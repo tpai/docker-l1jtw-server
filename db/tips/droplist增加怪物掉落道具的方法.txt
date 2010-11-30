@@ -1,0 +1,109 @@
+○droplistのアデナがないモンスターにアデナを追加する
+
+ --- 概要 ---
+ droplistでアデナが設定されていないモンスターにアデナDROPを設定するためのSQLです。
+ 実際の使い方は、下記「使い方」や「サンプル」を見てください。
+
+ --- 使い方 ---
+ 1.条件の指定
+ 真ん中あたりの以下の行を編集することで、マップ毎や、ボスモンスター以外、などの条件指定が出来ます。
+ (SELECT DISTINCT npc_templateid FROM spawnlist WHERE mapid = 111 ) spawnlist -- 特定MAPに出現するnpcのみ対象にする 
+
+ WHERE mapid = 111の部分を消せば、全マップのモンスターが対象になります。 
+ WHERE mapid BETWEEN 101 AND 200 と変更すればmapid 101～200(傲慢の塔1～100F)にいるモンスターが対象になります。
+ WHERE mapid IN (521,523) と変更すればmapid 521,523にいるモンスターが対象になります。
+ WHERE respawn_screen <> 1 と変更すればボス以外が対象になると思います。
+
+ WHERE句の使い方なので、他にも色々と指定できます。
+
+
+ 2.アデナの量の調整
+ 始めのあたりの以下の箇所を編集します。
+   lvl*4 AS min, -- アデナ最小drop 
+   lvl*8 AS max, -- アデナ最大drop 
+   
+ ASの前の lvl*4 や lvl*8 がアデナの量になっていて、サンプルではMOBのレベル×4が最小値、レベル×8が最大値にしています。
+ レベル以外にも
+   hp/2 AS min,
+   hp AS max,
+ このようにHPの1/2が最小値、HPが最大値という指定も可能です。
+ 
+ 
+ 3.SQLの実行結果の確認
+ INSERT INTO droplist の一文を削っておいてSQLを実行すると、実行によって設定されるデータが見れます。
+ はじめはINSERT INTO droplist を削って実行して、
+ 設定されるデータを確認してからINSERT INTO droplist を付加して実行するのが良いです。
+
+
+ いくつかサンプルを付けておくので参考にしてください。
+
+#---------------
+# サンプル1 (mapid 111(傲慢の塔11階)に出現するモンスターにアデナ(レベル×4～レベル×8)を設定する)
+#---------------
+INSERT INTO droplist 
+SELECT 
+    npcid AS mobId, 
+    40308 AS itemId, -- アデナのitemId 
+    lvl*4 AS min, -- アデナ最小drop 
+    lvl*8 AS max, -- アデナ最大drop 
+    1000000 AS chance -- 100%
+FROM 
+( 
+    SELECT * 
+    FROM npc, 
+         (SELECT DISTINCT npc_templateid FROM spawnlist WHERE mapid = 111 ) spawnlist -- 特定MAPに出現するnpcのみ対象にする 
+    WHERE 
+        npcid NOT IN 
+        (SELECT mobid FROM droplist WHERE itemid = 40308) -- droplistでアデナの無いnpc 
+    AND 
+        impl = 'L1Monster' -- L1Monsterのみ 
+    AND 
+        npcid = spawnlist.npc_templateid 
+) no_adena_npc
+
+#---------------
+# サンプル2 (傲慢の塔2F～100Fに出現する、ボス以外のレベル45以上のモンスターにアデナ(設定量はSQL参照…)を設定する)
+#---------------
+INSERT INTO droplist 
+SELECT 
+    npcid AS mobId, 
+    40308 AS itemId, -- アデナのitemId 
+    lvl*4 + hpr*20 AS min, -- アデナ最小drop (レベル×4 + HPR×20)
+    lvl*8 + hpr*40 AS max, -- アデナ最大drop (レベル×8 + HPR×40)
+    1000000 AS chance -- 100%
+FROM 
+( 
+    SELECT * 
+    FROM npc, 
+         (SELECT DISTINCT npc_templateid FROM spawnlist WHERE (mapid BETWEEN 102 AND 200) AND respawn_screen <> 1 ) spawnlist -- 傲慢の塔に出現する、ボス以外のモンスター
+    WHERE 
+        npcid NOT IN 
+        (SELECT mobid FROM droplist WHERE itemid = 40308) -- droplistでアデナの無いnpc 
+    AND 
+        impl = 'L1Monster' -- L1Monsterのみ 
+    AND
+        lvl >= 45 -- レベル45以上
+    AND 
+        npcid = spawnlist.npc_templateid 
+) no_adena_npc
+
+#---------------
+# サンプル3 (アデナDROPがない全てのモンスター(spawnlistに設定されていないものも全て)にアデナ(設定量はSQL参照…)を設定する
+#---------------
+INSERT INTO droplist 
+SELECT 
+    npcid AS mobId, 
+    40308 AS itemId, -- アデナのitemId 
+    lvl*4 + hpr*20 AS min, -- アデナ最小drop (レベル×4 + HPR×20)
+    lvl*8 + hpr*40 AS max, -- アデナ最大drop (レベル×8 + HPR×40)
+    900000 AS chance -- 90%
+FROM 
+( 
+    SELECT * 
+    FROM npc
+    WHERE 
+        npcid NOT IN 
+        (SELECT mobid FROM droplist WHERE itemid = 40308) -- droplistでアデナの無いnpc 
+    AND 
+        impl = 'L1Monster' -- L1Monsterのみ 
+) no_adena_npc

@@ -1,0 +1,33 @@
+InnoDBのSQLファイルは「l1jdb_InnoDB.sql」です。
+
+1.新規にDBを構築される方はそのまま上記のファイルを使用してください。その後3.へ。
+
+2.これまでのDBデータを引き続き使用する方は下記参照。
+
+2-1．＜一旦dumpして修正する方法＞
+　　・全てのテーブルをdumpする。（l1jdbをそのままdumpするのが楽できます。）
+　　・エディターを使いMyISAMをInnoDBへ置換。Shift-JISで保存。
+　　・NaviCATやphpMyAdminなどのクエリより読み込み。
+
+2-2.＜根性で手動修正する方法＞
+　　・NaviCATやphpMyAdminでテーブル表示。
+　　・テーブルタイプをInnoDBへ変更。
+
+3.MySQLのmy.cnf（my.ini）の「innodb_**」のコメントを外し設定。参考設定値は後記。
+　同じく「myisam」に関する部分をコメントアウト。
+
+MySQLを再起動。
+
+
+innodb_**　参考設定値　メモリ2GB、鯖と同時に蔵は動かさないことが前提
+
+innodb_data_home_dir = /usr/local/var/
+innodb_data_file_path = ibdata1:10M:autoextend
+innodb_log_group_home_dir = /usr/local/var/
+innodb_log_arch_dir = /usr/local/var/
+innodb_buffer_pool_size = 256M　（ヒープメモリの半分位が適当）
+innodb_additional_mem_pool_size = 16M　（buffer_pool_sizeの6%くらいが適当です）
+innodb_log_file_size = 64M　（buffer_pool_sizeの25%くらいが適当です）
+innodb_log_buffer_size = 64M　（buffer_pool_sizeの25%くらいが適当です）
+innodb_flush_log_at_trx_commit = 1
+innodb_lock_wait_timeout = 50 （注：ここは鯖の接続人数で適当な値を探してください）
