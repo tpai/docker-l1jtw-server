@@ -148,7 +148,11 @@ public class C_Result extends ClientBasePacket {
 					pc.turnOnOffLight();
 				}
 			}
-		} else if (resultType == 3 && size != 0
+
+			// 強制儲存一次身上道具, 避免角色背包內的物品未正常寫入導致物品複製的問題
+			pc.saveInventory();
+		}
+		else if (resultType == 3 && size != 0
 				&& npcImpl.equalsIgnoreCase("L1Dwarf") && level >= 5) { // 從倉庫取出東西
 			int objectId, count;
 			L1ItemInstance item;
@@ -170,7 +174,8 @@ public class C_Result extends ClientBasePacket {
 					break;
 				}
 			}
-		} else if (resultType == 4 && size != 0
+		}
+		else if (resultType == 4 && size != 0
 				&& npcImpl.equalsIgnoreCase("L1Dwarf") && level >= 5) { // 儲存道具到倉庫
 			int objectId, count;
 			if (pc.getClanid() != 0) { // 有血盟
@@ -231,6 +236,9 @@ public class C_Result extends ClientBasePacket {
 						}
 					}
 				}
+
+				// 強制儲存一次身上道具, 避免角色背包內的物品未正常寫入導致物品複製的問題
+				pc.saveInventory();
 			} else {
 				pc.sendPackets(new S_ServerMessage(208)); // \f1血盟倉庫を使用するには血盟に加入していなくてはなりません。
 			}
@@ -315,9 +323,13 @@ public class C_Result extends ClientBasePacket {
 					pc.getInventory().tradeItem(objectId, count,
 							pc.getDwarfForElfInventory());
 					pc.turnOnOffLight();
-				}
+				}			
 			}
-		} else if (resultType == 9 && size != 0
+			
+			// 強制儲存一次身上道具, 避免角色背包內的物品未正常寫入導致物品複製的問題
+			pc.saveInventory();
+		}
+		else if (resultType == 9 && size != 0
 				&& npcImpl.equalsIgnoreCase("L1Dwarf") && level >= 5 && pc
 						.isElf()) { // 自分のエルフ倉庫から取り出し
 			int objectId, count;
