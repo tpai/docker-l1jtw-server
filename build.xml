@@ -21,51 +21,63 @@
         http://www.gnu.org/copyleft/gpl.html
 
     </description>
-
-
-    <!-- Set Property -->
+ 	
+    <!-- 相關資料目錄 -->
+ 	<property name="class.dir" value="class" />
     <property name="src.dir" value="src" />
     <property name="lib.dir" value="lib" />
-    <property name="build.dir" value="build" />
     <property name="jarfile" value="l1jserver.jar" />
+	<property name="etc.dir" value="config" />
 
     <path id="classpath">
         <fileset dir="${lib.dir}">
-            <include name="c3p0-0.9.1.1.jar" />
-            <include name="javolution.jar" />
-        	<include name="mysql-connector-java-5.1.5-bin.jar" />
+ 			<include name="**/*.jar" />
         </fileset>
     </path>
 
+	<!-- 在 mf 檔內設定相關 class path -->
+	<pathconvert property="mf.classpath" pathsep=" ">
+		<path refid="classpath" />
+		<mapper>
+			<chainedmapper>
+				<flattenmapper />
+				<globmapper from="*" to="${lib.dir}/*" />
+			</chainedmapper>
+		</mapper>
+	</pathconvert>
 
-    <!-- Set DefaultTarget -->
-    <target name="all" depends="clean,compile,jar,clean2" />
+    <!-- 設定主要任務 -->
+    <target name="all" depends="clean,compile,jar" />
 
 
-    <!-- clean Target -->
+    <!-- 清除既有的編譯檔案 -->
     <target name="clean">
-        <delete dir="${build.dir}" />
+        <delete dir="${class.dir}" />
     </target>
 
-    <!-- Compile Target -->
+    <!-- 完整編譯(包含除錯訊息) -->
     <target name="compile">
-        <mkdir dir="${build.dir}" />
-        <javac destdir="${build.dir}"
-               optimize="on"
-               encoding="UTF-8">
-            <src path="${src.dir}" />
-            <classpath refid="classpath" />
-        </javac>
+        <mkdir dir="${class.dir}" />
+		<javac includeantruntime="true" debug="on" optimize="true" deprecation="true" source="1.6" target="1.6" encoding="UTF-8" destdir="${class.dir}">
+			<src path="${src.dir}" />
+			<classpath refid="classpath" />
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
     </target>
 
-    <!-- jar Target -->
-       <target name="jar">
-            <jar manifest="${src.dir}/META-INF/MANIFEST.MF" basedir="${build.dir}" jarfile="${jarfile}" />
-       </target>
-
-    <!-- clean Target -->
-    <target name="clean2">
-        <delete dir="${build.dir}" />
-    </target>
-
+    <!-- 封裝成 jar -->
+	<target name="jar" depends="copy_c3p0_config">
+		<jar basedir="${class.dir}" jarfile="${jar.file}">
+			<manifest>
+				<attribute name="Class-Path" value="${mf.classpath}" />
+				<attribute name="Main-Class" value="l1j.server.Server" />
+			</manifest>
+		</jar>
+		<delete dir="${class.dir}" />
+	</target>
+	
+	<!-- 複製 c3p0 的設定檔到 class 根目錄 -->
+	<target name="copy_c3p0_config">
+		<copy todir="${class.dir}" file="${etc.dir}/c3p0-config.xml" overwrite="true" />
+	</target>
 </project>
