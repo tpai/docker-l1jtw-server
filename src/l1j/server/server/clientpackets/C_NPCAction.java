@@ -21,7 +21,7 @@ package l1j.server.server.clientpackets;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.TimeZone;
 
 import l1j.server.Config;
@@ -109,8 +109,6 @@ public class C_NPCAction extends ClientBasePacket {
 	private static Logger		_log			= Logger
 														.getLogger(C_NPCAction.class
 																.getName());
-	private static Random		_random			= new Random();
-
 	public C_NPCAction(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
 		int objid = readD();
@@ -1615,7 +1613,7 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70512) {
 			// 治療を受ける("fullheal"でリクエストが来ることはあるのか？)
 			if (s.equalsIgnoreCase("0") || s.equalsIgnoreCase("fullheal")) {
-				int hp = _random.nextInt(21) + 70;
+				int hp = Random.nextInt(21) + 70;
 				pc.setCurrentHp(pc.getCurrentHp() + hp);
 				pc.sendPackets(new S_ServerMessage(77));
 				pc.sendPackets(new S_SkillSound(pc.getId(), 830));
@@ -1709,7 +1707,7 @@ public class C_NPCAction extends ClientBasePacket {
 				htmlid = "maptbox1";
 				pc.getQuest().set_end(L1Quest.QUEST_TBOX1);
 				int[] nextbox = { 1, 2, 3 };
-				int pid = _random.nextInt(nextbox.length);
+				int pid = Random.nextInt(nextbox.length);
 				int nb = nextbox[pid];
 				if (nb == 1) { // b地点
 					pc.getQuest().set_step(L1Quest.QUEST_LUKEIN1, 2);
@@ -1732,7 +1730,7 @@ public class C_NPCAction extends ClientBasePacket {
 				htmlid = "maptbox1";
 				pc.getQuest().set_end(L1Quest.QUEST_TBOX2);
 				int[] nextbox2 = { 1, 2, 3, 4, 5, 6 };
-				int pid = _random.nextInt(nextbox2.length);
+				int pid = Random.nextInt(nextbox2.length);
 				int nb2 = nextbox2[pid];
 				if (nb2 == 1) { // e地点
 					pc.getQuest().set_step(L1Quest.QUEST_LUKEIN1, 5);
@@ -2168,8 +2166,8 @@ public class C_NPCAction extends ClientBasePacket {
 						counts = new int[] { 1000, 1 };
 						createitem = new int[] { 41314 }; // 占星術師のお守り
 						createcount = new int[] { 1 };
-						int htmlA = _random.nextInt(3) + 1;
-						int htmlB = _random.nextInt(100) + 1;
+						int htmlA = Random.nextInt(3) + 1;
+						int htmlB = Random.nextInt(100) + 1;
 						switch (htmlA) {
 							case 1:
 								htmlid = "horosa" + htmlB; // horosa1 ~
@@ -2198,8 +2196,8 @@ public class C_NPCAction extends ClientBasePacket {
 				} else {
 					if (pc.getInventory().checkItem(41314)) { // 占星術師のお守り
 						pc.getInventory().consumeItem(41314, 1); // 占星術師のお守り
-						int html = _random.nextInt(9) + 1;
-						int PolyId = 6180 + _random.nextInt(64);
+						int html = Random.nextInt(9) + 1;
+						int PolyId = 6180 + Random.nextInt(64);
 						polyByKeplisha(client, PolyId);
 						switch (html) {
 							case 1:
@@ -2447,7 +2445,7 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80076) {
 			if (s.equalsIgnoreCase("A")) {
 				int[] diaryno = { 49082, 49083 };
-				int pid = _random.nextInt(diaryno.length);
+				int pid = Random.nextInt(diaryno.length);
 				int di = diaryno[pid];
 				if (di == 49082) { // 奇数ページ抜け
 					htmlid = "voyager6a";

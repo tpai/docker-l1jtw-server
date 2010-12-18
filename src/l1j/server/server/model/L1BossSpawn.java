@@ -21,7 +21,7 @@ package l1j.server.server.model;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Calendar;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.GeneralThreadPool;
@@ -102,8 +102,6 @@ public class L1BossSpawn extends L1Spawn {
 
 	private Calendar _activeSpawnTime;
 
-	private static Random _rnd = new Random();
-
 	@Override
 	public void init() {
 		if (_percentage <= 0) {
@@ -116,7 +114,7 @@ public class L1BossSpawn extends L1Spawn {
 		Calendar now = Calendar.getInstance();
 		// 出現時間
 		Calendar spawnTime;
-		if (Config.INIT_BOSS_SPAWN && _percentage > _rnd.nextInt(100)) {
+		if (Config.INIT_BOSS_SPAWN && _percentage > Random.nextInt(100)) {
 			spawnTime = _cycle.calcSpawnTime(now);
 
 		} else {
@@ -129,7 +127,7 @@ public class L1BossSpawn extends L1Spawn {
 	private Calendar calcNextSpawnTime(Calendar cal) {
 		do {
 			cal = _cycle.nextSpawnTime(cal);
-		} while (!(_percentage > _rnd.nextInt(100)));
+		} while (!(_percentage > Random.nextInt(100)));
 		return cal;
 	}
 

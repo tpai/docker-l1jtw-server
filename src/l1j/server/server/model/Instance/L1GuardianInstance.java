@@ -23,7 +23,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
@@ -35,7 +35,6 @@ import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1NpcTalkData;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.serverpackets.S_ChangeHeading;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NpcChatPacket;
@@ -54,7 +53,6 @@ public class L1GuardianInstance extends L1NpcInstance {
 	private static Logger _log = Logger.getLogger(L1GuardianInstance.class
 			.getName());
 
-	private Random _random = new Random();
 	private L1GuardianInstance _npc = this;
 
 	/**
@@ -118,7 +116,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 
 			if (attack.calcHit()) {
 				if (getNpcTemplate().get_npcId() == 70848) { // エント
-					int chance = _random.nextInt(100) + 1;
+					int chance = Random.nextInt(100) + 1;
 					if (chance <= 10) {
 						player.getInventory().storeItem(40506, 1);
 						player.sendPackets(new S_ServerMessage(143, "$755",
@@ -134,7 +132,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 					}
 				}
 				if (getNpcTemplate().get_npcId() == 70850) { // パン
-					int chance = _random.nextInt(100) + 1;
+					int chance = Random.nextInt(100) + 1;
 					if (chance <= 30) {
 						player.getInventory().storeItem(40519, 5);
 						player.sendPackets(new S_ServerMessage(143, "$753",
@@ -142,7 +140,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 					}
 				}
 				if (getNpcTemplate().get_npcId() == 70846) { // アラクネ
-					int chance = _random.nextInt(100) + 1;
+					int chance = Random.nextInt(100) + 1;
 					if (chance <= 30) {
 						player.getInventory().storeItem(40503, 1);
 						player.sendPackets(new S_ServerMessage(143, "$752",

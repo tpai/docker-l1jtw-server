@@ -19,7 +19,7 @@
 package l1j.server.server.model;
 
 import java.text.DecimalFormat;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -621,8 +621,7 @@ public class L1PcInventory extends L1Inventory {
 	}
 
 	public L1ItemInstance CaoPenalty() {
-		Random random = new Random();
-		int rnd = random.nextInt(_items.size());
+		int rnd = Random.nextInt(_items.size());
 		L1ItemInstance penaltyItem = _items.get(rnd);
 		if (penaltyItem.getItem().getItemId() == L1ItemId.ADENA // アデナ、トレード不可のアイテムは落とさない
 				|| !penaltyItem.getItem().isTradable()) {

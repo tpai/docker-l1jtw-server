@@ -18,7 +18,7 @@
  */
 package l1j.server.server.model;
 
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
@@ -36,7 +36,6 @@ import static l1j.server.server.model.skill.L1SkillId.*;
 public class L1Chaser extends TimerTask {
 	private static Logger _log = Logger.getLogger(L1Chaser.class.getName());
 
-	private static final Random _random = new Random();
 	private ScheduledFuture<?> _future = null;
 	private int _timeCounter = 0;
 	private final L1PcInstance _pc;
@@ -128,7 +127,7 @@ public class L1Chaser extends TimerTask {
 		} else {
 			coefficientC = intel;
 		}
-		dmg = (_random.nextInt(6) + 1 + 7) * coefficientA
+		dmg = (Random.nextInt(6) + 1 + 7) * coefficientA
 				* coefficientB / 10.5 * coefficientC * 2.0;
 
 		dmg = L1WeaponSkill.calcDamageReduction(pc, cha, dmg, 0);

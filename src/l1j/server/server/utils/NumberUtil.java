@@ -18,8 +18,6 @@
  */
 package l1j.server.server.utils;
 
-import java.util.Random;
-
 public class NumberUtil {
 
 	/**
@@ -35,7 +33,7 @@ public class NumberUtil {
 		if (percentage == 0) {
 			return ((int) number);
 		} else {
-			int r = new Random().nextInt(100);
+			int r = Random.nextInt(100);
 			if (r < percentage) {
 				return ((int) number + 1);
 			} else {

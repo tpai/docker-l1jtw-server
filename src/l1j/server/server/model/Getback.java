@@ -23,7 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -34,8 +34,6 @@ import l1j.server.server.utils.SQLUtil;
 public class Getback {
 
 	private static Logger _log = Logger.getLogger(Getback.class.getName());
-
-	private static Random _random = new Random();
 
 	private static HashMap<Integer, ArrayList<Getback>> _getback = new HashMap<Integer, ArrayList<Getback>>();
 
@@ -121,7 +119,7 @@ public class Getback {
 
 		int[] loc = new int[3];
 
-		int nPosition = _random.nextInt(3);
+		int nPosition = Random.nextInt(3);
 
 		int pcLocX = pc.getX();
 		int pcLocY = pc.getY();

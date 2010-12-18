@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.ScheduledFuture;
@@ -94,7 +94,6 @@ public class L1NpcInstance extends L1Character {
 	private int _petcost; // ペットになったときのコスト
 	public L1Inventory _inventory = new L1Inventory();
 	private L1MobSkillUse mobSkill;
-	private static Random _random = new Random();
 
 	// 対象を初めて発見したとき。（テレポート用）
 	private boolean firstFound = true;
@@ -408,7 +407,7 @@ public class L1NpcInstance extends L1Character {
 			if (isAttackPosition(target.getX(), target.getY(), getNpcTemplate()
 					.get_ranged())) { // 攻撃可能位置
 				if (mobSkill.isSkillTrigger(target)) { // トリガの条件に合うスキルがある
-					if (_random.nextInt(2) >= 1) { // 一定の確率で物理攻撃
+					if (Random.nextInt(2) >= 1) { // 一定の確率で物理攻撃
 						setHeading(targetDirection(target.getX(), target
 								.getY()));
 						attackTarget(target);
@@ -446,7 +445,7 @@ public class L1NpcInstance extends L1Character {
 					}
 
 					if (getNpcTemplate().is_teleport()
-							&& 20 > _random.nextInt(100)
+							&& 20 > Random.nextInt(100)
 							&& getCurrentMp() >= 10 && distance > 6
 							&& distance < 15) { // テレポート移動
 						if (nearTeleport(target.getX(), target.getY()) == true) {
@@ -564,7 +563,7 @@ public class L1NpcInstance extends L1Character {
 		}
 
 		// 拾うアイテム(のインベントリ)をランダムで選定
-		int pickupIndex = (int) (Math.random() * gInventorys.size());
+		int pickupIndex = Random.nextInt(gInventorys.size());
 		L1GroundInventory inventory = gInventorys.get(pickupIndex);
 		for (L1ItemInstance item : inventory.getItems()) {
 			if (getInventory().checkAddItem(item, item.getCount())
@@ -585,12 +584,12 @@ public class L1NpcInstance extends L1Character {
 				gInventorys.add((L1GroundInventory) obj);
 			}
 		}
-		if (gInventorys.size() == 0) {
+		if (gInventorys.isEmpty()) {
 			return;
 		}
 
 		// 拾うアイテム(のインベントリ)をランダムで選定
-		int pickupIndex = (int) (Math.random() * gInventorys.size());
+		int pickupIndex = Random.nextInt(gInventorys.size());
 		L1GroundInventory inventory = gInventorys.get(pickupIndex);
 		for (L1ItemInstance item : inventory.getItems()) {
 			if (item.getItem().getType() == 6 // potion
@@ -615,7 +614,7 @@ public class L1NpcInstance extends L1Character {
 
 	public static void shuffle(L1Object[] arr) {
 		for (int i = arr.length - 1; i > 0; i--) {
-			int t = (int) (Math.random() * i);
+			int t = Random.nextInt(i);
 
 			// 選ばれた値と交換する
 			L1Object tmp = arr[i];
@@ -681,7 +680,7 @@ public class L1NpcInstance extends L1Character {
 				return true;
 			}
 		} else {
-			if (L1World.getInstance().getRecognizePlayer(this).size() == 0) {
+			if (L1World.getInstance().getRecognizePlayer(this).isEmpty()) {
 				return true; // 周りにプレイヤーがいなくなったらＡＩ処理終了
 			}
 			// 移動できるキャラはランダムに動いておく
@@ -694,12 +693,12 @@ public class L1NpcInstance extends L1Character {
 					// 移動する予定の距離を移動し終えたら、新たに距離と方向を決める
 					// そうでないなら、移動する予定の距離をデクリメント
 					if (_randomMoveDistance == 0) {
-						_randomMoveDistance = _random.nextInt(5) + 1;
-						_randomMoveDirection = _random.nextInt(20);
+						_randomMoveDistance = Random.nextInt(5) + 1;
+						_randomMoveDirection = Random.nextInt(20);
 						// ホームポイントから離れすぎないように、一定の確率でホームポイントの方向に補正
 						if (getHomeX() != 0 && getHomeY() != 0
 								&& _randomMoveDirection < 8
-								&& _random.nextInt(3) == 0) {
+								&& Random.nextInt(3) == 0) {
 							_randomMoveDirection = moveDirection(getHomeX(),
 									getHomeY());
 						}
@@ -1092,7 +1091,7 @@ public class L1NpcInstance extends L1Character {
 		if (template.get_randomlevel() == 0) { // ランダムLv指定なし
 			setLevel(template.get_level());
 		} else { // ランダムLv指定あり（最小値:get_level(),最大値:get_randomlevel()）
-			randomlevel = _random.nextInt(
+			randomlevel = Random.nextInt(
 					template.get_randomlevel() - template.get_level() + 1);
 			diff = template.get_randomlevel() - template.get_level();
 			rate = randomlevel / diff;
@@ -1920,7 +1919,7 @@ public class L1NpcInstance extends L1Character {
 
 	// 目標の隣へテレポート
 	public boolean nearTeleport(int nx, int ny) {
-		int rdir = _random.nextInt(8);
+		int rdir = Random.nextInt(8);
 		int dir;
 		for (int i = 0; i < 8; i++) {
 			dir = rdir + i;

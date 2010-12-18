@@ -18,7 +18,7 @@
  */
 package l1j.server.server.model;
 
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
@@ -66,8 +66,6 @@ public class L1Attack {
 	private int _targetY;
 
 	private int _statusDamage = 0;
-
-	private static final Random _random = new Random();
 
 	private int _hitRate = 0;
 
@@ -448,7 +446,7 @@ public class L1Attack {
 			}
 		}
 
-		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 10;
+		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 10;
 
 		if (_targetPc.hasSkillEffect(UNCANNY_DODGE)) {
 			attackerDice -= 5;
@@ -469,7 +467,7 @@ public class L1Attack {
 		if (_targetPc.getAc() >= 0) {
 			defenderDice = 10 - _targetPc.getAc();
 		} else if (_targetPc.getAc() < 0) {
-			defenderDice = 10 + _random.nextInt(defenderValue) + 1;
+			defenderDice = 10 + Random.nextInt(defenderValue) + 1;
 		}
 
 		int fumble = _hitRate - 9;
@@ -506,7 +504,7 @@ public class L1Attack {
 		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			_hitRate = 0;
 		}
-		int rnd = _random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 		if (_weaponType == 20 && _hitRate > rnd) { // 弓の場合、ヒットした場合でもERでの回避を再度行う。
 			return calcErEvasion();
 		}
@@ -560,7 +558,7 @@ public class L1Attack {
  * (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) { _hitRate = 0; } if
  * (_targetPc.hasSkillEffect(FREEZING_BREATH)) { _hitRate = 0; } if
  * (_targetPc.hasSkillEffect(EARTH_BIND)) { _hitRate = 0; } int rnd =
- * _random.nextInt(100) + 1; if (_weaponType == 20 && _hitRate > rnd) { //
+ * Random.nextInt(100) + 1; if (_weaponType == 20 && _hitRate > rnd) { //
  * 弓の場合、ヒットした場合でもERでの回避を再度行う。 return calcErEvasion(); }
  * 
  * return _hitRate >= rnd;
@@ -631,7 +629,7 @@ public class L1Attack {
 			}
 		}
 
-		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 10;
+		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 10;
 
 		if (_targetNpc.hasSkillEffect(UNCANNY_DODGE)) {
 			attackerDice -= 5;
@@ -716,7 +714,7 @@ public class L1Attack {
 			_hitRate = 0;
 		}
 
- 		int rnd = _random.nextInt(100) + 1;
+ 		int rnd = Random.nextInt(100) + 1;
 
 		return _hitRate >= rnd;
 	}
@@ -732,7 +730,7 @@ public class L1Attack {
 
 		_hitRate += _npc.getHitup();
 
-		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 1;
+		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 1;
 
 		if (_targetPc.hasSkillEffect(UNCANNY_DODGE)) {
 			attackerDice -= 5;
@@ -753,7 +751,7 @@ public class L1Attack {
 		if (_targetPc.getAc() >= 0) {
 			defenderDice = 10 - _targetPc.getAc();
 		} else if (_targetPc.getAc() < 0) {
-			defenderDice = 10 + _random.nextInt(defenderValue) + 1;
+			defenderDice = 10 + Random.nextInt(defenderValue) + 1;
 		}
 
 		int fumble = _hitRate;
@@ -787,7 +785,7 @@ public class L1Attack {
 			_hitRate = 0;
 		}
 
-		int rnd = _random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 
 		// NPCの攻撃レンジが10以上の場合で、2以上離れている場合弓攻撃とみなす
 		if (_npc.getNpcTemplate().get_ranged() >= 10
@@ -810,7 +808,7 @@ public class L1Attack {
 
 		_hitRate += _npc.getHitup();
 
-		int attackerDice = _random.nextInt(20) + 1 + _hitRate - 1;
+		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 1;
 
 		if (_targetNpc.hasSkillEffect(UNCANNY_DODGE)) {
 			attackerDice -= 5;
@@ -831,7 +829,7 @@ public class L1Attack {
 		if (_targetNpc.getAc() >= 0) {
 			defenderDice = 10 - _targetNpc.getAc();
 		} else if (_targetNpc.getAc() < 0) {
-			defenderDice = 10 + _random.nextInt(defenderValue) + 1;
+			defenderDice = 10 + Random.nextInt(defenderValue) + 1;
 		}
 
 		int fumble = _hitRate;
@@ -849,7 +847,7 @@ public class L1Attack {
 			}
 		}
 
-		int rnd = _random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 		return _hitRate >= rnd;
 	}
 
@@ -857,7 +855,7 @@ public class L1Attack {
 	private boolean calcErEvasion() {
 		int er = _targetPc.getEr();
 
-		int rnd = _random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 		return er < rnd;
 	}
 
@@ -881,7 +879,7 @@ public class L1Attack {
 		int weaponMaxDamage = _weaponSmall;
 
 		int weaponDamage = 0;
-		if (_weaponType == 58 && (_random.nextInt(100) + 1) <=
+		if (_weaponType == 58 && (Random.nextInt(100) + 1) <=
 				_weaponDoubleDmgChance) { // クリティカルヒット
 			weaponDamage = weaponMaxDamage;
 			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3671));
@@ -889,7 +887,7 @@ public class L1Attack {
 		} else if (_weaponType == 0 || _weaponType == 20 || _weaponType == 62) { // 素手、弓、ガントトレット
 			weaponDamage = 0;
 		} else {
-			weaponDamage = _random.nextInt(weaponMaxDamage) + 1;
+			weaponDamage = Random.nextInt(weaponMaxDamage) + 1;
 		}
 		if (_pc.hasSkillEffect(SOUL_OF_FLAME)) {
 			if (_weaponType != 20 && _weaponType != 62) {
@@ -898,7 +896,7 @@ public class L1Attack {
 		}
 
 		int weaponTotalDamage = weaponDamage + _weaponAddDmg + _weaponEnchant;
-		if (_weaponType == 54 && (_random.nextInt(100) + 1) <=
+		if (_weaponType == 54 && (Random.nextInt(100) + 1) <=
 				_weaponDoubleDmgChance) { // ダブルヒット
 			weaponTotalDamage *= 2;
 			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3398));
@@ -908,12 +906,12 @@ public class L1Attack {
 		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
 				&& (_weaponType == 54 || _weaponType == 58)) {
-			if ((_random.nextInt(100) + 1) <= 33) {
+			if ((Random.nextInt(100) + 1) <= 33) {
 				weaponTotalDamage *= 2;
 			}
 		}
 
-		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率(暫定)75%
+		if (_weaponId == 262 && Random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率(暫定)75%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
@@ -932,16 +930,16 @@ public class L1Attack {
 				if (add_dmg == 0) {
 					add_dmg = 1;
 				}
-				dmg = dmg + _random.nextInt(add_dmg) + 1;
+				dmg = dmg + Random.nextInt(add_dmg) + 1;
 			} else if (_weaponId == 190) { // サイハの弓
-				dmg = dmg + _random.nextInt(15) + 1;
+				dmg = dmg + Random.nextInt(15) + 1;
 			}
 		} else if (_weaponType == 62) { // ガントトレット
 			int add_dmg = _sting.getItem().getDmgSmall();
 			if (add_dmg == 0) {
 				add_dmg = 1;
 			}
-			dmg = dmg + _random.nextInt(add_dmg) + 1;
+			dmg = dmg + Random.nextInt(add_dmg) + 1;
 		}
 
 		dmg = calcBuffDamage(dmg);
@@ -964,7 +962,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType == 0) { // 素手
-			dmg = (_random.nextInt(5) + 4) / 4;
+			dmg = (Random.nextInt(5) + 4) / 4;
 		}
 
 		if (_weaponType2 == 17) { // キーリンク
@@ -1093,7 +1091,7 @@ public class L1Attack {
 		}
 
 		int weaponDamage = 0;
-		if (_weaponType == 58 && (_random.nextInt(100) + 1) <=
+		if (_weaponType == 58 && (Random.nextInt(100) + 1) <=
 				_weaponDoubleDmgChance) { // クリティカルヒット
 			weaponDamage = weaponMaxDamage;
 			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3671));
@@ -1101,7 +1099,7 @@ public class L1Attack {
 		} else if (_weaponType == 0 || _weaponType == 20 || _weaponType == 62) { // 素手、弓、ガントトレット
 			weaponDamage = 0;
 		} else {
-			weaponDamage = _random.nextInt(weaponMaxDamage) + 1;
+			weaponDamage = Random.nextInt(weaponMaxDamage) + 1;
 		}
 		if (_pc.hasSkillEffect(SOUL_OF_FLAME)) {
 			if (_weaponType != 20 && _weaponType != 62) {
@@ -1112,7 +1110,7 @@ public class L1Attack {
 		int weaponTotalDamage = weaponDamage + _weaponAddDmg + _weaponEnchant;
 
 		weaponTotalDamage += calcMaterialBlessDmg(); // 銀祝福ダメージボーナス
-		if (_weaponType == 54 && (_random.nextInt(100) + 1) <=
+		if (_weaponType == 54 && (Random.nextInt(100) + 1) <=
 				_weaponDoubleDmgChance) { // ダブルヒット
 			weaponTotalDamage *= 2;
 			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3398));
@@ -1122,12 +1120,12 @@ public class L1Attack {
 		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
 				&& (_weaponType == 54 || _weaponType == 58)) {
-			if ((_random.nextInt(100) + 1) <= 33) {
+			if ((Random.nextInt(100) + 1) <= 33) {
 				weaponTotalDamage *= 2;
 			}
 		}
 
-		if (_weaponId == 262 && _random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率(暫定)75%
+		if (_weaponId == 262 && Random.nextInt(100) + 1 <= 75) { // ディストラクション装備かつ成功確率(暫定)75%
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
@@ -1155,9 +1153,9 @@ public class L1Attack {
 				if (_targetNpc.getNpcTemplate().is_hard()) {
 					add_dmg /= 2;
 				}
-				dmg = dmg + _random.nextInt(add_dmg) + 1;
+				dmg = dmg + Random.nextInt(add_dmg) + 1;
 			} else if (_weaponId == 190) { // サイハの弓
-				dmg = dmg + _random.nextInt(15) + 1;
+				dmg = dmg + Random.nextInt(15) + 1;
 			}
 		} else if (_weaponType == 62) { // ガントトレット
 			int add_dmg = 0;
@@ -1170,7 +1168,7 @@ public class L1Attack {
 			if (add_dmg == 0) {
 				add_dmg = 1;
 			}
-			dmg = dmg + _random.nextInt(add_dmg) + 1;
+			dmg = dmg + Random.nextInt(add_dmg) + 1;
 		}
 
 		dmg = calcBuffDamage(dmg);
@@ -1191,7 +1189,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType == 0) { // 素手
-			dmg = (_random.nextInt(5) + 4) / 4;
+			dmg = (Random.nextInt(5) + 4) / 4;
 		}
 
 		if (_weaponType2 == 17) { // キーリンク
@@ -1276,9 +1274,9 @@ public class L1Attack {
 		int lvl = _npc.getLevel();
 		double dmg = 0D;
 		if (lvl < 10) {
-			dmg = _random.nextInt(lvl) + 10D + _npc.getStr() / 2 + 1;
+			dmg = Random.nextInt(lvl) + 10D + _npc.getStr() / 2 + 1;
 		} else {
-			dmg = _random.nextInt(lvl) + _npc.getStr() / 2 + 1;
+			dmg = Random.nextInt(lvl) + _npc.getStr() / 2 + 1;
 		}
 
 		if (_npc instanceof L1PetInstance) {
@@ -1402,12 +1400,12 @@ public class L1Attack {
 		double dmg = 0;
 
 		if (_npc instanceof L1PetInstance) {
-			dmg = _random.nextInt(_npc.getNpcTemplate().get_level())
+			dmg = Random.nextInt(_npc.getNpcTemplate().get_level())
 					+ _npc.getStr() / 2 + 1;
 			dmg += (lvl / 16); // ペットはLV16毎に追加打撃
 			dmg += ((L1PetInstance) _npc).getDamageByWeapon();
 		} else {
-			dmg = _random.nextInt(lvl) + _npc.getStr() / 2 + 1;
+			dmg = Random.nextInt(lvl) + _npc.getStr() / 2 + 1;
 		}
 
 		if (isUndeadDamage()) {
@@ -1451,7 +1449,7 @@ public class L1Attack {
 				|| (_pc.hasSkillEffect(ELEMENTAL_FIRE)
 						&& _weaponType != 20 && _weaponType != 62
 						&& _weaponType2 !=17)) {
-			if ((_random.nextInt(100) + 1) <= 33) {
+			if ((Random.nextInt(100) + 1) <= 33) {
 				double tempDmg = dmg;
 				if (_pc.hasSkillEffect(FIRE_WEAPON)) {
 					tempDmg -= 4;
@@ -1477,7 +1475,7 @@ public class L1Attack {
 	private int calcPcDefense() {
 		int ac = Math.max(0, 10 - _targetPc.getAc());
 		int acDefMax = _targetPc.getClassFeature().getAcDefenseMax(ac);
-		return _random.nextInt(acDefMax + 1);
+		return Random.nextInt(acDefMax + 1);
 	}
 
 	// ●●●● ＮＰＣのダメージリダクションによる軽減 ●●●●
@@ -1492,14 +1490,14 @@ public class L1Attack {
 		if ((_weaponMaterial == 14 || _weaponMaterial == 17
 				|| _weaponMaterial == 22)
 				&& (undead == 1 || undead == 3 || undead == 5)) { // 銀・ミスリル・オリハルコン、かつ、アンデッド系・アンデッド系ボス・銀特効モンスター
-			damage += _random.nextInt(20) + 1;
+			damage += Random.nextInt(20) + 1;
 		}
 		if ((_weaponMaterial == 17 || _weaponMaterial == 22)
 				&& undead == 2) { // ミスリル・オリハルコン、かつ、悪魔系
-			damage += _random.nextInt(3) + 1;
+			damage += Random.nextInt(3) + 1;
 		}
 		if (_weaponBless == 0 && (undead == 1 || undead == 2 || undead == 3)) { // 祝福武器、かつ、アンデッド系・悪魔系・アンデッド系ボス
-			damage += _random.nextInt(4) + 1;
+			damage += Random.nextInt(4) + 1;
 		}
 		if (_pc.getWeapon() != null && _weaponType != 20 && _weaponType != 62
 				&& weapon.getHolyDmgByMagic() != 0 && (undead == 1 || undead == 3)) {
@@ -1577,7 +1575,7 @@ public class L1Attack {
 	// ●●●● ＮＰＣの毒攻撃を付加 ●●●●
 	private void addNpcPoisonAttack(L1Character attacker, L1Character target) {
 		if (_npc.getNpcTemplate().get_poisonatk() != 0) { // 毒攻撃あり
-			if (15 >= _random.nextInt(100) + 1) { // 15%の確率で毒攻撃
+			if (15 >= Random.nextInt(100) + 1) { // 15%の確率で毒攻撃
 				if (_npc.getNpcTemplate().get_poisonatk() == 1) { // 通常毒
 					// 3秒周期でダメージ5
 					L1DamagePoison.doInfection(attacker, target, 3000, 5);
@@ -1600,18 +1598,18 @@ public class L1Attack {
 				som_lvl = 0;
 			}
 			// MP吸収量をランダム取得
-			_drainMana = _random.nextInt(som_lvl) + 1;
+			_drainMana = Random.nextInt(som_lvl) + 1;
 			// 最大MP吸収量を9に制限
 			if (_drainMana > Config.MANA_DRAIN_LIMIT_PER_SOM_ATTACK) {
 				_drainMana = Config.MANA_DRAIN_LIMIT_PER_SOM_ATTACK;
 			}
 		} else if (_weaponId == 259) { // マナバーラード
 			if (_calcType == PC_PC) {
-				if (_targetPc.getMr() <= _random.nextInt(100) + 1) { // 確率はターゲットのMRに依存
+				if (_targetPc.getMr() <= Random.nextInt(100) + 1) { // 確率はターゲットのMRに依存
 					_drainMana = 1; // 吸収量は1固定
 				}
 			} else if (_calcType == PC_NPC) {
-				if (_targetNpc.getMr() <= _random.nextInt(100) + 1) { // 確率はターゲットのMRに依存
+				if (_targetNpc.getMr() <= Random.nextInt(100) + 1) { // 確率はターゲットのMRに依存
 					_drainMana = 1; // 吸収量は1固定
 				}
 			}
@@ -1629,7 +1627,7 @@ public class L1Attack {
 
 	// ■■■■ ＰＣの毒攻撃を付加 ■■■■
 	public void addPcPoisonAttack(L1Character attacker, L1Character target) {
-		int chance = _random.nextInt(100) + 1;
+		int chance = Random.nextInt(100) + 1;
 		if ((_weaponId == 13 || _weaponId == 44 // FOD、古代のダークエルフソード
 				|| (_weaponId != 0 && _pc.hasSkillEffect(ENCHANT_VENOM))) // エンチャント
 																			// ベノム中
@@ -1654,7 +1652,7 @@ public class L1Attack {
 		}
 		if (_weaponId == 265 || _weaponId == 266
 				|| _weaponId == 267 || _weaponId == 268) {
-			if (probability > _random.nextInt(100) + 1) {
+			if (probability > Random.nextInt(100) + 1) {
 				L1Chaser chaser = new L1Chaser(_pc, _target);
 				chaser.begin();
 			}
@@ -2001,13 +1999,13 @@ public class L1Attack {
 		}
 		// 通常の武器・呪われた武器
 		if ((_weaponBless == 1 || _weaponBless == 2)
-				&& ((_random.nextInt(100) + 1) < chance)) {
+				&& ((Random.nextInt(100) + 1) < chance)) {
 			// \f1あなたの%0が損傷しました。
 			_pc.sendPackets(new S_ServerMessage(268, weapon.getLogName()));
 			_pc.getInventory().receiveDamage(weapon);
 		}
 		// 祝福された武器
-		if (_weaponBless == 0 && ((_random.nextInt(100) + 1) < bchance)) {
+		if (_weaponBless == 0 && ((Random.nextInt(100) + 1) < bchance)) {
 			// \f1あなたの%0が損傷しました。
 			_pc.sendPackets(new S_ServerMessage(268, weapon.getLogName()));
 			_pc.getInventory().receiveDamage(weapon);
@@ -2026,7 +2024,7 @@ public class L1Attack {
 			return;
 		}
 
-		if (_random.nextInt(100) + 1 <= 10) {
+		if (Random.nextInt(100) + 1 <= 10) {
 			// \f1あなたの%0が損傷しました。
 			_pc.sendPackets(new S_ServerMessage(268, weapon.getLogName()));
 			_pc.getInventory().receiveDamage(weapon);

@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
@@ -52,8 +52,8 @@ public class L1Spawn extends L1GameTimeAdapter {
 	private int _groupId;
 	private int _locx;
 	private int _locy;
-	private int _randomx;
-	private int _randomy;
+	private int Randomx;
+	private int Randomy;
 	private int _locx1;
 	private int _locy1;
 	private int _locx2;
@@ -70,8 +70,6 @@ public class L1Spawn extends L1GameTimeAdapter {
 	private L1SpawnTime _time;
 	private HashMap<Integer, Point> _homePoint = null; // initでspawnした個々のオブジェクトのホームポイント
 	private List<L1NpcInstance> _mobs = new ArrayList<L1NpcInstance>();
-
-	private static Random _random = new Random();
 
 	private String _name;
 
@@ -159,11 +157,11 @@ public class L1Spawn extends L1GameTimeAdapter {
 	}
 
 	public int getRandomx() {
-		return _randomx;
+		return Randomx;
 	}
 
 	public int getRandomy() {
-		return _randomy;
+		return Randomy;
 	}
 
 	public int getLocX1() {
@@ -223,11 +221,11 @@ public class L1Spawn extends L1GameTimeAdapter {
 	}
 
 	public void setRandomx(int randomx) {
-		_randomx = randomx;
+		Randomx = randomx;
 	}
 
 	public void setRandomy(int randomy) {
-		_randomy = randomy;
+		Randomy = randomy;
 	}
 
 	public void setLocX1(int locx1) {
@@ -257,7 +255,7 @@ public class L1Spawn extends L1GameTimeAdapter {
 	private int calcRespawnDelay() {
 		int respawnDelay = _minRespawnDelay * 1000;
 		if (_delayInterval > 0) {
-			respawnDelay += _random.nextInt(_delayInterval) * 1000;
+			respawnDelay += Random.nextInt(_delayInterval) * 1000;
 		}
 		L1GameTime currentTime = L1GameTimeClock.getInstance().currentTime();
 		if (_time != null && !_time.getTimePeriod().includes(currentTime)) { // 指定時間外なら指定時間までの時間を足す
@@ -351,9 +349,9 @@ public class L1Spawn extends L1GameTimeAdapter {
 
 			int npcId = mob.getNpcTemplate().get_npcId();
 			if (npcId == 45488 && getMapId() == 9) { // カスパー
-				mob.setMap((short) (getMapId() + _random.nextInt(2)));
+				mob.setMap((short) (getMapId() + Random.nextInt(2)));
 			} else if (npcId == 45601 && getMapId() == 11) { // デスナイト
-				mob.setMap((short) (getMapId() + _random.nextInt(3)));
+				mob.setMap((short) (getMapId() + Random.nextInt(3)));
 			} else {
 				mob.setMap(getMapId());
 			}
@@ -371,7 +369,7 @@ public class L1Spawn extends L1GameTimeAdapter {
 							}
 						}
 						if (players.size() > 0) {
-							L1PcInstance pc = players.get(_random
+							L1PcInstance pc = players.get(Random
 									.nextInt(players.size()));
 							L1Location loc = pc.getLocation().randomLocation(
 									PC_AROUND_DISTANCE, false);
@@ -395,18 +393,16 @@ public class L1Spawn extends L1GameTimeAdapter {
 						} else {
 							int rangeX = getLocX2() - getLocX1();
 							int rangeY = getLocY2() - getLocY1();
-							newlocx = _random.nextInt(rangeX) + getLocX1();
-							newlocy = _random.nextInt(rangeY) + getLocY1();
+							newlocx = Random.nextInt(rangeX) + getLocX1();
+							newlocy = Random.nextInt(rangeY) + getLocY1();
 						}
 						if (tryCount > 49) { // 出現位置が決まらない時はlocx,locyの値
 							newlocx = getLocX();
 							newlocy = getLocY();
 						}
 					} else if (isRandomSpawn()) { // 座標のランダム値が指定されている場合
-						newlocx = (getLocX() + ((int) (Math.random() * getRandomx()) - (int) (Math
-								.random() * getRandomx())));
-						newlocy = (getLocY() + ((int) (Math.random() * getRandomy()) - (int) (Math
-								.random() * getRandomy())));
+						newlocx = (getLocX() + (Random.nextInt(getRandomx()) - Random.nextInt(getRandomx())));
+						newlocy = (getLocY() + (Random.nextInt(getRandomy()) - Random.nextInt(getRandomy())));
 					} else { // どちらも指定されていない場合
 						newlocx = getLocX();
 						newlocy = getLocY();
@@ -424,8 +420,7 @@ public class L1Spawn extends L1GameTimeAdapter {
 							break;
 						}
 						L1MonsterInstance mobtemp = (L1MonsterInstance) mob;
-						if (L1World.getInstance().getVisiblePlayer(mobtemp)
-								.size() == 0) {
+						if (L1World.getInstance().getVisiblePlayer(mobtemp).isEmpty()) {
 							break;
 						}
 						// 画面内にPCが居て出現できない場合は、3秒後にスケジューリングしてやり直し

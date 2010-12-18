@@ -18,10 +18,7 @@
  */
 package l1j.server.server.utils;
 
-import java.util.Random;
-
 public class Dice {
-	private static final Random _rnd = new Random();
 	private final int _faces;
 
 	public Dice(int faces) {
@@ -33,7 +30,7 @@ public class Dice {
 	}
 
 	public int roll() {
-		return _rnd.nextInt(_faces) + 1;
+		return Random.nextInt(_faces) + 1;
 	}
 
 	public int roll(int count) {

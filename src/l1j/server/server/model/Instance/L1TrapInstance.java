@@ -19,7 +19,7 @@
 package l1j.server.server.model.Instance;
 
 import java.util.List;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import l1j.server.server.model.L1Location;
@@ -45,8 +45,6 @@ public class L1TrapInstance extends L1Object {
 	private final String _nameForView;
 
 	private List<L1PcInstance> _knownPlayers = new CopyOnWriteArrayList<L1PcInstance>();
-
-	private static final Random _random = new Random();
 
 	public L1TrapInstance(int id, L1Trap trap, L1Location loc, Point rndPt,
 			int span) {
@@ -75,10 +73,10 @@ public class L1TrapInstance extends L1Object {
 		}
 
 		for (int i = 0; i < 50; i++) {
-			int rndX = _random.nextInt(_rndPt.getX() + 1)
-					* (_random.nextInt(2) == 1 ? 1 : -1); // 1/2の確率でマイナスにする
-			int rndY = _random.nextInt(_rndPt.getY() + 1)
-					* (_random.nextInt(2) == 1 ? 1 : -1);
+			int rndX = Random.nextInt(_rndPt.getX() + 1)
+					* (Random.nextInt(2) == 1 ? 1 : -1); // 1/2の確率でマイナスにする
+			int rndY = Random.nextInt(_rndPt.getY() + 1)
+					* (Random.nextInt(2) == 1 ? 1 : -1);
 
 			rndX += _baseLoc.getX();
 			rndY += _baseLoc.getY();

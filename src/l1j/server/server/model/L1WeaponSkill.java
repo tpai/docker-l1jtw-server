@@ -18,7 +18,7 @@
  */
 package l1j.server.server.model;
 
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Logger;
 
 import l1j.server.server.ActionCodes;
@@ -48,8 +48,6 @@ public class L1WeaponSkill {
 
 	private static Logger _log = Logger
 			.getLogger(L1WeaponSkill.class.getName());
-
-	private static Random _random = new Random();
 
 	private int _weaponId;
 
@@ -141,7 +139,7 @@ public class L1WeaponSkill {
 			return 0;
 		}
 
-		int chance = _random.nextInt(100) + 1;
+		int chance = Random.nextInt(100) + 1;
 		if (weaponSkill.getProbability() < chance) {
 			return 0;
 		}
@@ -181,7 +179,7 @@ public class L1WeaponSkill {
 		double damage = 0;
 		int randomDamage = weaponSkill.getRandomDamage();
 		if (randomDamage != 0) {
-			damage = _random.nextInt(randomDamage);
+			damage = Random.nextInt(randomDamage);
 		}
 		damage += weaponSkill.getFixDamage();
 
@@ -249,7 +247,7 @@ public class L1WeaponSkill {
 	public static double getBaphometStaffDamage(L1PcInstance pc,
 			L1Character cha) {
 		double dmg = 0;
-		int chance = _random.nextInt(100) + 1;
+		int chance = Random.nextInt(100) + 1;
 		if (14 >= chance) {
 			int locx = cha.getX();
 			int locy = cha.getY();
@@ -259,7 +257,7 @@ public class L1WeaponSkill {
 			if (pc.hasSkillEffect(BERSERKERS)) {
 				bsk = 0.2;
 			}
-			dmg = (intel + sp) * (1.8 + bsk) + _random.nextInt(intel + sp)
+			dmg = (intel + sp) * (1.8 + bsk) + Random.nextInt(intel + sp)
 					* 1.8;
 			S_EffectLocation packet = new S_EffectLocation(locx, locy, 129);
 			pc.sendPackets(packet);
@@ -271,7 +269,7 @@ public class L1WeaponSkill {
 	public static double getDiceDaggerDamage(L1PcInstance pc,
 			L1PcInstance targetPc, L1ItemInstance weapon) {
 		double dmg = 0;
-		int chance = _random.nextInt(100) + 1;
+		int chance = Random.nextInt(100) + 1;
 		if (3 >= chance) {
 			dmg = targetPc.getCurrentHp() * 2 / 3;
 			if (targetPc.getCurrentHp() - dmg < 0) {
@@ -300,7 +298,7 @@ public class L1WeaponSkill {
 		}
 
 		for (int i = 0; i < diceCount; i++) {
-			kiringkuDamage += (_random.nextInt(dice) + 1);
+			kiringkuDamage += (Random.nextInt(dice) + 1);
 		}
 		kiringkuDamage += value;
 
@@ -338,7 +336,7 @@ public class L1WeaponSkill {
 		double dmg = 0;
 		int probability = 0;
 		int attr = 0;
-		int chance = _random.nextInt(100) + 1;
+		int chance = Random.nextInt(100) + 1;
 		if (weaponId == 263) { // フリージングランサー
 			probability = 5;
 			attr = L1Skills.ATTR_WATER;
@@ -372,7 +370,7 @@ public class L1WeaponSkill {
 			if (pc.hasSkillEffect(BERSERKERS)) {
 				bsk = 0.2;
 			}
-			dmg = (intel + sp) * (damageRate + bsk) + _random.nextInt(intel
+			dmg = (intel + sp) * (damageRate + bsk) + Random.nextInt(intel
 				+ sp) * damageRate;
 			pc.sendPackets(new S_SkillSound(effectTargetId, effectId));
 			pc.broadcastPacket(new S_SkillSound(effectTargetId, effectId));
@@ -437,7 +435,7 @@ public class L1WeaponSkill {
 	public static double getLightningEdgeDamage(L1PcInstance pc,
 			L1Character cha) {
 		double dmg = 0;
-		int chance = _random.nextInt(100) + 1;
+		int chance = Random.nextInt(100) + 1;
 		if (4 >= chance) {
 			int sp = pc.getSp();
 			int intel = pc.getInt();
@@ -445,7 +443,7 @@ public class L1WeaponSkill {
 			if (pc.hasSkillEffect(BERSERKERS)) {
 				bsk = 0.2;
 			}
-			dmg = (intel + sp) * (2 + bsk) + _random.nextInt(intel + sp) * 2;
+			dmg = (intel + sp) * (2 + bsk) + Random.nextInt(intel + sp) * 2;
 
 			pc.sendPackets(new S_SkillSound(cha.getId(), 10));
 			pc.broadcastPacket(new S_SkillSound(cha.getId(), 10));
@@ -455,7 +453,7 @@ public class L1WeaponSkill {
 
 	public static void giveArkMageDiseaseEffect(L1PcInstance pc,
 			L1Character cha) {
-		int chance = _random.nextInt(1000) + 1;
+		int chance = Random.nextInt(1000) + 1;
 		int probability = (5 - ((cha.getMr() / 10) * 5)) * 10;
 		if (probability == 0) {
 			probability = 10;
@@ -473,7 +471,7 @@ public class L1WeaponSkill {
 		if (isFreeze(cha)) { // 凍結状態orカウンターマジック中
 			return;
 		}
-		if ((_random.nextInt(100) + 1) <= 2) {
+		if ((Random.nextInt(100) + 1) <= 2) {
 			L1EffectSpawn.getInstance().spawnEffect(81182, fettersTime,
 					cha.getX(), cha.getY(), cha.getMapId());
 			if (cha instanceof L1PcInstance) {

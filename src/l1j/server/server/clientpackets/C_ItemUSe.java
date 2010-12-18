@@ -22,7 +22,7 @@ import java.lang.reflect.Constructor;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -128,8 +128,6 @@ public class C_ItemUSe extends ClientBasePacket {
 
 	private static final String C_ITEM_USE = "[C] C_ItemUSe";
 	private static Logger _log = Logger.getLogger(C_ItemUSe.class.getName());
-
-	private static Random _random = new Random();
 
 	public C_ItemUSe(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
@@ -393,7 +391,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				} else {
 					pc.getInventory().removeItem(l1iteminstance, 1);
 
-					int rnd = _random.nextInt(100) + 1;
+					int rnd = Random.nextInt(100) + 1;
 					int enchant_chance_wepon;
 					if (enchant_level >= 9) {
 						enchant_chance_wepon = (100 + 3 * Config.ENCHANT_CHANCE_WEAPON) / 6;
@@ -449,7 +447,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					return;
 				}
 
-				int rnd = _random.nextInt(100) + 1;
+				int rnd = Random.nextInt(100) + 1;
 				if (Config.ATTR_ENCHANT_CHANCE >= rnd) {
 					pc.sendPackets(new S_ServerMessage(161, l1iteminstance1
 							.getLogName(), "$245", "$247")); // \f1%0が%2%1光ります。
@@ -539,7 +537,7 @@ public class C_ItemUSe extends ClientBasePacket {
 							l1iteminstance1, itemId));
 				} else {
 					pc.getInventory().removeItem(l1iteminstance, 1);
-					int rnd = _random.nextInt(100) + 1;
+					int rnd = Random.nextInt(100) + 1;
 					int enchant_chance_armor;
 					int enchant_level_tmp;
 					if (safe_enchant == 0) { // 骨、ブラックミスリル用補正
@@ -875,12 +873,12 @@ public class C_ItemUSe extends ClientBasePacket {
 				} else if (itemId == 40066 || itemId == 41413) { // お餅、月餅
 					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
 					pc.setCurrentMp(pc.getCurrentMp()
-							+ (7 + _random.nextInt(6))); // 7~12
+							+ (7 + Random.nextInt(6))); // 7~12
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 40067 || itemId == 41414) { // よもぎ餅、福餅
 					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
 					pc.setCurrentMp(pc.getCurrentMp()
-							+ (15 + _random.nextInt(16))); // 15~30
+							+ (15 + Random.nextInt(16))); // 15~30
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 40735) { // 勇気のコイン
 					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
@@ -893,12 +891,12 @@ public class C_ItemUSe extends ClientBasePacket {
 				} else if (itemId == 41404) { // クジャクの霊薬
 					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
 					pc.setCurrentMp(pc.getCurrentMp()
-							+ (80 + _random.nextInt(21))); // 80~100
+							+ (80 + Random.nextInt(21))); // 80~100
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 41412) { // 金のチョンズ
 					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
 					pc.setCurrentMp(pc.getCurrentMp()
-							+ (5 + _random.nextInt(16))); // 5~20
+							+ (5 + Random.nextInt(16))); // 5~20
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 40032 || itemId == 40041
 						|| itemId == 41344) { // エヴァの祝福、マーメイドの鱗、水の精粋
@@ -1011,7 +1009,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				} else if (itemId == 41036) { // 糊
 					int diaryId = l1iteminstance1.getItem().getItemId();
 					if (diaryId >= 41038 && 41047 >= diaryId) {
-						if ((_random.nextInt(99) + 1) <= Config.CREATE_CHANCE_DIARY) {
+						if ((Random.nextInt(99) + 1) <= Config.CREATE_CHANCE_DIARY) {
 							createNewItem(pc, diaryId + 10, 1);
 						} else {
 							pc.sendPackets(new S_ServerMessage(158,
@@ -1045,7 +1043,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				} else if (itemId == 40925) { // 浄化のポーション
 					int earingId = l1iteminstance1.getItem().getItemId();
 					if (earingId >= 40987 && 40989 >= earingId) { // 呪われたブラックイアリング
-						if (_random.nextInt(100) < Config.CREATE_CHANCE_RECOLLECTION) {
+						if (Random.nextInt(100) < Config.CREATE_CHANCE_RECOLLECTION) {
 							createNewItem(pc, earingId + 186, 1);
 						} else {
 							pc.sendPackets(new S_ServerMessage(158,
@@ -1078,7 +1076,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 						if (earing2Id >= (itemId + potion1)
 								&& (itemId + potion2) >= earing2Id) {
-							if ((_random.nextInt(99) + 1) < Config.CREATE_CHANCE_MYSTERIOUS) {
+							if ((Random.nextInt(99) + 1) < Config.CREATE_CHANCE_MYSTERIOUS) {
 								createNewItem(pc, (earing2Id - 12), 1);
 								pc.getInventory()
 										.removeItem(l1iteminstance1, 1);
@@ -1102,7 +1100,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					if (earing3Id >= 41161 && 41172 >= earing3Id) {
 						// ミステリアスイアリング類
 						if (earing3Id == (itemId + 230)) {
-							if ((_random.nextInt(99) + 1) < Config.CREATE_CHANCE_PROCESSING) {
+							if ((Random.nextInt(99) + 1) < Config.CREATE_CHANCE_PROCESSING) {
 								if (earing3Id == 41161) {
 									earinglevel = 21014;
 								} else if (earing3Id == 41162) {
@@ -1168,7 +1166,7 @@ public class C_ItemUSe extends ClientBasePacket {
 							gmam = 448;
 						}
 						if (ringId == (itemId + 242)) {
-							if ((_random.nextInt(99) + 1) < Config.CREATE_CHANCE_PROCESSING_DIAMOND) {
+							if ((Random.nextInt(99) + 1) < Config.CREATE_CHANCE_PROCESSING_DIAMOND) {
 								if (ringId == 41185) {
 									ringlevel = 20435;
 								} else if (ringId == 41186) {
@@ -1222,7 +1220,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				} else if (itemId == 41029) { // 召喚球の欠片
 					int dantesId = l1iteminstance1.getItem().getItemId();
 					if (dantesId >= 41030 && 41034 >= dantesId) { // 召喚球のコア・各段階
-						if ((_random.nextInt(99) + 1) < Config.CREATE_CHANCE_DANTES) {
+						if ((Random.nextInt(99) + 1) < Config.CREATE_CHANCE_DANTES) {
 							createNewItem(pc, dantesId + 1, 1);
 						} else {
 							pc.sendPackets(new S_ServerMessage(158,
@@ -1236,7 +1234,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				} else if (itemId == 40964) { // ダークマジックパウダー
 					int historybookId = l1iteminstance1.getItem().getItemId();
 					if (historybookId >= 41011 && 41018 >= historybookId) {
-						if ((_random.nextInt(99) + 1) <= Config.CREATE_CHANCE_HISTORY_BOOK) {
+						if ((Random.nextInt(99) + 1) <= Config.CREATE_CHANCE_HISTORY_BOOK) {
 							createNewItem(pc, historybookId + 8, 1);
 						} else {
 							pc.sendPackets(new S_ServerMessage(158,
@@ -1423,7 +1421,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				} else if (itemId == 40325) { // 2面コイン
 					if (pc.getInventory().checkItem(40318, 1)) {
-						int gfxid = 3237 + _random.nextInt(2);
+						int gfxid = 3237 + Random.nextInt(2);
 						pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 						pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 						pc.getInventory().consumeItem(40318, 1);
@@ -1432,7 +1430,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				} else if (itemId == 40326) { // 3方向ルーレット
 					if (pc.getInventory().checkItem(40318, 1)) {
-						int gfxid = 3229 + _random.nextInt(3);
+						int gfxid = 3229 + Random.nextInt(3);
 						pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 						pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 						pc.getInventory().consumeItem(40318, 1);
@@ -1441,7 +1439,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				} else if (itemId == 40327) { // 4方向ルーレット
 					if (pc.getInventory().checkItem(40318, 1)) {
-						int gfxid = 3241 + _random.nextInt(4);
+						int gfxid = 3241 + Random.nextInt(4);
 						pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 						pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 						pc.getInventory().consumeItem(40318, 1);
@@ -1450,7 +1448,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				} else if (itemId == 40328) { // 6面ダイス
 					if (pc.getInventory().checkItem(40318, 1)) {
-						int gfxid = 3204 + _random.nextInt(6);
+						int gfxid = 3204 + Random.nextInt(6);
 						pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 						pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 						pc.getInventory().consumeItem(40318, 1);
@@ -2013,7 +2011,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						 * スパイダー、リザードマン、グール、 // スパルトイ、ライカンスロープ、ドレッド スパイダー、 //
 						 * バグベアー
 						 */
-						int rnd = _random.nextInt(mobArray.length);
+						int rnd = Random.nextInt(mobArray.length);
 						L1SpawnUtil.spawn(pc, mobArray[rnd], 0, 300000);
 						if (itemId == 40006 || itemId == 140006) {
 							l1iteminstance.setChargeCount(l1iteminstance
@@ -2167,13 +2165,13 @@ public class C_ItemUSe extends ClientBasePacket {
 					UseHeallingPotion(pc, 35, 197);
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 41301) { // シャイニングレッドフィッシュ
-					int chance = _random.nextInt(10);
+					int chance = Random.nextInt(10);
 					if (chance >= 0 && chance < 5) {
 						UseHeallingPotion(pc, 15, 189);
 					} else if (chance >= 5 && chance < 9) {
 						createNewItem(pc, 40019, 1);
 					} else if (chance >= 9) {
-						int gemChance = _random.nextInt(3);
+						int gemChance = Random.nextInt(3);
 						if (gemChance == 0) {
 							createNewItem(pc, 40045, 1);
 						} else if (gemChance == 1) {
@@ -2184,13 +2182,13 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 41302) { // シャイニンググリーンフィッシュ
-					int chance = _random.nextInt(3);
+					int chance = Random.nextInt(3);
 					if (chance >= 0 && chance < 5) {
 						UseHeallingPotion(pc, 15, 189);
 					} else if (chance >= 5 && chance < 9) {
 						createNewItem(pc, 40018, 1);
 					} else if (chance >= 9) {
-						int gemChance = _random.nextInt(3);
+						int gemChance = Random.nextInt(3);
 						if (gemChance == 0) {
 							createNewItem(pc, 40047, 1);
 						} else if (gemChance == 1) {
@@ -2201,13 +2199,13 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 41303) { // シャイニングブルーフィッシュ
-					int chance = _random.nextInt(3);
+					int chance = Random.nextInt(3);
 					if (chance >= 0 && chance < 5) {
 						UseHeallingPotion(pc, 15, 189);
 					} else if (chance >= 5 && chance < 9) {
 						createNewItem(pc, 40015, 1);
 					} else if (chance >= 9) {
-						int gemChance = _random.nextInt(3);
+						int gemChance = Random.nextInt(3);
 						if (gemChance == 0) {
 							createNewItem(pc, 40046, 1);
 						} else if (gemChance == 1) {
@@ -2218,13 +2216,13 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 41304) { // シャイニングホワイトフィッシュ
-					int chance = _random.nextInt(3);
+					int chance = Random.nextInt(3);
 					if (chance >= 0 && chance < 5) {
 						UseHeallingPotion(pc, 15, 189);
 					} else if (chance >= 5 && chance < 9) {
 						createNewItem(pc, 40021, 1);
 					} else if (chance >= 9) {
-						int gemChance = _random.nextInt(3);
+						int gemChance = Random.nextInt(3);
 						if (gemChance == 0) {
 							createNewItem(pc, 40044, 1);
 						} else if (gemChance == 1) {
@@ -3101,32 +3099,32 @@ public class C_ItemUSe extends ClientBasePacket {
 			} else {
 				switch (i) {
 				case -1:
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$246";
 					sb = "$247";
 					break;
 
 				case 1: // '\001'
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$245";
 					sb = "$247";
 					break;
 
 				case 2: // '\002'
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$245";
 					sb = "$248";
 					break;
 
 				case 3: // '\003'
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$245";
 					sb = "$248";
@@ -3163,32 +3161,32 @@ public class C_ItemUSe extends ClientBasePacket {
 			} else {
 				switch (i) {
 				case -1:
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$246";
 					sb = "$247";
 					break;
 
 				case 1: // '\001'
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$252";
 					sb = "$247 ";
 					break;
 
 				case 2: // '\002'
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$252";
 					sb = "$248 ";
 					break;
 
 				case 3: // '\003'
-					s = (new StringBuilder()).append(
-							pm + item.getEnchantLevel()).append(" ").append(s1)
+					s = (new StringBuilder()).append(pm).append(
+							item.getEnchantLevel()).append(" ").append(s1)
 							.toString(); // \f1%0が%2%1光ります。
 					sa = "$252";
 					sb = "$248 ";
@@ -3257,7 +3255,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				if (item.getEnchantLevel() > 0) {
 					pm = "+";
 				}
-				s = (new StringBuilder()).append(pm + item.getEnchantLevel())
+				s = (new StringBuilder()).append(pm).append(item.getEnchantLevel())
 						.append(" ").append(nameId).toString(); // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
 				sa = "$245";
 			}
@@ -3269,7 +3267,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				if (item.getEnchantLevel() > 0) {
 					pm = "+";
 				}
-				s = (new StringBuilder()).append(pm + item.getEnchantLevel())
+				s = (new StringBuilder()).append(pm).append(item.getEnchantLevel())
 						.append(" ").append(nameId).toString(); // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
 				sa = " $252";
 			}
@@ -3385,7 +3383,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 		pc.sendPackets(new S_ServerMessage(77)); // \f1気分が良くなりました。
-		healHp *= (_random.nextGaussian() / 5.0D) + 1.0D;
+		healHp *= ((new java.util.Random()).nextGaussian() / 5.0D) + 1.0D;
 		if (pc.hasSkillEffect(POLLUTE_WATER)) { // ポルートウォーター中は回復量1/2倍
 			healHp /= 2;
 		}
@@ -4101,7 +4099,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				|| itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON
 				|| itemId == 140129 || itemId == 140130) {
 			if (item.getEnchantLevel() <= 2) {
-				int j = _random.nextInt(100) + 1;
+				int j = Random.nextInt(100) + 1;
 				if (j < 32) {
 					return 1;
 				} else if (j >= 33 && j <= 76) {
@@ -4111,7 +4109,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 			} else if (item.getEnchantLevel() >= 3
 					&& item.getEnchantLevel() <= 5) {
-				int j = _random.nextInt(100) + 1;
+				int j = Random.nextInt(100) + 1;
 				if (j < 50) {
 					return 2;
 				} else {
@@ -5455,7 +5453,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		}
 
 		// XXX 適当なダメージ計算、要修正
-		int dmg = (_random.nextInt(11) - 5) + user.getStr();
+		int dmg = (Random.nextInt(11) - 5) + user.getStr();
 		dmg = Math.max(1, dmg);
 
 		if (target instanceof L1PcInstance) {
@@ -5498,7 +5496,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		if (attacker.getId() != cha.getId() && !isSameClan) { // 自分以外と違うクラン
 			int probability = 3 * (attacker.getLevel() - cha.getLevel()) + 100
 					- cha.getMr();
-			int rnd = _random.nextInt(100) + 1;
+			int rnd = Random.nextInt(100) + 1;
 			if (rnd > probability) {
 				return;
 			}
@@ -5509,7 +5507,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				3866, 3867, 3868, 3869, 3870, 3871, 3872, 3873, 3874, 3875,
 				3876 };
 
-		int pid = _random.nextInt(polyArray.length);
+		int pid = Random.nextInt(polyArray.length);
 		int polyId = polyArray[pid];
 
 		if (cha instanceof L1PcInstance) {
@@ -5842,7 +5840,7 @@ public class C_ItemUSe extends ClientBasePacket {
 							ActionCodes.ACTION_Fishing, fishX, fishY));
 					pc.setFishing(true);
 					long time = System.currentTimeMillis() + 10000
-							+ _random.nextInt(5) * 1000;
+							+ Random.nextInt(5) * 1000;
 					pc.setFishingTime(time);
 					FishingTimeController.getInstance().addMember(pc);
 				} else {
@@ -5882,7 +5880,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			return;
 		}
 
-		int rnd = _random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 		if (rnd >= 1 && rnd <= 50) {
 			crystalCount = 0;
 			pc.sendPackets(new S_ServerMessage(158, item.getName())); // \f1%0が蒸発してなくなりました。
@@ -5990,7 +5988,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		}
 		pc.setSkillEffect(COOKING_NOW, 3 * 1000);
 
-		int chance = _random.nextInt(100) + 1;
+		int chance = Random.nextInt(100) + 1;
 		if (cookNo == 0) { // フローティングアイステーキ
 			if (pc.getInventory().checkItem(40057, 1)) {
 				pc.getInventory().consumeItem(40057, 1);

@@ -24,7 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.IdFactory;
@@ -194,8 +194,7 @@ public class L1Inventory extends L1Object {
 		int chargeCount = item.getItem().getMaxChargeCount();
 		if (itemId == 40006 || itemId == 40007 || itemId == 40008
 				|| itemId == 140006 || itemId == 140008 || itemId == 41401) {
-			Random random = new Random();
-			chargeCount -= random.nextInt(5);
+			chargeCount -= Random.nextInt(5);
 		}
 		if (itemId == 20383) {
 			chargeCount = 50;

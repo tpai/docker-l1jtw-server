@@ -22,7 +22,7 @@ package l1j.server.server.model.skill;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -323,7 +323,7 @@ public class L1SkillUse {
 			checkedResult = false;
 		}
 		makeTargetList(); // ターゲットの一覧を作成
-		if (_targetList.size() == 0 && (_user instanceof L1NpcInstance)) {
+		if (_targetList.isEmpty() && (_user instanceof L1NpcInstance)) {
 			checkedResult = false;
 		}
 		// 事前チェックここまで
@@ -933,7 +933,7 @@ public class L1SkillUse {
 			}
 
 		} catch (Exception e) {
-			_log.finest("exception in L1Skilluse makeTargetList" + e);
+			_log.log(Level.FINEST, "exception in L1Skilluse makeTargetList{0}", e);
 		}
 	}
 
@@ -951,7 +951,7 @@ public class L1SkillUse {
 		// ※攻撃スキルは障害物があっても成功時と同じアクションであるべき。
 		if (_skill.getType() != L1Skills.TYPE_ATTACK
 				&& !_skill.getTarget().equals("none")
-				&& _targetList.size() == 0) {
+				&& _targetList.isEmpty()) {
 			sendFailMessage();
 		}
 	}
@@ -1324,7 +1324,7 @@ public class L1SkillUse {
 			int targetid = _target.getId();
 
 			if (_skillId == SHOCK_STUN) {
-				if (_targetList.size() == 0) { // 失敗
+				if (_targetList.isEmpty()) { // 失敗
 					return;
 				} else {
 					if (_target instanceof L1PcInstance) {
@@ -1344,7 +1344,7 @@ public class L1SkillUse {
 				pc.sendPackets(new S_Sound(145));
 			}
 
-			if (_targetList.size() == 0 && !(_skill.getTarget().equals("none"))) {
+			if (_targetList.isEmpty() && !(_skill.getTarget().equals("none"))) {
 				// ターゲット数が０で対象を指定するスキルの場合、魔法使用エフェクトだけ表示して終了
 				int tempchargfx = _player.getTempCharGfx();
 				if (tempchargfx == 5727 || tempchargfx == 5730) { // シャドウ系変身のモーション対応
@@ -1461,7 +1461,7 @@ public class L1SkillUse {
 				return;
 			}
 
-			if (_targetList.size() == 0 && !(_skill.getTarget()
+			if (_targetList.isEmpty() && !(_skill.getTarget()
 					.equals("none"))) {
 				// ターゲット数が０で対象を指定するスキルの場合、魔法使用エフェクトだけ表示して終了
 				S_DoActionGFX gfx = new S_DoActionGFX(_user.getId(), _skill
@@ -2144,8 +2144,7 @@ public class L1SkillUse {
 					}
 				} else if (_skillId == SHOCK_STUN) {
 					int[] stunTimeArray = { 500, 1000, 1500, 2000, 2500, 3000 };
-					Random random = new Random();
-					int rnd = random.nextInt(stunTimeArray.length);
+					int rnd = Random.nextInt(stunTimeArray.length);
 					_shockStunDuration = stunTimeArray[rnd];
 					if (cha instanceof L1PcInstance
 							&& cha.hasSkillEffect(SHOCK_STUN)) {
@@ -2302,8 +2301,8 @@ public class L1SkillUse {
 					// ダメージを対象のHPとする。
 					dmg = cha.getCurrentHp();
 				} else if (_skillId == MANA_DRAIN) { // マナ ドレイン
-					Random random = new Random();
-					int chance = random.nextInt(10) + 5;
+					
+					int chance = Random.nextInt(10) + 5;
 					drainMana = chance + (_user.getInt() / 2);
 					if (cha.getCurrentMp() < drainMana) {
 						drainMana = cha.getCurrentMp();
@@ -2318,8 +2317,8 @@ public class L1SkillUse {
 							L1PcInstance pc = (L1PcInstance) cha;
 							L1ItemInstance weapon = pc.getWeapon();
 							if (weapon != null) {
-								Random random = new Random();
-								int weaponDamage = random.nextInt(_user
+								
+								int weaponDamage = Random.nextInt(_user
 										.getInt() / 3) + 1;
 								// \f1あなたの%0が損傷しました。
 								pc.sendPackets(new S_ServerMessage(268, weapon
@@ -2512,7 +2511,7 @@ public class L1SkillUse {
 						}
 					} else if (_skillId == BRING_STONE) { // ブリング ストーン
 						L1PcInstance pc = (L1PcInstance) cha;
-						Random random = new Random();
+						
 						L1ItemInstance item = pc.getInventory().getItem(
 								_itemobjid);
 						if (item != null) {
@@ -2521,7 +2520,7 @@ public class L1SkillUse {
 							int brave = (int) (dark / 2.1);
 							int wise = (int) (brave / 2.0);
 							int kayser = (int) (wise / 1.9);
-							int chance = random.nextInt(100) + 1;
+							int chance = Random.nextInt(100) + 1;
 							if (item.getItem().getItemId() == 40320) {
 								pc.getInventory().removeItem(item, 1);
 								if (dark >= chance) {
@@ -2654,8 +2653,8 @@ public class L1SkillUse {
 									}
 									// 特殊設定の場合ランダムで出現
 									if (summonid == 0) {
-										Random random = new Random();
-										int k3 = random.nextInt(4);
+										
+										int k3 = Random.nextInt(4);
 										summonid = summons[k3];
 									}
 

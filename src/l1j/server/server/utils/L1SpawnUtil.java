@@ -44,10 +44,8 @@ public class L1SpawnUtil {
 				int tryCount = 0;
 				do {
 					tryCount++;
-					npc.setX(pc.getX() + (int) (Math.random() * randomRange)
-							- (int) (Math.random() * randomRange));
-					npc.setY(pc.getY() + (int) (Math.random() * randomRange)
-							- (int) (Math.random() * randomRange));
+					npc.setX(pc.getX() + Random.nextInt(randomRange) - Random.nextInt(randomRange));
+					npc.setY(pc.getY() + Random.nextInt(randomRange) - Random.nextInt(randomRange));
 					if (npc.getMap().isInMap(npc.getLocation())
 							&& npc.getMap().isPassable(npc.getLocation())) {
 						break;

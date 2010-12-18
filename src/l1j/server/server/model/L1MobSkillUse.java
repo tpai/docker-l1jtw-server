@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -56,8 +56,6 @@ public class L1MobSkillUse {
 	private L1NpcInstance _attacker = null;
 
 	private L1Character _target = null;
-
-	private Random _rnd = new Random();
 
 	private int _sleepTime = 0;
 
@@ -186,7 +184,7 @@ public class L1MobSkillUse {
 		}
 
 		if (skillSizeCounter != 0) {
-			int num = _rnd.nextInt(skillSizeCounter);
+			int num = Random.nextInt(skillSizeCounter);
 			if (useSkill(skills[num])) { // スキル使用
 				return true;
 			}
@@ -232,7 +230,7 @@ public class L1MobSkillUse {
 			return false;
 		}
 
-		count = _rnd.nextInt(max) + min;
+		count = Random.nextInt(max) + min;
 		mobspawn(summonId, count);
 
 		// 魔方陣の表示
@@ -410,7 +408,7 @@ public class L1MobSkillUse {
 			targetList.put(_target.getId(), 0); // ターゲットのみ追加
 		}
 
-		if (targetList.size() == 0) {
+		if (targetList.isEmpty()) {
 			return false;
 		}
 
@@ -453,7 +451,7 @@ public class L1MobSkillUse {
 		if (isTriRnd || type == L1MobSkill.TYPE_SUMMON
 				|| type == L1MobSkill.TYPE_POLY) {
 			if (getMobSkillTemplate().getTriggerRandom(skillIdx) > 0) {
-				int chance = _rnd.nextInt(100) + 1;
+				int chance = Random.nextInt(100) + 1;
 				if (chance < getMobSkillTemplate().getTriggerRandom(skillIdx)) {
 					useble = true;
 				} else {
@@ -561,7 +559,7 @@ public class L1MobSkillUse {
 					mob.setId(IdFactory.getInstance().nextId());
 					L1Location loc = _attacker.getLocation().randomLocation(8,
 							false);
-					int heading = _rnd.nextInt(8);
+					int heading = Random.nextInt(8);
 					mob.setX(loc.getX());
 					mob.setY(loc.getY());
 					mob.setHomeX(loc.getX());
@@ -648,11 +646,11 @@ public class L1MobSkillUse {
 				}
 			}
 
-			if (targetList.size() == 0) {
+			if (targetList.isEmpty()) {
 				target = _target;
 			} else {
 				int randomSize = targetList.size() * 100;
-				int targetIndex = _rnd.nextInt(randomSize) / 100;
+				int targetIndex = Random.nextInt(randomSize) / 100;
 				target = targetList.get(targetIndex);
 			}
 			break;

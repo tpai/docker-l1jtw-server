@@ -18,7 +18,7 @@
  */
 package l1j.server.server.model;
 
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
@@ -60,8 +60,6 @@ public class L1Magic {
 	private L1NpcInstance _targetNpc = null;
 
 	private int _leverage = 10; // 1/10倍で表現する。
-
-	private static Random _random = new Random();
 
 	public void setLeverage(int i) {
 		_leverage = i;
@@ -264,8 +262,7 @@ public class L1Magic {
 
 		probability = calcProbability(skillId);
 
-		Random random = new Random();
-		int rnd = random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 		if (probability > 90) {
 			probability = 90; // 最高成功率を90%とする。
 		}
@@ -408,7 +405,6 @@ public class L1Magic {
 			}
 		} else if (skillId == GUARD_BRAKE || skillId == RESIST_FEAR
 				|| skillId ==HORROR_OF_DEATH) {
-			Random random = new Random();
 			int dice = l1skills.getProbabilityDice();
 			int value = l1skills.getProbabilityValue();
 			int diceCount = 0;
@@ -419,7 +415,7 @@ public class L1Magic {
 			}
 
 			for (int i = 0; i < diceCount; i++) {
-				probability += (random.nextInt(dice) + 1 + value);
+				probability += (Random.nextInt(dice) + 1 + value);
 			}
 
 			probability = probability * getLeverage() / 10;
@@ -435,7 +431,6 @@ public class L1Magic {
 				probability = 0;
 			}
 		} else {
-			Random random = new Random();
 			int dice = l1skills.getProbabilityDice();
 			int diceCount = 0;
 			if (_calcType == PC_PC || _calcType == PC_NPC) {
@@ -454,7 +449,7 @@ public class L1Magic {
 			}
 
 			for (int i = 0; i < diceCount; i++) {
-				probability += (random.nextInt(dice) + 1);
+				probability += (Random.nextInt(dice) + 1);
 			}
 			probability = probability * getLeverage() / 10;
 
@@ -691,7 +686,7 @@ public class L1Magic {
 
 		if (_targetPc.hasSkillEffect(COUNTER_MIRROR)) {
 			if (_calcType == PC_PC) {
-				if (_targetPc.getWis() >= _random.nextInt(100)) {
+				if (_targetPc.getWis() >= Random.nextInt(100)) {
 					_pc.sendPackets(new S_DoActionGFX(_pc.getId(),
 							ActionCodes.ACTION_Damage));
 					_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(),
@@ -710,7 +705,7 @@ public class L1Magic {
 						|| npcId == 45684) {
 				} else if (!_npc.getNpcTemplate().get_IsErase()) {
 				} else {
-					if (_targetPc.getWis() >= _random.nextInt(100)) {
+					if (_targetPc.getWis() >= Random.nextInt(100)) {
 						_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(),
 								ActionCodes.ACTION_Damage));
 						_targetPc.sendPackets(new S_SkillSound(_targetPc
@@ -841,10 +836,9 @@ public class L1Magic {
 		int value = l1skills.getDamageValue();
 		int magicDamage = 0;
 		int charaIntelligence = 0;
-		Random random = new Random();
 
 		for (int i = 0; i < diceCount; i++) {
-			magicDamage += (random.nextInt(dice) + 1);
+			magicDamage += (Random.nextInt(dice) + 1);
 		}
 		magicDamage += value;
 
@@ -878,7 +872,7 @@ public class L1Magic {
 		magicDamage *= coefficient;
 
 		double criticalCoefficient = 1.5; // 魔法クリティカル
-		int rnd = random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 		if (_calcType == PC_PC || _calcType == PC_NPC) {
 			if (l1skills.getSkillLevel() <= 6) {
 				if (rnd <= (10 + _pc.getOriginalMagicCritical())) {
@@ -911,10 +905,9 @@ public class L1Magic {
 			magicBonus = 10;
 		}
 
-		Random random = new Random();
 		int diceCount = value + magicBonus;
 		for (int i = 0; i < diceCount; i++) {
-			magicDamage += (random.nextInt(dice) + 1);
+			magicDamage += (Random.nextInt(dice) + 1);
 		}
 
 		double alignmentRevision = 1.0;
@@ -948,8 +941,7 @@ public class L1Magic {
 			}
 			dmg *= mrCoefficient;
 		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
-			Random random = new Random();
-			int rnd = random.nextInt(100) + 1;
+			int rnd = Random.nextInt(100) + 1;
 			if (mr >= rnd) {
 				dmg /= 2;
 			}

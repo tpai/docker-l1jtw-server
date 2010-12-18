@@ -16,7 +16,7 @@
  */
 package l1j.server.server.model;
 
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,8 +38,6 @@ public class L1MobGroupSpawn {
 			.getName());
 
 	private static L1MobGroupSpawn _instance;
-
-	private static Random _random = new Random();
 
 	private boolean _isRespawnScreen;
 
@@ -97,8 +95,8 @@ public class L1MobGroupSpawn {
 			mob.setMovementDistance(leader.getMovementDistance());
 			mob.setRest(leader.isRest());
 
-			mob.setX(leader.getX() + _random.nextInt(5) - 2);
-			mob.setY(leader.getY() + _random.nextInt(5) - 2);
+			mob.setX(leader.getX() + Random.nextInt(5) - 2);
+			mob.setY(leader.getY() + Random.nextInt(5) - 2);
 			// マップ外、障害物上、画面内沸き不可で画面内にPCがいる場合、リーダーと同じ座標
 			if (!canSpawn(mob)) {
 				mob.setX(leader.getX());
@@ -143,7 +141,7 @@ public class L1MobGroupSpawn {
 			if (_isRespawnScreen) {
 				return true;
 			}
-			if (L1World.getInstance().getVisiblePlayer(mob).size() == 0) {
+			if (L1World.getInstance().getVisiblePlayer(mob).isEmpty()) {
 				return true;
 			}
 		}

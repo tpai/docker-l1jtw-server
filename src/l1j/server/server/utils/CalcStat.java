@@ -19,13 +19,9 @@
 
 package l1j.server.server.utils;
 
-import java.util.Random;
-
 import l1j.server.Config;
 
 public class CalcStat {
-
-	private static Random rnd = new Random();
 
 	private CalcStat() {
 
@@ -108,43 +104,43 @@ public class CalcStat {
 			randomhp = (short) (baseCon - 15);
 		}
 		if (charType == 0) { // プリンス
-			randomhp += (short) (11 + rnd.nextInt(2)); // 初期値分追加
+			randomhp += (short) (11 + Random.nextInt(2)); // 初期値分追加
 
 			if (baseMaxHp + randomhp > Config.PRINCE_MAX_HP) {
 				randomhp = (short) (Config.PRINCE_MAX_HP - baseMaxHp);
 			}
 		} else if (charType == 1) { // ナイト
-			randomhp += (short) (17 + rnd.nextInt(2)); // 初期値分追加
+			randomhp += (short) (17 + Random.nextInt(2)); // 初期値分追加
 
 			if (baseMaxHp + randomhp > Config.KNIGHT_MAX_HP) {
 				randomhp = (short) (Config.KNIGHT_MAX_HP - baseMaxHp);
 			}
 		} else if (charType == 2) { // エルフ
-			randomhp += (short) (10 + rnd.nextInt(2)); // 初期値分追加
+			randomhp += (short) (10 + Random.nextInt(2)); // 初期値分追加
 
 			if (baseMaxHp + randomhp > Config.ELF_MAX_HP) {
 				randomhp = (short) (Config.ELF_MAX_HP - baseMaxHp);
 			}
 		} else if (charType == 3) { // ウィザード
-			randomhp += (short) (7 + rnd.nextInt(2)); // 初期値分追加
+			randomhp += (short) (7 + Random.nextInt(2)); // 初期値分追加
 
 			if (baseMaxHp + randomhp > Config.WIZARD_MAX_HP) {
 				randomhp = (short) (Config.WIZARD_MAX_HP - baseMaxHp);
 			}
 		} else if (charType == 4) { // ダークエルフ
-			randomhp += (short) (10 + rnd.nextInt(2)); // 初期値分追加
+			randomhp += (short) (10 + Random.nextInt(2)); // 初期値分追加
 
 			if (baseMaxHp + randomhp > Config.DARKELF_MAX_HP) {
 				randomhp = (short) (Config.DARKELF_MAX_HP - baseMaxHp);
 			}
 		} else if (charType == 5) { // ドラゴンナイト
-			randomhp += (short) (13 + rnd.nextInt(2)); // 初期値分追加
+			randomhp += (short) (13 + Random.nextInt(2)); // 初期値分追加
 
 			if (baseMaxHp + randomhp > Config.DRAGONKNIGHT_MAX_HP) {
 				randomhp = (short) (Config.DRAGONKNIGHT_MAX_HP - baseMaxHp);
 			}
 		} else if (charType == 6) { // イリュージョニスト
-			randomhp += (short) (9 + rnd.nextInt(2)); // 初期値分追加
+			randomhp += (short) (9 + Random.nextInt(2)); // 初期値分追加
 
 			if (baseMaxHp + randomhp > Config.ILLUSIONIST_MAX_HP) {
 				randomhp = (short) (Config.ILLUSIONIST_MAX_HP - baseMaxHp);
@@ -203,7 +199,7 @@ public class CalcStat {
 			seedZ = 6;
 		}
 
-		randommp = rnd.nextInt(seedY) + 1 + seedZ;
+		randommp = Random.nextInt(seedY) + 1 + seedZ;
 
 		if (charType == 0) { // プリンス
 			if (baseMaxMp + randommp > Config.PRINCE_MAX_MP) {

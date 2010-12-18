@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -91,7 +91,6 @@ public class L1BossCycle {
 		}
 	}
 
-	private static final Random _rnd = new Random();
 	private Calendar _baseDate;
 	private int _period; // 分換算
 	private int _periodDay;
@@ -244,7 +243,7 @@ public class L1BossCycle {
 		base.add(Calendar.MINUTE, _startTime);
 		// 出現時間の決定 start～end迄の間でランダムの秒
 		int diff = (_endTime - _startTime) * 60;
-		int random = diff > 0 ? _rnd.nextInt(diff) : 0;
+		int random = diff > 0 ? Random.nextInt(diff) : 0;
 		base.add(Calendar.SECOND, random);
 		return base;
 	}

@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TimeZone;
@@ -326,9 +326,8 @@ public class L1UltimateBattle {
 
 				for (L1PcInstance pc : getMembersArray()) // コロシアム内に居るPCを外へ出す
 				{
-					Random random = new Random();
-					int rndx = random.nextInt(4);
-					int rndy = random.nextInt(4);
+					int rndx = Random.nextInt(4);
+					int rndy = Random.nextInt(4);
 					int locx = 33503 + rndx;
 					int locy = 32764 + rndy;
 					short mapid = 4;
@@ -352,8 +351,8 @@ public class L1UltimateBattle {
 	 */
 	public void start() {
 		int patternsMax = UBSpawnTable.getInstance().getMaxPattern(_ubId);
-		Random random = new Random();
-		_pattern = random.nextInt(patternsMax) + 1; // 出現パターンを決める
+		Random Random = new Random();
+		_pattern = Random.nextInt(patternsMax) + 1; // 出現パターンを決める
 
 		UbThread ub = new UbThread();
 		GeneralThreadPool.getInstance().execute(ub);
@@ -642,8 +641,7 @@ public class L1UltimateBattle {
 	 * @return 参加出来る場合はtrue,出来ない場合はfalse
 	 */
 	public boolean canPcEnter(L1PcInstance pc) {
-		_log.log(Level.FINE, "pcname=" + pc.getName() + " ubid=" + _ubId
-				+ " minlvl=" + _minLevel + " maxlvl=" + _maxLevel);
+		_log.log(Level.FINE, "pcname={0} ubid={1} minlvl={2} maxlvl={3}", new Object[]{pc.getName(), _ubId, _minLevel, _maxLevel});
 		// 参加可能なレベルか
 		if (!IntRange.includes(pc.getLevel(), _minLevel, _maxLevel)) {
 			return false;

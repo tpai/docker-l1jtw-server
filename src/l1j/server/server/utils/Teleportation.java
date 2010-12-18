@@ -21,7 +21,6 @@ package l1j.server.server.utils;
 
 import java.util.HashSet;
 import java.util.logging.Logger;
-import java.util.Random;
 
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1Location;
@@ -33,7 +32,6 @@ import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_DollPack;
 import l1j.server.server.serverpackets.S_SkillIconWindShackle;
@@ -48,11 +46,8 @@ import static l1j.server.server.model.skill.L1SkillId.*;
 // FaceToFace
 
 public class Teleportation {
-
 	private static Logger _log = Logger
 			.getLogger(Teleportation.class.getName());
-
-	private static Random _random = new Random();
 
 	private Teleportation() {
 	}
@@ -131,8 +126,8 @@ public class Teleportation {
 					if (pc.getMapId() == 5125 || pc.getMapId() == 5131
 							|| pc.getMapId() == 5132 || pc.getMapId() == 5133
 							|| pc.getMapId() == 5134) { // ペットマッチ会場
-						nx = 32799 + _random.nextInt(5) - 3;
-						ny = 32864 + _random.nextInt(5) - 3;
+						nx = 32799 + Random.nextInt(5) - 3;
+						ny = 32864 + Random.nextInt(5) - 3;
 					}
 					teleport(petNpc, nx, ny, mapId, head);
 					if (petNpc instanceof L1SummonInstance) { // サモンモンスター

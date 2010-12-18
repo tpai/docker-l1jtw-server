@@ -21,7 +21,7 @@ package l1j.server.server.model;
 import java.util.logging.Logger;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.model.L1Character;
@@ -479,8 +479,7 @@ public class L1CastleLocation {
 			loc = L1TownLocation.getGetBackLoc(L1TownLocation.TOWNID_ADEN);
 		} else if (castle_id == DIAD_CASTLE_ID) { // ディアド要塞
 			// ディアド要塞の帰還先は未調査
-			Random random = new Random();
-			int rnd = random.nextInt(3);
+			int rnd = Random.nextInt(3);
 			loc = new int[3];
 			if (rnd == 0) {
 				loc[0] = 32792;

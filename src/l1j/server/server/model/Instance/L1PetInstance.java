@@ -22,7 +22,7 @@ package l1j.server.server.model.Instance;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.server.ActionCodes;
 import l1j.server.server.IdFactory;
@@ -33,7 +33,6 @@ import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_HPMeter;
 import l1j.server.server.serverpackets.S_NpcChatPacket;
@@ -48,7 +47,6 @@ import static l1j.server.server.model.skill.L1SkillId.*;
 public class L1PetInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
-	private static Random _random = new Random();
 
 	// ターゲットがいない場合の処理
 	@Override
@@ -89,8 +87,8 @@ public class L1PetInstance extends L1NpcInstance {
 				_currentPetStatus = 3;
 				return true;
 			}
-			int locx = _petMaster.getX() + _random.nextInt(1);
-			int locy = _petMaster.getY() + _random.nextInt(1);
+			int locx = _petMaster.getX() + Random.nextInt(1);
+			int locy = _petMaster.getY() + Random.nextInt(1);
 			int dir = moveDirection(locx, locy);
 			if (dir == -1) { // 主人を見失うかはなれたらその場で休憩状態に
 				_currentPetStatus = 3;
@@ -140,8 +138,8 @@ public class L1PetInstance extends L1NpcInstance {
 		setTempLawful(l1pet.get_lawful());
 
 		setMaster(master);
-		setX(master.getX() + _random.nextInt(5) - 2);
-		setY(master.getY() + _random.nextInt(5) - 2);
+		setX(master.getX() + Random.nextInt(5) - 2);
+		setY(master.getY() + Random.nextInt(5) - 2);
 		setMap(master.getMapId());
 		setHeading(5);
 		setLightSize(template.getLightSize());

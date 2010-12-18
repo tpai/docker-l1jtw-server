@@ -19,7 +19,7 @@
 
 package l1j.server.server.model.Instance;
 
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Logger;
 
 import l1j.server.server.GeneralThreadPool;
@@ -96,8 +96,7 @@ public class L1TeleporterInstance extends L1NpcInstance {
 				if (player.isElf()) { // エルフ
 					if (quest.get_step(L1Quest.QUEST_LEVEL30) == 1) {
 						if (!player.getInventory().checkItem(40592)) { // 呪われた精霊書
-							Random random = new Random();
-							if (random.nextInt(100) < 50) { // 50%でダークマールダンジョン
+							if (Random.nextInt(100) < 50) { // 50%でダークマールダンジョン
 								htmlid = "fairyp2";
 							} else { // ダークエルフダンジョン
 								htmlid = "fairyp1";

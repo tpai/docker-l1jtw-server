@@ -20,7 +20,7 @@
 package l1j.server.server.clientpackets;
 
 import java.util.logging.Logger;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.datatables.PetTypeTable;
@@ -44,8 +44,6 @@ import l1j.server.server.templates.L1PetType;
 public class C_GiveItem extends ClientBasePacket {
 	private static Logger _log = Logger.getLogger(C_GiveItem.class.getName());
 	private static final String C_GIVE_ITEM = "[C] C_GiveItem";
-
-	private static Random _random = new Random();
 
 	public C_GiveItem(byte decrypt[], ClientThread client) {
 		super(decrypt);
@@ -203,7 +201,7 @@ public class C_GiveItem extends ClientBasePacket {
 		int npcId = npc.getNpcTemplate().get_npcId();
 		if (npcId == 45313) { // タイガー
 			if (npc.getMaxHp() / 3 > npc.getCurrentHp() // HPが1/3未満で1/16の確率
-					&& _random.nextInt(16) == 15) {
+					&& Random.nextInt(16) == 15) {
 				isSuccess = true;
 			}
 		} else {

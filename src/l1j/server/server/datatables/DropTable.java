@@ -26,7 +26,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,7 +51,7 @@ import l1j.server.server.utils.SQLUtil;
 
 public class DropTable {
 
-	private static Logger _log = Logger.getLogger(DropTable.class.getName());
+	private static final Logger _log = Logger.getLogger(DropTable.class.getName());
 
 	private static DropTable _instance;
 
@@ -131,7 +131,6 @@ public class DropTable {
 		int addCount;
 		int randomChance;
 		L1ItemInstance item;
-		Random random = new Random();
 
 		for (L1Drop drop : dropList) {
 			// ドロップアイテムの取得
@@ -141,7 +140,7 @@ public class DropTable {
 			}
 
 			// ドロップチャンス判定
-			randomChance = random.nextInt(0xf4240) + 1;
+			randomChance = Random.nextInt(0xf4240) + 1;
 			double rateOfMapId = MapsTable.getInstance().getDropRate(
 					npc.getMapId());
 			double rateOfItem = DropItemTable.getInstance().getDropRate(itemId);
@@ -158,7 +157,7 @@ public class DropTable {
 			itemCount = min;
 			addCount = max - min + 1;
 			if (addCount > 1) {
-				itemCount += random.nextInt(addCount);
+				itemCount += Random.nextInt(addCount);
 			}
 			if (itemId == L1ItemId.ADENA) { // ドロップがアデナの場合はアデナレートを掛ける
 				itemCount *= adenarate;
@@ -214,7 +213,6 @@ public class DropTable {
 		L1Inventory targetInventory = null;
 		L1PcInstance player;
 		L1PcInstance[] partyMember;
-		Random random = new Random();
 		int randomInt;
 		int chanceHate;
 		int itemId;
@@ -228,7 +226,7 @@ public class DropTable {
 
 			if (((Config.AUTO_LOOT != 0) || itemId == L1ItemId.ADENA)
 					&& totalHate > 0) { // オートルーティングかアデナで取得者がいる場合
-				randomInt = random.nextInt(totalHate);
+				randomInt = Random.nextInt(totalHate);
 				chanceHate = 0;
 				for (int j = hateList.size() - 1; j >= 0; j--) {
 					chanceHate += (Integer) hateList.get(j);
@@ -303,12 +301,12 @@ public class DropTable {
 				int y = 0;
 				int dir = 0;
 				do {
-					if (dirList.size() == 0) {
+					if (dirList.isEmpty()) {
 						x = 0;
 						y = 0;
 						break;
 					}
-					randomInt = random.nextInt(dirList.size());
+					randomInt = Random.nextInt(dirList.size());
 					dir = dirList.get(randomInt);
 					dirList.remove(randomInt);
 					switch (dir) {

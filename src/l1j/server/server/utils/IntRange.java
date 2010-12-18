@@ -18,8 +18,6 @@
  */
 package l1j.server.server.utils;
 
-import java.util.Random;
-
 /**
  * <p>
  * 最低値lowと最大値highによって囲まれた、数値の範囲を指定するクラス。
@@ -30,7 +28,6 @@ import java.util.Random;
  * </p>
  */
 public class IntRange {
-	private static final Random _rnd = new Random();
 	private int _low;
 	private int _high;
 
@@ -85,7 +82,7 @@ public class IntRange {
 	 * @return 範囲内のランダムな値
 	 */
 	public int randomValue() {
-		return _rnd.nextInt(getWidth() + 1) + _low;
+		return Random.nextInt(getWidth() + 1) + _low;
 	}
 
 	public int getLow() {

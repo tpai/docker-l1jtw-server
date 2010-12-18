@@ -22,17 +22,16 @@ package l1j.server.server.model;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.server.model.Instance.L1EffectInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.types.Point;
 import static l1j.server.server.model.skill.L1SkillId.*;
 
 public class HpRegeneration extends TimerTask {
 
-	private static Logger _log = Logger.getLogger(HpRegeneration.class
+	private static final Logger _log = Logger.getLogger(HpRegeneration.class
 			.getName());
 
 	private final L1PcInstance _pc;
@@ -42,8 +41,6 @@ public class HpRegeneration extends TimerTask {
 	private int _regenPoint = 0;
 
 	private int _curPoint = 4;
-
-	private static Random _random = new Random();
 
 	public HpRegeneration(L1PcInstance pc) {
 		_pc = pc;
@@ -111,7 +108,7 @@ public class HpRegeneration extends TimerTask {
 
 		int equipHpr = _pc.getInventory().hpRegenPerTick();
 		equipHpr += _pc.getHpr();
-		int bonus = _random.nextInt(maxBonus) + 1;
+		int bonus = Random.nextInt(maxBonus) + 1;
 
 		if (_pc.hasSkillEffect(NATURES_TOUCH)) {
 			bonus += 15;

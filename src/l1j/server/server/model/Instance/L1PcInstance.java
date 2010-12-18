@@ -21,7 +21,7 @@ package l1j.server.server.model.Instance;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.Timer;
 import java.util.concurrent.ScheduledFuture;
 import java.util.logging.Level;
@@ -31,7 +31,6 @@ import java.sql.Timestamp;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.ClientThread;
-import l1j.server.server.GMCommands;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.PacketOutput;
 import l1j.server.server.WarTimeController;
@@ -73,7 +72,6 @@ import l1j.server.server.model.monitor.L1PcExpMonitor;
 import l1j.server.server.model.monitor.L1PcGhostMonitor;
 import l1j.server.server.model.monitor.L1PcHellMonitor;
 import l1j.server.server.model.monitor.L1PcInvisDelay;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_BlueMessage;
 import l1j.server.server.serverpackets.S_Exp;
@@ -84,7 +82,6 @@ import l1j.server.server.serverpackets.S_Disconnect;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_DoActionShop;
-import l1j.server.server.serverpackets.S_Emblem;
 import l1j.server.server.serverpackets.S_HPMeter;
 import l1j.server.server.serverpackets.S_HPUpdate;
 import l1j.server.server.serverpackets.S_Invis;
@@ -104,7 +101,6 @@ import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1PrivateShopBuyList;
 import l1j.server.server.templates.L1PrivateShopSellList;
 import l1j.server.server.utils.CalcStat;
-import l1j.server.server.utils.IntRange;
 import static l1j.server.server.model.skill.L1SkillId.*;
 
 // Referenced classes of package l1j.server.server.model:
@@ -129,8 +125,6 @@ public class L1PcInstance extends L1Character {
 	public static final int CLASSID_DRAGON_KNIGHT_FEMALE = 6661;
 	public static final int CLASSID_ILLUSIONIST_MALE = 6671;
 	public static final int CLASSID_ILLUSIONIST_FEMALE = 6650;
-
-	private static Random _random = new Random();
 
 	private short _hpr = 0;
 	private short _trueHpr = 0;
@@ -1006,7 +1000,7 @@ public class L1PcInstance extends L1Character {
 	// 魔法のダメージの場合はここを使用 (ここで魔法ダメージ軽減処理) attr:0.無属性魔法,1.地魔法,2.火魔法,3.水魔法,4.風魔法
 	public void receiveDamage(L1Character attacker, int damage, int attr) {
 		int player_mr = getMr();
-		int rnd = _random.nextInt(100) + 1;
+		int rnd = Random.nextInt(100) + 1;
 		if (player_mr >= rnd) {
 			damage /= 2;
 		}
@@ -1134,7 +1128,7 @@ public class L1PcInstance extends L1Character {
 
 			if (hasSkillEffect(MORTAL_BODY)
 					&& getId() != attacker.getId()) {
-				int rnd = _random.nextInt(100) + 1;
+				int rnd = Random.nextInt(100) + 1;
 				if (damage > 0 && rnd <= 10) {
 					if (attacker instanceof L1PcInstance) {
 						L1PcInstance attackPc = (L1PcInstance) attacker;
@@ -1353,17 +1347,17 @@ public class L1PcInstance extends L1Character {
 				if (getLawful() < 0) {
 					lostRate *= 2;
 				}
-				int rnd = _random.nextInt(1000) + 1;
+				int rnd = Random.nextInt(1000) + 1;
 				if (rnd <= lostRate) {
 					int count = 1;
 					if (getLawful() <= -30000) {
-						count = _random.nextInt(4) + 1;
+						count = Random.nextInt(4) + 1;
 					} else if (getLawful() <= -20000) {
-						count = _random.nextInt(3) + 1;
+						count = Random.nextInt(3) + 1;
 					} else if (getLawful() <= -10000) {
-						count = _random.nextInt(2) + 1;
+						count = Random.nextInt(2) + 1;
 					} else if (getLawful() < 0) {
-						count = _random.nextInt(1) + 1;
+						count = Random.nextInt(1) + 1;
 					}
 					caoPenaltyResult(count);
 				}

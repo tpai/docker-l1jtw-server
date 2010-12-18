@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -177,10 +177,9 @@ public class L1TreasureBox {
 
 		} else if (getType().equals(TYPE.RANDOM)) {
 			// 出るアイテムがランダムに決まるもの
-			Random random = new Random();
 			int chance = 0;
 
-			int r = random.nextInt(getTotalChance());
+			int r = Random.nextInt(getTotalChance());
 
 			for (Item each : getItems()) {
 				chance += each.getChance();

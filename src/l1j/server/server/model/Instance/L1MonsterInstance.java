@@ -21,7 +21,7 @@ package l1j.server.server.model.Instance;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Random;
+import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
@@ -57,8 +57,6 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 	private static Logger _log = Logger.getLogger(L1MonsterInstance.class
 			.getName());
-
-	private static Random _random = new Random();
 
 	private boolean _storeDroped; // ドロップアイテムの読込が完了したか
 
@@ -509,7 +507,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			ArrayList<L1Character> targetList = _hateList.toTargetArrayList();
 			ArrayList<Integer> hateList = _hateList.toHateArrayList();
 			// ヘイトリストにキャラクターが存在する
-			if (hateList.size() != 0) {
+			if (!hateList.isEmpty()) {
 				// 最大ヘイトを持つキャラクターが倒したものとする
 				int maxHate = 0;
 				for (int i = hateList.size() - 1; i >= 0; i--) {
@@ -622,7 +620,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				|| npcid == 45181 // スパルトイ
 				|| npcid == 45455) { // デッドリースパルトイ
 			if (getMaxHp() / 3 > getCurrentHp()) {
-				int rnd = _random.nextInt(10);
+				int rnd = Random.nextInt(10);
 				if (1 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
@@ -634,7 +632,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 		} else if (npcid == 45682) { // アンタラス
 			if (getMaxHp() / 3 > getCurrentHp()) {
-				int rnd = _random.nextInt(50);
+				int rnd = Random.nextInt(50);
 				if (1 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
@@ -651,7 +649,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				|| npcid == 45321 // グリフォン
 				|| npcid == 45445) { // グリフォン
 			if (getMaxHp() / 3 > getCurrentHp()) {
-				int rnd = _random.nextInt(10);
+				int rnd = Random.nextInt(10);
 				if (1 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_FLY);
@@ -663,7 +661,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 		} else if (npcid == 45681) { // リンドビオル
 			if (getMaxHp() / 3 > getCurrentHp()) {
-				int rnd = _random.nextInt(50);
+				int rnd = Random.nextInt(50);
 				if (1 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_FLY);
@@ -676,7 +674,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 		} else if (npcid == 46107 // テーベ マンドラゴラ(白)
 				 || npcid == 46108) { // テーベ マンドラゴラ(黒)
 			if (getMaxHp() / 4 > getCurrentHp()) {
-				int rnd = _random.nextInt(10);
+				int rnd = Random.nextInt(10);
 				if (1 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
@@ -698,7 +696,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				|| npcid == 45161 // スパルトイ
 				|| npcid == 45181 // スパルトイ
 				|| npcid == 45455) { // デッドリースパルトイ
-			int rnd = _random.nextInt(3);
+			int rnd = Random.nextInt(3);
 			if (1 > rnd) {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(13);
@@ -707,7 +705,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				|| npcid == 45126 // ストーンゴーレム
 				|| npcid == 45134 // ストーンゴーレム
 				|| npcid == 45281) { // ギランストーンゴーレム
-			int rnd = _random.nextInt(3);
+			int rnd = Random.nextInt(3);
 			if (1 > rnd) {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(4);
@@ -725,7 +723,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			setStatus(11);
 		} else if (npcid == 46107 // テーベ マンドラゴラ(白)
 				 || npcid == 46108) { // テーベ マンドラゴラ(黒)
-			int rnd = _random.nextInt(3);
+			int rnd = Random.nextInt(3);
 			if (1 > rnd) {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
 				setStatus(13);
