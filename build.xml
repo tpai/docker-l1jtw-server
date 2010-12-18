@@ -26,7 +26,7 @@
  	<property name="class.dir" value="class" />
     <property name="src.dir" value="src" />
     <property name="lib.dir" value="lib" />
-    <property name="jarfile" value="l1jserver.jar" />
+    <property name="jar.file" value="l1jserver.jar" />
 	<property name="etc.dir" value="config" />
 
     <path id="classpath">
