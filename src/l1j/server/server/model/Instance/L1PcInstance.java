@@ -1993,7 +1993,7 @@ public class L1PcInstance extends L1Character {
 
 	public int getOriginalBowHitup() {
 
-		return _originalHitup;
+		return _originalBowHitup;
 	}
 
 	private int _originalMr = 0; // ● オリジナルWIS 魔法防御
