@@ -1,2 +1,0 @@
-"C:\Program Files (x86)\Java\jdk1.7.0\bin\native2ascii.exe" -encoding UTF-8 ../data/language/messages_zh_TW.txt ../data/language/messages_zh_TW.properties
-"C:\Program Files (x86)\Java\jdk1.7.0\bin\native2ascii.exe" -encoding UTF-8 ../data/language/messages_ja_JP.txt ../data/language/messages_ja_JP.properties
