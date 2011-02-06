@@ -49,7 +49,7 @@ public class L1Adena implements L1CommandExecutor {
 			}
 		} catch (Exception e) {
 			pc.sendPackets(new S_SystemMessage((new StringBuilder()).append(
-					"請輸入 .adena 數量。").toString()));
+					"請輸入 .adena 數量||.金幣  數量。").toString()));
 		}
 	}
 }

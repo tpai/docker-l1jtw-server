@@ -40,12 +40,12 @@ public class L1AddSkill implements L1CommandExecutor {
 	@Override
 	public void execute(L1PcInstance pc, String cmdName, String arg) {
 		try {
-			int cnt = 0; // ループカウンタ
-			String skill_name = ""; // スキル名
-			int skill_id = 0; // スキルID
+			int cnt = 0; // 計數器
+			String skill_name = ""; // 技能名稱
+			int skill_id = 0; // 技能ID
 
 			int object_id = pc.getId(); // キャラクタのobjectidを取得
-			pc.sendPackets(new S_SkillSound(object_id, '\343')); // 魔法習得の効果音を鳴らす
+			pc.sendPackets(new S_SkillSound(object_id, '\343')); // 魔法習得的效果音效
 			pc.broadcastPacket(new S_SkillSound(object_id, '\343'));
 
 			if (pc.isCrown()) {
@@ -54,20 +54,20 @@ public class L1AddSkill implements L1CommandExecutor {
 				for (cnt = 1; cnt <= 16; cnt++) // LV1~2魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 				for (cnt = 113; cnt <= 120; cnt++) // プリ魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 			} else if (pc.isKnight()) {
 				pc.sendPackets(new S_AddSkill(255, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -75,20 +75,20 @@ public class L1AddSkill implements L1CommandExecutor {
 				for (cnt = 1; cnt <= 8; cnt++) // LV1魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 				for (cnt = 87; cnt <= 91; cnt++) // ナイト魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 			} else if (pc.isElf()) {
 				pc.sendPackets(new S_AddSkill(255, 255, 127, 255, 255, 255, 0,
@@ -97,20 +97,20 @@ public class L1AddSkill implements L1CommandExecutor {
 				for (cnt = 1; cnt <= 48; cnt++) // LV1~6魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 				for (cnt = 129; cnt <= 176; cnt++) // エルフ魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 			} else if (pc.isWizard()) {
 				pc.sendPackets(new S_AddSkill(255, 255, 127, 255, 255, 255,
@@ -119,11 +119,11 @@ public class L1AddSkill implements L1CommandExecutor {
 				for (cnt = 1; cnt <= 80; cnt++) // LV1~10魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 			} else if (pc.isDarkelf()) {
 				pc.sendPackets(new S_AddSkill(255, 255, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -131,20 +131,20 @@ public class L1AddSkill implements L1CommandExecutor {
 				for (cnt = 1; cnt <= 16; cnt++) // LV1~2魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 				for (cnt = 97; cnt <= 111; cnt++) // DE魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 			} else if (pc.isDragonKnight()) {
 				pc.sendPackets(new S_AddSkill(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -152,11 +152,11 @@ public class L1AddSkill implements L1CommandExecutor {
 				for (cnt = 181; cnt <= 195; cnt++) // ドラゴンナイト秘技
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 			} else if (pc.isIllusionist()) {
 				pc.sendPackets(new S_AddSkill(0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -164,11 +164,11 @@ public class L1AddSkill implements L1CommandExecutor {
 				for (cnt = 201; cnt <= 220; cnt++) // イリュージョニスト魔法
 				{
 					L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-							cnt); // スキル情報を取得
+							cnt); // 技能情報取得
 					skill_name = l1skills.getName();
 					skill_id = l1skills.getSkillId();
 					SkillsTable.getInstance().spellMastery(object_id, skill_id,
-							skill_name, 0, 0); // DBに登録
+							skill_name, 0, 0); // 寫入DB
 				}
 			}
 		} catch (Exception e) {

@@ -50,12 +50,12 @@ public class L1Poly implements L1CommandExecutor {
 							L1PolyMorph.MORPH_BY_GM);
 				} catch (Exception exception) {
 					pc.sendPackets(new S_SystemMessage(
-							".poly キャラクター名 グラフィックID と入力して下さい。"));
+							"請輸入 .poly 玩家名稱 變身代碼。"));
 				}
 			}
 		} catch (Exception e) {
 			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " キャラクター名 グラフィックID と入力して下さい。"));
+					+ " 請輸入  玩家名稱 變身代碼。"));
 		}
 	}
 }

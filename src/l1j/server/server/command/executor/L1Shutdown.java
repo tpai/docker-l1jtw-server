@@ -45,7 +45,7 @@ public class L1Shutdown implements L1CommandExecutor {
 			GameServer.getInstance().shutdownWithCountdown(sec);
 		} catch (Exception e) {
 			pc.sendPackets(new S_SystemMessage(
-					".shutdown sec|now|abort と入力して下さい。"));
+					"請輸入: .shutdown sec|now|abort 。"));
 		}
 	}
 }

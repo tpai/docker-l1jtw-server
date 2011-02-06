@@ -47,7 +47,7 @@ public class L1InvGfxId implements L1CommandExecutor {
 		} catch (Exception exception) {
 			pc
 					.sendPackets(new S_SystemMessage(cmdName
-							+ " id 出現させる数 と入力して下さい。"));
+							+ " 請輸入 id 出現的數量。"));
 		}
 	}
 }

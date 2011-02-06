@@ -103,18 +103,18 @@ public class L1Status implements L1CommandExecutor {
 				} else if (param.equalsIgnoreCase("CHA")) {
 					target.addBaseCha((byte) (value - target.getBaseCha()));
 				} else {
-					pc.sendPackets(new S_SystemMessage("ステータス " + param
-							+ " は不明です。"));
+					pc.sendPackets(new S_SystemMessage("狀態 " + param
+							+ " 不明。"));
 					return;
 				}
 				target.save(); // DBにキャラクター情報を書き込む
 			}
 			target.sendPackets(new S_OwnCharStatus(target));
-			pc.sendPackets(new S_SystemMessage(target.getName() + " の" + param
-					+ "を" + value + "に変更しました。"));
+			pc.sendPackets(new S_SystemMessage(target.getName() + " 的" + param
+					+ "值" + value + "被變更了。"));
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName
-					+ " キャラクター名|me ステータス 変更値 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage("請輸入: " + cmdName
+					+ " 玩家名稱|me 屬性 變更值 。"));
 		}
 	}
 }

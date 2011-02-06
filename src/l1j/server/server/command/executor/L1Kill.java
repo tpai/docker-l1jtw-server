@@ -40,7 +40,7 @@ public class L1Kill implements L1CommandExecutor {
 				target.death(null);
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " キャラクター名 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage("請輸入 : "+cmdName + " 玩家名稱。"));
 		}
 	}
 }

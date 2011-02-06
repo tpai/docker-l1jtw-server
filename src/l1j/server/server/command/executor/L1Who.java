@@ -43,7 +43,7 @@ public class L1Who implements L1CommandExecutor {
 
 			// オンラインのプレイヤーリストを表示
 			if (arg.equalsIgnoreCase("all")) {
-				pc.sendPackets(new S_SystemMessage("-- オンラインのプレイヤー --"));
+				pc.sendPackets(new S_SystemMessage("-- 線上玩家 --"));
 				StringBuffer buf = new StringBuffer();
 				for (L1PcInstance each : players) {
 					buf.append(each.getName());
@@ -58,7 +58,7 @@ public class L1Who implements L1CommandExecutor {
 				}
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(".who [all] と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage("請輸入: .who [all] 。"));
 		}
 	}
 }

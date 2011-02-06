@@ -26,14 +26,14 @@ import l1j.server.server.model.Instance.L1PcInstance;
  */
 public interface L1CommandExecutor {
 	/**
-	 * このコマンドを実行する。
+	 * GM指令動作。
 	 * 
 	 * @param pc
-	 *            実行者
+	 *            施行者
 	 * @param cmdName
-	 *            実行されたコマンド名
+	 *            執行該指令的名稱
 	 * @param arg
-	 *            引数
+	 *            引數
 	 */
 	public void execute(L1PcInstance pc, String cmdName, String arg);
 }

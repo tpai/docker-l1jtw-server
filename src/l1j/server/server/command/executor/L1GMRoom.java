@@ -54,7 +54,7 @@ public class L1GMRoom implements L1CommandExecutor {
 			} else {
 				L1Location loc = GMCommandsConfig.ROOMS.get(arg.toLowerCase());
 				if (loc == null) {
-					pc.sendPackets(new S_SystemMessage(arg + " 未定義のRoomです"));
+					pc.sendPackets(new S_SystemMessage(arg + " 未定義的Room～"));
 					return;
 				}
 				L1Teleport.teleport(pc, loc.getX(), loc.getY(), (short) loc
@@ -62,7 +62,7 @@ public class L1GMRoom implements L1CommandExecutor {
 			}
 		} catch (Exception exception) {
 			pc.sendPackets(new S_SystemMessage(
-					".gmroom1～.gmroom5 or .gmroom name と入力して下さい。"));
+					"請輸入 .gmroom1～.gmroom5 or .gmroom name 。"));
 		}
 	}
 }

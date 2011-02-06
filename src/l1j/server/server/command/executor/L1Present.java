@@ -44,17 +44,17 @@ public class L1Present implements L1CommandExecutor {
 
 			L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 			if (temp == null) {
-				pc.sendPackets(new S_SystemMessage("存在しないアイテムIDです。"));
+				pc.sendPackets(new S_SystemMessage("不存在的道具編號。"));
 				return;
 			}
 
 			L1DwarfInventory.present(account, itemid, enchant, count);
 			pc.sendPackets(new S_SystemMessage(temp.getIdentifiedNameId()
-					+ "を" + count + "個プレゼントしました。", true));
+					+ "數量" + count + "個發送出去了。", true));
 		} catch (Exception e) {
 			pc
 					.sendPackets(new S_SystemMessage(
-							".present アカウント名 アイテムID エンチャント数 アイテム数 と入力してください。（アカウント名=*で全て）"));
+							"請輸入 : "+".present 帳號 道具編號 數量 強化等級。（* 等於所有帳號）"));
 		}
 	}
 }

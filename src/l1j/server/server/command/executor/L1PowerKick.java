@@ -39,17 +39,17 @@ public class L1PowerKick implements L1CommandExecutor {
 
 			IpTable iptable = IpTable.getInstance();
 			if (target != null) {
-				iptable.banIp(target.getNetConnection().getIp()); // BANリストへIPを加える
+				iptable.banIp(target.getNetConnection().getIp()); // 加入IP至BAN名單
 				pc.sendPackets(new S_SystemMessage((new StringBuilder())
-						.append(target.getName()).append("さんをキックしました。")
+						.append(target.getName()).append("被您強制踢除遊戲並封鎖IP。")
 						.toString()));
 				target.sendPackets(new S_Disconnect());
 			} else {
 				pc.sendPackets(new S_SystemMessage(
-						"そのような名前のキャラクターはワールド内には存在しません。"));
+						"您指定的腳色名稱不存在。"));
 			}
 		} catch (Exception e) {
-			pc.sendPackets(new S_SystemMessage(cmdName + " キャラクター名 と入力して下さい。"));
+			pc.sendPackets(new S_SystemMessage("請輸入 : "+cmdName + " 玩家名稱。"));
 		}
 	}
 }

@@ -61,10 +61,10 @@ public class L1ToSpawn implements L1CommandExecutor {
 						.getMapId(), 5, false);
 				pc
 						.sendPackets(new S_SystemMessage("spawnid(" + id
-								+ ")の元へ飛びます"));
+								+ ")已傳送到"));
 			} else {
 				pc.sendPackets(new S_SystemMessage("spawnid(" + id
-						+ ")は見つかりません"));
+						+ ")找不到"));
 			}
 			_spawnId.put(pc.getId(), id);
 		} catch (Exception exception) {
