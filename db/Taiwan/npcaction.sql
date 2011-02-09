@@ -1050,3 +1050,4 @@ INSERT INTO `npcaction` VALUES ('81243', 'cold1', 'cold1', '', '');
 INSERT INTO `npcaction` VALUES ('81244', 'cold1', 'cold1', '', '');
 INSERT INTO `npcaction` VALUES ('81245', '', '', '', '');
 INSERT INTO `npcaction` VALUES ('81246', 'sharna1', 'sharna2', '', '');
+INSERT INTO `npcaction` VALUES ('91002', 'dufo', 'dufo', '', '');

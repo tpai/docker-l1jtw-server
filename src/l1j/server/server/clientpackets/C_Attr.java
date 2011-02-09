@@ -65,6 +65,7 @@ public class C_Attr extends ClientBasePacket {
 	private static final int HEADING_TABLE_X[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 	private static final int HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
+	@SuppressWarnings("static-access")
 	public C_Attr(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
 		int i = readH();
@@ -519,6 +520,9 @@ public class C_Attr extends ClientBasePacket {
 					}
 				}
 			}
+			break;
+		case 1256://寵物競速 預約名單回應
+			l1j.server.server.model.game.L1PolyRace.getInstance().requsetAttr(pc, readC());
 			break;
 		default:
 			break;

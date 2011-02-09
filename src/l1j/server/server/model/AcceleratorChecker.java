@@ -124,11 +124,11 @@ public class AcceleratorChecker {
 			_pc.sendPackets(new S_ServerMessage(945)); // 違法プログラムが見つかったので、終了します。
 			_pc.sendPackets(new S_Disconnect());
 			_log.info(String.format(
-					"加速器検知のため%sを強制切断しました。", _pc.getName()));
+					"因為檢測使用加速器%s，強制切斷連線。", _pc.getName()));
 		} else {
 			// GMは切断しない
 			_pc.sendPackets(new S_SystemMessage(
-					"加速器検知にひっかかっています。"));
+					"在遊戲中，檢測使用加速器掛著。"));
 			_injusticeCount = 0;
 		}
 	}
@@ -181,7 +181,9 @@ public class AcceleratorChecker {
 		if (_pc.isElfBrave()) {
 			interval *= WAFFLE_RATE;
 		}
-
+		if(_pc.getMapId() == 5143){//寵物競速例外
+			interval *= 0.1;
+		}
 		return interval;
 	}
 }

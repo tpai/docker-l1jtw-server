@@ -590,5 +590,8 @@ public class L1SkillId {
 	public static final int STATUS_CURSE_BARLOG = 1015;
 
 	public static final int STATUS_CURSE_YAHEE = 1014;
-
+	
+	public static final int STATUS_BRAVE2 = 55667788;
+	
+	public static final int STATUS_THIRD_SPEED = 551788;
 }

@@ -47,6 +47,7 @@ public class C_MoveChar extends ClientBasePacket {
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
 
 	// 地圖編號的研究
+	@SuppressWarnings("unused")
 	private void sendMapTileLog(L1PcInstance pc) {
 		pc.sendPackets(new S_SystemMessage(pc.getMap().toString(
 				pc.getLocation())));
@@ -111,7 +112,8 @@ public class C_MoveChar extends ClientBasePacket {
 		}
 
 		// sendMapTileLog(pc); //發送信息的目的地瓦（為調查地圖）
-
+		//寵物競速-判斷圈數
+		l1j.server.server.model.game.L1PolyRace.getInstance().checkLapFinish(pc);
 		L1WorldTraps.getInstance().onPlayerMoved(pc);
 
 		pc.getMap().setPassable(pc.getLocation(), false);

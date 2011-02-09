@@ -562,6 +562,7 @@ public class ClientThread implements Runnable, PacketOutput {
 		CharBuffTable.DeleteBuff(pc);
 		CharBuffTable.SaveBuff(pc);
 		pc.clearSkillEffectTimer();
+		l1j.server.server.model.game.L1PolyRace.getInstance().checkLeaveGame(pc);
 
 		// 停止玩家的偵測
 		pc.stopEtcMonitor();
