@@ -434,7 +434,7 @@ public final class Config {
 			CLIENT_LANGUAGE = Integer.parseInt(serverSettings.getProperty(
 					"ClientLanguage", "4"));
 			CLIENT_LANGUAGE_CODE = LANGUAGE_CODE_ARRAY[CLIENT_LANGUAGE];
-			TIME_ZONE = serverSettings.getProperty("TimeZone", "TST");
+			TIME_ZONE = serverSettings.getProperty("TimeZone", "Asia/Taipei");
 			HOSTNAME_LOOKUPS = Boolean.parseBoolean(serverSettings.getProperty(
 					"HostnameLookups", "false"));
 			AUTOMATIC_KICK = Integer.parseInt(serverSettings.getProperty(
