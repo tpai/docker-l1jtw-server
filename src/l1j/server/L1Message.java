@@ -16,11 +16,16 @@ package l1j.server;
 
 import java.util.ResourceBundle;
 
+/**
+ * 國際化的英文是Internationalization 
+ * 因為單字中總共有18個字母，簡稱I18N，
+ * 目的是讓應用程式可以應地區不同而顯示不同的訊息。
+ */
 public class L1Message {
 
 	private static L1Message _instance;
 	ResourceBundle resource;
-	
+
 	private L1Message() {
 		resource = ResourceBundle.getBundle("messages");
 		initLocaleMessage();
@@ -32,12 +37,13 @@ public class L1Message {
 		}
 		return _instance;
 	}
-	
+
+	/** 簡短化變數名詞 */
 	public void initLocaleMessage() {
-		_memoryUse = resource.getString("l1j.server.memoryUse");
+		memoryUse = resource.getString("l1j.server.memoryUse");
 	}
-	
-	
-	public static String _memoryUse;
-	
+
+	/** static 變數 */
+	public static String memoryUse;
+
 }

@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
+import l1j.server.L1Message;
 //import l1j.server.L1Message;
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.CharacterTable;
@@ -85,7 +86,7 @@ public class GameServer extends Thread {
 	@Override
 	public void run() {
 		System.out.println("使用了 " + SystemUtil.getUsedMemoryMB() + "MB 的記憶體");
-		// 這是一個 Locale 的範例
+		//Locale
 		// System.out.println(L1Message._memoryUse + SystemUtil.getUsedMemoryMB() + "MB");
 		System.out.println("等待客戶端連接中...");
 		while (true) {
@@ -125,8 +126,8 @@ public class GameServer extends Thread {
 		double rateDropItems = Config.RATE_DROP_ITEMS;
 		double rateDropAdena = Config.RATE_DROP_ADENA;
 
-		//TODO 考慮是否要將常顯示的訊息做 Locale 化，不然每次都要改來改去
-		//L1Message.getInstance();
+		//Locale 多國語系
+		L1Message.getInstance();
 		
 		chatlvl = Config.GLOBAL_CHAT_LEVEL;
 		_port = Config.GAME_SERVER_PORT;
