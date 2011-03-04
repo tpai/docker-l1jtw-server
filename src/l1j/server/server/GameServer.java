@@ -23,7 +23,6 @@ import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.L1Message;
-//import l1j.server.L1Message;
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.datatables.ChatLogTable;
@@ -86,8 +85,6 @@ public class GameServer extends Thread {
 	@Override
 	public void run() {
 		System.out.println("使用了 " + SystemUtil.getUsedMemoryMB() + "MB 的記憶體");
-		//Locale
-		// System.out.println(L1Message._memoryUse + SystemUtil.getUsedMemoryMB() + "MB");
 		System.out.println("等待客戶端連接中...");
 		while (true) {
 			try {
@@ -127,7 +124,7 @@ public class GameServer extends Thread {
 		double rateDropAdena = Config.RATE_DROP_ADENA;
 
 		//Locale 多國語系
-		L1Message.getInstance();
+		//L1Message.getInstance();
 		
 		chatlvl = Config.GLOBAL_CHAT_LEVEL;
 		_port = Config.GAME_SERVER_PORT;
