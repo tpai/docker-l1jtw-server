@@ -14,7 +14,9 @@
  */
 package l1j.server;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import l1j.server.server.utils.Internationalization.*;
 
 /**
  * 國際化的英文是Internationalization 
@@ -27,8 +29,12 @@ public class L1Message {
 	ResourceBundle resource;
 
 	private L1Message() {
-		resource = ResourceBundle.getBundle("messages");
-		initLocaleMessage();
+		try {
+			resource = ResourceBundle.getBundle(messages.class.getName());
+			initLocaleMessage();
+		} catch (MissingResourceException mre) {
+			mre.printStackTrace();
+		}
 	}
 
 	public static L1Message getInstance() {

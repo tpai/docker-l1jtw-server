@@ -124,7 +124,7 @@ public class GameServer extends Thread {
 		double rateDropAdena = Config.RATE_DROP_ADENA;
 
 		//Locale 多國語系
-		//L1Message.getInstance();
+		L1Message.getInstance();
 		
 		chatlvl = Config.GLOBAL_CHAT_LEVEL;
 		_port = Config.GAME_SERVER_PORT;
