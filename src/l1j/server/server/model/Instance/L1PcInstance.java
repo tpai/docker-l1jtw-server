@@ -410,7 +410,7 @@ public class L1PcInstance extends L1Character {
 
 	public void sendVisualEffectAtTeleport() {
 		if (isDrink()) { // liquorで酔っている
-			sendPackets(new S_Liquor(getId()));
+			sendPackets(new S_Liquor(getId(), 1));
 		}
 
 		sendVisualEffect();

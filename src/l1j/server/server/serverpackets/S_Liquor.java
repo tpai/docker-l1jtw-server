@@ -21,10 +21,10 @@ import l1j.server.server.Opcodes;
 
 public class S_Liquor extends ServerBasePacket {
 
-	public S_Liquor(int objecId) {
+	public S_Liquor(int objecId, int j) {
 		writeC(Opcodes.S_OPCODE_LIQUOR);
 		writeD(objecId);
-		writeC(1);
+		writeC(j);
 	}
 
 	@Override

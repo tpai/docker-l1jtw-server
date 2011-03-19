@@ -22,11 +22,11 @@ public class S_ServerVersion extends ServerBasePacket {
 
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
 
-/*
- * [Server] opcode = 89 0000: 59 00 02/ c9 60 01 00/ 6a 60 01 00/ 01 ee 00 00/
- * db Y...`..j`....... 0010: 3c 01 00/ ec 66 c4 49/ 00 00 03 58 0d 00 00 10 5f
- * <...f.I...X...._
- */
+	/*
+	 * [Server] opcode = 89 0000: 59 00 02/ c9 60 01 00/ 6a 60 01 00/ 01 ee 00
+	 * 00/ db Y...`..j`....... 0010: 3c 01 00/ ec 66 c4 49/ 00 00 03 58 0d 00 00
+	 * 10 5f <...f.I...X...._
+	 */
 	public S_ServerVersion() {
 		writeC(Opcodes.S_OPCODE_SERVERVERSION);
 		// Auth Check client Version
@@ -46,21 +46,21 @@ public class S_ServerVersion extends ServerBasePacket {
 		// inputs /ver to be able to print out all version in game
 		// If the user level isn't a administrator
 		// inputs /ver to be able to print out client version in game
-// writeD(0x00009D7C); // server verion // 2.70C
-// writeD(0x0000791A); // cache verion // 2.70C
-// writeD(0x0000791A); // auth verion // 2.70C
-// writeD(0x00009DD1); // npc verion // 2.70C
-		writeD(0x000160c9); // server verion
-		writeD(0x0001606a); // cache verion
-		writeD(0x0000ee01); // auth verion
-		writeD(0x00013cdb); // npc verion
-
+		/*
+		 * writeD(0x000160c9); // server verion writeD(0x0001606a); // cache
+		 * verion writeD(0x0000ee01); // auth verion writeD(0x00013cdb); // npc
+		 * verion
+		 */
+		writeD(0x0099fb8a); // server verion 3.3C Taiwan Server
+		writeD(0x00018972); // cache verion 3.3C Taiwan Server
+		writeD(0x77cf6eb9); // auth verion 3.3C Taiwan Server
+		writeD(0x00018978); // npc verion 3.3C Taiwan Server
 		// ↓ unknown
 		// ↓ Old 270Lin.bin
 		// ↓ New 270Lin.bin
 		// ↓ isn't game time
-// writeD(0x882a2cc6); // 2.70C
-		writeD(0x49c466ec);
+		// writeD(0x49c466ec);//3.0C
+		writeD(0x4cb3dc88); //3.3C Taiwan Server
 
 		writeC(0x00); // unknown
 		writeC(0x00); // unknown

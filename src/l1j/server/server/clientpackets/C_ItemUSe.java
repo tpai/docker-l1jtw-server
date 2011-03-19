@@ -796,7 +796,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == 40858) { // liquor（酒）
 					pc.setDrink(true);
-					pc.sendPackets(new S_Liquor(pc.getId()));
+					pc.sendPackets(new S_Liquor(pc.getId(), 1));
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				} else if (itemId == L1ItemId.POTION_OF_CURE_POISON
 						|| itemId == 40507) { // シアンポーション、エントの枝

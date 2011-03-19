@@ -102,7 +102,7 @@ public class PacketHandler {
 			new C_SkillBuy(abyte0, _client);
 			break;
 
-		case C_OPCODE_BOARDBACK:
+		case C_OPCODE_BOARDNEXT:
 			new C_BoardBack(abyte0, _client);
 			break;
 
@@ -227,7 +227,7 @@ public class PacketHandler {
 			new C_ChatWhisper(abyte0, _client);
 			break;
 
-		case C_OPCODE_PARTY:
+		case C_OPCODE_PARTYLIST:
 			new C_Party(abyte0, _client);
 			break;
 

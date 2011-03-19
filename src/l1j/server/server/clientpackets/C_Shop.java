@@ -25,6 +25,7 @@ import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_DoActionShop;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.templates.L1PrivateShopBuyList;
 import l1j.server.server.templates.L1PrivateShopSellList;
 
@@ -113,6 +114,11 @@ public class C_Shop extends ClientBasePacket {
 					// \f1%0は捨てたりまたは他人に讓ることができません。
 					pc.sendPackets(new S_ServerMessage(210, checkItem.getItem()
 							.getName()));
+					return;
+				}
+                //防止異常堆疊交易
+				if (checkItem.getCount() >1&& checkItem.getItem().isStackable()==false) { 
+					pc.sendPackets(new S_SystemMessage("此物品非堆疊，但異常堆疊無法交易。")); 
 					return;
 				}
 
