@@ -150,41 +150,39 @@ public class L1Party {
 
 	public void leaveMember(L1PcInstance pc) {
 		L1PcInstance[] members = getMembers();
-		if (isLeader(pc)) {
+		if (isLeader(pc) || getNumOfMembers() == 2) {
 			// パーティーリーダーの場合
 			breakup();
 		} else {
-			// パーティーリーダーでない場合
-			if (getNumOfMembers() == 2) {
-				// パーティーメンバーが自分とリーダーのみ
-				removeMember(pc);
-				L1PcInstance leader = getLeader();
-				removeMember(leader);
-
-				sendLeftMessage(pc, pc);
-				sendLeftMessage(leader, pc);
-			} else {
-				// 残りのパーティーメンバーが２人以上いる
-				removeMember(pc);
-				for (L1PcInstance member : members) {
-					sendLeftMessage(member, pc);
-				}
-				sendLeftMessage(pc, pc);
+			removeMember(pc);
+			for (L1PcInstance member : getMembers()) {
+				sendLeftMessage(member, pc);
 			}
+			sendLeftMessage(pc, pc);
+			// パーティーリーダーでない場合
+			/*
+			  if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ
+			  removeMember(pc); L1PcInstance leader = getLeader();
+			  removeMember(leader);
+			  sendLeftMessage(pc, pc); sendLeftMessage(leader, pc); } else { //
+			      残りのパーティーメンバーが２人以上いる removeMember(pc); for (L1PcInstance member :
+			  members) { sendLeftMessage(member, pc); } sendLeftMessage(pc,
+			  pc); }
+			 */
 		}
 	}
 
 	public void kickMember(L1PcInstance pc) {
 		if (getNumOfMembers() == 2) {
 			// パーティーメンバーが自分とリーダーのみ
-			removeMember(pc);
-			L1PcInstance leader = getLeader();
-			removeMember(leader);
+			breakup();
 		} else {
-			// 残りのパーティーメンバーが２人以上いる
 			removeMember(pc);
+			for (L1PcInstance member : getMembers()) {
+				sendLeftMessage(member, pc);
+			}
+			sendKickMessage(pc);
 		}
-		sendKickMessage(pc); // パーティーから追放されました。
 	}
 
 	private void showAddPartyInfo(L1PcInstance pc) {
@@ -210,8 +208,8 @@ public class L1Party {
 	public int getNumOfMembers() {
 		return _membersList.size();
 	}
-	
-	private void sendKickMessage(L1PcInstance kickpc){
+
+	private void sendKickMessage(L1PcInstance kickpc) {
 		kickpc.sendPackets(new S_ServerMessage(419));
 	}
 
