@@ -50,6 +50,7 @@ import l1j.server.server.model.L1Karma;
 import l1j.server.server.model.L1Magic;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1Party;
+import l1j.server.server.model.L1PartyRefresh;
 import l1j.server.server.model.L1PcDeleteTimer;
 import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.L1PinkName;
@@ -124,6 +125,11 @@ public class L1PcInstance extends L1Character {
 
 	private short _hpr = 0;
 	private short _trueHpr = 0;
+	
+	/**3.3C組隊系統*/
+	boolean _rpActive = false;
+	private L1PartyRefresh _rp;
+	private int _partyType;
 
 	public short getHpr() {
 		return _hpr;
@@ -476,6 +482,7 @@ public class L1PcInstance extends L1Character {
 	public void setInOrderList(boolean bool) {
 		_order_list = bool;
 	}
+
 	public L1PcInstance() {
 		_accessLevel = 0;
 		_currentWeapon = 0;
@@ -2333,9 +2340,9 @@ public class L1PcInstance extends L1Character {
 	public boolean isFastMovable() {
 		return (hasSkillEffect(HOLY_WALK)
 				|| hasSkillEffect(MOVING_ACCELERATION)
-				|| hasSkillEffect(WIND_WALK) 
-				|| hasSkillEffect(STATUS_RIBRAVE) 
-				|| hasSkillEffect(STATUS_BRAVE2)// 寵物競速																								// 超級加速效果
+				|| hasSkillEffect(WIND_WALK) || hasSkillEffect(STATUS_RIBRAVE) || hasSkillEffect(STATUS_BRAVE2)// 寵物競速
+																												// //
+																												// 超級加速效果
 		);
 	}
 
@@ -3914,6 +3921,35 @@ public class L1PcInstance extends L1Character {
 		resetOriginalConWeightReduction();
 	}
 
+	public void startRefreshParty() {// 組隊更新 3.3C
+
+		final int INTERVAL = 25000;
+
+		if (!_rpActive) {
+
+			_rp = new L1PartyRefresh(this);
+
+			_regenTimer.scheduleAtFixedRate(_rp, INTERVAL, INTERVAL);
+
+			_rpActive = true;
+
+		}
+
+	}
+
+	public void stopRefreshParty() {// 組隊暫停更新 3.3C
+
+		if (_rpActive) {
+
+			_rp.cancel();
+
+			_rp = null;
+
+			_rpActive = false;
+
+		}
+	}
+
 	private final L1ExcludingList _excludingList = new L1ExcludingList();
 
 	public L1ExcludingList getExcludingList() {
@@ -4127,6 +4163,13 @@ public class L1PcInstance extends L1Character {
 
 	public boolean isShapeChange() {
 		return _isShapeChange;
+	}
+
+	public void setPartyType(int type) {
+		_partyType = type;
+	}
+	public int getPartyType() {
+		return _partyType;
 	}
 
 }

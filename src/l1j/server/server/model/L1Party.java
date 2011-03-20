@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import l1j.server.Config;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_HPMeter;
+import l1j.server.server.serverpackets.S_Party;
 import l1j.server.server.serverpackets.S_ServerMessage;
 
 // Referenced classes of package l1j.server.server.model:
@@ -52,13 +53,15 @@ public class L1Party {
 
 		_membersList.add(pc);
 		pc.setParty(this);
+		showAddPartyInfo(pc);
+		pc.startRefreshParty();
 	}
 
 	private void removeMember(L1PcInstance pc) {
 		if (!_membersList.contains(pc)) {
 			return;
 		}
-
+		pc.stopRefreshParty();
 		_membersList.remove(pc);
 		pc.setParty(null);
 		if (!_membersList.isEmpty()) {
@@ -138,6 +141,13 @@ public class L1Party {
 		}
 	}
 
+	public void passLeader(L1PcInstance pc) {
+		for (L1PcInstance member : getMembers()) {
+			member.getParty().setLeader(pc);
+			member.sendPackets(new S_Party(0x6A, pc));
+		}
+	}
+
 	public void leaveMember(L1PcInstance pc) {
 		L1PcInstance[] members = getMembers();
 		if (isLeader(pc)) {
@@ -174,7 +184,23 @@ public class L1Party {
 			// 残りのパーティーメンバーが２人以上いる
 			removeMember(pc);
 		}
-		pc.sendPackets(new S_ServerMessage(419)); // パーティーから追放されました。
+		sendKickMessage(pc); // パーティーから追放されました。
+	}
+
+	private void showAddPartyInfo(L1PcInstance pc) {
+		for (L1PcInstance member : getMembers()) {
+			if (pc.getId() == getLeader().getId() && getNumOfMembers() == 1) {
+				continue;
+			}
+			// 發送給隊長的封包
+			if (pc.getId() == member.getId()) {
+				pc.sendPackets(new S_Party(0x68, pc));
+			} else {// 其他成員封包
+				member.sendPackets(new S_Party(0x69, pc));
+			}
+			member.sendPackets(new S_Party(0x6e, member));
+			createMiniHp(member);
+		}
 	}
 
 	public L1PcInstance[] getMembers() {
@@ -183,6 +209,10 @@ public class L1Party {
 
 	public int getNumOfMembers() {
 		return _membersList.size();
+	}
+	
+	private void sendKickMessage(L1PcInstance kickpc){
+		kickpc.sendPackets(new S_ServerMessage(419));
 	}
 
 	private void sendLeftMessage(L1PcInstance sendTo, L1PcInstance left) {

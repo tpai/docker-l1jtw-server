@@ -66,9 +66,17 @@ public class C_CreateParty extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(416));
 					}
 				} else {
+					pc.setPartyType(type);
 					targetPc.setPartyID(pc.getId());
-					// 玩家 %0%s 邀請您加入隊伍？(Y/N)
-					targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
+					switch (type) {
+					case 0:
+						// 玩家 %0%s 邀請您加入隊伍？(Y/N)
+						targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
+						break;
+					case 1:
+						targetPc.sendPackets(new S_Message_YN(954, pc.getName()));
+						break;
+					}
 				}
 			}
 		} else if (type == 2) { // 聊天組隊

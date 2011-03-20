@@ -618,7 +618,7 @@ public class L1ItemInstance extends L1Object {
 				if (ac < 0) {
 					ac = ac - ac - ac;
 				}
-				os.writeC(ac);
+				os.writeH(ac);
 				os.writeC(getItem().getMaterial());
 				os.writeD(getWeight());
 			}

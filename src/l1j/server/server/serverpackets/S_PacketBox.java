@@ -36,6 +36,9 @@ public class S_PacketBox extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	// *** S_107 sub code list ***
+	/** Updating */
+	public static final int UPDATE_OLD_PART_MEMBER = 104;
+	
 	/** 3.3 組隊系統(更新新加入的隊員信息) */
 	public static final int PATRY_UPDATE_MEMBER = 105;
 
@@ -44,9 +47,6 @@ public class S_PacketBox extends ServerBasePacket {
 
 	/** 3.3 組隊系統(更新隊伍信息,所有隊員) */
 	public static final int PATRY_MEMBERS = 110;
-	
-	/** Updating */
-	public static final int UPDATE_OLD_PART_MEMBER = 104;
 
 	// 1:Kent 2:Orc 3:WW 4:Giran 5:Heine 6:Dwarf 7:Aden 8:Diad 9:城名9 ...
 	/** C(id) H(?): %sの攻城戦が始まりました。 */
