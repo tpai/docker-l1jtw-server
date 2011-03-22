@@ -1,20 +1,23 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.HashMap;
+import static l1j.server.server.model.skill.L1SkillId.BLIND_HIDING;
+import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_FINDINVIS;
+import static l1j.server.server.model.skill.L1SkillId.INVISIBILITY;
+import static l1j.server.server.model.skill.L1SkillId.LIGHT;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -27,16 +30,15 @@ import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.poison.L1Poison;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.model.skill.L1SkillTimer;
 import l1j.server.server.model.skill.L1SkillTimerCreator;
 import l1j.server.server.serverpackets.S_Light;
-import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_Poison;
+import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.ServerBasePacket;
 import l1j.server.server.types.Point;
 import l1j.server.server.utils.IntRange;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.collections.Maps;
 
 // Referenced classes of package l1j.server.server.model:
 // L1Object, Die, L1PcInstance, L1MonsterInstance,
@@ -46,18 +48,23 @@ public class L1Character extends L1Object {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger _log = Logger.getLogger(L1Character.class
-			.getName());
+	private static final Logger _log = Logger.getLogger(L1Character.class.getName());
 
 	private L1Poison _poison = null;
+
 	private boolean _paralyzed;
+
 	private boolean _sleeped;
 
-	private final Map<Integer, L1NpcInstance> _petlist = new HashMap<Integer, L1NpcInstance>();
-	private final Map<Integer, L1DollInstance> _dolllist = new HashMap<Integer, L1DollInstance>();
-	private final Map<Integer, L1SkillTimer> _skillEffect = new HashMap<Integer, L1SkillTimer>();
-	private final Map<Integer, L1ItemDelay.ItemDelayTimer> _itemdelay = new HashMap<Integer, L1ItemDelay.ItemDelayTimer>();
-	private final Map<Integer, L1FollowerInstance> _followerlist = new HashMap<Integer, L1FollowerInstance>();
+	private final Map<Integer, L1NpcInstance> _petlist = Maps.newMap();
+
+	private final Map<Integer, L1DollInstance> _dolllist = Maps.newMap();
+
+	private final Map<Integer, L1SkillTimer> _skillEffect = Maps.newMap();
+
+	private final Map<Integer, L1ItemDelay.ItemDelayTimer> _itemdelay = Maps.newMap();
+
+	private final Map<Integer, L1FollowerInstance> _followerlist = Maps.newMap();
 
 	public L1Character() {
 		_level = 1;
@@ -229,10 +236,8 @@ public class L1Character extends L1Object {
 	 * @param packet
 	 *            送信するパケットを表すServerBasePacketオブジェクト。
 	 */
-	public void broadcastPacketExceptTargetSight(ServerBasePacket packet,
-			L1Character target) {
-		for (L1PcInstance pc : L1World.getInstance()
-				.getVisiblePlayerExceptTargetSight(this, target)) {
+	public void broadcastPacketExceptTargetSight(ServerBasePacket packet, L1Character target) {
+		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayerExceptTargetSight(this, target)) {
 			pc.sendPackets(packet);
 		}
 	}
@@ -245,14 +250,14 @@ public class L1Character extends L1Object {
 	 * @param isFindInvis
 	 *            true : 見破れるプレイヤーにだけパケットを送信する。 false : 見破れないプレイヤーにだけパケットを送信する。
 	 */
-	public void broadcastPacketForFindInvis(ServerBasePacket packet,
-			boolean isFindInvis) {
+	public void broadcastPacketForFindInvis(ServerBasePacket packet, boolean isFindInvis) {
 		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
 			if (isFindInvis) {
 				if (pc.hasSkillEffect(GMSTATUS_FINDINVIS)) {
 					pc.sendPackets(packet);
 				}
-			} else {
+			}
+			else {
 				if (!pc.hasSkillEffect(GMSTATUS_FINDINVIS)) {
 					pc.sendPackets(packet);
 				}
@@ -267,8 +272,7 @@ public class L1Character extends L1Object {
 	 *            送信するパケットを表すServerBasePacketオブジェクト。
 	 */
 	public void wideBroadcastPacket(ServerBasePacket packet) {
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this,
-				50)) {
+		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this, 50)) {
 			pc.sendPackets(packet);
 		}
 	}
@@ -285,22 +289,29 @@ public class L1Character extends L1Object {
 		int heading = getHeading();
 		if (heading == 0) {
 			y--;
-		} else if (heading == 1) {
+		}
+		else if (heading == 1) {
 			x++;
 			y--;
-		} else if (heading == 2) {
+		}
+		else if (heading == 2) {
 			x++;
-		} else if (heading == 3) {
+		}
+		else if (heading == 3) {
 			x++;
 			y++;
-		} else if (heading == 4) {
+		}
+		else if (heading == 4) {
 			y++;
-		} else if (heading == 5) {
+		}
+		else if (heading == 5) {
 			x--;
 			y++;
-		} else if (heading == 6) {
+		}
+		else if (heading == 6) {
 			x--;
-		} else if (heading == 7) {
+		}
+		else if (heading == 7) {
 			x--;
 			y--;
 		}
@@ -350,28 +361,28 @@ public class L1Character extends L1Object {
 			dir_y = 0;
 		}
 
-		if (dir_x == 1 && dir_y == -1) {
+		if ((dir_x == 1) && (dir_y == -1)) {
 			return 1; // 上
 		}
-		if (dir_x == 1 && dir_y == 0) {
+		if ((dir_x == 1) && (dir_y == 0)) {
 			return 2; // 右上
 		}
-		if (dir_x == 1 && dir_y == 1) {
+		if ((dir_x == 1) && (dir_y == 1)) {
 			return 3; // 右
 		}
-		if (dir_x == 0 && dir_y == 1) {
+		if ((dir_x == 0) && (dir_y == 1)) {
 			return 4; // 右下
 		}
-		if (dir_x == -1 && dir_y == 1) {
+		if ((dir_x == -1) && (dir_y == 1)) {
 			return 5; // 下
 		}
-		if (dir_x == -1 && dir_y == 0) {
+		if ((dir_x == -1) && (dir_y == 0)) {
 			return 6; // 左下
 		}
-		if (dir_x == -1 && dir_y == -1) {
+		if ((dir_x == -1) && (dir_y == -1)) {
 			return 7; // 左
 		}
-		if (dir_x == 0 && dir_y == -1) {
+		if ((dir_x == 0) && (dir_y == -1)) {
 			return 0; // 左上
 		}
 		return getHeading(); // ここにはこない。はず
@@ -392,63 +403,66 @@ public class L1Character extends L1Object {
 		int chy = getY();
 		int arw = 0;
 		for (int i = 0; i < 15; i++) {
-			if ((chx == tx && chy == ty) || (chx + 1 == tx && chy - 1 == ty)
-					|| (chx + 1 == tx && chy == ty)
-					|| (chx + 1 == tx && chy + 1 == ty)
-					|| (chx == tx && chy + 1 == ty)
-					|| (chx - 1 == tx && chy + 1 == ty)
-					|| (chx - 1 == tx && chy == ty)
-					|| (chx - 1 == tx && chy - 1 == ty)
-					|| (chx == tx && chy - 1 == ty)) {
+			if (((chx == tx) && (chy == ty)) || ((chx + 1 == tx) && (chy - 1 == ty)) || ((chx + 1 == tx) && (chy == ty))
+					|| ((chx + 1 == tx) && (chy + 1 == ty)) || ((chx == tx) && (chy + 1 == ty)) || ((chx - 1 == tx) && (chy + 1 == ty))
+					|| ((chx - 1 == tx) && (chy == ty)) || ((chx - 1 == tx) && (chy - 1 == ty)) || ((chx == tx) && (chy - 1 == ty))) {
 				break;
 
-			} else if (chx < tx && chy == ty) {
-// if (!map.isArrowPassable(chx, chy, 2)) {
+			}
+			else if ((chx < tx) && (chy == ty)) {
+				// if (!map.isArrowPassable(chx, chy, 2)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
 				chx++;
-			} else if (chx == tx && chy < ty) {
-// if (!map.isArrowPassable(chx, chy, 4)) {
+			}
+			else if ((chx == tx) && (chy < ty)) {
+				// if (!map.isArrowPassable(chx, chy, 4)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
 				chy++;
-			} else if (chx > tx && chy == ty) {
-// if (!map.isArrowPassable(chx, chy, 6)) {
+			}
+			else if ((chx > tx) && (chy == ty)) {
+				// if (!map.isArrowPassable(chx, chy, 6)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
 				chx--;
-			} else if (chx == tx && chy > ty) {
-// if (!map.isArrowPassable(chx, chy, 0)) {
+			}
+			else if ((chx == tx) && (chy > ty)) {
+				// if (!map.isArrowPassable(chx, chy, 0)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
 				chy--;
-			} else if (chx < tx && chy > ty) {
-// if (!map.isArrowPassable(chx, chy, 1)) {
+			}
+			else if ((chx < tx) && (chy > ty)) {
+				// if (!map.isArrowPassable(chx, chy, 1)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
 				chx++;
 				chy--;
-			} else if (chx < tx && chy < ty) {
-// if (!map.isArrowPassable(chx, chy, 3)) {
+			}
+			else if ((chx < tx) && (chy < ty)) {
+				// if (!map.isArrowPassable(chx, chy, 3)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
 				chx++;
 				chy++;
-			} else if (chx > tx && chy < ty) {
-// if (!map.isArrowPassable(chx, chy, 5)) {
+			}
+			else if ((chx > tx) && (chy < ty)) {
+				// if (!map.isArrowPassable(chx, chy, 5)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
 				chx--;
 				chy++;
-			} else if (chx > tx && chy > ty) {
-// if (!map.isArrowPassable(chx, chy, 7)) {
+			}
+			else if ((chx > tx) && (chy > ty)) {
+				// if (!map.isArrowPassable(chx, chy, 7)) {
 				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
 					return false;
 				}
@@ -458,7 +472,8 @@ public class L1Character extends L1Object {
 		}
 		if (arw == 0) {
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
 	}
@@ -480,7 +495,8 @@ public class L1Character extends L1Object {
 			if (getLocation().getTileDistance(new Point(x, y)) > range) {
 				return false;
 			}
-		} else // 近接武器
+		}
+		else // 近接武器
 		{
 			if (getLocation().getTileLineDistance(new Point(x, y)) > range) {
 				return false;
@@ -530,12 +546,12 @@ public class L1Character extends L1Object {
 			int remainingTimeMills = getSkillEffectTimeSec(skillId) * 1000;
 
 			// 残り時間が有限で、パラメータの効果時間の方が長いか無限の場合は上書きする。
-			if (remainingTimeMills >= 0
-					&& (remainingTimeMills < timeMillis || timeMillis == 0)) {
+			if ((remainingTimeMills >= 0) && ((remainingTimeMills < timeMillis) || (timeMillis == 0))) {
 				killSkillEffectTimer(skillId);
 				addSkillEffect(skillId, timeMillis);
 			}
-		} else {
+		}
+		else {
 			addSkillEffect(skillId, timeMillis);
 		}
 	}
@@ -693,7 +709,9 @@ public class L1Character extends L1Object {
 	/**
 	 * キャラクターのペットリストを返す。
 	 * 
-	 * @return キャラクターのペットリストを表す、HashMapオブジェクト。このオブジェクトのKeyはオブジェクトID、ValueはL1NpcInstance。
+	 * @return 
+	 *         キャラクターのペットリストを表す、HashMapオブジェクト。このオブジェクトのKeyはオブジェクトID、ValueはL1NpcInstance
+	 *         。
 	 */
 	public Map<Integer, L1NpcInstance> getPetList() {
 		return _petlist;
@@ -722,7 +740,8 @@ public class L1Character extends L1Object {
 	/**
 	 * キャラクターのマジックドールリストを返す。
 	 * 
-	 * @return キャラクターの魔法人形リストを表す、HashMapオブジェクト。このオブジェクトのKeyはオブジェクトID、ValueはL1DollInstance。
+	 * @return キャラクターの魔法人形リストを表す、HashMapオブジェクト。このオブジェクトのKeyはオブジェクトID、
+	 *         ValueはL1DollInstance。
 	 */
 	public Map<Integer, L1DollInstance> getDollList() {
 		return _dolllist;
@@ -751,15 +770,12 @@ public class L1Character extends L1Object {
 	/**
 	 * キャラクターの従者リストを返す。
 	 * 
-	 * @return キャラクターの従者リストを表す、HashMapオブジェクト。このオブジェクトのKeyはオブジェクトID、ValueはL1FollowerInstance。
+	 * @return キャラクターの従者リストを表す、HashMapオブジェクト。このオブジェクトのKeyはオブジェクトID、
+	 *         ValueはL1FollowerInstance。
 	 */
 	public Map<Integer, L1FollowerInstance> getFollowerList() {
 		return _followerlist;
 	}
-
-
-
-
 
 	/**
 	 * キャラクターへ、毒を追加する。
@@ -808,9 +824,11 @@ public class L1Character extends L1Object {
 	public int getZoneType() {
 		if (getMap().isSafetyZone(getLocation())) {
 			return 1;
-		} else if (getMap().isCombatZone(getLocation())) {
+		}
+		else if (getMap().isCombatZone(getLocation())) {
 			return -1;
-		} else { // ノーマルゾーン
+		}
+		else { // ノーマルゾーン
 			return 0;
 		}
 	}
@@ -838,6 +856,7 @@ public class L1Character extends L1Object {
 
 	// ■■■■■■■■■■ L1PcInstanceへ移動するプロパティ ■■■■■■■■■■
 	private final List<L1Object> _knownObjects = new CopyOnWriteArrayList<L1Object>();
+
 	private final List<L1PcInstance> _knownPlayer = new CopyOnWriteArrayList<L1PcInstance>();
 
 	/**
@@ -928,6 +947,7 @@ public class L1Character extends L1Object {
 	}
 
 	private short _maxHp = 0; // ● ＭＡＸＨＰ（1～32767）
+
 	private int _trueMaxHp = 0; // ● 本当のＭＡＸＨＰ
 
 	public short getMaxHp() {
@@ -945,6 +965,7 @@ public class L1Character extends L1Object {
 	}
 
 	private short _maxMp = 0; // ● ＭＡＸＭＰ（0～32767）
+
 	private int _trueMaxMp = 0; // ● 本当のＭＡＸＭＰ
 
 	public short getMaxMp() {
@@ -962,6 +983,7 @@ public class L1Character extends L1Object {
 	}
 
 	private int _ac = 0; // ● ＡＣ（-128～127）
+
 	private int _trueAc = 0; // ● 本当のＡＣ
 
 	public int getAc() {
@@ -978,6 +1000,7 @@ public class L1Character extends L1Object {
 	}
 
 	private byte _str = 0; // ● ＳＴＲ（1～127）
+
 	private short _trueStr = 0; // ● 本当のＳＴＲ
 
 	public byte getStr() {
@@ -994,6 +1017,7 @@ public class L1Character extends L1Object {
 	}
 
 	private byte _con = 0; // ● ＣＯＮ（1～127）
+
 	private short _trueCon = 0; // ● 本当のＣＯＮ
 
 	public byte getCon() {
@@ -1010,6 +1034,7 @@ public class L1Character extends L1Object {
 	}
 
 	private byte _dex = 0; // ● ＤＥＸ（1～127）
+
 	private short _trueDex = 0; // ● 本当のＤＥＸ
 
 	public byte getDex() {
@@ -1026,6 +1051,7 @@ public class L1Character extends L1Object {
 	}
 
 	private byte _cha = 0; // ● ＣＨＡ（1～127）
+
 	private short _trueCha = 0; // ● 本当のＣＨＡ
 
 	public byte getCha() {
@@ -1042,6 +1068,7 @@ public class L1Character extends L1Object {
 	}
 
 	private byte _int = 0; // ● ＩＮＴ（1～127）
+
 	private short _trueInt = 0; // ● 本当のＩＮＴ
 
 	public byte getInt() {
@@ -1058,6 +1085,7 @@ public class L1Character extends L1Object {
 	}
 
 	private byte _wis = 0; // ● ＷＩＳ（1～127）
+
 	private short _trueWis = 0; // ● 本当のＷＩＳ
 
 	public byte getWis() {
@@ -1074,6 +1102,7 @@ public class L1Character extends L1Object {
 	}
 
 	private int _wind = 0; // ● 風防御（-128～127）
+
 	private int _trueWind = 0; // ● 本当の風防御
 
 	public int getWind() {
@@ -1084,14 +1113,17 @@ public class L1Character extends L1Object {
 		_trueWind += i;
 		if (_trueWind >= 127) {
 			_wind = 127;
-		} else if (_trueWind <= -128) {
+		}
+		else if (_trueWind <= -128) {
 			_wind = -128;
-		} else {
+		}
+		else {
 			_wind = _trueWind;
 		}
 	}
 
 	private int _water = 0; // ● 水防御（-128～127）
+
 	private int _trueWater = 0; // ● 本当の水防御
 
 	public int getWater() {
@@ -1102,14 +1134,17 @@ public class L1Character extends L1Object {
 		_trueWater += i;
 		if (_trueWater >= 127) {
 			_water = 127;
-		} else if (_trueWater <= -128) {
+		}
+		else if (_trueWater <= -128) {
 			_water = -128;
-		} else {
+		}
+		else {
 			_water = _trueWater;
 		}
 	}
 
 	private int _fire = 0; // ● 火防御（-128～127）
+
 	private int _trueFire = 0; // ● 本当の火防御
 
 	public int getFire() {
@@ -1120,14 +1155,17 @@ public class L1Character extends L1Object {
 		_trueFire += i;
 		if (_trueFire >= 127) {
 			_fire = 127;
-		} else if (_trueFire <= -128) {
+		}
+		else if (_trueFire <= -128) {
 			_fire = -128;
-		} else {
+		}
+		else {
 			_fire = _trueFire;
 		}
 	}
 
 	private int _earth = 0; // ● 地防御（-128～127）
+
 	private int _trueEarth = 0; // ● 本当の地防御
 
 	public int getEarth() {
@@ -1138,9 +1176,11 @@ public class L1Character extends L1Object {
 		_trueEarth += i;
 		if (_trueEarth >= 127) {
 			_earth = 127;
-		} else if (_trueEarth <= -128) {
+		}
+		else if (_trueEarth <= -128) {
 			_earth = -128;
-		} else {
+		}
+		else {
 			_earth = _trueEarth;
 		}
 	}
@@ -1157,6 +1197,7 @@ public class L1Character extends L1Object {
 
 	// スタン耐性
 	private int _registStun = 0;
+
 	private int _trueRegistStun = 0;
 
 	public int getRegistStun() {
@@ -1167,15 +1208,18 @@ public class L1Character extends L1Object {
 		_trueRegistStun += i;
 		if (_trueRegistStun > 127) {
 			_registStun = 127;
-		} else if (_trueRegistStun < -128) {
+		}
+		else if (_trueRegistStun < -128) {
 			_registStun = -128;
-		} else {
+		}
+		else {
 			_registStun = _trueRegistStun;
 		}
 	}
 
 	// 石化耐性
 	private int _registStone = 0;
+
 	private int _trueRegistStone = 0;
 
 	public int getRegistStone() {
@@ -1186,15 +1230,18 @@ public class L1Character extends L1Object {
 		_trueRegistStone += i;
 		if (_trueRegistStone > 127) {
 			_registStone = 127;
-		} else if (_trueRegistStone < -128) {
+		}
+		else if (_trueRegistStone < -128) {
 			_registStone = -128;
-		} else {
+		}
+		else {
 			_registStone = _trueRegistStone;
 		}
 	}
 
 	// 睡眠耐性
 	private int _registSleep = 0;
+
 	private int _trueRegistSleep = 0;
 
 	public int getRegistSleep() {
@@ -1205,15 +1252,18 @@ public class L1Character extends L1Object {
 		_trueRegistSleep += i;
 		if (_trueRegistSleep > 127) {
 			_registSleep = 127;
-		} else if (_trueRegistSleep < -128) {
+		}
+		else if (_trueRegistSleep < -128) {
 			_registSleep = -128;
-		} else {
+		}
+		else {
 			_registSleep = _trueRegistSleep;
 		}
 	}
 
 	// 凍結耐性
 	private int _registFreeze = 0;
+
 	private int _trueRegistFreeze = 0;
 
 	public int getRegistFreeze() {
@@ -1224,15 +1274,18 @@ public class L1Character extends L1Object {
 		_trueRegistFreeze += i;
 		if (_trueRegistFreeze > 127) {
 			_registFreeze = 127;
-		} else if (_trueRegistFreeze < -128) {
+		}
+		else if (_trueRegistFreeze < -128) {
 			_registFreeze = -128;
-		} else {
+		}
+		else {
 			_registFreeze = _trueRegistFreeze;
 		}
 	}
 
 	// ホールド耐性
 	private int _registSustain = 0;
+
 	private int _trueRegistSustain = 0;
 
 	public int getRegistSustain() {
@@ -1243,15 +1296,18 @@ public class L1Character extends L1Object {
 		_trueRegistSustain += i;
 		if (_trueRegistSustain > 127) {
 			_registSustain = 127;
-		} else if (_trueRegistSustain < -128) {
+		}
+		else if (_trueRegistSustain < -128) {
 			_registSustain = -128;
-		} else {
+		}
+		else {
 			_registSustain = _trueRegistSustain;
 		}
 	}
 
 	// 暗闇耐性
 	private int _registBlind = 0;
+
 	private int _trueRegistBlind = 0;
 
 	public int getRegistBlind() {
@@ -1262,14 +1318,17 @@ public class L1Character extends L1Object {
 		_trueRegistBlind += i;
 		if (_trueRegistBlind > 127) {
 			_registBlind = 127;
-		} else if (_trueRegistBlind < -128) {
+		}
+		else if (_trueRegistBlind < -128) {
 			_registBlind = -128;
-		} else {
+		}
+		else {
 			_registBlind = _trueRegistBlind;
 		}
 	}
 
 	private int _dmgup = 0; // ● ダメージ補正（-128～127）
+
 	private int _trueDmgup = 0; // ● 本当のダメージ補正
 
 	public int getDmgup() {
@@ -1280,14 +1339,17 @@ public class L1Character extends L1Object {
 		_trueDmgup += i;
 		if (_trueDmgup >= 127) {
 			_dmgup = 127;
-		} else if (_trueDmgup <= -128) {
+		}
+		else if (_trueDmgup <= -128) {
 			_dmgup = -128;
-		} else {
+		}
+		else {
 			_dmgup = _trueDmgup;
 		}
 	}
 
 	private int _bowDmgup = 0; // ● 弓ダメージ補正（-128～127）
+
 	private int _trueBowDmgup = 0; // ● 本当の弓ダメージ補正
 
 	public int getBowDmgup() {
@@ -1298,14 +1360,17 @@ public class L1Character extends L1Object {
 		_trueBowDmgup += i;
 		if (_trueBowDmgup >= 127) {
 			_bowDmgup = 127;
-		} else if (_trueBowDmgup <= -128) {
+		}
+		else if (_trueBowDmgup <= -128) {
 			_bowDmgup = -128;
-		} else {
+		}
+		else {
 			_bowDmgup = _trueBowDmgup;
 		}
 	}
 
 	private int _hitup = 0; // ● 命中補正（-128～127）
+
 	private int _trueHitup = 0; // ● 本当の命中補正
 
 	public int getHitup() {
@@ -1316,14 +1381,17 @@ public class L1Character extends L1Object {
 		_trueHitup += i;
 		if (_trueHitup >= 127) {
 			_hitup = 127;
-		} else if (_trueHitup <= -128) {
+		}
+		else if (_trueHitup <= -128) {
 			_hitup = -128;
-		} else {
+		}
+		else {
 			_hitup = _trueHitup;
 		}
 	}
 
 	private int _bowHitup = 0; // ● 弓命中補正（-128～127）
+
 	private int _trueBowHitup = 0; // ● 本当の弓命中補正
 
 	public int getBowHitup() {
@@ -1334,20 +1402,24 @@ public class L1Character extends L1Object {
 		_trueBowHitup += i;
 		if (_trueBowHitup >= 127) {
 			_bowHitup = 127;
-		} else if (_trueBowHitup <= -128) {
+		}
+		else if (_trueBowHitup <= -128) {
 			_bowHitup = -128;
-		} else {
+		}
+		else {
 			_bowHitup = _trueBowHitup;
 		}
 	}
 
 	private int _mr = 0; // ● 魔法防御（0～）
+
 	private int _trueMr = 0; // ● 本当の魔法防御
 
 	public int getMr() {
 		if (hasSkillEffect(153) == true) {
 			return _mr / 4;
-		} else {
+		}
+		else {
 			return _mr;
 		}
 	} // 使用するとき
@@ -1360,7 +1432,8 @@ public class L1Character extends L1Object {
 		_trueMr += i;
 		if (_trueMr <= 0) {
 			_mr = 0;
-		} else {
+		}
+		else {
 			_mr = _trueMr;
 		}
 	}
@@ -1423,7 +1496,8 @@ public class L1Character extends L1Object {
 		_lawful += i;
 		if (_lawful > 32767) {
 			_lawful = 32767;
-		} else if (_lawful < -32768) {
+		}
+		else if (_lawful < -32768) {
 			_lawful = -32768;
 		}
 	}
@@ -1486,32 +1560,41 @@ public class L1Character extends L1Object {
 		int i = getInt();
 		if (i <= 5) {
 			return -2;
-		} else if (i <= 8) {
+		}
+		else if (i <= 8) {
 			return -1;
-		} else if (i <= 11) {
+		}
+		else if (i <= 11) {
 			return 0;
-		} else if (i <= 14) {
+		}
+		else if (i <= 14) {
 			return 1;
-		} else if (i <= 17) {
+		}
+		else if (i <= 17) {
 			return 2;
-		} else if (i <= 24) {
+		}
+		else if (i <= 24) {
 			return i - 15;
-		} else if (i <= 35) {
+		}
+		else if (i <= 35) {
 			return 10;
-		} else if (i <= 42) {
+		}
+		else if (i <= 42) {
 			return 11;
-		} else if (i <= 49) {
+		}
+		else if (i <= 49) {
 			return 12;
-		} else if (i <= 50) {
+		}
+		else if (i <= 50) {
 			return 13;
-		} else {
+		}
+		else {
 			return i - 25;
 		}
 	}
 
 	public boolean isInvisble() {
-		return (hasSkillEffect(INVISIBILITY)
-				|| hasSkillEffect(BLIND_HIDING));
+		return (hasSkillEffect(INVISIBILITY) || hasSkillEffect(BLIND_HIDING));
 	}
 
 	public void healHp(int pt) {
@@ -1543,7 +1626,8 @@ public class L1Character extends L1Object {
 		_trueMr = i;
 		if (_trueMr <= 0) {
 			_mr = 0;
-		} else {
+		}
+		else {
 			_mr = _trueMr;
 		}
 	}
@@ -1559,10 +1643,9 @@ public class L1Character extends L1Object {
 		}
 
 		for (L1ItemInstance item : getInventory().getItems()) {
-			if (item.getItem().getType2() == 0 && item.getItem()
-					.getType() == 2) { // light系アイテム
+			if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 2)) { // light系アイテム
 				int itemlightSize = item.getItem().getLightRange();
-				if (itemlightSize != 0 && item.isNowLighting()) {
+				if ((itemlightSize != 0) && item.isNowLighting()) {
 					if (itemlightSize > lightSize) {
 						lightSize = itemlightSize;
 					}

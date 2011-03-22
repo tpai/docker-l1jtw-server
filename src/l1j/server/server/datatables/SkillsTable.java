@@ -1,34 +1,32 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
+import l1j.server.server.model.L1World;
+import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.utils.SQLUtil;
-
-import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.L1World;
+import l1j.server.server.utils.collections.Maps;
 
 public class SkillsTable {
 
@@ -36,7 +34,7 @@ public class SkillsTable {
 
 	private static SkillsTable _instance;
 
-	private final Map<Integer, L1Skills> _skills = new HashMap<Integer, L1Skills>();
+	private final Map<Integer, L1Skills> _skills = Maps.newMap();
 
 	private final boolean _initialized;
 
@@ -62,9 +60,11 @@ public class SkillsTable {
 			rs = pstm.executeQuery();
 			FillSkillsTable(rs);
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, "error while creating skills table", e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -113,13 +113,11 @@ public class SkillsTable {
 		_log.config("スキル " + _skills.size() + "件ロード");
 	}
 
-	public void spellMastery(int playerobjid, int skillid, String skillname,
-			int active, int time) {
+	public void spellMastery(int playerobjid, int skillid, String skillname, int active, int time) {
 		if (spellCheck(playerobjid, skillid)) {
 			return;
 		}
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance()
-				.findObject(playerobjid);
+		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
 		if (pc != null) {
 			pc.setSkillMastery(skillid);
 		}
@@ -129,26 +127,26 @@ public class SkillsTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO character_skills SET char_obj_id=?, skill_id=?, skill_name=?, is_active=?, activetimeleft=?");
+			pstm = con.prepareStatement("INSERT INTO character_skills SET char_obj_id=?, skill_id=?, skill_name=?, is_active=?, activetimeleft=?");
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			pstm.setString(3, skillname);
 			pstm.setInt(4, active);
 			pstm.setInt(5, time);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
 	public void spellLost(int playerobjid, int skillid) {
-		L1PcInstance pc = (L1PcInstance) L1World.getInstance()
-				.findObject(playerobjid);
+		L1PcInstance pc = (L1PcInstance) L1World.getInstance().findObject(playerobjid);
 		if (pc != null) {
 			pc.removeSkillMastery(skillid);
 		}
@@ -158,15 +156,16 @@ public class SkillsTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM character_skills WHERE char_obj_id=? AND skill_id=?");
+			pstm = con.prepareStatement("DELETE FROM character_skills WHERE char_obj_id=? AND skill_id=?");
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -180,20 +179,22 @@ public class SkillsTable {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=? AND skill_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=? AND skill_id=?");
 			pstm.setInt(1, playerobjid);
 			pstm.setInt(2, skillid);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
 				ret = true;
-			} else {
+			}
+			else {
 				ret = false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

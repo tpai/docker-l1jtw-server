@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.lang.reflect.Constructor;
@@ -19,7 +18,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -28,6 +26,7 @@ import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Maps;
 
 public class NpcTable {
 	static Logger _log = Logger.getLogger(NpcTable.class.getName());
@@ -36,11 +35,11 @@ public class NpcTable {
 
 	private static NpcTable _instance;
 
-	private final HashMap<Integer, L1Npc> _npcs = new HashMap<Integer, L1Npc>();
-	private final HashMap<String, Constructor<?>> _constructorCache = new HashMap<String, Constructor<?>>();
+	private final Map<Integer, L1Npc> _npcs = Maps.newMap();
 
-	private static final Map<String, Integer> _familyTypes = NpcTable
-			.buildFamily();
+	private final Map<String, Constructor<?>> _constructorCache = Maps.newMap();
+
+	private static final Map<String, Integer> _familyTypes = NpcTable.buildFamily();
 
 	public static NpcTable getInstance() {
 		if (_instance == null) {
@@ -60,11 +59,11 @@ public class NpcTable {
 
 	private Constructor<?> getConstructor(String implName) {
 		try {
-			String implFullName = "l1j.server.server.model.Instance."
-					+ implName + "Instance";
+			String implFullName = "l1j.server.server.model.Instance." + implName + "Instance";
 			Constructor<?> con = Class.forName(implFullName).getConstructors()[0];
 			return con;
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 		return null;
@@ -123,13 +122,15 @@ public class NpcTable {
 				Integer family = _familyTypes.get(rs.getString("family"));
 				if (family == null) {
 					npc.set_family(0);
-				} else {
+				}
+				else {
 					npc.set_family(family.intValue());
 				}
 				int agrofamily = rs.getInt("agrofamily");
-				if (npc.get_family() == 0 && agrofamily == 1) {
+				if ((npc.get_family() == 0) && (agrofamily == 1)) {
 					npc.set_agrofamily(0);
-				} else {
+				}
+				else {
 					npc.set_agrofamily(agrofamily);
 				}
 				npc.set_agrogfxid1(rs.getInt("agrogfxid1"));
@@ -165,9 +166,11 @@ public class NpcTable {
 				registerConstructorCache(npc.getImpl());
 				_npcs.put(npcId, npc);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -181,8 +184,7 @@ public class NpcTable {
 	public L1NpcInstance newNpcInstance(int id) {
 		L1Npc npcTemp = getTemplate(id);
 		if (npcTemp == null) {
-			throw new IllegalArgumentException(String.format(
-					"NpcTemplate: %d not found", id));
+			throw new IllegalArgumentException(String.format("NpcTemplate: %d not found", id));
 		}
 		return newNpcInstance(npcTemp);
 	}
@@ -190,31 +192,34 @@ public class NpcTable {
 	public L1NpcInstance newNpcInstance(L1Npc template) {
 		try {
 			Constructor<?> con = _constructorCache.get(template.getImpl());
-			return (L1NpcInstance) con.newInstance(new Object[] { template });
-		} catch (Exception e) {
+			return (L1NpcInstance) con.newInstance(new Object[]
+			{ template });
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return null;
 	}
 
 	public static Map<String, Integer> buildFamily() {
-		Map<String, Integer> result = new HashMap<String, Integer>();
+		Map<String, Integer> result = Maps.newMap();
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("select distinct(family) as family from npc WHERE NOT trim(family) =''");
+			pstm = con.prepareStatement("select distinct(family) as family from npc WHERE NOT trim(family) =''");
 			rs = pstm.executeQuery();
 			int id = 1;
 			while (rs.next()) {
 				String family = rs.getString("family");
 				result.put(family, id++);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);

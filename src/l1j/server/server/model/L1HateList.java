@@ -1,27 +1,29 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.utils.collections.Lists;
+import l1j.server.server.utils.collections.Maps;
 
 public class L1HateList {
 	private final Map<L1Character, Integer> _hateMap;
@@ -36,7 +38,7 @@ public class L1HateList {
 		 * 但し、今後このクラスの利用方法が変わった場合、 例えば多くのスレッドから同時に読み出しがかかるようになった場合は、
 		 * ConcurrentHashMapを利用した方が良いかもしれない。
 		 */
-		_hateMap = new HashMap<L1Character, Integer>();
+		_hateMap = Maps.newMap();
 	}
 
 	public synchronized void add(L1Character cha, int hate) {
@@ -45,7 +47,8 @@ public class L1HateList {
 		}
 		if (_hateMap.containsKey(cha)) {
 			_hateMap.put(cha, _hateMap.get(cha) + hate);
-		} else {
+		}
+		else {
 			_hateMap.put(cha, hate);
 		}
 	}
@@ -84,9 +87,9 @@ public class L1HateList {
 	}
 
 	public synchronized void removeInvalidCharacter(L1NpcInstance npc) {
-		ArrayList<L1Character> invalidChars = new ArrayList<L1Character>();
+		List<L1Character> invalidChars = Lists.newList();
 		for (L1Character cha : _hateMap.keySet()) {
-			if (cha == null || cha.isDead() || !npc.knownsObject(cha)) {
+			if ((cha == null) || cha.isDead() || !npc.knownsObject(cha)) {
 				invalidChars.add(cha);
 			}
 		}
@@ -129,7 +132,7 @@ public class L1HateList {
 				}
 			}
 
-			if (pc != null && party.isMember(pc)) {
+			if ((pc != null) && party.isMember(pc)) {
 				partyHate += e.getValue();
 			}
 		}
@@ -145,7 +148,7 @@ public class L1HateList {
 				pc = (L1PcInstance) e.getKey();
 			}
 
-			if (pc != null && party.isMember(pc)) {
+			if ((pc != null) && party.isMember(pc)) {
 				partyHate += e.getValue();
 			}
 		}

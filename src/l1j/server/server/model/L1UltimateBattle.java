@@ -1,24 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
-import l1j.server.server.utils.Random;
+import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TimeZone;
@@ -38,51 +36,76 @@ import l1j.server.server.model.item.L1ItemId;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.utils.IntRange;
+import l1j.server.server.utils.Random;
+import l1j.server.server.utils.collections.Lists;
 
 // Referenced classes of package l1j.server.server.model:
 // L1UltimateBattle
 
 public class L1UltimateBattle {
 	private int _locX;
+
 	private int _locY;
+
 	private L1Location _location; // 中心点
+
 	private short _mapId;
+
 	private int _locX1;
+
 	private int _locY1;
+
 	private int _locX2;
+
 	private int _locY2;
 
 	private int _ubId;
+
 	private int _pattern;
+
 	private boolean _isNowUb;
+
 	private boolean _active; // UB入場可能～競技終了までtrue
 
 	private int _minLevel;
+
 	private int _maxLevel;
+
 	private int _maxPlayer;
 
 	private boolean _enterRoyal;
+
 	private boolean _enterKnight;
+
 	private boolean _enterMage;
+
 	private boolean _enterElf;
+
 	private boolean _enterDarkelf;
+
 	private boolean _enterDragonKnight;
+
 	private boolean _enterIllusionist;
+
 	private boolean _enterMale;
+
 	private boolean _enterFemale;
+
 	private boolean _usePot;
+
 	private int _hpr;
+
 	private int _mpr;
 
 	private static int BEFORE_MINUTE = 5; // 5分前から入場開始
 
 	private Set<Integer> _managers = new HashSet<Integer>();
+
 	private SortedSet<Integer> _ubTimes = new TreeSet<Integer>();
 
-	private static final Logger _log = Logger.getLogger(L1UltimateBattle.class
-			.getName());
+	private static final Logger _log = Logger.getLogger(L1UltimateBattle.class.getName());
 
-	private final ArrayList<L1PcInstance> _members = new ArrayList<L1PcInstance>();
+	private final List<L1PcInstance> _members = Lists.newList();
 
 	/**
 	 * ラウンド開始時のメッセージを送信する。
@@ -92,7 +115,8 @@ public class L1UltimateBattle {
 	 */
 	private void sendRoundMessage(int curRound) {
 		// XXX - このIDは間違っている
-		final int MSGID_ROUND_TABLE[] = { 893, 894, 895, 896 };
+		final int MSGID_ROUND_TABLE[] =
+		{ 893, 894, 895, 896 };
 
 		sendMessage(MSGID_ROUND_TABLE[curRound - 1], "");
 	}
@@ -111,7 +135,8 @@ public class L1UltimateBattle {
 			spawnGroundItem(L1ItemId.POTION_OF_GREATER_HEALING, 3, 20);
 			spawnGroundItem(40317, 1, 5); // 砥石
 			spawnGroundItem(40079, 1, 20); // 帰還スク
-		} else if (curRound == 2) {
+		}
+		else if (curRound == 2) {
 			spawnGroundItem(L1ItemId.ADENA, 5000, 50);
 			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 5, 20);
 			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 10, 20);
@@ -119,7 +144,8 @@ public class L1UltimateBattle {
 			spawnGroundItem(40317, 1, 7); // 砥石
 			spawnGroundItem(40093, 1, 10); // ブランクスク(Lv4)
 			spawnGroundItem(40079, 1, 5); // 帰還スク
-		} else if (curRound == 3) {
+		}
+		else if (curRound == 3) {
 			spawnGroundItem(L1ItemId.ADENA, 10000, 30);
 			spawnGroundItem(L1ItemId.POTION_OF_CURE_POISON, 7, 20);
 			spawnGroundItem(L1ItemId.POTION_OF_EXTRA_HEALING, 20, 20);
@@ -134,9 +160,9 @@ public class L1UltimateBattle {
 	 */
 	private void removeRetiredMembers() {
 		L1PcInstance[] temp = getMembersArray();
-		for (int i = 0; i < temp.length; i++) {
-			if (temp[i].getMapId() != _mapId) {
-				removeMember(temp[i]);
+		for (L1PcInstance element : temp) {
+			if (element.getMapId() != _mapId) {
+				removeMember(element);
 			}
 		}
 	}
@@ -172,25 +198,22 @@ public class L1UltimateBattle {
 		}
 
 		for (int i = 0; i < count; i++) {
-			L1Location loc = _location.randomLocation(
-					(getLocX2() - getLocX1()) / 2, false);
+			L1Location loc = _location.randomLocation((getLocX2() - getLocX1()) / 2, false);
 			if (temp.isStackable()) {
-				L1ItemInstance item = ItemTable.getInstance()
-						.createItem(itemId);
+				L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 				item.setEnchantLevel(0);
 				item.setCount(stackCount);
-				L1GroundInventory ground = L1World.getInstance().getInventory(
-						loc.getX(), loc.getY(), _mapId);
+				L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
 				if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
 					ground.storeItem(item);
 				}
-			} else {
+			}
+			else {
 				L1ItemInstance item = null;
 				for (int createCount = 0; createCount < stackCount; createCount++) {
 					item = ItemTable.getInstance().createItem(itemId);
 					item.setEnchantLevel(0);
-					L1GroundInventory ground = L1World.getInstance()
-							.getInventory(loc.getX(), loc.getY(), _mapId);
+					L1GroundInventory ground = L1World.getInstance().getInventory(loc.getX(), loc.getY(), _mapId);
 					if (ground.checkAddItem(item, stackCount) == L1Inventory.OK) {
 						ground.storeItem(item);
 					}
@@ -203,8 +226,7 @@ public class L1UltimateBattle {
 	 * コロシアム上のアイテムとモンスターを全て削除する。
 	 */
 	private void clearColosseum() {
-		for (Object obj : L1World.getInstance().getVisibleObjects(_mapId)
-				.values()) {
+		for (Object obj : L1World.getInstance().getVisibleObjects(_mapId).values()) {
 			if (obj instanceof L1MonsterInstance) // モンスター削除
 			{
 				L1MonsterInstance mob = (L1MonsterInstance) obj;
@@ -215,7 +237,8 @@ public class L1UltimateBattle {
 					mob.deleteMe();
 
 				}
-			} else if (obj instanceof L1Inventory) // アイテム削除
+			}
+			else if (obj instanceof L1Inventory) // アイテム削除
 			{
 				L1Inventory inventory = (L1Inventory) obj;
 				inventory.clearItems();
@@ -242,7 +265,7 @@ public class L1UltimateBattle {
 
 			for (int loop = 0; loop < BEFORE_MINUTE * 60 - 10; loop++) { // 開始10秒前まで待つ
 				Thread.sleep(1000);
-// removeRetiredMembers();
+				// removeRetiredMembers();
 			}
 			removeRetiredMembers();
 
@@ -276,12 +299,13 @@ public class L1UltimateBattle {
 		 * @throws InterruptedException
 		 */
 		private void waitForNextRound(int curRound) throws InterruptedException {
-			final int WAIT_TIME_TABLE[] = { 6, 6, 2, 18 };
+			final int WAIT_TIME_TABLE[] =
+			{ 6, 6, 2, 18 };
 
 			int wait = WAIT_TIME_TABLE[curRound - 1];
 			for (int i = 0; i < wait; i++) {
 				Thread.sleep(10000);
-// removeRetiredMembers();
+				// removeRetiredMembers();
 			}
 			removeRetiredMembers();
 		}
@@ -298,11 +322,9 @@ public class L1UltimateBattle {
 				for (int round = 1; round <= 4; round++) {
 					sendRoundMessage(round);
 
-					L1UbPattern pattern = UBSpawnTable.getInstance()
-							.getPattern(_ubId, _pattern);
+					L1UbPattern pattern = UBSpawnTable.getInstance().getPattern(_ubId, _pattern);
 
-					ArrayList<L1UbSpawn> spawnList = pattern
-							.getSpawnList(round);
+					List<L1UbSpawn> spawnList = pattern.getSpawnList(round);
 
 					for (L1UbSpawn spawn : spawnList) {
 						if (getMembersCount() > 0) {
@@ -310,7 +332,7 @@ public class L1UltimateBattle {
 						}
 
 						Thread.sleep(spawn.getSpawnDelay() * 1000);
-// removeRetiredMembers();
+						// removeRetiredMembers();
 					}
 
 					if (getMembersCount() > 0) {
@@ -333,7 +355,8 @@ public class L1UltimateBattle {
 				clearColosseum();
 				setActive(false);
 				setNowUb(false);
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			}
 		}
@@ -444,7 +467,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setMapId(short mapId) {
-		this._mapId = mapId;
+		_mapId = mapId;
 	}
 
 	public int getMinLevel() {
@@ -472,39 +495,39 @@ public class L1UltimateBattle {
 	}
 
 	public void setEnterRoyal(boolean enterRoyal) {
-		this._enterRoyal = enterRoyal;
+		_enterRoyal = enterRoyal;
 	}
 
 	public void setEnterKnight(boolean enterKnight) {
-		this._enterKnight = enterKnight;
+		_enterKnight = enterKnight;
 	}
 
 	public void setEnterMage(boolean enterMage) {
-		this._enterMage = enterMage;
+		_enterMage = enterMage;
 	}
 
 	public void setEnterElf(boolean enterElf) {
-		this._enterElf = enterElf;
+		_enterElf = enterElf;
 	}
 
 	public void setEnterDarkelf(boolean enterDarkelf) {
-		this._enterDarkelf = enterDarkelf;
+		_enterDarkelf = enterDarkelf;
 	}
 
 	public void setEnterDragonKnight(boolean enterDragonKnight) {
-		this._enterDragonKnight = enterDragonKnight;
+		_enterDragonKnight = enterDragonKnight;
 	}
 
 	public void setEnterIllusionist(boolean enterIllusionist) {
-		this._enterIllusionist = enterIllusionist;
+		_enterIllusionist = enterIllusionist;
 	}
 
 	public void setEnterMale(boolean enterMale) {
-		this._enterMale = enterMale;
+		_enterMale = enterMale;
 	}
 
 	public void setEnterFemale(boolean enterFemale) {
-		this._enterFemale = enterFemale;
+		_enterFemale = enterFemale;
 	}
 
 	public boolean canUsePot() {
@@ -512,7 +535,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setUsePot(boolean usePot) {
-		this._usePot = usePot;
+		_usePot = usePot;
 	}
 
 	public int getHpr() {
@@ -520,7 +543,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setHpr(int hpr) {
-		this._hpr = hpr;
+		_hpr = hpr;
 	}
 
 	public int getMpr() {
@@ -528,7 +551,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setMpr(int mpr) {
-		this._mpr = mpr;
+		_mpr = mpr;
 	}
 
 	public int getLocX1() {
@@ -536,7 +559,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setLocX1(int locX1) {
-		this._locX1 = locX1;
+		_locX1 = locX1;
 	}
 
 	public int getLocY1() {
@@ -544,7 +567,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setLocY1(int locY1) {
-		this._locY1 = locY1;
+		_locY1 = locY1;
 	}
 
 	public int getLocX2() {
@@ -552,7 +575,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setLocX2(int locX2) {
-		this._locX2 = locX2;
+		_locX2 = locX2;
 	}
 
 	public int getLocY2() {
@@ -560,7 +583,7 @@ public class L1UltimateBattle {
 	}
 
 	public void setLocY2(int locY2) {
-		this._locY2 = locY2;
+		_locY2 = locY2;
 	}
 
 	// setされたlocx1～locy2から中心点を求める。
@@ -637,18 +660,16 @@ public class L1UltimateBattle {
 	 * @return 参加出来る場合はtrue,出来ない場合はfalse
 	 */
 	public boolean canPcEnter(L1PcInstance pc) {
-		_log.log(Level.FINE, "pcname={0} ubid={1} minlvl={2} maxlvl={3}", new Object[]{pc.getName(), _ubId, _minLevel, _maxLevel});
+		_log.log(Level.FINE, "pcname={0} ubid={1} minlvl={2} maxlvl={3}", new Object[]
+		{ pc.getName(), _ubId, _minLevel, _maxLevel });
 		// 参加可能なレベルか
 		if (!IntRange.includes(pc.getLevel(), _minLevel, _maxLevel)) {
 			return false;
 		}
 
 		// 参加可能なクラスか
-		if (!((pc.isCrown() && _enterRoyal) || (pc.isKnight() && _enterKnight)
-				|| (pc.isWizard() && _enterMage) || (pc.isElf() && _enterElf)
-				|| (pc.isDarkelf() && _enterDarkelf)
-				|| (pc.isDragonKnight() && _enterDragonKnight)
-				|| (pc.isIllusionist() && _enterIllusionist))) {
+		if (!((pc.isCrown() && _enterRoyal) || (pc.isKnight() && _enterKnight) || (pc.isWizard() && _enterMage) || (pc.isElf() && _enterElf)
+				|| (pc.isDarkelf() && _enterDarkelf) || (pc.isDragonKnight() && _enterDragonKnight) || (pc.isIllusionist() && _enterIllusionist))) {
 			return false;
 		}
 
@@ -704,8 +725,8 @@ public class L1UltimateBattle {
 		String mpr = String.valueOf(_mpr);
 		String summon = _location.getMap().isTakePets() ? "可能" : "不可能";
 		String summon2 = _location.getMap().isRecallPets() ? "可能" : "不可能";
-		_ubInfo = new String[] { nextUbTime, classes, sex, loLevel, hiLevel,
-				teleport, res, pot, hpr, mpr, summon, summon2 };
+		_ubInfo = new String[]
+		{ nextUbTime, classes, sex, loLevel, hiLevel, teleport, res, pot, hpr, mpr, summon, summon2 };
 		return _ubInfo;
 	}
 }

@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.sql.Connection;
@@ -19,30 +18,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.templates.L1AuctionBoard;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Maps;
 
 // Referenced classes of package l1j.server.server:
 // IdFactory
 
 public class AuctionBoardTable {
 
-	private static Logger _log = Logger.getLogger(AuctionBoardTable.class.
-			getName());
+	private static Logger _log = Logger.getLogger(AuctionBoardTable.class.getName());
 
 	private static AuctionBoardTable _instance;
 
-	private final Map<Integer, L1AuctionBoard> _boards =
-			new ConcurrentHashMap<Integer, L1AuctionBoard>();
+	private final Map<Integer, L1AuctionBoard> _boards = Maps.newConcurrentMap();
 
 	private static AuctionBoardTable getInstance() {
 		if (_instance == null) {
@@ -63,16 +59,14 @@ public class AuctionBoardTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM board_auction ORDER BY house_id");
+			pstm = con.prepareStatement("SELECT * FROM board_auction ORDER BY house_id");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				L1AuctionBoard board = new L1AuctionBoard();
 				board.setHouseId(rs.getInt(1));
 				board.setHouseName(rs.getString(2));
 				board.setHouseArea(rs.getInt(3));
-				board.setDeadline(timestampToCalendar((Timestamp) rs
-						.getObject(4)));
+				board.setDeadline(timestampToCalendar((Timestamp) rs.getObject(4)));
 				board.setPrice(rs.getInt(5));
 				board.setLocation(rs.getString(6));
 				board.setOldOwner(rs.getString(7));
@@ -81,9 +75,11 @@ public class AuctionBoardTable {
 				board.setBidderId(rs.getInt(10));
 				_boards.put(board.getHouseId(), board);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -108,8 +104,8 @@ public class AuctionBoardTable {
 			pstm.setInt(1, board.getHouseId());
 			pstm.setString(2, board.getHouseName());
 			pstm.setInt(3, board.getHouseArea());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
-            String fm = sdf.format(board.getDeadline().getTime());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			String fm = sdf.format(board.getDeadline().getTime());
 			pstm.setString(4, fm);
 			pstm.setInt(5, board.getPrice());
 			pstm.setString(6, board.getLocation());
@@ -120,9 +116,11 @@ public class AuctionBoardTable {
 			pstm.execute();
 
 			_boards.put(board.getHouseId(), board);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -138,7 +136,7 @@ public class AuctionBoardTable {
 			pstm.setString(1, board.getHouseName());
 			pstm.setInt(2, board.getHouseArea());
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            String fm = sdf.format(board.getDeadline().getTime());
+			String fm = sdf.format(board.getDeadline().getTime());
 			pstm.setString(3, fm);
 			pstm.setInt(4, board.getPrice());
 			pstm.setString(5, board.getLocation());
@@ -148,9 +146,11 @@ public class AuctionBoardTable {
 			pstm.setInt(9, board.getBidderId());
 			pstm.setInt(10, board.getHouseId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -161,15 +161,16 @@ public class AuctionBoardTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM board_auction WHERE house_id=?");
+			pstm = con.prepareStatement("DELETE FROM board_auction WHERE house_id=?");
 			pstm.setInt(1, houseId);
 			pstm.execute();
 
 			_boards.remove(houseId);
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

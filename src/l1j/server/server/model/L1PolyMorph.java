@@ -1,20 +1,20 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.HashMap;
+import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
+
 import java.util.Map;
 import java.util.logging.Logger;
 
@@ -22,13 +22,12 @@ import l1j.server.server.datatables.PolyTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.serverpackets.S_ChangeShape;
 import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_CloseList;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.collections.Maps;
 
 // Referenced classes of package l1j.server.server.model:
 // L1PcInstance
@@ -57,7 +56,7 @@ public class L1PolyMorph {
 
 	private static final int KIRINGKU_EQUIP = 512;
 
-	private static final int CHAINSWORD_EQUIP= 1024;
+	private static final int CHAINSWORD_EQUIP = 1024;
 
 	// armor equip bit
 	private static final int HELM_EQUIP = 1;
@@ -95,7 +94,7 @@ public class L1PolyMorph {
 
 	public static final int MORPH_BY_LOGIN = 0;
 
-	private static final Map<Integer, Integer> weaponFlgMap = new HashMap<Integer, Integer>();
+	private static final Map<Integer, Integer> weaponFlgMap = Maps.newMap();
 	static {
 		weaponFlgMap.put(1, SWORD_EQUIP);
 		weaponFlgMap.put(2, DAGGER_EQUIP);
@@ -116,7 +115,8 @@ public class L1PolyMorph {
 		weaponFlgMap.put(17, KIRINGKU_EQUIP);
 		weaponFlgMap.put(18, CHAINSWORD_EQUIP);
 	}
-	private static final Map<Integer, Integer> armorFlgMap = new HashMap<Integer, Integer>();
+
+	private static final Map<Integer, Integer> armorFlgMap = Maps.newMap();
 	static {
 		armorFlgMap.put(1, HELM_EQUIP);
 		armorFlgMap.put(2, ARMOR_EQUIP);
@@ -133,17 +133,22 @@ public class L1PolyMorph {
 	}
 
 	private int _id;
+
 	private String _name;
+
 	private int _polyId;
+
 	private int _minLevel;
+
 	private int _weaponEquipFlg;
+
 	private int _armorEquipFlg;
+
 	private boolean _canUseSkill;
+
 	private int _causeFlg;
 
-	public L1PolyMorph(int id, String name, int polyId, int minLevel,
-			int weaponEquipFlg, int armorEquipFlg, boolean canUseSkill,
-			int causeFlg) {
+	public L1PolyMorph(int id, String name, int polyId, int minLevel, int weaponEquipFlg, int armorEquipFlg, boolean canUseSkill, int causeFlg) {
 		_id = id;
 		_name = name;
 		_polyId = polyId;
@@ -187,36 +192,36 @@ public class L1PolyMorph {
 	}
 
 	public static void handleCommands(L1PcInstance pc, String s) {
-		if (pc == null || pc.isDead()) {
+		if ((pc == null) || pc.isDead()) {
 			return;
 		}
 		L1PolyMorph poly = PolyTable.getInstance().getTemplate(s);
-		if (poly != null || s.equals("none")) {
+		if ((poly != null) || s.equals("none")) {
 			if (s.equals("none")) {
-				if (pc.getTempCharGfx() == 6034
-						|| pc.getTempCharGfx() == 6035) {
-				} else {
+				if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {}
+				else {
 					pc.removeSkillEffect(SHAPE_CHANGE);
 					pc.sendPackets(new S_CloseList(pc.getId()));
 				}
-			} else if (pc.getLevel() >= poly.getMinLevel() || pc.isGm()) {
-				if (pc.getTempCharGfx() == 6034
-						|| pc.getTempCharGfx() == 6035) {
+			}
+			else if ((pc.getLevel() >= poly.getMinLevel()) || pc.isGm()) {
+				if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
 					pc.sendPackets(new S_ServerMessage(181));
 					// \f1そのようなモンスターには変身できません。
-				} else {
-				doPoly(pc, poly.getPolyId(), 7200, MORPH_BY_ITEMMAGIC);
-				pc.sendPackets(new S_CloseList(pc.getId()));
 				}
-			} else {
+				else {
+					doPoly(pc, poly.getPolyId(), 7200, MORPH_BY_ITEMMAGIC);
+					pc.sendPackets(new S_CloseList(pc.getId()));
+				}
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(181)); // \f1そのようなモンスターには変身できません。
 			}
 		}
 	}
 
-	public static void doPoly(L1Character cha, int polyId, int timeSecs,
-				int cause) {
-		if (cha == null || cha.isDead()) {
+	public static void doPoly(L1Character cha, int polyId, int timeSecs, int cause) {
+		if ((cha == null) || cha.isDead()) {
 			return;
 		}
 		if (cha instanceof L1PcInstance) {
@@ -225,34 +230,31 @@ public class L1PolyMorph {
 				pc.sendPackets(new S_ServerMessage(1170)); // ここでは変身できません。
 				return;
 			}
-			if (pc.getTempCharGfx() == 6034
-					|| pc.getTempCharGfx() == 6035) {
+			if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
 				pc.sendPackets(new S_ServerMessage(181)); // \f1そのようなモンスターには変身できません。
-				return;	
+				return;
 			}
 			if (!isMatchCause(polyId, cause)) {
 				pc.sendPackets(new S_ServerMessage(181)); // \f1そのようなモンスターには変身できません。
 				return;
 			}
 
- 			pc.killSkillEffectTimer(SHAPE_CHANGE);
+			pc.killSkillEffectTimer(SHAPE_CHANGE);
 			pc.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
 			if (pc.getTempCharGfx() != polyId) { // 同じ変身の場合はアイコン送信以外が必要ない
 				L1ItemInstance weapon = pc.getWeapon();
 				// 変身によって武器が外れるか
-				boolean weaponTakeoff = (weapon != null && !isEquipableWeapon(
-						polyId, weapon.getItem().getType()));
+				boolean weaponTakeoff = ((weapon != null) && !isEquipableWeapon(polyId, weapon.getItem().getType()));
 				pc.setTempCharGfx(polyId);
-				pc.sendPackets(new S_ChangeShape(pc.getId(), polyId,
-						weaponTakeoff));
+				pc.sendPackets(new S_ChangeShape(pc.getId(), polyId, weaponTakeoff));
 				if (!pc.isGmInvis() && !pc.isInvisble()) {
 					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId));
 				}
-				if (pc.isGmInvis()) {
-				} else if (pc.isInvisble()) {
-					pc.broadcastPacketForFindInvis(new S_ChangeShape(pc
-							.getId(), polyId), true);
-				} else {
+				if (pc.isGmInvis()) {}
+				else if (pc.isInvisble()) {
+					pc.broadcastPacketForFindInvis(new S_ChangeShape(pc.getId(), polyId), true);
+				}
+				else {
 					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId));
 				}
 				pc.getInventory().takeoffEquip(polyId);
@@ -264,7 +266,8 @@ public class L1PolyMorph {
 				}
 			}
 			pc.sendPackets(new S_SkillIconGFX(35, timeSecs));
-		} else if (cha instanceof L1MonsterInstance) {
+		}
+		else if (cha instanceof L1MonsterInstance) {
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
 			mob.killSkillEffectTimer(SHAPE_CHANGE);
 			mob.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
@@ -288,7 +291,8 @@ public class L1PolyMorph {
 				pc.sendPackets(charVisual);
 				pc.broadcastPacket(charVisual);
 			}
-		} else if (cha instanceof L1MonsterInstance) {
+		}
+		else if (cha instanceof L1MonsterInstance) {
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
 			mob.setTempCharGfx(0);
 			mob.broadcastPacket(new S_ChangeShape(mob.getId(), mob.getGfxId()));

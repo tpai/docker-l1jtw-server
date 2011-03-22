@@ -1,20 +1,18 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -23,15 +21,15 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_HPMeter;
 import l1j.server.server.serverpackets.S_Party;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.utils.collections.Lists;
 
 // Referenced classes of package l1j.server.server.model:
 // L1Party
 
 public class L1Party {
-	private static final Logger _log = Logger
-			.getLogger(L1Party.class.getName());
+	private static final Logger _log = Logger.getLogger(L1Party.class.getName());
 
-	private final List<L1PcInstance> _membersList = new ArrayList<L1PcInstance>();
+	private final List<L1PcInstance> _membersList = Lists.newList();
 
 	private L1PcInstance _leader = null;
 
@@ -39,15 +37,15 @@ public class L1Party {
 		if (pc == null) {
 			throw new NullPointerException();
 		}
-		if (_membersList.size() == Config.MAX_PT && !_leader.isGm()
-				|| _membersList.contains(pc)) {
+		if (((_membersList.size() == Config.MAX_PT) && !_leader.isGm()) || _membersList.contains(pc)) {
 			return;
 		}
 
 		if (_membersList.isEmpty()) {
 			// 最初のPTメンバーであればリーダーにする
 			setLeader(pc);
-		} else {
+		}
+		else {
 			createMiniHp(pc);
 		}
 
@@ -106,10 +104,8 @@ public class L1Party {
 		L1PcInstance[] members = getMembers();
 
 		for (L1PcInstance member : members) {
-			member.sendPackets(new S_HPMeter(pc.getId(), 100
-					* pc.getCurrentHp() / pc.getMaxHp()));
-			pc.sendPackets(new S_HPMeter(member.getId(), 100
-					* member.getCurrentHp() / member.getMaxHp()));
+			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
+			pc.sendPackets(new S_HPMeter(member.getId(), 100 * member.getCurrentHp() / member.getMaxHp()));
 		}
 	}
 
@@ -127,8 +123,7 @@ public class L1Party {
 		L1PcInstance[] members = getMembers();
 
 		for (L1PcInstance member : members) { // パーティーメンバー分更新
-			member.sendPackets(new S_HPMeter(pc.getId(), 100
-					* pc.getCurrentHp() / pc.getMaxHp()));
+			member.sendPackets(new S_HPMeter(pc.getId(), 100 * pc.getCurrentHp() / pc.getMaxHp()));
 		}
 	}
 
@@ -150,10 +145,11 @@ public class L1Party {
 
 	public void leaveMember(L1PcInstance pc) {
 		L1PcInstance[] members = getMembers();
-		if (isLeader(pc) || getNumOfMembers() == 2) {
+		if (isLeader(pc) || (getNumOfMembers() == 2)) {
 			// パーティーリーダーの場合
 			breakup();
-		} else {
+		}
+		else {
 			removeMember(pc);
 			for (L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
@@ -161,13 +157,12 @@ public class L1Party {
 			sendLeftMessage(pc, pc);
 			// パーティーリーダーでない場合
 			/*
-			  if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ
-			  removeMember(pc); L1PcInstance leader = getLeader();
-			  removeMember(leader);
-			  sendLeftMessage(pc, pc); sendLeftMessage(leader, pc); } else { //
-			      残りのパーティーメンバーが２人以上いる removeMember(pc); for (L1PcInstance member :
-			  members) { sendLeftMessage(member, pc); } sendLeftMessage(pc,
-			  pc); }
+			 * if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ
+			 * removeMember(pc); L1PcInstance leader = getLeader();
+			 * removeMember(leader); sendLeftMessage(pc, pc);
+			 * sendLeftMessage(leader, pc); } else { // 残りのパーティーメンバーが２人以上いる
+			 * removeMember(pc); for (L1PcInstance member : members) {
+			 * sendLeftMessage(member, pc); } sendLeftMessage(pc, pc); }
 			 */
 		}
 	}
@@ -176,7 +171,8 @@ public class L1Party {
 		if (getNumOfMembers() == 2) {
 			// パーティーメンバーが自分とリーダーのみ
 			breakup();
-		} else {
+		}
+		else {
 			removeMember(pc);
 			for (L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
@@ -187,13 +183,14 @@ public class L1Party {
 
 	private void showAddPartyInfo(L1PcInstance pc) {
 		for (L1PcInstance member : getMembers()) {
-			if (pc.getId() == getLeader().getId() && getNumOfMembers() == 1) {
+			if ((pc.getId() == getLeader().getId()) && (getNumOfMembers() == 1)) {
 				continue;
 			}
 			// 發送給隊長的封包
 			if (pc.getId() == member.getId()) {
 				pc.sendPackets(new S_Party(0x68, pc));
-			} else {// 其他成員封包
+			}
+			else {// 其他成員封包
 				member.sendPackets(new S_Party(0x69, pc));
 			}
 			member.sendPackets(new S_Party(0x6e, member));

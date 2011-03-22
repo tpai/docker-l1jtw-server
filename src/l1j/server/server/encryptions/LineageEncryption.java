@@ -1,23 +1,23 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.encryptions;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import l1j.server.server.types.UChar8;
 import l1j.server.server.types.ULong32;
+import l1j.server.server.utils.collections.Maps;
 
 /**
  * Handler Encryption/Decryption of lineage packet data
@@ -26,7 +26,7 @@ import l1j.server.server.types.ULong32;
  */
 public class LineageEncryption {
 	// Initialized keys - one key per client ID
-	private static HashMap<Object, LineageKeys> keyMap = new HashMap<Object, LineageKeys>();
+	private static Map<Object, LineageKeys> keyMap = Maps.newMap();
 
 	// The current key to use for encryption/decryption
 	// private static LineageKeys currentKeys = null;
@@ -43,15 +43,15 @@ public class LineageEncryption {
 	 * @throws ClientIdExistsException
 	 *             If a client id already is in use
 	 */
-	public static LineageKeys initKeys(Object clientID, long seed)
-			throws ClientIdExistsException {
+	public static LineageKeys initKeys(Object clientID, long seed) throws ClientIdExistsException {
 		if (keyMap.containsKey(clientID)) {
 			throw new ClientIdExistsException();
 		}
 
 		LineageKeys keys = new LineageKeys();
 
-		long key[] = { seed, 0x930FD7E2L };
+		long key[] =
+		{ seed, 0x930FD7E2L };
 
 		LineageBlowfish.getSeeds(key);
 
@@ -94,8 +94,7 @@ public class LineageEncryption {
 	 * @throws NoEncryptionKeysSelectedException
 	 *             If no keys have been prepared
 	 */
-	public static char[] encrypt(char[] buf, LineageKeys currentKeys)
-			throws NoEncryptionKeysSelectedException {
+	public static char[] encrypt(char[] buf, LineageKeys currentKeys) throws NoEncryptionKeysSelectedException {
 		if (currentKeys == null) {
 			throw new NoEncryptionKeysSelectedException();
 		}
@@ -105,8 +104,7 @@ public class LineageEncryption {
 		_encrypt(buf, currentKeys);
 
 		currentKeys.encodeKey[0] ^= mask;
-		currentKeys.encodeKey[1] = ULong32.add(currentKeys.encodeKey[1],
-				0x287EFFC3L);
+		currentKeys.encodeKey[1] = ULong32.add(currentKeys.encodeKey[1], 0x287EFFC3L);
 
 		// updatekeye( cp, e );
 		return buf;
@@ -121,8 +119,7 @@ public class LineageEncryption {
 	 * @throws NoEncryptionKeysSelectedException
 	 *             If no keys have been prepared
 	 */
-	public static byte[] encrypt(byte[] buf, LineageKeys currentKeys)
-			throws NoEncryptionKeysSelectedException {
+	public static byte[] encrypt(byte[] buf, LineageKeys currentKeys) throws NoEncryptionKeysSelectedException {
 		if (currentKeys == null) {
 			throw new NoEncryptionKeysSelectedException();
 		}
@@ -132,8 +129,7 @@ public class LineageEncryption {
 		_encrypt(buf, currentKeys);
 
 		currentKeys.encodeKey[0] ^= mask;
-		currentKeys.encodeKey[1] = ULong32.add(currentKeys.encodeKey[1],
-				0x287EFFC3L);
+		currentKeys.encodeKey[1] = ULong32.add(currentKeys.encodeKey[1], 0x287EFFC3L);
 
 		// updatekeye( cp, e );
 		return buf;
@@ -148,8 +144,7 @@ public class LineageEncryption {
 	 * @throws NoEncryptionKeysSelectedException
 	 *             If no keys have been prepared
 	 */
-	public static char[] decrypt(char[] buf, LineageKeys currentKeys)
-			throws NoEncryptionKeysSelectedException {
+	public static char[] decrypt(char[] buf, LineageKeys currentKeys) throws NoEncryptionKeysSelectedException {
 		if (currentKeys == null) {
 			throw new NoEncryptionKeysSelectedException();
 		}
@@ -159,8 +154,7 @@ public class LineageEncryption {
 		long mask = ULong32.fromArray(buf);
 
 		currentKeys.decodeKey[0] ^= mask;
-		currentKeys.decodeKey[1] = ULong32.add(currentKeys.decodeKey[1],
-				0x287EFFC3L);
+		currentKeys.decodeKey[1] = ULong32.add(currentKeys.decodeKey[1], 0x287EFFC3L);
 
 		// updatekeyd( cp, d );
 		return buf;
@@ -175,8 +169,7 @@ public class LineageEncryption {
 	 * @throws NoEncryptionKeysSelectedException
 	 *             If no keys have been prepared
 	 */
-	public static byte[] decrypt(byte[] buf, int length, LineageKeys currentKeys)
-			throws NoEncryptionKeysSelectedException {
+	public static byte[] decrypt(byte[] buf, int length, LineageKeys currentKeys) throws NoEncryptionKeysSelectedException {
 		if (currentKeys == null) {
 			throw new NoEncryptionKeysSelectedException();
 		}
@@ -186,8 +179,7 @@ public class LineageEncryption {
 		long mask = ULong32.fromArray(buf);
 
 		currentKeys.decodeKey[0] ^= mask;
-		currentKeys.decodeKey[1] = ULong32.add(currentKeys.decodeKey[1],
-				0x287EFFC3L);
+		currentKeys.decodeKey[1] = ULong32.add(currentKeys.decodeKey[1], 0x287EFFC3L);
 
 		// updatekeyd( cp, d );
 		return buf;

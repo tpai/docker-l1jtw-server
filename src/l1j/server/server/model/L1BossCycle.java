@@ -1,26 +1,24 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import l1j.server.server.utils.Random;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -36,11 +34,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import l1j.server.server.datatables.BossSpawnTable;
 import l1j.server.server.utils.PerformanceTimer;
+import l1j.server.server.utils.Random;
+import l1j.server.server.utils.collections.Maps;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class L1BossCycle {
 	@XmlAttribute(name = "Name")
 	private String _name;
+
 	@XmlElement(name = "Base")
 	private Base _base;
 
@@ -48,6 +49,7 @@ public class L1BossCycle {
 	private static class Base {
 		@XmlAttribute(name = "Date")
 		private String _date;
+
 		@XmlAttribute(name = "Time")
 		private String _time;
 
@@ -56,7 +58,7 @@ public class L1BossCycle {
 		}
 
 		public void setDate(String date) {
-			this._date = date;
+			_date = date;
 		}
 
 		public String getTime() {
@@ -64,7 +66,7 @@ public class L1BossCycle {
 		}
 
 		public void setTime(String time) {
-			this._time = time;
+			_time = time;
 		}
 	}
 
@@ -75,8 +77,10 @@ public class L1BossCycle {
 	private static class Cycle {
 		@XmlAttribute(name = "Period")
 		private String _period;
+
 		@XmlAttribute(name = "Start")
 		private String _start;
+
 		@XmlAttribute(name = "End")
 		private String _end;
 
@@ -85,7 +89,7 @@ public class L1BossCycle {
 		}
 
 		public void setPeriod(String period) {
-			this._period = period;
+			_period = period;
 		}
 
 		public String getStart() {
@@ -106,19 +110,29 @@ public class L1BossCycle {
 	}
 
 	private Calendar _baseDate;
+
 	private int _period; // 分換算
+
 	private int _periodDay;
+
 	private int _periodHour;
+
 	private int _periodMinute;
 
 	private int _startTime; // 分換算
+
 	private int _endTime; // 分換算
+
 	private static SimpleDateFormat _sdfYmd = new SimpleDateFormat("yyyy/MM/dd");
+
 	private static SimpleDateFormat _sdfTime = new SimpleDateFormat("HH:mm");
-	private static SimpleDateFormat _sdf = new SimpleDateFormat(
-			"yyyy/MM/dd HH:mm");
+
+	private static SimpleDateFormat _sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
 	private static Date _initDate = new Date();
+
 	private static String _initTime = "0:00";
+
 	private static final Calendar START_UP = Calendar.getInstance();
 
 	public void init() throws Exception {
@@ -130,15 +144,18 @@ public class L1BossCycle {
 			getBase().setDate(_sdfYmd.format(_initDate));
 			getBase().setTime(_initTime);
 			base = getBase();
-		} else {
+		}
+		else {
 			try {
 				_sdfYmd.parse(base.getDate());
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				base.setDate(_sdfYmd.format(_initDate));
 			}
 			try {
 				_sdfTime.parse(base.getTime());
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				base.setTime(_initTime);
 			}
 		}
@@ -148,7 +165,7 @@ public class L1BossCycle {
 
 		// 出現周期の初期化,チェック
 		Cycle spawn = getCycle();
-		if (spawn == null || spawn.getPeriod() == null) {
+		if ((spawn == null) || (spawn.getPeriod() == null)) {
 			throw new Exception("CycleのPeriodは必須");
 		}
 
@@ -174,11 +191,11 @@ public class L1BossCycle {
 			throw new Exception("must be Period > 0");
 		}
 		// start補正
-		if (_startTime < 0 || _period < _startTime) { // 補正
+		if ((_startTime < 0) || (_period < _startTime)) { // 補正
 			_startTime = 0;
 		}
 		// end補正
-		if (_endTime < 0 || _period < _endTime || end == null) { // 補正
+		if ((_endTime < 0) || (_period < _endTime) || (end == null)) { // 補正
 			_endTime = _period;
 		}
 		if (_startTime > _endTime) {
@@ -189,7 +206,8 @@ public class L1BossCycle {
 		if (_startTime == _endTime) {
 			if (_endTime == _period) {
 				_startTime--;
-			} else {
+			}
+			else {
 				_endTime++;
 			}
 		}
@@ -204,18 +222,9 @@ public class L1BossCycle {
 	}
 
 	/*
-	 * 指定日時を含む周期(の開始時間)を返す
-	 * ex.周期が2時間の場合
-	 *  target base 戻り値
-	 *   4:59  7:00 3:00
-	 *   5:00  7:00 5:00
-	 *   5:01  7:00 5:00
-	 *   6:00  7:00 5:00
-	 *   6:59  7:00 5:00
-	 *   7:00  7:00 7:00
-	 *   7:01  7:00 7:00
-	 *   9:00  7:00 9:00
-	 *   9:01  7:00 9:00
+	 * 指定日時を含む周期(の開始時間)を返す ex.周期が2時間の場合 target base 戻り値 4:59 7:00 3:00 5:00 7:00
+	 * 5:00 5:01 7:00 5:00 6:00 7:00 5:00 6:59 7:00 5:00 7:00 7:00 7:00 7:01
+	 * 7:00 7:00 9:00 7:00 9:00 9:01 7:00 9:00
 	 */
 	private Calendar getBaseCycleOnTarget(Calendar target) {
 		// 基準日時取得
@@ -248,6 +257,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現タイミングを算出する。
+	 * 
 	 * @return 出現する時間
 	 */
 	public Calendar calcSpawnTime(Calendar now) {
@@ -264,6 +274,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現開始時間を算出する。
+	 * 
 	 * @return 周期の出現開始時間
 	 */
 	public Calendar getSpawnStartTime(Calendar now) {
@@ -276,6 +287,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、出現終了時間を算出する。
+	 * 
 	 * @return 周期の出現終了時間
 	 */
 	public Calendar getSpawnEndTime(Calendar now) {
@@ -288,6 +300,7 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時を含む周期に対して、次の周期の出現タイミングを算出する。
+	 * 
 	 * @return 次の周期の出現する時間
 	 */
 	public Calendar nextSpawnTime(Calendar now) {
@@ -301,13 +314,15 @@ public class L1BossCycle {
 
 	/**
 	 * 指定日時に対して、最近の出現開始時間を返却する。
+	 * 
 	 * @return 最近の出現開始時間
 	 */
 	public Calendar getLatestStartTime(Calendar now) {
 		// 基準日時取得
 		Calendar latestStart = getSpawnStartTime(now);
 		if (!now.before(latestStart)) { // now >= latestStart
-		} else {
+		}
+		else {
 			// now < latestStartなら1個前が最近の周期
 			latestStart.add(Calendar.DAY_OF_MONTH, -_periodDay);
 			latestStart.add(Calendar.HOUR_OF_DAY, -_periodHour);
@@ -350,8 +365,7 @@ public class L1BossCycle {
 		System.out.print("loading boss cycle...");
 		try {
 			// BookOrder クラスをバインディングするコンテキストを生成
-			JAXBContext context = JAXBContext
-					.newInstance(L1BossCycle.L1BossCycleList.class);
+			JAXBContext context = JAXBContext.newInstance(L1BossCycle.L1BossCycleList.class);
 
 			// XML -> POJO 変換を行うアンマーシャラを生成
 			Unmarshaller um = context.createUnmarshaller();
@@ -377,7 +391,8 @@ public class L1BossCycle {
 			}
 			// spawnlist_bossから読み込んで配置
 			BossSpawnTable.fillSpawnTable();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, "BossCycleを読み込めませんでした", e);
 			System.exit(0);
 		}
@@ -386,7 +401,9 @@ public class L1BossCycle {
 
 	/**
 	 * 周期名と指定日時に対する出現期間、出現時間をコンソール出力
-	 * @param now 周期を出力する日時
+	 * 
+	 * @param now
+	 *            周期を出力する日時
 	 */
 	public void showData(Calendar now) {
 		System.out.println("[Type]" + getName());
@@ -395,7 +412,7 @@ public class L1BossCycle {
 		System.out.println(_sdf.format(getSpawnEndTime(now).getTime()));
 	}
 
-	private static HashMap<String, L1BossCycle> _cycleMap = new HashMap<String, L1BossCycle>();
+	private static Map<String, L1BossCycle> _cycleMap = Maps.newMap();
 
 	public static L1BossCycle getBossCycle(String type) {
 		return _cycleMap.get(type);
@@ -406,7 +423,7 @@ public class L1BossCycle {
 	}
 
 	public void setName(String name) {
-		this._name = name;
+		_name = name;
 	}
 
 	public Base getBase() {
@@ -414,7 +431,7 @@ public class L1BossCycle {
 	}
 
 	public void setBase(Base base) {
-		this._base = base;
+		_base = base;
 	}
 
 	public Cycle getCycle() {
@@ -422,7 +439,7 @@ public class L1BossCycle {
 	}
 
 	public void setCycle(Cycle cycle) {
-		this._cycle = cycle;
+		_cycle = cycle;
 	}
 
 	private static Logger _log = Logger.getLogger(L1BossCycle.class.getName());

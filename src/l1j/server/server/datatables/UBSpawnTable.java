@@ -1,23 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,13 +25,14 @@ import l1j.server.server.model.L1UbPattern;
 import l1j.server.server.model.L1UbSpawn;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Maps;
 
 public class UBSpawnTable {
 	private static Logger _log = Logger.getLogger(UBSpawnTable.class.getName());
 
 	private static UBSpawnTable _instance;
 
-	private HashMap<Integer, L1UbSpawn> _spawnTable = new HashMap<Integer, L1UbSpawn>();;
+	private Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();;
 
 	public static UBSpawnTable getInstance() {
 		if (_instance == null) {
@@ -57,8 +57,7 @@ public class UBSpawnTable {
 			rs = pstm.executeQuery();
 
 			while (rs.next()) {
-				L1Npc npcTemp = NpcTable.getInstance()
-						.getTemplate(rs.getInt(6));
+				L1Npc npcTemp = NpcTable.getInstance().getTemplate(rs.getInt(6));
 				if (npcTemp == null) {
 					continue;
 				}
@@ -76,10 +75,12 @@ public class UBSpawnTable {
 
 				_spawnTable.put(spawnDat.getId(), spawnDat);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			// problem with initializing spawn, go to next one
 			_log.warning("spawn couldnt be initialized:" + e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -106,16 +107,17 @@ public class UBSpawnTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT MAX(pattern) FROM spawnlist_ub WHERE ub_id=?");
+			pstm = con.prepareStatement("SELECT MAX(pattern) FROM spawnlist_ub WHERE ub_id=?");
 			pstm.setInt(1, ubId);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
 				n = rs.getInt(1);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -126,7 +128,7 @@ public class UBSpawnTable {
 	public L1UbPattern getPattern(int ubId, int patternNumer) {
 		L1UbPattern pattern = new L1UbPattern();
 		for (L1UbSpawn spawn : _spawnTable.values()) {
-			if (spawn.getUbId() == ubId && spawn.getPattern() == patternNumer) {
+			if ((spawn.getUbId() == ubId) && (spawn.getPattern() == patternNumer)) {
 				pattern.addSpawn(spawn.getGroup(), spawn);
 			}
 		}

@@ -1,22 +1,19 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.shop;
 
-import java.util.ArrayList;
 import java.util.List;
-import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.datatables.CastleTable;
@@ -35,15 +32,18 @@ import l1j.server.server.templates.L1Castle;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1ShopItem;
 import l1j.server.server.utils.IntRange;
+import l1j.server.server.utils.Random;
+import l1j.server.server.utils.collections.Lists;
 
 public class L1Shop {
 	private final int _npcId;
+
 	private final List<L1ShopItem> _sellingItems;
+
 	private final List<L1ShopItem> _purchasingItems;
 
-	public L1Shop(int npcId, List<L1ShopItem> sellingItems,
-			List<L1ShopItem> purchasingItems) {
-		if (sellingItems == null || purchasingItems == null) {
+	public L1Shop(int npcId, List<L1ShopItem> sellingItems, List<L1ShopItem> purchasingItems) {
+		if ((sellingItems == null) || (purchasingItems == null)) {
 			throw new NullPointerException();
 		}
 
@@ -101,8 +101,7 @@ public class L1Shop {
 	}
 
 	private int getAssessedPrice(L1ShopItem item) {
-		return (int) (item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE / item
-				.getPackCount());
+		return (int) (item.getPrice() * Config.RATE_SHOP_PURCHASING_PRICE / item.getPackCount());
 	}
 
 	/**
@@ -113,15 +112,14 @@ public class L1Shop {
 	 * @return 査定された買取可能アイテムのリスト
 	 */
 	public List<L1AssessedItem> assessItems(L1PcInventory inv) {
-		List<L1AssessedItem> result = new ArrayList<L1AssessedItem>();
+		List<L1AssessedItem> result = Lists.newList();
 		for (L1ShopItem item : _purchasingItems) {
 			for (L1ItemInstance targetItem : inv.findItemsId(item.getItemId())) {
 				if (!isPurchaseableItem(targetItem)) {
 					continue;
 				}
 
-				result.add(new L1AssessedItem(targetItem.getId(),
-						getAssessedPrice(item)));
+				result.add(new L1AssessedItem(targetItem.getId(), getAssessedPrice(item)));
 			}
 		}
 		return result;
@@ -162,7 +160,8 @@ public class L1Shop {
 				if (!pc.getInventory().checkItem(temp.getItemId())) {
 					totalCount += 1;
 				}
-			} else {
+			}
+			else {
 				totalCount += 1;
 			}
 		}
@@ -188,15 +187,13 @@ public class L1Shop {
 		int castleTax = calc.calcCastleTaxPrice(price);
 		int nationalTax = calc.calcNationalTaxPrice(price);
 		// アデン城・ディアド城の場合は国税なし
-		if (castleId == L1CastleLocation.ADEN_CASTLE_ID
-				|| castleId == L1CastleLocation.DIAD_CASTLE_ID) {
+		if ((castleId == L1CastleLocation.ADEN_CASTLE_ID) || (castleId == L1CastleLocation.DIAD_CASTLE_ID)) {
 			castleTax += nationalTax;
 			nationalTax = 0;
 		}
 
-		if (castleId != 0 && castleTax > 0) {
-			L1Castle castle = CastleTable.getInstance()
-					.getCastleTable(castleId);
+		if ((castleId != 0) && (castleTax > 0)) {
+			L1Castle castle = CastleTable.getInstance().getCastleTable(castleId);
 
 			synchronized (castle) {
 				int money = castle.getPublicMoney();
@@ -208,8 +205,7 @@ public class L1Shop {
 			}
 
 			if (nationalTax > 0) {
-				L1Castle aden = CastleTable.getInstance().getCastleTable(
-						L1CastleLocation.ADEN_CASTLE_ID);
+				L1Castle aden = CastleTable.getInstance().getCastleTable(L1CastleLocation.ADEN_CASTLE_ID);
 				synchronized (aden) {
 					int money = aden.getPublicMoney();
 					if (2000000000 > money) {
@@ -238,8 +234,7 @@ public class L1Shop {
 			return;
 		}
 
-		L1Castle castle = CastleTable.getInstance().getCastleTable(
-				L1CastleLocation.DIAD_CASTLE_ID);
+		L1Castle castle = CastleTable.getInstance().getCastleTable(L1CastleLocation.DIAD_CASTLE_ID);
 		synchronized (castle) {
 			int money = castle.getPublicMoney();
 			if (2000000000 > money) {
@@ -261,7 +256,7 @@ public class L1Shop {
 		// 町の売上
 		if (!L1World.getInstance().isProcessingContributionTotal()) {
 			int town_id = L1TownLocation.getTownIdByNpcid(_npcId);
-			if (town_id >= 1 && town_id <= 10) {
+			if ((town_id >= 1) && (town_id <= 10)) {
 				TownTable.getInstance().addSalesMoney(town_id, price);
 			}
 		}
@@ -278,8 +273,7 @@ public class L1Shop {
 	 * 販売取引
 	 */
 	private void sellItems(L1PcInventory inv, L1ShopBuyOrderList orderList) {
-		if (!inv.consumeItem(L1ItemId.ADENA, orderList
-				.getTotalPriceTaxIncluded())) {
+		if (!inv.consumeItem(L1ItemId.ADENA, orderList.getTotalPriceTaxIncluded())) {
 			throw new IllegalStateException("購入に必要なアデナを消費できませんでした。");
 		}
 		for (L1ShopBuyOrder order : orderList.getList()) {
@@ -289,22 +283,28 @@ public class L1Shop {
 			item.setCount(amount);
 			item.setIdentified(true);
 			inv.storeItem(item);
-			if (_npcId == 70068 || _npcId == 70020) {
+			if ((_npcId == 70068) || (_npcId == 70020)) {
 				item.setIdentified(false);
 				int chance = Random.nextInt(100) + 1;
 				if (chance <= 15) {
 					item.setEnchantLevel(-2);
-				} else if (chance >= 16 && chance <= 30) {
+				}
+				else if ((chance >= 16) && (chance <= 30)) {
 					item.setEnchantLevel(-1);
-				} else if (chance >= 31 && chance <= 70) {
+				}
+				else if ((chance >= 31) && (chance <= 70)) {
 					item.setEnchantLevel(0);
-				} else if (chance >= 71 && chance <= 87) {
-					item.setEnchantLevel(Random.nextInt(2)+1);
-				} else if (chance >= 88 && chance <= 97) {
-					item.setEnchantLevel(Random.nextInt(3)+3);
-				} else if (chance >= 98 && chance <= 99) {
+				}
+				else if ((chance >= 71) && (chance <= 87)) {
+					item.setEnchantLevel(Random.nextInt(2) + 1);
+				}
+				else if ((chance >= 88) && (chance <= 97)) {
+					item.setEnchantLevel(Random.nextInt(3) + 3);
+				}
+				else if ((chance >= 98) && (chance <= 99)) {
 					item.setEnchantLevel(6);
-				} else if (chance == 100) {
+				}
+				else if (chance == 100) {
 					item.setEnchantLevel(7);
 				}
 			}
@@ -338,8 +338,7 @@ public class L1Shop {
 		L1PcInventory inv = orderList.getPc().getInventory();
 		int totalPrice = 0;
 		for (L1ShopSellOrder order : orderList.getList()) {
-			int count = inv.removeItem(order.getItem().getTargetId(), order
-					.getCount());
+			int count = inv.removeItem(order.getItem().getTargetId(), order.getCount());
 			totalPrice += order.getItem().getAssessedPrice() * count;
 		}
 

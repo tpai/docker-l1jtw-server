@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.sql.Connection;
@@ -19,7 +18,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -31,17 +29,16 @@ import l1j.server.server.storage.CharacterStorage;
 import l1j.server.server.storage.mysql.MySqlCharacterStorage;
 import l1j.server.server.templates.L1CharName;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Maps;
 
 public class CharacterTable {
 	private CharacterStorage _charStorage;
 
 	private static CharacterTable _instance;
 
-	private static Logger _log = Logger.getLogger(CharacterTable.class
-			.getName());
+	private static Logger _log = Logger.getLogger(CharacterTable.class.getName());
 
-	private final Map<String, L1CharName> _charNameList =
-			new ConcurrentHashMap<String, L1CharName>();
+	private final Map<String, L1CharName> _charNameList = Maps.newConcurrentMap();
 
 	private CharacterTable() {
 		_charStorage = new MySqlCharacterStorage();
@@ -75,8 +72,7 @@ public class CharacterTable {
 		}
 	}
 
-	public void deleteCharacter(String accountName, String charName)
-			throws Exception {
+	public void deleteCharacter(String accountName, String charName) throws Exception {
 		// 多分、同期は必要ない
 		_charStorage.deleteCharacter(accountName, charName);
 		if (_charNameList.containsKey(charName)) {
@@ -111,7 +107,8 @@ public class CharacterTable {
 			 * l1pcinstance.setClanname(clan.GetClanName()); }
 			 */
 			_log.finest("loadCharacter: " + pc.getName());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return pc;
@@ -125,9 +122,11 @@ public class CharacterTable {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con.prepareStatement("UPDATE characters SET OnlineStatus=0");
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -138,14 +137,15 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE characters SET OnlineStatus=? WHERE objid=?");
+			pstm = con.prepareStatement("UPDATE characters SET OnlineStatus=? WHERE objid=?");
 			pstm.setInt(1, pc.getOnlineStatus());
 			pstm.setInt(2, pc.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -160,14 +160,15 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE characters SET PartnerID=? WHERE objid=?");
+			pstm = con.prepareStatement("UPDATE characters SET PartnerID=? WHERE objid=?");
 			pstm.setInt(1, partnerId);
 			pstm.setInt(2, targetId);
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -178,11 +179,8 @@ public class CharacterTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE characters SET OriginalStr= ?"
-							+ ", OriginalCon= ?, OriginalDex= ?, OriginalCha= ?"
-							+ ", OriginalInt= ?, OriginalWis= ?"
-							+ " WHERE objid=?");
+			pstm = con.prepareStatement("UPDATE characters SET OriginalStr= ?" + ", OriginalCon= ?, OriginalDex= ?, OriginalCha= ?"
+					+ ", OriginalInt= ?, OriginalWis= ?" + " WHERE objid=?");
 			pstm.setInt(1, pc.getBaseStr());
 			pstm.setInt(2, pc.getBaseCon());
 			pstm.setInt(3, pc.getBaseDex());
@@ -191,9 +189,11 @@ public class CharacterTable {
 			pstm.setInt(6, pc.getBaseWis());
 			pstm.setInt(7, pc.getId());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -212,14 +212,15 @@ public class CharacterTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT account_name FROM characters WHERE char_name=?");
+			pstm = con.prepareStatement("SELECT account_name FROM characters WHERE char_name=?");
 			pstm.setString(1, name);
 			rs = pstm.executeQuery();
 			result = rs.next();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.warning("could not check existing charname:" + e.getMessage());
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -235,8 +236,7 @@ public class CharacterTable {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM characters");
+			pstm = con.prepareStatement("SELECT * FROM characters");
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				cn = new L1CharName();
@@ -245,9 +245,11 @@ public class CharacterTable {
 				cn.setId(rs.getInt("objid"));
 				_charNameList.put(name, cn);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -255,8 +257,7 @@ public class CharacterTable {
 	}
 
 	public L1CharName[] getCharNameList() {
-		return _charNameList.values().toArray(new L1CharName[_charNameList
-				.size()]);
+		return _charNameList.values().toArray(new L1CharName[_charNameList.size()]);
 	}
 
 }

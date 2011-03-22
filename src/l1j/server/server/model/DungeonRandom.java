@@ -1,47 +1,44 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
+
+import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
-import l1j.server.server.utils.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.skill.L1SkillId;
+import l1j.server.server.utils.Random;
 import l1j.server.server.utils.SQLUtil;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.collections.Maps;
 
 // Referenced classes of package l1j.server.server.model:
 // L1Teleport, L1PcInstance
 
 public class DungeonRandom {
 
-	private static Logger _log = Logger.getLogger(DungeonRandom.class
-			.getName());
+	private static Logger _log = Logger.getLogger(DungeonRandom.class.getName());
 
 	private static DungeonRandom _instance = null;
 
-	private static Map<String, NewDungeonRandom> _dungeonMap =
-			new HashMap<String, NewDungeonRandom>();
+	private static Map<String, NewDungeonRandom> _dungeonMap = Maps.newMap();
 
 	public static DungeonRandom getInstance() {
 		if (_instance == null) {
@@ -64,8 +61,7 @@ public class DungeonRandom {
 				int srcMapId = rs.getInt("src_mapid");
 				int srcX = rs.getInt("src_x");
 				int srcY = rs.getInt("src_y");
-				String key = new StringBuilder().append(srcMapId).append(srcX)
-						.append(srcY).toString();
+				String key = new StringBuilder().append(srcMapId).append(srcX).append(srcY).toString();
 				int[] newX = new int[5];
 				int[] newY = new int[5];
 				short[] newMapId = new short[5];
@@ -85,16 +81,17 @@ public class DungeonRandom {
 				newY[4] = rs.getInt("new_y5");
 				newMapId[4] = rs.getShort("new_mapid5");
 				int heading = rs.getInt("new_heading");
-				NewDungeonRandom newDungeonRandom = new NewDungeonRandom(newX, newY,
-						newMapId, heading);
+				NewDungeonRandom newDungeonRandom = new NewDungeonRandom(newX, newY, newMapId, heading);
 				if (_dungeonMap.containsKey(key)) {
 					_log.log(Level.WARNING, "同じキーのdungeonデータがあります。key=" + key);
 				}
 				_dungeonMap.put(key, newDungeonRandom);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -103,12 +100,14 @@ public class DungeonRandom {
 
 	private static class NewDungeonRandom {
 		int[] _newX = new int[5];
+
 		int[] _newY = new int[5];
+
 		short[] _newMapId = new short[5];
+
 		int _heading;
 
-		private NewDungeonRandom(int[] newX, int[] newY, short[] newMapId,
-				int heading) {
+		private NewDungeonRandom(int[] newX, int[] newY, short[] newMapId, int heading) {
 			for (int i = 0; i < 5; i++) {
 				_newX[i] = newX[i];
 				_newY[i] = newY[i];
@@ -119,8 +118,7 @@ public class DungeonRandom {
 	}
 
 	public boolean dg(int locX, int locY, int mapId, L1PcInstance pc) {
-		String key = new StringBuilder().append(mapId).append(locX)
-				.append(locY).toString();
+		String key = new StringBuilder().append(mapId).append(locX).append(locY).toString();
 		if (_dungeonMap.containsKey(key)) {
 			int rnd = Random.nextInt(5);
 			NewDungeonRandom newDungeonRandom = _dungeonMap.get(key);

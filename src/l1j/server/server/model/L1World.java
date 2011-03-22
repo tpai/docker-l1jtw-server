@@ -1,25 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
@@ -31,17 +28,25 @@ import l1j.server.server.model.map.L1Map;
 import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.ServerBasePacket;
 import l1j.server.server.types.Point;
+import l1j.server.server.utils.collections.Lists;
+import l1j.server.server.utils.collections.Maps;
 
 public class L1World {
 	private static Logger _log = Logger.getLogger(L1World.class.getName());
 
-	private final ConcurrentHashMap<String, L1PcInstance> _allPlayers;
-	private final ConcurrentHashMap<Integer, L1PetInstance> _allPets;
-	private final ConcurrentHashMap<Integer, L1SummonInstance> _allSummons;
-	private final ConcurrentHashMap<Integer, L1Object> _allObjects;
-	private final ConcurrentHashMap<Integer, L1Object>[] _visibleObjects;
+	private final Map<String, L1PcInstance> _allPlayers;
+
+	private final Map<Integer, L1PetInstance> _allPets;
+
+	private final Map<Integer, L1SummonInstance> _allSummons;
+
+	private final Map<Integer, L1Object> _allObjects;
+
+	private final Map<Integer, L1Object>[] _visibleObjects;
+
 	private final CopyOnWriteArrayList<L1War> _allWars;
-	private final ConcurrentHashMap<String, L1Clan> _allClans;
+
+	private final Map<String, L1Clan> _allClans;
 
 	private int _weather = 4;
 
@@ -54,16 +59,16 @@ public class L1World {
 	private static L1World _instance;
 
 	private L1World() {
-		_allPlayers = new ConcurrentHashMap<String, L1PcInstance>(); // 全てのプレイヤー
-		_allPets = new ConcurrentHashMap<Integer, L1PetInstance>(); // 全てのペット
-		_allSummons = new ConcurrentHashMap<Integer, L1SummonInstance>(); // 全てのサモンモンスター
-		_allObjects = new ConcurrentHashMap<Integer, L1Object>(); // 全てのオブジェクト(L1ItemInstance入り、L1Inventoryはなし)
-		_visibleObjects = new ConcurrentHashMap[MAX_MAP_ID + 1]; // マップ毎のオブジェクト(L1Inventory入り、L1ItemInstanceはなし)
+		_allPlayers = Maps.newConcurrentMap(); // 全てのプレイヤー
+		_allPets = Maps.newConcurrentMap(); // 全てのペット
+		_allSummons = Maps.newConcurrentMap(); // 全てのサモンモンスター
+		_allObjects = Maps.newConcurrentMap(); // 全てのオブジェクト(L1ItemInstance入り、L1Inventoryはなし)
+		_visibleObjects = new Map[MAX_MAP_ID + 1]; // マップ毎のオブジェクト(L1Inventory入り、L1ItemInstanceはなし)
 		_allWars = new CopyOnWriteArrayList<L1War>(); // 全ての戦争
-		_allClans = new ConcurrentHashMap<String, L1Clan>(); // 全てのクラン(Online/Offlineどちらも)
+		_allClans = Maps.newConcurrentMap(); // 全てのクラン(Online/Offlineどちらも)
 
 		for (int i = 0; i <= MAX_MAP_ID; i++) {
-			_visibleObjects[i] = new ConcurrentHashMap<Integer, L1Object>();
+			_visibleObjects[i] = Maps.newConcurrentMap();
 		}
 	}
 
@@ -89,8 +94,7 @@ public class L1World {
 
 		_allObjects.put(object.getId(), object);
 		if (object instanceof L1PcInstance) {
-			_allPlayers.put(((L1PcInstance) object).getName(),
-					(L1PcInstance) object);
+			_allPlayers.put(((L1PcInstance) object).getName(), (L1PcInstance) object);
 		}
 		if (object instanceof L1PetInstance) {
 			_allPets.put(object.getId(), (L1PetInstance) object);
@@ -126,8 +130,7 @@ public class L1World {
 
 	public Collection<L1Object> getObject() {
 		Collection<L1Object> vs = _allValues;
-		return (vs != null) ? vs : (_allValues = Collections
-				.unmodifiableCollection(_allObjects.values()));
+		return (vs != null) ? vs : (_allValues = Collections.unmodifiableCollection(_allObjects.values()));
 	}
 
 	public L1GroundInventory getInventory(int x, int y, short map) {
@@ -136,14 +139,14 @@ public class L1World {
 		Object object = _visibleObjects[map].get(inventoryKey);
 		if (object == null) {
 			return new L1GroundInventory(inventoryKey, x, y, map);
-		} else {
+		}
+		else {
 			return (L1GroundInventory) object;
 		}
 	}
 
 	public L1GroundInventory getInventory(L1Location loc) {
-		return getInventory(loc.getX(), loc.getY(), (short) loc.getMap()
-				.getId());
+		return getInventory(loc.getX(), loc.getY(), (short) loc.getMap().getId());
 	}
 
 	public void addVisibleObject(L1Object object) {
@@ -170,9 +173,8 @@ public class L1World {
 		}
 	}
 
-	private ConcurrentHashMap<Integer, Integer> createLineMap(Point src,
-			Point target) {
-		ConcurrentHashMap<Integer, Integer> lineMap = new ConcurrentHashMap<Integer, Integer>();
+	private Map<Integer, Integer> createLineMap(Point src, Point target) {
+		Map<Integer, Integer> lineMap = Maps.newConcurrentMap();
 
 		/*
 		 * http://www2.starcat.ne.jp/~fussy/algo/algo1-1.htmより
@@ -207,7 +209,8 @@ public class L1World {
 				}
 			}
 			/* 傾きが1より大きい場合 */
-		} else {
+		}
+		else {
 			E = -dy;
 			for (i = 0; i <= dy; i++) {
 				key = (x << 16) + y;
@@ -224,13 +227,11 @@ public class L1World {
 		return lineMap;
 	}
 
-	public ArrayList<L1Object> getVisibleLineObjects(L1Object src,
-			L1Object target) {
-		ConcurrentHashMap<Integer, Integer> lineMap = createLineMap(src
-				.getLocation(), target.getLocation());
+	public List<L1Object> getVisibleLineObjects(L1Object src, L1Object target) {
+		Map<Integer, Integer> lineMap = createLineMap(src.getLocation(), target.getLocation());
 
 		int map = target.getMapId();
-		ArrayList<L1Object> result = new ArrayList<L1Object>();
+		List<L1Object> result = Lists.newList();
 
 		if (map <= MAX_MAP_ID) {
 			for (L1Object element : _visibleObjects[map].values()) {
@@ -248,14 +249,14 @@ public class L1World {
 		return result;
 	}
 
-	public ArrayList<L1Object> getVisibleBoxObjects(L1Object object,
-			int heading, int width, int height) {
+	public List<L1Object> getVisibleBoxObjects(L1Object object, int heading, int width, int height) {
 		int x = object.getX();
 		int y = object.getY();
 		int map = object.getMapId();
 		L1Location location = object.getLocation();
-		ArrayList<L1Object> result = new ArrayList<L1Object>();
-		int headingRotate[] = { 6, 7, 0, 1, 2, 3, 4, 5 };
+		List<L1Object> result = Lists.newList();
+		int headingRotate[] =
+		{ 6, 7, 0, 1, 2, 3, 4, 5 };
 		double cosSita = Math.cos(headingRotate[heading] * Math.PI / 4);
 		double sinSita = Math.sin(headingRotate[heading] * Math.PI / 4);
 
@@ -274,10 +275,9 @@ public class L1World {
 					continue;
 				}
 
-				int distance = location.getTileLineDistance(element
-						.getLocation());
+				int distance = location.getTileLineDistance(element.getLocation());
 				// 直線距離が高さ、幅どちらよりも大きい場合、計算するまでもなく範囲外
-				if (distance > height && distance > width) {
+				if ((distance > height) && (distance > width)) {
 					continue;
 				}
 
@@ -297,8 +297,7 @@ public class L1World {
 				// 奥行きが射程とかみ合わないので直線距離で判定するように変更。
 				// if (rotX > xmin && rotX <= xmax && rotY >= ymin && rotY <=
 				// ymax) {
-				if (rotX > xmin && distance <= xmax && rotY >= ymin
-						&& rotY <= ymax) {
+				if ((rotX > xmin) && (distance <= xmax) && (rotY >= ymin) && (rotY <= ymax)) {
 					result.add(element);
 				}
 			}
@@ -307,14 +306,14 @@ public class L1World {
 		return result;
 	}
 
-	public ArrayList<L1Object> getVisibleObjects(L1Object object) {
+	public List<L1Object> getVisibleObjects(L1Object object) {
 		return getVisibleObjects(object, -1);
 	}
 
-	public ArrayList<L1Object> getVisibleObjects(L1Object object, int radius) {
+	public List<L1Object> getVisibleObjects(L1Object object, int radius) {
 		L1Map map = object.getMap();
 		Point pt = object.getLocation();
-		ArrayList<L1Object> result = new ArrayList<L1Object>();
+		List<L1Object> result = Lists.newList();
 		if (map.getId() <= MAX_MAP_ID) {
 			for (L1Object element : _visibleObjects[map.getId()].values()) {
 				if (element.equals(object)) {
@@ -328,11 +327,13 @@ public class L1World {
 					if (pt.isInScreen(element.getLocation())) {
 						result.add(element);
 					}
-				} else if (radius == 0) {
+				}
+				else if (radius == 0) {
 					if (pt.isSamePoint(element.getLocation())) {
 						result.add(element);
 					}
-				} else {
+				}
+				else {
 					if (pt.getTileLineDistance(element.getLocation()) <= radius) {
 						result.add(element);
 					}
@@ -343,8 +344,8 @@ public class L1World {
 		return result;
 	}
 
-	public ArrayList<L1Object> getVisiblePoint(L1Location loc, int radius) {
-		ArrayList<L1Object> result = new ArrayList<L1Object>();
+	public List<L1Object> getVisiblePoint(L1Location loc, int radius) {
+		List<L1Object> result = Lists.newList();
 		int mapId = loc.getMapId(); // ループ内で呼ぶと重いため
 
 		if (mapId <= MAX_MAP_ID) {
@@ -362,14 +363,14 @@ public class L1World {
 		return result;
 	}
 
-	public ArrayList<L1PcInstance> getVisiblePlayer(L1Object object) {
+	public List<L1PcInstance> getVisiblePlayer(L1Object object) {
 		return getVisiblePlayer(object, -1);
 	}
 
-	public ArrayList<L1PcInstance> getVisiblePlayer(L1Object object, int radius) {
+	public List<L1PcInstance> getVisiblePlayer(L1Object object, int radius) {
 		int map = object.getMapId();
 		Point pt = object.getLocation();
-		ArrayList<L1PcInstance> result = new ArrayList<L1PcInstance>();
+		List<L1PcInstance> result = Lists.newList();
 
 		for (L1PcInstance element : _allPlayers.values()) {
 			if (element.equals(object)) {
@@ -384,11 +385,13 @@ public class L1World {
 				if (pt.isInScreen(element.getLocation())) {
 					result.add(element);
 				}
-			} else if (radius == 0) {
+			}
+			else if (radius == 0) {
 				if (pt.isSamePoint(element.getLocation())) {
 					result.add(element);
 				}
-			} else {
+			}
+			else {
 				if (pt.getTileLineDistance(element.getLocation()) <= radius) {
 					result.add(element);
 				}
@@ -397,12 +400,11 @@ public class L1World {
 		return result;
 	}
 
-	public ArrayList<L1PcInstance> getVisiblePlayerExceptTargetSight(
-			L1Object object, L1Object target) {
+	public List<L1PcInstance> getVisiblePlayerExceptTargetSight(L1Object object, L1Object target) {
 		int map = object.getMapId();
 		Point objectPt = object.getLocation();
 		Point targetPt = target.getLocation();
-		ArrayList<L1PcInstance> result = new ArrayList<L1PcInstance>();
+		List<L1PcInstance> result = Lists.newList();
 
 		for (L1PcInstance element : _allPlayers.values()) {
 			if (element.equals(object)) {
@@ -419,7 +421,8 @@ public class L1World {
 						result.add(element);
 					}
 				}
-			} else {
+			}
+			else {
 				if (objectPt.getTileLineDistance(element.getLocation()) <= Config.PC_RECOGNIZE_RANGE) {
 					if (targetPt.getTileLineDistance(element.getLocation()) > Config.PC_RECOGNIZE_RANGE) {
 						result.add(element);
@@ -436,7 +439,7 @@ public class L1World {
 	 * @param object
 	 * @return
 	 */
-	public ArrayList<L1PcInstance> getRecognizePlayer(L1Object object) {
+	public List<L1PcInstance> getRecognizePlayer(L1Object object) {
 		return getVisiblePlayer(object, Config.PC_RECOGNIZE_RANGE);
 	}
 
@@ -445,19 +448,18 @@ public class L1World {
 
 	public Collection<L1PcInstance> getAllPlayers() {
 		Collection<L1PcInstance> vs = _allPlayerValues;
-		return (vs != null) ? vs : (_allPlayerValues = Collections
-				.unmodifiableCollection(_allPlayers.values()));
+		return (vs != null) ? vs : (_allPlayerValues = Collections.unmodifiableCollection(_allPlayers.values()));
 	}
 
 	/**
 	 * ワールド内にいる指定された名前のプレイヤーを取得する。
 	 * 
-	 * @param name -
-	 *            プレイヤー名(小文字・大文字は無視される)
+	 * @param name
+	 *            - プレイヤー名(小文字・大文字は無視される)
 	 * @return 指定された名前のL1PcInstance。該当プレイヤーが存在しない場合はnullを返す。
 	 */
 	public L1PcInstance getPlayer(String name) {
-		if (_allPlayers.contains(name)) {
+		if (_allPlayers.containsKey(name)) {
 			return _allPlayers.get(name);
 		}
 		for (L1PcInstance each : getAllPlayers()) {
@@ -473,8 +475,7 @@ public class L1World {
 
 	public Collection<L1PetInstance> getAllPets() {
 		Collection<L1PetInstance> vs = _allPetValues;
-		return (vs != null) ? vs : (_allPetValues = Collections
-				.unmodifiableCollection(_allPets.values()));
+		return (vs != null) ? vs : (_allPetValues = Collections.unmodifiableCollection(_allPets.values()));
 	}
 
 	// _allSummonsのビュー
@@ -482,8 +483,7 @@ public class L1World {
 
 	public Collection<L1SummonInstance> getAllSummons() {
 		Collection<L1SummonInstance> vs = _allSummonValues;
-		return (vs != null) ? vs : (_allSummonValues = Collections
-				.unmodifiableCollection(_allSummons.values()));
+		return (vs != null) ? vs : (_allSummonValues = Collections.unmodifiableCollection(_allSummons.values()));
 	}
 
 	public final Map<Integer, L1Object> getAllVisibleObjects() {
@@ -519,8 +519,7 @@ public class L1World {
 
 	public List<L1War> getWarList() {
 		List<L1War> vs = _allWarList;
-		return (vs != null) ? vs : (_allWarList = Collections
-				.unmodifiableList(_allWars));
+		return (vs != null) ? vs : (_allWarList = Collections.unmodifiableList(_allWars));
 	}
 
 	public void storeClan(L1Clan clan) {
@@ -546,8 +545,7 @@ public class L1World {
 
 	public Collection<L1Clan> getAllClans() {
 		Collection<L1Clan> vs = _allClanValues;
-		return (vs != null) ? vs : (_allClanValues = Collections
-				.unmodifiableCollection(_allClans.values()));
+		return (vs != null) ? vs : (_allClanValues = Collections.unmodifiableCollection(_allClans.values()));
 	}
 
 	public void setWeather(int weather) {

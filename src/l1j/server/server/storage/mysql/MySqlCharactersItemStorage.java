@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.storage.mysql;
 
 import java.sql.Connection;
@@ -19,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
@@ -28,32 +27,29 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.storage.CharactersItemStorage;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Lists;
 
 public class MySqlCharactersItemStorage extends CharactersItemStorage {
 
-	private static final Logger _log =
-			Logger.getLogger(MySqlCharactersItemStorage.class.getName());
-	
+	private static final Logger _log = Logger.getLogger(MySqlCharactersItemStorage.class.getName());
+
 	@Override
-	public ArrayList<L1ItemInstance> loadItems(int objId) throws Exception {
-		ArrayList<L1ItemInstance> items = null;
+	public List<L1ItemInstance> loadItems(int objId) throws Exception {
+		List<L1ItemInstance> items = Lists.newList();
 
 		Connection con = null;
 		PreparedStatement pstm = null;
 		ResultSet rs = null;
 		try {
-			items = new ArrayList<L1ItemInstance>();
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_items WHERE char_id = ?");
+			pstm = con.prepareStatement("SELECT * FROM character_items WHERE char_id = ?");
 			pstm.setInt(1, objId);
 
 			L1ItemInstance item;
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				int itemId = rs.getInt("item_id");
-				L1Item itemTemplate = ItemTable.getInstance().getTemplate(
-						itemId);
+				L1Item itemTemplate = ItemTable.getInstance().getTemplate(itemId);
 				if (itemTemplate == null) {
 					_log.warning(String.format("item id:%d not found", itemId));
 					continue;
@@ -75,9 +71,11 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 				item.getLastStatus().updateAll();
 				items.add(item);
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw e;
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -109,9 +107,11 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 			pstm.setInt(14, item.getAttrEnchantLevel());
 			pstm.execute();
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw e;
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -124,13 +124,14 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM character_items WHERE id = ?");
+			pstm = con.prepareStatement("DELETE FROM character_items WHERE id = ?");
 			pstm.setInt(1, item.getId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw e;
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -138,99 +139,73 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 
 	@Override
 	public void updateItemId(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET item_id = ? WHERE id = ?", item
-						.getItemId());
+		executeUpdate(item.getId(), "UPDATE character_items SET item_id = ? WHERE id = ?", item.getItemId());
 		item.getLastStatus().updateItemId();
 	}
 
 	@Override
 	public void updateItemCount(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET count = ? WHERE id = ?", item
-						.getCount());
+		executeUpdate(item.getId(), "UPDATE character_items SET count = ? WHERE id = ?", item.getCount());
 		item.getLastStatus().updateCount();
 	}
 
 	@Override
 	public void updateItemDurability(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET durability = ? WHERE id = ?", item
-						.get_durability());
+		executeUpdate(item.getId(), "UPDATE character_items SET durability = ? WHERE id = ?", item.get_durability());
 		item.getLastStatus().updateDuraility();
 	}
 
 	@Override
 	public void updateItemChargeCount(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET charge_count = ? WHERE id = ?", item
-						.getChargeCount());
+		executeUpdate(item.getId(), "UPDATE character_items SET charge_count = ? WHERE id = ?", item.getChargeCount());
 		item.getLastStatus().updateChargeCount();
 	}
 
 	@Override
 	public void updateItemRemainingTime(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET remaining_time = ? WHERE id = ?", item
-						.getRemainingTime());
+		executeUpdate(item.getId(), "UPDATE character_items SET remaining_time = ? WHERE id = ?", item.getRemainingTime());
 		item.getLastStatus().updateRemainingTime();
 	}
 
 	@Override
 	public void updateItemEnchantLevel(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET enchantlvl = ? WHERE id = ?", item
-						.getEnchantLevel());
+		executeUpdate(item.getId(), "UPDATE character_items SET enchantlvl = ? WHERE id = ?", item.getEnchantLevel());
 		item.getLastStatus().updateEnchantLevel();
 	}
 
 	@Override
 	public void updateItemEquipped(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET is_equipped = ? WHERE id = ?",
-				(item.isEquipped() ? 1 : 0));
+		executeUpdate(item.getId(), "UPDATE character_items SET is_equipped = ? WHERE id = ?", (item.isEquipped() ? 1 : 0));
 		item.getLastStatus().updateEquipped();
 	}
 
 	@Override
 	public void updateItemIdentified(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET is_id = ? WHERE id = ?", (item
-						.isIdentified() ? 1 : 0));
+		executeUpdate(item.getId(), "UPDATE character_items SET is_id = ? WHERE id = ?", (item.isIdentified() ? 1 : 0));
 		item.getLastStatus().updateIdentified();
 	}
 
 	@Override
 	public void updateItemDelayEffect(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET last_used = ? WHERE id = ?", item
-						.getLastUsed());
+		executeUpdate(item.getId(), "UPDATE character_items SET last_used = ? WHERE id = ?", item.getLastUsed());
 		item.getLastStatus().updateLastUsed();
 	}
 
 	@Override
 	public void updateItemBless(L1ItemInstance item) throws Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET bless = ? WHERE id = ?", item
-						.getBless());
+		executeUpdate(item.getId(), "UPDATE character_items SET bless = ? WHERE id = ?", item.getBless());
 		item.getLastStatus().updateBless();
 	}
 
 	@Override
-	public void updateItemAttrEnchantKind(L1ItemInstance item) throws
-			Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET attr_enchant_kind = ? WHERE id = ?",
-						item.getAttrEnchantKind());
+	public void updateItemAttrEnchantKind(L1ItemInstance item) throws Exception {
+		executeUpdate(item.getId(), "UPDATE character_items SET attr_enchant_kind = ? WHERE id = ?", item.getAttrEnchantKind());
 		item.getLastStatus().updateAttrEnchantKind();
 	}
 
 	@Override
-	public void updateItemAttrEnchantLevel(L1ItemInstance item) throws
-			Exception {
-		executeUpdate(item.getId(),
-				"UPDATE character_items SET attr_enchant_level = ? WHERE id = ?",
-						item.getAttrEnchantLevel());
+	public void updateItemAttrEnchantLevel(L1ItemInstance item) throws Exception {
+		executeUpdate(item.getId(), "UPDATE character_items SET attr_enchant_level = ? WHERE id = ?", item.getAttrEnchantLevel());
 		item.getLastStatus().updateAttrEnchantLevel();
 	}
 
@@ -242,16 +217,17 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_items WHERE char_id = ?");
+			pstm = con.prepareStatement("SELECT * FROM character_items WHERE char_id = ?");
 			pstm.setInt(1, objId);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				count++;
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw e;
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -259,8 +235,7 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 		return count;
 	}
 
-	private void executeUpdate(int objId, String sql, int updateNum)
-			throws SQLException {
+	private void executeUpdate(int objId, String sql, int updateNum) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -269,16 +244,17 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 			pstm.setInt(1, updateNum);
 			pstm.setInt(2, objId);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw e;
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	private void executeUpdate(int objId, String sql, Timestamp ts)
-			throws SQLException {
+	private void executeUpdate(int objId, String sql, Timestamp ts) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -287,9 +263,11 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 			pstm.setTimestamp(1, ts);
 			pstm.setInt(2, objId);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			throw e;
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

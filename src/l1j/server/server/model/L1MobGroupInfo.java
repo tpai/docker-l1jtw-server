@@ -1,35 +1,31 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import l1j.server.server.model.L1Spawn;
 import l1j.server.server.model.Instance.L1NpcInstance;
+import l1j.server.server.utils.collections.Lists;
 
 // Referenced classes of package l1j.server.server.model:
 // L1MobGroupInfo
 
 public class L1MobGroupInfo {
-	private static final Logger _log = Logger.getLogger(L1MobGroupInfo.class
-			.getName());
+	private static final Logger _log = Logger.getLogger(L1MobGroupInfo.class.getName());
 
-	private final List<L1NpcInstance> _membersList =
-			new ArrayList<L1NpcInstance>();
+	private final List<L1NpcInstance> _membersList = Lists.newList();
 
 	private L1NpcInstance _leader;
 
@@ -91,7 +87,7 @@ public class L1MobGroupInfo {
 
 		// リーダーで他のメンバーがいる場合は、新リーダーにする
 		if (isLeader(npc)) {
-			if (isRemoveGroup() && _membersList.size() != 0) { // リーダーが死亡したらグループ解除する場合
+			if (isRemoveGroup() && (_membersList.size() != 0)) { // リーダーが死亡したらグループ解除する場合
 				for (L1NpcInstance minion : _membersList) {
 					minion.setMobGroupInfo(null);
 					minion.setSpawn(null);

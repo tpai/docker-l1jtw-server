@@ -1,31 +1,34 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.utils.collections.Lists;
 
 public class L1Clan {
 
 	public static final int CLAN_RANK_PROBATION = 1;
+
 	public static final int CLAN_RANK_PUBLIC = 2;
+
 	public static final int CLAN_RANK_GUARDIAN = 3;
+
 	public static final int CLAN_RANK_PRINCE = 4;
 
 	private static final Logger _log = Logger.getLogger(L1Clan.class.getName());
@@ -44,10 +47,9 @@ public class L1Clan {
 
 	private int _warehouse = 0;
 
-	private final L1DwarfForClanInventory _dwarfForClan = new L1DwarfForClanInventory(
-			this);
+	private final L1DwarfForClanInventory _dwarfForClan = new L1DwarfForClanInventory(this);
 
-	private final ArrayList<String> membersNameList = new ArrayList<String>();
+	private final List<String> membersNameList = Lists.newList();
 
 	public int getClanId() {
 		return _clanId;
@@ -111,10 +113,10 @@ public class L1Clan {
 
 	public L1PcInstance[] getOnlineClanMember() // オンライン中のクラン員のみ
 	{
-		ArrayList<L1PcInstance> onlineMembers = new ArrayList<L1PcInstance>();
+		List<L1PcInstance> onlineMembers = Lists.newList();
 		for (String name : membersNameList) {
 			L1PcInstance pc = L1World.getInstance().getPlayer(name);
-			if (pc != null && !onlineMembers.contains(pc)) {
+			if ((pc != null) && !onlineMembers.contains(pc)) {
 				onlineMembers.add(pc);
 			}
 		}
@@ -155,31 +157,34 @@ public class L1Clan {
 		String result = "";
 		try {
 			for (String name : membersNameList) {
-				L1PcInstance pc = CharacterTable.getInstance()
-						.restoreCharacter(name);
+				L1PcInstance pc = CharacterTable.getInstance().restoreCharacter(name);
 				if (pc != null) {
 					result = result + name + getRankString(pc) + " ";
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return result;
 	}
-
 
 	private String getRankString(L1PcInstance pc) {
 		String rank = "";
 		if (pc != null) {
 			if (pc.getClanRank() == CLAN_RANK_PROBATION) {
 				rank = "[見習い]";
-			} else if (pc.getClanRank() == CLAN_RANK_PUBLIC) {
+			}
+			else if (pc.getClanRank() == CLAN_RANK_PUBLIC) {
 				rank = "[一般]";
-			} else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
+			}
+			else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
 				rank = "[ガーディアン]";
-			} else if (pc.getClanRank() == CLAN_RANK_PRINCE) {
+			}
+			else if (pc.getClanRank() == CLAN_RANK_PRINCE) {
 				rank = "[血盟君主]";
-			} else {
+			}
+			else {
 				rank = "";
 			}
 		}

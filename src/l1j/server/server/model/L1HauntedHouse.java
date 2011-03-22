@@ -1,44 +1,46 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
+import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
+
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
-import l1j.server.server.model.L1Object;
 import l1j.server.server.model.Instance.L1DoorInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ServerMessage;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.collections.Lists;
 
 public class L1HauntedHouse {
-	private static final Logger _log = Logger.getLogger(L1HauntedHouse.class
-			.getName());
+	private static final Logger _log = Logger.getLogger(L1HauntedHouse.class.getName());
 
 	public static final int STATUS_NONE = 0;
+
 	public static final int STATUS_READY = 1;
+
 	public static final int STATUS_PLAYING = 2;
 
-	private final ArrayList<L1PcInstance> _members =
-			new ArrayList<L1PcInstance>();
+	private final List<L1PcInstance> _members = Lists.newList();
+
 	private int _hauntedHouseStatus = STATUS_NONE;
+
 	private int _winnersCount = 0;
+
 	private int _goalCount = 0;
 
 	private static L1HauntedHouse _instance;
@@ -61,16 +63,16 @@ public class L1HauntedHouse {
 		int membersCount = getMembersCount();
 		if (membersCount <= 4) {
 			setWinnersCount(1);
-		} else if (5 >= membersCount && membersCount <= 7) {
+		}
+		else if ((5 >= membersCount) && (membersCount <= 7)) {
 			setWinnersCount(2);
-		} else if (8 >= membersCount && membersCount <= 10) {
+		}
+		else if ((8 >= membersCount) && (membersCount <= 10)) {
 			setWinnersCount(3);
 		}
 		for (L1PcInstance pc : getMembersArray()) {
 			L1SkillUse l1skilluse = new L1SkillUse();
-			l1skilluse.handleCommands(pc,
-					CANCELLATION, pc.getId(), pc.getX(), pc.getY(),
-					null, 0, L1SkillUse.TYPE_LOGIN);
+			l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 			L1PolyMorph.doPoly(pc, 6284, 300, L1PolyMorph.MORPH_BY_NPC);
 		}
 
@@ -91,9 +93,7 @@ public class L1HauntedHouse {
 		for (L1PcInstance pc : getMembersArray()) {
 			if (pc.getMapId() == 5140) {
 				L1SkillUse l1skilluse = new L1SkillUse();
-				l1skilluse.handleCommands(pc,
-						CANCELLATION, pc.getId(), pc.getX(),
-						pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
+				l1skilluse.handleCommands(pc, CANCELLATION, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 				L1Teleport.teleport(pc, 32624, 32813, (short) 4, 5, true);
 			}
 		}
@@ -110,9 +110,9 @@ public class L1HauntedHouse {
 
 	public void removeRetiredMembers() {
 		L1PcInstance[] temp = getMembersArray();
-		for (int i = 0; i < temp.length; i++) {
-			if (temp[i].getMapId() != 5140) {
-				removeMember(temp[i]);
+		for (L1PcInstance element : temp) {
+			if (element.getMapId() != 5140) {
+				removeMember(element);
 			}
 		}
 	}
@@ -127,7 +127,7 @@ public class L1HauntedHouse {
 		if (!_members.contains(pc)) {
 			_members.add(pc);
 		}
-		if (getMembersCount() == 1 && getHauntedHouseStatus() == STATUS_NONE) {
+		if ((getMembersCount() == 1) && (getHauntedHouseStatus() == STATUS_NONE)) {
 			readyHauntedHouse();
 		}
 	}
@@ -176,43 +176,41 @@ public class L1HauntedHouse {
 		return _goalCount;
 	}
 
+	public class L1HauntedHouseReadyTimer extends TimerTask {
 
+		public L1HauntedHouseReadyTimer() {
+		}
 
-public class L1HauntedHouseReadyTimer extends TimerTask {
+		@Override
+		public void run() {
+			startHauntedHouse();
+			L1HauntedHouseTimer hhTimer = new L1HauntedHouseTimer();
+			hhTimer.begin();
+		}
 
-	public L1HauntedHouseReadyTimer() {
+		public void begin() {
+			Timer timer = new Timer();
+			timer.schedule(this, 90000); // 90秒くらい？
+		}
+
 	}
 
-	@Override
-	public void run() {
-		startHauntedHouse();
-		L1HauntedHouseTimer hhTimer = new L1HauntedHouseTimer();
-		hhTimer.begin();
+	public class L1HauntedHouseTimer extends TimerTask {
+
+		public L1HauntedHouseTimer() {
+		}
+
+		@Override
+		public void run() {
+			endHauntedHouse();
+			cancel();
+		}
+
+		public void begin() {
+			Timer timer = new Timer();
+			timer.schedule(this, 300000); // 5分
+		}
+
 	}
-
-	public void begin() {
-		Timer timer = new Timer();
-		timer.schedule(this, 90000); // 90秒くらい？
-	}
-
-}
-
-public class L1HauntedHouseTimer extends TimerTask {
-
-	public L1HauntedHouseTimer() {
-	}
-
-	@Override
-	public void run() {
-		endHauntedHouse();
-		this.cancel();
-	}
-
-	public void begin() {
-		Timer timer = new Timer();
-		timer.schedule(this, 300000); // 5分
-	}
-
-}
 
 }

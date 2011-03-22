@@ -1,38 +1,42 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.npc.action;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
-
-import org.w3c.dom.Element;
 
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.npc.L1NpcHtml;
 import l1j.server.server.utils.IntRange;
+import l1j.server.server.utils.collections.Maps;
+
+import org.w3c.dom.Element;
 
 public abstract class L1NpcXmlAction implements L1NpcAction {
 	private String _name;
+
 	private final int _npcIds[];
+
 	private final IntRange _level;
+
 	private final int _questId;
+
 	private final int _questStep;
+
 	private final int _classes[];
 
 	public L1NpcXmlAction(Element element) {
@@ -41,8 +45,7 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		_npcIds = parseNpcIds(element.getAttribute("NpcId"));
 		_level = parseLevel(element);
 		_questId = L1NpcXmlParser.parseQuestId(element.getAttribute("QuestId"));
-		_questStep = L1NpcXmlParser.parseQuestStep(element
-				.getAttribute("QuestStep"));
+		_questStep = L1NpcXmlParser.parseQuestStep(element.getAttribute("QuestStep"));
 
 		_classes = parseClasses(element);
 	}
@@ -65,7 +68,7 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		return level == 0 ? new IntRange(min, max) : new IntRange(level, level);
 	}
 
-	private final static Map<Character, Integer> _charTypes = new HashMap<Character, Integer>();
+	private final static Map<Character, Integer> _charTypes = Maps.newMap();
 	static {
 		_charTypes.put('P', 0);
 		_charTypes.put('K', 1);
@@ -130,8 +133,8 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		return pc.getQuest().get_step(_questId) == _questStep;
 	}
 
-	public boolean acceptsRequest(String actionName, L1PcInstance pc,
-			L1Object obj) {
+	@Override
+	public boolean acceptsRequest(String actionName, L1PcInstance pc, L1Object obj) {
 		if (!acceptsNpcId(obj)) {
 			return false;
 		}
@@ -150,11 +153,11 @@ public abstract class L1NpcXmlAction implements L1NpcAction {
 		return true;
 	}
 
-	public abstract L1NpcHtml execute(String actionName, L1PcInstance pc,
-			L1Object obj, byte args[]);
+	@Override
+	public abstract L1NpcHtml execute(String actionName, L1PcInstance pc, L1Object obj, byte args[]);
 
-	public L1NpcHtml executeWithAmount(String actionName, L1PcInstance pc,
-			L1Object obj, int amount) {
+	@Override
+	public L1NpcHtml executeWithAmount(String actionName, L1PcInstance pc, L1Object obj, int amount) {
 		return null;
 	}
 }

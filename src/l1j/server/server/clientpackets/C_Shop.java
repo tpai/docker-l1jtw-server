@@ -1,20 +1,19 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.clientpackets;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Logger;
 
 import l1j.server.server.ActionCodes;
@@ -38,6 +37,7 @@ import l1j.server.server.templates.L1PrivateShopSellList;
 public class C_Shop extends ClientBasePacket {
 
 	private static final String C_SHOP = "[C] C_Shop";
+
 	private static Logger _log = Logger.getLogger(C_Shop.class.getName());
 
 	public C_Shop(byte abyte0[], ClientThread clientthread) {
@@ -49,13 +49,13 @@ public class C_Shop extends ClientBasePacket {
 		}
 
 		int mapId = pc.getMapId();
-		if (mapId != 340 && mapId != 350 && mapId != 360 && mapId != 370) {
+		if ((mapId != 340) && (mapId != 350) && (mapId != 360) && (mapId != 370)) {
 			pc.sendPackets(new S_ServerMessage(876)); // この場所では個人商店を開けません。
 			return;
 		}
 
-		ArrayList sellList = pc.getSellList();
-		ArrayList buyList = pc.getBuyList();
+		List<L1PrivateShopSellList> sellList = pc.getSellList();
+		List<L1PrivateShopBuyList> buyList = pc.getBuyList();
 		L1ItemInstance checkItem;
 		boolean tradable = true;
 
@@ -83,8 +83,7 @@ public class C_Shop extends ClientBasePacket {
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
-									checkItem.getItem().getName(),
-									"這是不可能處理。"));
+									checkItem.getItem().getName(), "這是不可能處理。"));
 							break;
 						}
 					}
@@ -112,13 +111,12 @@ public class C_Shop extends ClientBasePacket {
 				}
 				if (checkItem.getBless() >= 128) { // 封印的裝備
 					// \f1%0は捨てたりまたは他人に讓ることができません。
-					pc.sendPackets(new S_ServerMessage(210, checkItem.getItem()
-							.getName()));
+					pc.sendPackets(new S_ServerMessage(210, checkItem.getItem().getName()));
 					return;
 				}
-                //防止異常堆疊交易
-				if (checkItem.getCount() >1&& checkItem.getItem().isStackable()==false) { 
-					pc.sendPackets(new S_SystemMessage("此物品非堆疊，但異常堆疊無法交易。")); 
+				// 防止異常堆疊交易
+				if ((checkItem.getCount() > 1) && (checkItem.getItem().isStackable() == false)) {
+					pc.sendPackets(new S_SystemMessage("此物品非堆疊，但異常堆疊無法交易。"));
 					return;
 				}
 
@@ -129,8 +127,7 @@ public class C_Shop extends ClientBasePacket {
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
-									checkItem.getItem().getName(),
-									"這是不可能處理。"));
+									checkItem.getItem().getName(), "這是不可能處理。"));
 							break;
 						}
 					}
@@ -145,27 +142,22 @@ public class C_Shop extends ClientBasePacket {
 				sellList.clear();
 				buyList.clear();
 				pc.setPrivateShop(false);
-				pc.sendPackets(new S_DoActionGFX(pc.getId(),
-						ActionCodes.ACTION_Idle));
-				pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-						ActionCodes.ACTION_Idle));
+				pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+				pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 				return;
 			}
 			byte[] chat = readByte();
 			pc.setShopChat(chat);
 			pc.setPrivateShop(true);
-			pc.sendPackets(new S_DoActionShop(pc.getId(),
-					ActionCodes.ACTION_Shop, chat));
-			pc.broadcastPacket(new S_DoActionShop(pc.getId(),
-					ActionCodes.ACTION_Shop, chat));
-		} else if (type == 1) { // 終了
+			pc.sendPackets(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
+			pc.broadcastPacket(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
+		}
+		else if (type == 1) { // 終了
 			sellList.clear();
 			buyList.clear();
 			pc.setPrivateShop(false);
-			pc.sendPackets(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Idle));
-			pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-					ActionCodes.ACTION_Idle));
+			pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+			pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
 		}
 	}
 

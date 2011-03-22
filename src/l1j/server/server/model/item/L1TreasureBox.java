@@ -1,24 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.item;
 
 import java.io.File;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import l1j.server.server.utils.Random;
+import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,12 +36,13 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.utils.PerformanceTimer;
+import l1j.server.server.utils.Random;
+import l1j.server.server.utils.collections.Maps;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class L1TreasureBox {
 
-	private static Logger _log =
-			Logger.getLogger(L1TreasureBox.class.getName());
+	private static Logger _log = Logger.getLogger(L1TreasureBox.class.getName());
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "TreasureBoxList")
@@ -51,6 +50,7 @@ public class L1TreasureBox {
 		@XmlElement(name = "TreasureBox")
 		private List<L1TreasureBox> _list;
 
+		@Override
 		public Iterator<L1TreasureBox> iterator() {
 			return _list.iterator();
 		}
@@ -65,7 +65,7 @@ public class L1TreasureBox {
 		private int _count;
 
 		private int _chance;
-		
+
 		@XmlAttribute(name = "Chance")
 		private void setChance(double chance) {
 			_chance = (int) (chance * 10000);
@@ -90,13 +90,13 @@ public class L1TreasureBox {
 
 	private static final String PATH = "./data/xml/Item/TreasureBox.xml";
 
-	private static final HashMap<Integer, L1TreasureBox> _dataMap =
-			new HashMap<Integer, L1TreasureBox>();
+	private static final Map<Integer, L1TreasureBox> _dataMap = Maps.newMap();
 
 	/**
 	 * 指定されたIDのTreasureBoxを返す。
 	 * 
-	 * @param id - TreasureBoxのID。普通はアイテムのItemIdになる。
+	 * @param id
+	 *            - TreasureBoxのID。普通はアイテムのItemIdになる。
 	 * @return 指定されたIDのTreasureBox。見つからなかった場合はnull。
 	 */
 	public static L1TreasureBox get(int id) {
@@ -135,11 +135,10 @@ public class L1TreasureBox {
 			_totalChance += each.getChance();
 			if (ItemTable.getInstance().getTemplate(each.getItemId()) == null) {
 				getItems().remove(each);
-				_log.warning("アイテムID " + each.getItemId()
-						+ " のテンプレートが見つかりません。");
+				_log.warning("アイテムID " + each.getItemId() + " のテンプレートが見つかりません。");
 			}
 		}
-		if (getTotalChance() != 0 && getTotalChance() != 1000000) {
+		if ((getTotalChance() != 0) && (getTotalChance() != 1000000)) {
 			_log.warning("ID " + getBoxId() + " の確率の合計が100%になりません。");
 		}
 	}
@@ -148,9 +147,7 @@ public class L1TreasureBox {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("loading TreasureBox...");
 		try {
-			JAXBContext context =
-					JAXBContext
-							.newInstance(L1TreasureBox.TreasureBoxList.class);
+			JAXBContext context = JAXBContext.newInstance(L1TreasureBox.TreasureBoxList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
@@ -161,7 +158,8 @@ public class L1TreasureBox {
 				each.init();
 				_dataMap.put(each.getBoxId(), each);
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
 			System.exit(0);
 		}
@@ -169,12 +167,11 @@ public class L1TreasureBox {
 	}
 
 	/**
-	 * TreasureBoxを開けるPCにアイテムを入手させる。PCがアイテムを持ちきれなかった場合は
-	 * アイテムは地面に落ちる。
+	 * TreasureBoxを開けるPCにアイテムを入手させる。PCがアイテムを持ちきれなかった場合は アイテムは地面に落ちる。
 	 * 
-	 * @param pc - TreasureBoxを開けるPC
-	 * @return 開封した結果何らかのアイテムが出てきた場合はtrueを返す。
-	 *         持ちきれず地面に落ちた場合もtrueになる。
+	 * @param pc
+	 *            - TreasureBoxを開けるPC
+	 * @return 開封した結果何らかのアイテムが出てきた場合はtrueを返す。 持ちきれず地面に落ちた場合もtrueになる。
 	 */
 	public boolean open(L1PcInstance pc) {
 		L1ItemInstance item = null;
@@ -189,7 +186,8 @@ public class L1TreasureBox {
 				}
 			}
 
-		} else if (getType().equals(TYPE.RANDOM)) {
+		}
+		else if (getType().equals(TYPE.RANDOM)) {
 			// 出るアイテムがランダムに決まるもの
 			int chance = 0;
 
@@ -211,12 +209,12 @@ public class L1TreasureBox {
 
 		if (item == null) {
 			return false;
-		} else {
+		}
+		else {
 			int itemId = getBoxId();
 
 			// 魂の結晶の破片、魔族のスクロール、ブラックエントの実
-			if (itemId == 40576 || itemId == 40577 || itemId == 40578
-					|| itemId == 40411 || itemId == 49013) {
+			if ((itemId == 40576) || (itemId == 40577) || (itemId == 40578) || (itemId == 40411) || (itemId == 49013)) {
 				pc.death(null); // キャラクターを死亡させる
 			}
 			return true;
@@ -228,7 +226,8 @@ public class L1TreasureBox {
 
 		if (pc.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
 			inventory = pc.getInventory();
-		} else {
+		}
+		else {
 			// 持てない場合は地面に落とす 処理のキャンセルはしない（不正防止）
 			inventory = L1World.getInstance().getInventory(pc.getLocation());
 		}

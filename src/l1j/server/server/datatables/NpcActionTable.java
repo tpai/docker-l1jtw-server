@@ -1,22 +1,20 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,26 +29,28 @@ import l1j.server.server.model.npc.action.L1NpcAction;
 import l1j.server.server.model.npc.action.L1NpcXmlParser;
 import l1j.server.server.utils.FileUtil;
 import l1j.server.server.utils.PerformanceTimer;
+import l1j.server.server.utils.collections.Lists;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 public class NpcActionTable {
-	private static Logger _log = Logger.getLogger(NpcActionTable.class
-			.getName());
+	private static Logger _log = Logger.getLogger(NpcActionTable.class.getName());
+
 	private static NpcActionTable _instance;
-	private final List<L1NpcAction> _actions = new ArrayList<L1NpcAction>();
-	private final List<L1NpcAction> _talkActions = new ArrayList<L1NpcAction>();
+
+	private final List<L1NpcAction> _actions = Lists.newList();
+
+	private final List<L1NpcAction> _talkActions = Lists.newList();
 
 	private List<L1NpcAction> loadAction(File file, String nodeName)
 
 	throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
-				.newDocumentBuilder();
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 		Document doc = builder.parse(file);
 
 		if (!doc.getDocumentElement().getNodeName().equalsIgnoreCase(nodeName)) {
-			return new ArrayList<L1NpcAction>();
+			return Lists.newList();
 		}
 		return L1NpcXmlParser.listActions(doc.getDocumentElement());
 	}
@@ -87,7 +87,8 @@ public class NpcActionTable {
 			System.out.print("loading npcaction...");
 			_instance = new NpcActionTable();
 			System.out.println("OK! " + timer.get() + "ms");
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, "NpcActionを読み込めませんでした", e);
 			System.exit(0);
 		}

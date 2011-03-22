@@ -1,21 +1,19 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.trap;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,15 +29,17 @@ import l1j.server.server.model.map.L1Map;
 import l1j.server.server.storage.TrapStorage;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.types.Point;
+import l1j.server.server.utils.collections.Lists;
 
 public class L1MonsterTrap extends L1Trap {
-	private static Logger _log = Logger
-			.getLogger(L1MonsterTrap.class.getName());
+	private static Logger _log = Logger.getLogger(L1MonsterTrap.class.getName());
 
 	private final int _npcId;
+
 	private final int _count;
 
 	private L1Npc _npcTemp = null; // パフォーマンスのためにキャッシュ
+
 	private Constructor _constructor = null; // パフォーマンスのためにキャッシュ
 
 	public L1MonsterTrap(TrapStorage storage) {
@@ -56,7 +56,7 @@ public class L1MonsterTrap extends L1Trap {
 	}
 
 	private List<Point> getSpawnablePoints(L1Location loc, int d) {
-		List<Point> result = new ArrayList<Point>();
+		List<Point> result = Lists.newList();
 		L1Map m = loc.getMap();
 		int x = loc.getX();
 		int y = loc.getY();
@@ -71,9 +71,7 @@ public class L1MonsterTrap extends L1Trap {
 	}
 
 	private Constructor getConstructor(L1Npc npc) throws ClassNotFoundException {
-		return Class.forName(
-				"l1j.server.server.model.Instance." + npc.getImpl()
-						+ "Instance").getConstructors()[0];
+		return Class.forName("l1j.server.server.model.Instance." + npc.getImpl() + "Instance").getConstructors()[0];
 	}
 
 	private L1NpcInstance createNpc() throws Exception {
@@ -84,8 +82,8 @@ public class L1MonsterTrap extends L1Trap {
 			_constructor = getConstructor(_npcTemp);
 		}
 
-		return (L1NpcInstance) _constructor
-				.newInstance(new Object[] { _npcTemp });
+		return (L1NpcInstance) _constructor.newInstance(new Object[]
+		{ _npcTemp });
 	}
 
 	private void spawn(L1Location loc) throws Exception {
@@ -107,7 +105,7 @@ public class L1MonsterTrap extends L1Trap {
 		sendEffect(trapObj);
 
 		List<Point> points = getSpawnablePoints(trapObj.getLocation(), 5);
-		
+
 		// 沸ける場所が無ければ終了
 		if (points.isEmpty()) {
 			return;
@@ -124,7 +122,8 @@ public class L1MonsterTrap extends L1Trap {
 					}
 				}
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 	}

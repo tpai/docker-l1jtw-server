@@ -1,24 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,13 +29,14 @@ import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.NumberUtil;
 import l1j.server.server.utils.PerformanceTimer;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Maps;
 
 public class SpawnTable {
 	private static Logger _log = Logger.getLogger(SpawnTable.class.getName());
 
 	private static SpawnTable _instance;
 
-	private Map<Integer, L1Spawn> _spawntable = new HashMap<Integer, L1Spawn>();
+	private Map<Integer, L1Spawn> _spawntable = Maps.newMap();
 
 	private int _highestId;
 
@@ -73,7 +72,7 @@ public class SpawnTable {
 			while (rs.next()) {
 				if (Config.ALT_HALLOWEENIVENT == false) {
 					int npcid = rs.getInt("id");
-					if (npcid >= 26656 && npcid <= 26734) {
+					if ((npcid >= 26656) && (npcid <= 26734)) {
 						continue;
 					}
 				}
@@ -82,17 +81,15 @@ public class SpawnTable {
 				int count;
 
 				if (template1 == null) {
-					_log.warning("mob data for id:" + npcTemplateId
-							+ " missing in npc table");
+					_log.warning("mob data for id:" + npcTemplateId + " missing in npc table");
 					spawnDat = null;
-				} else {
+				}
+				else {
 					if (rs.getInt("count") == 0) {
 						continue;
 					}
-					double amount_rate = MapsTable.getInstance()
-							.getMonsterAmount(rs.getShort("mapid"));
-					count = calcCount(template1, rs.getInt("count"),
-							amount_rate);
+					double amount_rate = MapsTable.getInstance().getMonsterAmount(rs.getShort("mapid"));
+					count = calcCount(template1, rs.getInt("count"), amount_rate);
 					if (count == 0) {
 						continue;
 					}
@@ -114,16 +111,14 @@ public class SpawnTable {
 					spawnDat.setMaxRespawnDelay(rs.getInt("max_respawn_delay"));
 					spawnDat.setMapId(rs.getShort("mapid"));
 					spawnDat.setRespawnScreen(rs.getBoolean("respawn_screen"));
-					spawnDat
-							.setMovementDistance(rs.getInt("movement_distance"));
+					spawnDat.setMovementDistance(rs.getInt("movement_distance"));
 					spawnDat.setRest(rs.getBoolean("rest"));
 					spawnDat.setSpawnType(rs.getInt("near_spawn"));
-					spawnDat.setTime(SpawnTimeTable.getInstance().get(
-							spawnDat.getId()));
+					spawnDat.setTime(SpawnTimeTable.getInstance().get(spawnDat.getId()));
 
 					spawnDat.setName(template1.get_name());
 
-					if (count > 1 && spawnDat.getLocX1() == 0) {
+					if ((count > 1) && (spawnDat.getLocX1() == 0)) {
 						// 複数かつ固定spawnの場合は、個体数 * 6 の範囲spawnに変える。
 						// ただし範囲が30を超えないようにする
 						int range = Math.min(count * 6, 30);
@@ -144,9 +139,11 @@ public class SpawnTable {
 				}
 			}
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -191,9 +188,11 @@ public class SpawnTable {
 			pstm.setInt(12, pc.getMapId());
 			pstm.execute();
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			NpcTable._log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -203,9 +202,10 @@ public class SpawnTable {
 		if (rate == 0) {
 			return 0;
 		}
-		if (rate == 1 || npc.isAmountFixed()) {
+		if ((rate == 1) || npc.isAmountFixed()) {
 			return count;
-		} else {
+		}
+		else {
 			return NumberUtil.randomRound((count * rate));
 		}
 

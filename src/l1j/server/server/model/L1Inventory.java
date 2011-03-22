@@ -1,26 +1,23 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
-import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.IdFactory;
@@ -31,6 +28,8 @@ import l1j.server.server.datatables.PetTable;
 import l1j.server.server.model.Instance.L1FurnitureInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.templates.L1Item;
+import l1j.server.server.utils.Random;
+import l1j.server.server.utils.collections.Lists;
 
 public class L1Inventory extends L1Object {
 
@@ -82,18 +81,16 @@ public class L1Inventory extends L1Object {
 		if (item == null) {
 			return -1;
 		}
-		if (item.getCount() <= 0 || count <= 0) {
+		if ((item.getCount() <= 0) || (count <= 0)) {
 			return -1;
 		}
-		if (getSize() > Config.MAX_NPC_ITEM
-				|| (getSize() == Config.MAX_NPC_ITEM && (!item.isStackable() || !checkItem(item
-						.getItem().getItemId())))) { // 容量確認
+		if ((getSize() > Config.MAX_NPC_ITEM)
+				|| ((getSize() == Config.MAX_NPC_ITEM) && (!item.isStackable() || !checkItem(item.getItem().getItemId())))) { // 容量確認
 			return SIZE_OVER;
 		}
 
-		int weight = getWeight() + item.getItem().getWeight() * count / 1000
-				+ 1;
-		if (weight < 0 || (item.getItem().getWeight() * count / 1000) < 0) {
+		int weight = getWeight() + item.getItem().getWeight() * count / 1000 + 1;
+		if ((weight < 0) || ((item.getItem().getWeight() * count / 1000) < 0)) {
 			return WEIGHT_OVER;
 		}
 		if (weight > (MAX_WEIGHT * Config.RATE_WEIGHT_LIMIT_PET)) { // その他の重量確認（主にサモンとペット）
@@ -101,7 +98,7 @@ public class L1Inventory extends L1Object {
 		}
 
 		L1ItemInstance itemExist = findItemId(item.getItemId());
-		if (itemExist != null && (itemExist.getCount() + count) > MAX_AMOUNT) {
+		if ((itemExist != null) && ((itemExist.getCount() + count) > MAX_AMOUNT)) {
 			return AMOUNT_OVER;
 		}
 
@@ -117,19 +114,18 @@ public class L1Inventory extends L1Object {
 		if (item == null) {
 			return -1;
 		}
-		if (item.getCount() <= 0 || count <= 0) {
+		if ((item.getCount() <= 0) || (count <= 0)) {
 			return -1;
 		}
 
 		int maxSize = 100;
 		if (type == WAREHOUSE_TYPE_PERSONAL) {
 			maxSize = Config.MAX_PERSONAL_WAREHOUSE_ITEM;
-		} else if (type == WAREHOUSE_TYPE_CLAN) {
+		}
+		else if (type == WAREHOUSE_TYPE_CLAN) {
 			maxSize = Config.MAX_CLAN_WAREHOUSE_ITEM;
 		}
-		if (getSize() > maxSize
-				|| (getSize() == maxSize && (!item.isStackable() || !checkItem(item
-						.getItem().getItemId())))) { // 容量確認
+		if ((getSize() > maxSize) || ((getSize() == maxSize) && (!item.isStackable() || !checkItem(item.getItem().getItemId())))) { // 容量確認
 			return SIZE_OVER;
 		}
 
@@ -188,17 +184,17 @@ public class L1Inventory extends L1Object {
 		item.setY(getY());
 		item.setMap(getMapId());
 		int chargeCount = item.getItem().getMaxChargeCount();
-		if (itemId == 40006 || itemId == 40007 || itemId == 40008
-				|| itemId == 140006 || itemId == 140008 || itemId == 41401) {
+		if ((itemId == 40006) || (itemId == 40007) || (itemId == 40008) || (itemId == 140006) || (itemId == 140008) || (itemId == 41401)) {
 			chargeCount -= Random.nextInt(5);
 		}
 		if (itemId == 20383) {
 			chargeCount = 50;
 		}
 		item.setChargeCount(chargeCount);
-		if (item.getItem().getType2() == 0 && item.getItem().getType() == 2) { // light系アイテム
+		if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 2)) { // light系アイテム
 			item.setRemainingTime(item.getItem().getLightFuel());
-		} else {
+		}
+		else {
 			item.setRemainingTime(item.getItem().getMaxUseTime());
 		}
 		item.setBless(item.getItem().getBless());
@@ -229,10 +225,10 @@ public class L1Inventory extends L1Object {
 	 * インベントリから指定されたアイテムIDのアイテムを削除する。L1ItemInstanceへの参照
 	 * がある場合はremoveItemの方を使用するのがよい。 （こちらは矢とか魔石とか特定のアイテムを消費させるときに使う）
 	 * 
-	 * @param itemid -
-	 *            削除するアイテムのitemid(objidではない)
-	 * @param count -
-	 *            削除する個数
+	 * @param itemid
+	 *            - 削除するアイテムのitemid(objidではない)
+	 * @param count
+	 *            - 削除する個数
 	 * @return 実際に削除された場合はtrueを返す。
 	 */
 	public boolean consumeItem(int itemid, int count) {
@@ -241,18 +237,20 @@ public class L1Inventory extends L1Object {
 		}
 		if (ItemTable.getInstance().getTemplate(itemid).isStackable()) {
 			L1ItemInstance item = findItemId(itemid);
-			if (item != null && item.getCount() >= count) {
+			if ((item != null) && (item.getCount() >= count)) {
 				removeItem(item, count);
 				return true;
 			}
-		} else {
+		}
+		else {
 			L1ItemInstance[] itemList = findItemsId(itemid);
 			if (itemList.length == count) {
 				for (int i = 0; i < count; i++) {
 					removeItem(itemList[i], 1);
 				}
 				return true;
-			} else if (itemList.length > count) { // 指定個数より多く所持している場合
+			}
+			else if (itemList.length > count) { // 指定個数より多く所持している場合
 				DataComparator dc = new DataComparator();
 				Arrays.sort(itemList, dc); // エンチャント順にソートし、エンチャント数の少ないものから消費させる
 				for (int i = 0; i < count; i++) {
@@ -265,9 +263,9 @@ public class L1Inventory extends L1Object {
 	}
 
 	public class DataComparator implements java.util.Comparator {
+		@Override
 		public int compare(Object item1, Object item2) {
-			return ((L1ItemInstance) item1).getEnchantLevel()
-					- ((L1ItemInstance) item2).getEnchantLevel();
+			return ((L1ItemInstance) item1).getEnchantLevel() - ((L1ItemInstance) item2).getEnchantLevel();
 		}
 	}
 
@@ -285,7 +283,7 @@ public class L1Inventory extends L1Object {
 		if (item == null) {
 			return 0;
 		}
-		if (item.getCount() <= 0 || count <= 0) {
+		if ((item.getCount() <= 0) || (count <= 0)) {
 			return 0;
 		}
 		if (item.getCount() < count) {
@@ -293,25 +291,27 @@ public class L1Inventory extends L1Object {
 		}
 		if (item.getCount() == count) {
 			int itemId = item.getItem().getItemId();
-			if (itemId == 40314 || itemId == 40316) { // ペットのアミュレット
+			if ((itemId == 40314) || (itemId == 40316)) { // ペットのアミュレット
 				PetTable.getInstance().deletePet(item.getId());
-			} else if (itemId >= 49016 && itemId <= 49025) { // 便箋
+			}
+			else if ((itemId >= 49016) && (itemId <= 49025)) { // 便箋
 				LetterTable lettertable = new LetterTable();
 				lettertable.deleteLetter(item.getId());
-			} else if (itemId >= 41383 && itemId <= 41400) { // 家具
+			}
+			else if ((itemId >= 41383) && (itemId <= 41400)) { // 家具
 				for (L1Object l1object : L1World.getInstance().getObject()) {
 					if (l1object instanceof L1FurnitureInstance) {
 						L1FurnitureInstance furniture = (L1FurnitureInstance) l1object;
 						if (furniture.getItemObjId() == item.getId()) { // 既に引き出している家具
-							FurnitureSpawnTable.getInstance().deleteFurniture(
-									furniture);
+							FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
 						}
 					}
 				}
 			}
 			deleteItem(item);
 			L1World.getInstance().removeObject(item);
-		} else {
+		}
+		else {
 			item.setCount(item.getCount() - count);
 			updateItem(item);
 		}
@@ -324,18 +324,16 @@ public class L1Inventory extends L1Object {
 	}
 
 	// 引数のインベントリにアイテムを移譲
-	public synchronized L1ItemInstance tradeItem(int objectId, int count,
-			L1Inventory inventory) {
+	public synchronized L1ItemInstance tradeItem(int objectId, int count, L1Inventory inventory) {
 		L1ItemInstance item = getItem(objectId);
 		return tradeItem(item, count, inventory);
 	}
 
-	public synchronized L1ItemInstance tradeItem(L1ItemInstance item,
-			int count, L1Inventory inventory) {
+	public synchronized L1ItemInstance tradeItem(L1ItemInstance item, int count, L1Inventory inventory) {
 		if (item == null) {
 			return null;
 		}
-		if (item.getCount() <= 0 || count <= 0) {
+		if ((item.getCount() <= 0) || (count <= 0)) {
 			return null;
 		}
 		if (item.isEquipped()) {
@@ -348,11 +346,11 @@ public class L1Inventory extends L1Object {
 		if (item.getCount() <= count) {
 			deleteItem(item);
 			carryItem = item;
-		} else {
+		}
+		else {
 			item.setCount(item.getCount() - count);
 			updateItem(item);
-			carryItem = ItemTable.getInstance().createItem(
-					item.getItem().getItemId());
+			carryItem = ItemTable.getInstance().createItem(item.getItem().getItemId());
 			carryItem.setCount(count);
 			carryItem.setEnchantLevel(item.getEnchantLevel());
 			carryItem.setIdentified(item.isIdentified());
@@ -385,7 +383,7 @@ public class L1Inventory extends L1Object {
 			return null;
 		}
 
-		if ((currentDurability == 0 && itemType == 0) || currentDurability < 0) {
+		if (((currentDurability == 0) && (itemType == 0)) || (currentDurability < 0)) {
 			item.set_durability(0);
 			return null;
 		}
@@ -400,7 +398,8 @@ public class L1Inventory extends L1Object {
 			if (currentDurability > durability) {
 				item.set_durability(durability);
 			}
-		} else {
+		}
+		else {
 			int maxDurability = item.getEnchantLevel() + 5;
 			int durability = currentDurability + count;
 			if (durability > maxDurability) {
@@ -423,7 +422,7 @@ public class L1Inventory extends L1Object {
 			return null;
 		}
 
-		if ((durability == 0 && itemType != 0) || durability < 0) {
+		if (((durability == 0) && (itemType != 0)) || (durability < 0)) {
 			item.set_durability(0);
 			return null;
 		}
@@ -431,7 +430,8 @@ public class L1Inventory extends L1Object {
 		if (itemType == 0) {
 			// 耐久度をプラスしている。
 			item.set_durability(durability + 1);
-		} else {
+		}
+		else {
 			// 損傷度をマイナスしている。
 			item.set_durability(durability - 1);
 		}
@@ -451,7 +451,7 @@ public class L1Inventory extends L1Object {
 	}
 
 	public L1ItemInstance[] findItemsId(int id) {
-		ArrayList<L1ItemInstance> itemList = new ArrayList<L1ItemInstance>();
+		List<L1ItemInstance> itemList = Lists.newList();
 		for (L1ItemInstance item : _items) {
 			if (item.getItemId() == id) {
 				itemList.add(item);
@@ -461,7 +461,7 @@ public class L1Inventory extends L1Object {
 	}
 
 	public L1ItemInstance[] findItemsIdNotEquipped(int id) {
-		ArrayList<L1ItemInstance> itemList = new ArrayList<L1ItemInstance>();
+		List<L1ItemInstance> itemList = Lists.newList();
 		for (L1ItemInstance item : _items) {
 			if (item.getItemId() == id) {
 				if (!item.isEquipped()) {
@@ -494,10 +494,11 @@ public class L1Inventory extends L1Object {
 		}
 		if (ItemTable.getInstance().getTemplate(id).isStackable()) {
 			L1ItemInstance item = findItemId(id);
-			if (item != null && item.getCount() >= count) {
+			if ((item != null) && (item.getCount() >= count)) {
 				return true;
 			}
-		} else {
+		}
+		else {
 			Object[] itemList = findItemsId(id);
 			if (itemList.length >= count) {
 				return true;
@@ -514,8 +515,8 @@ public class L1Inventory extends L1Object {
 			if (item.isEquipped()) { // 装備しているものは該当しない
 				continue;
 			}
-			if (item.getItemId() == id && item.getEnchantLevel() == enchant) {
-				num ++;
+			if ((item.getItemId() == id) && (item.getEnchantLevel() == enchant)) {
+				num++;
 				if (num == count) {
 					return true;
 				}
@@ -531,7 +532,7 @@ public class L1Inventory extends L1Object {
 			if (item.isEquipped()) { // 装備しているものは該当しない
 				continue;
 			}
-			if (item.getItemId() == id && item.getEnchantLevel() == enchant) {
+			if ((item.getItemId() == id) && (item.getEnchantLevel() == enchant)) {
 				removeItem(item);
 				return true;
 			}
@@ -578,7 +579,8 @@ public class L1Inventory extends L1Object {
 			if (item != null) {
 				return item.getCount();
 			}
-		} else {
+		}
+		else {
 			Object[] itemList = findItemsIdNotEquipped(id);
 			return itemList.length;
 		}

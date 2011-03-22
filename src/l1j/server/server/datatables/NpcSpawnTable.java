@@ -1,24 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,18 +27,18 @@ import l1j.server.server.model.L1Spawn;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Maps;
 
 // Referenced classes of package l1j.server.server:
 // MobTable, IdFactory
 
 public class NpcSpawnTable {
 
-	private static Logger _log = Logger
-			.getLogger(NpcSpawnTable.class.getName());
+	private static Logger _log = Logger.getLogger(NpcSpawnTable.class.getName());
 
 	private static NpcSpawnTable _instance;
 
-	private Map<Integer, L1Spawn> _spawntable = new HashMap<Integer, L1Spawn>();
+	private Map<Integer, L1Spawn> _spawntable = Maps.newMap();
 
 	private int _highestId;
 
@@ -70,34 +68,31 @@ public class NpcSpawnTable {
 			while (rs.next()) {
 				if (Config.ALT_GMSHOP == false) {
 					int npcid = rs.getInt(1);
-					if (npcid >= Config.ALT_GMSHOP_MIN_ID
-							&& npcid <= Config.ALT_GMSHOP_MAX_ID) {
+					if ((npcid >= Config.ALT_GMSHOP_MIN_ID) && (npcid <= Config.ALT_GMSHOP_MAX_ID)) {
 						continue;
 					}
 				}
 				if (Config.ALT_HALLOWEENIVENT == false) {
 					int npcid = rs.getInt("id");
-					if (npcid >= 130852 && npcid <= 130862 || npcid >= 26656
-							&& npcid <= 26734) {
+					if (((npcid >= 130852) && (npcid <= 130862)) || ((npcid >= 26656) && (npcid <= 26734))) {
 						continue;
 					}
 				}
 				if (Config.ALT_JPPRIVILEGED == false) {
 					int npcid = rs.getInt("id");
-					if (npcid >= 1310368 && npcid <= 1310379) {
+					if ((npcid >= 1310368) && (npcid <= 1310379)) {
 						continue;
 					}
 				}
 				if (Config.ALT_TALKINGSCROLLQUEST == false) {
 					int npcid = rs.getInt("id");
-					if (npcid >= 87537 && npcid <= 87551 || npcid >= 1310387
-							&& npcid <= 1310389) {
+					if (((npcid >= 87537) && (npcid <= 87551)) || ((npcid >= 1310387) && (npcid <= 1310389))) {
 						continue;
 					}
 				}
 				if (Config.ALT_TALKINGSCROLLQUEST == true) {
 					int npcid = rs.getInt("id");
-					if (npcid >= 90066 && npcid <= 90069) {
+					if ((npcid >= 90066) && (npcid <= 90069)) {
 						continue;
 					}
 				}
@@ -105,10 +100,10 @@ public class NpcSpawnTable {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(npcTemplateid);
 				L1Spawn l1spawn;
 				if (l1npc == null) {
-					_log.warning("mob data for id:" + npcTemplateid
-							+ " missing in npc table");
+					_log.warning("mob data for id:" + npcTemplateid + " missing in npc table");
 					l1spawn = null;
-				} else {
+				}
+				else {
 					if (rs.getInt("count") == 0) {
 						continue;
 					}
@@ -137,9 +132,11 @@ public class NpcSpawnTable {
 					}
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -158,8 +155,7 @@ public class NpcSpawnTable {
 			String note = npc.get_name();
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_templateid=?,locx=?,locy=?,heading=?,mapid=?");
+			pstm = con.prepareStatement("INSERT INTO spawnlist_npc SET location=?,count=?,npc_templateid=?,locx=?,locy=?,heading=?,mapid=?");
 			pstm.setString(1, note);
 			pstm.setInt(2, count);
 			pstm.setInt(3, npc.get_npcId());
@@ -168,10 +164,12 @@ public class NpcSpawnTable {
 			pstm.setInt(6, pc.getHeading());
 			pstm.setInt(7, pc.getMapId());
 			pstm.execute();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}

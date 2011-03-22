@@ -1,25 +1,26 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
 
+import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
+
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import l1j.server.server.utils.Random;
 
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
@@ -33,12 +34,12 @@ import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
 import l1j.server.server.serverpackets.S_ChangeHeading;
 import l1j.server.server.serverpackets.S_DoActionGFX;
-import l1j.server.server.serverpackets.S_NpcChatPacket;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
+import l1j.server.server.serverpackets.S_NpcChatPacket;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.CalcExp;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.Random;
 
 public class L1GuardianInstance extends L1NpcInstance {
 	/**
@@ -46,8 +47,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static Logger _log = Logger.getLogger(L1GuardianInstance.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1GuardianInstance.class.getName());
 
 	private L1GuardianInstance _npc = this;
 
@@ -64,8 +64,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 		L1PcInstance targetPlayer = null;
 
 		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
-			if (pc.getCurrentHp() <= 0 || pc.isDead() || pc.isGm()
-					|| pc.isGhost()) {
+			if ((pc.getCurrentHp() <= 0) || pc.isDead() || pc.isGm() || pc.isGhost()) {
 				continue;
 			}
 			if (!pc.isInvisble() || getNpcTemplate().is_agrocoi()) { // インビジチェック
@@ -73,7 +72,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 					targetPlayer = pc;
 					wideBroadcastPacket(new S_NpcChatPacket(this, "$804", 2)); // エルフ以外の者よ、命が惜しければ早くここから去れ。ここは神聖な場所だ。
 					break;
-				} else if (pc.isElf() && pc.isWantedForElf()) {
+				}
+				else if (pc.isElf() && pc.isWantedForElf()) {
 					targetPlayer = pc;
 					wideBroadcastPacket(new S_NpcChatPacket(this, "$815", 1)); // 同族を殺したものは、己の血でその罪をあがなうことになるだろう。
 					break;
@@ -89,7 +89,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	// リンクの設定
 	@Override
 	public void setLink(L1Character cha) {
-		if (cha != null && _hateList.isEmpty()) { // ターゲットがいない場合のみ追加
+		if ((cha != null) && _hateList.isEmpty()) { // ターゲットがいない場合のみ追加
 			_hateList.add(cha, 0);
 			checkTarget();
 		}
@@ -106,8 +106,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(L1PcInstance player) {
-		if (player.getType() == 2 && player.getCurrentWeapon() == 0
-				&& player.isElf()) {
+		if ((player.getType() == 2) && (player.getCurrentWeapon() == 0) && player.isElf()) {
 			L1Attack attack = new L1Attack(player, this);
 
 			if (attack.calcHit()) {
@@ -115,32 +114,29 @@ public class L1GuardianInstance extends L1NpcInstance {
 					int chance = Random.nextInt(100) + 1;
 					if (chance <= 10) {
 						player.getInventory().storeItem(40506, 1);
-						player.sendPackets(new S_ServerMessage(143, "$755",
-								"$794")); // \f1%0が%1をくれました。
-					} else if (chance <= 60 && chance > 10) {
+						player.sendPackets(new S_ServerMessage(143, "$755", "$794")); // \f1%0が%1をくれました。
+					}
+					else if ((chance <= 60) && (chance > 10)) {
 						player.getInventory().storeItem(40507, 1);
-						player.sendPackets(new S_ServerMessage(143, "$755",
-								"$763")); // \f1%0が%1をくれました。
-					} else if (chance <= 70 && chance > 60) {
+						player.sendPackets(new S_ServerMessage(143, "$755", "$763")); // \f1%0が%1をくれました。
+					}
+					else if ((chance <= 70) && (chance > 60)) {
 						player.getInventory().storeItem(40505, 1);
-						player.sendPackets(new S_ServerMessage(143, "$755",
-								"$770")); // \f1%0が%1をくれました。
+						player.sendPackets(new S_ServerMessage(143, "$755", "$770")); // \f1%0が%1をくれました。
 					}
 				}
 				if (getNpcTemplate().get_npcId() == 70850) { // パン
 					int chance = Random.nextInt(100) + 1;
 					if (chance <= 30) {
 						player.getInventory().storeItem(40519, 5);
-						player.sendPackets(new S_ServerMessage(143, "$753",
-								"$760" + " (" + 5 + ")")); // \f1%0が%1をくれました。
+						player.sendPackets(new S_ServerMessage(143, "$753", "$760" + " (" + 5 + ")")); // \f1%0が%1をくれました。
 					}
 				}
 				if (getNpcTemplate().get_npcId() == 70846) { // アラクネ
 					int chance = Random.nextInt(100) + 1;
 					if (chance <= 30) {
 						player.getInventory().storeItem(40503, 1);
-						player.sendPackets(new S_ServerMessage(143, "$752",
-								"$769")); // \f1%0が%1をくれました。
+						player.sendPackets(new S_ServerMessage(143, "$752", "$769")); // \f1%0が%1をくれました。
 					}
 				}
 				attack.calcDamage();
@@ -150,7 +146,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 			}
 			attack.action();
 			attack.commit();
-		} else if (getCurrentHp() > 0 && !isDead()) {
+		}
+		else if ((getCurrentHp() > 0) && !isDead()) {
 			L1Attack attack = new L1Attack(player, this);
 			if (attack.calcHit()) {
 				attack.calcDamage();
@@ -166,8 +163,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	@Override
 	public void onTalkAction(L1PcInstance player) {
 		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(
-				getNpcTemplate().get_npcId());
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 		L1Object object = L1World.getInstance().findObject(getId());
 		L1NpcInstance target = (L1NpcInstance) object;
 		String htmlid = null;
@@ -179,21 +175,28 @@ public class L1GuardianInstance extends L1NpcInstance {
 			int npcx = target.getX(); // NPCのX座標
 			int npcy = target.getY(); // NPCのY座標
 
-			if (pcx == npcx && pcy < npcy) {
+			if ((pcx == npcx) && (pcy < npcy)) {
 				setHeading(0);
-			} else if (pcx > npcx && pcy < npcy) {
+			}
+			else if ((pcx > npcx) && (pcy < npcy)) {
 				setHeading(1);
-			} else if (pcx > npcx && pcy == npcy) {
+			}
+			else if ((pcx > npcx) && (pcy == npcy)) {
 				setHeading(2);
-			} else if (pcx > npcx && pcy > npcy) {
+			}
+			else if ((pcx > npcx) && (pcy > npcy)) {
 				setHeading(3);
-			} else if (pcx == npcx && pcy > npcy) {
+			}
+			else if ((pcx == npcx) && (pcy > npcy)) {
 				setHeading(4);
-			} else if (pcx < npcx && pcy > npcy) {
+			}
+			else if ((pcx < npcx) && (pcy > npcy)) {
 				setHeading(5);
-			} else if (pcx < npcx && pcy == npcy) {
+			}
+			else if ((pcx < npcx) && (pcy == npcy)) {
 				setHeading(6);
-			} else if (pcx < npcx && pcy < npcy) {
+			}
+			else if ((pcx < npcx) && (pcy < npcy)) {
 				setHeading(7);
 			}
 			broadcastPacket(new S_ChangeHeading(this));
@@ -201,15 +204,17 @@ public class L1GuardianInstance extends L1NpcInstance {
 			// html表示パケット送信
 			if (htmlid != null) { // htmlidが指定されている場合
 				if (htmldata != null) { // html指定がある場合は表示
-					player.sendPackets(new S_NPCTalkReturn(objid, htmlid,
-							htmldata));
-				} else {
+					player.sendPackets(new S_NPCTalkReturn(objid, htmlid, htmldata));
+				}
+				else {
 					player.sendPackets(new S_NPCTalkReturn(objid, htmlid));
 				}
-			} else {
+			}
+			else {
 				if (player.getLawful() < -1000) { // プレイヤーがカオティック
 					player.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-				} else {
+				}
+				else {
 					player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 				}
 			}
@@ -227,12 +232,12 @@ public class L1GuardianInstance extends L1NpcInstance {
 
 	@Override
 	public void receiveDamage(L1Character attacker, int damage) { // 攻撃でＨＰを減らすときはここを使用
-		if (attacker instanceof L1PcInstance && damage > 0) {
+		if ((attacker instanceof L1PcInstance) && (damage > 0)) {
 			L1PcInstance pc = (L1PcInstance) attacker;
-			if (pc.getType() == 2 && // 素手ならダメージなし
-					pc.getCurrentWeapon() == 0) {
-			} else {
-				if (getCurrentHp() > 0 && !isDead()) {
+			if ((pc.getType() == 2) && // 素手ならダメージなし
+					(pc.getCurrentWeapon() == 0)) {}
+			else {
+				if ((getCurrentHp() > 0) && !isDead()) {
 					if (damage >= 0) {
 						setHate(attacker, damage);
 					}
@@ -247,7 +252,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 					}
 
 					int newHp = getCurrentHp() - damage;
-					if (newHp <= 0 && !isDead()) {
+					if ((newHp <= 0) && !isDead()) {
 						setCurrentHpDirect(0);
 						setDead(true);
 						setStatus(ActionCodes.ACTION_Die);
@@ -258,7 +263,8 @@ public class L1GuardianInstance extends L1NpcInstance {
 					if (newHp > 0) {
 						setCurrentHp(newHp);
 					}
-				} else if (!isDead()) { // 念のため
+				}
+				else if (!isDead()) { // 念のため
 					setDead(true);
 					setStatus(ActionCodes.ACTION_Die);
 					_lastattacker = attacker;
@@ -300,6 +306,7 @@ public class L1GuardianInstance extends L1NpcInstance {
 	class Death implements Runnable {
 		L1Character lastAttacker = _lastattacker;
 
+		@Override
 		public void run() {
 			setDeathProcessing(true);
 			setCurrentHpDirect(0);
@@ -307,34 +314,30 @@ public class L1GuardianInstance extends L1NpcInstance {
 			setStatus(ActionCodes.ACTION_Die);
 			int targetobjid = getId();
 			getMap().setPassable(getLocation(), true);
-			broadcastPacket(new S_DoActionGFX(targetobjid,
-					ActionCodes.ACTION_Die));
+			broadcastPacket(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
 
 			L1PcInstance player = null;
 			if (lastAttacker instanceof L1PcInstance) {
 				player = (L1PcInstance) lastAttacker;
-			} else if (lastAttacker instanceof L1PetInstance) {
-				player = (L1PcInstance) ((L1PetInstance) lastAttacker)
-						.getMaster();
-			} else if (lastAttacker instanceof L1SummonInstance) {
-				player = (L1PcInstance) ((L1SummonInstance) lastAttacker)
-						.getMaster();
+			}
+			else if (lastAttacker instanceof L1PetInstance) {
+				player = (L1PcInstance) ((L1PetInstance) lastAttacker).getMaster();
+			}
+			else if (lastAttacker instanceof L1SummonInstance) {
+				player = (L1PcInstance) ((L1SummonInstance) lastAttacker).getMaster();
 			}
 			if (player != null) {
-				ArrayList<L1Character> targetList = _hateList
-						.toTargetArrayList();
+				List<L1Character> targetList = _hateList.toTargetArrayList();
 				ArrayList<Integer> hateList = _hateList.toHateArrayList();
 				int exp = getExp();
 				CalcExp.calcExp(player, targetobjid, targetList, hateList, exp);
 
-				ArrayList<L1Character> dropTargetList = _dropHateList
-						.toTargetArrayList();
-				ArrayList<Integer> dropHateList = _dropHateList
-						.toHateArrayList();
+				ArrayList<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
+				ArrayList<Integer> dropHateList = _dropHateList.toHateArrayList();
 				try {
-					DropTable.getInstance().dropShare(_npc,
-							dropTargetList, dropHateList);
-				} catch (Exception e) {
+					DropTable.getInstance().dropShare(_npc, dropTargetList, dropHateList);
+				}
+				catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
 				// カルマは止めを刺したプレイヤーに設定。ペットorサモンで倒した場合も入る。

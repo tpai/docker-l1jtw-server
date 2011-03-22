@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.datatables;
 
 import java.sql.Connection;
@@ -19,7 +18,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,6 +28,7 @@ import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.collections.Maps;
 
 // Referenced classes of package l1j.server.server:
 // IdFactory
@@ -37,8 +37,7 @@ public class ClanTable {
 
 	private static Logger _log = Logger.getLogger(ClanTable.class.getName());
 
-	private final HashMap<Integer, L1Clan> _clans
-			= new HashMap<Integer, L1Clan>();
+	private final Map<Integer, L1Clan> _clans = Maps.newMap();
 
 	private static ClanTable _instance;
 
@@ -57,8 +56,7 @@ public class ClanTable {
 
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con
-						.prepareStatement("SELECT * FROM clan_data ORDER BY clan_id");
+				pstm = con.prepareStatement("SELECT * FROM clan_data ORDER BY clan_id");
 
 				rs = pstm.executeQuery();
 				while (rs.next()) {
@@ -76,9 +74,11 @@ public class ClanTable {
 					_clans.put(clan_id, clan);
 				}
 
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			} finally {
+			}
+			finally {
 				SQLUtil.close(rs);
 				SQLUtil.close(pstm);
 				SQLUtil.close(con);
@@ -93,17 +93,18 @@ public class ClanTable {
 
 			try {
 				con = L1DatabaseFactory.getInstance().getConnection();
-				pstm = con
-						.prepareStatement("SELECT char_name FROM characters WHERE ClanID = ?");
+				pstm = con.prepareStatement("SELECT char_name FROM characters WHERE ClanID = ?");
 				pstm.setInt(1, clan.getClanId());
 				rs = pstm.executeQuery();
 
 				while (rs.next()) {
 					clan.addMemberName(rs.getString(1));
 				}
-			} catch (SQLException e) {
+			}
+			catch (SQLException e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			} finally {
+			}
+			finally {
 				SQLUtil.close(rs);
 				SQLUtil.close(pstm);
 				SQLUtil.close(con);
@@ -134,8 +135,7 @@ public class ClanTable {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO clan_data SET clan_id=?, clan_name=?, leader_id=?, leader_name=?, hascastle=?, hashouse=?");
+			pstm = con.prepareStatement("INSERT INTO clan_data SET clan_id=?, clan_name=?, leader_id=?, leader_name=?, hascastle=?, hashouse=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setString(2, clan.getClanName());
 			pstm.setInt(3, clan.getLeaderId());
@@ -143,9 +143,11 @@ public class ClanTable {
 			pstm.setInt(5, clan.getCastleId());
 			pstm.setInt(6, clan.getHouseId());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -160,7 +162,8 @@ public class ClanTable {
 		try {
 			// DBにキャラクター情報を書き込む
 			player.save();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return clan;
@@ -171,8 +174,7 @@ public class ClanTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE clan_data SET clan_id=?, leader_id=?, leader_name=?, hascastle=?, hashouse=? WHERE clan_name=?");
+			pstm = con.prepareStatement("UPDATE clan_data SET clan_id=?, leader_id=?, leader_name=?, hascastle=?, hashouse=? WHERE clan_name=?");
 			pstm.setInt(1, clan.getClanId());
 			pstm.setInt(2, clan.getLeaderId());
 			pstm.setString(3, clan.getLeaderName());
@@ -180,9 +182,11 @@ public class ClanTable {
 			pstm.setInt(5, clan.getHouseId());
 			pstm.setString(6, clan.getClanName());
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -197,13 +201,14 @@ public class ClanTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM clan_data WHERE clan_name=?");
+			pstm = con.prepareStatement("DELETE FROM clan_data WHERE clan_name=?");
 			pstm.setString(1, clan_name);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
