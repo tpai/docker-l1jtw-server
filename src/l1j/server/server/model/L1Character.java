@@ -20,7 +20,6 @@ import static l1j.server.server.model.skill.L1SkillId.LIGHT;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 import l1j.server.server.model.Instance.L1DollInstance;
@@ -38,6 +37,7 @@ import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.ServerBasePacket;
 import l1j.server.server.types.Point;
 import l1j.server.server.utils.IntRange;
+import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
 // Referenced classes of package l1j.server.server.model:
@@ -855,9 +855,9 @@ public class L1Character extends L1Object {
 	}
 
 	// ■■■■■■■■■■ L1PcInstanceへ移動するプロパティ ■■■■■■■■■■
-	private final List<L1Object> _knownObjects = new CopyOnWriteArrayList<L1Object>();
+	private final List<L1Object> _knownObjects = Lists.newConcurrentList();
 
-	private final List<L1PcInstance> _knownPlayer = new CopyOnWriteArrayList<L1PcInstance>();
+	private final List<L1PcInstance> _knownPlayer = Lists.newConcurrentList();
 
 	/**
 	 * 指定されたオブジェクトを、キャラクターが認識しているかを返す。

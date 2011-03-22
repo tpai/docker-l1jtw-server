@@ -16,7 +16,6 @@ package l1j.server.server.model;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
@@ -37,7 +36,7 @@ public class L1Inventory extends L1Object {
 
 	private static Logger _log = Logger.getLogger(L1Inventory.class.getName());
 
-	protected List<L1ItemInstance> _items = new CopyOnWriteArrayList<L1ItemInstance>();
+	protected List<L1ItemInstance> _items = Lists.newConcurrentList();
 
 	public static final int MAX_AMOUNT = 2000000000; // 2G
 

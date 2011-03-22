@@ -1,49 +1,53 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
 
+import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_SHOWTRAPS;
+
 import java.util.List;
-import l1j.server.server.utils.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import l1j.server.server.model.L1Location;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.map.L1Map;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.model.trap.L1Trap;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_Trap;
 import l1j.server.server.types.Point;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.Random;
+import l1j.server.server.utils.collections.Lists;
 
 public class L1TrapInstance extends L1Object {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private final L1Trap _trap;
+
 	private final Point _baseLoc = new Point();
+
 	private final Point _rndPt = new Point();
+
 	private final int _span;
+
 	private boolean _isEnable = true;
+
 	private final String _nameForView;
 
-	private List<L1PcInstance> _knownPlayers = new CopyOnWriteArrayList<L1PcInstance>();
+	private List<L1PcInstance> _knownPlayers = Lists.newConcurrentList();
 
-	public L1TrapInstance(int id, L1Trap trap, L1Location loc, Point rndPt,
-			int span) {
+	public L1TrapInstance(int id, L1Trap trap, L1Location loc, Point rndPt, int span) {
 		setId(id);
 		_trap = trap;
 		getLocation().set(loc);
@@ -64,15 +68,13 @@ public class L1TrapInstance extends L1Object {
 	}
 
 	public void resetLocation() {
-		if (_rndPt.getX() == 0 && _rndPt.getY() == 0) {
+		if ((_rndPt.getX() == 0) && (_rndPt.getY() == 0)) {
 			return;
 		}
 
 		for (int i = 0; i < 50; i++) {
-			int rndX = Random.nextInt(_rndPt.getX() + 1)
-					* (Random.nextInt(2) == 1 ? 1 : -1); // 1/2の確率でマイナスにする
-			int rndY = Random.nextInt(_rndPt.getY() + 1)
-					* (Random.nextInt(2) == 1 ? 1 : -1);
+			int rndX = Random.nextInt(_rndPt.getX() + 1) * (Random.nextInt(2) == 1 ? 1 : -1); // 1/2の確率でマイナスにする
+			int rndY = Random.nextInt(_rndPt.getY() + 1) * (Random.nextInt(2) == 1 ? 1 : -1);
 
 			rndX += _baseLoc.getX();
 			rndY += _baseLoc.getY();

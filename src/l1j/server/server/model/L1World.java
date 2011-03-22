@@ -17,7 +17,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
@@ -44,7 +43,7 @@ public class L1World {
 
 	private final Map<Integer, L1Object>[] _visibleObjects;
 
-	private final CopyOnWriteArrayList<L1War> _allWars;
+	private final List<L1War> _allWars;
 
 	private final Map<String, L1Clan> _allClans;
 
@@ -64,7 +63,7 @@ public class L1World {
 		_allSummons = Maps.newConcurrentMap(); // 全てのサモンモンスター
 		_allObjects = Maps.newConcurrentMap(); // 全てのオブジェクト(L1ItemInstance入り、L1Inventoryはなし)
 		_visibleObjects = new Map[MAX_MAP_ID + 1]; // マップ毎のオブジェクト(L1Inventory入り、L1ItemInstanceはなし)
-		_allWars = new CopyOnWriteArrayList<L1War>(); // 全ての戦争
+		_allWars = Lists.newConcurrentList(); // 全ての戦争
 		_allClans = Maps.newConcurrentMap(); // 全てのクラン(Online/Offlineどちらも)
 
 		for (int i = 0; i <= MAX_MAP_ID; i++) {
