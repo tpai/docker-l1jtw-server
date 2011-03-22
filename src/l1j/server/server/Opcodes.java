@@ -42,7 +42,6 @@ public class Opcodes {
 	public static final int C_OPCODE_TRADE = 25;//要求交易(個人)
 	public static final int C_OPCODE_MOVE_CHECK = 26;//人物移動回碩檢測 <= 3.3C added
 	public static final int C_OPCODE_ENTERPORTAL = 27;//要求傳送 (進入地監)
-	public static final int C_OPCODE_TELEPORTLOCK = 56;//玩家傳送鎖定 (回溯檢測用)
 	public static final int C_OPCODE_DRAWAL = 28;//要求領出資金
 	public static final int C_OPCODE_SECOND_PLEDGE = 31;//第二次要求查詢血盟成員
 	public static final int C_OPCODE_RANK = 31;//要求給予角色血盟階級
@@ -64,7 +63,7 @@ public class Opcodes {
 	public static final int C_OPCODE_SKILLBUYOK = 52;//要求學習魔法 完成
 	public static final int C_OPCODE_UNKOWN1 = 53;//用戶端自動請求在線公告
 	public static final int C_OPCODE_NPCTALK = 55;//要求物件對話視窗
-	public static final int C_OPCODE_TELEPORT = 90;//要求傳送 更新周圍物件 (無動畫傳送後)
+	public static final int C_OPCODE_TELEPORT = 56;//要求傳送 更新周圍物件 (無動畫傳送後)
 	public static final int C_OPCODE_SHIP = 58;//要求下船
 	public static final int C_OPCODE_CHANGEWARTIME = 102;//修正城堡總管全部功能
 	public static final int C_OPCODE_USEPETITEM = 60;//要求使用寵物裝備

@@ -125,8 +125,8 @@ public class L1PcInstance extends L1Character {
 
 	private short _hpr = 0;
 	private short _trueHpr = 0;
-	
-	/**3.3C組隊系統*/
+
+	/** 3.3C組隊系統 */
 	boolean _rpActive = false;
 	private L1PartyRefresh _rp;
 	private int _partyType;
@@ -1356,13 +1356,13 @@ public class L1PcInstance extends L1Character {
 				}
 			}
 
-			deathPenalty(); // EXPロスト
-
-			setGresValid(true); // EXPロストしたらG-RES有効
-
-			if (getExpRes() == 0) {
-				setExpRes(1);
-			}
+			/*
+			 * deathPenalty(); // EXPロスト
+			 * 
+			 * setGresValid(true); // EXPロストしたらG-RES有効
+			 * 
+			 * if (getExpRes() == 0) { setExpRes(1); }
+			 */
 
 			// ガードに殺された場合のみ、PKカウントを減らしガードに攻撃されなくなる
 			if (lastAttacker instanceof L1GuardInstance) {
@@ -1409,6 +1409,18 @@ public class L1PcInstance extends L1Character {
 				return;
 			}
 
+			if (!getMap().isEnabledDeathPenalty()) {
+				return;
+			}
+			deathPenalty(); // EXPロスト
+
+			setGresValid(true); // EXPロストしたらG-RES有効
+
+			if (get_PKcount() > 0) {
+				set_PKcount(get_PKcount() - 1);
+			}
+			setLastPk(null);
+
 			// 最後に殺したキャラがプレイヤーだったら、赤ネームにする
 			L1PcInstance player = null;
 			if (lastAttacker instanceof L1PcInstance) {
@@ -1428,6 +1440,10 @@ public class L1PcInstance extends L1Character {
 						}
 					}
 					player.setLastPk();
+					/** 正義值滿不會被警衛追殺 */
+					if (player.getLawful() == 32767) {
+						player.setLastPk(null);
+					}
 					if (player.isElf() && isElf()) {
 						player.setLastPkForElf();
 					}
@@ -1628,6 +1644,10 @@ public class L1PcInstance extends L1Character {
 
 		if (exp == 0) {
 			return;
+		}
+
+		if (getExpRes() >= 0) {
+			setExpRes(getExpRes() + 1);
 		}
 		addExp(-exp);
 	}
@@ -4168,6 +4188,7 @@ public class L1PcInstance extends L1Character {
 	public void setPartyType(int type) {
 		_partyType = type;
 	}
+
 	public int getPartyType() {
 		return _partyType;
 	}

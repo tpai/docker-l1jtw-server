@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.L1Character;
+import l1j.server.server.utils.MoveUtil;
 
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
@@ -32,54 +33,15 @@ public class S_MoveCharPacket extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_MoveCharPacket(L1Character cha) {
-		int x = cha.getX();
-		int y = cha.getY();
-		// if(cha instanceof L1PcInstance)
-		// {
-
-		switch (cha.getHeading()) {
-		case 1: // '\001'
-			x--;
-			y++;
-			break;
-
-		case 2: // '\002'
-			x--;
-			break;
-
-		case 3: // '\003'
-			x--;
-			y--;
-			break;
-
-		case 4: // '\004'
-			y--;
-			break;
-
-		case 5: // '\005'
-			x++;
-			y--;
-			break;
-
-		case 6: // '\006'
-			x++;
-			break;
-
-		case 7: // '\007'
-			x++;
-			y++;
-			break;
-
-		case 0: // '\0'
-			y++;
-			break;
-		}
+		int heading = cha.getHeading();
+		int x = cha.getX() - MoveUtil.MoveX(heading);
+		int y = cha.getY() - MoveUtil.MoveY(heading);
 
 		writeC(Opcodes.S_OPCODE_MOVEOBJECT);
 		writeD(cha.getId());
 		writeH(x);
 		writeH(y);
-		writeC(cha.getHeading());
+		writeC(heading);
 		writeC(129);
 		writeD(0);
 	}
