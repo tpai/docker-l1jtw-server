@@ -18,16 +18,18 @@ import java.util.ListResourceBundle;
 
 /**
  * @category 日本-日本語<br>
- * 國際化的英文是Internationalization 
- * 因為單字中總共有18個字母，簡稱I18N， 
- * 目的是讓應用程式可以應地區不同而顯示不同的訊息。
+ *           國際化的英文是Internationalization 因為單字中總共有18個字母，簡稱I18N，
+ *           目的是讓應用程式可以應地區不同而顯示不同的訊息。
  */
-public class messages_ja_JP extends ListResourceBundle{
-	static final Object[][] contents = { { "l1j.server.memoryUse", "利用メモリ" } };
-	
+public class messages_ja_JP extends ListResourceBundle {
+	static final Object[][] contents = { { "l1j.server.memoryUse", "利用メモリ" },
+			{ "l1j.server.server.model.onGroundItem", "ワールドマップ上のアイテム" },
+			{ "l1j.server.server.model.seconds", "10秒後に削除されます" },
+			{ "l1j.server.server.model.deleted", "削除されました" }};
+
 	@Override
 	protected Object[][] getContents() {
-		return null;
+		return contents;
 	}
 
 }

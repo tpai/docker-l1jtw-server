@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
+import l1j.server.L1Message;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -41,6 +42,7 @@ public class L1DeleteItemOnGround {
 
 		@Override
 		public void run() {
+			L1Message.getInstance();// Locale 多國語系
 			int time = Config.ALT_ITEM_DELETION_TIME * 60 * 1000 - 10 * 1000;
 			for (;;) {
 				try {
@@ -50,8 +52,8 @@ public class L1DeleteItemOnGround {
 					break;
 				}
 				L1World.getInstance().broadcastPacketToAll(
-						new S_ServerMessage(166, "ワールドマップ上のアイテム",
-								"10秒後に削除されます。")); // \f1%0が%4%1%3 %2
+						new S_ServerMessage(166, L1Message.onGroundItem,
+								L1Message.secondsDelete + "。"));
 				try {
 					Thread.sleep(10000);
 				} catch (Exception exception) {
@@ -60,8 +62,8 @@ public class L1DeleteItemOnGround {
 				}
 				deleteItem();
 				L1World.getInstance().broadcastPacketToAll(
-						new S_ServerMessage(166, "ワールドマップ上のアイテム", "削除されました。")); // \f1%0が%4%1%3
-				// %2
+						new S_ServerMessage(166, L1Message.onGroundItem,
+								L1Message.deleted + "。"));
 			}
 		}
 	}
@@ -89,8 +91,8 @@ public class L1DeleteItemOnGround {
 			if (item.getItem().getItemId() == 40515) { // 精霊の石
 				continue;
 			}
-			if (L1HouseLocation.isInHouse(item.getX(), item.getY(), item
-					.getMapId())) { // アジト内
+			if (L1HouseLocation.isInHouse(item.getX(), item.getY(),
+					item.getMapId())) { // アジト内
 				continue;
 			}
 

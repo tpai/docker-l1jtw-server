@@ -19,9 +19,7 @@ import java.util.ResourceBundle;
 import l1j.server.server.utils.Internationalization.*;
 
 /**
- * 國際化的英文是Internationalization 
- * 因為單字中總共有18個字母，簡稱I18N，
- * 目的是讓應用程式可以應地區不同而顯示不同的訊息。
+ * 國際化的英文是Internationalization 因為單字中總共有18個字母，簡稱I18N， 目的是讓應用程式可以應地區不同而顯示不同的訊息。
  */
 public class L1Message {
 
@@ -47,9 +45,15 @@ public class L1Message {
 	/** 簡短化變數名詞 */
 	public void initLocaleMessage() {
 		memoryUse = resource.getString("l1j.server.memoryUse");
+		onGroundItem = resource.getString("l1j.server.server.model.onGroundItem");
+		secondsDelete = resource.getString("l1j.server.server.model.seconds");
+		deleted = resource.getString("l1j.server.server.model.deleted");
 	}
 
 	/** static 變數 */
 	public static String memoryUse;
+	public static String onGroundItem;
+	public static String secondsDelete;
+	public static String deleted;
 
 }
