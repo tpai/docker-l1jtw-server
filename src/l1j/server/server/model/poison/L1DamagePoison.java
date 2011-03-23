@@ -1,40 +1,36 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.poison;
 
-import java.util.logging.Logger;
-
+import static l1j.server.server.model.skill.L1SkillId.STATUS_POISON;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.skill.L1SkillId;
-import static l1j.server.server.model.skill.L1SkillId.*;
 
 public class L1DamagePoison extends L1Poison {
-	private static Logger _log = Logger.getLogger(L1DamagePoison.class
-			.getName());
-
 	private Thread _timer;
+
 	private final L1Character _attacker;
+
 	private final L1Character _target;
+
 	private final int _damageSpan;
+
 	private final int _damage;
 
-	private L1DamagePoison(L1Character attacker, L1Character cha,
-			int damageSpan, int damage) {
+	private L1DamagePoison(L1Character attacker, L1Character cha, int damageSpan, int damage) {
 		_attacker = attacker;
 		_target = cha;
 		_damageSpan = damageSpan;
@@ -49,7 +45,8 @@ public class L1DamagePoison extends L1Poison {
 			while (true) {
 				try {
 					Thread.sleep(_damageSpan);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e) {
 					break;
 				}
 
@@ -62,7 +59,8 @@ public class L1DamagePoison extends L1Poison {
 					if (player.isDead()) { // 死亡したら解毒処理
 						break;
 					}
-				} else if (_target instanceof L1MonsterInstance) {
+				}
+				else if (_target instanceof L1MonsterInstance) {
 					L1MonsterInstance mob = (L1MonsterInstance) _target;
 					mob.receiveDamage(_attacker, _damage);
 					if (mob.isDead()) { // 死亡しても解毒しない
@@ -75,8 +73,7 @@ public class L1DamagePoison extends L1Poison {
 	}
 
 	boolean isDamageTarget(L1Character cha) {
-		return (cha instanceof L1PcInstance)
-				|| (cha instanceof L1MonsterInstance);
+		return (cha instanceof L1PcInstance) || (cha instanceof L1MonsterInstance);
 	}
 
 	private void doInfection() {
@@ -89,8 +86,7 @@ public class L1DamagePoison extends L1Poison {
 		}
 	}
 
-	public static boolean doInfection(L1Character attacker, L1Character cha,
-			int damageSpan, int damage) {
+	public static boolean doInfection(L1Character attacker, L1Character cha, int damageSpan, int damage) {
 		if (!isValidTarget(cha)) {
 			return false;
 		}

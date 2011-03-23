@@ -14,7 +14,6 @@
 package l1j.server.server.model;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -27,8 +26,6 @@ import l1j.server.server.utils.collections.Lists;
 // L1Party
 
 public class L1Party {
-	private static final Logger _log = Logger.getLogger(L1Party.class.getName());
-
 	private final List<L1PcInstance> _membersList = Lists.newList();
 
 	private L1PcInstance _leader = null;
@@ -144,7 +141,6 @@ public class L1Party {
 	}
 
 	public void leaveMember(L1PcInstance pc) {
-		L1PcInstance[] members = getMembers();
 		if (isLeader(pc) || (getNumOfMembers() == 2)) {
 			// パーティーリーダーの場合
 			breakup();

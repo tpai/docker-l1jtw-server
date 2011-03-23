@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.model.Instance;
 
-import java.util.logging.Logger;
+package l1j.server.server.model.Instance;
 
 import l1j.server.server.datatables.HouseTable;
 import l1j.server.server.datatables.NPCTalkDataTable;
@@ -31,8 +28,6 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static Logger _log = Logger.getLogger(L1HousekeeperInstance.class
-			.getName());
 
 	/**
 	 * @param template
@@ -51,8 +46,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 	@Override
 	public void onTalkAction(L1PcInstance pc) {
 		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(
-				getNpcTemplate().get_npcId());
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 		int npcid = getNpcTemplate().get_npcId();
 		String htmlid = null;
 		String[] htmldata = null;
@@ -64,8 +58,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance()
-							.getHouseTable(houseId);
+					L1House house = HouseTable.getInstance().getHouseTable(houseId);
 					if (npcid == house.getKeeperId()) {
 						isOwner = true;
 					}
@@ -76,8 +69,7 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 			if (!isOwner) {
 				// Housekeeperが属するアジトを取得する
 				L1House targetHouse = null;
-				for (L1House house : HouseTable.getInstance()
-						.getHouseTableList()) {
+				for (L1House house : HouseTable.getInstance().getHouseTableList()) {
 					if (npcid == house.getKeeperId()) {
 						targetHouse = house;
 						break;
@@ -100,27 +92,30 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 				// 会話内容を設定する
 				if (isOccupy) { // 所有者あり
 					htmlid = "agname";
-					htmldata = new String[] { clanName, leaderName,
-							targetHouse.getHouseName() };
-				} else { // 所有者なし(競売中)
+					htmldata = new String[]
+					{ clanName, leaderName, targetHouse.getHouseName() };
+				}
+				else { // 所有者なし(競売中)
 					htmlid = "agnoname";
-					htmldata = new String[] { targetHouse.getHouseName() };
+					htmldata = new String[]
+					{ targetHouse.getHouseName() };
 				}
 			}
 
 			// html表示パケット送信
 			if (htmlid != null) { // htmlidが指定されている場合
 				if (htmldata != null) { // html指定がある場合は表示
-					pc
-							.sendPackets(new S_NPCTalkReturn(objid, htmlid,
-									htmldata));
-				} else {
+					pc.sendPackets(new S_NPCTalkReturn(objid, htmlid, htmldata));
+				}
+				else {
 					pc.sendPackets(new S_NPCTalkReturn(objid, htmlid));
 				}
-			} else {
+			}
+			else {
 				if (pc.getLawful() < -1000) { // プレイヤーがカオティック
 					pc.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 				}
 			}

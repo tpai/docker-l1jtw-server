@@ -37,6 +37,4 @@ public class S_TaxRate extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_TaxRate";
 	}
-
-	private static final String _S__66_TAXRATE = "[S] S_TaxRate";
 }

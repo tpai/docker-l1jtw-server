@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.model;
 
-import java.util.logging.Logger;
+package l1j.server.server.model;
 
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.NpcTable;
@@ -25,13 +22,21 @@ import l1j.server.server.serverpackets.S_NPCPack;
 
 public class L1UbSpawn implements Comparable<L1UbSpawn> {
 	private int _id;
+
 	private int _ubId;
+
 	private int _pattern;
+
 	private int _group;
+
 	private int _npcTemplateId;
+
 	private int _amount;
+
 	private int _spawnDelay;
+
 	private int _sealCount;
+
 	private String _name;
 
 	// --------------------start getter/setter--------------------
@@ -111,14 +116,8 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 
 	public void spawnOne() {
 		L1UltimateBattle ub = UBTable.getInstance().getUb(_ubId);
-		L1Location loc = ub.getLocation().randomLocation(
-				(ub.getLocX2() - ub.getLocX1()) / 2, false);
-		L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance()
-				.getTemplate(getNpcTemplateId()));
-		if (mob == null) {
-			_log.warning("mob == null");
-			return;
-		}
+		L1Location loc = ub.getLocation().randomLocation((ub.getLocX2() - ub.getLocX1()) / 2, false);
+		L1MonsterInstance mob = new L1MonsterInstance(NpcTable.getInstance().getTemplate(getNpcTemplateId()));
 
 		mob.setId(IdFactory.getInstance().nextId());
 		mob.setHeading(5);
@@ -143,7 +142,7 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 		// モンスターのＡＩを開始
 		mob.onNpcAI();
 		mob.turnOnOffLight();
-// mob.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // チャット開始
+		// mob.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // チャット開始
 	}
 
 	public void spawnAll() {
@@ -152,6 +151,7 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 		}
 	}
 
+	@Override
 	public int compareTo(L1UbSpawn rhs) {
 		// XXX - 本当はもっと厳密な順序付けがあるはずだが、必要なさそうなので後回し
 		if (getId() < rhs.getId()) {
@@ -162,7 +162,4 @@ public class L1UbSpawn implements Comparable<L1UbSpawn> {
 		}
 		return 0;
 	}
-
-	private static final Logger _log = Logger.getLogger(L1UbSpawn.class
-			.getName());
 }

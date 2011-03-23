@@ -15,7 +15,6 @@ package l1j.server.server.model;
 
 import java.util.Calendar;
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.server.GeneralThreadPool;
@@ -41,15 +40,11 @@ public class L1War {
 
 	private int _warType = 0;
 
-	private int _castleId = 0;
-
 	private L1Castle _castle = null;
 
 	private Calendar _warEndTime;
 
 	private boolean _isWarTimerDelete = false;
-
-	private static final Logger _log = Logger.getLogger(L1War.class.getName());
 
 	public L1War() {
 	}
@@ -117,7 +112,7 @@ public class L1War {
 		SetDefenceClanName(defence_clan_name);
 
 		if (war_type == 1) { // 攻城戦
-			_castleId = GetCastleId();
+			GetCastleId();
 			_castle = GetCastle();
 			if (_castle != null) {
 				Calendar cal = (Calendar) _castle.getWarTime().clone();

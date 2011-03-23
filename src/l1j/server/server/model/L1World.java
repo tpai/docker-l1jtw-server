@@ -57,6 +57,7 @@ public class L1World {
 
 	private static L1World _instance;
 
+	@SuppressWarnings("unchecked")
 	private L1World() {
 		_allPlayers = Maps.newConcurrentMap(); // 全てのプレイヤー
 		_allPets = Maps.newConcurrentMap(); // 全てのペット

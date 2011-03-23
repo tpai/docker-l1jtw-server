@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.serverpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.NPCTalkDataTable;
@@ -28,16 +25,10 @@ import l1j.server.server.model.Instance.L1NpcInstance;
 public class S_NPCPack extends ServerBasePacket {
 
 	private static final String S_NPC_PACK = "[S] S_NPCPack";
-	private static Logger _log = Logger.getLogger(S_NPCPack.class.getName());
 
 	private static final int STATUS_POISON = 1;
-	private static final int STATUS_INVISIBLE = 2;
+
 	private static final int STATUS_PC = 4;
-	private static final int STATUS_FREEZE = 8;
-	private static final int STATUS_BRAVE = 16;
-	private static final int STATUS_ELFBRAVE = 32;
-	private static final int STATUS_FASTMOVABLE = 64;
-	private static final int STATUS_GHOST = 128;
 
 	private byte[] _byte = null;
 
@@ -48,12 +39,14 @@ public class S_NPCPack extends ServerBasePacket {
 		writeD(npc.getId());
 		if (npc.getTempCharGfx() == 0) {
 			writeH(npc.getGfxId());
-		} else {
+		}
+		else {
 			writeH(npc.getTempCharGfx());
 		}
-		if (npc.getNpcTemplate().is_doppel() && npc.getGfxId() != 31) { // スライムの姿をしていなければドッペル
+		if (npc.getNpcTemplate().is_doppel() && (npc.getGfxId() != 31)) { // スライムの姿をしていなければドッペル
 			writeC(4); // 長剣
-		} else {
+		}
+		else {
 			writeC(npc.getStatus());
 		}
 		writeC(npc.getHeading());
@@ -63,14 +56,15 @@ public class S_NPCPack extends ServerBasePacket {
 		writeH(npc.getTempLawful());
 		writeS(npc.getNameId());
 		if (npc instanceof L1FieldObjectInstance) { // SICの壁字、看板など
-			L1NpcTalkData talkdata = NPCTalkDataTable.getInstance()
-					.getTemplate(npc.getNpcTemplate().get_npcId());
+			L1NpcTalkData talkdata = NPCTalkDataTable.getInstance().getTemplate(npc.getNpcTemplate().get_npcId());
 			if (talkdata != null) {
 				writeS(talkdata.getNormalAction()); // タイトルがHTML名として解釈される
-			} else {
+			}
+			else {
 				writeS(null);
 			}
-		} else {
+		}
+		else {
 			writeS(npc.getTitle());
 		}
 

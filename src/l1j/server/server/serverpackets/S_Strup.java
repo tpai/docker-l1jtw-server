@@ -40,6 +40,4 @@ public class S_Strup extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_Strup";
 	}
-
-	private static final String _S__25_S_Strup = "[S] S_Strup";
 }

@@ -1,25 +1,24 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.poison;
 
+import static l1j.server.server.model.skill.L1SkillId.STATUS_POISON_PARALYZED;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_POISON_PARALYZING;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.serverpackets.S_Paralysis;
-import static l1j.server.server.model.skill.L1SkillId.*;
 
 public class L1ParalysisPoison extends L1Poison {
 	// 麻痺毒の性能一覧 猶予 持続 (参考値、未適用)
@@ -29,9 +28,13 @@ public class L1ParalysisPoison extends L1Poison {
 	// D-グール 39 45
 
 	private final L1Character _target;
+
 	private Thread _timer;
+
 	private final int _delay;
+
 	private final int _time;
+
 	private int _effectId = 1;
 
 	private class ParalysisPoisonTimer extends Thread {
@@ -41,9 +44,9 @@ public class L1ParalysisPoison extends L1Poison {
 
 			try {
 				Thread.sleep(_delay); // 麻痺するまでの猶予時間を待つ。
-			} catch (InterruptedException e) {
-				_target
-						.killSkillEffectTimer(STATUS_POISON_PARALYZING);
+			}
+			catch (InterruptedException e) {
+				_target.killSkillEffectTimer(STATUS_POISON_PARALYZING);
 				return;
 			}
 
@@ -72,8 +75,8 @@ public class L1ParalysisPoison extends L1Poison {
 			_target.setSkillEffect(STATUS_POISON_PARALYZED, 0);
 			try {
 				Thread.sleep(_time);
-			} catch (InterruptedException e) {
 			}
+			catch (InterruptedException e) {}
 
 			_target.killSkillEffectTimer(STATUS_POISON_PARALYZED);
 			if (_target instanceof L1PcInstance) {

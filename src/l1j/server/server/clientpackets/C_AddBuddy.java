@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.clientpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.clientpackets;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.datatables.BuddyTable;
@@ -33,7 +30,6 @@ import l1j.server.server.templates.L1CharName;
 public class C_AddBuddy extends ClientBasePacket {
 
 	private static final String C_ADD_BUDDY = "[C] C_AddBuddy";
-	private static Logger _log = Logger.getLogger(C_AddBuddy.class.getName());
 
 	public C_AddBuddy(byte[] decrypt, ClientThread client) {
 		super(decrypt);
@@ -44,7 +40,8 @@ public class C_AddBuddy extends ClientBasePacket {
 
 		if (charName.equalsIgnoreCase(pc.getName())) {
 			return;
-		} else if (buddyList.containsName(charName)) {
+		}
+		else if (buddyList.containsName(charName)) {
 			pc.sendPackets(new S_ServerMessage(1052, charName)); // %s
 																	// は既に登録されています。
 			return;

@@ -370,7 +370,6 @@ public class L1UltimateBattle {
 	 */
 	public void start() {
 		int patternsMax = UBSpawnTable.getInstance().getMaxPattern(_ubId);
-		Random Random = new Random();
 		_pattern = Random.nextInt(patternsMax) + 1; // 出現パターンを決める
 
 		UbThread ub = new UbThread();

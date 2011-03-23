@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.serverpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1SignboardInstance;
@@ -24,18 +21,9 @@ import l1j.server.server.model.Instance.L1SignboardInstance;
 
 public class S_SignboardPack extends ServerBasePacket {
 
-	private static Logger _log = Logger.getLogger(S_SignboardPack.class
-			.getName());
 	private static final String S_SIGNBOARD_PACK = "[S] S_SignboardPack";
 
 	private static final int STATUS_POISON = 1;
-	private static final int STATUS_INVISIBLE = 2;
-	private static final int STATUS_PC = 4;
-	private static final int STATUS_FREEZE = 8;
-	private static final int STATUS_BRAVE = 16;
-	private static final int STATUS_ELFBRAVE = 32;
-	private static final int STATUS_FASTMOVABLE = 64;
-	private static final int STATUS_GHOST = 128;
 
 	private byte[] _byte = null;
 
@@ -75,21 +63,21 @@ public class S_SignboardPack extends ServerBasePacket {
 	private int getDirection(int heading) {
 		int dir = 0;
 		switch (heading) {
-		case 2:
-			dir = 1;
-			break;
-		case 3:
-			dir = 2;
-			break;
-		case 4:
-			dir = 3;
-			break;
-		case 6:
-			dir = 4;
-			break;
-		case 7:
-			dir = 5;
-			break;
+			case 2:
+				dir = 1;
+				break;
+			case 3:
+				dir = 2;
+				break;
+			case 4:
+				dir = 3;
+				break;
+			case 6:
+				dir = 4;
+				break;
+			case 7:
+				dir = 5;
+				break;
 		}
 		return dir;
 	}

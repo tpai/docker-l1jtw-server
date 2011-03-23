@@ -199,10 +199,6 @@ public class L1SkillUse {
 	private static class TargetStatus {
 		private L1Character _target = null;
 
-		private boolean _isAction = false; // ダメージモーションが発生するか？
-
-		private boolean _isSendStatus = false; // キャラクターステータスを送信するか？（ヒール、スローなど状態が変わるとき送る）
-
 		private boolean _isCalc = true; // ダメージや確率魔法の計算をする必要があるか？
 
 		public TargetStatus(L1Character _cha) {
@@ -219,22 +215,6 @@ public class L1SkillUse {
 
 		public boolean isCalc() {
 			return _isCalc;
-		}
-
-		public void isAction(boolean _flg) {
-			_isAction = _flg;
-		}
-
-		public boolean isAction() {
-			return _isAction;
-		}
-
-		public void isSendStatus(boolean _flg) {
-			_isSendStatus = _flg;
-		}
-
-		public boolean isSendStatus() {
-			return _isSendStatus;
 		}
 	}
 
@@ -945,24 +925,6 @@ public class L1SkillUse {
 			return false;
 		}
 		return true;
-	}
-
-	/**
-	 * スキルを使用するために必要なHPがあるか返す。
-	 * 
-	 * @return HPが十分であればtrue
-	 */
-	private boolean isEnoughHp() {
-		return false;
-	}
-
-	/**
-	 * スキルを使用するために必要なMPがあるか返す。
-	 * 
-	 * @return MPが十分であればtrue
-	 */
-	private boolean isEnoughMp() {
-		return false;
 	}
 
 	// 必要ＨＰ、ＭＰがあるか？

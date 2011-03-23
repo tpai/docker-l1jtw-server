@@ -15,7 +15,6 @@ package l1j.server.server.serverpackets;
 
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.MailTable;
@@ -26,8 +25,6 @@ import l1j.server.server.utils.collections.Lists;
 // ServerBasePacket
 
 public class S_Mail extends ServerBasePacket {
-
-	private static Logger _log = Logger.getLogger(S_WhoAmount.class.getName());
 
 	private static final String S_MAIL = "[S] S_Mail";
 
@@ -49,7 +46,8 @@ public class S_Mail extends ServerBasePacket {
 	// 打開收信夾 ?封信件顯示標題
 	public S_Mail(String receiverName, int type) {
 		List<L1Mail> mails = Lists.newList();
-		for (L1Mail mail : MailTable.getInstance().getAllMail()) {
+		MailTable.getInstance();
+		for (L1Mail mail : MailTable.getAllMail()) {
 			if (mail.getReceiverName().equalsIgnoreCase(receiverName)) {
 				if (mail.getType() == type) {
 					mails.add(mail);
@@ -104,7 +102,8 @@ public class S_Mail extends ServerBasePacket {
 			writeC(1);
 			return;
 		}
-		L1Mail mail = MailTable.getInstance().getMail(mailId);
+		MailTable.getInstance();
+		L1Mail mail = MailTable.getMail(mailId);
 		if (mail != null) {
 			writeC(Opcodes.S_OPCODE_MAIL);
 			writeC(type);

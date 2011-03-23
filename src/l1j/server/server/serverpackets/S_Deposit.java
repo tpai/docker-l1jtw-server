@@ -35,6 +35,4 @@ public class S_Deposit extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_Deposit";
 	}
-
-	private static final String _S__53_DEPOSIT = "[S] S_Deposit";
 }

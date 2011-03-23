@@ -1,22 +1,20 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
 
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.model.L1Attack;
@@ -27,10 +25,10 @@ import l1j.server.server.templates.L1Npc;
 
 public class L1QuestInstance extends L1NpcInstance {
 
-	private static Logger _log = Logger.getLogger(L1QuestInstance.class
-			.getName());
-
-	private L1QuestInstance _npc = this;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	public L1QuestInstance(L1Npc template) {
 		super(template);
@@ -42,9 +40,10 @@ public class L1QuestInstance extends L1NpcInstance {
 		if (isAiRunning()) {
 			return;
 		}
-		if (npcId == 71075 || npcId == 70957 || npcId == 81209) {
-			return;			
-		} else {
+		if ((npcId == 71075) || (npcId == 70957) || (npcId == 81209)) {
+			return;
+		}
+		else {
 			setActived(false);
 			startAI();
 		}
@@ -70,57 +69,70 @@ public class L1QuestInstance extends L1NpcInstance {
 		int npcX = getX();
 		int npcY = getY();
 
-		if (pcX == npcX && pcY < npcY) {
+		if ((pcX == npcX) && (pcY < npcY)) {
 			setHeading(0);
-		} else if (pcX > npcX && pcY < npcY) {
+		}
+		else if ((pcX > npcX) && (pcY < npcY)) {
 			setHeading(1);
-		} else if (pcX > npcX && pcY == npcY) {
+		}
+		else if ((pcX > npcX) && (pcY == npcY)) {
 			setHeading(2);
-		} else if (pcX > npcX && pcY > npcY) {
+		}
+		else if ((pcX > npcX) && (pcY > npcY)) {
 			setHeading(3);
-		} else if (pcX == npcX && pcY > npcY) {
+		}
+		else if ((pcX == npcX) && (pcY > npcY)) {
 			setHeading(4);
-		} else if (pcX < npcX && pcY > npcY) {
+		}
+		else if ((pcX < npcX) && (pcY > npcY)) {
 			setHeading(5);
-		} else if (pcX < npcX && pcY == npcY) {
+		}
+		else if ((pcX < npcX) && (pcY == npcY)) {
 			setHeading(6);
-		} else if (pcX < npcX && pcY < npcY) {
+		}
+		else if ((pcX < npcX) && (pcY < npcY)) {
 			setHeading(7);
 		}
 		broadcastPacket(new S_ChangeHeading(this));
 
 		int npcId = getNpcTemplate().get_npcId();
-		if (npcId ==  71092 || npcId == 71093) { // 調査員
-			if (pc.isKnight() && pc.getQuest().get_step(3) == 4) {
+		if ((npcId == 71092) || (npcId == 71093)) { // 調査員
+			if (pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "searcherk1"));
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "searcherk4"));
 			}
-		} else if (npcId == 71094) { // エンディア
-			if (pc.isDarkelf() && pc.getQuest().get_step(4) == 1) {
+		}
+		else if (npcId == 71094) { // エンディア
+			if (pc.isDarkelf() && (pc.getQuest().get_step(4) == 1)) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "endiaq1"));
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "endiaq4"));
 			}
-		} else if (npcId == 71062) { // カミット
-			if (pc.getQuest().get_step(L1Quest.QUEST_CADMUS)
-					== 2) {
+		}
+		else if (npcId == 71062) { // カミット
+			if (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "kamit1b"));
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "kamit1"));
 			}
-		} else if (npcId == 71075) { // 疲れ果てたリザードマンファイター
-			if (pc.getQuest().get_step(L1Quest.QUEST_LIZARD)
-					== 1) {
+		}
+		else if (npcId == 71075) { // 疲れ果てたリザードマンファイター
+			if (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "llizard1b"));
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "llizard1a"));
 			}
-		} else if (npcId == 70957 || npcId == 81209) { // ロイ
-			if (pc.getQuest().get_step(L1Quest.QUEST_ROI)
-					!= 1) {
+		}
+		else if ((npcId == 70957) || (npcId == 81209)) { // ロイ
+			if (pc.getQuest().get_step(L1Quest.QUEST_ROI) != 1) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "roi1"));
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
 			}
 		}
@@ -139,37 +151,29 @@ public class L1QuestInstance extends L1NpcInstance {
 	public void onFinalAction(L1PcInstance pc, String action) {
 		if (action.equalsIgnoreCase("start")) {
 			int npcId = getNpcTemplate().get_npcId();
-			if ((npcId == 71092 || npcId == 71093)
-					&& pc.isKnight() && pc.getQuest().get_step(3) == 4) {
+			if (((npcId == 71092) || (npcId == 71093)) && pc.isKnight() && (pc.getQuest().get_step(3) == 4)) {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(71093);
-				L1FollowerInstance follow = new L1FollowerInstance(l1npc,
-						this, pc);
+				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			} else if (npcId == 71094
-					&& pc.isDarkelf() && pc.getQuest().get_step(4) == 1) {
+			}
+			else if ((npcId == 71094) && pc.isDarkelf() && (pc.getQuest().get_step(4) == 1)) {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(71094);
-				L1FollowerInstance follow = new L1FollowerInstance(l1npc,
-						this, pc);
+				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			} else if (npcId == 71062
-					&& pc.getQuest().get_step(L1Quest.QUEST_CADMUS)
-					== 2) {
+			}
+			else if ((npcId == 71062) && (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2)) {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(71062);
-				L1FollowerInstance follow = new L1FollowerInstance(l1npc,
-						this, pc);
+				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			} else if (npcId == 71075
-					&& pc.getQuest().get_step(L1Quest.QUEST_LIZARD)
-					== 1) {
+			}
+			else if ((npcId == 71075) && (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1)) {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(71075);
-				L1FollowerInstance follow = new L1FollowerInstance(l1npc,
-						this, pc);
+				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
-			} else if (npcId == 70957 || npcId == 81209) {
-
+			}
+			else if ((npcId == 70957) || (npcId == 81209)) {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(70957);
-				L1FollowerInstance follow = new L1FollowerInstance(l1npc,
-						this, pc);
+				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
 		}

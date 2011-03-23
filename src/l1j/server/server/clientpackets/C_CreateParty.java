@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.clientpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.clientpackets;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1Object;
@@ -32,8 +29,6 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 public class C_CreateParty extends ClientBasePacket {
 
 	private static final String C_CREATE_PARTY = "[C] C_CreateParty";
-	private static Logger _log = Logger.getLogger(C_CreateParty.class
-			.getName());
 
 	public C_CreateParty(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
@@ -41,7 +36,7 @@ public class C_CreateParty extends ClientBasePacket {
 		L1PcInstance pc = client.getActiveChar();
 
 		int type = readC();
-		if (type == 0 || type == 1) { // 自動接受組隊 on 與 off 的同
+		if ((type == 0) || (type == 1)) { // 自動接受組隊 on 與 off 的同
 			int targetId = readD();
 			L1Object temp = L1World.getInstance().findObject(targetId);
 			if (temp instanceof L1PcInstance) {
@@ -59,27 +54,29 @@ public class C_CreateParty extends ClientBasePacket {
 					if (pc.getParty().isLeader(pc)) {
 						targetPc.setPartyID(pc.getId());
 						// 玩家 %0%s 邀請您加入隊伍？(Y/N)
-						targetPc.sendPackets(new S_Message_YN(953, pc
-								.getName()));
-					} else {
+						targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
+					}
+					else {
 						// 只有領導者才能邀請其他的成員。
 						pc.sendPackets(new S_ServerMessage(416));
 					}
-				} else {
+				}
+				else {
 					pc.setPartyType(type);
 					targetPc.setPartyID(pc.getId());
 					switch (type) {
-					case 0:
-						// 玩家 %0%s 邀請您加入隊伍？(Y/N)
-						targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
-						break;
-					case 1:
-						targetPc.sendPackets(new S_Message_YN(954, pc.getName()));
-						break;
+						case 0:
+							// 玩家 %0%s 邀請您加入隊伍？(Y/N)
+							targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
+							break;
+						case 1:
+							targetPc.sendPackets(new S_Message_YN(954, pc.getName()));
+							break;
 					}
 				}
 			}
-		} else if (type == 2) { // 聊天組隊
+		}
+		else if (type == 2) { // 聊天組隊
 			String name = readS();
 			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (targetPc == null) {
@@ -101,11 +98,13 @@ public class C_CreateParty extends ClientBasePacket {
 					targetPc.setPartyID(pc.getId());
 					// 您要接受玩家 %0%s 提出的隊伍對話邀請嗎？(Y/N)
 					targetPc.sendPackets(new S_Message_YN(951, pc.getName()));
-				} else {
+				}
+				else {
 					// 只有領導者才能邀請其他的成員。
 					pc.sendPackets(new S_ServerMessage(416));
 				}
-			} else {
+			}
+			else {
 				targetPc.setPartyID(pc.getId());
 				// 您要接受玩家 %0%s 提出的隊伍對話邀請嗎？(Y/N)
 				targetPc.sendPackets(new S_Message_YN(951, pc.getName()));

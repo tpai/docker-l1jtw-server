@@ -1,21 +1,19 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
 import java.lang.reflect.Constructor;
-import java.util.logging.Logger;
 
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.NpcTable;
@@ -28,12 +26,9 @@ import l1j.server.server.templates.L1Npc;
 // L1WarSpawn
 
 public class L1WarSpawn {
-	private static final Logger _log = Logger.getLogger(L1WarSpawn.class
-			.getName());
-
 	private static L1WarSpawn _instance;
 
-	private Constructor _constructor;
+	private Constructor<?> _constructor;
 
 	public L1WarSpawn() {
 	}
@@ -105,16 +100,12 @@ public class L1WarSpawn {
 	private void SpawnWarObject(L1Npc l1npc, int locx, int locy, short mapid) {
 		try {
 			if (l1npc != null) {
-				Object obj = null;
 				String s = l1npc.getImpl();
 				_constructor = Class.forName(
-						(new StringBuilder()).append(
-								"l1j.server.server.model.Instance.").append(s)
-								.append("Instance").toString())
-						.getConstructors()[0];
-				Object aobj[] = { l1npc };
-				L1NpcInstance npc = (L1NpcInstance) _constructor
-						.newInstance(aobj);
+						(new StringBuilder()).append("l1j.server.server.model.Instance.").append(s).append("Instance").toString()).getConstructors()[0];
+				Object aobj[] =
+				{ l1npc };
+				L1NpcInstance npc = (L1NpcInstance) _constructor.newInstance(aobj);
 				npc.setId(IdFactory.getInstance().nextId());
 				npc.setX(locx);
 				npc.setY(locy);
@@ -132,7 +123,7 @@ public class L1WarSpawn {
 					pc.broadcastPacket(new S_NPCPack(npc));
 				}
 			}
-		} catch (Exception exception) {
 		}
+		catch (Exception exception) {}
 	}
 }

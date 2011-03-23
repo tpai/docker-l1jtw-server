@@ -16,7 +16,6 @@ package l1j.server.server.model;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.PolyTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -33,8 +32,6 @@ import l1j.server.server.utils.collections.Maps;
 // L1PcInstance
 
 public class L1PolyMorph {
-	private static Logger _log = Logger.getLogger(L1PolyMorph.class.getName());
-
 	// weapon equip bit
 	private static final int DAGGER_EQUIP = 1;
 

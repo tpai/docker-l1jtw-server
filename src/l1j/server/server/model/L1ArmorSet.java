@@ -19,7 +19,6 @@ import static l1j.server.server.model.skill.L1SkillId.AWAKEN_VALAKAS;
 
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.ArmorSetTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -95,8 +94,6 @@ class L1ArmorSetImpl extends L1ArmorSet {
 	private final int _ids[];
 
 	private final List<L1ArmorSetEffect> _effects;
-
-	private static Logger _log = Logger.getLogger(L1ArmorSetImpl.class.getName());
 
 	protected L1ArmorSetImpl(int ids[]) {
 		_ids = ids;

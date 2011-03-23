@@ -14,7 +14,6 @@
 package l1j.server.server.clientpackets;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.ActionCodes;
 import l1j.server.server.ClientThread;
@@ -37,8 +36,6 @@ import l1j.server.server.templates.L1PrivateShopSellList;
 public class C_Shop extends ClientBasePacket {
 
 	private static final String C_SHOP = "[C] C_Shop";
-
-	private static Logger _log = Logger.getLogger(C_Shop.class.getName());
 
 	public C_Shop(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);

@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.serverpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
@@ -23,8 +20,6 @@ import l1j.server.server.Opcodes;
 
 public class S_AddSkill extends ServerBasePacket {
 	private static final String S_ADD_SKILL = "[S] S_AddSkill";
-
-	private static Logger _log = Logger.getLogger(S_AddSkill.class.getName());
 
 	private byte[] _byte = null;
 
@@ -41,9 +36,11 @@ public class S_AddSkill extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_ADDSKILL);
 		if (hasLevel5to8 && !hasLevel9to10) {
 			writeC(50);
-		} else if (hasLevel9to10) {
+		}
+		else if (hasLevel9to10) {
 			writeC(100);
-		} else {
+		}
+		else {
 			writeC(32);
 		}
 		for (int i : ids) {
@@ -53,19 +50,19 @@ public class S_AddSkill extends ServerBasePacket {
 		writeD(0);
 	}
 
-	public S_AddSkill(int level1, int level2, int level3, int level4,
-			int level5, int level6, int level7, int level8, int level9,
-			int level10, int knight, int l2, int de1, int de2, int royal,
-			int l3, int elf1, int elf2, int elf3, int elf4, int elf5, int elf6,
-			int k5, int l5, int m5, int n5, int o5, int p5) {
+	public S_AddSkill(int level1, int level2, int level3, int level4, int level5, int level6, int level7, int level8, int level9, int level10,
+			int knight, int l2, int de1, int de2, int royal, int l3, int elf1, int elf2, int elf3, int elf4, int elf5, int elf6, int k5, int l5,
+			int m5, int n5, int o5, int p5) {
 		int i6 = level5 + level6 + level7 + level8;
 		int j6 = level9 + level10;
 		writeC(Opcodes.S_OPCODE_ADDSKILL);
-		if (i6 > 0 && j6 == 0) {
+		if ((i6 > 0) && (j6 == 0)) {
 			writeC(50);
-		} else if (j6 > 0) {
+		}
+		else if (j6 > 0) {
 			writeC(100);
-		} else {
+		}
+		else {
 			writeC(32);
 		}
 		writeC(level1);

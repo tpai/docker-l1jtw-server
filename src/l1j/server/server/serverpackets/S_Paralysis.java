@@ -94,6 +94,4 @@ public class S_Paralysis extends ServerBasePacket {
 	public static final int TYPE_BIND = 6;
 
 	public static final int TYPE_TELEPORT_UNLOCK = 7;
-
-	private static final String _S__2F_PARALYSIS = "[S] S_Paralysis";
 }

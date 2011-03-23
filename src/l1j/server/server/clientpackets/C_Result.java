@@ -14,7 +14,6 @@
 package l1j.server.server.clientpackets;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.datatables.ShopTable;
@@ -40,8 +39,6 @@ import l1j.server.server.templates.L1PrivateShopSellList;
  */
 public class C_Result extends ClientBasePacket {
 
-	private static Logger _log = Logger.getLogger(C_Result.class.getName());
-
 	private static final String C_RESULT = "[C] C_Result";
 
 	public C_Result(byte abyte0[], ClientThread clientthread) throws Exception {
@@ -49,7 +46,7 @@ public class C_Result extends ClientBasePacket {
 		int npcObjectId = readD();
 		int resultType = readC();
 		int size = readC();
-		int unknown = readC();
+		readC();
 
 		L1PcInstance pc = clientthread.getActiveChar();
 		int level = pc.getLevel();
@@ -327,6 +324,14 @@ public class C_Result extends ClientBasePacket {
 			}
 		}
 		else if ((resultType == 0) && (size != 0) && isPrivateShop) { // 個人商店からアイテム購入
+			if (findObject == null) {
+				return;
+			}
+			if (!(findObject instanceof L1PcInstance)) {
+				return;
+			}
+			L1PcInstance targetPc = (L1PcInstance) findObject;
+
 			int order;
 			int count;
 			int price;
@@ -339,13 +344,6 @@ public class C_Result extends ClientBasePacket {
 			L1ItemInstance item;
 			boolean[] isRemoveFromList = new boolean[8];
 
-			L1PcInstance targetPc = null;
-			if (findObject instanceof L1PcInstance) {
-				targetPc = (L1PcInstance) findObject;
-				if (targetPc == null) {
-					return;
-				}
-			}
 			if (targetPc.isTradingInPrivateShop()) {
 				return;
 			}

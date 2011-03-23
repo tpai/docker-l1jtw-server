@@ -36,6 +36,4 @@ public class S_PinkName extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_PinkName";
 	}
-
-	private static final String _S__2C_PINKNAME = "[S] S_PinkName";
 }

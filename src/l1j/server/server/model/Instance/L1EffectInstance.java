@@ -1,22 +1,25 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
 
-import java.util.concurrent.ScheduledFuture;
-import java.util.logging.Logger;
-
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CUBE_BALANCE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CUBE_IGNITION_TO_ALLY;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CUBE_IGNITION_TO_ENEMY;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CUBE_QUAKE_TO_ALLY;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CUBE_QUAKE_TO_ENEMY;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CUBE_SHOCK_TO_ALLY;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CUBE_SHOCK_TO_ENEMY;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.WarTimeController;
@@ -27,26 +30,22 @@ import l1j.server.server.model.L1Cube;
 import l1j.server.server.model.L1Magic;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.Instance.L1MonsterInstance;
-import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Npc;
-import static l1j.server.server.model.skill.L1SkillId.*;
 
 public class L1EffectInstance extends L1NpcInstance {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static Logger _log = Logger.getLogger(L1EffectInstance.class
-			.getName());
 
-	private ScheduledFuture<?> _effectFuture;
 	private static final int FW_DAMAGE_INTERVAL = 1000;
+
 	private static final int CUBE_INTERVAL = 500; // キューブ範囲内に居るキャラクターをチェックする間隔
+
 	private static final int CUBE_TIME = 8000; // 効果時間8秒?
 
 	public L1EffectInstance(L1Npc template) {
@@ -54,14 +53,14 @@ public class L1EffectInstance extends L1NpcInstance {
 
 		int npcId = getNpcTemplate().get_npcId();
 		if (npcId == 81157) { // FW
-			_effectFuture = GeneralThreadPool.getInstance().schedule(
-					new FwDamageTimer(this), 0);
-		} else if (npcId == 80149 // キューブ[イグニション]
-				|| npcId == 80150 // キューブ[クエイク]
-				|| npcId == 80151 // キューブ[ショック]
-				|| npcId == 80152) { // キューブ[バランス]
-			_effectFuture = GeneralThreadPool.getInstance().schedule(
-					new CubeTimer(this), 0);
+			GeneralThreadPool.getInstance().schedule(new FwDamageTimer(this), 0);
+		}
+		else if ((npcId == 80149 // キューブ[イグニション]
+				)
+				|| (npcId == 80150 // キューブ[クエイク]
+				) || (npcId == 80151 // キューブ[ショック]
+				) || (npcId == 80152)) { // キューブ[バランス]
+			GeneralThreadPool.getInstance().schedule(new CubeTimer(this), 0);
 		}
 	}
 
@@ -97,8 +96,7 @@ public class L1EffectInstance extends L1NpcInstance {
 		public void run() {
 			while (!_destroyed) {
 				try {
-					for (L1Object objects : L1World.getInstance()
-							.getVisibleObjects(_effect, 0)) {
+					for (L1Object objects : L1World.getInstance().getVisibleObjects(_effect, 0)) {
 						if (objects instanceof L1PcInstance) {
 							L1PcInstance pc = (L1PcInstance) objects;
 							if (pc.isDead()) {
@@ -106,11 +104,9 @@ public class L1EffectInstance extends L1NpcInstance {
 							}
 							if (pc.getZoneType() == 1) {
 								boolean isNowWar = false;
-								int castleId = L1CastleLocation
-										.getCastleIdByArea(pc);
+								int castleId = L1CastleLocation.getCastleIdByArea(pc);
 								if (castleId > 0) {
-									isNowWar = WarTimeController.getInstance()
-											.isNowWar(castleId);
+									isNowWar = WarTimeController.getInstance().isNowWar(castleId);
 								}
 								if (!isNowWar) {
 									continue;
@@ -121,12 +117,11 @@ public class L1EffectInstance extends L1NpcInstance {
 							if (damage == 0) {
 								continue;
 							}
-							pc.sendPackets(new S_DoActionGFX(pc.getId(),
-									ActionCodes.ACTION_Damage));
-							pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
-									ActionCodes.ACTION_Damage));
+							pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
+							pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Damage));
 							pc.receiveDamage(_effect, damage, false);
-						} else if (objects instanceof L1MonsterInstance) {
+						}
+						else if (objects instanceof L1MonsterInstance) {
 							L1MonsterInstance mob = (L1MonsterInstance) objects;
 							if (mob.isDead()) {
 								continue;
@@ -136,13 +131,13 @@ public class L1EffectInstance extends L1NpcInstance {
 							if (damage == 0) {
 								continue;
 							}
-							mob.broadcastPacket(new S_DoActionGFX(mob.getId(),
-									ActionCodes.ACTION_Damage));
+							mob.broadcastPacket(new S_DoActionGFX(mob.getId(), ActionCodes.ACTION_Damage));
 							mob.receiveDamage(_effect, damage);
 						}
 					}
 					Thread.sleep(FW_DAMAGE_INTERVAL);
-				} catch (InterruptedException ignore) {
+				}
+				catch (InterruptedException ignore) {
 					// ignore
 				}
 			}
@@ -160,8 +155,7 @@ public class L1EffectInstance extends L1NpcInstance {
 		public void run() {
 			while (!_destroyed) {
 				try {
-					for (L1Object objects : L1World.getInstance()
-							.getVisibleObjects(_effect, 3)) {
+					for (L1Object objects : L1World.getInstance().getVisibleObjects(_effect, 3)) {
 						if (objects instanceof L1PcInstance) {
 							L1PcInstance pc = (L1PcInstance) objects;
 							if (pc.isDead()) {
@@ -172,32 +166,30 @@ public class L1EffectInstance extends L1NpcInstance {
 								cubeToAlly(pc, _effect);
 								continue;
 							}
-							if (pc.getClanid() != 0
-									&& user.getClanid() == pc.getClanid()) {
+							if ((pc.getClanid() != 0) && (user.getClanid() == pc.getClanid())) {
 								cubeToAlly(pc, _effect);
 								continue;
 							}
-							if (pc.isInParty()
-									&& pc.getParty().isMember(user)) {
+							if (pc.isInParty() && pc.getParty().isMember(user)) {
 								cubeToAlly(pc, _effect);
 								continue;
 							}
 							if (pc.getZoneType() == 1) { // セーフティーゾーンでは戦争中を除き敵には無効
 								boolean isNowWar = false;
-								int castleId = L1CastleLocation
-										.getCastleIdByArea(pc);
+								int castleId = L1CastleLocation.getCastleIdByArea(pc);
 								if (castleId > 0) {
-									isNowWar = WarTimeController.getInstance()
-											.isNowWar(castleId);
+									isNowWar = WarTimeController.getInstance().isNowWar(castleId);
 								}
 								if (!isNowWar) {
 									continue;
 								}
 								cubeToEnemy(pc, _effect);
-							} else {
+							}
+							else {
 								cubeToEnemy(pc, _effect);
 							}
-						} else if (objects instanceof L1MonsterInstance) {
+						}
+						else if (objects instanceof L1MonsterInstance) {
 							L1MonsterInstance mob = (L1MonsterInstance) objects;
 							if (mob.isDead()) {
 								continue;
@@ -206,7 +198,8 @@ public class L1EffectInstance extends L1NpcInstance {
 						}
 					}
 					Thread.sleep(CUBE_INTERVAL);
-				} catch (InterruptedException ignore) {
+				}
+				catch (InterruptedException ignore) {
 					// ignore
 				}
 			}
@@ -215,8 +208,7 @@ public class L1EffectInstance extends L1NpcInstance {
 
 	private void cubeToAlly(L1Character cha, L1Character effect) {
 		int npcId = getNpcTemplate().get_npcId();
-		int castGfx = SkillsTable.getInstance().getTemplate(getSkillId())
-				.getCastGfx();
+		int castGfx = SkillsTable.getInstance().getTemplate(getSkillId()).getCastGfx();
 		L1PcInstance pc = null;
 
 		if (npcId == 80149) { // キューブ[イグニション]
@@ -230,7 +222,8 @@ public class L1EffectInstance extends L1NpcInstance {
 				cha.broadcastPacket(new S_SkillSound(cha.getId(), castGfx));
 				cha.setSkillEffect(STATUS_CUBE_IGNITION_TO_ALLY, CUBE_TIME);
 			}
-		} else if (npcId == 80150) { // キューブ[クエイク]
+		}
+		else if (npcId == 80150) { // キューブ[クエイク]
 			if (!cha.hasSkillEffect(STATUS_CUBE_QUAKE_TO_ALLY)) {
 				cha.addEarth(30);
 				if (cha instanceof L1PcInstance) {
@@ -241,7 +234,8 @@ public class L1EffectInstance extends L1NpcInstance {
 				cha.broadcastPacket(new S_SkillSound(cha.getId(), castGfx));
 				cha.setSkillEffect(STATUS_CUBE_QUAKE_TO_ALLY, CUBE_TIME);
 			}
-		} else if (npcId == 80151) { // キューブ[ショック]
+		}
+		else if (npcId == 80151) { // キューブ[ショック]
 			if (!cha.hasSkillEffect(STATUS_CUBE_SHOCK_TO_ALLY)) {
 				cha.addWind(30);
 				if (cha instanceof L1PcInstance) {
@@ -252,7 +246,8 @@ public class L1EffectInstance extends L1NpcInstance {
 				cha.broadcastPacket(new S_SkillSound(cha.getId(), castGfx));
 				cha.setSkillEffect(STATUS_CUBE_SHOCK_TO_ALLY, CUBE_TIME);
 			}
-		} else if (npcId == 80152) { // キューブ[バランス]
+		}
+		else if (npcId == 80152) { // キューブ[バランス]
 			if (!cha.hasSkillEffect(STATUS_CUBE_BALANCE)) {
 				if (cha instanceof L1PcInstance) {
 					pc = (L1PcInstance) cha;
@@ -268,8 +263,7 @@ public class L1EffectInstance extends L1NpcInstance {
 
 	private void cubeToEnemy(L1Character cha, L1Character effect) {
 		int npcId = getNpcTemplate().get_npcId();
-		int castGfx2 = SkillsTable.getInstance().getTemplate(getSkillId())
-				.getCastGfx2();
+		int castGfx2 = SkillsTable.getInstance().getTemplate(getSkillId()).getCastGfx2();
 		L1PcInstance pc = null;
 		if (npcId == 80149) { // キューブ[イグニション]
 			if (!cha.hasSkillEffect(STATUS_CUBE_IGNITION_TO_ENEMY)) {
@@ -279,11 +273,11 @@ public class L1EffectInstance extends L1NpcInstance {
 				}
 				cha.broadcastPacket(new S_SkillSound(cha.getId(), castGfx2));
 				cha.setSkillEffect(STATUS_CUBE_IGNITION_TO_ENEMY, CUBE_TIME);
-				L1Cube cube = new L1Cube(effect, cha,
-						STATUS_CUBE_IGNITION_TO_ENEMY);
+				L1Cube cube = new L1Cube(effect, cha, STATUS_CUBE_IGNITION_TO_ENEMY);
 				cube.begin();
 			}
-		} else if (npcId == 80150) { // キューブ[クエイク]
+		}
+		else if (npcId == 80150) { // キューブ[クエイク]
 			if (!cha.hasSkillEffect(STATUS_CUBE_QUAKE_TO_ENEMY)) {
 				if (cha instanceof L1PcInstance) {
 					pc = (L1PcInstance) cha;
@@ -291,11 +285,11 @@ public class L1EffectInstance extends L1NpcInstance {
 				}
 				cha.broadcastPacket(new S_SkillSound(cha.getId(), castGfx2));
 				cha.setSkillEffect(STATUS_CUBE_QUAKE_TO_ENEMY, CUBE_TIME);
-				L1Cube cube = new L1Cube(effect, cha,
-						STATUS_CUBE_QUAKE_TO_ENEMY);
+				L1Cube cube = new L1Cube(effect, cha, STATUS_CUBE_QUAKE_TO_ENEMY);
 				cube.begin();
 			}
-		} else if (npcId == 80151) { // キューブ[ショック]
+		}
+		else if (npcId == 80151) { // キューブ[ショック]
 			if (!cha.hasSkillEffect(STATUS_CUBE_SHOCK_TO_ENEMY)) {
 				if (cha instanceof L1PcInstance) {
 					pc = (L1PcInstance) cha;
@@ -303,11 +297,11 @@ public class L1EffectInstance extends L1NpcInstance {
 				}
 				cha.broadcastPacket(new S_SkillSound(cha.getId(), castGfx2));
 				cha.setSkillEffect(STATUS_CUBE_SHOCK_TO_ENEMY, CUBE_TIME);
-				L1Cube cube = new L1Cube(effect, cha,
-						STATUS_CUBE_SHOCK_TO_ENEMY);
+				L1Cube cube = new L1Cube(effect, cha, STATUS_CUBE_SHOCK_TO_ENEMY);
 				cube.begin();
 			}
-		} else if (npcId == 80152) { // キューブ[バランス]
+		}
+		else if (npcId == 80152) { // キューブ[バランス]
 			if (!cha.hasSkillEffect(STATUS_CUBE_BALANCE)) {
 				if (cha instanceof L1PcInstance) {
 					pc = (L1PcInstance) cha;
@@ -320,7 +314,6 @@ public class L1EffectInstance extends L1NpcInstance {
 			}
 		}
 	}
-
 
 	private L1PcInstance _pc;
 

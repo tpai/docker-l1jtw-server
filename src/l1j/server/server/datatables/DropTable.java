@@ -17,7 +17,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -175,7 +174,7 @@ public class DropTable {
 	}
 
 	// ドロップを分配
-	public void dropShare(L1NpcInstance npc, ArrayList acquisitorList, ArrayList hateList) {
+	public void dropShare(L1NpcInstance npc, List<L1Character> acquisitorList, List<Integer> hateList) {
 		L1Inventory inventory = npc.getInventory();
 		if (inventory.getSize() == 0) {
 			return;
@@ -187,7 +186,7 @@ public class DropTable {
 		int totalHate = 0;
 		L1Character acquisitor;
 		for (int i = hateList.size() - 1; i >= 0; i--) {
-			acquisitor = (L1Character) acquisitorList.get(i);
+			acquisitor = acquisitorList.get(i);
 			if ((Config.AUTO_LOOT == 2) // オートルーティング２の場合はサモン及びペットは省く
 					&& ((acquisitor instanceof L1SummonInstance) || (acquisitor instanceof L1PetInstance))) {
 				acquisitorList.remove(i);
@@ -195,7 +194,7 @@ public class DropTable {
 			}
 			else if ((acquisitor != null) && (acquisitor.getMapId() == npc.getMapId())
 					&& (acquisitor.getLocation().getTileLineDistance(npc.getLocation()) <= Config.LOOTING_RANGE)) {
-				totalHate += (Integer) hateList.get(i);
+				totalHate += hateList.get(i);
 			}
 			else { // nullだったり死んでたり遠かったら排除
 				acquisitorList.remove(i);
@@ -223,9 +222,9 @@ public class DropTable {
 				randomInt = Random.nextInt(totalHate);
 				chanceHate = 0;
 				for (int j = hateList.size() - 1; j >= 0; j--) {
-					chanceHate += (Integer) hateList.get(j);
+					chanceHate += hateList.get(j);
 					if (chanceHate > randomInt) {
-						acquisitor = (L1Character) acquisitorList.get(j);
+						acquisitor = acquisitorList.get(j);
 						if ((itemId >= 40131) && (itemId <= 40135)) {
 							if (!(acquisitor instanceof L1PcInstance) || (hateList.size() > 1)) {
 								targetInventory = null;

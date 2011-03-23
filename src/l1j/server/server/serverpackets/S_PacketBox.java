@@ -1,23 +1,21 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.serverpackets;
 
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.server.Account;
@@ -31,14 +29,12 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public class S_PacketBox extends ServerBasePacket {
 	private static final String S_PACKETBOX = "[S] S_PacketBox";
 
-	private static Logger _log = Logger.getLogger(S_PacketBox.class.getName());
-
 	private byte[] _byte = null;
 
 	// *** S_107 sub code list ***
 	/** Updating */
 	public static final int UPDATE_OLD_PART_MEMBER = 104;
-	
+
 	/** 3.3 組隊系統(更新新加入的隊員信息) */
 	public static final int PATRY_UPDATE_MEMBER = 105;
 
@@ -189,18 +185,18 @@ public class S_PacketBox extends ServerBasePacket {
 		writeC(subCode);
 
 		switch (subCode) {
-		case MSG_WAR_INITIATIVE:
-		case MSG_WAR_OCCUPY:
-		case MSG_MARRIED:
-		case MSG_FEEL_GOOD:
-		case MSG_CANT_LOGOUT:
-		case LOGOUT:
-		case FISHING:
-			break;
-		case CALL_SOMETHING:
-			callSomething();
-		default:
-			break;
+			case MSG_WAR_INITIATIVE:
+			case MSG_WAR_OCCUPY:
+			case MSG_MARRIED:
+			case MSG_FEEL_GOOD:
+			case MSG_CANT_LOGOUT:
+			case LOGOUT:
+			case FISHING:
+				break;
+			case CALL_SOMETHING:
+				callSomething();
+			default:
+				break;
 		}
 	}
 
@@ -209,42 +205,42 @@ public class S_PacketBox extends ServerBasePacket {
 		writeC(subCode);
 
 		switch (subCode) {
-		case ICON_BLUEPOTION:
-		case ICON_CHATBAN:
-		case ICON_I2H:
-		case ICON_POLYMORPH:
-			writeH(value); // time
-			break;
-		case MSG_WAR_BEGIN:
-		case MSG_WAR_END:
-		case MSG_WAR_GOING:
-			writeC(value); // castle id
-			writeH(0); // ?
-			break;
-		case MSG_SMS_SENT:
-		case WEIGHT:
-		case FOOD:
-			writeC(value);
-			break;
-		case MSG_ELF:
-		case MSG_RANK_CHANGED:
-		case MSG_COLOSSEUM:
-			writeC(value); // msg id
-			break;
-		case MSG_LEVEL_OVER:
-			writeC(0); // ?
-			writeC(value); // 0-49以外は表示されない
-			break;
-		case COOK_WINDOW:
-			writeC(0xdb); // ?
-			writeC(0x31);
-			writeC(0xdf);
-			writeC(0x02);
-			writeC(0x01);
-			writeC(value); // level
-			break;
-		default:
-			break;
+			case ICON_BLUEPOTION:
+			case ICON_CHATBAN:
+			case ICON_I2H:
+			case ICON_POLYMORPH:
+				writeH(value); // time
+				break;
+			case MSG_WAR_BEGIN:
+			case MSG_WAR_END:
+			case MSG_WAR_GOING:
+				writeC(value); // castle id
+				writeH(0); // ?
+				break;
+			case MSG_SMS_SENT:
+			case WEIGHT:
+			case FOOD:
+				writeC(value);
+				break;
+			case MSG_ELF:
+			case MSG_RANK_CHANGED:
+			case MSG_COLOSSEUM:
+				writeC(value); // msg id
+				break;
+			case MSG_LEVEL_OVER:
+				writeC(0); // ?
+				writeC(value); // 0-49以外は表示されない
+				break;
+			case COOK_WINDOW:
+				writeC(0xdb); // ?
+				writeC(0x31);
+				writeC(0xdf);
+				writeC(0x02);
+				writeC(0x01);
+				writeC(value); // level
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -253,42 +249,43 @@ public class S_PacketBox extends ServerBasePacket {
 		writeC(subCode);
 
 		switch (subCode) {
-		case ICON_COOKING:
-			if (type != 7) {
-				writeC(0x0c);
-				writeC(0x0c);
-				writeC(0x0c);
-				writeC(0x12);
-				writeC(0x0c);
-				writeC(0x09);
-				writeC(0x00);
-				writeC(0x00);
-				writeC(type);
-				writeC(0x24);
-				writeH(time);
-				writeH(0x00);
-			} else {
-				writeC(0x0c);
-				writeC(0x0c);
-				writeC(0x0c);
-				writeC(0x12);
-				writeC(0x0c);
-				writeC(0x09);
-				writeC(0xc8);
-				writeC(0x00);
-				writeC(type);
-				writeC(0x26);
-				writeH(time);
-				writeC(0x3e);
-				writeC(0x87);
-			}
-			break;
-		case MSG_DUEL:
-			writeD(type); // 相手のオブジェクトID
-			writeD(time); // 自分のオブジェクトID
-			break;
-		default:
-			break;
+			case ICON_COOKING:
+				if (type != 7) {
+					writeC(0x0c);
+					writeC(0x0c);
+					writeC(0x0c);
+					writeC(0x12);
+					writeC(0x0c);
+					writeC(0x09);
+					writeC(0x00);
+					writeC(0x00);
+					writeC(type);
+					writeC(0x24);
+					writeH(time);
+					writeH(0x00);
+				}
+				else {
+					writeC(0x0c);
+					writeC(0x0c);
+					writeC(0x0c);
+					writeC(0x12);
+					writeC(0x0c);
+					writeC(0x09);
+					writeC(0xc8);
+					writeC(0x00);
+					writeC(type);
+					writeC(0x26);
+					writeH(time);
+					writeC(0x3e);
+					writeC(0x87);
+				}
+				break;
+			case MSG_DUEL:
+				writeD(type); // 相手のオブジェクトID
+				writeD(time); // 自分のオブジェクトID
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -297,13 +294,13 @@ public class S_PacketBox extends ServerBasePacket {
 		writeC(subCode);
 
 		switch (subCode) {
-		case ADD_EXCLUDE:
-		case REM_EXCLUDE:
-		case MSG_TOWN_LEADER:
-			writeS(name);
-			break;
-		default:
-			break;
+			case ADD_EXCLUDE:
+			case REM_EXCLUDE:
+			case MSG_TOWN_LEADER:
+				writeS(name);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -312,13 +309,13 @@ public class S_PacketBox extends ServerBasePacket {
 		writeC(subCode);
 
 		switch (subCode) {
-		case MSG_WIN_LASTAVARD:
-			writeD(id); // クランIDか何か？
-			writeS(name);
-			writeS(clanName);
-			break;
-		default:
-			break;
+			case MSG_WIN_LASTAVARD:
+				writeD(id); // クランIDか何か？
+				writeS(name);
+				writeS(clanName);
+				break;
+			default:
+				break;
 		}
 	}
 
@@ -327,20 +324,19 @@ public class S_PacketBox extends ServerBasePacket {
 		writeC(subCode);
 
 		switch (subCode) {
-		case ADD_EXCLUDE2:
-			writeC(names.length);
-			for (Object name : names) {
-				writeS(name.toString());
-			}
-			break;
-		default:
-			break;
+			case ADD_EXCLUDE2:
+				writeC(names.length);
+				for (Object name : names) {
+					writeS(name.toString());
+				}
+				break;
+			default:
+				break;
 		}
 	}
 
 	private void callSomething() {
-		Iterator<L1PcInstance> itr = L1World.getInstance().getAllPlayers()
-				.iterator();
+		Iterator<L1PcInstance> itr = L1World.getInstance().getAllPlayers().iterator();
 
 		writeC(L1World.getInstance().getAllPlayers().size());
 
@@ -351,9 +347,9 @@ public class S_PacketBox extends ServerBasePacket {
 			// 時間情報 とりあえずログイン時間を入れてみる
 			if (acc == null) {
 				writeD(0);
-			} else {
-				Calendar cal = Calendar.getInstance(TimeZone
-						.getTimeZone(Config.TIME_ZONE));
+			}
+			else {
+				Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(Config.TIME_ZONE));
 				long lastactive = acc.getLastActive().getTime();
 				cal.setTimeInMillis(lastactive);
 				cal.set(Calendar.YEAR, 1970);

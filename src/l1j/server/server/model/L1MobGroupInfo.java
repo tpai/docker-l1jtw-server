@@ -14,7 +14,6 @@
 package l1j.server.server.model;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.utils.collections.Lists;
@@ -23,8 +22,6 @@ import l1j.server.server.utils.collections.Lists;
 // L1MobGroupInfo
 
 public class L1MobGroupInfo {
-	private static final Logger _log = Logger.getLogger(L1MobGroupInfo.class.getName());
-
 	private final List<L1NpcInstance> _membersList = Lists.newList();
 
 	private L1NpcInstance _leader;

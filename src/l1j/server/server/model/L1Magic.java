@@ -1,28 +1,92 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
 
-import l1j.server.server.utils.Random;
-import java.util.logging.Logger;
-
+import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
+import static l1j.server.server.model.skill.L1SkillId.AREA_OF_SILENCE;
+import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_0_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_1_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_2_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_3_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_4_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_5_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_6_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_7_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_0_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_1_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_2_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_3_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_4_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_5_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_6_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_7_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_1_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_2_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_3_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_4_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_5_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_7_S;
+import static l1j.server.server.model.skill.L1SkillId.COUNTER_BARRIER;
+import static l1j.server.server.model.skill.L1SkillId.COUNTER_MIRROR;
+import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
+import static l1j.server.server.model.skill.L1SkillId.CURSE_PARALYZE;
+import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
+import static l1j.server.server.model.skill.L1SkillId.DARK_BLIND;
+import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
+import static l1j.server.server.model.skill.L1SkillId.DISEASE;
+import static l1j.server.server.model.skill.L1SkillId.DRAGON_SKIN;
+import static l1j.server.server.model.skill.L1SkillId.EARTH_BIND;
+import static l1j.server.server.model.skill.L1SkillId.ELEMENTAL_FALL_DOWN;
+import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
+import static l1j.server.server.model.skill.L1SkillId.ERASE_MAGIC;
+import static l1j.server.server.model.skill.L1SkillId.FINAL_BURN;
+import static l1j.server.server.model.skill.L1SkillId.FIRE_WALL;
+import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
+import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
+import static l1j.server.server.model.skill.L1SkillId.FREEZING_BREATH;
+import static l1j.server.server.model.skill.L1SkillId.GUARD_BRAKE;
+import static l1j.server.server.model.skill.L1SkillId.HORROR_OF_DEATH;
+import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
+import static l1j.server.server.model.skill.L1SkillId.ILLUSION_AVATAR;
+import static l1j.server.server.model.skill.L1SkillId.IMMUNE_TO_HARM;
+import static l1j.server.server.model.skill.L1SkillId.MANA_DRAIN;
+import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
+import static l1j.server.server.model.skill.L1SkillId.PATIENCE;
+import static l1j.server.server.model.skill.L1SkillId.POLLUTE_WATER;
+import static l1j.server.server.model.skill.L1SkillId.REDUCTION_ARMOR;
+import static l1j.server.server.model.skill.L1SkillId.RESIST_FEAR;
+import static l1j.server.server.model.skill.L1SkillId.RETURN_TO_NATURE;
+import static l1j.server.server.model.skill.L1SkillId.SHOCK_STUN;
+import static l1j.server.server.model.skill.L1SkillId.SLOW;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_BARLOG;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_YAHEE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_MITHRIL_POWDER;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
+import static l1j.server.server.model.skill.L1SkillId.STRIKER_GALE;
+import static l1j.server.server.model.skill.L1SkillId.TAMING_MONSTER;
+import static l1j.server.server.model.skill.L1SkillId.WEAKNESS;
+import static l1j.server.server.model.skill.L1SkillId.WEAPON_BREAK;
+import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.model.Instance.L1DollInstance;
-import l1j.server.server.model.Instance.L1DoorInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -32,11 +96,9 @@ import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Skills;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.Random;
 
 public class L1Magic {
-	private static Logger _log = Logger.getLogger(L1Magic.class.getName());
-
 	private int _calcType;
 
 	private final int PC_PC = 1;
@@ -71,17 +133,20 @@ public class L1Magic {
 				_calcType = PC_PC;
 				_pc = (L1PcInstance) attacker;
 				_targetPc = (L1PcInstance) target;
-			} else {
+			}
+			else {
 				_calcType = PC_NPC;
 				_pc = (L1PcInstance) attacker;
 				_targetNpc = (L1NpcInstance) target;
 			}
-		} else {
+		}
+		else {
 			if (target instanceof L1PcInstance) {
 				_calcType = NPC_PC;
 				_npc = (L1NpcInstance) attacker;
 				_targetPc = (L1PcInstance) target;
-			} else {
+			}
+			else {
 				_calcType = NPC_NPC;
 				_npc = (L1NpcInstance) attacker;
 				_targetNpc = (L1NpcInstance) target;
@@ -89,22 +154,12 @@ public class L1Magic {
 		}
 	}
 
-	/* ■■■■■■■■■■■■■■■ 魔法共通関数 ■■■■■■■■■■■■■■ */
-	private int getSpellPower() {
-		int spellPower = 0;
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
-			spellPower = _pc.getSp();
-		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
-			spellPower = _npc.getSp();
-		}
-		return spellPower;
-	}
-
 	private int getMagicLevel() {
 		int magicLevel = 0;
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			magicLevel = _pc.getMagicLevel();
-		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
+		}
+		else if ((_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
 			magicLevel = _npc.getMagicLevel();
 		}
 		return magicLevel;
@@ -112,9 +167,10 @@ public class L1Magic {
 
 	private int getMagicBonus() {
 		int magicBonus = 0;
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			magicBonus = _pc.getMagicBonus();
-		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
+		}
+		else if ((_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
 			magicBonus = _npc.getMagicBonus();
 		}
 		return magicBonus;
@@ -122,9 +178,10 @@ public class L1Magic {
 
 	private int getLawful() {
 		int lawful = 0;
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			lawful = _pc.getLawful();
-		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
+		}
+		else if ((_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
 			lawful = _npc.getLawful();
 		}
 		return lawful;
@@ -132,9 +189,10 @@ public class L1Magic {
 
 	private int getTargetMr() {
 		int mr = 0;
-		if (_calcType == PC_PC || _calcType == NPC_PC) {
+		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			mr = _targetPc.getMr();
-		} else {
+		}
+		else {
 			mr = _targetNpc.getMr();
 		}
 		return mr;
@@ -151,74 +209,82 @@ public class L1Magic {
 		boolean isSuccess = false;
 
 		// 攻撃者がGM権限の場合100%成功
-		if (_pc != null && _pc.isGm()) {
+		if ((_pc != null) && _pc.isGm()) {
 			return true;
 		}
 
-		if (_calcType == PC_NPC && _targetNpc != null) {
+		if ((_calcType == PC_NPC) && (_targetNpc != null)) {
 			int npcId = _targetNpc.getNpcTemplate().get_npcId();
-			if (npcId >= 45912 && npcId <= 45915 // 恨みに満ちたソルジャー＆ソルジャーゴースト
-					&& !_pc.hasSkillEffect(STATUS_HOLY_WATER)) {
+			if ((npcId >= 45912) && (npcId <= 45915 // 恨みに満ちたソルジャー＆ソルジャーゴースト
+					) && !_pc.hasSkillEffect(STATUS_HOLY_WATER)) {
 				return false;
 			}
-			if (npcId == 45916 // 恨みに満ちたハメル将軍
+			if ((npcId == 45916 // 恨みに満ちたハメル将軍
+					)
 					&& !_pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
 				return false;
 			}
-			if (npcId == 45941 // 呪われた巫女サエル
+			if ((npcId == 45941 // 呪われた巫女サエル
+					)
 					&& !_pc.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
 				return false;
 			}
-			if (npcId == 45752 // バルログ(変身前)
+			if ((npcId == 45752 // バルログ(変身前)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
 				return false;
 			}
-			if (npcId == 45753 // バルログ(変身後)
+			if ((npcId == 45753 // バルログ(変身後)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
 				return false;
 			}
-			if (npcId == 45675 // ヤヒ(変身前)
+			if ((npcId == 45675 // ヤヒ(変身前)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				return false;
 			}
-			if (npcId == 81082 // ヤヒ(変身後)
+			if ((npcId == 81082 // ヤヒ(変身後)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				return false;
 			}
-			if (npcId == 45625 // 混沌
+			if ((npcId == 45625 // 混沌
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				return false;
 			}
-			if (npcId == 45674 // 死
+			if ((npcId == 45674 // 死
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				return false;
 			}
-			if (npcId == 45685 // 堕落
+			if ((npcId == 45685 // 堕落
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				return false;
 			}
-			if (npcId >= 46068 && npcId <= 46091 // 欲望の洞窟側mob
-					&& _pc.getTempCharGfx() == 6035) {
+			if ((npcId >= 46068) && (npcId <= 46091 // 欲望の洞窟側mob
+					) && (_pc.getTempCharGfx() == 6035)) {
 				return false;
 			}
-			if (npcId >= 46092 && npcId <= 46106 // 影の神殿側mob
-					&& _pc.getTempCharGfx() == 6034) {
+			if ((npcId >= 46092) && (npcId <= 46106 // 影の神殿側mob
+					) && (_pc.getTempCharGfx() == 6034)) {
 				return false;
 			}
 		}
 
- 		if (!checkZone(skillId)) {
+		if (!checkZone(skillId)) {
 			return false;
 		}
 		if (skillId == CANCELLATION) {
-			if (_calcType == PC_PC && _pc != null && _targetPc != null) {
+			if ((_calcType == PC_PC) && (_pc != null) && (_targetPc != null)) {
 				// 自分自身の場合は100%成功
 				if (_pc.getId() == _targetPc.getId()) {
 					return true;
 				}
 				// 同じクランの場合は100%成功
-				if (_pc.getClanid() > 0
-						&& (_pc.getClanid() == _targetPc.getClanid())) {
+				if ((_pc.getClanid() > 0) && (_pc.getClanid() == _targetPc.getClanid())) {
 					return true;
 				}
 				// 同じパーティの場合は100%成功
@@ -228,29 +294,27 @@ public class L1Magic {
 					}
 				}
 				// それ以外の場合、セーフティゾーン内では無効
-				if (_pc.getZoneType() == 1 || _targetPc.getZoneType() == 1) {
+				if ((_pc.getZoneType() == 1) || (_targetPc.getZoneType() == 1)) {
 					return false;
 				}
 			}
 			// 対象がNPC、使用者がNPCの場合は100%成功
-			if (_calcType == PC_NPC
-					|| _calcType == NPC_PC || _calcType == NPC_NPC) {
+			if ((_calcType == PC_NPC) || (_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
 				return true;
 			}
 		}
 
 		// アースバインド中はWB、キャンセレーション以外無効
-		if (_calcType == PC_PC || _calcType == NPC_PC) {
+		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			if (_targetPc.hasSkillEffect(EARTH_BIND)) {
-				if (skillId != WEAPON_BREAK
-						&& skillId != CANCELLATION) {
+				if ((skillId != WEAPON_BREAK) && (skillId != CANCELLATION)) {
 					return false;
 				}
 			}
-		} else {
+		}
+		else {
 			if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
-				if (skillId != WEAPON_BREAK
-						&& skillId != CANCELLATION) {
+				if ((skillId != WEAPON_BREAK) && (skillId != CANCELLATION)) {
 					return false;
 				}
 			}
@@ -265,7 +329,8 @@ public class L1Magic {
 
 		if (probability >= rnd) {
 			isSuccess = true;
-		} else {
+		}
+		else {
 			isSuccess = false;
 		}
 
@@ -274,12 +339,10 @@ public class L1Magic {
 			return isSuccess;
 		}
 		if (Config.ALT_ATKMSG) {
-			if ((_calcType == PC_PC || _calcType == PC_NPC)
-					&& !_pc.isGm()) {
+			if (((_calcType == PC_PC) || (_calcType == PC_NPC)) && !_pc.isGm()) {
 				return isSuccess;
 			}
-			if ((_calcType == PC_PC || _calcType == NPC_PC)
-					&& !_targetPc.isGm()) {
+			if (((_calcType == PC_PC) || (_calcType == NPC_PC)) && !_targetPc.isGm()) {
 				return isSuccess;
 			}
 		}
@@ -290,53 +353,48 @@ public class L1Magic {
 		String msg3 = "";
 		String msg4 = "";
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
 			msg0 = _pc.getName();
-		} else if (_calcType == NPC_PC) { // アタッカーがＮＰＣの場合
+		}
+		else if (_calcType == NPC_PC) { // アタッカーがＮＰＣの場合
 			msg0 = _npc.getName();
 		}
 
 		msg2 = "probability:" + probability + "%";
-		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
+		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
 			msg4 = _targetPc.getName();
-		} else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
+		}
+		else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
 			msg4 = _targetNpc.getName();
 		}
 		if (isSuccess == true) {
 			msg3 = "成功";
-		} else {
+		}
+		else {
 			msg3 = "失敗";
 		}
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
-			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3,
-					msg4)); // \f1%0が%4%1%3 %2
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
+			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
+																						// %2
 		}
-		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
-					msg3, msg4)); // \f1%0が%4%1%3 %2
+		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
+			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
+																							// %2
 		}
 
 		return isSuccess;
 	}
 
 	private boolean checkZone(int skillId) {
-		if (_pc != null && _targetPc != null) {
-			if (_pc.getZoneType() == 1 || _targetPc.getZoneType() == 1) { // セーフティーゾーン
-				if (skillId == WEAPON_BREAK || skillId == SLOW
-						|| skillId == CURSE_PARALYZE || skillId == MANA_DRAIN
-						|| skillId == DARKNESS || skillId == WEAKNESS
-						|| skillId == DISEASE || skillId == DECAY_POTION
-						|| skillId == MASS_SLOW || skillId == ENTANGLE
-						|| skillId == ERASE_MAGIC || skillId == EARTH_BIND
-						|| skillId == AREA_OF_SILENCE || skillId == WIND_SHACKLE
-						|| skillId == STRIKER_GALE || skillId == SHOCK_STUN
-						|| skillId == FOG_OF_SLEEPING || skillId == ICE_LANCE
-						|| skillId == FREEZING_BLIZZARD
-						|| skillId == FREEZING_BREATH
-						|| skillId == POLLUTE_WATER
-						|| skillId == ELEMENTAL_FALL_DOWN
-						|| skillId == RETURN_TO_NATURE) {
+		if ((_pc != null) && (_targetPc != null)) {
+			if ((_pc.getZoneType() == 1) || (_targetPc.getZoneType() == 1)) { // セーフティーゾーン
+				if ((skillId == WEAPON_BREAK) || (skillId == SLOW) || (skillId == CURSE_PARALYZE) || (skillId == MANA_DRAIN) || (skillId == DARKNESS)
+						|| (skillId == WEAKNESS) || (skillId == DISEASE) || (skillId == DECAY_POTION) || (skillId == MASS_SLOW)
+						|| (skillId == ENTANGLE) || (skillId == ERASE_MAGIC) || (skillId == EARTH_BIND) || (skillId == AREA_OF_SILENCE)
+						|| (skillId == WIND_SHACKLE) || (skillId == STRIKER_GALE) || (skillId == SHOCK_STUN) || (skillId == FOG_OF_SLEEPING)
+						|| (skillId == ICE_LANCE) || (skillId == FREEZING_BLIZZARD) || (skillId == FREEZING_BREATH) || (skillId == POLLUTE_WATER)
+						|| (skillId == ELEMENTAL_FALL_DOWN) || (skillId == RETURN_TO_NATURE)) {
 					return false;
 				}
 			}
@@ -348,18 +406,19 @@ public class L1Magic {
 		L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
 		int attackLevel = 0;
 		int defenseLevel = 0;
-		int mr = 0;
 		int probability = 0;
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			attackLevel = _pc.getLevel();
-		} else {
+		}
+		else {
 			attackLevel = _npc.getLevel();
 		}
 
-		if (_calcType == PC_PC || _calcType == NPC_PC) {
+		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			defenseLevel = _targetPc.getLevel();
-		} else {
+		}
+		else {
 			defenseLevel = _targetNpc.getLevel();
 			if (skillId == RETURN_TO_NATURE) {
 				if (_targetNpc instanceof L1SummonInstance) {
@@ -369,38 +428,36 @@ public class L1Magic {
 			}
 		}
 
-		if (skillId == ELEMENTAL_FALL_DOWN || skillId == RETURN_TO_NATURE
-				|| skillId == ENTANGLE || skillId == ERASE_MAGIC
-				|| skillId == AREA_OF_SILENCE || skillId == WIND_SHACKLE
-				|| skillId == STRIKER_GALE || skillId == POLLUTE_WATER
-				|| skillId == EARTH_BIND) {
+		if ((skillId == ELEMENTAL_FALL_DOWN) || (skillId == RETURN_TO_NATURE) || (skillId == ENTANGLE) || (skillId == ERASE_MAGIC)
+				|| (skillId == AREA_OF_SILENCE) || (skillId == WIND_SHACKLE) || (skillId == STRIKER_GALE) || (skillId == POLLUTE_WATER)
+				|| (skillId == EARTH_BIND)) {
 			// 成功確率は 魔法固有係数 × LV差 + 基本確率
-			probability = (int) (((l1skills.getProbabilityDice()) / 10D)
-					* (attackLevel - defenseLevel)) + l1skills
-					.getProbabilityValue();
+			probability = (int) (((l1skills.getProbabilityDice()) / 10D) * (attackLevel - defenseLevel)) + l1skills.getProbabilityValue();
 
 			// オリジナルINTによる魔法命中
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				probability += 2 * _pc.getOriginalMagicHit();
 			}
-		} else if (skillId == SHOCK_STUN) {
+		}
+		else if (skillId == SHOCK_STUN) {
 			// 成功確率は 基本確率 + LV差1毎に+-2%
 			probability = l1skills.getProbabilityValue() + (attackLevel - defenseLevel) * 2;
 
 			// オリジナルINTによる魔法命中
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				probability += 2 * _pc.getOriginalMagicHit();
 			}
-		} else if (skillId == COUNTER_BARRIER) {
+		}
+		else if (skillId == COUNTER_BARRIER) {
 			// 成功確率は 基本確率 + LV差1毎に+-1%
 			probability = l1skills.getProbabilityValue() + attackLevel - defenseLevel;
 
 			// オリジナルINTによる魔法命中
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				probability += 2 * _pc.getOriginalMagicHit();
 			}
-		} else if (skillId == GUARD_BRAKE || skillId == RESIST_FEAR
-				|| skillId ==HORROR_OF_DEATH) {
+		}
+		else if ((skillId == GUARD_BRAKE) || (skillId == RESIST_FEAR) || (skillId == HORROR_OF_DEATH)) {
 			int dice = l1skills.getProbabilityDice();
 			int value = l1skills.getProbabilityValue();
 			int diceCount = 0;
@@ -416,28 +473,33 @@ public class L1Magic {
 
 			probability = probability * getLeverage() / 10;
 
-			//オリジナルINTによる魔法命中
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			// オリジナルINTによる魔法命中
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				probability += 2 * _pc.getOriginalMagicHit();
 			}
 
 			if (probability >= getTargetMr()) {
-				probability = 100;				
-			} else {
+				probability = 100;
+			}
+			else {
 				probability = 0;
 			}
-		} else {
+		}
+		else {
 			int dice = l1skills.getProbabilityDice();
 			int diceCount = 0;
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				if (_pc.isWizard()) {
 					diceCount = getMagicBonus() + getMagicLevel() + 1;
-				} else if (_pc.isElf()) {
-					diceCount = getMagicBonus() + getMagicLevel() - 1;
-				} else {
+				}
+				else if (_pc.isElf()) {
 					diceCount = getMagicBonus() + getMagicLevel() - 1;
 				}
-			} else {
+				else {
+					diceCount = getMagicBonus() + getMagicLevel() - 1;
+				}
+			}
+			else {
 				diceCount = getMagicBonus() + getMagicLevel();
 			}
 			if (diceCount < 1) {
@@ -450,7 +512,7 @@ public class L1Magic {
 			probability = probability * getLeverage() / 10;
 
 			// オリジナルINTによる魔法命中
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				probability += 2 * _pc.getOriginalMagicHit();
 			}
 
@@ -460,11 +522,11 @@ public class L1Magic {
 				double probabilityRevision = 1;
 				if ((_targetNpc.getMaxHp() * 1 / 4) > _targetNpc.getCurrentHp()) {
 					probabilityRevision = 1.3;
-				} else if ((_targetNpc.getMaxHp() * 2 / 4) > _targetNpc
-						.getCurrentHp()) {
+				}
+				else if ((_targetNpc.getMaxHp() * 2 / 4) > _targetNpc.getCurrentHp()) {
 					probabilityRevision = 1.2;
-				} else if ((_targetNpc.getMaxHp() * 3 / 4) > _targetNpc
-						.getCurrentHp()) {
+				}
+				else if ((_targetNpc.getMaxHp() * 3 / 4) > _targetNpc.getCurrentHp()) {
 					probabilityRevision = 1.1;
 				}
 				probability *= probabilityRevision;
@@ -473,30 +535,32 @@ public class L1Magic {
 
 		// 状態異常に対する耐性
 		if (skillId == EARTH_BIND) {
-			if (_calcType == PC_PC || _calcType == NPC_PC) {
+			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				probability -= _targetPc.getRegistSustain();
 			}
-		} else if (skillId == SHOCK_STUN) {
-			if (_calcType == PC_PC || _calcType == NPC_PC) {
+		}
+		else if (skillId == SHOCK_STUN) {
+			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				probability -= 2 * _targetPc.getRegistStun();
 			}
-		} else if (skillId == CURSE_PARALYZE) {
-			if (_calcType == PC_PC || _calcType == NPC_PC) {
+		}
+		else if (skillId == CURSE_PARALYZE) {
+			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				probability -= _targetPc.getRegistStone();
 			}
-		} else if (skillId == FOG_OF_SLEEPING) {
-			if (_calcType == PC_PC || _calcType == NPC_PC) {
+		}
+		else if (skillId == FOG_OF_SLEEPING) {
+			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				probability -= _targetPc.getRegistSleep();
 			}
-		} else if (skillId == ICE_LANCE
-				|| skillId == FREEZING_BLIZZARD
-				|| skillId == FREEZING_BREATH) {
-			if (_calcType == PC_PC || _calcType == NPC_PC) {
+		}
+		else if ((skillId == ICE_LANCE) || (skillId == FREEZING_BLIZZARD) || (skillId == FREEZING_BREATH)) {
+			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				probability -= _targetPc.getRegistFreeze();
 			}
-		} else if (skillId == CURSE_BLIND
-				|| skillId == DARKNESS || skillId == DARK_BLIND) {
-			if (_calcType == PC_PC || _calcType == NPC_PC) {
+		}
+		else if ((skillId == CURSE_BLIND) || (skillId == DARKNESS) || (skillId == DARK_BLIND)) {
+			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 				probability -= _targetPc.getRegistBlind();
 			}
 		}
@@ -508,9 +572,10 @@ public class L1Magic {
 
 	public int calcMagicDamage(int skillId) {
 		int damage = 0;
-		if (_calcType == PC_PC || _calcType == NPC_PC) {
+		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			damage = calcPcMagicDamage(skillId);
-		} else if (_calcType == PC_NPC || _calcType == NPC_NPC) {
+		}
+		else if ((_calcType == PC_NPC) || (_calcType == NPC_NPC)) {
 			damage = calcNpcMagicDamage(skillId);
 		}
 
@@ -580,12 +645,14 @@ public class L1Magic {
 	private int calcPcMagicDamage(int skillId) {
 		int dmg = 0;
 		if (skillId == FINAL_BURN) {
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				dmg = _pc.getCurrentMp();
-			} else {
+			}
+			else {
 				dmg = _npc.getCurrentMp();
 			}
-		} else {
+		}
+		else {
 			dmg = calcMagicDiceDamage(skillId);
 			dmg = (dmg * getLeverage()) / 10;
 		}
@@ -599,31 +666,23 @@ public class L1Magic {
 		}
 
 		if (_targetPc.hasSkillEffect(COOKING_1_0_S) // 料理によるダメージ軽減
-				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_2_S)
+				|| _targetPc.hasSkillEffect(COOKING_1_1_S) || _targetPc.hasSkillEffect(COOKING_1_2_S)
 				|| _targetPc.hasSkillEffect(COOKING_1_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_1_5_S)
+				|| _targetPc.hasSkillEffect(COOKING_1_4_S) || _targetPc.hasSkillEffect(COOKING_1_5_S)
 				|| _targetPc.hasSkillEffect(COOKING_1_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_0_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_1_S)
+				|| _targetPc.hasSkillEffect(COOKING_2_0_S) || _targetPc.hasSkillEffect(COOKING_2_1_S)
 				|| _targetPc.hasSkillEffect(COOKING_2_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_3_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_4_S)
+				|| _targetPc.hasSkillEffect(COOKING_2_3_S) || _targetPc.hasSkillEffect(COOKING_2_4_S)
 				|| _targetPc.hasSkillEffect(COOKING_2_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_2_6_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_0_S)
+				|| _targetPc.hasSkillEffect(COOKING_2_6_S) || _targetPc.hasSkillEffect(COOKING_3_0_S)
 				|| _targetPc.hasSkillEffect(COOKING_3_1_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_2_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_3_S)
+				|| _targetPc.hasSkillEffect(COOKING_3_2_S) || _targetPc.hasSkillEffect(COOKING_3_3_S)
 				|| _targetPc.hasSkillEffect(COOKING_3_4_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_5_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_6_S)) {
+				|| _targetPc.hasSkillEffect(COOKING_3_5_S) || _targetPc.hasSkillEffect(COOKING_3_6_S)) {
 			dmg -= 5;
 		}
 		if (_targetPc.hasSkillEffect(COOKING_1_7_S) // デザートによるダメージ軽減
-				|| _targetPc.hasSkillEffect(COOKING_2_7_S)
-				|| _targetPc.hasSkillEffect(COOKING_3_7_S)) {
+				|| _targetPc.hasSkillEffect(COOKING_2_7_S) || _targetPc.hasSkillEffect(COOKING_3_7_S)) {
 			dmg -= 5;
 		}
 
@@ -637,7 +696,7 @@ public class L1Magic {
 		if (_targetPc.hasSkillEffect(DRAGON_SKIN)) {
 			dmg -= 2;
 		}
-		
+
 		if (_targetPc.hasSkillEffect(PATIENCE)) {
 			dmg -= 2;
 		}
@@ -683,31 +742,24 @@ public class L1Magic {
 		if (_targetPc.hasSkillEffect(COUNTER_MIRROR)) {
 			if (_calcType == PC_PC) {
 				if (_targetPc.getWis() >= Random.nextInt(100)) {
-					_pc.sendPackets(new S_DoActionGFX(_pc.getId(),
-							ActionCodes.ACTION_Damage));
-					_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(),
-							ActionCodes.ACTION_Damage));
-					_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(),
-							4395));
-					_targetPc.broadcastPacket(new S_SkillSound(_targetPc
-							.getId(), 4395));
+					_pc.sendPackets(new S_DoActionGFX(_pc.getId(), ActionCodes.ACTION_Damage));
+					_pc.broadcastPacket(new S_DoActionGFX(_pc.getId(), ActionCodes.ACTION_Damage));
+					_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(), 4395));
+					_targetPc.broadcastPacket(new S_SkillSound(_targetPc.getId(), 4395));
 					_pc.receiveDamage(_targetPc, dmg, false);
 					dmg = 0;
 					_targetPc.killSkillEffectTimer(COUNTER_MIRROR);
 				}
-			} else if (_calcType == NPC_PC) {
+			}
+			else if (_calcType == NPC_PC) {
 				int npcId = _npc.getNpcTemplate().get_npcId();
-				if (npcId == 45681 || npcId == 45682 || npcId == 45683
-						|| npcId == 45684) {
-				} else if (!_npc.getNpcTemplate().get_IsErase()) {
-				} else {
+				if ((npcId == 45681) || (npcId == 45682) || (npcId == 45683) || (npcId == 45684)) {}
+				else if (!_npc.getNpcTemplate().get_IsErase()) {}
+				else {
 					if (_targetPc.getWis() >= Random.nextInt(100)) {
-						_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(),
-								ActionCodes.ACTION_Damage));
-						_targetPc.sendPackets(new S_SkillSound(_targetPc
-								.getId(), 4395));
-						_targetPc.broadcastPacket(new S_SkillSound(_targetPc
-								.getId(), 4395));
+						_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(), ActionCodes.ACTION_Damage));
+						_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(), 4395));
+						_targetPc.broadcastPacket(new S_SkillSound(_targetPc.getId(), 4395));
 						_npc.receiveDamage(_targetPc, dmg);
 						dmg = 0;
 						_targetPc.killSkillEffectTimer(COUNTER_MIRROR);
@@ -727,12 +779,14 @@ public class L1Magic {
 	private int calcNpcMagicDamage(int skillId) {
 		int dmg = 0;
 		if (skillId == FINAL_BURN) {
-			if (_calcType == PC_PC || _calcType == PC_NPC) {
+			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 				dmg = _pc.getCurrentMp();
-			} else {
+			}
+			else {
 				dmg = _npc.getCurrentMp();
 			}
-		} else {
+		}
+		else {
 			dmg = calcMagicDiceDamage(skillId);
 			dmg = (dmg * getLeverage()) / 10;
 		}
@@ -769,54 +823,63 @@ public class L1Magic {
 			dmg = 0;
 		}
 
-		if (_calcType == PC_NPC && _targetNpc != null) {
+		if ((_calcType == PC_NPC) && (_targetNpc != null)) {
 			int npcId = _targetNpc.getNpcTemplate().get_npcId();
-			if (npcId >= 45912 && npcId <= 45915 // 恨みに満ちたソルジャー＆ソルジャーゴースト
-					&& !_pc.hasSkillEffect(STATUS_HOLY_WATER)) {
+			if ((npcId >= 45912) && (npcId <= 45915 // 恨みに満ちたソルジャー＆ソルジャーゴースト
+					) && !_pc.hasSkillEffect(STATUS_HOLY_WATER)) {
 				dmg = 0;
 			}
-			if (npcId == 45916 // 恨みに満ちたハメル将軍
+			if ((npcId == 45916 // 恨みに満ちたハメル将軍
+					)
 					&& !_pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
 				dmg = 0;
 			}
-			if (npcId == 45941 // 呪われた巫女サエル
+			if ((npcId == 45941 // 呪われた巫女サエル
+					)
 					&& !_pc.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
 				dmg = 0;
 			}
-			if (npcId == 45752 // バルログ(変身前)
+			if ((npcId == 45752 // バルログ(変身前)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
 				dmg = 0;
 			}
-			if (npcId == 45753 // バルログ(変身後)
+			if ((npcId == 45753 // バルログ(変身後)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
 				dmg = 0;
 			}
-			if (npcId == 45675 // ヤヒ(変身前)
+			if ((npcId == 45675 // ヤヒ(変身前)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				dmg = 0;
 			}
-			if (npcId == 81082 // ヤヒ(変身後)
+			if ((npcId == 81082 // ヤヒ(変身後)
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				dmg = 0;
 			}
-			if (npcId == 45625 // 混沌
+			if ((npcId == 45625 // 混沌
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				dmg = 0;
 			}
-			if (npcId == 45674 // 死
+			if ((npcId == 45674 // 死
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				dmg = 0;
 			}
-			if (npcId == 45685 // 堕落
+			if ((npcId == 45685 // 堕落
+					)
 					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 				dmg = 0;
 			}
-			if (npcId >= 46068 && npcId <= 46091 // 欲望の洞窟側mob
-					&& _pc.getTempCharGfx() == 6035) {
+			if ((npcId >= 46068) && (npcId <= 46091 // 欲望の洞窟側mob
+					) && (_pc.getTempCharGfx() == 6035)) {
 				dmg = 0;
 			}
-			if (npcId >= 46092 && npcId <= 46106 // 影の神殿側mob
-					&& _pc.getTempCharGfx() == 6034) {
+			if ((npcId >= 46092) && (npcId <= 46106 // 影の神殿側mob
+					) && (_pc.getTempCharGfx() == 6034)) {
 				dmg = 0;
 			}
 		}
@@ -838,7 +901,7 @@ public class L1Magic {
 		}
 		magicDamage += value;
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			int weaponAddDmg = 0; // 武器による追加ダメージ
 			L1ItemInstance weapon = _pc.getWeapon();
 			if (weapon != null) {
@@ -847,10 +910,11 @@ public class L1Magic {
 			magicDamage += weaponAddDmg;
 		}
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			int spByItem = _pc.getSp() - _pc.getTrueSp(); // アイテムによるSP変動
 			charaIntelligence = _pc.getInt() + spByItem - 12;
-		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
+		}
+		else if ((_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
 			int spByItem = _npc.getSp() - _npc.getTrueSp(); // アイテムによるSP変動
 			charaIntelligence = _npc.getInt() + spByItem - 12;
 		}
@@ -869,7 +933,7 @@ public class L1Magic {
 
 		double criticalCoefficient = 1.5; // 魔法クリティカル
 		int rnd = Random.nextInt(100) + 1;
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			if (l1skills.getSkillLevel() <= 6) {
 				if (rnd <= (10 + _pc.getOriginalMagicCritical())) {
 					magicDamage *= criticalCoefficient;
@@ -877,10 +941,10 @@ public class L1Magic {
 			}
 		}
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // オリジナルINTによる魔法ダメージ
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // オリジナルINTによる魔法ダメージ
 			magicDamage += _pc.getOriginalMagicDamage();
 		}
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // アバターによる追加ダメージ
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アバターによる追加ダメージ
 			if (_pc.hasSkillEffect(ILLUSION_AVATAR)) {
 				magicDamage += 10;
 			}
@@ -923,50 +987,57 @@ public class L1Magic {
 		int mr = getTargetMr();
 
 		double mrFloor = 0;
-		if (_calcType == PC_PC || _calcType == PC_NPC) {
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			if (mr <= 100) {
 				mrFloor = Math.floor((mr - _pc.getOriginalMagicHit()) / 2);
-			} else if (mr >= 100) {
+			}
+			else if (mr >= 100) {
 				mrFloor = Math.floor((mr - _pc.getOriginalMagicHit()) / 10);
 			}
 			double mrCoefficient = 0;
 			if (mr <= 100) {
 				mrCoefficient = 1 - 0.01 * mrFloor;
-			} else if (mr >= 100) {
+			}
+			else if (mr >= 100) {
 				mrCoefficient = 0.6 - 0.01 * mrFloor;
 			}
 			dmg *= mrCoefficient;
-		} else if (_calcType == NPC_PC || _calcType == NPC_NPC) {
+		}
+		else if ((_calcType == NPC_PC) || (_calcType == NPC_NPC)) {
 			int rnd = Random.nextInt(100) + 1;
 			if (mr >= rnd) {
 				dmg /= 2;
 			}
 		}
 
-		return dmg; 
+		return dmg;
 	}
 
 	// ●●●● 属性によるダメージ軽減 ●●●●
 	// attr:0.無属性魔法,1.地魔法,2.火魔法,4.水魔法,8.風魔法(,16.光魔法)
 	private double calcAttrResistance(int attr) {
 		int resist = 0;
-		if (_calcType == PC_PC || _calcType == NPC_PC) {
+		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			if (attr == L1Skills.ATTR_EARTH) {
 				resist = _targetPc.getEarth();
-			} else if (attr == L1Skills.ATTR_FIRE) {
+			}
+			else if (attr == L1Skills.ATTR_FIRE) {
 				resist = _targetPc.getFire();
-			} else if (attr == L1Skills.ATTR_WATER) {
+			}
+			else if (attr == L1Skills.ATTR_WATER) {
 				resist = _targetPc.getWater();
-			} else if (attr == L1Skills.ATTR_WIND) {
+			}
+			else if (attr == L1Skills.ATTR_WIND) {
 				resist = _targetPc.getWind();
 			}
-		} else if (_calcType == PC_NPC || _calcType == NPC_NPC) {
 		}
+		else if ((_calcType == PC_NPC) || (_calcType == NPC_NPC)) {}
 
 		int resistFloor = (int) (0.32 * Math.abs(resist));
 		if (resist >= 0) {
 			resistFloor *= 1;
-		} else {
+		}
+		else {
 			resistFloor *= -1;
 		}
 
@@ -978,9 +1049,10 @@ public class L1Magic {
 	/* ■■■■■■■■■■■■■■■ 計算結果反映 ■■■■■■■■■■■■■■■ */
 
 	public void commit(int damage, int drainMana) {
-		if (_calcType == PC_PC || _calcType == NPC_PC) {
+		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			commitPc(damage, drainMana);
-		} else if (_calcType == PC_NPC || _calcType == NPC_NPC) {
+		}
+		else if ((_calcType == PC_NPC) || (_calcType == NPC_NPC)) {
 			commitNpc(damage, drainMana);
 		}
 
@@ -989,12 +1061,10 @@ public class L1Magic {
 			return;
 		}
 		if (Config.ALT_ATKMSG) {
-			if ((_calcType == PC_PC || _calcType == PC_NPC)
-					&& !_pc.isGm()) {
+			if (((_calcType == PC_PC) || (_calcType == PC_NPC)) && !_pc.isGm()) {
 				return;
 			}
-			if ((_calcType == PC_PC || _calcType == NPC_PC)
-					&& !_targetPc.isGm()) {
+			if (((_calcType == PC_PC) || (_calcType == NPC_PC)) && !_targetPc.isGm()) {
 				return;
 			}
 		}
@@ -1005,36 +1075,38 @@ public class L1Magic {
 		String msg3 = "";
 		String msg4 = "";
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) {// アタッカーがＰＣの場合
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {// アタッカーがＰＣの場合
 			msg0 = _pc.getName();
-		} else if (_calcType == NPC_PC) { // アタッカーがＮＰＣの場合
+		}
+		else if (_calcType == NPC_PC) { // アタッカーがＮＰＣの場合
 			msg0 = _npc.getName();
 		}
 
-		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
+		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
 			msg4 = _targetPc.getName();
 			msg2 = "THP" + _targetPc.getCurrentHp();
-		} else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
+		}
+		else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
 			msg4 = _targetNpc.getName();
 			msg2 = "THp" + _targetNpc.getCurrentHp();
 		}
 
 		msg3 = damage + "与えた";
 
-		if (_calcType == PC_PC || _calcType == PC_NPC) { // アタッカーがＰＣの場合
-			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3,
-					msg4)); // \f1%0が%4%1%3 %2
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
+			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
+																						// %2
 		}
-		if (_calcType == NPC_PC || _calcType == PC_PC) { // ターゲットがＰＣの場合
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
-					msg3, msg4)); // \f1%0が%4%1%3 %2
+		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
+			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
+																							// %2
 		}
 	}
 
 	// ●●●● プレイヤーに計算結果を反映 ●●●●
 	private void commitPc(int damage, int drainMana) {
 		if (_calcType == PC_PC) {
-			if (drainMana > 0 && _targetPc.getCurrentMp() > 0) {
+			if ((drainMana > 0) && (_targetPc.getCurrentMp() > 0)) {
 				if (drainMana > _targetPc.getCurrentMp()) {
 					drainMana = _targetPc.getCurrentMp();
 				}
@@ -1043,7 +1115,8 @@ public class L1Magic {
 			}
 			_targetPc.receiveManaDamage(_pc, drainMana);
 			_targetPc.receiveDamage(_pc, damage, true);
-		} else if (_calcType == NPC_PC) {
+		}
+		else if (_calcType == NPC_PC) {
 			_targetPc.receiveDamage(_npc, damage, true);
 		}
 	}
@@ -1058,7 +1131,8 @@ public class L1Magic {
 			}
 			_targetNpc.ReceiveManaDamage(_pc, drainMana);
 			_targetNpc.receiveDamage(_pc, damage);
-		} else if (_calcType == NPC_NPC) {
+		}
+		else if (_calcType == NPC_NPC) {
 			_targetNpc.receiveDamage(_npc, damage);
 		}
 	}

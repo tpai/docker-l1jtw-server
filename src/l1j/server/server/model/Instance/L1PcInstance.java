@@ -1134,80 +1134,73 @@ public class L1PcInstance extends L1Character {
 				long nowTime = System.currentTimeMillis();
 				long interval = nowTime - _oldTime;
 
-				if (damage < 0) {
-					damage = damage;
+				if (damage < 1) {
+					damage = 0;
 				}
-				else {
-					if ((2000 > interval) && (interval >= 1900)) {
-						damage = (damage * (100 - (10 / 3))) / 100;
-					}
-					else if ((1900 > interval) && (interval >= 1800)) {
-						damage = (damage * (100 - 2 * (10 / 3))) / 100;
-					}
-					else if ((1800 > interval) && (interval >= 1700)) {
-						damage = (damage * (100 - 3 * (10 / 3))) / 100;
-					}
-					else if ((1700 > interval) && (interval >= 1600)) {
-						damage = (damage * (100 - 4 * (10 / 3))) / 100;
-					}
-					else if ((1600 > interval) && (interval >= 1500)) {
-						damage = (damage * (100 - 5 * (10 / 3))) / 100;
-					}
-					else if ((1500 > interval) && (interval >= 1400)) {
-						damage = (damage * (100 - 6 * (10 / 3))) / 100;
-					}
-					else if ((1400 > interval) && (interval >= 1300)) {
-						damage = (damage * (100 - 7 * (10 / 3))) / 100;
-					}
-					else if ((1300 > interval) && (interval >= 1200)) {
-						damage = (damage * (100 - 8 * (10 / 3))) / 100;
-					}
-					else if ((1200 > interval) && (interval >= 1100)) {
-						damage = (damage * (100 - 9 * (10 / 3))) / 100;
-					}
-					else if ((1100 > interval) && (interval >= 1000)) {
-						damage = (damage * (100 - 10 * (10 / 3))) / 100;
-					}
-					else if ((1000 > interval) && (interval >= 900)) {
-						damage = (damage * (100 - 11 * (10 / 3))) / 100;
-					}
-					else if ((900 > interval) && (interval >= 800)) {
-						damage = (damage * (100 - 12 * (10 / 3))) / 100;
-					}
-					else if ((800 > interval) && (interval >= 700)) {
-						damage = (damage * (100 - 13 * (10 / 3))) / 100;
-					}
-					else if ((700 > interval) && (interval >= 600)) {
-						damage = (damage * (100 - 14 * (10 / 3))) / 100;
-					}
-					else if ((600 > interval) && (interval >= 500)) {
-						damage = (damage * (100 - 15 * (10 / 3))) / 100;
-					}
-					else if ((500 > interval) && (interval >= 400)) {
-						damage = (damage * (100 - 16 * (10 / 3))) / 100;
-					}
-					else if ((400 > interval) && (interval >= 300)) {
-						damage = (damage * (100 - 17 * (10 / 3))) / 100;
-					}
-					else if ((300 > interval) && (interval >= 200)) {
-						damage = (damage * (100 - 18 * (10 / 3))) / 100;
-					}
-					else if ((200 > interval) && (interval >= 100)) {
-						damage = (damage * (100 - 19 * (10 / 3))) / 100;
-					}
-					else if ((100 > interval) && (interval >= 0)) {
-						damage = (damage * (100 - 20 * (10 / 3))) / 100;
-					}
-					else {
-						damage = damage;
-					}
 
-					if (damage < 1) {
-						damage = 0;
-					}
-
-					_oldTime = nowTime; // 次回のために時間を保存
+				else if ((2000 > interval) && (interval >= 1900)) {
+					damage = (damage * (100 - (10 / 3))) / 100;
 				}
+				else if ((1900 > interval) && (interval >= 1800)) {
+					damage = (damage * (100 - 2 * (10 / 3))) / 100;
+				}
+				else if ((1800 > interval) && (interval >= 1700)) {
+					damage = (damage * (100 - 3 * (10 / 3))) / 100;
+				}
+				else if ((1700 > interval) && (interval >= 1600)) {
+					damage = (damage * (100 - 4 * (10 / 3))) / 100;
+				}
+				else if ((1600 > interval) && (interval >= 1500)) {
+					damage = (damage * (100 - 5 * (10 / 3))) / 100;
+				}
+				else if ((1500 > interval) && (interval >= 1400)) {
+					damage = (damage * (100 - 6 * (10 / 3))) / 100;
+				}
+				else if ((1400 > interval) && (interval >= 1300)) {
+					damage = (damage * (100 - 7 * (10 / 3))) / 100;
+				}
+				else if ((1300 > interval) && (interval >= 1200)) {
+					damage = (damage * (100 - 8 * (10 / 3))) / 100;
+				}
+				else if ((1200 > interval) && (interval >= 1100)) {
+					damage = (damage * (100 - 9 * (10 / 3))) / 100;
+				}
+				else if ((1100 > interval) && (interval >= 1000)) {
+					damage = (damage * (100 - 10 * (10 / 3))) / 100;
+				}
+				else if ((1000 > interval) && (interval >= 900)) {
+					damage = (damage * (100 - 11 * (10 / 3))) / 100;
+				}
+				else if ((900 > interval) && (interval >= 800)) {
+					damage = (damage * (100 - 12 * (10 / 3))) / 100;
+				}
+				else if ((800 > interval) && (interval >= 700)) {
+					damage = (damage * (100 - 13 * (10 / 3))) / 100;
+				}
+				else if ((700 > interval) && (interval >= 600)) {
+					damage = (damage * (100 - 14 * (10 / 3))) / 100;
+				}
+				else if ((600 > interval) && (interval >= 500)) {
+					damage = (damage * (100 - 15 * (10 / 3))) / 100;
+				}
+				else if ((500 > interval) && (interval >= 400)) {
+					damage = (damage * (100 - 16 * (10 / 3))) / 100;
+				}
+				else if ((400 > interval) && (interval >= 300)) {
+					damage = (damage * (100 - 17 * (10 / 3))) / 100;
+				}
+				else if ((300 > interval) && (interval >= 200)) {
+					damage = (damage * (100 - 18 * (10 / 3))) / 100;
+				}
+				else if ((200 > interval) && (interval >= 100)) {
+					damage = (damage * (100 - 19 * (10 / 3))) / 100;
+				}
+				else if ((100 > interval) && (interval >= 0)) {
+					damage = (damage * (100 - 20 * (10 / 3))) / 100;
+				}
+
+				_oldTime = nowTime; // 次回のために時間を保存
+
 			}
 			if (damage > 0) {
 				delInvis();
@@ -1483,14 +1476,12 @@ public class L1PcInstance extends L1Character {
 			if (player != null) {
 				if ((getLawful() >= 0) && (isPinkName() == false)) {
 					boolean isChangePkCount = false;
-					boolean isChangePkCountForElf = false;
 					// アライメントが30000未満の場合はPKカウント増加
 					if (player.getLawful() < 30000) {
 						player.set_PKcount(player.get_PKcount() + 1);
 						isChangePkCount = true;
 						if (player.isElf() && isElf()) {
 							player.setPkCountForElf(player.getPkCountForElf() + 1);
-							isChangePkCountForElf = true;
 						}
 					}
 					player.setLastPk();

@@ -1,21 +1,19 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.ClanTable;
 import l1j.server.server.datatables.DoorSpawnTable;
@@ -36,8 +34,6 @@ public class L1CrownInstance extends L1NpcInstance {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private static Logger _log = Logger.getLogger(L1CrownInstance.class
-			.getName());
 
 	public L1CrownInstance(L1Npc template) {
 		super(template);
@@ -57,8 +53,8 @@ public class L1CrownInstance extends L1NpcInstance {
 		if (!player.isCrown()) { // 君主以外
 			return;
 		}
-		if (player.getTempCharGfx() != 0 && // 変身中
-				player.getTempCharGfx() != 1) {
+		if ((player.getTempCharGfx() != 0) && // 変身中
+				(player.getTempCharGfx() != 1)) {
 			return;
 		}
 		if (player.getId() != clan.getLeaderId()) { // 血盟主以外
@@ -75,8 +71,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		}
 
 		// クラウンの座標からcastle_idを取得
-		int castle_id = L1CastleLocation
-				.getCastleId(getX(), getY(), getMapId());
+		int castle_id = L1CastleLocation.getCastleId(getX(), getY(), getMapId());
 
 		// 布告しているかチェック。但し、城主が居ない場合は布告不要
 		boolean existDefenseClan = false;
@@ -84,8 +79,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		for (L1Clan defClan : L1World.getInstance().getAllClans()) {
 			if (castle_id == defClan.getCastleId()) {
 				// 元の城主クラン
-				defence_clan = L1World.getInstance().getClan(
-						defClan.getClanName());
+				defence_clan = L1World.getInstance().getClan(defClan.getClanName());
 				existDefenseClan = true;
 				break;
 			}
@@ -97,23 +91,19 @@ public class L1CrownInstance extends L1NpcInstance {
 				break;
 			}
 		}
-		if (existDefenseClan && in_war == false) { // 城主が居て、布告していない場合
+		if (existDefenseClan && (in_war == false)) { // 城主が居て、布告していない場合
 			return;
 		}
 
 		// clan_dataのhascastleを更新し、キャラクターにクラウンを付ける
-		if (existDefenseClan && defence_clan != null) { // 元の城主クランが居る
+		if (existDefenseClan && (defence_clan != null)) { // 元の城主クランが居る
 			defence_clan.setCastleId(0);
 			ClanTable.getInstance().updateClan(defence_clan);
-			L1PcInstance defence_clan_member[] = defence_clan
-					.getOnlineClanMember();
-			for (int m = 0; m < defence_clan_member.length; m++) {
-				if (defence_clan_member[m].getId() == defence_clan
-						.getLeaderId()) { // 元の城主クランの君主
-					defence_clan_member[m].sendPackets(new S_CastleMaster(0,
-							defence_clan_member[m].getId()));
-					defence_clan_member[m].broadcastPacket(new S_CastleMaster(
-							0, defence_clan_member[m].getId()));
+			L1PcInstance defence_clan_member[] = defence_clan.getOnlineClanMember();
+			for (L1PcInstance element : defence_clan_member) {
+				if (element.getId() == defence_clan.getLeaderId()) { // 元の城主クランの君主
+					element.sendPackets(new S_CastleMaster(0, element.getId()));
+					element.broadcastPacket(new S_CastleMaster(0, element.getId()));
 					break;
 				}
 			}
@@ -126,7 +116,7 @@ public class L1CrownInstance extends L1NpcInstance {
 		// クラン員以外を街に強制テレポート
 		int[] loc = new int[3];
 		for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
-			if (pc.getClanid() != player.getClanid() && !pc.isGm()) {
+			if ((pc.getClanid() != player.getClanid()) && !pc.isGm()) {
 
 				if (L1CastleLocation.checkInWarArea(castle_id, pc)) {
 					// 旗内に居る
@@ -198,7 +188,6 @@ public class L1CrownInstance extends L1NpcInstance {
 	}
 
 	private boolean checkRange(L1PcInstance pc) {
-		return (getX() - 1 <= pc.getX() && pc.getX() <= getX() + 1
-				&& getY() - 1 <= pc.getY() && pc.getY() <= getY() + 1);
+		return ((getX() - 1 <= pc.getX()) && (pc.getX() <= getX() + 1) && (getY() - 1 <= pc.getY()) && (pc.getY() <= getY() + 1));
 	}
 }

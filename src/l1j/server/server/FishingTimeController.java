@@ -14,7 +14,6 @@
 package l1j.server.server;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_CharVisualUpdate;
@@ -23,8 +22,6 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.utils.collections.Lists;
 
 public class FishingTimeController implements Runnable {
-	private static Logger _log = Logger.getLogger(FishingTimeController.class.getName());
-
 	private static FishingTimeController _instance;
 
 	private final List<L1PcInstance> _fishingList = Lists.newList();

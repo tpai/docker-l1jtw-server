@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.serverpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -25,7 +22,6 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 public class S_DropItem extends ServerBasePacket {
 
 	private static final String _S__OB_DropItem = "[S] S_DropItem";
-	private static Logger _log = Logger.getLogger(S_DropItem.class.getName());
 
 	private byte[] _byte = null;
 
@@ -47,7 +43,8 @@ public class S_DropItem extends ServerBasePacket {
 		writeC(0);
 		if (item.isNowLighting()) {
 			writeC(item.getItem().getLightRange());
-		} else {
+		}
+		else {
 			writeC(0);
 		}
 		writeC(0);
@@ -56,21 +53,21 @@ public class S_DropItem extends ServerBasePacket {
 		writeC(0);
 		if (item.getCount() > 1) {
 			writeS(item.getItem().getName() + " (" + item.getCount() + ")");
-		} else {
+		}
+		else {
 			int itemId = item.getItem().getItemId();
 			int isId = item.isIdentified() ? 1 : 0;
-			if (itemId == 20383 && isId == 1) { // 騎馬用ヘルム
-				writeS(item.getItem().getName() + " [" + item
-						.getChargeCount() + "]");
-			} else if ((itemId == 40006 || itemId == 40007
-					|| itemId == 40008 || itemId == 40009
-					|| itemId == 140006 || itemId == 140008) && isId == 1) { // ワンド類
-				writeS(item.getItem().getName() + " (" + item
-						.getChargeCount() + ")");
-			} else if (item.getItem().getLightRange() != 0 && item
-					.isNowLighting()) {
+			if ((itemId == 20383) && (isId == 1)) { // 騎馬用ヘルム
+				writeS(item.getItem().getName() + " [" + item.getChargeCount() + "]");
+			}
+			else if (((itemId == 40006) || (itemId == 40007) || (itemId == 40008) || (itemId == 40009) || (itemId == 140006) || (itemId == 140008))
+					&& (isId == 1)) { // ワンド類
+				writeS(item.getItem().getName() + " (" + item.getChargeCount() + ")");
+			}
+			else if ((item.getItem().getLightRange() != 0) && item.isNowLighting()) {
 				writeS(item.getItem().getName() + " ($10)");
-			} else {
+			}
+			else {
 				writeS(item.getItem().getName());
 			}
 		}

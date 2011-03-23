@@ -1,24 +1,23 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
+
+import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.ScheduledFuture;
-import java.util.logging.Logger;
-import l1j.server.server.utils.Random;
 
 import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
@@ -29,7 +28,6 @@ import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_HPMeter;
 import l1j.server.server.serverpackets.S_PetMenuPacket;
@@ -37,17 +35,19 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.templates.L1Npc;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.Random;
 
 public class L1SummonInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger _log = Logger.getLogger(L1SummonInstance.class
-			.getName());
 	private ScheduledFuture<?> _summonFuture;
+
 	private static final long SUMMON_TIME = 3600000L;
+
 	private int _currentPetStatus;
+
 	private boolean _tamed;
+
 	private boolean _isReturnToNature = false;
 
 	// ターゲットがいない場合の処理
@@ -56,35 +56,37 @@ public class L1SummonInstance extends L1NpcInstance {
 		if (_currentPetStatus == 3) {
 			// ● 休憩の場合
 			return true;
-		} else if (_currentPetStatus == 4) {
+		}
+		else if (_currentPetStatus == 4) {
 			// ● 配備の場合
-			if (_master != null
-					&& _master.getMapId() == getMapId()
-					&& getLocation().getTileLineDistance(_master.getLocation()) < 5) {
+			if ((_master != null) && (_master.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_master.getLocation()) < 5)) {
 				int dir = targetReverseDirection(_master.getX(), _master.getY());
 				dir = checkObject(getX(), getY(), getMapId(), dir);
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-			} else {
+			}
+			else {
 				// 主人を見失うか５マス以上はなれたら休憩状態に
 				_currentPetStatus = 3;
 				return true;
 			}
-		} else if (_currentPetStatus == 5) {
+		}
+		else if (_currentPetStatus == 5) {
 			// ● 警戒の場合はホームへ
-			if (Math.abs(getHomeX() - getX()) > 1
-					|| Math.abs(getHomeY() - getY()) > 1) {
+			if ((Math.abs(getHomeX() - getX()) > 1) || (Math.abs(getHomeY() - getY()) > 1)) {
 				int dir = moveDirection(getHomeX(), getHomeY());
 				if (dir == -1) {
 					// ホームが離れすぎてたら現在地がホーム
 					setHomeX(getX());
 					setHomeY(getY());
-				} else {
+				}
+				else {
 					setDirectionMove(dir);
 					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				}
 			}
-		} else if (_master != null && _master.getMapId() == getMapId()) {
+		}
+		else if ((_master != null) && (_master.getMapId() == getMapId())) {
 			// ●主人を追尾
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
 				int dir = moveDirection(_master.getX(), _master.getY());
@@ -92,12 +94,14 @@ public class L1SummonInstance extends L1NpcInstance {
 					// 主人が離れすぎたら休憩状態に
 					_currentPetStatus = 3;
 					return true;
-				} else {
+				}
+				else {
 					setDirectionMove(dir);
 					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				}
 			}
-		} else {
+		}
+		else {
 			// ● 主人を見失ったら休憩状態に
 			_currentPetStatus = 3;
 			return true;
@@ -115,7 +119,8 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (_tamed) {
 				// テイミングモンスター、クリエイトゾンビの解放
 				liberate();
-			} else {
+			}
+			else {
 				// サモンの解散
 				Death(null);
 			}
@@ -127,8 +132,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		super(template);
 		setId(IdFactory.getInstance().nextId());
 
-		_summonFuture = GeneralThreadPool.getInstance().schedule(
-				new SummonTimer(), SUMMON_TIME);
+		_summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
 
 		setMaster(master);
 		setX(master.getX() + Random.nextInt(5) - 2);
@@ -149,8 +153,7 @@ public class L1SummonInstance extends L1NpcInstance {
 	}
 
 	// テイミングモンスター、クリエイトゾンビ用
-	public L1SummonInstance(L1NpcInstance target, L1Character master,
-			boolean isCreateZombie) {
+	public L1SummonInstance(L1NpcInstance target, L1Character master, boolean isCreateZombie) {
 		super(null);
 		setId(IdFactory.getInstance().nextId());
 
@@ -159,34 +162,40 @@ public class L1SummonInstance extends L1NpcInstance {
 			L1PcInstance pc = (L1PcInstance) master;
 			int level = pc.getLevel();
 			if (pc.isWizard()) {
-				if (level >= 24 && level <= 31) {
+				if ((level >= 24) && (level <= 31)) {
 					npcId = 81183;
-				} else if (level >= 32 && level <= 39) {
+				}
+				else if ((level >= 32) && (level <= 39)) {
 					npcId = 81184;
-				} else if (level >= 40 && level <= 43) {
+				}
+				else if ((level >= 40) && (level <= 43)) {
 					npcId = 81185;
-				} else if (level >= 44 && level <= 47) {
+				}
+				else if ((level >= 44) && (level <= 47)) {
 					npcId = 81186;
-				} else if (level >= 48 && level <= 51) {
+				}
+				else if ((level >= 48) && (level <= 51)) {
 					npcId = 81187;
-				} else if (level >= 52) {
+				}
+				else if (level >= 52) {
 					npcId = 81188;
 				}
-			} else if (pc.isElf()) {
+			}
+			else if (pc.isElf()) {
 				if (level >= 48) {
 					npcId = 81183;
 				}
 			}
 			L1Npc template = NpcTable.getInstance().getTemplate(npcId).clone();
 			setting_template(template);
-		} else { // テイミングモンスター
+		}
+		else { // テイミングモンスター
 			setting_template(target.getNpcTemplate());
 			setCurrentHpDirect(target.getCurrentHp());
 			setCurrentMpDirect(target.getCurrentMp());
 		}
 
-		_summonFuture = GeneralThreadPool.getInstance().schedule(
-				new SummonTimer(), SUMMON_TIME);
+		_summonFuture = GeneralThreadPool.getInstance().schedule(new SummonTimer(), SUMMON_TIME);
 
 		setMaster(master);
 		setX(target.getX());
@@ -196,8 +205,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		setLightSize(target.getLightSize());
 		setPetcost(6);
 
-		if (target instanceof L1MonsterInstance
-				&& !((L1MonsterInstance) target).is_storeDroped()) {
+		if ((target instanceof L1MonsterInstance) && !((L1MonsterInstance) target).is_storeDroped()) {
 			DropTable.getInstance().setDrop(target, target.getInventory());
 		}
 		setInventory(target.getInventory());
@@ -232,7 +240,7 @@ public class L1SummonInstance extends L1NpcInstance {
 				}
 			}
 
-			if (attacker instanceof L1PcInstance && damage > 0) {
+			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
 				L1PcInstance player = (L1PcInstance) attacker;
 				player.setPetTarget(this);
 			}
@@ -240,10 +248,12 @@ public class L1SummonInstance extends L1NpcInstance {
 			int newHp = getCurrentHp() - damage;
 			if (newHp <= 0) {
 				Death(attacker);
-			} else {
+			}
+			else {
 				setCurrentHp(newHp);
 			}
-		} else if (!isDead()) // 念のため
+		}
+		else if (!isDead()) // 念のため
 		{
 			System.out.println("警告：サモンのＨＰ減少処理が正しく行われていない箇所があります。※もしくは最初からＨＰ０");
 			Death(attacker);
@@ -264,24 +274,21 @@ public class L1SummonInstance extends L1NpcInstance {
 			for (L1ItemInstance item : items) {
 				if (_master.getInventory().checkAddItem( // 容量重量確認及びメッセージ送信
 						item, item.getCount()) == L1Inventory.OK) {
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 					// \f1%0が%1をくれました。
-					((L1PcInstance) _master).sendPackets(new S_ServerMessage(
-							143, getName(), item.getLogName()));
-				} else { // 持てないので足元に落とす
-					targetInventory = L1World.getInstance().getInventory(
-							getX(), getY(), getMapId());
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					((L1PcInstance) _master).sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+				}
+				else { // 持てないので足元に落とす
+					targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 				}
 			}
 
 			if (_tamed) {
-				broadcastPacket(new S_DoActionGFX(getId(),
-						ActionCodes.ACTION_Die));
+				broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
 				startDeleteTimer();
-			} else {
+			}
+			else {
 				deleteMe();
 			}
 		}
@@ -297,20 +304,18 @@ public class L1SummonInstance extends L1NpcInstance {
 			for (L1ItemInstance item : items) {
 				if (_master.getInventory().checkAddItem( // 容量重量確認及びメッセージ送信
 						item, item.getCount()) == L1Inventory.OK) {
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 					// \f1%0が%1をくれました。
-					((L1PcInstance) _master).sendPackets(new S_ServerMessage(
-							143, getName(), item.getLogName()));
-				} else { // 持てないので足元に落とす
-					targetInventory = L1World.getInstance().getInventory(
-							getX(), getY(), getMapId());
-					_inventory
-							.tradeItem(item, item.getCount(), targetInventory);
+					((L1PcInstance) _master).sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+				}
+				else { // 持てないので足元に落とす
+					targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
+					_inventory.tradeItem(item, item.getCount(), targetInventory);
 				}
 			}
 			deleteMe();
-		} else {
+		}
+		else {
 			liberate();
 		}
 	}
@@ -355,8 +360,7 @@ public class L1SummonInstance extends L1NpcInstance {
 	}
 
 	public void setTarget(L1Character target) {
-		if (target != null
-				&& (_currentPetStatus == 1 || _currentPetStatus == 2 || _currentPetStatus == 5)) {
+		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 2) || (_currentPetStatus == 5))) {
 			setHate(target, 0);
 			if (!isAiRunning()) {
 				startAI();
@@ -365,8 +369,7 @@ public class L1SummonInstance extends L1NpcInstance {
 	}
 
 	public void setMasterTarget(L1Character target) {
-		if (target != null
-				&& (_currentPetStatus == 1 || _currentPetStatus == 5)) {
+		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 5))) {
 			setHate(target, 0);
 			if (!isAiRunning()) {
 				startAI();
@@ -380,7 +383,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		if (attacker == null) {
 			return;
 		}
-		L1Character cha = this.getMaster();
+		L1Character cha = getMaster();
 		if (cha == null) {
 			return;
 		}
@@ -389,8 +392,7 @@ public class L1SummonInstance extends L1NpcInstance {
 			// テレポート処理中
 			return;
 		}
-		if ((getZoneType() == 1 || attacker.getZoneType() == 1)
-				&& isExsistMaster()) {
+		if (((getZoneType() == 1) || (attacker.getZoneType() == 1)) && isExsistMaster()) {
 			// 攻撃される側がセーフティーゾーン
 			// 攻撃モーション送信
 			L1Attack attack_mortion = new L1Attack(attacker, this);
@@ -430,11 +432,13 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (_tamed) {
 				// テイミングモンスター、クリエイトゾンビの解放
 				liberate();
-			} else {
+			}
+			else {
 				// サモンの解散
 				Death(null);
 			}
-		} else {
+		}
+		else {
 			// 同じ主人のペットの状態をすべて更新
 			Object[] petList = _master.getPetList().values().toArray();
 			for (Object petObject : petList) {
@@ -442,7 +446,8 @@ public class L1SummonInstance extends L1NpcInstance {
 					// サモンモンスター
 					L1SummonInstance summon = (L1SummonInstance) petObject;
 					summon.set_currentPetStatus(status);
-				} else {
+				}
+				else {
 					// ペット
 				}
 			}
@@ -479,8 +484,8 @@ public class L1SummonInstance extends L1NpcInstance {
 			if (getCurrentHp() != getMaxHp()) {
 				useItem(USEITEM_HEAL, 100);
 			}
-		} else if (Arrays
-				.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
+		}
+		else if (Arrays.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
 			useItem(USEITEM_HASTE, 100);
 		}
 	}
@@ -489,15 +494,20 @@ public class L1SummonInstance extends L1NpcInstance {
 		int status = 0;
 		if (action.equalsIgnoreCase("aggressive")) { // 攻撃態勢
 			status = 1;
-		} else if (action.equalsIgnoreCase("defensive")) { // 防御態勢
+		}
+		else if (action.equalsIgnoreCase("defensive")) { // 防御態勢
 			status = 2;
-		} else if (action.equalsIgnoreCase("stay")) { // 休憩
+		}
+		else if (action.equalsIgnoreCase("stay")) { // 休憩
 			status = 3;
-		} else if (action.equalsIgnoreCase("extend")) { // 配備
+		}
+		else if (action.equalsIgnoreCase("extend")) { // 配備
 			status = 4;
-		} else if (action.equalsIgnoreCase("alert")) { // 警戒
+		}
+		else if (action.equalsIgnoreCase("alert")) { // 警戒
 			status = 5;
-		} else if (action.equalsIgnoreCase("dismiss")) { // 解散
+		}
+		else if (action.equalsIgnoreCase("dismiss")) { // 解散
 			status = 6;
 		}
 		return status;
@@ -544,7 +554,8 @@ public class L1SummonInstance extends L1NpcInstance {
 
 		if (_currentPetStatus == 3) {
 			allTargetClear();
-		} else {
+		}
+		else {
 			if (!isAiRunning()) {
 				startAI();
 			}
@@ -557,8 +568,8 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	public boolean isExsistMaster() {
 		boolean isExsistMaster = true;
-		if (this.getMaster() != null) {
-			String masterName = this.getMaster().getName();
+		if (getMaster() != null) {
+			String masterName = getMaster().getName();
 			if (L1World.getInstance().getPlayer(masterName) == null) {
 				isExsistMaster = false;
 			}

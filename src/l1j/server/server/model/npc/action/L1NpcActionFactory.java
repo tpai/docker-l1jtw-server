@@ -25,9 +25,9 @@ import org.w3c.dom.Element;
 public class L1NpcActionFactory {
 	private static Logger _log = Logger.getLogger(L1NpcActionFactory.class.getName());
 
-	private static Map<String, Constructor<L1NpcAction>> _actions = Maps.newMap();
+	private static Map<String, Constructor<? extends L1NpcXmlAction>> _actions = Maps.newMap();
 
-	private static Constructor<L1NpcAction> loadConstructor(Class c) throws NoSuchMethodException {
+	private static Constructor<? extends L1NpcXmlAction> loadConstructor(Class<? extends L1NpcXmlAction> c) throws NoSuchMethodException {
 		return c.getConstructor(new Class[]
 		{ Element.class });
 	}
@@ -47,7 +47,7 @@ public class L1NpcActionFactory {
 
 	public static L1NpcAction newAction(Element element) {
 		try {
-			Constructor<L1NpcAction> con = _actions.get(element.getNodeName());
+			Constructor<? extends L1NpcXmlAction> con = _actions.get(element.getNodeName());
 			return con.newInstance(element);
 		}
 		catch (NullPointerException e) {

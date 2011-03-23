@@ -34,6 +34,4 @@ public class S_TradeStatus extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_TradeStatus";
 	}
-
-	private static final String _S__2A_TRADESTATUS = "[S] S_TradeStatus";
 }

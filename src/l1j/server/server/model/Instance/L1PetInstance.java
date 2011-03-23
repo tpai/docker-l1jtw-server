@@ -1,23 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
+
+import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Logger;
-import l1j.server.server.utils.Random;
 
 import l1j.server.server.ActionCodes;
 import l1j.server.server.IdFactory;
@@ -37,7 +36,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1Pet;
 import l1j.server.server.templates.L1PetType;
-import static l1j.server.server.model.skill.L1SkillId.*;
+import l1j.server.server.utils.Random;
 
 public class L1PetInstance extends L1NpcInstance {
 
@@ -48,37 +47,34 @@ public class L1PetInstance extends L1NpcInstance {
 	public boolean noTarget() {
 		if (_currentPetStatus == 3) { // ● 休憩の場合
 			return true;
-		} else if (_currentPetStatus == 4) { // ● 配備の場合
-			if (_petMaster != null
-					&& _petMaster.getMapId() == getMapId()
-					&& getLocation().getTileLineDistance(
-							_petMaster.getLocation()) < 5) {
-				int dir = targetReverseDirection(_petMaster.getX(), _petMaster
-						.getY());
+		}
+		else if (_currentPetStatus == 4) { // ● 配備の場合
+			if ((_petMaster != null) && (_petMaster.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_petMaster.getLocation()) < 5)) {
+				int dir = targetReverseDirection(_petMaster.getX(), _petMaster.getY());
 				dir = checkObject(getX(), getY(), getMapId(), dir);
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-			} else { // 主人を見失うか５マス以上はなれたら休憩状態に
+			}
+			else { // 主人を見失うか５マス以上はなれたら休憩状態に
 				_currentPetStatus = 3;
 				return true;
 			}
-		} else if (_currentPetStatus == 5) { // ● 警戒の場合はホームへ
-			if (Math.abs(getHomeX() - getX()) > 1
-					|| Math.abs(getHomeY() - getY()) > 1) {
+		}
+		else if (_currentPetStatus == 5) { // ● 警戒の場合はホームへ
+			if ((Math.abs(getHomeX() - getX()) > 1) || (Math.abs(getHomeY() - getY()) > 1)) {
 				int dir = moveDirection(getHomeX(), getHomeY());
 				if (dir == -1) { // ホームが離れすぎてたら現在地がホーム
 					setHomeX(getX());
 					setHomeY(getY());
-				} else {
+				}
+				else {
 					setDirectionMove(dir);
 					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				}
 			}
-		} else if (_currentPetStatus == 7) { // ● ペットの笛で主人の元へ
-			if (_petMaster != null
-					&& _petMaster.getMapId() == getMapId()
-					&& getLocation().getTileLineDistance(
-							_petMaster.getLocation()) <= 1) {
+		}
+		else if (_currentPetStatus == 7) { // ● ペットの笛で主人の元へ
+			if ((_petMaster != null) && (_petMaster.getMapId() == getMapId()) && (getLocation().getTileLineDistance(_petMaster.getLocation()) <= 1)) {
 				_currentPetStatus = 3;
 				return true;
 			}
@@ -91,7 +87,8 @@ public class L1PetInstance extends L1NpcInstance {
 			}
 			setDirectionMove(dir);
 			setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-		} else if (_petMaster != null && _petMaster.getMapId() == getMapId()) { // ●
+		}
+		else if ((_petMaster != null) && (_petMaster.getMapId() == getMapId())) { // ●
 			// 主人を追尾
 			if (getLocation().getTileLineDistance(_petMaster.getLocation()) > 2) {
 				int dir = moveDirection(_petMaster.getX(), _petMaster.getY());
@@ -102,7 +99,8 @@ public class L1PetInstance extends L1NpcInstance {
 				setDirectionMove(dir);
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 			}
-		} else { // ● 主人を見失ったら休憩状態に
+		}
+		else { // ● 主人を見失ったら休憩状態に
 			_currentPetStatus = 3;
 			return true;
 		}
@@ -127,8 +125,7 @@ public class L1PetInstance extends L1NpcInstance {
 		setMaxMp(l1pet.get_mp());
 		setCurrentMpDirect(l1pet.get_mp());
 		setExp(l1pet.get_exp());
-		setExpPercent(ExpTable.getExpPercentage(l1pet.get_level(), l1pet
-				.get_exp()));
+		setExpPercent(ExpTable.getExpPercentage(l1pet.get_level(), l1pet.get_exp()));
 		setLawful(l1pet.get_lawful());
 		setTempLawful(l1pet.get_lawful());
 
@@ -155,8 +152,7 @@ public class L1PetInstance extends L1NpcInstance {
 
 		_petMaster = master;
 		_itemObjId = itemid;
-		_type = PetTypeTable.getInstance().get(
-				target.getNpcTemplate().get_npcId());
+		_type = PetTypeTable.getInstance().get(target.getNpcTemplate().get_npcId());
 
 		// ステータスを上書き
 		setId(IdFactory.getInstance().nextId());
@@ -200,7 +196,7 @@ public class L1PetInstance extends L1NpcInstance {
 				removeSkillEffect(FOG_OF_SLEEPING);
 			}
 
-			if (attacker instanceof L1PcInstance && damage > 0) {
+			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
 				L1PcInstance player = (L1PcInstance) attacker;
 				player.setPetTarget(this);
 			}
@@ -208,10 +204,12 @@ public class L1PetInstance extends L1NpcInstance {
 			int newHp = getCurrentHp() - damage;
 			if (newHp <= 0) {
 				death(attacker);
-			} else {
+			}
+			else {
 				setCurrentHp(newHp);
 			}
-		} else if (!isDead()) { // 念のため
+		}
+		else if (!isDead()) { // 念のため
 			death(attacker);
 		}
 	}
@@ -297,8 +295,7 @@ public class L1PetInstance extends L1NpcInstance {
 
 		L1World.getInstance().storeObject(monster);
 		L1World.getInstance().addVisibleObject(monster);
-		for (L1PcInstance pc : L1World.getInstance()
-				.getRecognizePlayer(monster)) {
+		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(monster)) {
 			onPerceive(pc);
 		}
 	}
@@ -316,11 +313,10 @@ public class L1PetInstance extends L1NpcInstance {
 			if (_petMaster.getInventory().checkAddItem( // 容量重量確認及びメッセージ送信
 					item, item.getCount()) == L1Inventory.OK) {
 				_inventory.tradeItem(item, item.getCount(), targetInventory);
-				_petMaster.sendPackets(new S_ServerMessage(143, getName(), item
-						.getLogName())); // \f1%0が%1をくれました。
-			} else { // 持てないので足元に落とす
-				targetInventory = L1World.getInstance().getInventory(getX(),
-						getY(), getMapId());
+				_petMaster.sendPackets(new S_ServerMessage(143, getName(), item.getLogName())); // \f1%0が%1をくれました。
+			}
+			else { // 持てないので足元に落とす
+				targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
 				_inventory.tradeItem(item, item.getCount(), targetInventory);
 			}
 		}
@@ -328,8 +324,7 @@ public class L1PetInstance extends L1NpcInstance {
 
 	// リスタート時にDROPを地面に落とす
 	public void dropItem() {
-		L1Inventory targetInventory = L1World.getInstance().getInventory(
-				getX(), getY(), getMapId());
+		L1Inventory targetInventory = L1World.getInstance().getInventory(getX(), getY(), getMapId());
 		List<L1ItemInstance> items = _inventory.getItems();
 		int size = _inventory.getSize();
 		for (int i = 0; i < size; i++) {
@@ -350,8 +345,7 @@ public class L1PetInstance extends L1NpcInstance {
 	}
 
 	public void setTarget(L1Character target) {
-		if (target != null
-				&& (_currentPetStatus == 1 || _currentPetStatus == 2 || _currentPetStatus == 5)) {
+		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 2) || (_currentPetStatus == 5))) {
 			setHate(target, 0);
 			if (!isAiRunning()) {
 				startAI();
@@ -360,8 +354,7 @@ public class L1PetInstance extends L1NpcInstance {
 	}
 
 	public void setMasterTarget(L1Character target) {
-		if (target != null
-				&& (_currentPetStatus == 1 || _currentPetStatus == 5)) {
+		if ((target != null) && ((_currentPetStatus == 1) || (_currentPetStatus == 5))) {
 			setHate(target, 0);
 			if (!isAiRunning()) {
 				startAI();
@@ -374,14 +367,13 @@ public class L1PetInstance extends L1NpcInstance {
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_PetPack(this, perceivedFrom)); // ペット系オブジェクト認識
 		if (isDead()) {
-			perceivedFrom.sendPackets(new S_DoActionGFX(getId(),
-					ActionCodes.ACTION_Die));
+			perceivedFrom.sendPackets(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
 		}
 	}
 
 	@Override
 	public void onAction(L1PcInstance player) {
-		L1Character cha = this.getMaster();
+		L1Character cha = getMaster();
 		L1PcInstance master = (L1PcInstance) cha;
 		if (master.isTeleport()) { // テレポート処理中
 			return;
@@ -431,22 +423,21 @@ public class L1PetInstance extends L1NpcInstance {
 		}
 		if (status == 6) {
 			liberate(); // ペットの解放
-		} else {
+		}
+		else {
 			// 同じ主人のペットの状態をすべて更新
 			Object[] petList = _petMaster.getPetList().values().toArray();
 			for (Object petObject : petList) {
 				if (petObject instanceof L1PetInstance) { // ペット
 					L1PetInstance pet = (L1PetInstance) petObject;
-					if (_petMaster != null && _petMaster.getLevel() >= pet
-							.getLevel()) {
+					if ((_petMaster != null) && (_petMaster.getLevel() >= pet.getLevel())) {
 						pet.setCurrentPetStatus(status);
-					} else {
-						L1PetType type = PetTypeTable.getInstance().get(
-								pet.getNpcTemplate().get_npcId());
+					}
+					else {
+						L1PetType type = PetTypeTable.getInstance().get(pet.getNpcTemplate().get_npcId());
 						int id = type.getDefyMessageId();
 						if (id != 0) {
-							broadcastPacket(new S_NpcChatPacket(pet,
-									"$" + id, 0));
+							broadcastPacket(new S_NpcChatPacket(pet, "$" + id, 0));
 						}
 					}
 				}
@@ -475,8 +466,8 @@ public class L1PetInstance extends L1NpcInstance {
 			if (getCurrentHp() != getMaxHp()) {
 				useItem(USEITEM_HEAL, 100);
 			}
-		} else if (Arrays
-				.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
+		}
+		else if (Arrays.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
 			useItem(USEITEM_HASTE, 100);
 		}
 	}
@@ -485,17 +476,23 @@ public class L1PetInstance extends L1NpcInstance {
 		int status = 0;
 		if (action.equalsIgnoreCase("aggressive")) { // 攻撃態勢
 			status = 1;
-		} else if (action.equalsIgnoreCase("defensive")) { // 防御態勢
+		}
+		else if (action.equalsIgnoreCase("defensive")) { // 防御態勢
 			status = 2;
-		} else if (action.equalsIgnoreCase("stay")) { // 休憩
+		}
+		else if (action.equalsIgnoreCase("stay")) { // 休憩
 			status = 3;
-		} else if (action.equalsIgnoreCase("extend")) { // 配備
+		}
+		else if (action.equalsIgnoreCase("extend")) { // 配備
 			status = 4;
-		} else if (action.equalsIgnoreCase("alert")) { // 警戒
+		}
+		else if (action.equalsIgnoreCase("alert")) { // 警戒
 			status = 5;
-		} else if (action.equalsIgnoreCase("dismiss")) { // 解散
+		}
+		else if (action.equalsIgnoreCase("dismiss")) { // 解散
 			status = 6;
-		} else if (action.equalsIgnoreCase("getitem")) { // 収集
+		}
+		else if (action.equalsIgnoreCase("getitem")) { // 収集
 			collect();
 		}
 		return status;
@@ -545,7 +542,8 @@ public class L1PetInstance extends L1NpcInstance {
 
 		if (_currentPetStatus == 3) {
 			allTargetClear();
-		} else {
+		}
+		else {
 			if (!isAiRunning()) {
 				startAI();
 			}
@@ -608,12 +606,14 @@ public class L1PetInstance extends L1NpcInstance {
 		return _damageByWeapon;
 	}
 
-	private static Logger _log = Logger
-			.getLogger(L1PetInstance.class.getName());
 	private int _currentPetStatus;
+
 	private L1PcInstance _petMaster;
+
 	private int _itemObjId;
+
 	private L1PetType _type;
+
 	private int _expPercent;
 
 	public L1PetType getPetType() {

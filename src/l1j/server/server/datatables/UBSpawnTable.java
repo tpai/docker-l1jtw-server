@@ -32,7 +32,7 @@ public class UBSpawnTable {
 
 	private static UBSpawnTable _instance;
 
-	private Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();;
+	private Map<Integer, L1UbSpawn> _spawnTable = Maps.newMap();
 
 	public static UBSpawnTable getInstance() {
 		if (_instance == null) {

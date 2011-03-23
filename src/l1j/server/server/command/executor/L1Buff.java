@@ -15,7 +15,6 @@ package l1j.server.server.command.executor;
 
 import java.util.Collection;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.model.L1World;
@@ -29,8 +28,6 @@ import l1j.server.server.utils.collections.Lists;
  * GM指令：輔助魔法
  */
 public class L1Buff implements L1CommandExecutor {
-	private static Logger _log = Logger.getLogger(L1Buff.class.getName());
-
 	private L1Buff() {
 	}
 

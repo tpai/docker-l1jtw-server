@@ -1,47 +1,47 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
 
 import java.util.Arrays;
-import java.util.concurrent.ScheduledFuture;
-import java.util.logging.Logger;
-import l1j.server.server.utils.Random;
 
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.IdFactory;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_DollPack;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Npc;
+import l1j.server.server.utils.Random;
 
 public class L1DollInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;
 
 	public static final int DOLLTYPE_BUGBEAR = 0;
+
 	public static final int DOLLTYPE_SUCCUBUS = 1;
+
 	public static final int DOLLTYPE_WAREWOLF = 2;
+
 	public static final int DOLLTYPE_ELDER = 3;
+
 	public static final int DOLLTYPE_CRUSTANCEAN = 4;
+
 	public static final int DOLLTYPE_GOLEM = 5;
+
 	public static final int DOLL_TIME = 1800000;
 
-	private static Logger _log = Logger.getLogger(L1DollInstance.class
-			.getName());
-	private ScheduledFuture<?> _dollFuture;
 	private int _dollType;
+
 	private int _itemObjId;
 
 	// ターゲットがいない場合の処理
@@ -50,7 +50,8 @@ public class L1DollInstance extends L1NpcInstance {
 		if (_master.isDead()) {
 			deleteDoll();
 			return true;
-		} else if (_master != null && _master.getMapId() == getMapId()) {
+		}
+		else if ((_master != null) && (_master.getMapId() == getMapId())) {
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
 				int dir = moveDirection(_master.getX(), _master.getY());
 				if (dir == -1) {
@@ -58,12 +59,14 @@ public class L1DollInstance extends L1NpcInstance {
 						startAI();
 					}
 					return true;
-				} else {
+				}
+				else {
 					setDirectionMove(dir);
 					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				}
 			}
-		} else {
+		}
+		else {
 			deleteDoll();
 			return true;
 		}
@@ -81,15 +84,13 @@ public class L1DollInstance extends L1NpcInstance {
 		}
 	}
 
-	public L1DollInstance(L1Npc template, L1PcInstance master, int dollType,
-			int itemObjId) {
+	public L1DollInstance(L1Npc template, L1PcInstance master, int dollType, int itemObjId) {
 		super(template);
 		setId(IdFactory.getInstance().nextId());
 
 		setDollType(dollType);
 		setItemObjId(itemObjId);
-		_dollFuture = GeneralThreadPool.getInstance().schedule(
-				new DollTimer(), DOLL_TIME);
+		GeneralThreadPool.getInstance().schedule(new DollTimer(), DOLL_TIME);
 
 		setMaster(master);
 		setX(master.getX() + Random.nextInt(5) - 2);
@@ -163,17 +164,15 @@ public class L1DollInstance extends L1NpcInstance {
 	public int getDamageByDoll() {
 		int damage = 0;
 		int dollType = getDollType();
-		if (dollType == DOLLTYPE_WAREWOLF || dollType == DOLLTYPE_CRUSTANCEAN) {
+		if ((dollType == DOLLTYPE_WAREWOLF) || (dollType == DOLLTYPE_CRUSTANCEAN)) {
 			int chance = Random.nextInt(100) + 1;
 			if (chance <= 3) {
 				damage = 15;
 				if (_master instanceof L1PcInstance) {
 					L1PcInstance pc = (L1PcInstance) _master;
-					pc.sendPackets(new S_SkillSound(_master.getId(),
-							6319));
+					pc.sendPackets(new S_SkillSound(_master.getId(), 6319));
 				}
-				_master.broadcastPacket(new S_SkillSound(_master
-						.getId(), 6319));
+				_master.broadcastPacket(new S_SkillSound(_master.getId(), 6319));
 			}
 		}
 		return damage;
@@ -182,7 +181,7 @@ public class L1DollInstance extends L1NpcInstance {
 	public boolean isMpRegeneration() {
 		boolean isMpRegeneration = false;
 		int dollType = getDollType();
-		if (dollType == DOLLTYPE_SUCCUBUS || dollType == DOLLTYPE_ELDER) {
+		if ((dollType == DOLLTYPE_SUCCUBUS) || (dollType == DOLLTYPE_ELDER)) {
 			isMpRegeneration = true;
 		}
 		return isMpRegeneration;

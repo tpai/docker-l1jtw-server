@@ -56,14 +56,15 @@ public class C_Mail extends ClientBasePacket {
 		}
 		else if ((type == 0x10) || (type == 0x11) || (type == 0x12)) { // 讀取
 			int mailId = readD();
-			L1Mail mail = MailTable.getInstance().getMail(mailId);
+			MailTable.getInstance();
+			L1Mail mail = MailTable.getMail(mailId);
 			if (mail.getReadStatus() == 0) {
 				MailTable.getInstance().setReadStatus(mailId);
 			}
 			pc.sendPackets(new S_Mail(mailId, type));
 		}
 		else if (type == 0x20) { // 一般信紙
-			int unknow = readH();
+			readH();
 			String receiverName = readS();
 			byte[] text = readByte();
 			L1PcInstance receiver = L1World.getInstance().getPlayer(receiverName);
@@ -97,7 +98,7 @@ public class C_Mail extends ClientBasePacket {
 			}
 		}
 		else if (type == 0x21) { // 血盟信紙
-			int unknow = readH();
+			readH();
 			String clanName = readS();
 			byte[] text = readByte();
 			L1Clan clan = L1World.getInstance().getClan(clanName);
@@ -129,7 +130,8 @@ public class C_Mail extends ClientBasePacket {
 
 	private int getMailSizeByReceiver(String receiverName, int type) {
 		List<L1Mail> mails = Lists.newList();
-		for (L1Mail mail : MailTable.getInstance().getAllMail()) {
+		MailTable.getInstance();
+		for (L1Mail mail : MailTable.getAllMail()) {
 			if (mail.getReceiverName().equalsIgnoreCase(receiverName)) {
 				if (mail.getType() == type) {
 					mails.add(mail);

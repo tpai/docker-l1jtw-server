@@ -27,7 +27,6 @@ import static l1j.server.server.model.skill.L1SkillId.PHYSICAL_ENCHANT_STR;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -44,8 +43,6 @@ import l1j.server.server.templates.L1Item;
 import l1j.server.server.utils.collections.Lists;
 
 public class L1EquipmentSlot {
-	private static Logger _log = Logger.getLogger(L1EquipmentSlot.class.getName());
-
 	private L1PcInstance _owner;
 
 	/**
@@ -140,7 +137,6 @@ public class L1EquipmentSlot {
 	}
 
 	private void removeWeapon(L1ItemInstance weapon) {
-		int itemId = weapon.getItem().getItemId();
 		_owner.setWeapon(null);
 		_owner.setCurrentWeapon(0);
 		weapon.stopEquipmentTimer(_owner);

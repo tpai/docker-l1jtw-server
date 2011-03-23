@@ -1,22 +1,20 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.Instance;
 
-import java.util.logging.Logger;
-
 import java.lang.reflect.Constructor;
+
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.NpcTable;
@@ -26,7 +24,6 @@ import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1Quest;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.serverpackets.S_FollowerPack;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
 import l1j.server.server.serverpackets.S_ServerMessage;
@@ -35,17 +32,14 @@ import l1j.server.server.templates.L1Npc;
 public class L1FollowerInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;
 
-	private static Logger _log = Logger.getLogger(L1FollowerInstance.class
-			.getName());
-
 	@Override
 	public boolean noTarget() {
-		L1NpcInstance targetNpc = null;
 		for (L1Object object : L1World.getInstance().getVisibleObjects(this)) {
 			if (object instanceof L1NpcInstance) {
 				L1NpcInstance npc = (L1NpcInstance) object;
-				if (npc.getNpcTemplate().get_npcId() == 70740 // ディカルデンソルジャー
-						&& getNpcTemplate().get_npcId() == 71093) { // 調査員
+				if ((npc.getNpcTemplate().get_npcId() == 70740 // ディカルデンソルジャー
+						)
+						&& (getNpcTemplate().get_npcId() == 71093)) { // 調査員
 					setParalyzed(true);
 					L1PcInstance pc = (L1PcInstance) _master;
 					if (!pc.getInventory().checkItem(40593)) {
@@ -53,8 +47,10 @@ public class L1FollowerInstance extends L1NpcInstance {
 					}
 					deleteMe();
 					return true;
-				} else if (npc.getNpcTemplate().get_npcId() == 70811 // ライラ
-						&& getNpcTemplate().get_npcId() == 71094) { // エンディア
+				}
+				else if ((npc.getNpcTemplate().get_npcId() == 70811 // ライラ
+						)
+						&& (getNpcTemplate().get_npcId() == 71094)) { // エンディア
 					setParalyzed(true);
 					L1PcInstance pc = (L1PcInstance) _master;
 					if (!pc.getInventory().checkItem(40582)) {
@@ -62,13 +58,14 @@ public class L1FollowerInstance extends L1NpcInstance {
 					}
 					deleteMe();
 					return true;
-				} else if (npc.getNpcTemplate().get_npcId() == 71061 // カドモス
-						&& getNpcTemplate().get_npcId() == 71062) { // カミット
+				}
+				else if ((npc.getNpcTemplate().get_npcId() == 71061 // カドモス
+						)
+						&& (getNpcTemplate().get_npcId() == 71062)) { // カミット
 					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						L1PcInstance pc = (L1PcInstance) _master;	
-						if((pc.getX() >= 32448 && pc.getX() <= 32452) // カドモス周辺座標
-								&& (pc.getY() >= 33048 && pc.getY() <= 33052)
-								&& (pc.getMapId() == 440)) {						
+						L1PcInstance pc = (L1PcInstance) _master;
+						if (((pc.getX() >= 32448) && (pc.getX() <= 32452)) // カドモス周辺座標
+								&& ((pc.getY() >= 33048) && (pc.getY() <= 33052)) && (pc.getMapId() == 440)) {
 							setParalyzed(true);
 							if (!pc.getInventory().checkItem(40711)) {
 								createNewItem(pc, 40711, 1);
@@ -78,14 +75,15 @@ public class L1FollowerInstance extends L1NpcInstance {
 							return true;
 						}
 					}
-				} else if (npc.getNpcTemplate().get_npcId() == 71074 // リザードマンの長老
-						&& getNpcTemplate().get_npcId() == 71075) { 
+				}
+				else if ((npc.getNpcTemplate().get_npcId() == 71074 // リザードマンの長老
+						)
+						&& (getNpcTemplate().get_npcId() == 71075)) {
 					// 疲れ果てたリザードマンファイター
 					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
-						L1PcInstance pc = (L1PcInstance) _master;	
-						if((pc.getX() >= 32731 && pc.getX() <= 32735) // リザードマン長老周辺座標
-								&& (pc.getY() >= 32854 && pc.getY() <= 32858)
-								&& (pc.getMapId() == 480)) {
+						L1PcInstance pc = (L1PcInstance) _master;
+						if (((pc.getX() >= 32731) && (pc.getX() <= 32735)) // リザードマン長老周辺座標
+								&& ((pc.getY() >= 32854) && (pc.getY() <= 32858)) && (pc.getMapId() == 480)) {
 							setParalyzed(true);
 							if (!pc.getInventory().checkItem(40633)) {
 								createNewItem(pc, 40633, 1);
@@ -95,16 +93,17 @@ public class L1FollowerInstance extends L1NpcInstance {
 							return true;
 						}
 					}
-				} else if (npc.getNpcTemplate().get_npcId() == 70964 // バッシュ
-						&& getNpcTemplate().get_npcId() == 70957) { // ロイ
-					if (getLocation().getTileLineDistance(_master.getLocation()) < 3){
-						L1PcInstance pc = (L1PcInstance) _master;	
-						if((pc.getX() >= 32917 && pc.getX() <= 32921) // バッシュ周辺座標
-								&& (pc.getY() >= 32974 && pc.getY() <= 32978)
-								&& (pc.getMapId() == 410)) {
+				}
+				else if ((npc.getNpcTemplate().get_npcId() == 70964 // バッシュ
+						)
+						&& (getNpcTemplate().get_npcId() == 70957)) { // ロイ
+					if (getLocation().getTileLineDistance(_master.getLocation()) < 3) {
+						L1PcInstance pc = (L1PcInstance) _master;
+						if (((pc.getX() >= 32917) && (pc.getX() <= 32921)) // バッシュ周辺座標
+								&& ((pc.getY() >= 32974) && (pc.getY() <= 32978)) && (pc.getMapId() == 410)) {
 							setParalyzed(true);
 							createNewItem(pc, 41003, 1);
-							pc.getQuest().set_step(L1Quest.QUEST_ROI, 0);					
+							pc.getQuest().set_step(L1Quest.QUEST_ROI, 0);
 							deleteMe();
 							return true;
 						}
@@ -112,15 +111,14 @@ public class L1FollowerInstance extends L1NpcInstance {
 				}
 			}
 		}
-			
-		if (_master.isDead() || getLocation().getTileLineDistance(_master
-				.getLocation()) > 10) {
+
+		if (_master.isDead() || (getLocation().getTileLineDistance(_master.getLocation()) > 10)) {
 			setParalyzed(true);
-			spawn(getNpcTemplate().get_npcId(), getX(), getY(), getHeading(),
-					getMapId());
+			spawn(getNpcTemplate().get_npcId(), getX(), getY(), getHeading(), getMapId());
 			deleteMe();
 			return true;
-		} else if (_master != null && _master.getMapId() == getMapId()) {
+		}
+		else if ((_master != null) && (_master.getMapId() == getMapId())) {
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
 				setDirectionMove(moveDirection(_master.getX(), _master.getY()));
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
@@ -129,8 +127,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 		return false;
 	}
 
-	public L1FollowerInstance(L1Npc template, L1NpcInstance target,
-			L1Character master) {
+	public L1FollowerInstance(L1Npc template, L1NpcInstance target, L1Character master) {
 		super(template);
 
 		_master = master;
@@ -184,31 +181,40 @@ public class L1FollowerInstance extends L1NpcInstance {
 		if (getNpcTemplate().get_npcId() == 71093) {
 			if (_master.equals(player)) {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "searcherk2"));
-			} else {
+			}
+			else {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "searcherk4"));
 			}
-		} else if (getNpcTemplate().get_npcId() == 71094) {
+		}
+		else if (getNpcTemplate().get_npcId() == 71094) {
 			if (_master.equals(player)) {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "endiaq2"));
-			} else {
+			}
+			else {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "endiaq4"));
 			}
-		} else if (getNpcTemplate().get_npcId() == 71062) {
+		}
+		else if (getNpcTemplate().get_npcId() == 71062) {
 			if (_master.equals(player)) {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "kamit2"));
-			} else {
+			}
+			else {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "kamit1"));
 			}
-		} else if (getNpcTemplate().get_npcId() == 71075) {
+		}
+		else if (getNpcTemplate().get_npcId() == 71075) {
 			if (_master.equals(player)) {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "llizard2"));
-			} else {
+			}
+			else {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "llizard1a"));
 			}
-		} else if (getNpcTemplate().get_npcId() == 70957) {
+		}
+		else if (getNpcTemplate().get_npcId() == 70957) {
 			if (_master.equals(player)) {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
-			} else {
+			}
+			else {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
 			}
 		}
@@ -226,9 +232,9 @@ public class L1FollowerInstance extends L1NpcInstance {
 		if (item != null) {
 			if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) {
 				pc.getInventory().storeItem(item);
-			} else {
-				L1World.getInstance().getInventory(pc.getX(), pc.getY(),
-						pc.getMapId()).storeItem(item);
+			}
+			else {
+				L1World.getInstance().getInventory(pc.getX(), pc.getY(), pc.getMapId()).storeItem(item);
 			}
 			pc.sendPackets(new S_ServerMessage(403, item.getLogName()));
 		}
@@ -240,11 +246,11 @@ public class L1FollowerInstance extends L1NpcInstance {
 			L1NpcInstance mob = null;
 			try {
 				String implementationName = l1npc.getImpl();
-				Constructor _constructor = Class.forName((new StringBuilder())
-						.append("l1j.server.server.model.Instance.")
-						.append(implementationName).append("Instance")
-						.toString()).getConstructors()[0];
-				mob = (L1NpcInstance) _constructor.newInstance(new Object[] { l1npc });
+				Constructor<?> _constructor = Class.forName(
+						(new StringBuilder()).append("l1j.server.server.model.Instance.").append(implementationName).append("Instance").toString())
+						.getConstructors()[0];
+				mob = (L1NpcInstance) _constructor.newInstance(new Object[]
+				{ l1npc });
 				mob.setId(IdFactory.getInstance().nextId());
 				mob.setX(X);
 				mob.setY(Y);
@@ -259,7 +265,8 @@ public class L1FollowerInstance extends L1NpcInstance {
 				newnpc.onNpcAI();
 				newnpc.turnOnOffLight();
 				newnpc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // チャット開始
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}

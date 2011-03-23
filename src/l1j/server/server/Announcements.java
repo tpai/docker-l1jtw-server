@@ -16,7 +16,6 @@ package l1j.server.server;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.LineNumberReader;
 import java.util.List;
@@ -92,25 +91,6 @@ public class Announcements {
 		}
 		finally {
 			StreamUtil.close(lnr);
-		}
-	}
-
-	private void saveToDisk() {
-		File file = new File("data/announcements.txt");
-		FileWriter save = null;
-
-		try {
-			save = new FileWriter(file);
-			for (String msg : _announcements) {
-				save.write(msg);
-				save.write("\r\n");
-			}
-		}
-		catch (IOException e) {
-			_log.log(Level.SEVERE, "saving the announcements file has failed", e);
-		}
-		finally {
-			StreamUtil.close(save);
 		}
 	}
 

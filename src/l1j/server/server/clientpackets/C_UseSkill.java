@@ -1,21 +1,27 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.clientpackets;
 
-import java.util.logging.Logger;
-
+import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
+import static l1j.server.server.model.skill.L1SkillId.CALL_CLAN;
+import static l1j.server.server.model.skill.L1SkillId.FIRE_WALL;
+import static l1j.server.server.model.skill.L1SkillId.LIFE_STREAM;
+import static l1j.server.server.model.skill.L1SkillId.MASS_TELEPORT;
+import static l1j.server.server.model.skill.L1SkillId.MEDITATION;
+import static l1j.server.server.model.skill.L1SkillId.RUN_CLAN;
+import static l1j.server.server.model.skill.L1SkillId.TELEPORT;
+import static l1j.server.server.model.skill.L1SkillId.TRUE_TARGET;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.ClientThread;
@@ -25,7 +31,6 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ServerMessage;
-import static l1j.server.server.model.skill.L1SkillId.*;
 
 // Referenced classes of package l1j.server.server.clientpackets:
 // ClientBasePacket
@@ -34,8 +39,6 @@ import static l1j.server.server.model.skill.L1SkillId.*;
  * 處理收到由客戶端傳來使用魔法的封包
  */
 public class C_UseSkill extends ClientBasePacket {
-
-	private static Logger _log = Logger.getLogger(C_UseSkill.class.getName());
 
 	public C_UseSkill(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
@@ -64,13 +67,11 @@ public class C_UseSkill extends ClientBasePacket {
 		if (Config.CHECK_SPELL_INTERVAL) {
 			int result;
 			// FIXME 判斷有向及無向的魔法
-			if (SkillsTable.getInstance().getTemplate(skillId).getActionId() ==
-						ActionCodes.ACTION_SkillAttack) {
-				result = pc.getAcceleratorChecker().checkInterval(
-						AcceleratorChecker.ACT_TYPE.SPELL_DIR);
-			} else {
-				result = pc.getAcceleratorChecker().checkInterval(
-						AcceleratorChecker.ACT_TYPE.SPELL_NODIR);
+			if (SkillsTable.getInstance().getTemplate(skillId).getActionId() == ActionCodes.ACTION_SkillAttack) {
+				result = pc.getAcceleratorChecker().checkInterval(AcceleratorChecker.ACT_TYPE.SPELL_DIR);
+			}
+			else {
+				result = pc.getAcceleratorChecker().checkInterval(AcceleratorChecker.ACT_TYPE.SPELL_NODIR);
 			}
 			if (result == AcceleratorChecker.R_DISCONNECTED) {
 				return;
@@ -79,25 +80,30 @@ public class C_UseSkill extends ClientBasePacket {
 
 		if (abyte0.length > 4) {
 			try {
-				if (skillId == CALL_CLAN || skillId == RUN_CLAN) { // コールクラン、ランクラン
+				if ((skillId == CALL_CLAN) || (skillId == RUN_CLAN)) { // コールクラン、ランクラン
 					charName = readS();
-				} else if (skillId == TRUE_TARGET) { // トゥルーターゲット
+				}
+				else if (skillId == TRUE_TARGET) { // トゥルーターゲット
 					targetId = readD();
 					targetX = readH();
 					targetY = readH();
 					message = readS();
-				} else if (skillId == TELEPORT || skillId == MASS_TELEPORT) { // テレポート、マステレポート
+				}
+				else if ((skillId == TELEPORT) || (skillId == MASS_TELEPORT)) { // テレポート、マステレポート
 					readH(); // MapID
 					targetId = readD(); // Bookmark ID
-				} else if (skillId == FIRE_WALL || skillId == LIFE_STREAM) { // ファイアーウォール、ライフストリーム
+				}
+				else if ((skillId == FIRE_WALL) || (skillId == LIFE_STREAM)) { // ファイアーウォール、ライフストリーム
 					targetX = readH();
 					targetY = readH();
-				} else {
+				}
+				else {
 					targetId = readD();
 					targetX = readH();
 					targetY = readH();
 				}
-			} catch (Exception e) {
+			}
+			catch (Exception e) {
 				// _log.log(Level.SEVERE, "", e);
 			}
 		}
@@ -111,7 +117,7 @@ public class C_UseSkill extends ClientBasePacket {
 		pc.killSkillEffectTimer(MEDITATION);
 
 		try {
-			if (skillId == CALL_CLAN || skillId == RUN_CLAN) { // コールクラン、ランクラン
+			if ((skillId == CALL_CLAN) || (skillId == RUN_CLAN)) { // コールクラン、ランクラン
 				if (charName.isEmpty()) {
 					// 名前が空の場合クライアントで弾かれるはず
 					return;
@@ -132,17 +138,17 @@ public class C_UseSkill extends ClientBasePacket {
 				if (skillId == CALL_CLAN) {
 					// 移動せずに連続して同じクラン員にコールクランした場合、向きは前回の向きになる
 					int callClanId = pc.getCallClanId();
-					if (callClanId == 0 || callClanId != targetId) {
+					if ((callClanId == 0) || (callClanId != targetId)) {
 						pc.setCallClanId(targetId);
 						pc.setCallClanHeading(pc.getHeading());
 					}
 				}
 			}
 			L1SkillUse l1skilluse = new L1SkillUse();
-			l1skilluse.handleCommands(pc, skillId, targetId, targetX, targetY,
-					message, 0, L1SkillUse.TYPE_NORMAL);
+			l1skilluse.handleCommands(pc, skillId, targetId, targetX, targetY, message, 0, L1SkillUse.TYPE_NORMAL);
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

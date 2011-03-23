@@ -34,6 +34,4 @@ public class S_Trade extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_Trade";
 	}
-
-	private static final String _S__77_TRADE = "[S] S_Trade";
 }

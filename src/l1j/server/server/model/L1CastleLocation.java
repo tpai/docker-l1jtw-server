@@ -14,7 +14,6 @@
 package l1j.server.server.model;
 
 import java.util.Map;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.model.gametime.L1GameTime;
@@ -28,8 +27,6 @@ import l1j.server.server.utils.collections.Maps;
 // L1CastleLocation
 
 public class L1CastleLocation {
-	private static final Logger _log = Logger.getLogger(L1CastleLocation.class.getName());
-
 	// castle_id
 	public static final int KENT_CASTLE_ID = 1;
 

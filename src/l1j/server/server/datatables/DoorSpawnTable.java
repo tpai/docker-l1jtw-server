@@ -66,7 +66,7 @@ public class DoorSpawnTable {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(81158);
 				if (l1npc != null) {
 					String s = l1npc.getImpl();
-					Constructor constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
+					Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
 					Object parameters[] =
 					{ l1npc };
 					L1DoorInstance door = (L1DoorInstance) constructor.newInstance(parameters);

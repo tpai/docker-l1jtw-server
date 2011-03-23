@@ -36,6 +36,4 @@ public class S_Drawal extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_Drawal";
 	}
-
-	private static final String _S__37_DRAWAL = "[S] S_Drawal";
 }

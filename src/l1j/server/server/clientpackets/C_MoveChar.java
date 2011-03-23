@@ -1,34 +1,30 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.clientpackets;
 
 import static l1j.server.server.model.Instance.L1PcInstance.REGENSTATE_MOVE;
-
-import java.util.logging.Logger;
-
+import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
+import static l1j.server.server.model.skill.L1SkillId.MEDITATION;
 import l1j.server.Config;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.AcceleratorChecker;
 import l1j.server.server.model.Dungeon;
 import l1j.server.server.model.DungeonRandom;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.model.trap.L1WorldTraps;
 import l1j.server.server.serverpackets.S_MoveCharPacket;
 import l1j.server.server.serverpackets.S_SystemMessage;
-import static l1j.server.server.model.skill.L1SkillId.*;
 
 // Referenced classes of package l1j.server.server.clientpackets:
 // ClientBasePacket
@@ -38,24 +34,22 @@ import static l1j.server.server.model.skill.L1SkillId.*;
  */
 public class C_MoveChar extends ClientBasePacket {
 
-	private static Logger _log = Logger.getLogger(C_MoveChar.class.getName());
+	private static final byte HEADING_TABLE_X[] =
+	{ 0, 1, 1, 1, 0, -1, -1, -1 };
 
-	private static final byte HEADING_TABLE_X[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-
-	private static final byte HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+	private static final byte HEADING_TABLE_Y[] =
+	{ -1, -1, 0, 1, 1, 1, 0, -1 };
 
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
 
 	// 地圖編號的研究
 	@SuppressWarnings("unused")
 	private void sendMapTileLog(L1PcInstance pc) {
-		pc.sendPackets(new S_SystemMessage(pc.getMap().toString(
-				pc.getLocation())));
+		pc.sendPackets(new S_SystemMessage(pc.getMap().toString(pc.getLocation())));
 	}
 
 	// 移動
-	public C_MoveChar(byte decrypt[], ClientThread client)
-			throws Exception {
+	public C_MoveChar(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
 		int locx = readH();
 		int locy = readH();
@@ -70,8 +64,7 @@ public class C_MoveChar extends ClientBasePacket {
 		// 檢查移動的時間間隔
 		if (Config.CHECK_MOVE_INTERVAL) {
 			int result;
-			result = pc.getAcceleratorChecker()
-					.checkInterval(AcceleratorChecker.ACT_TYPE.MOVE);
+			result = pc.getAcceleratorChecker().checkInterval(AcceleratorChecker.ACT_TYPE.MOVE);
 			if (result == AcceleratorChecker.R_DISCONNECTED) {
 				return;
 			}
@@ -97,22 +90,22 @@ public class C_MoveChar extends ClientBasePacket {
 		if (Dungeon.getInstance().dg(locx, locy, pc.getMap().getId(), pc)) { // 傳點
 			return;
 		}
-		if (DungeonRandom.getInstance().dg(locx, locy, pc.getMap().getId(),
-				pc)) { // 取得隨機傳送地點
+		if (DungeonRandom.getInstance().dg(locx, locy, pc.getMap().getId(), pc)) { // 取得隨機傳送地點
 			return;
 		}
 
 		pc.getLocation().set(locx, locy);
 		pc.setHeading(heading);
-		if (pc.isGmInvis() || pc.isGhost()) {
-		} else if (pc.isInvisble()) {
+		if (pc.isGmInvis() || pc.isGhost()) {}
+		else if (pc.isInvisble()) {
 			pc.broadcastPacketForFindInvis(new S_MoveCharPacket(pc), true);
-		} else {
+		}
+		else {
 			pc.broadcastPacket(new S_MoveCharPacket(pc));
 		}
 
 		// sendMapTileLog(pc); //發送信息的目的地瓦（為調查地圖）
-		//寵物競速-判斷圈數
+		// 寵物競速-判斷圈數
 		l1j.server.server.model.game.L1PolyRace.getInstance().checkLapFinish(pc);
 		L1WorldTraps.getInstance().onPlayerMoved(pc);
 

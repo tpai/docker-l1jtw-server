@@ -1,18 +1,19 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model;
+
+import static l1j.server.server.model.skill.L1SkillId.FIRE_WALL;
 
 import java.lang.reflect.Constructor;
 import java.util.logging.Level;
@@ -25,22 +26,19 @@ import l1j.server.server.model.Instance.L1EffectInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
-import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.templates.L1Npc;
-import static l1j.server.server.model.skill.L1SkillId.*;
 
 // Referenced classes of package l1j.server.server.model:
 // L1EffectSpawn
 
 public class L1EffectSpawn {
 
-	private static final Logger _log = Logger.getLogger(L1EffectSpawn.class
-			.getName());
+	private static final Logger _log = Logger.getLogger(L1EffectSpawn.class.getName());
 
 	private static L1EffectSpawn _instance;
 
-	private Constructor _constructor;
+	private Constructor<?> _constructor;
 
 	private L1EffectSpawn() {
 	}
@@ -67,13 +65,11 @@ public class L1EffectSpawn {
 	 *            設置するマップのID
 	 * @return 生成されたエフェクトオブジェクト
 	 */
-	public L1EffectInstance spawnEffect(int npcId, int time, int locX,
-			int locY, short mapId) {
+	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId) {
 		return spawnEffect(npcId, time, locX, locY, mapId, null, 0);
 	}
 
-	public L1EffectInstance spawnEffect(int npcId, int time, int locX,
-			int locY, short mapId, L1PcInstance user, int skiiId) {
+	public L1EffectInstance spawnEffect(int npcId, int time, int locX, int locY, short mapId, L1PcInstance user, int skiiId) {
 		L1Npc template = NpcTable.getInstance().getTemplate(npcId);
 		L1EffectInstance effect = null;
 
@@ -81,13 +77,12 @@ public class L1EffectSpawn {
 			return null;
 		}
 
-		String className = (new StringBuilder()).append(
-				"l1j.server.server.model.Instance.").append(
-				template.getImpl()).append("Instance").toString();
+		String className = (new StringBuilder()).append("l1j.server.server.model.Instance.").append(template.getImpl()).append("Instance").toString();
 
 		try {
 			_constructor = Class.forName(className).getConstructors()[0];
-			Object obj[] = { template };
+			Object obj[] =
+			{ template };
 			effect = (L1EffectInstance) _constructor.newInstance(obj);
 
 			effect.setId(IdFactory.getInstance().nextId());
@@ -103,8 +98,7 @@ public class L1EffectSpawn {
 			L1World.getInstance().storeObject(effect);
 			L1World.getInstance().addVisibleObject(effect);
 
-			for (L1PcInstance pc : L1World.getInstance()
-					.getRecognizePlayer(effect)) {
+			for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(effect)) {
 				effect.addKnownObject(pc);
 				pc.addKnownObject(effect);
 				pc.sendPackets(new S_NPCPack(effect));
@@ -112,7 +106,8 @@ public class L1EffectSpawn {
 			}
 			L1NpcDeleteTimer timer = new L1NpcDeleteTimer(effect, time);
 			timer.begin();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 
@@ -121,12 +116,10 @@ public class L1EffectSpawn {
 
 	public void doSpawnFireWall(L1Character cha, int targetX, int targetY) {
 		L1Npc firewall = NpcTable.getInstance().getTemplate(81157); // ファイアーウォール
-		int duration = SkillsTable.getInstance().getTemplate(
-				FIRE_WALL).getBuffDuration();
+		int duration = SkillsTable.getInstance().getTemplate(FIRE_WALL).getBuffDuration();
 
 		if (firewall == null) {
-			throw new NullPointerException(
-					"FireWall data not found:npcid=81157");
+			throw new NullPointerException("FireWall data not found:npcid=81157");
 		}
 
 		L1Character base = cha;
@@ -137,22 +130,29 @@ public class L1EffectSpawn {
 			if (a == 1) {
 				x++;
 				y--;
-			} else if (a == 2) {
+			}
+			else if (a == 2) {
 				x++;
-			} else if (a == 3) {
+			}
+			else if (a == 3) {
 				x++;
 				y++;
-			} else if (a == 4) {
+			}
+			else if (a == 4) {
 				y++;
-			} else if (a == 5) {
+			}
+			else if (a == 5) {
 				x--;
 				y++;
-			} else if (a == 6) {
+			}
+			else if (a == 6) {
 				x--;
-			} else if (a == 7) {
+			}
+			else if (a == 7) {
 				x--;
 				y--;
-			} else if (a == 0) {
+			}
+			else if (a == 0) {
 				y--;
 			}
 			if (!base.isAttackPosition(x, y, 1)) {
@@ -164,13 +164,11 @@ public class L1EffectSpawn {
 				break;
 			}
 
-			L1EffectInstance effect = spawnEffect(81157, duration * 1000, x, y,
-					cha.getMapId());
+			L1EffectInstance effect = spawnEffect(81157, duration * 1000, x, y, cha.getMapId());
 			if (effect == null) {
 				break;
 			}
-			for (L1Object objects : L1World.getInstance()
-					.getVisibleObjects(effect, 0)) {
+			for (L1Object objects : L1World.getInstance().getVisibleObjects(effect, 0)) {
 				if (objects instanceof L1EffectInstance) {
 					L1EffectInstance npc = (L1EffectInstance) objects;
 					if (npc.getNpcTemplate().get_npcId() == 81157) {
@@ -178,7 +176,7 @@ public class L1EffectSpawn {
 					}
 				}
 			}
-			if (targetX == x && targetY == y) {
+			if ((targetX == x) && (targetY == y)) {
 				break;
 			}
 			base = effect;

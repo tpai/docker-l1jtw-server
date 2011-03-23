@@ -14,7 +14,6 @@
 package l1j.server.server.serverpackets;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -26,8 +25,6 @@ import l1j.server.server.utils.collections.Lists;
 // ServerBasePacket
 
 public class S_PetList extends ServerBasePacket {
-
-	private static Logger _log = Logger.getLogger(S_PetList.class.getName());
 
 	private static final String S_PETLIST = "[S] S_PetList";
 

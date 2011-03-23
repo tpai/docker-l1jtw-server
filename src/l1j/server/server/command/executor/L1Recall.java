@@ -14,7 +14,6 @@
 package l1j.server.server.command.executor;
 
 import java.util.Collection;
-import java.util.logging.Logger;
 
 import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1World;
@@ -23,8 +22,6 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.utils.collections.Lists;
 
 public class L1Recall implements L1CommandExecutor {
-	private static Logger _log = Logger.getLogger(L1Recall.class.getName());
-
 	private L1Recall() {
 	}
 

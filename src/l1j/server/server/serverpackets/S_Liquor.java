@@ -36,6 +36,4 @@ public class S_Liquor extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_Liquor";
 	}
-
-	private static final String _S__19_LIQUOR = "[S] S_Liquor";
 }

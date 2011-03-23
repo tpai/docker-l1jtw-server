@@ -15,7 +15,6 @@ package l1j.server.server.model.Instance;
 
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -166,8 +165,6 @@ public class L1GuardianInstance extends L1NpcInstance {
 		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 		L1Object object = L1World.getInstance().findObject(getId());
 		L1NpcInstance target = (L1NpcInstance) object;
-		String htmlid = null;
-		String[] htmldata = null;
 
 		if (talking != null) {
 			int pcx = player.getX(); // PCのX座標
@@ -202,22 +199,13 @@ public class L1GuardianInstance extends L1NpcInstance {
 			broadcastPacket(new S_ChangeHeading(this));
 
 			// html表示パケット送信
-			if (htmlid != null) { // htmlidが指定されている場合
-				if (htmldata != null) { // html指定がある場合は表示
-					player.sendPackets(new S_NPCTalkReturn(objid, htmlid, htmldata));
-				}
-				else {
-					player.sendPackets(new S_NPCTalkReturn(objid, htmlid));
-				}
+			if (player.getLawful() < -1000) { // プレイヤーがカオティック
+				player.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
 			}
 			else {
-				if (player.getLawful() < -1000) { // プレイヤーがカオティック
-					player.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-				}
-				else {
-					player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
-				}
+				player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 			}
+
 			// 動かないようにする
 			synchronized (this) {
 				if (_monitor != null) {
@@ -328,12 +316,12 @@ public class L1GuardianInstance extends L1NpcInstance {
 			}
 			if (player != null) {
 				List<L1Character> targetList = _hateList.toTargetArrayList();
-				ArrayList<Integer> hateList = _hateList.toHateArrayList();
+				List<Integer> hateList = _hateList.toHateArrayList();
 				int exp = getExp();
 				CalcExp.calcExp(player, targetobjid, targetList, hateList, exp);
 
-				ArrayList<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
-				ArrayList<Integer> dropHateList = _dropHateList.toHateArrayList();
+				List<L1Character> dropTargetList = _dropHateList.toTargetArrayList();
+				List<Integer> dropHateList = _dropHateList.toHateArrayList();
 				try {
 					DropTable.getInstance().dropShare(_npc, dropTargetList, dropHateList);
 				}

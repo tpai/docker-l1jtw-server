@@ -36,6 +36,4 @@ public class S_Underwater extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_Underwater";
 	}
-
-	private static final String _S__19_UNDERWATER = "[S] S_Underwater";
 }

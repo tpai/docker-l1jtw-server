@@ -18,7 +18,6 @@ import java.io.FileReader;
 import java.io.LineNumberReader;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.logging.Logger;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.utils.collections.Lists;
@@ -84,10 +83,6 @@ public class S_CommonNews extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_CommonNews";
 	}
-
-	private static final String _S__0B_COMMONNEWS = "[S] S_CommonNews";
-
-	private static Logger _log = Logger.getLogger(S_CommonNews.class.getName());
 
 	private List<String> _announcements;
 

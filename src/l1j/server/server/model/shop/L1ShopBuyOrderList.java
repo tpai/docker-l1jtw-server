@@ -14,7 +14,6 @@
 package l1j.server.server.model.shop;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.server.model.L1TaxCalculator;
@@ -41,8 +40,6 @@ class L1ShopBuyOrder {
 }
 
 public class L1ShopBuyOrderList {
-	private static Logger _log = Logger.getLogger(L1ShopBuyOrder.class.getName());
-
 	private final L1Shop _shop;
 
 	private final List<L1ShopBuyOrder> _list = Lists.newList();

@@ -1,30 +1,24 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.map;
 
-import java.util.logging.Logger;
-
-import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.datatables.DoorSpawnTable;
 import l1j.server.server.model.Instance.L1DoorInstance;
 import l1j.server.server.types.Point;
 
 public class L1V1Map extends L1Map {
-	private static Logger _log = Logger.getLogger(L1Map.class.getName());
-
 	private int _mapId;
 
 	private int _worldTopLeftX;
@@ -71,11 +65,9 @@ public class L1V1Map extends L1Map {
 
 	}
 
-	public L1V1Map(int mapId, byte map[][], int worldTopLeftX,
-			int worldTopLeftY, boolean underwater, boolean markable,
-			boolean teleportable, boolean escapable, boolean useResurrection,
-			boolean usePainwand, boolean enabledDeathPenalty, boolean takePets,
-			boolean recallPets, boolean usableItem, boolean usableSkill) {
+	public L1V1Map(int mapId, byte map[][], int worldTopLeftX, int worldTopLeftY, boolean underwater, boolean markable, boolean teleportable,
+			boolean escapable, boolean useResurrection, boolean usePainwand, boolean enabledDeathPenalty, boolean takePets, boolean recallPets,
+			boolean usableItem, boolean usableSkill) {
 		_mapId = mapId;
 		_map = map;
 		_worldTopLeftX = worldTopLeftX;
@@ -187,12 +179,10 @@ public class L1V1Map extends L1Map {
 	@Override
 	public boolean isInMap(int x, int y) {
 		// フィールドの茶色エリアの判定
-		if (_mapId == 4
-				&& (x < 32520 || y < 32070 || (y < 32190 && x < 33950))) {
+		if ((_mapId == 4) && ((x < 32520) || (y < 32070) || ((y < 32190) && (x < 33950)))) {
 			return false;
 		}
-		return (_worldTopLeftX <= x && x <= _worldBottomRightX
-				&& _worldTopLeftY <= y && y <= _worldBottomRightY);
+		return ((_worldTopLeftX <= x) && (x <= _worldBottomRightX) && (_worldTopLeftY <= y) && (y <= _worldBottomRightY));
 	}
 
 	@Override
@@ -202,8 +192,7 @@ public class L1V1Map extends L1Map {
 
 	@Override
 	public boolean isPassable(int x, int y) {
-		return isPassable(x, y - 1, 4) || isPassable(x + 1, y, 6)
-				|| isPassable(x, y + 1, 0) || isPassable(x - 1, y, 2);
+		return isPassable(x, y - 1, 4) || isPassable(x + 1, y, 6) || isPassable(x, y + 1, 0) || isPassable(x - 1, y, 2);
 	}
 
 	@Override
@@ -220,21 +209,29 @@ public class L1V1Map extends L1Map {
 
 		if (heading == 0) {
 			tile2 = accessTile(x, y - 1);
-		} else if (heading == 1) {
+		}
+		else if (heading == 1) {
 			tile2 = accessTile(x + 1, y - 1);
-		} else if (heading == 2) {
+		}
+		else if (heading == 2) {
 			tile2 = accessTile(x + 1, y);
-		} else if (heading == 3) {
+		}
+		else if (heading == 3) {
 			tile2 = accessTile(x + 1, y + 1);
-		} else if (heading == 4) {
+		}
+		else if (heading == 4) {
 			tile2 = accessTile(x, y + 1);
-		} else if (heading == 5) {
+		}
+		else if (heading == 5) {
 			tile2 = accessTile(x - 1, y + 1);
-		} else if (heading == 6) {
+		}
+		else if (heading == 6) {
 			tile2 = accessTile(x - 1, y);
-		} else if (heading == 7) {
+		}
+		else if (heading == 7) {
 			tile2 = accessTile(x - 1, y - 1);
-		} else {
+		}
+		else {
 			return false;
 		}
 
@@ -244,22 +241,29 @@ public class L1V1Map extends L1Map {
 
 		if (heading == 0) {
 			return (tile1 & 0x02) == 0x02;
-		} else if (heading == 1) {
+		}
+		else if (heading == 1) {
 			int tile3 = accessTile(x, y - 1);
 			int tile4 = accessTile(x + 1, y);
-			return (tile3 & 0x01) == 0x01 || (tile4 & 0x02) == 0x02;
-		} else if (heading == 2) {
+			return ((tile3 & 0x01) == 0x01) || ((tile4 & 0x02) == 0x02);
+		}
+		else if (heading == 2) {
 			return (tile1 & 0x01) == 0x01;
-		} else if (heading == 3) {
+		}
+		else if (heading == 3) {
 			int tile3 = accessTile(x, y + 1);
 			return (tile3 & 0x01) == 0x01;
-		} else if (heading == 4) {
+		}
+		else if (heading == 4) {
 			return (tile2 & 0x02) == 0x02;
-		} else if (heading == 5) {
-			return (tile2 & 0x01) == 0x01 || (tile2 & 0x02) == 0x02;
-		} else if (heading == 6) {
+		}
+		else if (heading == 5) {
+			return ((tile2 & 0x01) == 0x01) || ((tile2 & 0x02) == 0x02);
+		}
+		else if (heading == 6) {
 			return (tile2 & 0x01) == 0x01;
-		} else if (heading == 7) {
+		}
+		else if (heading == 7) {
 			int tile3 = accessTile(x - 1, y);
 			return (tile3 & 0x02) == 0x02;
 		}
@@ -276,7 +280,8 @@ public class L1V1Map extends L1Map {
 	public void setPassable(int x, int y, boolean isPassable) {
 		if (isPassable) {
 			setTile(x, y, (short) (accessTile(x, y) & (~BITFLAG_IS_IMPASSABLE)));
-		} else {
+		}
+		else {
 			setTile(x, y, (short) (accessTile(x, y) | BITFLAG_IS_IMPASSABLE));
 		}
 	}
@@ -345,35 +350,43 @@ public class L1V1Map extends L1Map {
 			tile2 = accessTile(x, y - 1);
 			newX = x;
 			newY = y - 1;
-		} else if (heading == 1) {
+		}
+		else if (heading == 1) {
 			tile2 = accessTile(x + 1, y - 1);
 			newX = x + 1;
 			newY = y - 1;
-		} else if (heading == 2) {
+		}
+		else if (heading == 2) {
 			tile2 = accessTile(x + 1, y);
 			newX = x + 1;
 			newY = y;
-		} else if (heading == 3) {
+		}
+		else if (heading == 3) {
 			tile2 = accessTile(x + 1, y + 1);
 			newX = x + 1;
 			newY = y + 1;
-		} else if (heading == 4) {
+		}
+		else if (heading == 4) {
 			tile2 = accessTile(x, y + 1);
 			newX = x;
 			newY = y + 1;
-		} else if (heading == 5) {
+		}
+		else if (heading == 5) {
 			tile2 = accessTile(x - 1, y + 1);
 			newX = x - 1;
 			newY = y + 1;
-		} else if (heading == 6) {
+		}
+		else if (heading == 6) {
 			tile2 = accessTile(x - 1, y);
 			newX = x - 1;
 			newY = y;
-		} else if (heading == 7) {
+		}
+		else if (heading == 7) {
 			tile2 = accessTile(x - 1, y - 1);
 			newX = x - 1;
 			newY = y - 1;
-		} else {
+		}
+		else {
 			return false;
 		}
 
@@ -381,31 +394,38 @@ public class L1V1Map extends L1Map {
 			return false;
 		}
 
-// if (Config.ARROW_PASS_FLOWER_BED) {
-// if (tile2 == 0x00 || (tile2 & 0x10) == 0x10) { // 花壇
-// if (tile2 == 0x00) { // 花壇
-// return true;
-// }
-// }
+		// if (Config.ARROW_PASS_FLOWER_BED) {
+		// if (tile2 == 0x00 || (tile2 & 0x10) == 0x10) { // 花壇
+		// if (tile2 == 0x00) { // 花壇
+		// return true;
+		// }
+		// }
 
 		if (heading == 0) {
 			return (tile1 & 0x08) == 0x08;
-		} else if (heading == 1) {
+		}
+		else if (heading == 1) {
 			int tile3 = accessTile(x, y - 1);
 			int tile4 = accessTile(x + 1, y);
-			return (tile3 & 0x04) == 0x04 || (tile4 & 0x08) == 0x08;
-		} else if (heading == 2) {
+			return ((tile3 & 0x04) == 0x04) || ((tile4 & 0x08) == 0x08);
+		}
+		else if (heading == 2) {
 			return (tile1 & 0x04) == 0x04;
-		} else if (heading == 3) {
+		}
+		else if (heading == 3) {
 			int tile3 = accessTile(x, y + 1);
 			return (tile3 & 0x04) == 0x04;
-		} else if (heading == 4) {
+		}
+		else if (heading == 4) {
 			return (tile2 & 0x08) == 0x08;
-		} else if (heading == 5) {
-			return (tile2 & 0x04) == 0x04 || (tile2 & 0x08) == 0x08;
-		} else if (heading == 6) {
+		}
+		else if (heading == 5) {
+			return ((tile2 & 0x04) == 0x04) || ((tile2 & 0x08) == 0x08);
+		}
+		else if (heading == 6) {
 			return (tile2 & 0x04) == 0x04;
-		} else if (heading == 7) {
+		}
+		else if (heading == 7) {
 			int tile3 = accessTile(x - 1, y);
 			return (tile3 & 0x08) == 0x08;
 		}
@@ -489,21 +509,21 @@ public class L1V1Map extends L1Map {
 			int rightEdgeLocation = door.getRightEdgeLocation();
 			int size = rightEdgeLocation - leftEdgeLocation;
 			if (size == 0) { // 1マス分の幅のドア
-				if (x == door.getX() && y == door.getY()) {
+				if ((x == door.getX()) && (y == door.getY())) {
 					return true;
 				}
-			} else { // 2マス分以上の幅があるドア
+			}
+			else { // 2マス分以上の幅があるドア
 				if (door.getDirection() == 0) { // ／向き
-					for (int doorX = leftEdgeLocation;
-							doorX <= rightEdgeLocation; doorX++) {
-						if (x == doorX && y == door.getY()) {
+					for (int doorX = leftEdgeLocation; doorX <= rightEdgeLocation; doorX++) {
+						if ((x == doorX) && (y == door.getY())) {
 							return true;
 						}
 					}
-				} else { // ＼向き
-					for (int doorY = leftEdgeLocation;
-							doorY <= rightEdgeLocation; doorY++) {
-						if (x == door.getX() && y == doorY) {
+				}
+				else { // ＼向き
+					for (int doorY = leftEdgeLocation; doorY <= rightEdgeLocation; doorY++) {
+						if ((x == door.getX()) && (y == doorY)) {
 							return true;
 						}
 					}

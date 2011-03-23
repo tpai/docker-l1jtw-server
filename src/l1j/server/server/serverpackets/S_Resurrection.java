@@ -39,6 +39,4 @@ public class S_Resurrection extends ServerBasePacket {
 	public String getType() {
 		return "[S] S_Resurrection";
 	}
-
-	private static final String _S__FF_RESURRECTION = "[S] S_Resurrection";
 }

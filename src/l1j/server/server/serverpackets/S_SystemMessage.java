@@ -1,38 +1,33 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.serverpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 
 public class S_SystemMessage extends ServerBasePacket {
 	private static final String S_SYSTEM_MESSAGE = "[S] S_SystemMessage";
 
-	private static Logger _log = Logger.getLogger(S_SystemMessage.class
-			.getName());
-
 	private byte[] _byte = null;
+
 	private final String _msg;
 
 	/**
 	 * クライアントにデータの存在しないオリジナルのメッセージを表示する。
 	 * メッセージにnameid($xxx)が含まれている場合はオーバーロードされたもう一方を使用する。
 	 * 
-	 * @param msg -
-	 *            表示する文字列
+	 * @param msg
+	 *            - 表示する文字列
 	 */
 	public S_SystemMessage(String msg) {
 		_msg = msg;
@@ -44,10 +39,10 @@ public class S_SystemMessage extends ServerBasePacket {
 	/**
 	 * クライアントにデータの存在しないオリジナルのメッセージを表示する。
 	 * 
-	 * @param msg -
-	 *            表示する文字列
-	 * @param nameid -
-	 *            文字列にnameid($xxx)が含まれている場合trueにする。
+	 * @param msg
+	 *            - 表示する文字列
+	 * @param nameid
+	 *            - 文字列にnameid($xxx)が含まれている場合trueにする。
 	 */
 	public S_SystemMessage(String msg, boolean nameid) {
 		_msg = msg;

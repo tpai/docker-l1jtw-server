@@ -32,8 +32,6 @@ public class LeakCheckedConnection {
 
 	private Connection _con;
 
-	private Throwable _stackTrace;
-
 	private Map<Statement, Throwable> _openedStatements = Maps.newMap();
 
 	private Map<ResultSet, Throwable> _openedResultSets = Maps.newMap();
@@ -44,7 +42,6 @@ public class LeakCheckedConnection {
 		_con = con;
 		_proxy = Proxy.newProxyInstance(Connection.class.getClassLoader(), new Class[]
 		{ Connection.class }, new ConnectionHandler());
-		_stackTrace = new Throwable();
 	}
 
 	public static Connection create(Connection con) {
@@ -94,19 +91,6 @@ public class LeakCheckedConnection {
 		}
 	}
 
-	/**
-	 * ファイナライザ用無名クラス _guardianに未使用変数の警告が出ますが、削除しないでください。
-	 */
-	private final Object _guardian = new Object() {
-		@Override
-		protected void finalize() throws Throwable {
-			if (!_con.isClosed()) {
-				_log.log(Level.WARNING, "Leaked Connection detected.", _stackTrace);
-				_con.close();
-			}
-		}
-	};
-
 	private class ConnectionHandler implements java.lang.reflect.InvocationHandler {
 		@Override
 		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
@@ -127,7 +111,7 @@ public class LeakCheckedConnection {
 
 		private Object _original;
 
-		Delegate(Object o, Class c) {
+		Delegate(Object o, Class<?> c) {
 			_original = o;
 			_delegateProxy = Proxy.newProxyInstance(c.getClassLoader(), new Class[]
 			{ c }, this);

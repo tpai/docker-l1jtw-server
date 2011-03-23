@@ -42,7 +42,7 @@ public class Dungeon {
 
 	private enum DungeonType {
 		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI
-	};
+	}
 
 	public static Dungeon getInstance() {
 		if (_instance == null) {

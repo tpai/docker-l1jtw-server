@@ -1,40 +1,36 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.model.Instance;
 
-import java.util.logging.Logger;
+package l1j.server.server.model.Instance;
 
 import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1World;
-import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_Door;
 import l1j.server.server.serverpackets.S_DoorPack;
+import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.templates.L1Npc;
 
 public class L1DoorInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
-	public static final int PASS = 0;
-	public static final int NOT_PASS = 1;
 
-	private static Logger _log = Logger.getLogger(L1DoorInstance.class
-			.getName());
+	public static final int PASS = 0;
+
+	public static final int NOT_PASS = 1;
 
 	public L1DoorInstance(L1Npc template) {
 		super(template);
@@ -42,11 +38,11 @@ public class L1DoorInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(L1PcInstance pc) {
-		if (getMaxHp() == 0 || getMaxHp() == 1) { // 破壊不可能なドアは対象外
+		if ((getMaxHp() == 0) || (getMaxHp() == 1)) { // 破壊不可能なドアは対象外
 			return;
 		}
 
-		if (getCurrentHp() > 0 && !isDead()) {
+		if ((getCurrentHp() > 0) && !isDead()) {
 			L1Attack attack = new L1Attack(pc, this);
 			if (attack.calcHit()) {
 				attack.calcDamage();
@@ -87,13 +83,13 @@ public class L1DoorInstance extends L1NpcInstance {
 
 	@Override
 	public void receiveDamage(L1Character attacker, int damage) {
-		if (getMaxHp() == 0 || getMaxHp() == 1) { // 破壊不可能なドアは対象外
+		if ((getMaxHp() == 0) || (getMaxHp() == 1)) { // 破壊不可能なドアは対象外
 			return;
 		}
 
-		if (getCurrentHp() > 0 && !isDead()) {
+		if ((getCurrentHp() > 0) && !isDead()) {
 			int newHp = getCurrentHp() - damage;
-			if (newHp <= 0 && !isDead()) {
+			if ((newHp <= 0) && !isDead()) {
 				setCurrentHpDirect(0);
 				setDead(true);
 				setStatus(ActionCodes.ACTION_DoorDie);
@@ -104,42 +100,42 @@ public class L1DoorInstance extends L1NpcInstance {
 				setCurrentHp(newHp);
 				if ((getMaxHp() * 1 / 6) > getCurrentHp()) {
 					if (_crackStatus != 5) {
-						broadcastPacket(new S_DoActionGFX(getId(),
-								ActionCodes.ACTION_DoorAction5));
+						broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorAction5));
 						setStatus(ActionCodes.ACTION_DoorAction5);
 						_crackStatus = 5;
 					}
-				} else if ((getMaxHp() * 2 / 6) > getCurrentHp()) {
+				}
+				else if ((getMaxHp() * 2 / 6) > getCurrentHp()) {
 					if (_crackStatus != 4) {
-						broadcastPacket(new S_DoActionGFX(getId(),
-								ActionCodes.ACTION_DoorAction4));
+						broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorAction4));
 						setStatus(ActionCodes.ACTION_DoorAction4);
 						_crackStatus = 4;
 					}
-				} else if ((getMaxHp() * 3 / 6) > getCurrentHp()) {
+				}
+				else if ((getMaxHp() * 3 / 6) > getCurrentHp()) {
 					if (_crackStatus != 3) {
-						broadcastPacket(new S_DoActionGFX(getId(),
-								ActionCodes.ACTION_DoorAction3));
+						broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorAction3));
 						setStatus(ActionCodes.ACTION_DoorAction3);
 						_crackStatus = 3;
 					}
-				} else if ((getMaxHp() * 4 / 6) > getCurrentHp()) {
+				}
+				else if ((getMaxHp() * 4 / 6) > getCurrentHp()) {
 					if (_crackStatus != 2) {
-						broadcastPacket(new S_DoActionGFX(getId(),
-								ActionCodes.ACTION_DoorAction2));
+						broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorAction2));
 						setStatus(ActionCodes.ACTION_DoorAction2);
 						_crackStatus = 2;
 					}
-				} else if ((getMaxHp() * 5 / 6) > getCurrentHp()) {
+				}
+				else if ((getMaxHp() * 5 / 6) > getCurrentHp()) {
 					if (_crackStatus != 1) {
-						broadcastPacket(new S_DoActionGFX(getId(),
-								ActionCodes.ACTION_DoorAction1));
+						broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorAction1));
 						setStatus(ActionCodes.ACTION_DoorAction1);
 						_crackStatus = 1;
 					}
 				}
 			}
-		} else if (!isDead()) { // 念のため
+		}
+		else if (!isDead()) { // 念のため
 			setDead(true);
 			setStatus(ActionCodes.ACTION_DoorDie);
 			Death death = new Death(attacker);
@@ -171,8 +167,7 @@ public class L1DoorInstance extends L1NpcInstance {
 
 			getMap().setPassable(getLocation(), true);
 
-			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes
-					.ACTION_DoorDie));
+			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_DoorDie));
 			setPassable(PASS);
 			sendDoorPacket(null);
 		}
@@ -187,12 +182,14 @@ public class L1DoorInstance extends L1NpcInstance {
 		int size = rightEdgeLocation - leftEdgeLocation;
 		if (size == 0) { // 1マス分の幅のドア
 			sendPacket(pc, entranceX, entranceY);
-		} else { // 2マス分以上の幅があるドア
+		}
+		else { // 2マス分以上の幅があるドア
 			if (getDirection() == 0) { // ／向き
 				for (int x = leftEdgeLocation; x <= rightEdgeLocation; x++) {
 					sendPacket(pc, x, entranceY);
 				}
-			} else { // ＼向き
+			}
+			else { // ＼向き
 				for (int y = leftEdgeLocation; y <= rightEdgeLocation; y++) {
 					sendPacket(pc, entranceX, y);
 				}
@@ -207,7 +204,8 @@ public class L1DoorInstance extends L1NpcInstance {
 			if (getOpenStatus() == ActionCodes.ACTION_Close) {
 				pc.sendPackets(packet);
 			}
-		} else {
+		}
+		else {
 			broadcastPacket(packet);
 		}
 	}
@@ -264,7 +262,7 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	public void setDirection(int i) {
-		if (i == 0 || i == 1) {
+		if ((i == 0) || (i == 1)) {
 			_direction = i;
 		}
 	}
@@ -273,7 +271,8 @@ public class L1DoorInstance extends L1NpcInstance {
 		int entranceX = 0;
 		if (getDirection() == 0) { // ／向き
 			entranceX = getX();
-		} else { // ＼向き
+		}
+		else { // ＼向き
 			entranceX = getX() - 1;
 		}
 		return entranceX;
@@ -283,7 +282,8 @@ public class L1DoorInstance extends L1NpcInstance {
 		int entranceY = 0;
 		if (getDirection() == 0) { // ／向き
 			entranceY = getY() + 1;
-		} else { // ＼向き
+		}
+		else { // ＼向き
 			entranceY = getY();
 		}
 		return entranceY;
@@ -316,7 +316,7 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	public void setOpenStatus(int i) {
-		if (i == ActionCodes.ACTION_Open || i == ActionCodes.ACTION_Close) {
+		if ((i == ActionCodes.ACTION_Open) || (i == ActionCodes.ACTION_Close)) {
 			_openStatus = i;
 		}
 	}
@@ -328,7 +328,7 @@ public class L1DoorInstance extends L1NpcInstance {
 	}
 
 	public void setPassable(int i) {
-		if (i == PASS || i == NOT_PASS) {
+		if ((i == PASS) || (i == NOT_PASS)) {
 			_passable = i;
 		}
 	}

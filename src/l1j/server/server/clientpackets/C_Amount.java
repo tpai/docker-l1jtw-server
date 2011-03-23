@@ -1,24 +1,22 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.clientpackets;
 
 import java.util.Calendar;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 import java.util.TimeZone;
-import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.server.ClientThread;
@@ -47,20 +45,17 @@ import l1j.server.server.templates.L1House;
  */
 public class C_Amount extends ClientBasePacket {
 
-	private static final Logger _log = Logger.getLogger(C_Amount.class
-			.getName());
 	private static final String C_AMOUNT = "[C] C_Amount";
 
 	public C_Amount(byte[] decrypt, ClientThread client) throws Exception {
 		super(decrypt);
 		int objectId = readD();
 		int amount = readD();
-		int c = readC();
+		readC();
 		String s = readS();
 
 		L1PcInstance pc = client.getActiveChar();
-		L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(
-				objectId);
+		L1NpcInstance npc = (L1NpcInstance) L1World.getInstance().findObject(objectId);
 		if (npc == null) {
 			return;
 		}
@@ -71,7 +66,8 @@ public class C_Amount extends ClientBasePacket {
 			StringTokenizer stringtokenizer = new StringTokenizer(s);
 			s1 = stringtokenizer.nextToken();
 			s2 = stringtokenizer.nextToken();
-		} catch (NoSuchElementException e) {
+		}
+		catch (NoSuchElementException e) {
 			s1 = "";
 			s2 = "";
 		}
@@ -97,29 +93,27 @@ public class C_Amount extends ClientBasePacket {
 					boardTable.updateAuctionBoard(board);
 					if (nowBidderId != 0) {
 						// 將金幣退還給投標者
-						L1PcInstance bidPc = (L1PcInstance) L1World
-								.getInstance().findObject(nowBidderId);
+						L1PcInstance bidPc = (L1PcInstance) L1World.getInstance().findObject(nowBidderId);
 						if (bidPc != null) { // 玩家在線上
-							bidPc.getInventory().storeItem(L1ItemId.ADENA,
-									nowPrice);
+							bidPc.getInventory().storeItem(L1ItemId.ADENA, nowPrice);
 							// あなたが提示された金額よりももっと高い金額を提示した方が現れたため、残念ながら入札に失敗しました。%n
 							// あなたが競売に預けた%0アデナをお返しします。%nありがとうございました。%n%n
-							bidPc.sendPackets(new S_ServerMessage(525, String
-									.valueOf(nowPrice)));
-						} else { // 玩家離線中
-							L1ItemInstance item = ItemTable.getInstance()
-									.createItem(L1ItemId.ADENA);
+							bidPc.sendPackets(new S_ServerMessage(525, String.valueOf(nowPrice)));
+						}
+						else { // 玩家離線中
+							L1ItemInstance item = ItemTable.getInstance().createItem(L1ItemId.ADENA);
 							item.setCount(nowPrice);
-							CharactersItemStorage storage = CharactersItemStorage
-									.create();
+							CharactersItemStorage storage = CharactersItemStorage.create();
 							storage.storeItem(nowBidderId, item);
 						}
 					}
-				} else {
+				}
+				else {
 					pc.sendPackets(new S_ServerMessage(189)); // \f1アデナが不足しています。
 				}
 			}
-		} else if (s1.equalsIgnoreCase("agsell")) { // 出售盟屋
+		}
+		else if (s1.equalsIgnoreCase("agsell")) { // 出售盟屋
 			int houseId = Integer.valueOf(s2);
 			AuctionBoardTable boardTable = new AuctionBoardTable();
 			L1AuctionBoard board = new L1AuctionBoard();
@@ -132,7 +126,7 @@ public class C_Amount extends ClientBasePacket {
 				TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
 				Calendar cal = Calendar.getInstance(tz);
 				cal.add(Calendar.DATE, 5); // 5天後
-				cal.set(Calendar.MINUTE, 0); 
+				cal.set(Calendar.MINUTE, 0);
 				cal.set(Calendar.SECOND, 0);
 				board.setDeadline(cal);
 				board.setPrice(amount);
@@ -147,7 +141,8 @@ public class C_Amount extends ClientBasePacket {
 				house.setPurchaseBasement(true); // 地下アジト未購入に設定
 				HouseTable.getInstance().updateHouse(house); // 更新到資料庫中
 			}
-		} else {
+		}
+		else {
 			L1NpcAction action = NpcActionTable.getInstance().get(s, pc, npc);
 			if (action != null) {
 				L1NpcHtml result = action.executeWithAmount(s, pc, npc, amount);

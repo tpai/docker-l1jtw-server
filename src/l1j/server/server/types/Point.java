@@ -1,26 +1,23 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.types;
 
-import java.util.logging.Logger;
 
 public class Point {
 
-	private static Logger _log = Logger.getLogger(Point.class.getName());
-
 	protected int _x = 0;
+
 	protected int _y = 0;
 
 	public Point() {
@@ -62,8 +59,11 @@ public class Point {
 		_y = y;
 	}
 
-	private static final int HEADING_TABLE_X[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
-	private static final int HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
+	private static final int HEADING_TABLE_X[] =
+	{ 0, 1, 1, 1, 0, -1, -1, -1 };
+
+	private static final int HEADING_TABLE_Y[] =
+	{ -1, -1, 0, 1, 1, 1, 0, -1 };
 
 	/**
 	 * 指定された向きにこの座標をひとつ進める。
@@ -95,8 +95,8 @@ public class Point {
 	 * @return 座標までの直線距離
 	 */
 	public double getLineDistance(Point pt) {
-		long diffX = pt.getX() - this.getX();
-		long diffY = pt.getY() - this.getY();
+		long diffX = pt.getX() - getX();
+		long diffY = pt.getY() - getY();
 		return Math.sqrt((diffX * diffX) + (diffY * diffY));
 	}
 
@@ -108,8 +108,7 @@ public class Point {
 	 * @return 指定された座標までの直線タイル数。
 	 */
 	public int getTileLineDistance(Point pt) {
-		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY()
-				- getY()));
+		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY() - getY()));
 	}
 
 	/**
@@ -132,20 +131,21 @@ public class Point {
 	 * @return 指定された座標が画面内に見える場合はtrue。そうでない場合はfalse。
 	 */
 	public boolean isInScreen(Point pt) {
-		int dist = this.getTileDistance(pt);
+		int dist = getTileDistance(pt);
 
 		if (dist > 17) {
 			return false;
-		} else if (dist <= 13) {
+		}
+		else if (dist <= 13) {
 			return true;
-		} else {
+		}
+		else {
 			// 左右の画面外部分を除外
 			// プレイヤーの座標を(15, 15)とした場合に(0, 0)にあたる座標からの距離で判断
 			// Point pointZero = new Point(this.getX() - 15, this.getY() - 15);
 			// int dist2 = pointZero.getTileDistance(pt);
-			int dist2 = Math.abs(pt.getX() - (this.getX() - 15))
-					+ Math.abs(pt.getY() - (this.getY() - 15));
-			if (17 <= dist2 && dist2 <= 43) {
+			int dist2 = Math.abs(pt.getX() - (getX() - 15)) + Math.abs(pt.getY() - (getY() - 15));
+			if ((17 <= dist2) && (dist2 <= 43)) {
 				return true;
 			}
 			return false;
@@ -160,7 +160,7 @@ public class Point {
 	 * @return 指定された座標と同じ座標か。
 	 */
 	public boolean isSamePoint(Point pt) {
-		return (pt.getX() == getX() && pt.getY() == getY());
+		return ((pt.getX() == getX()) && (pt.getY() == getY()));
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class Point {
 			return false;
 		}
 		Point pt = (Point) obj;
-		return (this.getX() == pt.getX()) && (this.getY() == pt.getY());
+		return (getX() == pt.getX()) && (getY() == pt.getY());
 	}
 
 	@Override

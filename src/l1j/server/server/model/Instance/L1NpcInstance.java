@@ -1990,8 +1990,7 @@ public class L1NpcInstance extends L1Character {
 			return; // ディケイ ポーション状態かチェック
 		}
 
-		Random random = new Random();
-		if (random.nextInt(100) > chance) {
+		if (Random.nextInt(100) > chance) {
 			return; // 使用する可能性
 		}
 

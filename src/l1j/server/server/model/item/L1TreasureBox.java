@@ -66,6 +66,7 @@ public class L1TreasureBox {
 
 		private int _chance;
 
+		@SuppressWarnings("unused")
 		@XmlAttribute(name = "Chance")
 		private void setChance(double chance) {
 			_chance = (int) (chance * 10000);

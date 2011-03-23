@@ -20,7 +20,6 @@ import static l1j.server.server.model.skill.L1SkillId.LIGHT;
 
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1FollowerInstance;
@@ -47,8 +46,6 @@ import l1j.server.server.utils.collections.Maps;
 public class L1Character extends L1Object {
 
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger _log = Logger.getLogger(L1Character.class.getName());
 
 	private L1Poison _poison = null;
 

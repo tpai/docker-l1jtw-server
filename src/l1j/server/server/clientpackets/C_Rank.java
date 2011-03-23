@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.clientpackets;
 
 import java.util.logging.Level;
@@ -33,13 +32,13 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 public class C_Rank extends ClientBasePacket {
 
 	private static final String C_RANK = "[C] C_Rank";
+
 	private static Logger _log = Logger.getLogger(C_Rank.class.getName());
 
-	public C_Rank(byte abyte0[], ClientThread clientthread)
-			throws Exception {
+	public C_Rank(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		int data = readC(); // ?
+		readC(); // ?
 		int rank = readC();
 		String name = readS();
 
@@ -55,7 +54,7 @@ public class C_Rank extends ClientBasePacket {
 			return;
 		}
 
-		if (rank < 1 && 3 < rank) {
+		if ((rank < 1) && (3 < rank)) {
 			// ランクを変更する人の名前とランクを入力してください。[ランク=ガーディアン、一般、見習い]
 			pc.sendPackets(new S_ServerMessage(781));
 			return;
@@ -66,7 +65,8 @@ public class C_Rank extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(785)); // あなたはもう君主ではありません。
 				return;
 			}
-		} else {
+		}
+		else {
 			pc.sendPackets(new S_ServerMessage(518)); // この命令は血盟の君主のみが利用できます。
 			return;
 		}
@@ -79,31 +79,36 @@ public class C_Rank extends ClientBasePacket {
 					String rankString = "$772";
 					if (rank == L1Clan.CLAN_RANK_PROBATION) {
 						rankString = "$774";
-					} else if (rank == L1Clan.CLAN_RANK_PUBLIC) {
+					}
+					else if (rank == L1Clan.CLAN_RANK_PUBLIC) {
 						rankString = "$773";
-					} else if (rank == L1Clan.CLAN_RANK_GUARDIAN) {
+					}
+					else if (rank == L1Clan.CLAN_RANK_GUARDIAN) {
 						rankString = "$772";
 					}
 					targetPc.sendPackets(new S_ServerMessage(784, rankString)); // あなたのランクが%sに変更されました。
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(414)); // 同じ血盟員ではありません。
 				return;
 			}
-		} else { // オフライン中
-			L1PcInstance restorePc = CharacterTable.getInstance()
-					.restoreCharacter(name);
-			if (restorePc != null
-					&& restorePc.getClanid() == pc.getClanid()) { // 同じ血盟
+		}
+		else { // オフライン中
+			L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
+			if ((restorePc != null) && (restorePc.getClanid() == pc.getClanid())) { // 同じ血盟
 				try {
 					restorePc.setClanRank(rank);
 					restorePc.save(); // 儲存玩家的資料到資料庫中
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 				}
-			} else {
+			}
+			else {
 				pc.sendPackets(new S_ServerMessage(109, name)); // %0という名前の人はいません。
 				return;
 			}

@@ -14,7 +14,6 @@
 package l1j.server.server.command.executor;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.server.datatables.FurnitureSpawnTable;
 import l1j.server.server.datatables.LetterTable;
@@ -30,8 +29,6 @@ import l1j.server.server.model.Instance.L1PcInstance;
  * GM指令：刪除地上道具
  */
 public class L1DeleteGroundItem implements L1CommandExecutor {
-	private static Logger _log = Logger.getLogger(L1DeleteGroundItem.class.getName());
-
 	private L1DeleteGroundItem() {
 	}
 

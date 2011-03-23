@@ -1,20 +1,17 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.clientpackets;
 
-import java.util.logging.Logger;
+package l1j.server.server.clientpackets;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1World;
@@ -27,11 +24,9 @@ import l1j.server.server.serverpackets.S_ServerMessage;
  * 處理收到由客戶端傳來丟道具到地上的封包
  */
 public class C_DropItem extends ClientBasePacket {
-	private static Logger _log = Logger.getLogger(C_DropItem.class.getName());
 	private static final String C_DROP_ITEM = "[C] C_DropItem";
 
-	public C_DropItem(byte[] decrypt, ClientThread client)
-			throws Exception {
+	public C_DropItem(byte[] decrypt, ClientThread client) throws Exception {
 		super(decrypt);
 		int x = readH();
 		int y = readH();
@@ -47,8 +42,7 @@ public class C_DropItem extends ClientBasePacket {
 		if (item != null) {
 			if (!item.getItem().isTradable()) {
 				// \f1%0%d是不可轉移的…
-				pc.sendPackets(new S_ServerMessage(210, item.getItem()
-						.getName()));
+				pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
 				return;
 			}
 
@@ -58,8 +52,7 @@ public class C_DropItem extends ClientBasePacket {
 					L1PetInstance pet = (L1PetInstance) petObject;
 					if (item.getId() == pet.getItemObjId()) {
 						// \f1%0%d是不可轉移的…
-						pc.sendPackets(new S_ServerMessage(210, item.getItem()
-								.getName()));
+						pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
 						return;
 					}
 				}
@@ -72,13 +65,11 @@ public class C_DropItem extends ClientBasePacket {
 			}
 			if (item.getBless() >= 128) { // 封印的裝備
 				// \f1%0%d是不可轉移的…
-				pc.sendPackets(new S_ServerMessage(210, item.getItem()
-						.getName()));
+				pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
 				return;
 			}
 
-			pc.getInventory().tradeItem(item, count,
-					L1World.getInstance().getInventory(x, y, pc.getMapId()));
+			pc.getInventory().tradeItem(item, count, L1World.getInstance().getInventory(x, y, pc.getMapId()));
 			pc.turnOnOffLight();
 		}
 	}

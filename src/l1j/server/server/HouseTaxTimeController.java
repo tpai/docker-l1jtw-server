@@ -1,21 +1,19 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server;
 
 import java.util.Calendar;
-import java.util.logging.Logger;
 import java.util.TimeZone;
 
 import l1j.server.Config;
@@ -28,9 +26,6 @@ import l1j.server.server.templates.L1AuctionBoard;
 import l1j.server.server.templates.L1House;
 
 public class HouseTaxTimeController implements Runnable {
-	private static Logger _log = Logger.getLogger(HouseTaxTimeController.class
-			.getName());
-
 	private static HouseTaxTimeController _instance;
 
 	public static HouseTaxTimeController getInstance() {
@@ -47,8 +42,8 @@ public class HouseTaxTimeController implements Runnable {
 				checkTaxDeadline();
 				Thread.sleep(600000);
 			}
-		} catch (Exception e1) {
 		}
+		catch (Exception e1) {}
 	}
 
 	public Calendar getRealTime() {
@@ -79,7 +74,7 @@ public class HouseTaxTimeController implements Runnable {
 			TimeZone tz = TimeZone.getTimeZone(Config.TIME_ZONE);
 			Calendar cal = Calendar.getInstance(tz);
 			cal.add(Calendar.DATE, 5); // 5天以後
-			cal.set(Calendar.MINUTE, 0); // 
+			cal.set(Calendar.MINUTE, 0); //
 			cal.set(Calendar.SECOND, 0);
 			board.setDeadline(cal);
 			board.setPrice(100000);

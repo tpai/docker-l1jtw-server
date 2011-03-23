@@ -15,8 +15,8 @@ package l1j.server.server.model;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.server.IdFactory;
@@ -33,8 +33,6 @@ import l1j.server.server.utils.collections.Lists;
 public class L1Inventory extends L1Object {
 
 	private static final long serialVersionUID = 1L;
-
-	private static Logger _log = Logger.getLogger(L1Inventory.class.getName());
 
 	protected List<L1ItemInstance> _items = Lists.newConcurrentList();
 
@@ -250,7 +248,7 @@ public class L1Inventory extends L1Object {
 				return true;
 			}
 			else if (itemList.length > count) { // 指定個数より多く所持している場合
-				DataComparator dc = new DataComparator();
+				DataComparator<L1ItemInstance> dc = new DataComparator<L1ItemInstance>();
 				Arrays.sort(itemList, dc); // エンチャント順にソートし、エンチャント数の少ないものから消費させる
 				for (int i = 0; i < count; i++) {
 					removeItem(itemList[i], 1);
@@ -261,10 +259,10 @@ public class L1Inventory extends L1Object {
 		return false;
 	}
 
-	public class DataComparator implements java.util.Comparator {
+	public class DataComparator<T> implements Comparator<L1ItemInstance> {
 		@Override
-		public int compare(Object item1, Object item2) {
-			return ((L1ItemInstance) item1).getEnchantLevel() - ((L1ItemInstance) item2).getEnchantLevel();
+		public int compare(L1ItemInstance item1, L1ItemInstance item2) {
+			return item1.getEnchantLevel() - item2.getEnchantLevel();
 		}
 	}
 
@@ -378,10 +376,6 @@ public class L1Inventory extends L1Object {
 		int itemType = item.getItem().getType2();
 		int currentDurability = item.get_durability();
 
-		if (item == null) {
-			return null;
-		}
-
 		if (((currentDurability == 0) && (itemType == 0)) || (currentDurability < 0)) {
 			item.set_durability(0);
 			return null;
@@ -414,12 +408,12 @@ public class L1Inventory extends L1Object {
 	}
 
 	public L1ItemInstance recoveryDamage(L1ItemInstance item) {
-		int itemType = item.getItem().getType2();
-		int durability = item.get_durability();
-
 		if (item == null) {
 			return null;
 		}
+
+		int itemType = item.getItem().getType2();
+		int durability = item.get_durability();
 
 		if (((durability == 0) && (itemType != 0)) || (durability < 0)) {
 			item.set_durability(0);
@@ -456,7 +450,7 @@ public class L1Inventory extends L1Object {
 				itemList.add(item);
 			}
 		}
-		return itemList.toArray(new L1ItemInstance[] {});
+		return itemList.toArray(new L1ItemInstance[itemList.size()]);
 	}
 
 	public L1ItemInstance[] findItemsIdNotEquipped(int id) {
@@ -468,7 +462,7 @@ public class L1Inventory extends L1Object {
 				}
 			}
 		}
-		return itemList.toArray(new L1ItemInstance[] {});
+		return itemList.toArray(new L1ItemInstance[itemList.size()]);
 	}
 
 	// オブジェクトＩＤから検索

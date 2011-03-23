@@ -1,34 +1,36 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.templates;
 
 import java.sql.Time;
 import java.sql.Timestamp;
-import java.util.logging.Logger;
 
 import l1j.server.server.utils.TimePeriod;
 
 public class L1SpawnTime {
-	private static Logger _log = Logger.getLogger(L1SpawnTime.class.getName());
-
 	private final int _spawnId;
+
 	private final Time _timeStart;
+
 	private final Time _timeEnd;
+
 	private final TimePeriod _timePeriod;
+
 	private final Timestamp _periodStart;
+
 	private final Timestamp _periodEnd;
+
 	private boolean _isDeleteAtEndTime;
 
 	public boolean isDeleteAtEndTime() {
@@ -67,10 +69,15 @@ public class L1SpawnTime {
 
 	public static class L1SpawnTimeBuilder {
 		private final int _spawnId;
+
 		private Time _timeStart;
+
 		private Time _timeEnd;
+
 		private Timestamp _periodStart;
+
 		private Timestamp _periodEnd;
+
 		private boolean _isDeleteAtEndTime;
 
 		public L1SpawnTimeBuilder(int spawnId) {
