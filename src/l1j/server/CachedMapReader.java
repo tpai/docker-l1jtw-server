@@ -1,16 +1,17 @@
 /**
- * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
- * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
- * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
+ *                            License
+ * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
+ * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
+ * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
+ * COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
- * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
- * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
+ * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
+ * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-
 package l1j.server;
 
 import java.io.BufferedInputStream;
@@ -64,8 +65,7 @@ public class CachedMapReader extends MapReader {
 			try {
 				String idStr = FileUtil.getNameWithoutExtension(mapFile);
 				id = Integer.parseInt(idStr);
-			}
-			catch (NumberFormatException e) {
+			} catch (NumberFormatException e) {
 				continue;
 			}
 			ids.add(id);
@@ -89,7 +89,8 @@ public class CachedMapReader extends MapReader {
 
 		L1V1Map map = (L1V1Map) new TextMapReader().read(mapId);
 
-		DataOutputStream out = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(CACHE_DIR + mapId + ".map")));
+		DataOutputStream out = new DataOutputStream(new BufferedOutputStream(
+				new FileOutputStream(CACHE_DIR + mapId + ".map")));
 
 		out.writeInt(map.getId());
 		out.writeInt(map.getX());
@@ -123,7 +124,8 @@ public class CachedMapReader extends MapReader {
 			return cacheMap(mapId);
 		}
 
-		DataInputStream in = new DataInputStream(new BufferedInputStream(new FileInputStream(CACHE_DIR + mapId + ".map")));
+		DataInputStream in = new DataInputStream(new BufferedInputStream(
+				new FileInputStream(CACHE_DIR + mapId + ".map")));
 
 		int id = in.readInt();
 		if (mapId != id) {
@@ -141,11 +143,17 @@ public class CachedMapReader extends MapReader {
 		}
 
 		in.close();
-		L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, MapsTable.getInstance().isUnderwater(mapId), MapsTable.getInstance().isMarkable(mapId),
-				MapsTable.getInstance().isTeleportable(mapId), MapsTable.getInstance().isEscapable(mapId), MapsTable.getInstance().isUseResurrection(
-						mapId), MapsTable.getInstance().isUsePainwand(mapId), MapsTable.getInstance().isEnabledDeathPenalty(mapId), MapsTable
-						.getInstance().isTakePets(mapId), MapsTable.getInstance().isRecallPets(mapId), MapsTable.getInstance().isUsableItem(mapId),
-				MapsTable.getInstance().isUsableSkill(mapId));
+		L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, MapsTable
+				.getInstance().isUnderwater(mapId), MapsTable.getInstance()
+				.isMarkable(mapId), MapsTable.getInstance().isTeleportable(
+				mapId), MapsTable.getInstance().isEscapable(mapId), MapsTable
+				.getInstance().isUseResurrection(mapId), MapsTable
+				.getInstance().isUsePainwand(mapId), MapsTable.getInstance()
+				.isEnabledDeathPenalty(mapId), MapsTable.getInstance()
+				.isTakePets(mapId),
+				MapsTable.getInstance().isRecallPets(mapId), MapsTable
+						.getInstance().isUsableItem(mapId), MapsTable
+						.getInstance().isUsableSkill(mapId));
 		return map;
 	}
 

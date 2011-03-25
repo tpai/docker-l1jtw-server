@@ -15,182 +15,186 @@
 package l1j.server.server.model.skill;
 
 public class L1SkillId {
+	/** 魔法開頭 */
 	public static final int SKILLS_BEGIN = 1;
 
 	/*
 	 * Regular Magic Lv1-10
 	 */
+	/** 法師魔法 (初級治癒術) */
 	public static final int HEAL = 1; // E: LESSER_HEAL
-
+	/** 法師魔法 (日光術) */
 	public static final int LIGHT = 2;
-
+	/** 法師魔法 (防護罩) */
 	public static final int SHIELD = 3;
-
+	/** 法師魔法 (光箭) */
 	public static final int ENERGY_BOLT = 4;
-
+	/** 法師魔法 (指定傳送) */
 	public static final int TELEPORT = 5;
-
+	/** 法師魔法 (冰箭) */
 	public static final int ICE_DAGGER = 6;
-
+	/** 法師魔法 (風刃) */
 	public static final int WIND_CUTTER = 7; // E: WIND_SHURIKEN
-
+	/** 法師魔法 (神聖武器) */
 	public static final int HOLY_WEAPON = 8;
-
+	/** 法師魔法 (解毒術) */
 	public static final int CURE_POISON = 9;
-
+	/** 法師魔法 (寒冷戰慄) */
 	public static final int CHILL_TOUCH = 10;
-
+	/** 法師魔法 (毒咒) */
 	public static final int CURSE_POISON = 11;
-
+	/** 法師魔法 (擬似魔法武器) */
 	public static final int ENCHANT_WEAPON = 12;
-
+	/** 法師魔法 (無所遁形術) */
 	public static final int DETECTION = 13;
-
+	/** 法師魔法 (負重強化) */
 	public static final int DECREASE_WEIGHT = 14;
-
+	/** 法師魔法 (地獄之牙) */
 	public static final int FIRE_ARROW = 15;
-
+	/** 法師魔法 (火箭) */
 	public static final int STALAC = 16;
-
+	/** 法師魔法 (極光雷電) */
 	public static final int LIGHTNING = 17;
-
+	/** 法師魔法 (起死回生術) */
 	public static final int TURN_UNDEAD = 18;
-
+	/** 法師魔法 (中級治癒術) */
 	public static final int EXTRA_HEAL = 19; // E: HEAL
-
+	/** 法師魔法 (闇盲咒術) */
 	public static final int CURSE_BLIND = 20;
-
+	/** 法師魔法 (鎧甲護持) */
 	public static final int BLESSED_ARMOR = 21;
-
+	/** 法師魔法 (寒冰氣息) */
 	public static final int FROZEN_CLOUD = 22;
-
+	/** 法師魔法 (能量感測) */
 	public static final int WEAK_ELEMENTAL = 23; // E: REVEAL_WEAKNESS
 
 	// none = 24
+	/** 法師魔法 (燃燒的火球) */
 	public static final int FIREBALL = 25;
-
+	/** 法師魔法 (通暢氣脈術) */
 	public static final int PHYSICAL_ENCHANT_DEX = 26; // E: ENCHANT_DEXTERITY
-
+	/** 法師魔法 (壞物術) */
 	public static final int WEAPON_BREAK = 27;
-
+	/** 法師魔法 (吸血鬼之吻) */
 	public static final int VAMPIRIC_TOUCH = 28;
-
+	/** 法師魔法 (緩速術) */
 	public static final int SLOW = 29;
-
+	/** 法師魔法 (岩牢) */
 	public static final int EARTH_JAIL = 30;
-
+	/** 法師魔法 (魔法屏障) */
 	public static final int COUNTER_MAGIC = 31;
-
+	/** 法師魔法 (冥想術) */
 	public static final int MEDITATION = 32;
-
+	/** 法師魔法 (木乃伊的詛咒) */
 	public static final int CURSE_PARALYZE = 33;
-
+	/** 法師魔法 (極道落雷) */
 	public static final int CALL_LIGHTNING = 34;
-
+	/** 法師魔法 (高級治癒術) */
 	public static final int GREATER_HEAL = 35;
-
+	/** 法師魔法 (迷魅術) */
 	public static final int TAMING_MONSTER = 36; // E: TAME_MONSTER
-
+	/** 法師魔法 (聖潔之光) */
 	public static final int REMOVE_CURSE = 37;
-
+	/** 法師魔法 (冰錐) */
 	public static final int CONE_OF_COLD = 38;
-
+	/** 法師魔法 (魔力奪取) */
 	public static final int MANA_DRAIN = 39;
-
+	/** 法師魔法 (黑闇之影) */
 	public static final int DARKNESS = 40;
-
+	/** 法師魔法 (造屍術) */
 	public static final int CREATE_ZOMBIE = 41;
-
+	/** 法師魔法 (體魄強健術) */
 	public static final int PHYSICAL_ENCHANT_STR = 42; // E: ENCHANT_MIGHTY
-
+	/** 法師魔法 (加速術) */
 	public static final int HASTE = 43;
-
+	/** 法師魔法 (魔法相消術) */
 	public static final int CANCELLATION = 44; // E: CANCEL MAGIC
-
+	/** 法師魔法 (地裂術) */
 	public static final int ERUPTION = 45;
-
+	/** 法師魔法 (烈炎術) */
 	public static final int SUNBURST = 46;
-
+	/** 法師魔法 (弱化術) */
 	public static final int WEAKNESS = 47;
-
+	/** 法師魔法 (祝福魔法武器) */
 	public static final int BLESS_WEAPON = 48;
-
+	/** 法師魔法 (體力回復術) */
 	public static final int HEAL_ALL = 49; // E: HEAL_PLEDGE
-
+	/** 法師魔法 (冰矛圍籬) */
 	public static final int ICE_LANCE = 50;
-
+	/** 法師魔法 (召喚術) */
 	public static final int SUMMON_MONSTER = 51;
-
+	/** 法師魔法 (神聖疾走) */
 	public static final int HOLY_WALK = 52;
-
+	/** 法師魔法 (龍捲風) */
 	public static final int TORNADO = 53;
-
+	/** 法師魔法 (強力加速術) */
 	public static final int GREATER_HASTE = 54;
-
+	/** 法師魔法 (狂暴術) */
 	public static final int BERSERKERS = 55;
-
+	/** 法師魔法 (疾病術) */
 	public static final int DISEASE = 56;
-
+	/** 法師魔法 (全部治癒術) */
 	public static final int FULL_HEAL = 57;
-
+	/** 法師魔法 (火牢) */
 	public static final int FIRE_WALL = 58;
-
+	/** 法師魔法 (冰雪暴) */
 	public static final int BLIZZARD = 59;
-
+	/** 法師魔法 (隱身術) */
 	public static final int INVISIBILITY = 60;
-
+	/** 法師魔法 (返生術) */
 	public static final int RESURRECTION = 61;
-
+	/** 法師魔法 (震裂術) */
 	public static final int EARTHQUAKE = 62;
-
+	/** 法師魔法 (治癒能量風暴) */
 	public static final int LIFE_STREAM = 63;
-
+	/** 法師魔法 (魔法封印) */
 	public static final int SILENCE = 64;
-
+	/** 法師魔法 (雷霆風暴) */
 	public static final int LIGHTNING_STORM = 65;
-
+	/** 法師魔法 (沉睡之霧) */
 	public static final int FOG_OF_SLEEPING = 66;
-
+	/** 法師魔法 (變形術) */
 	public static final int SHAPE_CHANGE = 67; // E: POLYMORPH
-
+	/** 法師魔法 (聖結界) */
 	public static final int IMMUNE_TO_HARM = 68;
-
+	/** 法師魔法 (集體傳送術) */
 	public static final int MASS_TELEPORT = 69;
-
+	/** 法師魔法 (火風暴) */
 	public static final int FIRE_STORM = 70;
-
+	/** 法師魔法 (藥水霜化術) */
 	public static final int DECAY_POTION = 71;
-
+	/** 法師魔法 (強力無所遁形術) */
 	public static final int COUNTER_DETECTION = 72;
-
+	/** 法師魔法 (創造魔法武器) */
 	public static final int CREATE_MAGICAL_WEAPON = 73;
-
+	/** 法師魔法 (流星雨) */
 	public static final int METEOR_STRIKE = 74;
-
+	/** 法師魔法 (終極返生術) */
 	public static final int GREATER_RESURRECTION = 75;
-
+	/** 法師魔法 (集體緩速術) */
 	public static final int MASS_SLOW = 76;
-
+	/** 法師魔法 (究極光裂術) */
 	public static final int DISINTEGRATE = 77; // E: DESTROY
-
+	/** 法師魔法 (絕對屏障) */
 	public static final int ABSOLUTE_BARRIER = 78;
-
+	/** 法師魔法 (靈魂昇華) */
 	public static final int ADVANCE_SPIRIT = 79;
-
+	/** 法師魔法 (冰雪颶風) */
 	public static final int FREEZING_BLIZZARD = 80;
 
 	// none = 81 - 86
 	/*
 	 * Knight skills
 	 */
+	/** 騎士魔法 (衝擊之暈) */
 	public static final int SHOCK_STUN = 87; // E: STUN_SHOCK
-
+	/** 騎士魔法 (增幅防禦) */
 	public static final int REDUCTION_ARMOR = 88;
-
+	/** 騎士魔法 (尖刺盔甲) */
 	public static final int BOUNCE_ATTACK = 89;
-
+	/** 騎士魔法 (堅固防護) */
 	public static final int SOLID_CARRIAGE = 90;
-
+	/** 騎士魔法 (反擊屏障) */
 	public static final int COUNTER_BARRIER = 91;
 
 	// none = 92-96
@@ -590,8 +594,8 @@ public class L1SkillId {
 	public static final int STATUS_CURSE_BARLOG = 1015;
 
 	public static final int STATUS_CURSE_YAHEE = 1014;
-	
+
 	public static final int STATUS_BRAVE2 = 55667788;
-	
+
 	public static final int STATUS_THIRD_SPEED = 551788;
 }

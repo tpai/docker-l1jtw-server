@@ -1,16 +1,17 @@
 /**
- * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
- * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
- * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
+ *                            License
+ * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
+ * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
+ * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
+ * COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
- * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
- * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
+ * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
+ * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-
 package l1j.server.server;
 
 import java.util.Map;
@@ -60,25 +61,28 @@ public class LoginController {
 			@Override
 			public void run() {
 				if (client.getActiveChar() != null) {
-					client.getActiveChar().sendPackets(new S_ServerMessage(357));
+					client.getActiveChar()
+							.sendPackets(new S_ServerMessage(357));
 				}
 
 				try {
 					Thread.sleep(1000);
+				} catch (Exception e) {
 				}
-				catch (Exception e) {}
 				client.kick();
 			}
 		});
 	}
 
-	public synchronized void login(ClientThread client, Account account) throws GameServerFullException, AccountAlreadyLoginException {
+	public synchronized void login(ClientThread client, Account account)
+			throws GameServerFullException, AccountAlreadyLoginException {
 		if (!account.isValid()) {
 			// 密碼驗證未指定或不驗證帳戶。
 			// 此代碼只存在的錯誤檢測。
 			throw new IllegalArgumentException("帳戶沒有通過認證");
 		}
-		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount()) && !account.isGameMaster()) {
+		if ((getMaxAllowedOnlinePlayers() <= getOnlinePlayerCount())
+				&& !account.isGameMaster()) {
 			throw new GameServerFullException();
 		}
 		if (_accounts.containsKey(account.getName())) {

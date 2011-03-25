@@ -1,16 +1,17 @@
 /**
- * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
- * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
- * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
+ *                            License
+ * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
+ * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
+ * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
+ * COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
- * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
- * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
+ * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
+ * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-
 package l1j.server.server;
 
 import java.io.IOException;
@@ -35,7 +36,8 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 public class GMCommandsConfig {
-	private static Logger _log = Logger.getLogger(GMCommandsConfig.class.getName());
+	private static Logger _log = Logger.getLogger(GMCommandsConfig.class
+			.getName());
 
 	private interface ConfigLoader {
 		public void load(Element element);
@@ -113,8 +115,10 @@ public class GMCommandsConfig {
 
 	public static Map<String, List<L1ItemSetItem>> ITEM_SETS = Maps.newMap();
 
-	private static Document loadXml(String file) throws ParserConfigurationException, SAXException, IOException {
-		DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+	private static Document loadXml(String file)
+			throws ParserConfigurationException, SAXException, IOException {
+		DocumentBuilder builder = DocumentBuilderFactory.newInstance()
+				.newDocumentBuilder();
 		return builder.parse(file);
 	}
 
@@ -123,13 +127,13 @@ public class GMCommandsConfig {
 			Document doc = loadXml("./data/xml/GmCommands/GMCommands.xml");
 			NodeList nodes = doc.getDocumentElement().getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
-				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName().toLowerCase());
+				ConfigLoader loader = _loaders.get(nodes.item(i).getNodeName()
+						.toLowerCase());
 				if (loader != null) {
 					loader.load((Element) nodes.item(i));
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, "讀取 GMCommands.xml 失敗", e);
 		}
 	}

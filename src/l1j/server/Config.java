@@ -427,10 +427,12 @@ public final class Config {
 							"jdbc:mysql://localhost/l1jdb?useUnicode=true&characterEncoding=utf8");
 			DB_LOGIN = serverSettings.getProperty("Login", "root");
 			DB_PASSWORD = serverSettings.getProperty("Password", "");
-			THREAD_P_TYPE_GENERAL = Integer.parseInt(serverSettings
-					.getProperty("GeneralThreadPoolType", "0"), 10);
-			THREAD_P_SIZE_GENERAL = Integer.parseInt(serverSettings
-					.getProperty("GeneralThreadPoolSize", "0"), 10);
+			THREAD_P_TYPE_GENERAL = Integer.parseInt(
+					serverSettings.getProperty("GeneralThreadPoolType", "0"),
+					10);
+			THREAD_P_SIZE_GENERAL = Integer.parseInt(
+					serverSettings.getProperty("GeneralThreadPoolSize", "0"),
+					10);
 			CLIENT_LANGUAGE = Integer.parseInt(serverSettings.getProperty(
 					"ClientLanguage", "4"));
 			CLIENT_LANGUAGE_CODE = LANGUAGE_CODE_ARRAY[CLIENT_LANGUAGE];
@@ -479,8 +481,8 @@ public final class Config {
 					.getProperty("LoggingChatCombined", "false"));
 			LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(serverSettings
 					.getProperty("LoggingChatChatParty", "false"));
-			AUTOSAVE_INTERVAL = Integer.parseInt(serverSettings.getProperty(
-					"AutosaveInterval", "1200"), 10);
+			AUTOSAVE_INTERVAL = Integer.parseInt(
+					serverSettings.getProperty("AutosaveInterval", "1200"), 10);
 			AUTOSAVE_INTERVAL_INVENTORY = Integer.parseInt(serverSettings
 					.getProperty("AutosaveIntervalOfInventory", "300"), 10);
 			SKILLTIMER_IMPLTYPE = Integer.parseInt(serverSettings.getProperty(
