@@ -45,6 +45,7 @@ import l1j.server.server.serverpackets.S_AddSkill;
 import l1j.server.server.serverpackets.S_Bookmarks;
 import l1j.server.server.serverpackets.S_CharacterConfig;
 import l1j.server.server.serverpackets.S_CharTitle;
+import l1j.server.server.serverpackets.S_InitialAbilityGrowth;
 import l1j.server.server.serverpackets.S_InvList;
 import l1j.server.server.serverpackets.S_LoginGame;
 import l1j.server.server.serverpackets.S_MapID;
@@ -88,8 +89,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		String charName = readS();
 
 		if (client.getActiveChar() != null) {
-			_log.info("同一個角色重複登入，強制切斷 " + client.getHostname()
-					+ ") 的連結");
+			_log.info("同一個角色重複登入，強制切斷 " + client.getHostname() + ") 的連結");
 			client.close();
 			return;
 		}
@@ -104,8 +104,8 @@ public class C_LoginToServer extends ClientBasePacket {
 
 		if (Config.LEVEL_DOWN_RANGE != 0) {
 			if (pc.getHighLevel() - pc.getLevel() >= Config.LEVEL_DOWN_RANGE) {
-				_log.info("登錄請求超出了容忍的等級下降的角色: char="
-						+ charName + " account=" + login + " host=" + client.getHostname());
+				_log.info("登錄請求超出了容忍的等級下降的角色: char=" + charName + " account="
+						+ login + " host=" + client.getHostname());
 				client.kick();
 				return;
 			}
@@ -125,10 +125,14 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.setPacketOutput(client);
 		client.setActiveChar(pc);
 
-		/*S_Unknown1 s_unknown1 = new S_Unknown1();
-		pc.sendPackets(s_unknown1);
-		S_Unknown2 s_unknown2 = new S_Unknown2();
-		pc.sendPackets(s_unknown2);*/
+		/** 初始能力加成 */
+		S_InitialAbilityGrowth AbilityGrowth = new S_InitialAbilityGrowth(pc);
+		pc.sendPackets(AbilityGrowth);
+
+		/*
+		 * S_Unknown1 s_unknown1 = new S_Unknown1(); pc.sendPackets(s_unknown1);
+		 * S_Unknown2 s_unknown2 = new S_Unknown2(); pc.sendPackets(s_unknown2);
+		 */
 		pc.sendPackets(new S_LoginGame());
 		bookmarks(pc);
 
@@ -235,8 +239,8 @@ public class C_LoginToServer extends ClientBasePacket {
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				if (pc.getClanid() == clan.getClanId() && // 血盟解散、又重新用同樣名字創立時的對策
-						pc.getClanname().toLowerCase().equals(
-								clan.getClanName().toLowerCase())) {
+						pc.getClanname().toLowerCase()
+								.equals(clan.getClanName().toLowerCase())) {
 					L1PcInstance[] clanMembers = clan.getOnlineClanMember();
 					for (L1PcInstance clanMember : clanMembers) {
 						if (clanMember.getId() != pc.getId()) {
@@ -473,13 +477,15 @@ public class C_LoginToServer extends ClientBasePacket {
 				}
 				i = lv1 + lv2 + lv3 + lv4 + lv5 + lv6 + lv7 + lv8 + lv9 + lv10
 						+ lv11 + lv12 + lv13 + lv14 + lv15 + lv16 + lv17 + lv18
-						+ lv19 + lv20 + lv21 + lv22 + lv23 + lv24 + lv25 + lv26 + lv27 + lv28;
+						+ lv19 + lv20 + lv21 + lv22 + lv23 + lv24 + lv25 + lv26
+						+ lv27 + lv28;
 				pc.setSkillMastery(skillId);
 			}
 			if (i > 0) {
 				pc.sendPackets(new S_AddSkill(lv1, lv2, lv3, lv4, lv5, lv6,
 						lv7, lv8, lv9, lv10, lv11, lv12, lv13, lv14, lv15,
-						lv16, lv17, lv18, lv19, lv20, lv21, lv22, lv23, lv24, lv25, lv26, lv27, lv28));
+						lv16, lv17, lv18, lv19, lv20, lv21, lv22, lv23, lv24,
+						lv25, lv26, lv27, lv28));
 				// _log.warning("ここたち来るのね＠直訳");
 			}
 		} catch (SQLException e) {
@@ -520,8 +526,8 @@ public class C_LoginToServer extends ClientBasePacket {
 				int remaining_time = rs.getInt("remaining_time");
 				if (skillid == SHAPE_CHANGE) { // 變身
 					int poly_id = rs.getInt("poly_id");
-					L1PolyMorph.doPoly(pc, poly_id, remaining_time, L1PolyMorph
-							.MORPH_BY_LOGIN);
+					L1PolyMorph.doPoly(pc, poly_id, remaining_time,
+							L1PolyMorph.MORPH_BY_LOGIN);
 				} else if (skillid == STATUS_BRAVE) { // 勇敢藥水
 					pc.sendPackets(new S_SkillBrave(pc.getId(), 1,
 							remaining_time));
