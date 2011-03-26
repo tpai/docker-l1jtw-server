@@ -15,13 +15,14 @@
 package l1j.server.server.templates;
 
 import l1j.server.server.datatables.ItemTable;
+import l1j.server.server.model.L1BugBearRace;
 
 public class L1ShopItem {
 	private static final long serialVersionUID = 1L;
 
 	private final int _itemId;
 
-	private final L1Item _item;
+	private L1Item _item;
 
 	private final int _price;
 
@@ -48,5 +49,16 @@ public class L1ShopItem {
 
 	public int getPackCount() {
 		return _packCount;
+	}
+
+	// 食人妖精賽跑用
+	public void setName(int num) {
+		int trueNum = L1BugBearRace.getInstance().getRunner(num).getNpcId() - 91350 + 1;
+		_item = (L1Item) _item.clone();
+		_item.setName(L1BugBearRace.getInstance().getRound() + "-" + trueNum);
+		_item.setUnidentifiedNameId(L1BugBearRace.getInstance().getRound()
+				+ "-" + trueNum);
+		_item.setIdentifiedNameId(L1BugBearRace.getInstance().getRound() + "-"
+				+ trueNum);
 	}
 }

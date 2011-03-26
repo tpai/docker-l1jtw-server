@@ -14,12 +14,32 @@
  */
 package l1j.server.server.model.shop;
 
+import l1j.server.server.datatables.RaceTicketTable;
+import l1j.server.server.model.L1World;
+import l1j.server.server.model.Instance.L1ItemInstance;
+import l1j.server.server.templates.L1RaceTicket;
+
 public class L1AssessedItem {
 	private final int _targetId;
-	private final int _assessedPrice;
+	private int _assessedPrice;
 
 	L1AssessedItem(int targetId, int assessedPrice) {
 		_targetId = targetId;
+		L1ItemInstance item = (L1ItemInstance) L1World.getInstance()
+				.findObject(getTargetId());
+		if (item.getItemId() == 40309) {// Race Tickets
+			L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(
+					_targetId);
+			int price = 0;
+			if (ticket != null) {
+				price = (int) (assessedPrice
+						* ticket.get_allotment_percentage() * ticket
+						.get_victory());
+			}
+			_assessedPrice = price;
+		} else {
+			_assessedPrice = assessedPrice;
+		}
 		_assessedPrice = assessedPrice;
 	}
 

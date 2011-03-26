@@ -20,6 +20,7 @@ import java.util.TimerTask;
 import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.datatables.TownTable;
 import l1j.server.server.model.L1Attack;
+import l1j.server.server.model.L1BugBearRace;
 import l1j.server.server.model.L1CastleLocation;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1NpcTalkData;
@@ -3331,6 +3332,17 @@ public class L1MerchantInstance extends L1NpcInstance {
 						}
 					}
 				}
+			}  else if (npcid == 70035||npcid == 70041||npcid == 70042) { // ギランレース管理人(セシル　パーキン　ポーリー)
+				//STATUS_NONE = 0; STATUS_READY = 1; STATUS_PLAYING = 2; STATUS_END = 3;
+				if (L1BugBearRace.getInstance().getGameStatus()==0){
+					htmlid = "maeno5";
+				}else if (L1BugBearRace.getInstance().getGameStatus()==1){
+					htmlid = "maeno1";
+				}else if (L1BugBearRace.getInstance().getGameStatus()==2){
+					htmlid = "maeno3";
+				}else if (L1BugBearRace.getInstance().getGameStatus()==3){
+					htmlid = "maeno5";
+				}
 			}
 
 			// html表示パケット送信
@@ -3355,10 +3367,10 @@ public class L1MerchantInstance extends L1NpcInstance {
 
 	private static String talkToTownadviser(L1PcInstance pc, int town_id) {
 		String htmlid;
-		if ((pc.getHomeTownId() == town_id) && TownTable.getInstance().isLeader(pc, town_id)) {
+		if ((pc.getHomeTownId() == town_id)
+				&& TownTable.getInstance().isLeader(pc, town_id)) {
 			htmlid = "secretary1";
-		}
-		else {
+		} else {
 			htmlid = "secretary2";
 		}
 
@@ -3369,8 +3381,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 		String htmlid;
 		if (pc.getHomeTownId() == town_id) {
 			htmlid = "hometown";
-		}
-		else {
+		} else {
 			htmlid = "othertown";
 		}
 		return htmlid;
@@ -3424,14 +3435,11 @@ public class L1MerchantInstance extends L1NpcInstance {
 		}
 		if (rulerCount == 0) {
 			necessarySealCount = 10;
-		}
-		else if (rulerCount == 1) {
+		} else if (rulerCount == 1) {
 			necessarySealCount = 100;
-		}
-		else if (rulerCount == 2) {
+		} else if (rulerCount == 2) {
 			necessarySealCount = 200;
-		}
-		else if (rulerCount == 3) {
+		} else if (rulerCount == 3) {
 			necessarySealCount = 500;
 		}
 		return necessarySealCount;
@@ -3446,18 +3454,15 @@ public class L1MerchantInstance extends L1NpcInstance {
 			rulerId = 40917;
 			protectionId = 40909;
 			sealId = 40913;
-		}
-		else if (attr == 2) {
+		} else if (attr == 2) {
 			rulerId = 40919;
 			protectionId = 40911;
 			sealId = 40915;
-		}
-		else if (attr == 4) {
+		} else if (attr == 4) {
 			rulerId = 40918;
 			protectionId = 40910;
 			sealId = 40914;
-		}
-		else if (attr == 8) {
+		} else if (attr == 8) {
 			rulerId = 40920;
 			protectionId = 40912;
 			sealId = 40916;
@@ -3466,7 +3471,8 @@ public class L1MerchantInstance extends L1NpcInstance {
 		pc.getInventory().consumeItem(sealId, sealCount);
 		L1ItemInstance item = pc.getInventory().storeItem(rulerId, 1);
 		if (item != null) {
-			pc.sendPackets(new S_ServerMessage(143, getNpcTemplate().get_name(), item.getLogName())); // \f1%0が%1をくれました。
+			pc.sendPackets(new S_ServerMessage(143,
+					getNpcTemplate().get_name(), item.getLogName())); // \f1%0が%1をくれました。
 		}
 	}
 
@@ -3474,8 +3480,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 		String htmlid = "";
 		if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) == 0) {
 			htmlid = "jpe0011";
-		}
-		else if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) == 1) {
+		} else if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) == 1) {
 			htmlid = "jpe0015";
 		}
 
@@ -3486,37 +3491,27 @@ public class L1MerchantInstance extends L1NpcInstance {
 		String htmlid = "";
 		if (pc.getLevel() < 3) {
 			htmlid = "jpe0021";
-		}
-		else if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) < 2) {
+		} else if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) < 2) {
 			htmlid = "jpe0022";
-		}
-		else if (pc.getQuest().get_step(L1Quest.QUEST_AREX) == L1Quest.QUEST_END) {
+		} else if (pc.getQuest().get_step(L1Quest.QUEST_AREX) == L1Quest.QUEST_END) {
 			htmlid = "jpe0023";
-		}
-		else if ((pc.getLevel() >= 10) && (pc.getLevel() < 25)) {
+		} else if ((pc.getLevel() >= 10) && (pc.getLevel() < 25)) {
 			if (pc.getInventory().checkItem(41227)) { // アレックスの紹介状
 				htmlid = "jpe0023";
-			}
-			else if (pc.isCrown()) {
+			} else if (pc.isCrown()) {
 				htmlid = "jpe0024p";
-			}
-			else if (pc.isKnight()) {
+			} else if (pc.isKnight()) {
 				htmlid = "jpe0024k";
-			}
-			else if (pc.isElf()) {
+			} else if (pc.isElf()) {
 				htmlid = "jpe0024e";
-			}
-			else if (pc.isWizard()) {
+			} else if (pc.isWizard()) {
 				htmlid = "jpe0024w";
-			}
-			else if (pc.isDarkelf()) {
+			} else if (pc.isDarkelf()) {
 				htmlid = "jpe0024d";
 			}
-		}
-		else if (pc.getLevel() > 25) {
+		} else if (pc.getLevel() > 25) {
 			htmlid = "jpe0023";
-		}
-		else {
+		} else {
 			htmlid = "jpe0021";
 		}
 		return htmlid;
@@ -3526,12 +3521,10 @@ public class L1MerchantInstance extends L1NpcInstance {
 		String htmlid = "";
 		if (pc.getLevel() < 3) {
 			htmlid = "jpe0031";
-		}
-		else {
+		} else {
 			if (pc.getQuest().get_step(L1Quest.QUEST_DOROMOND) < 2) {
 				htmlid = "jpe0035";
-			}
-			else {
+			} else {
 				htmlid = "jpe0036";
 			}
 		}
@@ -3543,8 +3536,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 		String htmlid = "";
 		if (pc.getLevel() < 13) {
 			htmlid = "jpe0161";
-		}
-		else {
+		} else {
 			htmlid = "jpe0162";
 		}
 
@@ -3556,8 +3548,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 
 		if (pc.isCrown() || pc.isWizard()) {
 			htmlid = "en0101";
-		}
-		else if (pc.isKnight() || pc.isElf() || pc.isDarkelf()) {
+		} else if (pc.isKnight() || pc.isElf() || pc.isDarkelf()) {
 			htmlid = "en0102";
 		}
 
@@ -3568,23 +3559,17 @@ public class L1MerchantInstance extends L1NpcInstance {
 		String htmlid = "";
 		if (pc.getLevel() < 3) {
 			htmlid = "en0301";
-		}
-		else if ((pc.getLevel() >= 3) && (pc.getLevel() < 7)) {
+		} else if ((pc.getLevel() >= 3) && (pc.getLevel() < 7)) {
 			htmlid = "en0302";
-		}
-		else if ((pc.getLevel() >= 7) && (pc.getLevel() < 9)) {
+		} else if ((pc.getLevel() >= 7) && (pc.getLevel() < 9)) {
 			htmlid = "en0303";
-		}
-		else if ((pc.getLevel() >= 9) && (pc.getLevel() < 12)) {
+		} else if ((pc.getLevel() >= 9) && (pc.getLevel() < 12)) {
 			htmlid = "en0304";
-		}
-		else if ((pc.getLevel() >= 12) && (pc.getLevel() < 13)) {
+		} else if ((pc.getLevel() >= 12) && (pc.getLevel() < 13)) {
 			htmlid = "en0305";
-		}
-		else if ((pc.getLevel() >= 13) && (pc.getLevel() < 25)) {
+		} else if ((pc.getLevel() >= 13) && (pc.getLevel() < 25)) {
 			htmlid = "en0306";
-		}
-		else {
+		} else {
 			htmlid = "en0307";
 		}
 		return htmlid;
@@ -3594,15 +3579,16 @@ public class L1MerchantInstance extends L1NpcInstance {
 		String htmlid = "";
 		if (pc.getLevel() < 25) {
 			htmlid = "jpe0041";
-			if (pc.getInventory().checkItem(41209) || pc.getInventory().checkItem(41210) || pc.getInventory().checkItem(41211)
+			if (pc.getInventory().checkItem(41209)
+					|| pc.getInventory().checkItem(41210)
+					|| pc.getInventory().checkItem(41211)
 					|| pc.getInventory().checkItem(41212)) {
 				htmlid = "jpe0043";
 			}
 			if (pc.getInventory().checkItem(41213)) {
 				htmlid = "jpe0044";
 			}
-		}
-		else {
+		} else {
 			htmlid = "jpe0045";
 		}
 		return htmlid;
@@ -3613,12 +3599,10 @@ public class L1MerchantInstance extends L1NpcInstance {
 		if (pc.getQuest().get_step(L1Quest.QUEST_TBOX1) == L1Quest.QUEST_END) {
 			if (pc.getInventory().checkItem(40701)) {
 				htmlid = "maptboxa";
-			}
-			else {
+			} else {
 				htmlid = "maptbox0";
 			}
-		}
-		else {
+		} else {
 			htmlid = "maptbox0";
 		}
 		return htmlid;
@@ -3629,12 +3613,10 @@ public class L1MerchantInstance extends L1NpcInstance {
 		if (pc.getQuest().get_step(L1Quest.QUEST_TBOX2) == L1Quest.QUEST_END) {
 			if (pc.getInventory().checkItem(40701)) {
 				htmlid = "maptboxd";
-			}
-			else {
+			} else {
 				htmlid = "maptbox0";
 			}
-		}
-		else {
+		} else {
 			htmlid = "maptbox0";
 		}
 		return htmlid;

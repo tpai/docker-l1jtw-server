@@ -45,6 +45,7 @@ import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.PetTypeTable;
 import l1j.server.server.datatables.PolyTable;
+import l1j.server.server.datatables.RaceTicketTable;
 import l1j.server.server.datatables.ResolventTable;
 import l1j.server.server.datatables.ShopTable;
 import l1j.server.server.datatables.SkillsTable;
@@ -56,6 +57,7 @@ import l1j.server.server.model.Dungeon;
 import l1j.server.server.model.ElementalStoneGenerator;
 import l1j.server.server.model.Getback;
 import l1j.server.server.model.L1BossCycle;
+import l1j.server.server.model.L1BugBearRace;
 import l1j.server.server.model.L1CastleLocation;
 import l1j.server.server.model.L1DeleteItemOnGround;
 import l1j.server.server.model.L1NpcRegenerationTimer;
@@ -267,6 +269,8 @@ public class GameServer extends Thread {
 		FurnitureSpawnTable.getInstance();
 		NpcChatTable.getInstance();
 		MailTable.getInstance();
+		RaceTicketTable.getInstance();
+		L1BugBearRace.getInstance();
 
 		System.out.println("初始化完畢");
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());

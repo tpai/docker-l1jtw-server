@@ -23,8 +23,10 @@ import java.sql.Timestamp;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.PetTable;
+import l1j.server.server.datatables.RaceTicketTable;
 import l1j.server.server.model.L1EquipmentTimer;
 import l1j.server.server.model.L1ItemOwnerTimer;
 import l1j.server.server.model.L1Object;
@@ -35,6 +37,7 @@ import l1j.server.server.templates.L1Armor;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1Pet;
+import l1j.server.server.templates.L1RaceTicket;
 import l1j.server.server.utils.BinaryOutputStream;
 
 // Referenced classes of package l1j.server.server.model:
@@ -250,10 +253,12 @@ public class L1ItemInstance extends L1Object {
 
 	public int getMr() {
 		int mr = _item.get_mdef();
-		if ((getItemId() == 20011) || (getItemId() == 20110) || (getItemId() == 21108) || (getItemId() == 120011)) {
+		if ((getItemId() == 20011) || (getItemId() == 20110)
+				|| (getItemId() == 21108) || (getItemId() == 120011)) {
 			mr += getEnchantLevel();
 		}
-		if ((getItemId() == 20056) || (getItemId() == 120056) || (getItemId() == 220056)) {
+		if ((getItemId() == 20056) || (getItemId() == 120056)
+				|| (getItemId() == 220056)) {
 			mr += getEnchantLevel() * 2;
 		}
 		return mr;
@@ -276,8 +281,7 @@ public class L1ItemInstance extends L1Object {
 	public int getWeight() {
 		if (getItem().getWeight() == 0) {
 			return 0;
-		}
-		else {
+		} else {
 			return Math.max(getCount() * getItem().getWeight() / 1000, 1);
 		}
 	}
@@ -438,7 +442,22 @@ public class L1ItemInstance extends L1Object {
 				L1Npc npc = NpcTable.getInstance().getTemplate(pet.get_npcid());
 				// name.append("[Lv." + pet.get_level() + " "
 				// + npc.get_nameid() + "]");
-				name.append("[Lv." + pet.get_level() + " " + pet.get_name() + "]HP" + pet.get_hp() + " " + npc.get_nameid());
+				name.append("[Lv." + pet.get_level() + " " + pet.get_name()
+						+ "]HP" + pet.get_hp() + " " + npc.get_nameid());
+			}
+		}
+
+		// 食人妖精 RaceTicket
+		if (itemId == 40309) {
+			L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(
+					getId());
+			if (ticket != null) {
+				name.delete(0, name.length());
+				name.append(ItemTable.getInstance().getTemplate(getItemId())
+						.getIdentifiedNameId());
+				name.append(" " + ticket.get_round() + "-"
+						+ ticket.get_runner_num());
+				name.append(" (" + count + ")");
 			}
 		}
 
@@ -456,11 +475,9 @@ public class L1ItemInstance extends L1Object {
 		if (isEquipped()) {
 			if (itemType2 == 1) {
 				name.append(" ($9)"); // 装備(Armed)
-			}
-			else if (itemType2 == 2) {
+			} else if (itemType2 == 2) {
 				name.append(" ($117)"); // 装備(Worn)
-			}
-			else if ((itemType2 == 0) && (getItem().getType() == 11)) { // petitem
+			} else if ((itemType2 == 0) && (getItem().getType() == 11)) { // petitem
 				name.append(" ($117)"); // 装備(Worn)
 			}
 		}
@@ -495,52 +512,44 @@ public class L1ItemInstance extends L1Object {
 				if (attrEnchantLevel > 0) {
 					String attrStr = null;
 					switch (getAttrEnchantKind()) {
-						case 1: // 地
-							if (attrEnchantLevel == 1) {
-								attrStr = "$6124";
-							}
-							else if (attrEnchantLevel == 2) {
-								attrStr = "$6125";
-							}
-							else if (attrEnchantLevel == 3) {
-								attrStr = "$6126";
-							}
-							break;
-						case 2: // 火
-							if (attrEnchantLevel == 1) {
-								attrStr = "$6115";
-							}
-							else if (attrEnchantLevel == 2) {
-								attrStr = "$6116";
-							}
-							else if (attrEnchantLevel == 3) {
-								attrStr = "$6117";
-							}
-							break;
-						case 4: // 水
-							if (attrEnchantLevel == 1) {
-								attrStr = "$6118";
-							}
-							else if (attrEnchantLevel == 2) {
-								attrStr = "$6119";
-							}
-							else if (attrEnchantLevel == 3) {
-								attrStr = "$6120";
-							}
-							break;
-						case 8: // 風
-							if (attrEnchantLevel == 1) {
-								attrStr = "$6121";
-							}
-							else if (attrEnchantLevel == 2) {
-								attrStr = "$6122";
-							}
-							else if (attrEnchantLevel == 3) {
-								attrStr = "$6123";
-							}
-							break;
-						default:
-							break;
+					case 1: // 地
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6124";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6125";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6126";
+						}
+						break;
+					case 2: // 火
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6115";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6116";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6117";
+						}
+						break;
+					case 4: // 水
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6118";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6119";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6120";
+						}
+						break;
+					case 8: // 風
+						if (attrEnchantLevel == 1) {
+							attrStr = "$6121";
+						} else if (attrEnchantLevel == 2) {
+							attrStr = "$6122";
+						} else if (attrEnchantLevel == 3) {
+							attrStr = "$6123";
+						}
+						break;
+					default:
+						break;
 					}
 					name.append(attrStr + " ");
 				}
@@ -548,16 +557,14 @@ public class L1ItemInstance extends L1Object {
 			if ((getItem().getType2() == 1) || (getItem().getType2() == 2)) { // 武器・防具
 				if (getEnchantLevel() >= 0) {
 					name.append("+" + getEnchantLevel() + " ");
-				}
-				else if (getEnchantLevel() < 0) {
+				} else if (getEnchantLevel() < 0) {
 					name.append(String.valueOf(getEnchantLevel()) + " ");
 				}
 			}
 		}
 		if (isIdentified()) {
 			name.append(_item.getIdentifiedNameId());
-		}
-		else {
+		} else {
 			name.append(_item.getUnidentifiedNameId());
 		}
 		if (isIdentified()) {
@@ -589,30 +596,29 @@ public class L1ItemInstance extends L1Object {
 
 		if (itemType2 == 0) { // etcitem
 			switch (getItem().getType()) {
-				case 2: // light
-					os.writeC(22); // 明るさ
-					os.writeH(getItem().getLightRange());
-					break;
-				case 7: // food
-					os.writeC(21);
-					// 栄養
-					os.writeH(getItem().getFoodVolume());
-					break;
-				case 0: // arrow
-				case 15: // sting
-					os.writeC(1); // 打撃値
-					os.writeC(getItem().getDmgSmall());
-					os.writeC(getItem().getDmgLarge());
-					break;
-				default:
-					os.writeC(23); // 材質
-					break;
+			case 2: // light
+				os.writeC(22); // 明るさ
+				os.writeH(getItem().getLightRange());
+				break;
+			case 7: // food
+				os.writeC(21);
+				// 栄養
+				os.writeH(getItem().getFoodVolume());
+				break;
+			case 0: // arrow
+			case 15: // sting
+				os.writeC(1); // 打撃値
+				os.writeC(getItem().getDmgSmall());
+				os.writeC(getItem().getDmgLarge());
+				break;
+			default:
+				os.writeC(23); // 材質
+				break;
 			}
 			os.writeC(getItem().getMaterial());
 			os.writeD(getWeight());
 
-		}
-		else if ((itemType2 == 1) || (itemType2 == 2)) { // weapon | armor
+		} else if ((itemType2 == 1) || (itemType2 == 2)) { // weapon | armor
 			if (itemType2 == 1) { // weapon
 				// 打撃値
 				os.writeC(1);
@@ -620,8 +626,7 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(getItem().getDmgLarge());
 				os.writeC(getItem().getMaterial());
 				os.writeD(getWeight());
-			}
-			else if (itemType2 == 2) { // armor
+			} else if (itemType2 == 2) { // armor
 				// AC
 				os.writeC(19);
 				int ac = ((L1Armor) getItem()).get_ac();
@@ -652,8 +657,7 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(5);
 					os.writeC(getItem().getHitModifier());
 				}
-			}
-			else if (itemType2 == 2) { // armor
+			} else if (itemType2 == 2) { // armor
 				if (getItem().getHitModifierByArmor() != 0) {
 					os.writeC(5);
 					os.writeC(getItem().getHitModifierByArmor());
@@ -665,8 +669,7 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(6);
 					os.writeC(getItem().getDmgModifier());
 				}
-			}
-			else if (itemType2 == 2) { // armor
+			} else if (itemType2 == 2) { // armor
 				if (getItem().getDmgModifierByArmor() != 0) {
 					os.writeC(6);
 					os.writeC(getItem().getDmgModifierByArmor());
@@ -855,8 +858,8 @@ public class L1ItemInstance extends L1Object {
 				_pc.sendPackets(new S_ServerMessage(308, getLogName()));
 				_isRunning = false;
 				_timer = null;
+			} catch (Exception e) {
 			}
-			catch (Exception e) {}
 		}
 	}
 
@@ -928,7 +931,8 @@ public class L1ItemInstance extends L1Object {
 		_isRunning = true;
 	}
 
-	public void setSkillWeaponEnchant(L1PcInstance pc, int skillId, int skillTime) {
+	public void setSkillWeaponEnchant(L1PcInstance pc, int skillId,
+			int skillTime) {
 		if (getItem().getType2() != 1) {
 			return;
 		}
@@ -942,26 +946,26 @@ public class L1ItemInstance extends L1Object {
 		}
 
 		switch (skillId) {
-			case HOLY_WEAPON:
-				setHolyDmgByMagic(1);
-				setHitByMagic(1);
-				break;
+		case HOLY_WEAPON:
+			setHolyDmgByMagic(1);
+			setHitByMagic(1);
+			break;
 
-			case ENCHANT_WEAPON:
-				setDmgByMagic(2);
-				break;
+		case ENCHANT_WEAPON:
+			setDmgByMagic(2);
+			break;
 
-			case BLESS_WEAPON:
-				setDmgByMagic(2);
-				setHitByMagic(2);
-				break;
+		case BLESS_WEAPON:
+			setDmgByMagic(2);
+			setHitByMagic(2);
+			break;
 
-			case SHADOW_FANG:
-				setDmgByMagic(5);
-				break;
+		case SHADOW_FANG:
+			setDmgByMagic(5);
+			break;
 
-			default:
-				break;
+		default:
+			break;
 		}
 
 		_pc = pc;
