@@ -28,7 +28,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		int Wis = pc.getOriginalWis();// 精神
 		int Cha = pc.getOriginalCha();// 魅力
 		int Int = pc.getOriginalInt();// 智力
-		int[] growth = new int[5];
+		int[] growth = new int[6];
 
 		// 王族
 		if (pc.isCrown()) {

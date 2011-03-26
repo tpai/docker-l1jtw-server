@@ -189,6 +189,8 @@ public class C_ItemUSe extends ClientBasePacket {
 		int l = 0;
 
 		String s = "";
+		@SuppressWarnings("unused")
+		int bmapid = 0;
 		int btele = 0;
 		int blanksc_skillid = 0;
 		int spellsc_objid = 0;
@@ -287,6 +289,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			l = readD();
 		} else if ((itemId == 140100) || (itemId == 40100) || (itemId == 40099)
 				|| (itemId == 40086) || (itemId == 40863)) {
+			bmapid = readH();
 			btele = readD();
 			pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK,
 					false));

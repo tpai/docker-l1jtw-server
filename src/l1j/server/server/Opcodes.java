@@ -181,7 +181,7 @@ public class Opcodes {
 	public static final int S_OPCODE_WEATHER = 51;//遊戲天氣
 	public static final int S_OPCODE_HIRESOLDIER = 52;//僱傭傭兵 傭兵名單
 	public static final int S_OPCODE_WAR = 53;//血盟戰爭訊息 {編號,血盟名稱,目標血盟名稱}
-	public static final int S_OPCODE_TELEPORTLOCK = 101;//人物回碩檢測  OR 傳送鎖定 (無動畫)
+	public static final int S_OPCODE_TELEPORTLOCK = 54;//人物回碩檢測  OR 傳送鎖定 (無動畫)
 	public static final int S_OPCODE_PINKNAME = 55;//角色名稱變紫色
 	public static final int S_OPCODE_ITEMSTATUS = 56;//物品狀態更新
 	public static final int S_OPCODE_ITEMAMOUNT = 56;//物品可用次數
@@ -191,7 +191,7 @@ public class Opcodes {
 	public static final int S_OPCODE_INITPACKET = 60;//初始化OpCodes
 	public static final int S_OPCODE_MOVEOBJECT = 62;//物件移動
 	public static final int S_OPCODE_PUTSOLDIER = 63;//配置已僱用士兵
-	public static final int S_OPCODE_TELEPORT = 54;//要求傳送 (有動畫)
+	public static final int S_OPCODE_TELEPORT = 64;//要求傳送 (有動畫)
 	public static final int S_OPCODE_STRUP = 65;//力量提升封包
 	public static final int S_OPCODE_LAWFUL = 66;//正義值更新
 	public static final int S_OPCODE_SELECTTARGET = 67;//選擇一個目標
