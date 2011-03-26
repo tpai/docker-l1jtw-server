@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.model.skill;
 
 import static l1j.server.server.model.skill.L1SkillId.*;
@@ -2937,18 +2936,17 @@ public class L1SkillUse {
 					dmg = 0;
 				}
 
-				if ((dmg != 0) || (drainMana != 0)) {
+				if ((dmg > 0) || (drainMana != 0)) {
 					_magic.commit(dmg, drainMana); // ダメージ系、回復系の値をターゲットにコミットする。
+				}
+
+				if ((_skill.getType() == L1Skills.TYPE_HEAL) && (dmg < 0)) {
+					_target.setCurrentHp((dmg * -1) + _target.getCurrentHp());
 				}
 
 				// ヒール系の他に、別途回復した場合（V-Tなど）
 				if (heal > 0) {
-					if ((heal + _user.getCurrentHp()) > _user.getMaxHp()) {
-						_user.setCurrentHp(_user.getMaxHp());
-					}
-					else {
-						_user.setCurrentHp(heal + _user.getCurrentHp());
-					}
+					_user.setCurrentHp(heal + _user.getCurrentHp());
 				}
 
 				if (cha instanceof L1PcInstance) { // ターゲットがPCならば、ACとステータスを送信
