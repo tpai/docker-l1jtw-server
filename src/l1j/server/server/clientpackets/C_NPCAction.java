@@ -84,6 +84,7 @@ import l1j.server.server.serverpackets.S_HouseMap;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
+import l1j.server.server.serverpackets.S_PetCtrlMenu;
 import l1j.server.server.serverpackets.S_PetList;
 import l1j.server.server.serverpackets.S_RetrieveElfList;
 import l1j.server.server.serverpackets.S_RetrieveList;
@@ -438,6 +439,9 @@ public class C_NPCAction extends ClientBasePacket {
 					pc.getPetList().remove(pet.getId());
 					pet.deleteMe();
 				}
+			}
+			if (pc.getPetList().isEmpty()) {
+				pc.sendPackets(new S_PetCtrlMenu(0));// 關閉寵物控制圖形介面
 			}
 			htmlid = ""; // ウィンドウを消す
 		} else if (s.equalsIgnoreCase("withdrawnpc")) { // 「動物を受け取る」

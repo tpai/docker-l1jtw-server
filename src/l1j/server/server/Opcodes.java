@@ -242,7 +242,7 @@ public class Opcodes {
 	public static final int S_OPCODE_HPUPDATE = 118;//體力更新
 	public static final int S_OPCODE_SHOWSHOPBUYLIST = 119;//物品購買
 	public static final int S_OPCODE_GAMETIME = 120;//更新目前遊戲時間 ( 遊戲時間 )
-	public static final int S_OPCODE_DELPETMENU = 121;//寵物控制介面移除
+	public static final int S_OPCODE_PETCTRL = 121;//寵物控制介面移除
 	public static final int S_OPCODE_CHARRESET = 121; //角色重置
 	public static final int S_OPCODE_SOUND = 122;//撥放音效
 	public static final int S_OPCODE_LIGHT = 123;//物件亮度
