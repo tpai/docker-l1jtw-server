@@ -198,4 +198,8 @@ public class L1Object implements Serializable {
 	}
 
 	private int _id = 0;
+
+	public void onAction(L1PcInstance attacker, int skillId) {
+
+	}
 }
