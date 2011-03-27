@@ -24,11 +24,15 @@
  	
     <!-- 相關資料目錄 -->
  	<property name="class.dir" value="bin" />
-    <property name="src.dir" value="src" />
+	<property name="server.src.dir" value="src" />
+ 	<property name="loader.src.dir" value="src_loader" />
     <property name="lib.dir" value="lib" />
-    <property name="jar.file" value="l1jserver.jar" />
 	<property name="etc.dir" value="config" />
 
+	<!-- 封裝檔案名稱 -->
+	<property name="server.jar.file" value="l1jserver.jar" />
+	<property name="loader.jar.file" value="l1jloader.jar" />
+	
     <path id="classpath">
         <fileset dir="${lib.dir}">
  			<include name="**/*.jar" />
@@ -47,40 +51,75 @@
 	</pathconvert>
 
     <!-- 設定主要任務 -->
-    <target name="all" depends="clean,compile,jar" />
-	<target name="mini" depends="clean,compile_mini,jar" />
+    <target name="all" depends="clean,compile_loader,jar_loader,clean,compile_server,jar_server" />
+	<target name="mini" depends="clean,compile_loader_mini,jar_loader,clean,compile_server_mini,jar_server" />
 
     <!-- 清除既有的編譯檔案 -->
     <target name="clean">
         <delete dir="${class.dir}" />
     </target>
 
-    <!-- 完整編譯(包含除錯訊息) -->
-    <target name="compile">
+    <!-- Server 完整編譯(包含除錯訊息) -->
+    <target name="compile_server">
         <mkdir dir="${class.dir}" />
 		<javac includeantruntime="true" debug="on" optimize="true" deprecation="true" source="1.6" target="1.6" encoding="UTF-8" destdir="${class.dir}">
-			<src path="${src.dir}" />
+			<src path="${server.src.dir}" />
 			<classpath refid="classpath" />
 			<compilerarg value="-Xlint:unchecked"/>
 		</javac>
     </target>
 
-     <!-- 最簡編譯(不包含任何除錯訊息) -->
-    <target name="compile_mini">
+     <!-- Server 最簡編譯(不包含任何除錯訊息) -->
+    <target name="compile_server_mini">
         <mkdir dir="${class.dir}" />
 		<javac includeantruntime="true" debug="off" optimize="true" deprecation="true" source="1.6" target="1.6" encoding="UTF-8" destdir="${class.dir}">
-			<src path="${src.dir}" />
+			<src path="${server.src.dir}" />
 			<classpath refid="classpath" />
 			<compilerarg value="-Xlint:unchecked"/>
 		</javac>
     </target>
 
-   <!-- 封裝成 jar -->
-	<target name="jar" depends="copy_c3p0_config">
-		<jar basedir="${class.dir}" jarfile="${jar.file}">
+   <!-- Server 封裝成 jar -->
+	<target name="jar_server" depends="copy_c3p0_config">
+		<jar basedir="${class.dir}" jarfile="${server.jar.file}">
 			<manifest>
 				<attribute name="Class-Path" value="${mf.classpath}" />
 				<attribute name="Main-Class" value="l1j.server.Server" />
+			</manifest>
+		</jar>
+		<delete dir="${class.dir}" />
+	</target>
+	
+	<!-- Loader 完整編譯(包含除錯訊息) -->
+	<target name="compile_loader" depends="clean">
+		<mkdir dir="${class.dir}" />
+		
+		<javac includeantruntime="true" debug="on" optimize="true" deprecation="true" source="1.6" target="1.6" encoding="UTF-8" destdir="${class.dir}">
+			<src path="${loader.src.dir}" />
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+	</target>
+	
+	<!-- 最簡編譯(不包含任何除錯訊息) -->
+	<target name="compile_loader_mini" depends="clean">
+		<mkdir dir="${class.dir}" />
+		
+		<javac includeantruntime="true" debug="off" optimize="true" deprecation="true" source="1.6" target="1.6" encoding="UTF-8" destdir="${class.dir}">
+			<src path="${loader.src.dir}" />
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+	</target>
+
+	<!-- Loader 封裝成 jar -->
+	<target name="jar_loader">
+		<delete dir="${loader.jar.file}" />
+		<tstamp>
+			<format property="build.tstamp" pattern="yyyy/MM/dd HH:mm" />
+		</tstamp>
+		<jar basedir="${class.dir}" jarfile="${loader.jar.file}">
+			<manifest>
+				<attribute name="Built-Time" value="${build.tstamp}" />
+				<attribute name="Main-Class" value="l1j.loader.StartLoader" />
 			</manifest>
 		</jar>
 		<delete dir="${class.dir}" />
