@@ -129,7 +129,7 @@ public class Opcodes {
 	
 	/**3.2C ServerPacket*/
 	public static final int S_OPCODE_COMMONNEWS2 = 0;
-	public static final int S_OPCODE_USEMAP = 64;
+	public static final int S_OPCODE_USEMAP = 71;
 	public static final int S_LETTER = 90;
 	
 	/**3.3C ServerPacket*/

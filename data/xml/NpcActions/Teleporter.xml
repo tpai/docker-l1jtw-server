@@ -1558,6 +1558,7 @@
 		<Data Value="50" />
 		<Data Value="120" />
 		<Data Value="120" />
+                <Data Value="120"/>
 		<Data Value="180" />
 		<Data Value="180" />
 		<Data Value="240" />
@@ -1703,4 +1704,8 @@
 		<Data Value="0" />
 		<Data Value="0" />
 	</ShowHtml>
+  <!-- 燃柳村的杜發 往隱藏港口-->
+  <ShowHtml Name="teleportURL" HtmlId="duvall3" NpcId="50064">
+      <Data Value="100"/>
+  </ShowHtml>
 </NpcActionList>
