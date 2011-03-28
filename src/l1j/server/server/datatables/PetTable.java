@@ -25,6 +25,8 @@ import java.util.logging.Logger;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.templates.L1Pet;
+import l1j.server.server.templates.L1PetType;
+import l1j.server.server.utils.Random;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
@@ -74,11 +76,9 @@ public class PetTable {
 
 				_pets.put(new Integer(itemobjid), pet);
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -104,7 +104,8 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?");
+			pstm = con
+					.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?");
 			pstm.setInt(1, l1pet.get_itemobjid());
 			pstm.setInt(2, l1pet.get_objid());
 			pstm.setInt(3, l1pet.get_npcid());
@@ -115,12 +116,10 @@ public class PetTable {
 			pstm.setInt(8, l1pet.get_exp());
 			pstm.setInt(9, l1pet.get_lawful());
 			pstm.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 
@@ -132,7 +131,8 @@ public class PetTable {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE pets SET objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=? WHERE item_obj_id=?");
+			pstm = con
+					.prepareStatement("UPDATE pets SET objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=? WHERE item_obj_id=?");
 			pstm.setInt(1, pet.get_objid());
 			pstm.setInt(2, pet.get_npcid());
 			pstm.setString(3, pet.get_name());
@@ -143,11 +143,9 @@ public class PetTable {
 			pstm.setInt(8, pet.get_lawful());
 			pstm.setInt(9, pet.get_itemobjid());
 			pstm.execute();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -161,12 +159,10 @@ public class PetTable {
 			pstm = con.prepareStatement("DELETE FROM pets WHERE item_obj_id=?");
 			pstm.setInt(1, itemobjid);
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -191,7 +187,8 @@ public class PetTable {
 			 * 同じ名前を探す。MySQLはデフォルトでcase insensitiveなため
 			 * 本来LOWERは必要ないが、binaryに変更された場合に備えて。
 			 */
-			pstm = con.prepareStatement("SELECT item_obj_id FROM pets WHERE LOWER(name)=?");
+			pstm = con
+					.prepareStatement("SELECT item_obj_id FROM pets WHERE LOWER(name)=?");
 			pstm.setString(1, nameLower);
 			rs = pstm.executeQuery();
 			if (!rs.next()) { // 同じ名前が無かった
@@ -200,16 +197,68 @@ public class PetTable {
 			if (PetTypeTable.getInstance().isNameDefault(nameLower)) { // デフォルトの名前なら重複していないとみなす
 				return false;
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 		return true;
+	}
+
+	/**
+	 * 經過 C_NPCAction 獲得 pet
+	 */
+	public void buyNewPet(int petNpcId, int objid, int itemobjid, int upLv,
+			int lvExp) {
+		L1PetType petType = PetTypeTable.getInstance().get(petNpcId);
+		L1Pet l1pet = new L1Pet();
+		l1pet.set_itemobjid(itemobjid);
+		l1pet.set_objid(objid);
+		l1pet.set_npcid(petNpcId);
+		l1pet.set_name(petType.getName());
+		l1pet.set_level(upLv);
+		int hpUpMin = petType.getHpUpRange().getLow();
+		int hpUpMax = petType.getHpUpRange().getHigh();
+		int mpUpMin = petType.getMpUpRange().getLow();
+		int mpUpMax = petType.getMpUpRange().getHigh();
+		short randomhp = (short) ((hpUpMin + hpUpMax) / 2);
+		short randommp = (short) ((mpUpMin + mpUpMax) / 2);
+		for (int i = 1; i < upLv; i++) {
+			randomhp += (Random.nextInt(hpUpMax - hpUpMin) + hpUpMin + 1);
+			randommp += (Random.nextInt(mpUpMax - mpUpMin) + mpUpMin + 1);
+		}
+		l1pet.set_hp(randomhp);
+		l1pet.set_mp(randommp);
+		l1pet.set_exp(lvExp); // upLv EXP
+		l1pet.set_lawful(0);
+		_pets.put(new Integer(itemobjid), l1pet);
+
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con
+					.prepareStatement("INSERT INTO pets SET item_obj_id=?,objid=?,npcid=?,name=?,lvl=?,hp=?,mp=?,exp=?,lawful=?");
+			pstm.setInt(1, l1pet.get_itemobjid());
+			pstm.setInt(2, l1pet.get_objid());
+			pstm.setInt(3, l1pet.get_npcid());
+			pstm.setString(4, l1pet.get_name());
+			pstm.setInt(5, l1pet.get_level());
+			pstm.setInt(6, l1pet.get_hp());
+			pstm.setInt(7, l1pet.get_mp());
+			pstm.setInt(8, l1pet.get_exp());
+			pstm.setInt(9, l1pet.get_lawful());
+			pstm.execute();
+		} catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+
+		}
 	}
 
 	public L1Pet getTemplate(int itemobjid) {

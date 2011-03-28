@@ -36,10 +36,12 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.DoorSpawnTable;
+import l1j.server.server.datatables.ExpTable;
 import l1j.server.server.datatables.HouseTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.NpcActionTable;
 import l1j.server.server.datatables.NpcTable;
+import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.PolyTable;
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.datatables.TownTable;
@@ -81,6 +83,7 @@ import l1j.server.server.serverpackets.S_Deposit;
 import l1j.server.server.serverpackets.S_Drawal;
 import l1j.server.server.serverpackets.S_HPUpdate;
 import l1j.server.server.serverpackets.S_HouseMap;
+import l1j.server.server.serverpackets.S_ItemName;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
@@ -98,6 +101,7 @@ import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillSound;
+import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_TaxRate;
 import l1j.server.server.templates.L1Castle;
 import l1j.server.server.templates.L1House;
@@ -3648,6 +3652,51 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				htmlid = "maeno4";
 			}
+		}
+		// 然柳寵物商
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70077) { // 羅德尼
+			int consumeItem = 40308;
+			int consumeItemCount = 50000;
+			int petNpcId = 0;
+			int petItemId = 40314;// 40314 低等寵物項圈
+			int upLv = 5; // 等級
+			int lvExp = ExpTable.getExpByLevel(upLv); // LV.upLv 經驗值
+			if (s.equalsIgnoreCase("buy 1")) {
+				petNpcId = 45042;// 杜賓狗
+			} else if (s.equalsIgnoreCase("buy 2")) {
+				petNpcId = 45034;// 牧羊犬
+			} else if (s.equalsIgnoreCase("buy 3")) {
+				petNpcId = 45046;// 小獵犬
+			} else if (s.equalsIgnoreCase("buy 4")) {
+				petNpcId = 45047;// 聖伯納犬
+			}
+			if (petNpcId > 0) {
+				if (!pc.getInventory().checkItem(consumeItem, consumeItemCount)) { // 檢查扣除物品是否足夠
+					pc.sendPackets(new S_ServerMessage(337, "$4"));
+				} else if (pc.getInventory().getSize() > 180) { // 檢查身上空間足夠
+					pc.sendPackets(new S_ServerMessage(337, "身上空間"));
+				} else if (pc.getInventory().checkItem(consumeItem,
+						consumeItemCount)) { // 檢查扣除物品是否足夠
+					pc.getInventory()
+							.consumeItem(consumeItem, consumeItemCount); // 扣除物品
+					L1PcInventory inv = pc.getInventory();
+					L1ItemInstance petamu = inv.storeItem(petItemId, 1);// 40314
+																		// 低等寵物項圈
+					if (petamu != null) {
+						PetTable.getInstance()
+								.buyNewPet(petNpcId, petamu.getId() + 1,
+										petamu.getId(), upLv, lvExp);// 將獲得的寵物寫入
+																		// pets
+																		// 資料表
+						pc.sendPackets(new S_ItemName(petamu));
+						pc.sendPackets(new S_ServerMessage(403, petamu
+								.getName()));
+					}
+				}
+			} else {
+				pc.sendPackets(new S_SystemMessage("對話檔版本不符，請下載更新"));
+			}
+			htmlid = "";
 		}
 
 		// else System.out.println("C_NpcAction: " + s);
