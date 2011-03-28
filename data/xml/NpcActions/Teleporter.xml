@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
 	<!-- 隠された渓谷⇒シルバーナイトタウン -->
 	<Action Name="teleport hidden-velley-for-newbie" NpcId="50004">
@@ -1264,7 +1264,7 @@
 	<Action Name="teleport gludin-behemoth" NpcId="50024">
 		<Teleport X="32779" Y="32887" Map="1001" Heading="5" Price="1000" />
 	</Action>
-	<!-- 狩場 -->
+	<!-- 狩場金幣顯示 -->
 	<ShowHtml Name="teleportURL" HtmlId="telefire3"
 		NpcId="50017,50022,50030,50053,50057">
 		<Data Value="168" />
@@ -1318,7 +1318,6 @@
 		<Data Value="780" />
 		<Data Value="630" />
 		<Data Value="1080" />
-		<Data Value="930" />
 	</ShowHtml>
 	<ShowHtml Name="teleportURLH" HtmlId="guide_3_1"
 		NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
@@ -1355,9 +1354,181 @@
 		<Data Value="676" />
 		<Data Value="676" />
 		<Data Value="676" />
-		<Data Value="1066" />
 		<Data Value="936" />
+		<Data Value="1066" />
 	</ShowHtml>
+
+<!-- 狩場傳送位置 -->
+<Action Name="teleport guide1_1_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32787" Y="32854" Map="4" Heading="5" Price="390"/>
+	</Action>
+	<Action Name="teleport guide1_1_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33154" Y="33279" Map="4" Heading="5" Price="390"/>
+	</Action>
+	<Action Name="teleport guide1_1_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32640" Y="32595" Map="4" Heading="5" Price="390"/>
+	</Action>
+	<Action Name="teleport guide1_1_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32663" Y="32893" Map="4" Heading="5" Price="390"/>
+	</Action>
+	<Action Name="teleport guide1_2_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32662" Y="33008" Map="4" Heading="5" Price="403"/>
+	</Action>
+	<Action Name="teleport guide1_2_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32673" Y="33158" Map="4" Heading="5" Price="403"/>
+	</Action>
+	<Action Name="teleport guide1_2_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33083" Y="33139" Map="4" Heading="5" Price="403"/>
+	</Action>
+	<Action Name="teleport guide1_2_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34168" Y="32821" Map="4" Heading="5" Price="403"/>
+	</Action>
+	<Action Name="teleport guide1_2_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32641" Y="32839" Map="0" Heading="5" Price="923"/>
+	</Action>
+	<Action Name="teleport guide1_2_6" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32516" Y="32988" Map="0" Heading="5" Price="923"/>
+	</Action>
+	<Action Name="teleport guide1_3_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32960" Y="33014" Map="4" Heading="5" Price="480"/>
+	</Action>
+	<Action Name="teleport guide1_3_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32638" Y="33460" Map="4" Heading="5" Price="480"/>
+	</Action>
+	<Action Name="teleport guide1_3_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33259" Y="33013" Map="4" Heading="5" Price="480"/>
+	</Action>
+	<Action Name="teleport guide1_3_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33407" Y="33410" Map="4" Heading="5" Price="480"/>
+	</Action>
+	<Action Name="teleport guide1_3_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32676" Y="32802" Map="304" Heading="5" Price="630"/>
+	</Action>
+	<Action Name="teleport guide1_3_6" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32414" Y="33045" Map="0" Heading="5" Price="1080"/>
+	</Action>
+	<Action Name="teleport guide1_3_7" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32806" Y="32814" Map="25" Heading="5" Price="630"/>
+	</Action>
+	<Action Name="teleport guide2_1_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32738" Y="32680" Map="4" Heading="5" Price="600"/>
+	</Action>
+	<Action Name="teleport guide2_1_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33570" Y="32582" Map="4" Heading="5" Price="600"/>
+	</Action>
+	<Action Name="teleport guide2_1_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32803" Y="32815" Map="26" Heading="5" Price="750"/>
+	</Action>
+	<Action Name="teleport guide2_1_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32810" Y="32728" Map="7" Heading="5" Price="750"/>
+	</Action>
+	<Action Name="teleport guide2_2_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32740" Y="32377" Map="4" Heading="5" Price="533"/>
+	</Action>
+	<Action Name="teleport guide2_2_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33913" Y="32972" Map="4" Heading="5" Price="533"/>
+	</Action>
+	<Action Name="teleport guide2_2_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32811" Y="32812" Map="27" Heading="5" Price="793"/>
+	</Action>
+	<Action Name="teleport guide2_2_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32761" Y="32825" Map="307" Heading="5" Price="663"/>
+	</Action>
+	<Action Name="teleport guide2_3_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33443" Y="33032" Map="4" Heading="5" Price="630"/>
+	</Action>
+	<Action Name="teleport guide2_3_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34223" Y="32462" Map="4" Heading="5" Price="780"/>
+	</Action>
+	<Action Name="teleport guide2_3_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32806" Y="32734" Map="53" Heading="5" Price="630"/>
+	</Action>
+	<Action Name="teleport guide2_3_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32797" Y="32751" Map="9" Heading="5" Price="1080"/>
+	</Action>
+	<Action Name="teleport guide2_3_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32750" Y="32827" Map="308" Heading="5" Price="930"/>
+	</Action>
+	<Action Name="teleport guide3_1_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34232" Y="32260" Map="4" Heading="5" Price="750"/>
+	</Action>
+	<Action Name="teleport guide3_1_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34050" Y="32446" Map="4" Heading="5" Price="750"/>
+	</Action>
+	<Action Name="teleport guide3_1_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34245" Y="32355" Map="4" Heading="5" Price="750"/>
+	</Action>
+	<Action Name="teleport guide3_1_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32794" Y="32800" Map="28" Heading="5" Price="1200"/>
+	</Action>
+	<Action Name="teleport guide3_1_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32808" Y="32797" Map="54" Heading="5" Price="1050"/>
+	</Action>
+	<Action Name="teleport guide3_2_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32813" Y="33271" Map="4" Heading="5" Price="663"/>
+	</Action>
+	<Action Name="teleport guide3_2_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33656" Y="32954" Map="4" Heading="5" Price="663"/>
+	</Action>
+	<Action Name="teleport guide3_2_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34173" Y="32271" Map="4" Heading="5" Price="663"/>
+	</Action>
+	<Action Name="teleport guide3_2_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33742" Y="32396" Map="4" Heading="5" Price="663"/>
+	</Action>
+	<Action Name="teleport guide3_2_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32726" Y="32727" Map="11" Heading="5" Price="1313"/>
+	</Action>
+	<Action Name="teleport guide3_2_6" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32754" Y="32839" Map="309" Heading="5" Price="1053"/>
+	</Action>
+	<Action Name="teleport guide3_2_7" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32710" Y="32788" Map="59" Heading="5" Price="793"/>
+	</Action>
+	<Action Name="teleport guide3_3_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33769" Y="33318" Map="4" Heading="5" Price="780"/>
+	</Action>
+	<Action Name="teleport guide3_3_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33334" Y="32444" Map="4" Heading="5" Price="780"/>
+	</Action>
+	<Action Name="teleport guide3_3_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33820" Y="32634" Map="4" Heading="5" Price="780"/>
+	</Action>
+	<Action Name="teleport guide3_3_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34277" Y="33222" Map="4" Heading="5" Price="780"/>
+	</Action>
+	<Action Name="teleport guide3_3_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33662" Y="32339" Map="4" Heading="5" Price="780"/>
+	</Action>
+	<Action Name="teleport guide3_3_6" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32732" Y="32727" Map="55" Heading="5" Price="1230"/>
+	</Action>
+	<Action Name="teleport guide3_3_7" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32747" Y="32861" Map="60" Heading="5" Price="1080"/>
+	</Action>
+	<Action Name="teleport guide4_1" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33763" Y="33314" Map="4" Heading="5" Price="676"/>
+	</Action>
+	<Action Name="teleport guide4_2" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33334" Y="32444" Map="4" Heading="5" Price="676"/>
+	</Action>
+	<Action Name="teleport guide4_3" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33815" Y="32638" Map="4" Heading="5" Price="676"/>
+	</Action>
+	<Action Name="teleport guide4_4" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="34279" Y="33214" Map="4" Heading="5" Price="676"/>
+	</Action>
+	<Action Name="teleport guide4_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="33662" Y="32333" Map="4" Heading="5" Price="676"/>
+	</Action>
+	
+<Action Name="teleport guide4_6" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+<Teleport X="32740" Y="32730" Map="55" Heading="5" Price="1066"/>
+	</Action>
+	<Action Name="teleport guide4_7" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32745" Y="32857" Map="60" Heading="5" Price="936"/>
+	</Action>
+<!-- 村莊金幣顯示 -->
 	<ShowHtml Name="teleportURL" HtmlId="teleisland2" NpcId="50015">
 		<Data Value="1500" />
 	</ShowHtml>
@@ -1580,7 +1751,6 @@
 		<Data Value="1800" />
 		<Data Value="1000" />
 	</ShowHtml>
-	<!-- 歐姆地監 迪亞路哲 -->
 	<ShowHtml Name="teleportURL" HtmlId="teleoum2" NpcId="50072">
 		<Data Value="2200" />
 		<Data Value="1800" />
@@ -1592,7 +1762,6 @@
 		<Data Value="2000" />
 		<Data Value="2000" />
 	</ShowHtml>
-	<!-- 狄亞得要塞 迪雅貝斯 -->
 	<ShowHtml Name="teleportURL" HtmlId="telediad2" NpcId="50073">
 		<Data Value="0" />
 		<Data Value="2200" />
