@@ -4148,6 +4148,28 @@ public class L1PcInstance extends L1Character {
 		_isShowTradeChat = flag;
 	}
 
+	// 血盟
+	private boolean _isShowClanChat = true;
+
+	public boolean isShowClanChat() {
+		return _isShowClanChat;
+	}
+
+	public void setShowClanChat(boolean flag) {
+		_isShowClanChat = flag;
+	}
+
+	// 組隊
+	private boolean _isShowPartyChat = true;
+
+	public boolean isShowPartyChat() {
+		return _isShowPartyChat;
+	}
+
+	public void setShowPartyChat(boolean flag) {
+		_isShowPartyChat = flag;
+	}
+
 	private boolean _isShowWorldChat = true;
 
 	public boolean isShowWorldChat() {

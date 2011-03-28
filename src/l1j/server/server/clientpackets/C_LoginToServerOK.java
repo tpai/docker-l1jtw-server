@@ -39,42 +39,45 @@ public class C_LoginToServerOK extends ClientBasePacket {
 			if ((button == 95) || (button == 127)) {
 				pc.setShowWorldChat(true); // open
 				pc.setCanWhisper(true); // open
-			}
-			else if ((button == 91) || (button == 123)) {
+			} else if ((button == 91) || (button == 123)) {
 				pc.setShowWorldChat(true); // open
 				pc.setCanWhisper(false); // close
-			}
-			else if ((button == 94) || (button == 126)) {
+			} else if ((button == 94) || (button == 126)) {
 				pc.setShowWorldChat(false); // close
 				pc.setCanWhisper(true); // open
-			}
-			else if ((button == 90) || (button == 122)) {
+			} else if ((button == 90) || (button == 122)) {
 				pc.setShowWorldChat(false); // close
 				pc.setCanWhisper(false); // close
 			}
-		}
-		else if (type == 0) { // 全體聊天
+		} else if (type == 0) { // 全體聊天
 			if (button == 0) { // close
 				pc.setShowWorldChat(false);
-			}
-			else if (button == 1) { // open
+			} else if (button == 1) { // open
 				pc.setShowWorldChat(true);
 			}
-		}
-		else if (type == 2) { // 密語
+		} else if (type == 2) { // 密語
 			if (button == 0) { // close
 				pc.setCanWhisper(false);
-			}
-			else if (button == 1) { // open
+			} else if (button == 1) { // open
 				pc.setCanWhisper(true);
 			}
-		}
-		else if (type == 6) { // 交易頻道
+		} else if (type == 6) { // 交易頻道
 			if (button == 0) { // close
 				pc.setShowTradeChat(false);
-			}
-			else if (button == 1) { // open
+			} else if (button == 1) { // open
 				pc.setShowTradeChat(true);
+			}
+		} else if (type == 9) { // 血盟
+			if (button == 0) { // open
+				pc.setShowClanChat(true);
+			} else if (button == 1) { // close
+				pc.setShowClanChat(false);
+			}
+		} else if (type == 10) { // 組隊
+			if (button == 0) { // close
+				pc.setShowPartyChat(false);
+			} else if (button == 1) { // open
+				pc.setShowPartyChat(true);
 			}
 		}
 	}
