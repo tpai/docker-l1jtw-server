@@ -63,18 +63,21 @@ public class S_ShopSellList extends ServerBasePacket {
 			writeD(i);
 			writeH(shopItem.getItem().getGfxId());
 			writeD(price);
-			
-			String nameId = "";
-			if (item.getItemId() == 40309) {// Race Tickets
-				String[] temp = item.getName().split("-");
-				nameId = " $" + (1212 + Integer.parseInt(temp[1]));
-			}
+
 			if (shopItem.getPackCount() > 1) {
 				writeS(item.getName() + " (" + shopItem.getPackCount() + ")");
 			} else {
-				writeS(item.getName() + nameId);
+				if (item.getItemId() == 40309) {// 食人妖精RaceTicket
+					String[] temp = item.getName().split(" ");
+					String buf = temp[temp.length - 1];
+					temp = buf.split("-");
+					writeS(buf + " $"
+							+ (1212 + Integer.parseInt(temp[temp.length - 1])));
+				} else {
+					writeS(item.getName());
+				}
 			}
-			
+
 			L1Item template = ItemTable.getInstance().getTemplate(
 					item.getItemId());
 			if (template == null) {

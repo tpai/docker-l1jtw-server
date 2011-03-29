@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
+import l1j.server.server.datatables.RaceTicketTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
@@ -36,6 +37,7 @@ import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.storage.CharactersItemStorage;
 import l1j.server.server.templates.L1Item;
+import l1j.server.server.templates.L1RaceTicket;
 
 public class L1PcInventory extends L1Inventory {
 
@@ -61,7 +63,7 @@ public class L1PcInventory extends L1Inventory {
 	public L1PcInstance getOwner() {
 		return _owner;
 	}
-	
+
 	// 240段階のウェイトを返す
 	public int getWeight240() {
 		return calcWeight240(getWeight());
@@ -105,7 +107,8 @@ public class L1PcInventory extends L1Inventory {
 			return SIZE_OVER;
 		}
 
-		int weight = getWeight() + item.getItem().getWeight() * count / 1000 + 1;
+		int weight = getWeight() + item.getItem().getWeight() * count / 1000
+				+ 1;
 		if (weight < 0 || (item.getItem().getWeight() * count / 1000) < 0) {
 			if (message) {
 				sendOverMessage(82); // アイテムが重すぎて、これ以上持てません。
@@ -122,13 +125,13 @@ public class L1PcInventory extends L1Inventory {
 		L1ItemInstance itemExist = findItemId(item.getItemId());
 		if (itemExist != null && (itemExist.getCount() + count) > MAX_AMOUNT) {
 			if (message) {
-				getOwner().sendPackets(new S_ServerMessage(166,
-						"所持しているアデナ",
-						"2,000,000,000を超過しています。")); // \f1%0が%4%1%3%2
+				getOwner().sendPackets(
+						new S_ServerMessage(166, "所持しているアデナ",
+								"2,000,000,000を超過しています。")); // \f1%0が%4%1%3%2
 			}
 			return AMOUNT_OVER;
 		}
-		
+
 		return OK;
 	}
 
@@ -149,9 +152,26 @@ public class L1PcInventory extends L1Inventory {
 					item.setEquipped(false);
 					setEquipped(item, true, true, false);
 				}
-				if (item.getItem().getType2() == 0 && item.getItem()
-						.getType() == 2) { // light系アイテム
+				if (item.getItem().getType2() == 0
+						&& item.getItem().getType() == 2) { // light系アイテム
 					item.setRemainingTime(item.getItem().getLightFuel());
+				}
+				/**
+				 * 玩家身上的食人妖精RaceTicket 顯示場次、及選手編號
+				 */
+				if (item.getItemId() == 40309) {
+					L1RaceTicket ticket = RaceTicketTable.getInstance()
+							.getTemplate(item.getId());
+					if (ticket != null) {
+						L1Item temp = (L1Item) item.getItem().clone();
+						String buf = temp.getIdentifiedNameId() + " "
+								+ ticket.get_round() + "-"
+								+ ticket.get_runner_num();
+						temp.setName(buf);
+						temp.setUnidentifiedNameId(buf);
+						temp.setIdentifiedNameId(buf);
+						item.setItem(temp);
+					}
 				}
 				L1World.getInstance().storeObject(item);
 			}
@@ -165,8 +185,8 @@ public class L1PcInventory extends L1Inventory {
 	public void insertItem(L1ItemInstance item) {
 		_owner.sendPackets(new S_AddItem(item));
 		if (item.getItem().getWeight() != 0) {
-			_owner.sendPackets(
-					new S_PacketBox(S_PacketBox.WEIGHT, getWeight240()));
+			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
+					getWeight240()));
 		}
 		try {
 			CharactersItemStorage storage = CharactersItemStorage.create();
@@ -211,10 +231,10 @@ public class L1PcInventory extends L1Inventory {
 	/**
 	 * インベントリ内のアイテムの状態を更新する。
 	 * 
-	 * @param item -
-	 *            更新対象のアイテム
-	 * @param column -
-	 *            更新するステータスの種類
+	 * @param item
+	 *            - 更新対象のアイテム
+	 * @param column
+	 *            - 更新するステータスの種類
 	 */
 	@Override
 	public void updateItem(L1ItemInstance item, int column) {
@@ -241,8 +261,8 @@ public class L1PcInventory extends L1Inventory {
 		if (column >= COL_ITEMID) { // 別のアイテムになる場合(便箋を開封したときなど)
 			_owner.sendPackets(new S_ItemStatus(item));
 			_owner.sendPackets(new S_ItemColor(item));
-			_owner.sendPackets(new S_PacketBox(
-					S_PacketBox.WEIGHT, getWeight240()));
+			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
+					getWeight240()));
 			column -= COL_ITEMID;
 		}
 		if (column >= COL_DELAY_EFFECT) { // 効果ディレイ
@@ -260,8 +280,8 @@ public class L1PcInventory extends L1Inventory {
 			}
 			if (item.getItem().getWeight() != 0) {
 				// XXX 240段階のウェイトが変化しない場合は送らなくてよい
-				_owner.sendPackets(new S_PacketBox(
-						S_PacketBox.WEIGHT, getWeight240()));
+				_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
+						getWeight240()));
 			}
 			column -= COL_COUNT;
 		}
@@ -287,10 +307,10 @@ public class L1PcInventory extends L1Inventory {
 	/**
 	 * インベントリ内のアイテムの状態をDBに保存する。
 	 * 
-	 * @param item -
-	 *            更新対象のアイテム
-	 * @param column -
-	 *            更新するステータスの種類
+	 * @param item
+	 *            - 更新対象のアイテム
+	 * @param column
+	 *            - 更新するステータスの種類
 	 */
 	public void saveItem(L1ItemInstance item, int column) {
 		if (column == 0) {
@@ -368,8 +388,8 @@ public class L1PcInventory extends L1Inventory {
 		_owner.sendPackets(new S_DeleteInventoryItem(item));
 		_items.remove(item);
 		if (item.getItem().getWeight() != 0) {
-			_owner.sendPackets(
-					new S_PacketBox(S_PacketBox.WEIGHT, getWeight240()));
+			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
+					getWeight240()));
 		}
 	}
 
@@ -469,8 +489,8 @@ public class L1PcInventory extends L1Inventory {
 		int equipeCount = 0;
 		for (Object itemObject : _items) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item.getItem().getType2() == 2
-					&& item.getItem().getType() == 9 && item.isEquipped()) {
+			if (item.getItem().getType2() == 2 && item.getItem().getType() == 9
+					&& item.isEquipped()) {
 				equipeItem[equipeCount] = item;
 				equipeCount++;
 				if (equipeCount == 2) {

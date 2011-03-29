@@ -447,20 +447,6 @@ public class L1ItemInstance extends L1Object {
 			}
 		}
 
-		// 食人妖精 RaceTicket
-		if (itemId == 40309) {
-			L1RaceTicket ticket = RaceTicketTable.getInstance().getTemplate(
-					getId());
-			if (ticket != null) {
-				name.delete(0, name.length());
-				name.append(ItemTable.getInstance().getTemplate(getItemId())
-						.getIdentifiedNameId());
-				name.append(" " + ticket.get_round() + "-"
-						+ ticket.get_runner_num());
-				name.append(" (" + count + ")");
-			}
-		}
-
 		if ((getItem().getType2() == 0) && (getItem().getType() == 2)) { // light系アイテム
 			if (isNowLighting()) {
 				name.append(" ($10)");

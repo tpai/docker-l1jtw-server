@@ -191,7 +191,8 @@ public class L1Inventory extends L1Object {
 		}
 
 		if (itemId == 40309) {// Race Tickets
-			String[] temp = item.getItem().getIdentifiedNameId().split("-");
+			String[] temp = item.getItem().getIdentifiedNameId().split(" ");
+			temp=temp[temp.length-1].split("-");
 			L1RaceTicket ticket = new L1RaceTicket();
 			ticket.set_itemobjid(item.getId());
 			ticket.set_round(Integer.parseInt(temp[0]));
