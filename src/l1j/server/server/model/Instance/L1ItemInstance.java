@@ -23,10 +23,8 @@ import java.sql.Timestamp;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.PetTable;
-import l1j.server.server.datatables.RaceTicketTable;
 import l1j.server.server.model.L1EquipmentTimer;
 import l1j.server.server.model.L1ItemOwnerTimer;
 import l1j.server.server.model.L1Object;
@@ -37,7 +35,6 @@ import l1j.server.server.templates.L1Armor;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1Pet;
-import l1j.server.server.templates.L1RaceTicket;
 import l1j.server.server.utils.BinaryOutputStream;
 
 // Referenced classes of package l1j.server.server.model:

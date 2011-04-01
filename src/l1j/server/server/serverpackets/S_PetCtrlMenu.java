@@ -20,15 +20,12 @@ public class S_PetCtrlMenu extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_PetCtrlMenu(int type) {
+	public S_PetCtrlMenu(boolean open) {
 		writeC(Opcodes.S_OPCODE_PETCTRL);
 		writeC(0x0c);
-		writeC(type);
-		writeC(0x00);
-		writeC(0x00);
-		writeC(0x00);
-		writeC(0x00);
-		writeC(0x00);
+		writeH(open ? 0x0003 : 0x0000);
+		writeD(0x00000000);
+		writeD(0x00000000);
 	}
 
 	@Override

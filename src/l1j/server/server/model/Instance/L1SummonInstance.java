@@ -331,7 +331,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		if (_master.getPetList().isEmpty()) {
 			L1PcInstance pc = (L1PcInstance) _master;
 			if (pc instanceof L1PcInstance) {
-				pc.sendPackets(new S_PetCtrlMenu(0));// 關閉寵物控制圖形介面
+				pc.sendPackets(new S_PetCtrlMenu(false));// 關閉寵物控制圖形介面
 			}
 		}
 		super.deleteMe();

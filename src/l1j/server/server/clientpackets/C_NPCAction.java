@@ -445,7 +445,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 			if (pc.getPetList().isEmpty()) {
-				pc.sendPackets(new S_PetCtrlMenu(0));// 關閉寵物控制圖形介面
+				pc.sendPackets(new S_PetCtrlMenu(false));// 關閉寵物控制圖形介面
 			}
 			htmlid = ""; // ウィンドウを消す
 		} else if (s.equalsIgnoreCase("withdrawnpc")) { // 「動物を受け取る」
