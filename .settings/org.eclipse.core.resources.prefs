@@ -1,6 +1,7 @@
-#Sun Feb 06 19:25:01 CST 2011
+#Sat Apr 02 19:03:30 CST 2011
 eclipse.preferences.version=1
 encoding//config/altsettings.properties=UTF-8
 encoding//config/log.properties=UTF-8
+encoding//config/record.properties=UTF-8
 encoding//config/server.properties=UTF-8
 encoding/<project>=UTF-8

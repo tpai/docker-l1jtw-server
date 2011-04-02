@@ -40,7 +40,6 @@ public class L1AssessedItem {
 		} else {
 			_assessedPrice = assessedPrice;
 		}
-		_assessedPrice = assessedPrice;
 	}
 
 	public int getTargetId() {
