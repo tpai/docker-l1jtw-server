@@ -16,24 +16,66 @@ package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.utils.Random;
 
 public class S_ActiveSpells extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
 	public S_ActiveSpells(L1PcInstance pc) {
-		buildPacket(pc);
-	}
+		int[] UByte8 = new int[101];
+		byte[] randBox = new byte[2];
+		randBox[0] = Random.nextByte();
+		randBox[1] = Random.nextByte();
 
-	private void buildPacket(L1PcInstance pc) {
+		int[] time = new int[101];
+
 		writeC(Opcodes.S_OPCODE_ACTIVESPELLS);
 		writeC(0x14);
-		writeC(0x69);
-		// writeC(0x50);
-		// writeC(0x40);
-		// writeC(0x30);
-		// writeC(0x25);
-		// writeC(0x55);
+
+		if (pc.hasSkillEffect(4001)) { // 神力藥水150%
+			time[42] = 900 / 4; // 該技能最後登出時間
+			UByte8[42] = time[42]; // 圖示時間 = 時間 * 4 - 2
+			UByte8[43] = 32; // type 32: 狩獵的經驗值將會增加。
+			pc.setSkillEffect(4001, time[42] - 2);
+		} else if (pc.hasSkillEffect(4002)) { // 神力藥水175%
+			time[42] = 900 / 4; // 該技能最後登出時間
+			UByte8[42] = time[42]; // 圖示時間 = 時間 * 4 - 2
+			UByte8[43] = 33; // type 33: 狩獵的經驗值將會增加。
+			pc.setSkillEffect(4002, time[42] - 2);
+		} else if (pc.hasSkillEffect(4003)) { // 神力藥水200%
+			time[42] = 900 / 4; // 該技能最後登出時間
+			UByte8[42] = time[42]; // 圖示時間 = 時間 * 4 - 2
+			UByte8[43] = 34; // type 34: 狩獵的經驗值將會增加。
+			pc.setSkillEffect(4003, time[42] - 2);
+		} else if (pc.hasSkillEffect(4004)) { // 神力藥水225%
+			time[42] = 900 / 4; // 該技能最後登出時間
+			UByte8[42] = time[42]; // 圖示時間 = 時間 * 4 - 2
+			UByte8[43] = 35; // type 35: 狩獵的經驗值將會增加。
+			pc.setSkillEffect(4004, time[42] - 2);
+		} else if (pc.hasSkillEffect(4005)) { // 神力藥水250%
+			time[42] = 900 / 4; // 該技能最後登出時間
+			UByte8[42] = time[42]; // 圖示時間 = 時間 * 4 - 2
+			UByte8[43] = 36; // type 36: 狩獵的經驗值將會增加。
+			pc.setSkillEffect(4005, time[42] - 2);
+		} else if (pc.hasSkillEffect(4006)) { // 象牙塔妙藥
+			time[42] = 900 / 4; // 該技能最後登出時間
+			UByte8[42] = time[42]; // 圖示時間 = 時間 * 4 - 2
+			UByte8[43] = 54; // type 54:因為妙藥，身心都很輕鬆。提升體力回復量和魔力回復量。
+			pc.setSkillEffect(4006, time[42] - 2);
+		}
+
+		writeC(Opcodes.S_OPCODE_ACTIVESPELLS);
+		writeC(0x14);
+
+		for (int i : UByte8) {
+			if (i != 72) {
+				writeC(i);
+			} else {
+				writeD(0x00000000); // 時間???
+			}
+		}
+		writeByte(randBox);
 	}
 
 	@Override

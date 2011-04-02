@@ -28,12 +28,6 @@ public class S_OwnCharPack extends ServerBasePacket {
 
 	private static final int STATUS_PC = 4;
 
-	private static final int STATUS_BRAVE = 16;
-
-	private static final int STATUS_ELFBRAVE = 32;
-
-	private static final int STATUS_FASTMOVABLE = 64;
-
 	private static final int STATUS_GHOST = 128;
 
 	private byte[] _byte = null;
@@ -53,18 +47,10 @@ public class S_OwnCharPack extends ServerBasePacket {
 		if (pc.isInvisble() || pc.isGmInvis()) {
 			status |= STATUS_INVISIBLE;
 		}
-		if (pc.isBrave()) {
-			status |= STATUS_BRAVE;
+		if (pc.getBraveSpeed() != 0) { // 2段加速效果
+			status |= pc.getBraveSpeed() * 16;
 		}
-		if (pc.isElfBrave()) {
-			// エルヴンワッフルの場合は、STATUS_BRAVEとSTATUS_ELFBRAVEを立てる。
-			// STATUS_ELFBRAVEのみでは効果が無い？
-			status |= STATUS_BRAVE;
-			status |= STATUS_ELFBRAVE;
-		}
-		if (pc.isFastMovable()) {
-			status |= STATUS_FASTMOVABLE;
-		}
+
 		if (pc.isGhost()) {
 			status |= STATUS_GHOST;
 		}
@@ -76,14 +62,12 @@ public class S_OwnCharPack extends ServerBasePacket {
 		writeD(pc.getId());
 		if (pc.isDead()) {
 			writeH(pc.getTempCharGfxAtDead());
-		}
-		else {
+		} else {
 			writeH(pc.getTempCharGfx());
 		}
 		if (pc.isDead()) {
 			writeC(pc.getStatus());
-		}
-		else {
+		} else {
 			writeC(pc.getCurrentWeapon());
 		}
 		writeC(pc.getHeading());
@@ -102,8 +86,7 @@ public class S_OwnCharPack extends ServerBasePacket {
 		if (pc.isInParty()) // パーティー中
 		{
 			writeC(100 * pc.getCurrentHp() / pc.getMaxHp());
-		}
-		else {
+		} else {
 			writeC(0xFF);
 		}
 		writeC(0); // タルクック距離(通り)

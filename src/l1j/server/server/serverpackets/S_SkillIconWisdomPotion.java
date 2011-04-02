@@ -25,7 +25,7 @@ public class S_SkillIconWisdomPotion extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_SKILLICONGFX);
 		writeC(0x39);
 		writeC(0x2c);
-		writeH(time);
+		writeC(time);
 	}
 
 	@Override
