@@ -96,6 +96,7 @@ import static l1j.server.server.Opcodes.C_OPCODE_TELEPORT;
 import static l1j.server.server.Opcodes.C_OPCODE_TITLE;
 import static l1j.server.server.Opcodes.C_OPCODE_TRADE;
 import static l1j.server.server.Opcodes.C_OPCODE_TRADEADDCANCEL;
+import static l1j.server.server.Opcodes.C_OPCODE_SENDLOCATION;
 import static l1j.server.server.Opcodes.C_OPCODE_TRADEADDITEM;
 import static l1j.server.server.Opcodes.C_OPCODE_TRADEADDOK;
 import static l1j.server.server.Opcodes.C_OPCODE_USEITEM;
@@ -172,6 +173,7 @@ import l1j.server.server.clientpackets.C_Result;
 import l1j.server.server.clientpackets.C_ReturnToLogin;
 import l1j.server.server.clientpackets.C_SelectList;
 import l1j.server.server.clientpackets.C_SelectTarget;
+import l1j.server.server.clientpackets.C_SendLocation;
 import l1j.server.server.clientpackets.C_ServerVersion;
 import l1j.server.server.clientpackets.C_Ship;
 import l1j.server.server.clientpackets.C_Shop;
@@ -560,6 +562,10 @@ public class PacketHandler {
 
 		case C_OPCODE_CLAN:
 			new C_Clan(abyte0, _client);
+			break;
+
+		case C_OPCODE_SENDLOCATION:
+			new C_SendLocation(abyte0, _client);
 			break;
 
 		default:
