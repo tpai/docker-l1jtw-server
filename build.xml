@@ -85,6 +85,9 @@
 			<manifest>
 				<attribute name="Class-Path" value="${mf.classpath}" />
 				<attribute name="Main-Class" value="l1j.server.Server" />
+				<attribute name="Created-By" value="L1JTW 99nets" />
+				<attribute name="Specification-Title" value="L1JTW_99nets_GameServer_S3DS2" />
+				<attribute name="Specification-Vendor" value="L1JTW 99nets" />
 			</manifest>
 		</jar>
 		<delete dir="${class.dir}" />
@@ -120,6 +123,7 @@
 			<manifest>
 				<attribute name="Built-Time" value="${build.tstamp}" />
 				<attribute name="Main-Class" value="l1j.loader.StartLoader" />
+				<attribute name="Created-By" value="L1JTW 99nets" />
 			</manifest>
 		</jar>
 		<delete dir="${class.dir}" />
