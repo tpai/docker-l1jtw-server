@@ -89,7 +89,7 @@ public class Opcodes {
 	public static final int C_OPCODE_PUTSOLDIER = 84;//要求配置已僱用士兵
 	public static final int C_OPCODE_LEAVEPARTY = 85;//要求脫離隊伍
 	public static final int C_OPCODE_PARTYLIST = 86;//要求查看隊伍
-	public static final int C_OPCODE_NEWMAPTYPE = 87; // 地圖(3.3C 新增)
+	public static final int C_OPCODE_SENDLOCATION = 87; // 要求傳送位置(3.3C 新增)
 	public static final int C_OPCODE_BOARDREAD = 88;//要求閱讀佈告單個欄訊息
 	public static final int C_OPCODE_CALL = 89;//要求召喚到身邊(gm)
 	public static final int C_OPCODE_WAR = 91;//要求宣戰
