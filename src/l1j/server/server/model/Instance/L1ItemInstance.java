@@ -29,6 +29,7 @@ import l1j.server.server.model.L1EquipmentTimer;
 import l1j.server.server.model.L1ItemOwnerTimer;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1PcInventory;
+import l1j.server.server.model.item.L1ArmorId;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Armor;
@@ -250,12 +251,13 @@ public class L1ItemInstance extends L1Object {
 
 	public int getMr() {
 		int mr = _item.get_mdef();
-		if ((getItemId() == 20011) || (getItemId() == 20110)
-				|| (getItemId() == 21108) || (getItemId() == 120011)) {
+		if ((getItemId() == L1ArmorId.HELMET_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.CHAIN_MAIL_OF_MAGIC_RESISTANCE) // 抗魔法頭盔、抗魔法鏈甲
+				|| (getItemId() >= L1ArmorId.ELITE_PLATE_MAIL_OF_LINDVIOR && getItemId() <= L1ArmorId.ELITE_SCALE_MAIL_OF_LINDVIOR) // 林德拜爾的力量、林德拜爾的魅惑、林德拜爾的泉源、林德拜爾的霸氣
+				|| (getItemId() == L1ArmorId.B_HELMET_OF_MAGIC_RESISTANCE)) { // 受祝福的 抗魔法頭盔
 			mr += getEnchantLevel();
 		}
-		if ((getItemId() == 20056) || (getItemId() == 120056)
-				|| (getItemId() == 220056)) {
+		if ((getItemId() == L1ArmorId.CLOAK_OF_MAGIC_RESISTANCE) || (getItemId() == L1ArmorId.B_CLOAK_OF_MAGIC_RESISTANCE) // 抗魔法斗篷、受祝福的 抗魔法斗篷
+				|| (getItemId() == L1ArmorId.C_CLOAK_OF_MAGIC_RESISTANCE)) { // 受咀咒的 抗魔法斗篷
 			mr += getEnchantLevel() * 2;
 		}
 		return mr;
@@ -684,6 +686,11 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(getItem().getDmgSmall());
 				os.writeC(getItem().getDmgLarge());
 				break;
+			case 11: // 可使用職業：[高等寵物]
+				os.writeC(7);
+				os.writeC(128);
+				os.writeC(23); // 材質
+				break;
 			default:
 				os.writeC(23); // 材質
 				break;
@@ -706,8 +713,9 @@ public class L1ItemInstance extends L1Object {
 				if (ac < 0) {
 					ac = ac - ac - ac;
 				}
-				os.writeH(ac);
+				os.writeC(ac);
 				os.writeC(getItem().getMaterial());
+				os.writeC(-1); // 飾品級別 - 0:上等 1:中等 2:初級 3:特等
 				os.writeD(getWeight());
 			}
 			/** 強化數判斷 */
@@ -894,6 +902,16 @@ public class L1ItemInstance extends L1Object {
 				os.writeH(getItem().get_regist_sustain());
 				os.writeC(33);
 				os.writeC(6);
+			}
+			// 體力回復率
+			if (getItem().get_addhpr() != 0) {
+				os.writeC(37);
+				os.writeC(getItem().get_addhpr());
+			}
+			// 魔力回復率
+			if (getItem().get_addmpr() != 0) {
+				os.writeC(38);
+				os.writeC(getItem().get_addmpr());
 			}
 			// 幸運
 			// if (getItem.getLuck() != 0) {

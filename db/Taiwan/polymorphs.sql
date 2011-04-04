@@ -268,3 +268,8 @@ INSERT INTO `polymorphs` VALUES ('6282', 'neo platinum assassin', '6282', '70', 
 INSERT INTO `polymorphs` VALUES ('6284', 'Haunted House jack o lantern', '6284', '1', '0', '0', '0', '7');
 INSERT INTO `polymorphs` VALUES ('6400', 'Halloween jack o lantern', '6400', '1', '4095', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('6894', 'awake', '6894', '1', '751', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('7332', 'spearm 52', '7332', '52', '1080', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('7338', 'spearm 55', '7338', '55', '1080', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('7339', 'spearm 60', '7339', '60', '1080', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('7340', 'spearm 65', '7340', '65', '1080', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('7341', 'spearm 70', '7341', '70', '1080', '4095', '1', '7');
