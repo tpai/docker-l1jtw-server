@@ -196,29 +196,47 @@ public class L1PcInventory extends L1Inventory {
 		}
 	}
 
-	public static final int COL_ATTR_ENCHANT_LEVEL = 2048;
-
-	public static final int COL_ATTR_ENCHANT_KIND = 1024;
-
-	public static final int COL_BLESS = 512;
-
-	public static final int COL_REMAINING_TIME = 256;
-
-	public static final int COL_CHARGE_COUNT = 128;
-
-	public static final int COL_ITEMID = 64;
-
-	public static final int COL_DELAY_EFFECT = 32;
-
-	public static final int COL_COUNT = 16;
-
-	public static final int COL_EQUIPPED = 8;
-
-	public static final int COL_ENCHANTLVL = 4;
+	public static final int COL_DURABILITY = 1;
 
 	public static final int COL_IS_ID = 2;
 
-	public static final int COL_DURABILITY = 1;
+	public static final int COL_ENCHANTLVL = 4;
+
+	public static final int COL_EQUIPPED = 8;
+
+	public static final int COL_COUNT = 16;
+
+	public static final int COL_DELAY_EFFECT = 32;
+
+	public static final int COL_ITEMID = 64;
+
+	public static final int COL_CHARGE_COUNT = 128;
+
+	public static final int COL_MPR = 129;
+
+	public static final int COL_HPR = 130;
+
+	public static final int COL_ADDMP = 131;
+
+	public static final int COL_ADDHP = 132;
+
+	public static final int COL_ADDSP = 133;
+
+	public static final int COL_EARTHMR = 134;
+
+	public static final int COL_WINDMR = 135;
+
+	public static final int COL_WATERMR = 136;
+
+	public static final int COL_FIREMR = 137;
+
+	public static final int COL_REMAINING_TIME = 256;
+
+	public static final int COL_BLESS = 512;
+
+	public static final int COL_ATTR_ENCHANT_KIND = 1024;
+
+	public static final int COL_ATTR_ENCHANT_LEVEL = 2048;
 
 	@Override
 	public void updateItem(L1ItemInstance item) {
@@ -238,6 +256,41 @@ public class L1PcInventory extends L1Inventory {
 	 */
 	@Override
 	public void updateItem(L1ItemInstance item, int column) {
+		switch (column) {//飾品強化卷軸 Scroll of Enchant Accessory
+		case COL_ATTR_ENCHANT_LEVEL:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_ATTR_ENCHANT_KIND:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_FIREMR:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_WATERMR:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_EARTHMR:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_WINDMR:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_ADDSP:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_ADDHP:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_ADDMP:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_HPR:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		case COL_MPR:
+			_owner.sendPackets(new S_ItemStatus(item));
+			break;
+		}
 		if (column >= COL_ATTR_ENCHANT_LEVEL) { // 属性強化数
 			_owner.sendPackets(new S_ItemStatus(item));
 			column -= COL_ATTR_ENCHANT_LEVEL;

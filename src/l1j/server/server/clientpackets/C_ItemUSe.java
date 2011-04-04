@@ -107,6 +107,7 @@ import l1j.server.server.serverpackets.S_CurseBlind;
 import l1j.server.server.serverpackets.S_Fishing;
 import l1j.server.server.serverpackets.S_IdentifyDesc;
 import l1j.server.server.serverpackets.S_ItemName;
+import l1j.server.server.serverpackets.S_ItemStatus;
 import l1j.server.server.serverpackets.S_Letter;
 import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_Message_YN;
@@ -282,6 +283,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				) || (itemId == 41426 // 封印スクロール
 				) || (itemId == 41427 // 封印解除スクロール
 				) || (itemId == 40075 // 防具破壊スクロール
+				) || (itemId == 49148 //飾品強化卷軸 Scroll of Enchant Accessory
 				) || (itemId == 41429 // 風の武器強化スクロール
 				) || (itemId == 41430 // 地の武器強化スクロール
 				) || (itemId == 41431 // 水の武器強化スクロール
@@ -2788,254 +2790,339 @@ public class C_ItemUSe extends ClientBasePacket {
 					} else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 					}
-				} else if (itemId == 41426) { // 封印スクロール
-					L1ItemInstance lockItem = pc.getInventory().getItem(l);
-					if (((lockItem != null) && (lockItem.getItem().getType2() == 1))
-							|| (lockItem.getItem().getType2() == 2)
-							|| ((lockItem.getItem().getType2() == 0) && lockItem
-									.getItem().isCanSeal())) {
-						if ((lockItem.getBless() == 0)
-								|| (lockItem.getBless() == 1)
-								|| (lockItem.getBless() == 2)
-								|| (lockItem.getBless() == 3)) {
-							int bless = 1;
-							switch (lockItem.getBless()) {
-							case 0:
-								bless = 128;
-								break;
-							case 1:
-								bless = 129;
-								break;
-							case 2:
-								bless = 130;
-								break;
-							case 3:
-								bless = 131;
-								break;
-							}
-							lockItem.setBless(bless);
-							pc.getInventory().updateItem(lockItem,
-									L1PcInventory.COL_BLESS);
-							pc.getInventory().saveItem(lockItem,
-									L1PcInventory.COL_BLESS);
-							pc.getInventory().removeItem(l1iteminstance, 1);
-						} else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						}
-					} else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				}
+				/**飾品強化卷軸 Scroll of Enchant Accessory*/
+				else if (itemId == 49148) {
+					if (!pc.getInventory().checkItem(itemId, 1)) {
+						return;
 					}
-				} else if (itemId == 41427) { // 封印解除スクロール
-					L1ItemInstance lockItem = pc.getInventory().getItem(l);
-					if (((lockItem != null) && (lockItem.getItem().getType2() == 1))
-							|| (lockItem.getItem().getType2() == 2)
-							|| ((lockItem.getItem().getType2() == 0) && lockItem
-									.getItem().isCanSeal())) {
-						if ((lockItem.getBless() == 128)
-								|| (lockItem.getBless() == 129)
-								|| (lockItem.getBless() == 130)
-								|| (lockItem.getBless() == 131)) {
-							int bless = 1;
-							switch (lockItem.getBless()) {
-							case 128:
-								bless = 0;
-								break;
-							case 129:
-								bless = 1;
-								break;
-							case 130:
-								bless = 2;
-								break;
-							case 131:
-								bless = 3;
-								break;
-							}
-							lockItem.setBless(bless);
-							pc.getInventory().updateItem(lockItem,
-									L1PcInventory.COL_BLESS);
-							pc.getInventory().saveItem(lockItem,
-									L1PcInventory.COL_BLESS);
-							pc.getInventory().removeItem(l1iteminstance, 1);
-						} else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						}
-					} else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					}
-				} else if (itemId == 41428) { // 太古の玉爾
-					if ((pc != null) && (l1iteminstance != null)) {
-						Account account = Account.load(pc.getAccountName());
-						if (account == null) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-							return;
-						}
-						int characterSlot = account.getCharacterSlot();
-						int maxAmount = Config.DEFAULT_CHARACTER_SLOT
-								+ characterSlot;
-						if (maxAmount >= 8) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-							return;
-						}
-						if (characterSlot < 0) {
-							characterSlot = 0;
-						} else {
-							characterSlot += 1;
-						}
-						account.setCharacterSlot(characterSlot);
-						Account.updateCharacterSlot(account);
-						pc.getInventory().removeItem(l1iteminstance, 1);
-					} else {
+					if (l1iteminstance1.getItem().getType2() != 2) {
 						pc.sendPackets(new S_ServerMessage(79));
-					}
-				} else if (itemId == 40075) { // 防具破壊スクロール
-					if (l1iteminstance1.getItem().getType2() == 2) {
-						int msg = 0;
-						switch (l1iteminstance1.getItem().getType()) {
-						case 1: // helm
-							msg = 171; // \f1ヘルムが塵になり、風に飛んでいきます。
+						return;
+					} else if (l1iteminstance1 != null
+							&& (l1iteminstance1.getItem().getType() == 8
+									|| l1iteminstance1.getItem().getType() == 9
+									|| l1iteminstance1.getItem().getType() == 10 || l1iteminstance1
+									.getItem().getType() == 12)) {
+						int chance = Random.nextInt(100) + 1;
+						switch (l1iteminstance1.getEnchantLevel()) {
+						case -1:
+						case 0:
+						case 1:
+						case 2:
+						case 3:
+						case 4:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+							if (l1iteminstance1.getEnchantLevel() == -1) {
+								l1iteminstance1.setEnchantLevel(0);
+							}
+							if (chance < 25) {
+								l1iteminstance1.setaddHp(l1iteminstance1
+										.getaddHp() + 2);
+								if (l1iteminstance1.isEquipped()) {
+									pc.addMaxHp(2);
+									// pc.addAc(-1);
+								}
+							} else if (chance > 25 && chance < 50) {
+								l1iteminstance1.setaddMp(l1iteminstance1
+										.getaddMp() + 1);
+								if (l1iteminstance1.isEquipped()) {
+									pc.addMaxMp(1);
+									// pc.addAc(-1);
+								}
+							} else if (chance > 50 && chance < 75) {
+								l1iteminstance1.setFireMr(l1iteminstance1
+										.getFireMr() + 1);
+								l1iteminstance1.setWaterMr(l1iteminstance1
+										.getWaterMr() + 1);
+								l1iteminstance1.setEarthMr(l1iteminstance1
+										.getEarthMr() + 1);
+								l1iteminstance1.setWindMr(l1iteminstance1
+										.getWindMr() + 1);
+								if (l1iteminstance1.isEquipped()) {
+									pc.addFire(1);
+									pc.addWater(1);
+									pc.addEarth(1);
+									pc.addWind(1);
+									// pc.addAc(-1);
+								}
+							} else {
+								FailureEnchant(pc, l1iteminstance1, client);
+								pc.getInventory().removeItem(l1iteminstance, 1);
+								return;
+							}
 							break;
-						case 2: // armor
-							msg = 169; // \f1アーマーが壊れ、下に落ちました。
-							break;
-						case 3: // T
-							msg = 170; // \f1シャツが細かい糸になり、破けて落ちました。
-							break;
-						case 4: // cloak
-							msg = 168; // \f1マントが破れ、塵になりました。
-							break;
-						case 5: // glove
-							msg = 172; // \f1グローブが消えました。
-							break;
-						case 6: // boots
-							msg = 173; // \f1靴がバラバラになりました。
-							break;
-						case 7: // shield
-							msg = 174; // \f1シールドが壊れました。
+						case 5:
+							if (chance < 25) {
+								l1iteminstance1.setaddHp(l1iteminstance1
+										.getaddHp() + 2);
+								l1iteminstance1.setMpr(l1iteminstance1
+										.getItem().get_addmpr() + 1);
+								if (l1iteminstance1.isEquipped()) {
+									pc.addMaxHp(2);
+									// pc.addAc(-1);
+								}
+							} else if (chance > 25 && chance < 50) {
+								l1iteminstance1.setaddMp(l1iteminstance1
+										.getaddMp() + 1);
+								l1iteminstance1.setaddSp(l1iteminstance1
+										.getItem().get_addsp() + 1);
+								if (l1iteminstance1.isEquipped()) {
+									pc.addMaxMp(1);
+									// pc.addAc(-1);
+								}
+							} else if (chance > 50 && chance < 75) {
+								l1iteminstance1.setFireMr(l1iteminstance1
+										.getFireMr() + 1);
+								l1iteminstance1.setWaterMr(l1iteminstance1
+										.getWaterMr() + 1);
+								l1iteminstance1.setEarthMr(l1iteminstance1
+										.getEarthMr() + 1);
+								l1iteminstance1.setWindMr(l1iteminstance1
+										.getWindMr() + 1);
+								l1iteminstance1
+										.setMpr(l1iteminstance1.getMpr() + 1);
+								l1iteminstance1
+										.setHpr(l1iteminstance1.getHpr() + 1);
+								if (l1iteminstance1.isEquipped()) {
+									pc.addFire(1);
+									pc.addWater(1);
+									pc.addEarth(1);
+									pc.addWind(1);
+								}
+							} else {
+								FailureEnchant(pc, l1iteminstance1, client);
+								pc.getInventory().removeItem(l1iteminstance, 1);
+								return;
+							}
 							break;
 						default:
-							msg = 167; // \f1肌がムズムズします。
-							break;
+							pc.sendPackets(new S_ServerMessage(79));
+							return;
 						}
-						pc.sendPackets(new S_ServerMessage(msg));
-						pc.getInventory().removeItem(l1iteminstance1, 1);
-					} else {
-						pc.sendPackets(new S_ServerMessage(154)); // \f1スクロールが散らばります。
-					}
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				} else if (itemId == 49210) { // プロケルの1番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "first_p"));
-				} else if (itemId == 49211) { // プロケルの2番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "second_p"));
-				} else if (itemId == 49212) { // プロケルの3番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "third_p"));
-				} else if (itemId == 49287) { // プロケルの4番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fourth_p"));
-				} else if (itemId == 49288) { // プロケルの5番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fifth_p"));
-				} else if (itemId == 49222) { // オーク密使の笛
-					if (pc.isDragonKnight() && (pc.getMapId() == 61)) { // HC3F
-						boolean found = false;
-						for (L1Object obj : L1World.getInstance().getObject()) {
-							if (obj instanceof L1MonsterInstance) {
-								L1MonsterInstance mob = (L1MonsterInstance) obj;
-								if (mob != null) {
-									if (mob.getNpcTemplate().get_npcId() == 46161) {
-										found = true;
-										break;
+						SuccessEnchant(pc, l1iteminstance1, client, 1);
+						pc.sendPackets(new S_ItemStatus(l1iteminstance1));
+						CharactersItemStorage storage = CharactersItemStorage
+								.create();// 儲存道具
+						storage.updateFireMr(l1iteminstance1);
+						storage.updateWaterMr(l1iteminstance1);
+						storage.updateEarthMr(l1iteminstance1);
+						storage.updateWindMr(l1iteminstance1);
+						storage.updateaddSp(l1iteminstance1);
+						storage.updateaddHp(l1iteminstance1);
+						storage.updateaddMp(l1iteminstance1);
+						storage.updateHpr(l1iteminstance1);
+						storage.updateMpr(l1iteminstance1);
+						pc.getInventory().removeItem(l1iteminstance, 1);// Del
+					} else if (itemId == 41426) { // 封印スクロール
+						L1ItemInstance lockItem = pc.getInventory().getItem(l);
+						if (((lockItem != null) && (lockItem.getItem()
+								.getType2() == 1))
+								|| (lockItem.getItem().getType2() == 2)
+								|| ((lockItem.getItem().getType2() == 0) && lockItem
+										.getItem().isCanSeal())) {
+							if ((lockItem.getBless() == 0)
+									|| (lockItem.getBless() == 1)
+									|| (lockItem.getBless() == 2)
+									|| (lockItem.getBless() == 3)) {
+								int bless = 1;
+								switch (lockItem.getBless()) {
+								case 0:
+									bless = 128;
+									break;
+								case 1:
+									bless = 129;
+									break;
+								case 2:
+									bless = 130;
+									break;
+								case 3:
+									bless = 131;
+									break;
+								}
+								lockItem.setBless(bless);
+								pc.getInventory().updateItem(lockItem,
+										L1PcInventory.COL_BLESS);
+								pc.getInventory().saveItem(lockItem,
+										L1PcInventory.COL_BLESS);
+								pc.getInventory().removeItem(l1iteminstance, 1);
+							} else {
+								pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							}
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						}
+					} else if (itemId == 41427) { // 封印解除スクロール
+						L1ItemInstance lockItem = pc.getInventory().getItem(l);
+						if (((lockItem != null) && (lockItem.getItem()
+								.getType2() == 1))
+								|| (lockItem.getItem().getType2() == 2)
+								|| ((lockItem.getItem().getType2() == 0) && lockItem
+										.getItem().isCanSeal())) {
+							if ((lockItem.getBless() == 128)
+									|| (lockItem.getBless() == 129)
+									|| (lockItem.getBless() == 130)
+									|| (lockItem.getBless() == 131)) {
+								int bless = 1;
+								switch (lockItem.getBless()) {
+								case 128:
+									bless = 0;
+									break;
+								case 129:
+									bless = 1;
+									break;
+								case 130:
+									bless = 2;
+									break;
+								case 131:
+									bless = 3;
+									break;
+								}
+								lockItem.setBless(bless);
+								pc.getInventory().updateItem(lockItem,
+										L1PcInventory.COL_BLESS);
+								pc.getInventory().saveItem(lockItem,
+										L1PcInventory.COL_BLESS);
+								pc.getInventory().removeItem(l1iteminstance, 1);
+							} else {
+								pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							}
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						}
+					} else if (itemId == 41428) { // 太古の玉爾
+						if ((pc != null) && (l1iteminstance != null)) {
+							Account account = Account.load(pc.getAccountName());
+							if (account == null) {
+								pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+								return;
+							}
+							int characterSlot = account.getCharacterSlot();
+							int maxAmount = Config.DEFAULT_CHARACTER_SLOT
+									+ characterSlot;
+							if (maxAmount >= 8) {
+								pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+								return;
+							}
+							if (characterSlot < 0) {
+								characterSlot = 0;
+							} else {
+								characterSlot += 1;
+							}
+							account.setCharacterSlot(characterSlot);
+							Account.updateCharacterSlot(account);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else {
+							pc.sendPackets(new S_ServerMessage(79));
+						}
+					} else if (itemId == 40075) { // 防具破壊スクロール
+						if (l1iteminstance1.getItem().getType2() == 2) {
+							int msg = 0;
+							switch (l1iteminstance1.getItem().getType()) {
+							case 1: // helm
+								msg = 171; // \f1ヘルムが塵になり、風に飛んでいきます。
+								break;
+							case 2: // armor
+								msg = 169; // \f1アーマーが壊れ、下に落ちました。
+								break;
+							case 3: // T
+								msg = 170; // \f1シャツが細かい糸になり、破けて落ちました。
+								break;
+							case 4: // cloak
+								msg = 168; // \f1マントが破れ、塵になりました。
+								break;
+							case 5: // glove
+								msg = 172; // \f1グローブが消えました。
+								break;
+							case 6: // boots
+								msg = 173; // \f1靴がバラバラになりました。
+								break;
+							case 7: // shield
+								msg = 174; // \f1シールドが壊れました。
+								break;
+							default:
+								msg = 167; // \f1肌がムズムズします。
+								break;
+							}
+							pc.sendPackets(new S_ServerMessage(msg));
+							pc.getInventory().removeItem(l1iteminstance1, 1);
+						} else {
+							pc.sendPackets(new S_ServerMessage(154)); // \f1スクロールが散らばります。
+						}
+						pc.getInventory().removeItem(l1iteminstance, 1);
+					} else if (itemId == 49210) { // プロケルの1番目の指令書
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(),
+								"first_p"));
+					} else if (itemId == 49211) { // プロケルの2番目の指令書
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(),
+								"second_p"));
+					} else if (itemId == 49212) { // プロケルの3番目の指令書
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(),
+								"third_p"));
+					} else if (itemId == 49287) { // プロケルの4番目の指令書
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(),
+								"fourth_p"));
+					} else if (itemId == 49288) { // プロケルの5番目の指令書
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(),
+								"fifth_p"));
+					} else if (itemId == 49222) { // オーク密使の笛
+						if (pc.isDragonKnight() && (pc.getMapId() == 61)) { // HC3F
+							boolean found = false;
+							for (L1Object obj : L1World.getInstance()
+									.getObject()) {
+								if (obj instanceof L1MonsterInstance) {
+									L1MonsterInstance mob = (L1MonsterInstance) obj;
+									if (mob != null) {
+										if (mob.getNpcTemplate().get_npcId() == 46161) {
+											found = true;
+											break;
+										}
 									}
 								}
 							}
+							if (found) {
+								pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							} else {
+								L1SpawnUtil.spawn(pc, 46161, 0, 0); // オーク
+																	// 密使リーダー
+							}
+							pc.getInventory().consumeItem(49222, 1);
 						}
-						if (found) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+
+					} else {
+						int locX = ((L1EtcItem) l1iteminstance.getItem())
+								.get_locx();
+						int locY = ((L1EtcItem) l1iteminstance.getItem())
+								.get_locy();
+						short mapId = ((L1EtcItem) l1iteminstance.getItem())
+								.get_mapid();
+						if ((locX != 0) && (locY != 0)) { // 各種テレポートスクロール
+							if (pc.getMap().isEscapable() || pc.isGm()) {
+								L1Teleport.teleport(pc, locX, locY, mapId,
+										pc.getHeading(), true);
+								pc.getInventory().removeItem(l1iteminstance, 1);
+							} else {
+								pc.sendPackets(new S_ServerMessage(647));
+							}
+							cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 						} else {
-							L1SpawnUtil.spawn(pc, 46161, 0, 0); // オーク 密使リーダー
+							if (l1iteminstance.getCount() < 1) { // あり得ない？
+								pc.sendPackets(new S_ServerMessage(329,
+										l1iteminstance.getLogName())); // \f1%0を持っていません。
+							} else {
+								pc.sendPackets(new S_ServerMessage(74,
+										l1iteminstance.getLogName())); // \f1%0は使用できません。
+							}
 						}
-						pc.getInventory().consumeItem(49222, 1);
 					}
 
-				} else {
-					int locX = ((L1EtcItem) l1iteminstance.getItem())
-							.get_locx();
-					int locY = ((L1EtcItem) l1iteminstance.getItem())
-							.get_locy();
-					short mapId = ((L1EtcItem) l1iteminstance.getItem())
-							.get_mapid();
-					if ((locX != 0) && (locY != 0)) { // 各種テレポートスクロール
-						if (pc.getMap().isEscapable() || pc.isGm()) {
-							L1Teleport.teleport(pc, locX, locY, mapId,
-									pc.getHeading(), true);
-							pc.getInventory().removeItem(l1iteminstance, 1);
-						} else {
-							pc.sendPackets(new S_ServerMessage(647));
-						}
-						cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
-					} else {
-						if (l1iteminstance.getCount() < 1) { // あり得ない？
-							pc.sendPackets(new S_ServerMessage(329,
-									l1iteminstance.getLogName())); // \f1%0を持っていません。
-						} else {
-							pc.sendPackets(new S_ServerMessage(74,
-									l1iteminstance.getLogName())); // \f1%0は使用できません。
-						}
-					}
-				}
-
-			} else if (l1iteminstance.getItem().getType2() == 1) {
-				// 種別：武器
-				int min = l1iteminstance.getItem().getMinLevel();
-				int max = l1iteminstance.getItem().getMaxLevel();
-				if ((min != 0) && (min > pc.getLevel())) {
-					// このアイテムは%0レベル以上にならなければ使用できません。
-					pc.sendPackets(new S_ServerMessage(318, String.valueOf(min)));
-				} else if ((max != 0) && (max < pc.getLevel())) {
-					// このアイテムは%dレベル以下のみ使用できます。
-					// S_ServerMessageでは引数が表示されない
-					if (max < 50) {
-						pc.sendPackets(new S_PacketBox(
-								S_PacketBox.MSG_LEVEL_OVER, max));
-					} else {
-						pc.sendPackets(new S_SystemMessage("このアイテムは" + max
-								+ "レベル以下のみ使用できます。"));
-					}
-				} else {
-					if ((pc.isCrown() && l1iteminstance.getItem().isUseRoyal())
-							|| (pc.isKnight() && l1iteminstance.getItem()
-									.isUseKnight())
-							|| (pc.isElf() && l1iteminstance.getItem()
-									.isUseElf())
-							|| (pc.isWizard() && l1iteminstance.getItem()
-									.isUseMage())
-							|| (pc.isDarkelf() && l1iteminstance.getItem()
-									.isUseDarkelf())
-							|| (pc.isDragonKnight() && l1iteminstance.getItem()
-									.isUseDragonknight())
-							|| (pc.isIllusionist() && l1iteminstance.getItem()
-									.isUseIllusionist())) {
-						UseWeapon(pc, l1iteminstance);
-					} else {
-						// \f1あなたのクラスではこのアイテムは使用できません。
-						pc.sendPackets(new S_ServerMessage(264));
-					}
-				}
-			} else if (l1iteminstance.getItem().getType2() == 2) { // 種別：防具
-				if ((pc.isCrown() && l1iteminstance.getItem().isUseRoyal())
-						|| (pc.isKnight() && l1iteminstance.getItem()
-								.isUseKnight())
-						|| (pc.isElf() && l1iteminstance.getItem().isUseElf())
-						|| (pc.isWizard() && l1iteminstance.getItem()
-								.isUseMage())
-						|| (pc.isDarkelf() && l1iteminstance.getItem()
-								.isUseDarkelf())
-						|| (pc.isDragonKnight() && l1iteminstance.getItem()
-								.isUseDragonknight())
-						|| (pc.isIllusionist() && l1iteminstance.getItem()
-								.isUseIllusionist())) {
-
-					int min = ((L1Armor) l1iteminstance.getItem())
-							.getMinLevel();
-					int max = ((L1Armor) l1iteminstance.getItem())
-							.getMaxLevel();
+				} else if (l1iteminstance.getItem().getType2() == 1) {
+					// 種別：武器
+					int min = l1iteminstance.getItem().getMinLevel();
+					int max = l1iteminstance.getItem().getMaxLevel();
 					if ((min != 0) && (min > pc.getLevel())) {
 						// このアイテムは%0レベル以上にならなければ使用できません。
 						pc.sendPackets(new S_ServerMessage(318, String
@@ -3051,25 +3138,80 @@ public class C_ItemUSe extends ClientBasePacket {
 									+ "レベル以下のみ使用できます。"));
 						}
 					} else {
-						UseArmor(pc, l1iteminstance);
+						if ((pc.isCrown() && l1iteminstance.getItem()
+								.isUseRoyal())
+								|| (pc.isKnight() && l1iteminstance.getItem()
+										.isUseKnight())
+								|| (pc.isElf() && l1iteminstance.getItem()
+										.isUseElf())
+								|| (pc.isWizard() && l1iteminstance.getItem()
+										.isUseMage())
+								|| (pc.isDarkelf() && l1iteminstance.getItem()
+										.isUseDarkelf())
+								|| (pc.isDragonKnight() && l1iteminstance
+										.getItem().isUseDragonknight())
+								|| (pc.isIllusionist() && l1iteminstance
+										.getItem().isUseIllusionist())) {
+							UseWeapon(pc, l1iteminstance);
+						} else {
+							// \f1あなたのクラスではこのアイテムは使用できません。
+							pc.sendPackets(new S_ServerMessage(264));
+						}
 					}
-				} else {
-					// \f1あなたのクラスではこのアイテムは使用できません。
-					pc.sendPackets(new S_ServerMessage(264));
+				} else if (l1iteminstance.getItem().getType2() == 2) { // 種別：防具
+					if ((pc.isCrown() && l1iteminstance.getItem().isUseRoyal())
+							|| (pc.isKnight() && l1iteminstance.getItem()
+									.isUseKnight())
+							|| (pc.isElf() && l1iteminstance.getItem()
+									.isUseElf())
+							|| (pc.isWizard() && l1iteminstance.getItem()
+									.isUseMage())
+							|| (pc.isDarkelf() && l1iteminstance.getItem()
+									.isUseDarkelf())
+							|| (pc.isDragonKnight() && l1iteminstance.getItem()
+									.isUseDragonknight())
+							|| (pc.isIllusionist() && l1iteminstance.getItem()
+									.isUseIllusionist())) {
+
+						int min = ((L1Armor) l1iteminstance.getItem())
+								.getMinLevel();
+						int max = ((L1Armor) l1iteminstance.getItem())
+								.getMaxLevel();
+						if ((min != 0) && (min > pc.getLevel())) {
+							// このアイテムは%0レベル以上にならなければ使用できません。
+							pc.sendPackets(new S_ServerMessage(318, String
+									.valueOf(min)));
+						} else if ((max != 0) && (max < pc.getLevel())) {
+							// このアイテムは%dレベル以下のみ使用できます。
+							// S_ServerMessageでは引数が表示されない
+							if (max < 50) {
+								pc.sendPackets(new S_PacketBox(
+										S_PacketBox.MSG_LEVEL_OVER, max));
+							} else {
+								pc.sendPackets(new S_SystemMessage("このアイテムは"
+										+ max + "レベル以下のみ使用できます。"));
+							}
+						} else {
+							UseArmor(pc, l1iteminstance);
+						}
+					} else {
+						// \f1あなたのクラスではこのアイテムは使用できません。
+						pc.sendPackets(new S_ServerMessage(264));
+					}
 				}
-			}
 
-			// 効果ディレイがある場合は現在時間をセット
-			if (isDelayEffect) {
-				Timestamp ts = new Timestamp(System.currentTimeMillis());
-				l1iteminstance.setLastUsed(ts);
-				pc.getInventory().updateItem(l1iteminstance,
-						L1PcInventory.COL_DELAY_EFFECT);
-				pc.getInventory().saveItem(l1iteminstance,
-						L1PcInventory.COL_DELAY_EFFECT);
-			}
+				// 効果ディレイがある場合は現在時間をセット
+				if (isDelayEffect) {
+					Timestamp ts = new Timestamp(System.currentTimeMillis());
+					l1iteminstance.setLastUsed(ts);
+					pc.getInventory().updateItem(l1iteminstance,
+							L1PcInventory.COL_DELAY_EFFECT);
+					pc.getInventory().saveItem(l1iteminstance,
+							L1PcInventory.COL_DELAY_EFFECT);
+				}
 
-			L1ItemDelay.onItemUse(client, l1iteminstance); // アイテムディレイ開始
+				L1ItemDelay.onItemUse(client, l1iteminstance); // アイテムディレイ開始
+			}
 		}
 	}
 
