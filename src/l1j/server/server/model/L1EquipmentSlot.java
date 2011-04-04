@@ -76,7 +76,6 @@ public class L1EquipmentSlot {
 	private void setArmor(L1ItemInstance armor) {
 		L1Item item = armor.getItem();
 		int itemId = armor.getItem().getItemId();
-
 		_owner.addAc(item.get_ac() - armor.getEnchantLevel()
 				- armor.getAcByMagic());
 		_owner.addDamageReductionByArmor(item.getDamageReduction());
@@ -85,10 +84,6 @@ public class L1EquipmentSlot {
 		_owner.addDmgModifierByArmor(item.getDmgModifierByArmor());
 		_owner.addBowHitModifierByArmor(item.getBowHitModifierByArmor());
 		_owner.addBowDmgModifierByArmor(item.getBowDmgModifierByArmor());
-		_owner.addEarth(item.get_defense_earth());
-		_owner.addWind(item.get_defense_wind());
-		_owner.addWater(item.get_defense_water());
-		_owner.addFire(item.get_defense_fire());
 		_owner.addRegistStun(item.get_regist_stun());
 		_owner.addRegistStone(item.get_regist_stone());
 		_owner.addRegistSleep(item.get_regist_sleep());
@@ -158,7 +153,7 @@ public class L1EquipmentSlot {
 	private void removeArmor(L1ItemInstance armor) {
 		L1Item item = armor.getItem();
 		int itemId = armor.getItem().getItemId();
-
+		// 飾品強化 Scroll of Enchant Accessory
 		_owner.addAc(-(item.get_ac() - armor.getEnchantLevel() - armor
 				.getAcByMagic()));
 		_owner.addDamageReductionByArmor(-item.getDamageReduction());
@@ -167,10 +162,6 @@ public class L1EquipmentSlot {
 		_owner.addDmgModifierByArmor(-item.getDmgModifierByArmor());
 		_owner.addBowHitModifierByArmor(-item.getBowHitModifierByArmor());
 		_owner.addBowDmgModifierByArmor(-item.getBowDmgModifierByArmor());
-		_owner.addEarth(-item.get_defense_earth());
-		_owner.addWind(-item.get_defense_wind());
-		_owner.addWater(-item.get_defense_water());
-		_owner.addFire(-item.get_defense_fire());
 		_owner.addRegistStun(-item.get_regist_stun());
 		_owner.addRegistStone(-item.get_regist_stone());
 		_owner.addRegistSleep(-item.get_regist_sleep());
@@ -221,6 +212,8 @@ public class L1EquipmentSlot {
 		if (equipment.getaddMp() != 0) {
 			_owner.addMaxMp(equipment.getaddMp());
 		}
+		_owner.addMaxHp(item.get_addhp() + equipment.getaddHp());
+		_owner.addMaxMp(item.get_addmp() + equipment.getaddMp());
 		_owner.addStr(item.get_addstr());
 		_owner.addCon(item.get_addcon());
 		_owner.addDex(item.get_adddex());
@@ -238,10 +231,6 @@ public class L1EquipmentSlot {
 		}
 		if (addMr != 0) {
 			_owner.addMr(addMr);
-			_owner.sendPackets(new S_SPMR(_owner));
-		}
-		if (item.get_addsp() != 0) {
-			_owner.addSp(item.get_addsp());
 			_owner.sendPackets(new S_SPMR(_owner));
 		}
 		if (item.get_addsp() != 0 || equipment.getaddSp() != 0) {
@@ -293,6 +282,8 @@ public class L1EquipmentSlot {
 		if (equipment.getaddMp() != 0) {
 			_owner.addMaxMp(-equipment.getaddMp());
 		}
+		_owner.addMaxHp(-(item.get_addhp() + equipment.getaddHp()));
+		_owner.addMaxMp(-(item.get_addmp() + equipment.getaddMp()));
 		_owner.addStr((byte) -item.get_addstr());
 		_owner.addCon((byte) -item.get_addcon());
 		_owner.addDex((byte) -item.get_adddex());
@@ -310,10 +301,6 @@ public class L1EquipmentSlot {
 		}
 		if (addMr != 0) {
 			_owner.addMr(addMr);
-			_owner.sendPackets(new S_SPMR(_owner));
-		}
-		if (item.get_addsp() != 0) {
-			_owner.addSp(-item.get_addsp());
 			_owner.sendPackets(new S_SPMR(_owner));
 		}
 		if (item.get_addsp() != 0 || equipment.getaddSp() != 0) {

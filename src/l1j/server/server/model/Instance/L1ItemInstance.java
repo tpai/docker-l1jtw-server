@@ -311,7 +311,7 @@ public class L1ItemInstance extends L1Object {
 
 		public int attrEnchantLevel;
 
-		public int firemr; //Scroll of Enchant Accessory
+		public int firemr; // Scroll of Enchant Accessory
 
 		public int watermr;
 
@@ -818,13 +818,13 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(getItem().get_addcha());
 			}
 			// HP, MP
-			if (getItem().get_addhp() != 0) {
+			if (getItem().get_addhp() != 0 || getaddHp() != 0) {
 				os.writeC(14);
-				os.writeH(getItem().get_addhp());
+				os.writeH(getItem().get_addhp() + getaddHp());
 			}
-			if (getItem().get_addmp() != 0) {
+			if (getItem().get_addmp() != 0 || getaddMp() != 0) {
 				os.writeC(32);
-				os.writeC(getItem().get_addmp());
+				os.writeC(getItem().get_addmp() + getaddMp());
 			}
 			// MR
 			if (getMr() != 0) {
@@ -832,33 +832,33 @@ public class L1ItemInstance extends L1Object {
 				os.writeH(getMr());
 			}
 			// SP(魔力)
-			if (getItem().get_addsp() != 0) {
+			if (getItem().get_addsp() != 0 || getaddSp() != 0) {
 				os.writeC(17);
-				os.writeC(getItem().get_addsp());
+				os.writeC(getItem().get_addsp() + getaddSp());
 			}
 			// ヘイスト
 			if (getItem().isHasteItem()) {
 				os.writeC(18);
 			}
 			// 火の属性
-			if (getItem().get_defense_fire() != 0) {
+			if (getItem().get_defense_fire() != 0 || getFireMr() != 0) {
 				os.writeC(27);
-				os.writeC(getItem().get_defense_fire());
+				os.writeC(getItem().get_defense_fire() + getFireMr());
 			}
 			// 水の属性
-			if (getItem().get_defense_water() != 0) {
+			if (getItem().get_defense_water() != 0 || getWaterMr() != 0) {
 				os.writeC(28);
-				os.writeC(getItem().get_defense_water());
+				os.writeC(getItem().get_defense_water() + getWaterMr());
 			}
 			// 風の属性
-			if (getItem().get_defense_wind() != 0) {
+			if (getItem().get_defense_wind() != 0 || getWindMr() != 0) {
 				os.writeC(29);
-				os.writeC(getItem().get_defense_wind());
+				os.writeC(getItem().get_defense_wind() + getWindMr());
 			}
 			// 地の属性
-			if (getItem().get_defense_earth() != 0) {
+			if (getItem().get_defense_earth() != 0 || getEarthMr() != 0) {
 				os.writeC(30);
-				os.writeC(getItem().get_defense_earth());
+				os.writeC(getItem().get_defense_earth() + getEarthMr());
 			}
 			// 凍結耐性
 			if (getItem().get_regist_freeze() != 0) {
@@ -901,37 +901,6 @@ public class L1ItemInstance extends L1Object {
 				os.writeH(getItem().get_regist_sustain());
 				os.writeC(33);
 				os.writeC(6);
-			}
-			// 飾品強化卷軸
-			if (getItem().get_addhp() != 0 || getaddHp() != 0) {
-				os.writeC(14);
-				os.writeH(getItem().get_addhp() + getaddHp());
-			}
-			if (getItem().get_addmp() != 0 || getaddMp() != 0) {
-				os.writeC(32);
-				os.writeC(getItem().get_addmp() + getaddMp());
-			}
-
-			if (getItem().get_addsp() != 0 || getaddSp() != 0) {
-				os.writeC(17);
-				os.writeC(getItem().get_addsp() + getaddSp());
-			}
-
-			if (getItem().get_defense_fire() != 0 || getFireMr() != 0) {
-				os.writeC(27);
-				os.writeC(getItem().get_defense_fire() + getFireMr());
-			}
-			if (getItem().get_defense_water() != 0 || getWaterMr() != 0) {
-				os.writeC(28);
-				os.writeC(getItem().get_defense_water() + getWaterMr());
-			}
-			if (getItem().get_defense_wind() != 0 || getWindMr() != 0) {
-				os.writeC(29);
-				os.writeC(getItem().get_defense_wind() + getWindMr());
-			}
-			if (getItem().get_defense_earth() != 0 || getEarthMr() != 0) {
-				os.writeC(30);
-				os.writeC(getItem().get_defense_earth() + getEarthMr());
 			}
 			// 幸運
 			// if (getItem.getLuck() != 0) {

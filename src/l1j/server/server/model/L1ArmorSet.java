@@ -58,15 +58,19 @@ public abstract class L1ArmorSet {
 				if (armorSets.getPolyId() != -1) {
 					impl.addEffect(new PolymorphEffect(armorSets.getPolyId()));
 				}
-				impl.addEffect(new AcHpMpBonusEffect(armorSets.getAc(), armorSets.getHp(), armorSets.getMp(), armorSets.getHpr(), armorSets.getMpr(),
-						armorSets.getMr()));
-				impl.addEffect(new StatBonusEffect(armorSets.getStr(), armorSets.getDex(), armorSets.getCon(), armorSets.getWis(),
-						armorSets.getCha(), armorSets.getIntl()));
-				impl.addEffect(new DefenseBonusEffect(armorSets.getDefenseWater(), armorSets.getDefenseWind(), armorSets.getDefenseFire(), armorSets
-						.getDefenseWind()));
+				impl.addEffect(new AcHpMpBonusEffect(armorSets.getAc(),
+						armorSets.getHp(), armorSets.getMp(), armorSets
+								.getHpr(), armorSets.getMpr(), armorSets
+								.getMr()));
+				impl.addEffect(new StatBonusEffect(armorSets.getStr(),
+						armorSets.getDex(), armorSets.getCon(), armorSets
+								.getWis(), armorSets.getCha(), armorSets
+								.getIntl()));
+				impl.addEffect(new DefenseBonusEffect(armorSets
+						.getDefenseWater(), armorSets.getDefenseWind(),
+						armorSets.getDefenseFire(), armorSets.getDefenseWind()));
 				_allSet.add(impl);
-			}
-			catch (Exception ex) {
+			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
 		}
@@ -147,7 +151,8 @@ class L1ArmorSetImpl extends L1ArmorSet {
 		// セット装備にリングが含まれているか調べる
 		for (int id : _ids) {
 			armor = pcInventory.findItemId(id);
-			if ((armor.getItem().getType2() == 2) && (armor.getItem().getType() == 9)) { // ring
+			if ((armor.getItem().getType2() == 2)
+					&& (armor.getItem().getType() == 9)) { // ring
 				isSetContainRing = true;
 				break;
 			}
@@ -159,7 +164,8 @@ class L1ArmorSetImpl extends L1ArmorSet {
 			if (pcInventory.getTypeEquipped(2, 9) == 2) {
 				L1ItemInstance ring[] = new L1ItemInstance[2];
 				ring = pcInventory.getRingEquipped();
-				if ((ring[0].getItem().getItemId() == itemId) && (ring[1].getItem().getItemId() == itemId)) {
+				if ((ring[0].getItem().getItemId() == itemId)
+						&& (ring[1].getItem().getItemId() == itemId)) {
 					return true;
 				}
 			}
@@ -182,7 +188,8 @@ class AcHpMpBonusEffect implements L1ArmorSetEffect {
 
 	private final int _addMr;
 
-	public AcHpMpBonusEffect(int ac, int addHp, int addMp, int regenHp, int regenMp, int addMr) {
+	public AcHpMpBonusEffect(int ac, int addHp, int addMp, int regenHp,
+			int regenMp, int addMr) {
 		_ac = ac;
 		_addHp = addHp;
 		_addMp = addMp;
@@ -264,7 +271,8 @@ class DefenseBonusEffect implements L1ArmorSetEffect {
 
 	private final int _defenseEarth;
 
-	public DefenseBonusEffect(int defenseWater, int defenseWind, int defenseFire, int defenseEarth) {
+	public DefenseBonusEffect(int defenseWater, int defenseWind,
+			int defenseFire, int defenseEarth) {
 		_defenseWater = defenseWater;
 		_defenseWind = defenseWind;
 		_defenseFire = defenseFire;
@@ -300,15 +308,16 @@ class PolymorphEffect implements L1ArmorSetEffect {
 	@Override
 	public void giveEffect(L1PcInstance pc) {
 		int awakeSkillId = pc.getAwakeSkillId();
-		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+		if ((awakeSkillId == AWAKEN_ANTHARAS)
+				|| (awakeSkillId == AWAKEN_FAFURION)
+				|| (awakeSkillId == AWAKEN_VALAKAS)) {
 			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
 			return;
 		}
 		if ((_gfxId == 6080) || (_gfxId == 6094)) {
 			if (pc.get_sex() == 0) {
 				_gfxId = 6094;
-			}
-			else {
+			} else {
 				_gfxId = 6080;
 			}
 			if (!isRemainderOfCharge(pc)) { // 残チャージ数なし
@@ -321,7 +330,9 @@ class PolymorphEffect implements L1ArmorSetEffect {
 	@Override
 	public void cancelEffect(L1PcInstance pc) {
 		int awakeSkillId = pc.getAwakeSkillId();
-		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
+		if ((awakeSkillId == AWAKEN_ANTHARAS)
+				|| (awakeSkillId == AWAKEN_FAFURION)
+				|| (awakeSkillId == AWAKEN_VALAKAS)) {
 			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
 			return;
 		}
