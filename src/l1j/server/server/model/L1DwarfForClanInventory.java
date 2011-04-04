@@ -76,6 +76,15 @@ public class L1DwarfForClanInventory extends L1Inventory {
 				item.setBless(rs.getInt("bless"));
 				item.setAttrEnchantKind(rs.getInt("attr_enchant_kind"));
 				item.setAttrEnchantLevel(rs.getInt("attr_enchant_level"));
+				item.setFireMr(rs.getInt("firemr"));
+				item.setWaterMr(rs.getInt("watermr"));
+				item.setEarthMr(rs.getInt("earthmr"));
+				item.setWindMr(rs.getInt("windmr"));
+				item.setaddSp(rs.getInt("addsp"));
+				item.setaddHp(rs.getInt("addhp"));
+				item.setaddMp(rs.getInt("addmp"));
+				item.setHpr(rs.getInt("hpr"));
+				item.setMpr(rs.getInt("mpr"));
 
 				_items.add(item);
 				L1World.getInstance().storeObject(item);
@@ -112,6 +121,15 @@ public class L1DwarfForClanInventory extends L1Inventory {
 			pstm.setInt(12, item.getBless());
 			pstm.setInt(13, item.getAttrEnchantKind());
 			pstm.setInt(14, item.getAttrEnchantLevel());
+			pstm.setInt(15, item.getFireMr());
+			pstm.setInt(16, item.getWaterMr());
+			pstm.setInt(17, item.getEarthMr());
+			pstm.setInt(18, item.getWindMr());
+			pstm.setInt(19, item.getaddSp());
+			pstm.setInt(20, item.getaddHp());
+			pstm.setInt(21, item.getaddMp());
+			pstm.setInt(22, item.getHpr());
+			pstm.setInt(23, item.getMpr());
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

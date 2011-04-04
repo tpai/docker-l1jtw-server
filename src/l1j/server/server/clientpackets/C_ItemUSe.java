@@ -283,7 +283,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				) || (itemId == 41426 // 封印スクロール
 				) || (itemId == 41427 // 封印解除スクロール
 				) || (itemId == 40075 // 防具破壊スクロール
-				) || (itemId == 49148 //飾品強化卷軸 Scroll of Enchant Accessory
+				) || (itemId == 49148 // 飾品強化卷軸 Scroll of Enchant Accessory
 				) || (itemId == 41429 // 風の武器強化スクロール
 				) || (itemId == 41430 // 地の武器強化スクロール
 				) || (itemId == 41431 // 水の武器強化スクロール

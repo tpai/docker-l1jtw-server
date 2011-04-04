@@ -48,7 +48,8 @@ public class L1DwarfInventory extends L1Inventory {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM character_warehouse WHERE account_name = ?");
+			pstm = con
+					.prepareStatement("SELECT * FROM character_warehouse WHERE account_name = ?");
 			pstm.setString(1, _owner.getAccountName());
 
 			rs = pstm.executeQuery();
@@ -57,7 +58,8 @@ public class L1DwarfInventory extends L1Inventory {
 				L1ItemInstance item = new L1ItemInstance();
 				int objectId = rs.getInt("id");
 				item.setId(objectId);
-				L1Item itemTemplate = ItemTable.getInstance().getTemplate(rs.getInt("item_id"));
+				L1Item itemTemplate = ItemTable.getInstance().getTemplate(
+						rs.getInt("item_id"));
 				item.setItem(itemTemplate);
 				item.setCount(rs.getInt("count"));
 				item.setEquipped(false);
@@ -70,16 +72,23 @@ public class L1DwarfInventory extends L1Inventory {
 				item.setBless(rs.getInt("bless"));
 				item.setAttrEnchantKind(rs.getInt("attr_enchant_kind"));
 				item.setAttrEnchantLevel(rs.getInt("attr_enchant_level"));
+				item.setFireMr(rs.getInt("firemr"));
+				item.setWaterMr(rs.getInt("watermr"));
+				item.setEarthMr(rs.getInt("earthmr"));
+				item.setWindMr(rs.getInt("windmr"));
+				item.setaddSp(rs.getInt("addsp"));
+				item.setaddHp(rs.getInt("addhp"));
+				item.setaddMp(rs.getInt("addmp"));
+				item.setHpr(rs.getInt("hpr"));
+				item.setMpr(rs.getInt("mpr"));
 
 				_items.add(item);
 				L1World.getInstance().storeObject(item);
 			}
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -109,12 +118,19 @@ public class L1DwarfInventory extends L1Inventory {
 			pstm.setInt(12, item.getBless());
 			pstm.setInt(13, item.getAttrEnchantKind());
 			pstm.setInt(14, item.getAttrEnchantLevel());
+			pstm.setInt(15, item.getFireMr());
+			pstm.setInt(16, item.getWaterMr());
+			pstm.setInt(17, item.getEarthMr());
+			pstm.setInt(18, item.getWindMr());
+			pstm.setInt(19, item.getaddSp());
+			pstm.setInt(20, item.getaddHp());
+			pstm.setInt(21, item.getaddMp());
+			pstm.setInt(22, item.getHpr());
+			pstm.setInt(23, item.getMpr());
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -128,15 +144,14 @@ public class L1DwarfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("UPDATE character_warehouse SET count = ? WHERE id = ?");
+			pstm = con
+					.prepareStatement("UPDATE character_warehouse SET count = ? WHERE id = ?");
 			pstm.setInt(1, item.getCount());
 			pstm.setInt(2, item.getId());
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -149,14 +164,13 @@ public class L1DwarfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("DELETE FROM character_warehouse WHERE id = ?");
+			pstm = con
+					.prepareStatement("DELETE FROM character_warehouse WHERE id = ?");
 			pstm.setInt(1, item.getId());
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -164,7 +178,8 @@ public class L1DwarfInventory extends L1Inventory {
 		_items.remove(_items.indexOf(item));
 	}
 
-	public static void present(String account, int itemid, int enchant, int count) throws Exception {
+	public static void present(String account, int itemid, int enchant,
+			int count) throws Exception {
 
 		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
@@ -179,9 +194,9 @@ public class L1DwarfInventory extends L1Inventory {
 
 			if (account.compareToIgnoreCase("*") == 0) {
 				pstm = con.prepareStatement("SELECT * FROM accounts");
-			}
-			else {
-				pstm = con.prepareStatement("SELECT * FROM accounts WHERE login=?");
+			} else {
+				pstm = con
+						.prepareStatement("SELECT * FROM accounts WHERE login=?");
 				pstm.setString(1, account);
 			}
 			rs = pstm.executeQuery();
@@ -193,12 +208,10 @@ public class L1DwarfInventory extends L1Inventory {
 
 			present(accountList, itemid, enchant, count);
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -206,7 +219,8 @@ public class L1DwarfInventory extends L1Inventory {
 
 	}
 
-	public static void present(int minlvl, int maxlvl, int itemid, int enchant, int count) throws Exception {
+	public static void present(int minlvl, int maxlvl, int itemid, int enchant,
+			int count) throws Exception {
 
 		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
@@ -219,7 +233,8 @@ public class L1DwarfInventory extends L1Inventory {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con.prepareStatement("SELECT distinct(account_name) as account_name FROM characters WHERE level between ? and ?");
+			pstm = con
+					.prepareStatement("SELECT distinct(account_name) as account_name FROM characters WHERE level between ? and ?");
 			pstm.setInt(1, minlvl);
 			pstm.setInt(2, maxlvl);
 			rs = pstm.executeQuery();
@@ -231,12 +246,10 @@ public class L1DwarfInventory extends L1Inventory {
 
 			present(accountList, itemid, enchant, count);
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw e;
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -244,7 +257,8 @@ public class L1DwarfInventory extends L1Inventory {
 
 	}
 
-	private static void present(List<String> accountList, int itemid, int enchant, int count) throws Exception {
+	private static void present(List<String> accountList, int itemid,
+			int enchant, int count) throws Exception {
 
 		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
 		if (temp == null) {
@@ -259,7 +273,8 @@ public class L1DwarfInventory extends L1Inventory {
 			for (String account : accountList) {
 
 				if (temp.isStackable()) {
-					L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
+					L1ItemInstance item = ItemTable.getInstance().createItem(
+							itemid);
 					item.setEnchantLevel(enchant);
 					item.setCount(count);
 
@@ -274,10 +289,22 @@ public class L1DwarfInventory extends L1Inventory {
 					pstm.setInt(7, item.isIdentified() ? 1 : 0);
 					pstm.setInt(8, item.get_durability());
 					pstm.setInt(9, item.getChargeCount());
-					pstm.setInt(10, item.getRemainingTime());
+					pstm.setInt(10, 0);
+					pstm.setInt(11, 0);
+					pstm.setInt(12, 0);
+					pstm.setInt(13, 0);
+					pstm.setInt(14, 0);
+					pstm.setInt(15, item.getFireMr());
+					pstm.setInt(16, item.getWaterMr());
+					pstm.setInt(17, item.getEarthMr());
+					pstm.setInt(18, item.getWindMr());
+					pstm.setInt(19, item.getaddSp());
+					pstm.setInt(20, item.getaddHp());
+					pstm.setInt(21, item.getaddMp());
+					pstm.setInt(22, item.getHpr());
+					pstm.setInt(23, item.getMpr());
 					pstm.execute();
-				}
-				else {
+				} else {
 					L1ItemInstance item = null;
 					int createCount;
 					for (createCount = 0; createCount < count; createCount++) {
@@ -296,6 +323,19 @@ public class L1DwarfInventory extends L1Inventory {
 						pstm.setInt(8, item.get_durability());
 						pstm.setInt(9, item.getChargeCount());
 						pstm.setInt(10, item.getRemainingTime());
+						pstm.setInt(11, 0); 
+						pstm.setInt(12, 0);
+						pstm.setInt(13, 0);
+						pstm.setInt(14, 0);
+						pstm.setInt(15, item.getFireMr());
+						pstm.setInt(16, item.getWaterMr());
+						pstm.setInt(17, item.getEarthMr());
+						pstm.setInt(18, item.getWindMr());
+						pstm.setInt(19, item.getaddSp());
+						pstm.setInt(20, item.getaddHp());
+						pstm.setInt(21, item.getaddMp());
+						pstm.setInt(22, item.getHpr());
+						pstm.setInt(23, item.getMpr());
 						pstm.execute();
 					}
 				}
@@ -303,24 +343,22 @@ public class L1DwarfInventory extends L1Inventory {
 
 			con.commit();
 			con.setAutoCommit(true);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			try {
 				con.rollback();
-			}
-			catch (SQLException ignore) {
+			} catch (SQLException ignore) {
 				// ignore
 			}
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Exception(".present処理中にエラーが発生しました。");
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
-	private static Logger _log = Logger.getLogger(L1DwarfInventory.class.getName());
+	private static Logger _log = Logger.getLogger(L1DwarfInventory.class
+			.getName());
 
 	private final L1PcInstance _owner;
 }

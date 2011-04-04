@@ -196,6 +196,8 @@ public class L1PcInventory extends L1Inventory {
 		}
 	}
 
+	public static final int COL_ALL = 0;
+
 	public static final int COL_DURABILITY = 1;
 
 	public static final int COL_IS_ID = 2;
@@ -256,41 +258,6 @@ public class L1PcInventory extends L1Inventory {
 	 */
 	@Override
 	public void updateItem(L1ItemInstance item, int column) {
-		switch (column) {//飾品強化卷軸 Scroll of Enchant Accessory
-		case COL_ATTR_ENCHANT_LEVEL:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_ATTR_ENCHANT_KIND:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_FIREMR:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_WATERMR:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_EARTHMR:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_WINDMR:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_ADDSP:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_ADDHP:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_ADDMP:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_HPR:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		case COL_MPR:
-			_owner.sendPackets(new S_ItemStatus(item));
-			break;
-		}
 		if (column >= COL_ATTR_ENCHANT_LEVEL) { // 属性強化数
 			_owner.sendPackets(new S_ItemStatus(item));
 			column -= COL_ATTR_ENCHANT_LEVEL;
@@ -298,6 +265,43 @@ public class L1PcInventory extends L1Inventory {
 		if (column >= COL_ATTR_ENCHANT_KIND) { // 属性強化の種類
 			_owner.sendPackets(new S_ItemStatus(item));
 			column -= COL_ATTR_ENCHANT_KIND;
+		}
+		// 飾品強化卷軸 Scroll of Enchant Accessory
+		if (column >= COL_FIREMR) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_FIREMR;
+		}
+		if (column >= COL_WATERMR) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_WATERMR;
+		}
+		if (column >= COL_EARTHMR) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_EARTHMR;
+		}
+		if (column >= COL_WINDMR) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_WINDMR;
+		}
+		if (column >= COL_ADDSP) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_ADDSP;
+		}
+		if (column >= COL_ADDHP) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_ADDHP;
+		}
+		if (column >= COL_ADDMP) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_ADDMP;
+		}
+		if (column >= COL_HPR) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_HPR;
+		}
+		if (column >= COL_MPR) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_MPR;
 		}
 		if (column >= COL_BLESS) { // 祝福・封印
 			_owner.sendPackets(new S_ItemColor(item));
@@ -419,6 +423,42 @@ public class L1PcInventory extends L1Inventory {
 			if (column >= COL_DURABILITY) { // 耐久性
 				storage.updateItemDurability(item);
 				column -= COL_DURABILITY;
+			}
+			if (column >= COL_FIREMR) {
+				storage.updateFireMr(item);
+				column -= COL_FIREMR;
+			}
+			if (column >= COL_WATERMR) {
+				storage.updateWaterMr(item);
+				column -= COL_WATERMR;
+			}
+			if (column >= COL_EARTHMR) {
+				storage.updateEarthMr(item);
+				column -= COL_EARTHMR;
+			}
+			if (column >= COL_WINDMR) {
+				storage.updateWindMr(item);
+				column -= COL_WINDMR;
+			}
+			if (column >= COL_ADDSP) {
+				storage.updateaddSp(item);
+				column -= COL_ADDSP;
+			}
+			if (column >= COL_ADDHP) {
+				storage.updateaddHp(item);
+				column -= COL_ADDHP;
+			}
+			if (column >= COL_ADDMP) {
+				storage.updateaddMp(item);
+				column -= COL_ADDMP;
+			}
+			if (column >= COL_HPR) {
+				storage.updateHpr(item);
+				column -= COL_HPR;
+			}
+			if (column >= COL_MPR) {
+				storage.updateMpr(item);
+				column -= COL_MPR;
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

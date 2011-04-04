@@ -342,6 +342,15 @@ public class L1ItemInstance extends L1Object {
 			bless = getBless();
 			attrEnchantKind = getAttrEnchantKind();
 			attrEnchantLevel = getAttrEnchantLevel();
+			firemr = getFireMr();
+			watermr = getWaterMr();
+			earthmr = getEarthMr();
+			windmr = getWindMr();
+			addhp = getaddHp();
+			addmp = getaddMp();
+			addsp = getaddSp();
+			hpr = getHpr();
+			mpr = getMpr();
 		}
 
 		public void updateCount() {
@@ -1215,5 +1224,4 @@ public class L1ItemInstance extends L1Object {
 	public void setNowLighting(boolean flag) {
 		_isNowLighting = flag;
 	}
-
 }

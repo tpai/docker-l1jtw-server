@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-02-04 06:56:00
+Date: 2011-04-04 16:03:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,6 +33,15 @@ CREATE TABLE `character_warehouse` (
   `bless` int(11) DEFAULT NULL,
   `attr_enchant_kind` int(11) DEFAULT NULL,
   `attr_enchant_level` int(11) DEFAULT NULL,
+  `firemr` int(11) DEFAULT NULL,
+  `watermr` int(11) DEFAULT NULL,
+  `earthmr` int(11) DEFAULT NULL,
+  `windmr` int(11) DEFAULT NULL,
+  `addsp` int(11) DEFAULT NULL,
+  `addhp` int(11) DEFAULT NULL,
+  `addmp` int(11) DEFAULT NULL,
+  `hpr` int(11) DEFAULT NULL,
+  `mpr` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `key_id` (`account_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
