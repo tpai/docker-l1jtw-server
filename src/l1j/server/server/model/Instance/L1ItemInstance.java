@@ -722,11 +722,6 @@ public class L1ItemInstance extends L1Object {
 					os.writeC(getEnchantLevel());
 				}
 			}
-			// 強化数
-			if (getEnchantLevel() != 0) {
-				os.writeC(2);
-				os.writeC(getEnchantLevel());
-			}
 			// 損傷度
 			if (get_durability() != 0) {
 				os.writeC(3);

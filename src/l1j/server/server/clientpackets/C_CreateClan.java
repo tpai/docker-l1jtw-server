@@ -36,7 +36,7 @@ public class C_CreateClan extends ClientBasePacket {
 		String s = readS();
 
 		L1PcInstance l1pcinstance = clientthread.getActiveChar();
-		if (l1pcinstance.isCrown()) { // 是王組
+		if (l1pcinstance.isCrown()) { // 是王族
 			if (l1pcinstance.getClanid() == 0) {
 
 				for (L1Clan clan : L1World.getInstance().getAllClans()) { // 檢查是否有同名的血盟

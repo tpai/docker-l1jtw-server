@@ -3111,7 +3111,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 					}
 				}
-
 			} else if (l1iteminstance.getItem().getType2() == 1) {
 				// 種別：武器
 				int min = l1iteminstance.getItem().getMinLevel();
