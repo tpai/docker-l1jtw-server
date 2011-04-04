@@ -62,7 +62,7 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 				item.setId(rs.getInt("id"));
 				item.setItem(itemTemplate);
 				item.setCount(rs.getInt("count"));
-				item.setEquipped(rs.getInt("Is_equipped") != 0 ? true : false);
+				item.setEquipped(rs.getInt("is_equipped") != 0 ? true : false);
 				item.setEnchantLevel(rs.getInt("enchantlvl"));
 				item.setIdentified(rs.getInt("is_id") != 0 ? true : false);
 				item.set_durability(rs.getInt("durability"));
@@ -101,7 +101,7 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("INSERT INTO character_items SET id = ?, item_id = ?, char_id = ?, item_name = ?, count = ?, is_equipped = 0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?");
+					.prepareStatement("INSERT INTO character_items SET id = ?, item_id = ?, char_id = ?, item_name = ?, count = ?, is_equipped = 0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?");
 			pstm.setInt(1, item.getId());
 			pstm.setInt(2, item.getItem().getItemId());
 			pstm.setInt(3, objId);
