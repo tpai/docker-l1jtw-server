@@ -56,28 +56,25 @@ public class C_CreateParty extends ClientBasePacket {
 						targetPc.setPartyID(pc.getId());
 						// 玩家 %0%s 邀請您加入隊伍？(Y/N)
 						targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
-					}
-					else {
+					} else {
 						// 只有領導者才能邀請其他的成員。
 						pc.sendPackets(new S_ServerMessage(416));
 					}
-				}
-				else {
+				} else {
 					pc.setPartyType(type);
 					targetPc.setPartyID(pc.getId());
 					switch (type) {
-						case 0:
-							// 玩家 %0%s 邀請您加入隊伍？(Y/N)
-							targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
-							break;
-						case 1:
-							targetPc.sendPackets(new S_Message_YN(954, pc.getName()));
-							break;
+					case 0:
+						// 玩家 %0%s 邀請您加入隊伍？(Y/N)
+						targetPc.sendPackets(new S_Message_YN(953, pc.getName()));
+						break;
+					case 1:
+						targetPc.sendPackets(new S_Message_YN(954, pc.getName()));
+						break;
 					}
 				}
 			}
-		}
-		else if (type == 2) { // 聊天組隊
+		} else if (type == 2) { // 聊天組隊
 			String name = readS();
 			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (targetPc == null) {
@@ -99,19 +96,48 @@ public class C_CreateParty extends ClientBasePacket {
 					targetPc.setPartyID(pc.getId());
 					// 您要接受玩家 %0%s 提出的隊伍對話邀請嗎？(Y/N)
 					targetPc.sendPackets(new S_Message_YN(951, pc.getName()));
-				}
-				else {
+				} else {
 					// 只有領導者才能邀請其他的成員。
 					pc.sendPackets(new S_ServerMessage(416));
 				}
-			}
-			else {
+			} else {
 				targetPc.setPartyID(pc.getId());
 				// 您要接受玩家 %0%s 提出的隊伍對話邀請嗎？(Y/N)
 				targetPc.sendPackets(new S_Message_YN(951, pc.getName()));
 			}
 		}
+		// 隊長委任
+		else if (type == 3) {
+			// 不是隊長時, 不可使用
+			if ((pc.getParty() == null) || !pc.getParty().isLeader(pc)) {
+				pc.sendPackets(new S_ServerMessage(1697));
+				return;
+			}
 
+			// 取得目標物件編號
+			int targetId = readD();
+
+			// 嘗試取得目標
+			L1Object obj = L1World.getInstance().findObject(targetId);
+
+			// 判斷目標是否合理
+			if ((obj == null) || (pc.getId() == obj.getId())
+					|| !(obj instanceof L1PcInstance)) {
+				return;
+			}
+
+			// 轉型為玩家物件
+			L1PcInstance targetPc = (L1PcInstance) obj;
+
+			// 判斷目標是否屬於相同隊伍
+			if (!targetPc.isInParty()) {
+				pc.sendPackets(new S_ServerMessage(1696));
+				return;
+			}
+
+			// 指定隊長給新的目標
+			pc.getParty().passLeader(targetPc);
+		}
 	}
 
 	@Override

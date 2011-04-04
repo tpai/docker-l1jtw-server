@@ -75,7 +75,7 @@ public class S_Party extends ServerBasePacket {
 			return;
 		} else {
 			writeC(Opcodes.S_OPCODE_PACKETBOX);
-			writeC(0x68);
+			writeC(S_PacketBox.UPDATE_OLD_PART_MEMBER);
 			nowhp = leader.getCurrentHp();
 			maxhp = leader.getMaxHp();
 			writeC(member.length - 1);
@@ -108,7 +108,7 @@ public class S_Party extends ServerBasePacket {
 	 */
 	public void oldMember(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(0x69);
+		writeC(S_PacketBox.PATRY_UPDATE_MEMBER);
 		writeD(pc.getId());
 		writeS(pc.getName());
 		writeD(pc.getMapId());
@@ -123,7 +123,7 @@ public class S_Party extends ServerBasePacket {
 	 */
 	public void changeLeader(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(0x6A);
+		writeC(S_PacketBox.PATRY_SET_MASTER);
 		writeD(pc.getId());
 		writeH(0x0000);
 	}
@@ -139,7 +139,7 @@ public class S_Party extends ServerBasePacket {
 			return;
 		} else {
 			writeC(Opcodes.S_OPCODE_PACKETBOX);
-			writeC(0x6E);
+			writeC(S_PacketBox.PATRY_MEMBERS);
 			writeC(member.length);
 			for (int i = 0, a = member.length; i < a; i++) {
 				writeD(member[i].getId());
