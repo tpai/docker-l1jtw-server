@@ -153,7 +153,6 @@ public class L1EquipmentSlot {
 	private void removeArmor(L1ItemInstance armor) {
 		L1Item item = armor.getItem();
 		int itemId = armor.getItem().getItemId();
-		// 飾品強化 Scroll of Enchant Accessory
 		_owner.addAc(-(item.get_ac() - armor.getEnchantLevel() - armor
 				.getAcByMagic()));
 		_owner.addDamageReductionByArmor(-item.getDamageReduction());

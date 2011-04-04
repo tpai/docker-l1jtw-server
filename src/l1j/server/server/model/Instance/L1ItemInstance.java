@@ -710,15 +710,13 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(getItem().getMaterial());
 				os.writeD(getWeight());
 			}
-			/** 飾品強化卷軸 */
+			/** 強化數判斷 */
 			if (getEnchantLevel() != 0) {
 				os.writeC(2);
-				if (getItem().getType2() != 2) {
-					os.writeC(getEnchantLevel());
-				} else if (getItem().getType2() == 2
-						&& getItem().getType() == 8 || getItem().getType() == 9
-						|| getItem().getType() == 10
-						|| getItem().getType() == 12) {
+				/** 飾品強化卷軸 */
+				if (getItem().getType2() == 2 && getItem().getType() >= 8
+						&& getItem().getType() <= 12) { // 8:項鍊 9:戒指1 10:腰帶
+														// 11:戒指2 12:耳環
 					os.writeC(0);
 				} else {
 					os.writeC(getEnchantLevel());
