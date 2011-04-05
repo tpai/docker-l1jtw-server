@@ -76,8 +76,14 @@ public class L1EquipmentSlot {
 	private void setArmor(L1ItemInstance armor) {
 		L1Item item = armor.getItem();
 		int itemId = armor.getItem().getItemId();
-		_owner.addAc(item.get_ac() - armor.getEnchantLevel()
-				- armor.getAcByMagic());
+		// 飾品不加防判斷
+		if (armor.getItem().getType2() == 2 && armor.getItem().getType() >= 8
+				&& armor.getItem().getType() <= 12) {
+			_owner.addAc(item.get_ac() - armor.getAcByMagic());
+		} else {
+			_owner.addAc(item.get_ac() - armor.getEnchantLevel()
+					- armor.getAcByMagic());
+		}
 		_owner.addDamageReductionByArmor(item.getDamageReduction());
 		_owner.addWeightReduction(item.getWeightReduction());
 		_owner.addHitModifierByArmor(item.getHitModifierByArmor());
@@ -153,8 +159,14 @@ public class L1EquipmentSlot {
 	private void removeArmor(L1ItemInstance armor) {
 		L1Item item = armor.getItem();
 		int itemId = armor.getItem().getItemId();
-		_owner.addAc(-(item.get_ac() - armor.getEnchantLevel() - armor
-				.getAcByMagic()));
+		// 飾品不加防判斷
+		if (armor.getItem().getType2() == 2 && armor.getItem().getType() >= 8
+				&& armor.getItem().getType() <= 12) {
+			_owner.addAc(-(item.get_ac() - armor.getAcByMagic()));
+		} else {
+			_owner.addAc(-(item.get_ac() - armor.getEnchantLevel() - armor
+					.getAcByMagic()));
+		}
 		_owner.addDamageReductionByArmor(-item.getDamageReduction());
 		_owner.addWeightReduction(-item.getWeightReduction());
 		_owner.addHitModifierByArmor(-item.getHitModifierByArmor());
@@ -211,8 +223,6 @@ public class L1EquipmentSlot {
 		if (equipment.getaddMp() != 0) {
 			_owner.addMaxMp(equipment.getaddMp());
 		}
-		_owner.addMaxHp(item.get_addhp() + equipment.getaddHp());
-		_owner.addMaxMp(item.get_addmp() + equipment.getaddMp());
 		_owner.addStr(item.get_addstr());
 		_owner.addCon(item.get_addcon());
 		_owner.addDex(item.get_adddex());
@@ -281,8 +291,6 @@ public class L1EquipmentSlot {
 		if (equipment.getaddMp() != 0) {
 			_owner.addMaxMp(-equipment.getaddMp());
 		}
-		_owner.addMaxHp(-(item.get_addhp() + equipment.getaddHp()));
-		_owner.addMaxMp(-(item.get_addmp() + equipment.getaddMp()));
 		_owner.addStr((byte) -item.get_addstr());
 		_owner.addCon((byte) -item.get_addcon());
 		_owner.addDex((byte) -item.get_adddex());
