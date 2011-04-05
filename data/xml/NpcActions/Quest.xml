@@ -964,4 +964,158 @@
 			<ShowHtml HtmlId="silrein42"/>
 		</Fail>
 	</MakeItem>
+	<!--ILv45幻術士 道具 第一次記憶碎片 / 第一 白螞的屍體 / 使用時空裂痕水晶(綠色)x1-->
+	<MakeItem Name="a" Class="I" NpcId="81247" AmountInputable="false" QuestId="Level45" QuestStep="1">
+		<Item Amount="1" ItemId="49194"/>
+		<Material Amount="1" ItemId="49192"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="2"/>
+			<ShowHtml HtmlId="wcorpse3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wcorpse1"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 第二次記憶碎片 / 第二 白螞的屍體 / 使用時空裂痕水晶(綠色)x1-->
+	<MakeItem Name="a" Class="I" NpcId="81248" AmountInputable="false" QuestId="Level45" QuestStep="2">
+		<Item Amount="1" ItemId="49195"/>
+		<Material Amount="1" ItemId="49192"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="3"/>
+			<ShowHtml HtmlId="wcorpse6"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wcorpse4"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 第三次記憶碎片 / 第三 白螞的屍體 / 使用時空裂痕水晶(綠色)x1-->
+	<MakeItem Name="a" Class="I" NpcId="81249" AmountInputable="false" QuestId="Level45" QuestStep="3">
+		<Item Amount="1" ItemId="49196"/>
+		<Material Amount="1" ItemId="49192"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="4"/>
+			<ShowHtml HtmlId="wcorpse9"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wcorpse7"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 第一次邪念碎片 / 白蟻的痕跡(土壤) / 使用時時空裂痕水晶(藍色)x1-->
+	<MakeItem Name="a" Class="I" NpcId="81250" AmountInputable="false" QuestId="Level45" QuestStep="5">
+		<Item Amount="1" ItemId="49197"/>
+		<Material Amount="1" ItemId="49193"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="6"/>
+			<ShowHtml HtmlId="wa_earth3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wa_earth1"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 第二次邪念碎片 / 白蟻的痕跡(酸性液) / 使用時空裂痕水晶(藍色)x1-->
+	<MakeItem Name="a" Class="I" NpcId="81251" AmountInputable="false" QuestId="Level45" QuestStep="6">
+		<Item Amount="1" ItemId="49198"/>
+		<Material Amount="1" ItemId="49193"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="7"/>
+			<ShowHtml HtmlId="wa_acidw3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wa_acidw1"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 第三次邪念碎片 / 白蟻的痕跡(蛋殼) / 使用時空裂痕水晶(藍色)x1-->
+	<MakeItem Name="a" Class="I" NpcId="81252" AmountInputable="false" QuestId="Level45" QuestStep="7">
+		<Item Amount="1" ItemId="49199"/>
+		<Material Amount="1" ItemId="49193"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="8"/>
+			<ShowHtml HtmlId="wa_egg3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wa_egg1"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv15幻術士 獎勵 幻術士魔杖,記憶水晶(立方：燃燒) / 長老 希蓮恩 / 污濁妖魔之心x10,污濁精靈核晶x1,污濁安特的樹皮x1,污濁安特的水果x1,污濁安特的樹枝x1-->
+	<MakeItem Name="b" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level15" QuestStep="1">
+		<Item Amount="1" ItemId="269"/>
+		<Item Amount="1" ItemId="49121"/>
+		<Material Amount="10" ItemId="49169"/>
+		<Material Amount="1" ItemId="49170"/>
+		<Material Amount="1" ItemId="40510"/>
+		<Material Amount="1" ItemId="40511"/>
+		<Material Amount="1" ItemId="40512"/>
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+			<ShowHtml HtmlId="silrein7"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein8"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv30幻術士 獎勵 幻術士法書,記憶水晶(立方：衝擊) / 長老 希蓮恩 / 艾爾摩部隊日記x1-->
+	<MakeItem Name="d" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level30" QuestStep="1">
+		<Item Amount="1" ItemId="21101"/>
+		<Item Amount="1" ItemId="49131"/>
+		<Material Amount="1" ItemId="49191"/>
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+			<ShowHtml HtmlId="silrein13"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein12"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 時空裂痕水晶(藍色) / 長老 希蓮恩 / 第一次記憶碎片x1,第二次記憶碎片x1,第三次記憶碎片x1-->
+	<MakeItem Name="f" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="4">
+		<Item Amount="3" ItemId="49193"/>
+		<Material Amount="1" ItemId="49194"/>
+		<Material Amount="1" ItemId="49195"/>
+		<Material Amount="1" ItemId="49196"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="5"/>
+			<ShowHtml HtmlId="silrein22"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein21"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 未完成的時間水晶球 / 長老 希蓮恩 / 第一次邪念碎片x1,第二次邪念碎片x1-->
+	<MakeItem Name="g" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="8">
+		<Item Amount="1" ItemId="49200"/>
+		<Material Amount="1" ItemId="49197"/>
+		<Material Amount="1" ItemId="49198"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="9"/>
+			<ShowHtml HtmlId="silrein22"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein24"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 道具 完成的時間水晶球 / 長老 希蓮恩 / 第三次邪念碎片x1-->
+	<MakeItem Name="g" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="9">
+		<Item Amount="1" ItemId="49201"/>
+		<Material Amount="1" ItemId="49200"/>
+		<Material Amount="1" ItemId="49199"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="10"/>
+			<ShowHtml HtmlId="silrein22"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein24"/>
+		</Fail>
+	</MakeItem>
+	<!--ILv45幻術士 獎勵 幻術士斗篷 / 長老 希蓮恩 / 時空裂痕邪念碎片x1-->
+	<MakeItem Name="g" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="10">
+		<Item Amount="1" ItemId="21100"/>
+		<Material Amount="1" ItemId="49202"/>
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+			<ShowHtml HtmlId="silrein25"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein24"/>
+		</Fail>
+	</MakeItem>
 </NpcActionList>

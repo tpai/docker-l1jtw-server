@@ -3305,7 +3305,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "prokel1";
 					}
 				}
-			}
+			/*}
 			else if (npcid == 80145) { // 長老 シルレイン
 				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
 				if (player.isDragonKnight()) { // ドラゴンナイト
@@ -3322,8 +3322,144 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "silrein43";
 					}
 				}
-			}
-			else if (npcid == 81245) { // オーク密使(HC3)
+			}*/
+			} else if (npcid == 81247) { //第一 白螞的屍體
+				if(player.isIllusionist()) { // 幻術士 LV45 試練任務
+					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
+					int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+					if (player.getLevel() > 44
+							&& lv30_step == L1Quest.QUEST_END) {
+						if(lv45_step == 1) {
+							htmlid = "wcorpse2";
+						} else {
+							htmlid = "wcorpse1";
+						}
+					}
+				}
+			} else if (npcid == 81248) { //第二 白螞的屍體
+				if(player.isIllusionist()) { // 幻術士 LV45 試練任務
+					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
+					int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+					if (player.getLevel() > 44
+							&& lv30_step == L1Quest.QUEST_END) {
+						if(lv45_step == 2) {
+							htmlid = "wcorpse5";
+						} else {
+							htmlid = "wcorpse4";
+						}
+					}
+				}
+			} else if (npcid == 81249) { //第三 白螞的屍體
+				if(player.isIllusionist()) { // 幻術士 LV45 試練任務
+					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
+					int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+					if (player.getLevel() > 44
+							&& lv30_step == L1Quest.QUEST_END) {
+						if(lv45_step == 3) {
+							htmlid = "wcorpse8";
+						} else {
+							htmlid = "wcorpse7";
+						}
+					}
+				}
+			} else if (npcid == 81250) { //白蟻的痕跡(土壤)
+				if(player.isIllusionist()) { // 幻術士 LV45 試練任務
+					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
+					int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+					if (player.getLevel() > 44
+							&& lv30_step == L1Quest.QUEST_END) {
+						if(lv45_step == 5) {
+							htmlid = "wa_earth2";
+						} else {
+							htmlid = "wa_earth1";
+						}
+					}
+				}
+			} else if (npcid == 81251) { //白蟻的痕跡(酸性液)
+				if(player.isIllusionist()) { // 幻術士 LV45 試練任務
+					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
+					int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+					if (player.getLevel() > 44
+							&& lv30_step == L1Quest.QUEST_END) {
+						if(lv45_step == 6) {
+							htmlid = "wa_acidw2";
+						} else {
+							htmlid = "wa_acidw1";
+						}
+					}
+				}
+			} else if (npcid == 81252) { //白蟻的痕跡(蛋殼)
+				if(player.isIllusionist()) { // 幻術士 LV45 試練任務
+					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
+					int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+					if (player.getLevel() > 44
+							&& lv30_step == L1Quest.QUEST_END) {
+						if(lv45_step == 7) {
+							htmlid = "wa_egg2";
+						} else {
+							htmlid = "wa_egg1";
+						}
+					}
+				}
+			} else if (npcid == 80145) { // 長老 希蓮恩
+				int lv15_step = quest.get_step(L1Quest.QUEST_LEVEL15);
+				int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
+				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if (player.isDragonKnight()) { // 龍騎士
+					if(player.getLevel() >= 45 && lv45_step == 1) {
+						htmlid = "silrein37";
+					} else if (player.getLevel() >= 45 && lv45_step == 2) {
+						htmlid = "silrein38";
+					} else if (player.getLevel() >= 45 && lv45_step == 3) {
+						htmlid = "silrein40";
+					} else if (player.getLevel() >= 45 && lv45_step == 4) {
+						htmlid = "silrein43";
+					}
+				}
+				if (player.isIllusionist()) { // 幻術士
+					if(player.getLevel() > 49
+							&& lv45_step == L1Quest.QUEST_END) {
+						if(lv50_step == 0) {
+							htmlid = "silrein26";//正確 silrein27 未實裝先控制不能接
+						} else if(lv50_step == L1Quest.QUEST_END) { // ?
+							htmlid = "silrein32";
+						} else {
+							htmlid = "silrein24";
+						}
+					} else if(player.getLevel() > 44
+							&& lv30_step == L1Quest.QUEST_END) {
+						if(lv45_step == 0) {
+							htmlid = "silrein18";
+						} else if(lv45_step > 4) { //交出時空裂痕邪念碎片 lv45_step >= 5 ~ lv45_step <= 10
+							htmlid = "silrein23";
+						} else if(lv45_step > 0) { // 交出記憶的碎片
+							htmlid = "silrein20";
+						} else {
+							htmlid = "silrein19";
+						}
+					} else if (player.getLevel() > 29
+							&& lv15_step == L1Quest.QUEST_END) {
+						if(lv30_step == 0) {
+							htmlid = "silrein11";
+						} else if(lv30_step > 0) { // ?
+							htmlid = "silrein14";
+						} else {
+							htmlid = "silrein10";
+						}
+					} else if (player.getLevel() > 14) {
+						if (lv15_step == 0 ) {
+							htmlid = "silrein2";
+						} else if (	lv15_step == L1Quest.QUEST_END) { // ?)
+							htmlid = "silrein5";
+						} else {
+							htmlid = "silrein4";
+						}
+					} else { // Lv15?
+						htmlid = "silrein1";
+					}
+				}
+			} else if (npcid == 81245) { // オーク密使(HC3)
 				if (player.isDragonKnight()) {
 					if (player.getTempCharGfx() == 6984) { // オーク密使変身
 						int lv30_step = player.getQuest().get_step(L1Quest.QUEST_LEVEL30);

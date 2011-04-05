@@ -3534,8 +3534,8 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 
-		// 長老 シルレイン
-		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80145) {
+		/*// 長老 シルレイン
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80145) {// 併到 幻術士 試煉
 			if (pc.isDragonKnight()) {
 				int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
 				// 「プロケルの手紙を渡す」
@@ -3550,7 +3550,7 @@ public class C_NPCAction extends ClientBasePacket {
 					htmlid = "silrein39";
 				}
 			}
-		}
+		}*/
 
 		// エルラス
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80135) {
@@ -3697,6 +3697,77 @@ public class C_NPCAction extends ClientBasePacket {
 				pc.sendPackets(new S_SystemMessage("對話檔版本不符，請下載更新"));
 			}
 			htmlid = "";
+		}
+
+// 幻術士 試練任務
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80145) {//長老 希蓮恩
+			int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
+			int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
+			int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
+			int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
+			if (pc.isDragonKnight()) {
+				if (s.equalsIgnoreCase("l") && lv45_step == 1) {
+					if (pc.getInventory().checkItem(49209, 1)) { // check
+						pc.getInventory().consumeItem(49209, 1); // del
+						pc.getQuest().set_step(L1Quest.QUEST_LEVEL45, 2);
+						htmlid = "silrein38";
+					}
+				} else if (s.equalsIgnoreCase("m") && lv45_step == 2) {
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL45, 3);
+					htmlid = "silrein39";
+				}
+			}
+			if (pc.isIllusionist()) {
+				//希蓮恩的第一次課題
+				if (s.equalsIgnoreCase("a") && lv15_step == 0) {
+					final int[] item_ids = { 49172, 49182, }; //希蓮恩的第一次信件、妖精森林瞬間移動卷軸
+					final int[] item_amounts = { 1, 1,};
+					for (int i = 0; i < item_ids.length; i++) {
+						L1ItemInstance item = pc.getInventory().storeItem(
+								item_ids[i], item_amounts[i]);
+						pc.sendPackets(new S_ServerMessage(143,
+								((L1NpcInstance) obj).getNpcTemplate()
+										.get_name(), item.getItem().getName()));
+					}
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL15, 1);
+					htmlid = "silrein3";
+				//執行希蓮恩的第二課題
+				} else if (s.equalsIgnoreCase("c") && lv30_step == 0) {
+					final int[] item_ids = { 49173, 49179, }; //希蓮恩的第二次信件、希蓮恩之袋 獲得【歐瑞村莊瞬間移動卷軸、生鏽的笛子】
+					final int[] item_amounts = { 1, 1,};
+					for (int i = 0; i < item_ids.length; i++) {
+						L1ItemInstance item = pc.getInventory().storeItem(
+								item_ids[i], item_amounts[i]);
+						pc.sendPackets(new S_ServerMessage(143,
+								((L1NpcInstance) obj).getNpcTemplate()
+										.get_name(), item.getItem().getName()));
+					}
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL30, 1);
+					htmlid = "silrein12";
+				//重新接收生鏽的笛子
+				} else if (s.equalsIgnoreCase("o") && lv30_step == 1) {
+					if (pc.getInventory().checkItem(49186, 1) || pc.getInventory().checkItem(49179, 1)) {
+						htmlid = "silrein17";//已經有 希蓮恩之袋、生鏽的笛子 不可再取得
+					} else {
+						L1ItemInstance item = pc.getInventory().storeItem(49186, 1); //生鏽的笛子
+						pc.sendPackets(new S_ServerMessage(143, item.getItem().getName()));
+					htmlid = "silrein16";
+					}
+				//執行希蓮恩的第三課題
+				} else if (s.equalsIgnoreCase("e") && lv45_step == 0) {
+					final int[] item_ids = { 49174, 49180, }; //希蓮恩的第三次信件、希蓮恩之袋 獲得【風木村莊瞬間移動卷軸、時空裂痕水晶(綠色 3個)】
+					final int[] item_amounts = { 1, 1,};
+					for (int i = 0; i < item_ids.length; i++) {
+						L1ItemInstance item = pc.getInventory().storeItem(
+								item_ids[i], item_amounts[i]);
+						pc.sendPackets(new S_ServerMessage(143,
+								((L1NpcInstance) obj).getNpcTemplate()
+										.get_name(), item.getItem().getName()));
+					}
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL45, 1);
+					htmlid = "silrein19";
+				}
+			}
 		}
 
 		// else System.out.println("C_NpcAction: " + s);

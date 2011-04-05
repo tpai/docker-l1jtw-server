@@ -227,6 +227,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				|| (itemId == 41029 // 召喚球の欠片
 				)
 				|| (itemId == 40317)
+				|| (itemId == 49188) // 索夏依卡靈魂之石
 				|| (itemId == 41036)
 				|| (itemId == 41245)
 				|| (itemId == 40127)
@@ -3084,6 +3085,65 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 						pc.getInventory().consumeItem(49222, 1);
 					}
+			// 幻術士試練 增加 start
+				} else if (itemId == 49188) { // 索夏依卡靈魂之石
+					if (l1iteminstance1.getItem().getItemId() == 49186) {
+						L1ItemInstance item1 = ItemTable.getInstance().createItem(49189);
+						item1.setCount(1);
+						if (pc.getInventory().checkAddItem(item1, 1) == L1Inventory.OK) {
+							pc.getInventory().storeItem(item1);
+							pc.sendPackets(new S_ServerMessage(403, item1.getLogName()));
+							pc.getInventory().removeItem(l1iteminstance, 1);
+							pc.getInventory().removeItem(l1iteminstance1, 1);
+						}
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					}
+				} else if (itemId == 49189) { //索夏依卡靈魂之笛
+					if (pc.isIllusionist()
+							&& pc.getMapId() == 4) { // 古魯丁祭壇
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 46163) {//艾爾摩索夏依卡將軍的冤魂
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1
+						} else {
+							L1SpawnUtil.spawn(pc, 46163, 0, 0); //  ?
+						}
+						pc.getInventory().consumeItem(49189, 1);
+					}
+				} else if (itemId == 49201) { //完成的時間水晶球
+					if (pc.isIllusionist()
+							&& pc.getMapId() == 4) { // 火龍窟
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 81254) {//時空裂痕
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1
+						} else {
+							L1SpawnUtil.spawn(pc, 81254, 0, 0); //  ?
+						}
+						pc.getInventory().consumeItem(49201, 1);
+					}
+			// 幻術士試練 增加 end
 
 				} else {
 					int locX = ((L1EtcItem) l1iteminstance.getItem())

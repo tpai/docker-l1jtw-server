@@ -1132,4 +1132,12 @@
 	<TreasureBox Type="SPECIFIC" ItemId="49309">
 		<Item ItemId="49310" Count="1000"></Item>
 	</TreasureBox>
+        <TreasureBox Type="SPECIFIC" ItemId="49179">  <!--希蓮恩之袋-->
+                <Item ItemId="49183" Count="1" />  <!--歐瑞村莊瞬間移動卷軸 * 1-->
+                <Item ItemId="49186" Count="1" />  <!--生鏽的笛子 * 1-->
+	</TreasureBox>
+        <TreasureBox Type="SPECIFIC" ItemId="49180">  <!--希蓮恩之袋-->
+                <Item ItemId="49184" Count="1" />  <!--風木村莊瞬間移動卷軸 * 1-->
+                <Item ItemId="49192" Count="3" />  <!--時空裂痕水晶(綠色) * 1-->
+	</TreasureBox>
 </TreasureBoxList>
