@@ -223,3 +223,4 @@ INSERT INTO `getback_restart` VALUES ('21504', 'SKT Hotel', '33115', '33379', '4
 INSERT INTO `getback_restart` VALUES ('22016', 'SKT Hotel', '33115', '33379', '4');
 INSERT INTO `getback_restart` VALUES ('22528', 'Heine Hotel', '33604', '33276', '4');
 INSERT INTO `getback_restart` VALUES ('23040', 'Heine Hotel', '33604', '33276', '4');
+INSERT INTO `getback_restart` VALUES ('2005', '新隱藏之谷', '32682', '32874', '2005');

@@ -1057,3 +1057,6 @@ INSERT INTO `npcaction` VALUES ('81249', 'wcorpse7', 'wcorpse7', '', '');
 INSERT INTO `npcaction` VALUES ('81250', 'wa_earth1', 'wa_earth1', '', '');
 INSERT INTO `npcaction` VALUES ('81251', 'wa_acidw1', 'wa_acidw1', '', '');
 INSERT INTO `npcaction` VALUES ('81252', 'wa_egg1', 'wa_egg1', '', '');
+INSERT INTO `npcaction` VALUES ('81255', 'tutor', 'tutor', '', '');
+INSERT INTO `npcaction` VALUES ('81256', 'admin1', 'admin1', '', '');
+INSERT INTO `npcaction` VALUES ('81257', 'lowlv1', 'lowlv1', '', '');

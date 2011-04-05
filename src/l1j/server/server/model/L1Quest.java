@@ -86,6 +86,8 @@ public class L1Quest {
 
 	public static final int QUEST_GENERALHAMELOFRESENTMENT = 41;
 
+	public static final int QUEST_TUTOR = 300;
+
 	public static final int QUEST_END = 255; // 終了済みクエストのステップ
 
 	private L1PcInstance _owner = null;

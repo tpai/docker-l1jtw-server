@@ -1,5 +1,17 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
+	<!-- 隱藏之谷地監-史蓋傳送隱藏之谷 -->
+	<Action Name="teleport dungeon-out" NpcId="50002">
+		<Teleport X="32682" Y="32874" Map="2005" Heading="5" Price="0"/>
+	</Action>
+	<!-- 隱藏之谷-小柯傳送隱藏之谷地監內 -->
+	<Action Name="teleport dungeon-in" NpcId="50006">
+		<Teleport X="32871" Y="32866" Map="86" Heading="5" Price="0"/>
+	</Action>
+	<!-- 隱藏之谷-伊爾卓斯傳送說話之島 -->
+	<Action Name="teleport talking island-in" NpcId="50003">
+		<Teleport X="32593" Y="32922" Map="0" Heading="5" Price="0"/>
+	</Action>
 	<!-- 隠された渓谷⇒シルバーナイトタウン -->
 	<Action Name="teleport hidden-velley-for-newbie" NpcId="50004">
 		<Teleport X="33083" Y="33387" Map="4" Heading="5" Price="0" />

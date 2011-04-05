@@ -3769,6 +3769,182 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 50016) {//傑諾
+			if (s.equalsIgnoreCase("0")) {
+				if (pc.getLevel() < 13) {// lv < 13 傳送隱藏之谷
+					L1Teleport.teleport(pc, 32682, 32874, (short) 2005, 2, true);
+				} else {
+					htmlid = "zeno1";
+				}
+			}
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 50065) {//魯比恩
+			if (s.equalsIgnoreCase("teleport valley-in")) {
+				if (pc.getLevel() < 13) {// lv < 13 傳送隱藏之谷
+					L1Teleport.teleport(pc, 32682, 32874, (short) 2005, 2, true);
+				} else {
+					htmlid = "drist1";
+				}
+			}
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 50055) {//德瑞斯特
+			if (s.equalsIgnoreCase("teleport hidden-valley")) {
+				if (pc.getLevel() < 13) {// lv < 13 傳送隱藏之谷
+					L1Teleport.teleport(pc, 32682, 32874, (short) 2005, 2, true);
+				} else {
+					htmlid = "drist1";
+				}
+			}
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81255) {//新手導師
+			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR);//任務編號階段
+			int level = pc.getLevel();//角色等級
+			int helpNo = 0;
+			if (s.equalsIgnoreCase("l")) {
+				if (pc.getLevel() < 13 && quest_step == 1) {
+					L1ItemInstance item = pc.getInventory().storeItem(42099, 5); //指定傳送卷軸(隱藏之谷) * 5
+					pc.sendPackets(new S_ServerMessage(143, item.getItem().getName()));
+					pc.getQuest().set_step(L1Quest.QUEST_TUTOR, 2);
+					helpNo = 1;
+					htmlid = "";
+				} else {
+					htmlid = "tutorend";
+				}
+			} else if (s.equalsIgnoreCase("A")) {//isCrown
+				helpNo = 1;
+				if (level > 1 && level < 5) {// lv2 ~ lv4
+					htmlid = "tutorp1";//指引
+				} else if (level > 4 && level < 8) {// lv5 ~ lv7
+					htmlid = "tutorp2";//傳送服務
+				} else if (level > 7 && level < 10) {// lv8 ~ lv9
+					htmlid = "tutorp3";//傳送服務
+				} else if (level > 9 && level < 12) {// lv10 ~ lv11
+					htmlid = "tutorp4";//傳送服務
+				} else if (level > 11 && level < 13) {// lv12
+					htmlid = "tutorp5";//傳送服務
+				} else if (level > 12) {// lv13
+					htmlid = "tutorp6";//離開隱藏之谷
+				} else {
+					htmlid = "tutorend";
+				}
+			} else if (s.equalsIgnoreCase("B")) {//isKnight
+				helpNo = 1;
+				if (level > 1 && level < 5) {// lv2 ~ lv4
+					htmlid = "tutork1";//接受幫助
+				} else if (level > 4 && level < 8) {// lv5 ~ lv7
+					htmlid = "tutork2";//傳送服務
+				} else if (level > 7 && level < 10) {// lv8 ~ lv9
+					htmlid = "tutork3";//傳送服務
+				} else if (level > 9 && level < 13) {// lv10 ~ lv12
+					htmlid = "tutork4";//傳送服務
+				} else if (level > 12) {// lv13
+					htmlid = "tutork5";//離開隱藏之谷
+				} else {
+					htmlid = "tutorend";
+				}
+			} else if (s.equalsIgnoreCase("C")) {//isElf
+				helpNo = 1;
+				if (level > 1 && level < 5) {// lv2 ~ lv4
+					htmlid = "tutore1";//接受幫助
+				} else if (level > 4 && level < 8) {// lv5 ~ lv7
+					htmlid = "tutore2";//傳送服務
+				} else if (level > 7 && level < 10) {// lv8 ~ lv9
+					htmlid = "tutore3";//傳送服務
+				} else if (level > 9 && level < 12) {// lv10 ~ lv11
+					htmlid = "tutore4";//傳送服務
+				} else if (level > 11 && level < 13) {// lv12
+					htmlid = "tutore5";//傳送服務
+				} else if (level > 12) {// lv13
+					htmlid = "tutore6";//離開隱藏之谷
+				} else {
+					htmlid = "tutorend";
+				}
+			} else if (s.equalsIgnoreCase("D")) {//isWizard
+				helpNo = 1;
+				if (level > 1 && level < 5) {// lv2 ~ lv4
+					htmlid = "tutorm1";//接受幫助
+				} else if (level > 4 && level < 8) {// lv5 ~ lv7
+					htmlid = "tutorm2";//傳送服務
+				} else if (level > 7 && level < 10) {// lv8 ~ lv9
+					htmlid = "tutorm3";//傳送服務
+				} else if (level > 9 && level < 12) {// lv10 ~ lv11
+					htmlid = "tutorm4";//傳送服務
+				} else if (level > 11 && level < 13) {// lv12
+					htmlid = "tutorm5";//傳送服務
+				} else if (level > 12) {// lv13
+					htmlid = "tutorm6";//離開隱藏之谷
+				} else {
+					htmlid = "tutorend";
+				}
+			} else if (s.equalsIgnoreCase("E")) {//isDarkelf
+				helpNo = 1;
+				if (level > 1 && level < 5) {// lv2 ~ lv4
+					htmlid = "tutord1";//接受幫助
+				} else if (level > 4 && level < 8) {// lv5 ~ lv7
+					htmlid = "tutord2";//傳送服務
+				} else if (level > 7 && level < 10) {// lv8 ~ lv9
+					htmlid = "tutord3";//傳送服務
+				} else if (level > 9 && level < 12) {// lv10 ~ lv11
+					htmlid = "tutord4";//傳送服務
+				} else if (level > 11 && level < 13) {// lv12
+					htmlid = "tutord5";//傳送服務
+				} else if (level > 12) {// lv13
+					htmlid = "tutord6";//離開隱藏之谷
+				} else {
+					htmlid = "tutorend";
+				}
+			} else if (s.equalsIgnoreCase("F")) {//isDragonKnight
+				helpNo = 1;
+				if (level > 1 && level < 5) {// lv2 ~ lv4
+					htmlid = "tutordk1";//接受幫助
+				} else if (level > 4 && level < 8) {// lv5 ~ lv7
+					htmlid = "tutordk2";//傳送服務
+				} else if (level > 7 && level < 10) {// lv8 ~ lv9
+					htmlid = "tutordk3";//傳送服務
+				} else if (level > 9 && level < 13) {// lv10 ~ lv12
+					htmlid = "tutordk4";//傳送服務
+				} else if (level > 12) {// lv13
+					htmlid = "tutordk5";//離開隱藏之谷
+				} else {
+					htmlid = "tutorend";
+				}
+			} else if (s.equalsIgnoreCase("G")) {//isIllusionist
+				helpNo = 1;
+				if (level > 1 && level < 5) {// lv2 ~ lv4
+					htmlid = "tutori";//接受幫助
+				} else if (level > 4 && level < 8) {// lv5 ~ lv7
+					htmlid = "tutori2";//傳送服務
+				} else if (level > 7 && level < 10) {// lv8 ~ lv9
+					htmlid = "tutori3";//傳送服務
+				} else if (level > 9 && level < 13) {// lv10 ~ lv12
+					htmlid = "tutori4";//傳送服務
+				} else if (level > 12) {// lv13
+					htmlid = "tutori5";//離開隱藏之谷
+				} else {
+					htmlid = "tutorend";
+				}
+			}
+			switch (helpNo) {
+				case 1:
+					pc.sendPackets(new S_ServerMessage(183));
+					pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
+					pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
+					pc.sendPackets(new S_SkillSound(pc.getId(), 755));
+					pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
+					pc.setMoveSpeed(1);
+					pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
+				
+					pc.setCurrentHp(pc.getMaxHp());
+					if (pc.getLevel() < 13) {
+						pc.setCurrentMp(pc.getMaxMp());
+					}
+					pc.sendPackets(new S_ServerMessage(77));
+					pc.sendPackets(new S_SkillSound(pc.getId(), 830));
+					pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+					pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+				break;
+			}
+		}
 
 		// else System.out.println("C_NpcAction: " + s);
 		if ((htmlid != null) && htmlid.equalsIgnoreCase("colos2")) {

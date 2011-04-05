@@ -3479,6 +3479,30 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}else if (L1BugBearRace.getInstance().getGameStatus()==3){
 					htmlid = "maeno5";
 				}
+			} else if (npcid == 81255) { // 新手導師
+				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);//任務編號階段
+				int playerLv = player.getLevel();//角色等級
+				if (playerLv < 13 && quest_step == 0) {
+					player.addExp(125);//給予 LV2 EXP
+					quest.set_step(L1Quest.QUEST_TUTOR, 1); // 設定任務
+					htmlid = "tutor";//達到了2等級
+				} else if (playerLv < 13 && player.isDarkelf()) {
+					htmlid = "tutord";//接受幫助
+				} else if (playerLv < 13 && player.isDragonKnight()) {
+					htmlid = "tutordk";//接受幫助
+				} else if (playerLv < 13 && player.isElf()) {
+					htmlid = "tutore";//接受幫助
+				} else if (playerLv < 13 && player.isIllusionist()) {
+					htmlid = "tutori";//接受幫助
+				} else if (playerLv < 13 && player.isKnight()) {
+					htmlid = "tutork";//接受幫助
+				} else if (playerLv < 13 && player.isWizard()) {
+					htmlid = "tutorm";//接受幫助
+				} else if (playerLv < 13 && player.isCrown()) {
+					htmlid = "tutorp";//接受幫助
+				} else {
+					htmlid = "tutorend";
+				}
 			}
 
 			// html表示パケット送信
