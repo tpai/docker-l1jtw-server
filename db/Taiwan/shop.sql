@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-02-04 06:56:00
+Date: 2011-04-05 22:15:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -2462,9 +2462,9 @@ INSERT INTO `shop` VALUES ('81029', '40123', '13', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40125', '10', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40801', '31', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40803', '28', '1', '0', '-1');
-INSERT INTO `shop` VALUES ('81029', '40804', '158', '1', '0', '-1');
-INSERT INTO `shop` VALUES ('81029', '40805', '159', '1', '0', '-1');
-INSERT INTO `shop` VALUES ('81029', '40806', '160', '1', '0', '-1');
+INSERT INTO `shop` VALUES ('81029', '40804', '155', '1', '0', '-1');
+INSERT INTO `shop` VALUES ('81029', '40805', '156', '1', '0', '-1');
+INSERT INTO `shop` VALUES ('81029', '40806', '157', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40807', '60', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40808', '61', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40809', '29', '1', '0', '-1');
@@ -2499,7 +2499,7 @@ INSERT INTO `shop` VALUES ('81029', '40837', '56', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40838', '57', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40839', '58', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40840', '59', '1', '0', '-1');
-INSERT INTO `shop` VALUES ('81029', '40841', '157', '1', '0', '-1');
+INSERT INTO `shop` VALUES ('81029', '40841', '154', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40846', '114', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40847', '115', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '40848', '116', '1', '0', '-1');
@@ -2583,9 +2583,6 @@ INSERT INTO `shop` VALUES ('81029', '42084', '144', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '42085', '145', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '42086', '146', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '42087', '147', '1', '0', '-1');
-INSERT INTO `shop` VALUES ('81029', '42088', '154', '1', '0', '-1');
-INSERT INTO `shop` VALUES ('81029', '42089', '155', '1', '0', '-1');
-INSERT INTO `shop` VALUES ('81029', '42090', '156', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '42091', '4', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '42092', '5', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81029', '42093', '143', '1', '0', '-1');
