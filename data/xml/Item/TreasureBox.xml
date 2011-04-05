@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TreasureBoxList>
 	<!--Type = SPECIFICの場合アイテムリストのすべてが手に入る。Chanceは指定しなくてよい。-->
 	<!--Type = RANDOMの場合アイテムリストの中からどれか一つが手に入る。Chanceを指定する必要がある。-->
@@ -1127,5 +1127,9 @@
 		<Item ItemId="41252" Count="1" Chance="3" />	<!--タートル-->
 		<Item ItemId="41253" Count="1" Chance="3" />	<!--スパイス-->
 		<Item ItemId="41254" Count="1" Chance="3" />	<!--印章-->
+	</TreasureBox>
+	<!--象牙塔箭桶-->
+	<TreasureBox Type="SPECIFIC" ItemId="49309">
+		<Item ItemId="49310" Count="1000"></Item>
 	</TreasureBox>
 </TreasureBoxList>

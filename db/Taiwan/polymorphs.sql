@@ -143,8 +143,8 @@ INSERT INTO `polymorphs` VALUES ('4929', 'high raccoon', '4929', '1', '0', '2', 
 INSERT INTO `polymorphs` VALUES ('4932', 'assassin master morph', '4932', '52', '751', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('5184', 'red uniform', '5184', '1', '0', '8', '1', '7');
 INSERT INTO `polymorphs` VALUES ('5186', 'blue uniform', '5186', '1', '0', '8', '1', '7');
-INSERT INTO `polymorphs` VALUES ('5645', 'Halloween Pumpkin', '5645', '1', '4095', '4095', '1', '7');
-INSERT INTO `polymorphs` VALUES ('5719', 'manekineko', '5719', '1', '4095', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('5645', 'Halloween Pumpkin', '5645', '1', '2047', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('5719', 'manekineko', '5719', '1', '2047', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('5727', 'ancient black assassin morph', '5727', '55', '751', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('5730', 'ancient silver assassin morph', '5730', '60', '751', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('5733', 'ancient gold assassin morph', '5733', '65', '751', '4095', '1', '7');
@@ -266,10 +266,11 @@ INSERT INTO `polymorphs` VALUES ('6280', 'neo silver assassin', '6280', '60', '7
 INSERT INTO `polymorphs` VALUES ('6281', 'neo gold assassin', '6281', '65', '751', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('6282', 'neo platinum assassin', '6282', '70', '751', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('6284', 'Haunted House jack o lantern', '6284', '1', '0', '0', '0', '7');
-INSERT INTO `polymorphs` VALUES ('6400', 'Halloween jack o lantern', '6400', '1', '4095', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('6400', 'Halloween jack o lantern', '6400', '1', '2047', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('6894', 'awake', '6894', '1', '751', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('7332', 'spearm 52', '7332', '52', '1080', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('7338', 'spearm 55', '7338', '55', '1080', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('7339', 'spearm 60', '7339', '60', '1080', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('7340', 'spearm 65', '7340', '65', '1080', '4095', '1', '7');
 INSERT INTO `polymorphs` VALUES ('7341', 'spearm 70', '7341', '70', '1080', '4095', '1', '7');
+INSERT INTO `polymorphs` VALUES ('8719', '柑橘', '8719', '1', '2047', '4095', '1', '7');
