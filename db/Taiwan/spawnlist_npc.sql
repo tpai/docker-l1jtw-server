@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-02-04 06:56:00
+Date: 2011-04-06 18:55:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -750,3 +750,6 @@ INSERT INTO `spawnlist_npc` VALUES ('88043', '龍騎士 費艾娜', '1', '81259'
 INSERT INTO `spawnlist_npc` VALUES ('88044', '旅人諮詢員-話島', '1', '81257', '32581', '32922', '0', '0', '4', '0', '0', '0');
 INSERT INTO `spawnlist_npc` VALUES ('88045', '旅人諮詢員-威頓', '1', '81257', '33709', '32501', '0', '0', '6', '0', '4', '0');
 INSERT INTO `spawnlist_npc` VALUES ('88046', '史蓋', '1', '50002', '32871', '32870', '0', '0', '7', '0', '86', '0');
+INSERT INTO `spawnlist_npc` VALUES ('130408', '箱子', '1', '80001', '32647', '32950', '0', '0', '5', '0', '0', '0');
+INSERT INTO `spawnlist_npc` VALUES ('130409', '妖精森林(光)', '1', '81166', '33054', '32337', '0', '0', '6', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('130408', '海音噴水池', '1', '71097', '33601', '33245', '0', '0', '5', '0', '4', '0');

@@ -1,3 +1,17 @@
+/**
+ *                            License
+ * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
+ * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
+ * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
+ * COPYRIGHT LAW IS PROHIBITED.
+ * 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
+ * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
+ * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
+ * 
+ */
 package l1j.server.server.model.item.action;
 
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -11,7 +25,7 @@ import l1j.server.server.serverpackets.S_SkillSound;
 import static l1j.server.server.model.skill.L1SkillId.*;
 
 public class Potion {
-/** 2段加速效果 **/
+	/** 2段加速效果 **/
 	public static void Brave(L1PcInstance pc, L1ItemInstance item, int item_id) {
 		if (pc.hasSkillEffect(DECAY_POTION)) { // 藥水霜化術狀態
 			pc.sendPackets(new S_ServerMessage(698)); // 喉嚨灼熱，無法喝東西。
@@ -24,38 +38,41 @@ public class Potion {
 
 		// 判斷持續時間 && 使用類型
 		/* 勇敢藥水類 */
-		if ( item_id == L1ItemId.POTION_OF_EMOTION_BRAVERY || item_id == L1ItemId.B_POTION_OF_EMOTION_BRAVERY
-				|| item_id == L1ItemId.POTION_OF_REINFORCED_CASE || item_id == L1ItemId.W_POTION_OF_EMOTION_BRAVERY
+		if (item_id == L1ItemId.POTION_OF_EMOTION_BRAVERY
+				|| item_id == L1ItemId.B_POTION_OF_EMOTION_BRAVERY
+				|| item_id == L1ItemId.POTION_OF_REINFORCED_CASE
+				|| item_id == L1ItemId.W_POTION_OF_EMOTION_BRAVERY
 				|| item_id == L1ItemId.DEVILS_BLOOD
-				|| item_id == L1ItemId.COIN_OF_REPUTATION ) {
-			if ( item_id == L1ItemId.POTION_OF_EMOTION_BRAVERY ) { // 勇敢藥水
+				|| item_id == L1ItemId.COIN_OF_REPUTATION) {
+			if (item_id == L1ItemId.POTION_OF_EMOTION_BRAVERY) { // 勇敢藥水
 				time = 300;
-			} else if ( item_id == L1ItemId.B_POTION_OF_EMOTION_BRAVERY ) { // 受祝福的勇敢藥水
+			} else if (item_id == L1ItemId.B_POTION_OF_EMOTION_BRAVERY) { // 受祝福的勇敢藥水
 				time = 350;
-			} else if ( item_id == L1ItemId.POTION_OF_REINFORCED_CASE ) { // 強化勇氣的藥水
+			} else if (item_id == L1ItemId.POTION_OF_REINFORCED_CASE) { // 強化勇氣的藥水
 				time = 1800;
-			} else if ( item_id == L1ItemId.DEVILS_BLOOD ) { // 惡魔之血
+			} else if (item_id == L1ItemId.DEVILS_BLOOD) { // 惡魔之血
 				time = 600;
-			} else if ( item_id == L1ItemId.COIN_OF_REPUTATION ) { // 名譽貨幣
+			} else if (item_id == L1ItemId.COIN_OF_REPUTATION) { // 名譽貨幣
 				time = 600;
-			} else if ( item_id == L1ItemId.W_POTION_OF_EMOTION_BRAVERY  ) { // 福利勇敢藥水
+			} else if (item_id == L1ItemId.W_POTION_OF_EMOTION_BRAVERY) { // 福利勇敢藥水
 				time = 1200;
 			}
 			buff_brave(pc, STATUS_BRAVE, (byte) 1, time); // 給予勇敢藥水效果
 			pc.getInventory().removeItem(item, 1);
-		/* 精靈餅乾 & 祝福的精靈餅乾 */
-		} else if (item_id == L1ItemId.ELVEN_WAFER || item_id == L1ItemId.B_ELVEN_WAFER
-				|| item_id == L1ItemId.W_POTION_OF_FOREST ) {
-			if ( item_id == L1ItemId.ELVEN_WAFER ) { // 精靈餅乾
+			/* 精靈餅乾 & 祝福的精靈餅乾 */
+		} else if (item_id == L1ItemId.ELVEN_WAFER
+				|| item_id == L1ItemId.B_ELVEN_WAFER
+				|| item_id == L1ItemId.W_POTION_OF_FOREST) {
+			if (item_id == L1ItemId.ELVEN_WAFER) { // 精靈餅乾
 				time = 600;
-			} else if ( item_id == L1ItemId.B_ELVEN_WAFER ) { // 祝福的精靈餅乾
+			} else if (item_id == L1ItemId.B_ELVEN_WAFER) { // 祝福的精靈餅乾
 				time = 700;
-			} else if ( item_id == L1ItemId.W_POTION_OF_FOREST ) { // 福利森林藥水
+			} else if (item_id == L1ItemId.W_POTION_OF_FOREST) { // 福利森林藥水
 				time = 1920;
 			}
 			buff_brave(pc, STATUS_ELFBRAVE, (byte) 3, time); // 給予精靈餅乾效果
 			pc.getInventory().removeItem(item, 1);
-		/* 生命之樹果實 */
+			/* 生命之樹果實 */
 		} else if (item_id == L1ItemId.FORBIDDEN_FRUIT) { // 生命之樹果實
 			time = 480;
 			pc.setSkillEffect(STATUS_RIBRAVE, time * 1000);
@@ -65,7 +82,8 @@ public class Potion {
 		}
 	}
 
-	private static void buff_brave(L1PcInstance pc, int skillId, byte type, int timeMillis) {
+	private static void buff_brave(L1PcInstance pc, int skillId, byte type,
+			int timeMillis) {
 		// 消除重複狀態
 		if (pc.hasSkillEffect(STATUS_BRAVE)) { // 勇敢藥水類 1.33倍
 			pc.killSkillEffectTimer(STATUS_BRAVE);
@@ -73,13 +91,13 @@ public class Potion {
 		if (pc.hasSkillEffect(STATUS_ELFBRAVE)) { // 精靈餅乾 1.15倍
 			pc.killSkillEffectTimer(STATUS_ELFBRAVE);
 		}
-		if (pc.hasSkillEffect(HOLY_WALK)) { // 神聖疾走	移速1.33倍
+		if (pc.hasSkillEffect(HOLY_WALK)) { // 神聖疾走 移速1.33倍
 			pc.killSkillEffectTimer(HOLY_WALK);
 		}
-		if (pc.hasSkillEffect(MOVING_ACCELERATION)) { // 行走加速	移速1.33倍
+		if (pc.hasSkillEffect(MOVING_ACCELERATION)) { // 行走加速 移速1.33倍
 			pc.killSkillEffectTimer(MOVING_ACCELERATION);
 		}
-		if (pc.hasSkillEffect(WIND_WALK)) { // 風之疾走	移速1.33倍
+		if (pc.hasSkillEffect(WIND_WALK)) { // 風之疾走 移速1.33倍
 			pc.killSkillEffectTimer(WIND_WALK);
 		}
 		if (pc.hasSkillEffect(BLOODLUST)) { // 血之渴望 攻速1.33倍
@@ -96,9 +114,10 @@ public class Potion {
 		pc.broadcastPacket(new S_SkillBrave(pc.getId(), type, 0));
 		pc.setBraveSpeed(type);
 	}
-/** 2段加速效果 結束 **/
 
-/** 3段加速效果 **/
+	/** 2段加速效果 結束 **/
+
+	/** 3段加速效果 **/
 	public static void ThirdSpeed(L1PcInstance pc, L1ItemInstance item, int time) {
 		if (pc.hasSkillEffect(DECAY_POTION)) { // 藥水霜化術狀態
 			pc.sendPackets(new S_ServerMessage(698)); // 喉嚨灼熱，無法喝東西。
@@ -120,7 +139,8 @@ public class Potion {
 		pc.sendPackets(new S_ServerMessage(1065)); // 將發生神秘的奇蹟力量。
 		pc.getInventory().removeItem(item, 1);
 	}
-/** 3段加速效果 結束 **/
+
+	/** 3段加速效果 結束 **/
 
 	private static void cancelAbsoluteBarrier(L1PcInstance pc) { // 絕對屏障效果解除
 		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
