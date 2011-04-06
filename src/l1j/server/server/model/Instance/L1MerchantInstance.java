@@ -3503,6 +3503,26 @@ public class L1MerchantInstance extends L1NpcInstance {
 				} else {
 					htmlid = "tutorend";
 				}
+			} else if (npcid == 81256) { // 修練場管理員
+				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);//任務編號階段
+				int playerLv = player.getLevel();//角色等級
+				if (playerLv > 4 && playerLv < 14 && quest_step == 2) {
+					if (playerLv == 5) {
+						player.addExp(750);//給予 LV6 EXP
+					}
+					quest.set_step(L1Quest.QUEST_TUTOR, 3); // 設定任務
+					htmlid = "admin3";//獲得裝備
+				} else if (playerLv < 5) {
+					htmlid = "admin2";
+				}
+			} else if (npcid == 81257) { // 旅人諮詢員
+				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);//任務編號階段
+				int playerLv = player.getLevel();//角色等級
+				if (playerLv < 13) {
+					htmlid = "lowlvS1";
+				} else {
+					htmlid = "lowlvS2";
+				}
 			}
 
 			// html表示パケット送信
