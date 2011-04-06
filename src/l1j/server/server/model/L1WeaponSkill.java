@@ -247,17 +247,18 @@ public class L1WeaponSkill {
 		return calcDamageReduction(pc, cha, dmg, L1Skills.ATTR_EARTH);
 	}
 
-	public static double getDiceDaggerDamage(L1PcInstance pc, L1PcInstance targetPc, L1ItemInstance weapon) {
+	/** 骰子匕首 */
+	public static double getDiceDaggerDamage(L1PcInstance pc, L1Character cha, L1ItemInstance weapon) {
 		double dmg = 0;
 		int chance = Random.nextInt(100) + 1;
-		if (3 >= chance) {
-			dmg = targetPc.getCurrentHp() * 2 / 3;
-			if (targetPc.getCurrentHp() - dmg < 0) {
+		if (2 >= chance) {
+			dmg = cha.getCurrentHp() * 2 / 3;
+			if (cha.getCurrentHp() - dmg < 0) {
 				dmg = 0;
 			}
 			String msg = weapon.getLogName();
 			pc.sendPackets(new S_ServerMessage(158, msg));
-			// \f1%0が蒸発してなくなりました。
+			// \f1%0%s 消失。
 			pc.getInventory().removeItem(weapon, 1);
 		}
 		return dmg;

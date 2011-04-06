@@ -14,6 +14,8 @@
  */
 package l1j.server.server.serverpackets;
 
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
+
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
@@ -29,12 +31,6 @@ public class S_OtherCharPacks extends ServerBasePacket {
 	private static final int STATUS_INVISIBLE = 2;
 
 	private static final int STATUS_PC = 4;
-
-	private static final int STATUS_BRAVE = 16;
-
-	private static final int STATUS_ELFBRAVE = 32;
-
-	private static final int STATUS_FASTMOVABLE = 64;
 
 	private byte[] _byte = null;
 
@@ -57,17 +53,8 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		if (pc.isInvisble() && !isFindInvis) {
 			status |= STATUS_INVISIBLE;
 		}
-		if (pc.isBrave()) {
-			status |= STATUS_BRAVE;
-		}
-		if (pc.isElfBrave()) {
-			// エルヴンワッフルの場合は、STATUS_BRAVEとSTATUS_ELFBRAVEを立てる。
-			// STATUS_ELFBRAVEのみでは効果が無い？
-			status |= STATUS_BRAVE;
-			status |= STATUS_ELFBRAVE;
-		}
-		if (pc.isFastMovable()) {
-			status |= STATUS_FASTMOVABLE;
+		if (pc.getBraveSpeed() != 0) { // 2段加速效果
+			status |= pc.getBraveSpeed() * 16;
 		}
 
 		// int addbyte = 0;
@@ -109,7 +96,11 @@ public class S_OtherCharPacks extends ServerBasePacket {
 		 */
 
 		writeC(0xFF);
-		writeC(0); // タルクック距離(通り)
+		if (pc.hasSkillEffect(EFFECT_THIRD_SPEED)) {
+			writeC(0x08);
+		} else {
+			writeC(0); // 海底波紋程度
+		}
 		writeC(0); // PC = 0, Mon = Lv
 		writeC(0); // ？
 		writeC(0xFF);

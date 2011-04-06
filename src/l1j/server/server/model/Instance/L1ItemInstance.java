@@ -650,7 +650,7 @@ public class L1ItemInstance extends L1Object {
 				name.append(" (" + getChargeCount() + ")");
 			}
 			if ((getItem().getMaxUseTime() > 0) && (getItem().getType2() != 0)) { // 武器防具で使用時間制限あり
-				name.append(" (" + getRemainingTime() + ")");
+				name.append(" [" + getRemainingTime() + "]");
 			}
 		}
 

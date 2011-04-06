@@ -471,7 +471,9 @@ public class L1SkillId {
 
 	public static final int STATUS_CUBE_BALANCE = 1025;
 
-	public static final int STATUS_END = 1025;
+	public static final int STATUS_BRAVE2 = 1026;
+
+	public static final int STATUS_END = 1026;
 
 	public static final int GMSTATUS_BEGIN = 2000;
 
@@ -591,11 +593,15 @@ public class L1SkillId {
 
 	public static final int CURSE_PARALYZE2 = 10101;
 
+/** 編號待修正 (可攻擊炎魔、火焰之影狀態) */ 
 	public static final int STATUS_CURSE_BARLOG = 1015;
 
 	public static final int STATUS_CURSE_YAHEE = 1014;
 
-	public static final int STATUS_BRAVE2 = 55667788;
+/** 相消無法消除的狀態 */
+	public static final int EFFECT_BEGIN = 4000;
 
-	public static final int STATUS_THIRD_SPEED = 551788;
+	public static final int EFFECT_THIRD_SPEED = 4000;
+
+	public static final int EFFECT_END = 4000;
 }

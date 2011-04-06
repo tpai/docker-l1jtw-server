@@ -1027,7 +1027,7 @@ public class L1Attack {
 		if (_weaponId == 124) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if ((_weaponId == 2) || (_weaponId == 200002)) { // ダイスダガー
-			dmg = L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
+			dmg += L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
 		} else if ((_weaponId == 204) || (_weaponId == 100204)) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetPc);
 		} else if (_weaponId == 264) { // ライトニングエッジ
@@ -1260,6 +1260,8 @@ public class L1Attack {
 
 		if (_weaponId == 124) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
+		} else if ((_weaponId == 2) || (_weaponId == 200002)) { // ダイスダガー
+			dmg += L1WeaponSkill.getDiceDaggerDamage(_pc, _targetNpc, weapon);
 		} else if ((_weaponId == 204) || (_weaponId == 100204)) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetNpc);
 		} else if (_weaponId == 264) { // ライトニングエッジ

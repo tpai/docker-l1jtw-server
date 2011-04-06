@@ -47,6 +47,8 @@ import l1j.server.server.serverpackets.S_CharacterConfig;
 import l1j.server.server.serverpackets.S_CharTitle;
 import l1j.server.server.serverpackets.S_InitialAbilityGrowth;
 import l1j.server.server.serverpackets.S_InvList;
+import l1j.server.server.serverpackets.S_Karma;
+import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_LoginGame;
 import l1j.server.server.serverpackets.S_MapID;
 import l1j.server.server.serverpackets.S_OwnCharPack;
@@ -56,6 +58,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillBrave;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
+import l1j.server.server.serverpackets.S_SkillIconThirdSpeed;
 import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.serverpackets.S_War;
 import l1j.server.server.serverpackets.S_Weather;
@@ -204,6 +207,8 @@ public class C_LoginToServer extends ClientBasePacket {
 		pc.broadcastPacket(s_charTitle);
 
 		pc.sendVisualEffectAtLogin(); // 皇冠，毒，水和其他視覺效果顯示
+
+		pc.sendPackets(new S_Karma(pc)); // 友好度
 
 		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
 
@@ -538,7 +543,7 @@ public class C_LoginToServer extends ClientBasePacket {
 					pc.sendPackets(new S_SkillBrave(pc.getId(), 3,
 							remaining_time));
 					pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
-					pc.setBraveSpeed(1);
+					pc.setBraveSpeed(3);
 					pc.setSkillEffect(skillid, remaining_time * 1000);
 				} else if (skillid == STATUS_HASTE) { // 加速
 					pc.sendPackets(new S_SkillHaste(pc.getId(), 1,
@@ -559,6 +564,14 @@ public class C_LoginToServer extends ClientBasePacket {
 						|| skillid >= COOKING_3_0_N && skillid <= COOKING_3_6_N
 						|| skillid >= COOKING_3_0_S && skillid <= COOKING_3_6_S) { // 料理
 					L1Cooking.eatCooking(pc, skillid, remaining_time);
+				} else if (skillid == STATUS_RIBRAVE) { // 生命之樹果實
+					;
+				} else if (skillid == EFFECT_THIRD_SPEED) { // 三段加速
+					int time = remaining_time / 4;
+					pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+					pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+					pc.sendPackets(new S_SkillIconThirdSpeed(time));
+					pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 4 * 1000);
 				} else {
 					L1SkillUse l1skilluse = new L1SkillUse();
 					l1skilluse.handleCommands(clientthread.getActiveChar(),

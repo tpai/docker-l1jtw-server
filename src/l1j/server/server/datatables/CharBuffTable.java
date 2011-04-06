@@ -14,7 +14,9 @@
  */
 package l1j.server.server.datatables;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,26 +33,28 @@ public class CharBuffTable {
 	private static Logger _log = Logger
 			.getLogger(CharBuffTable.class.getName());
 
-	private static final int[] buffSkill = { 2, 67, // ライト、シェイプチェンジ
-			3, 99, 151, 159, 168, // シールド、シャドウアーマー、アーススキン、アースブレス、アイアンスキン
-			43, 54, 1000, 1001, STATUS_ELFBRAVE, // ヘイスト、グレーターヘイスト、ブレイブポーション、グリーンポーション、エルヴンワッフル
-			52, 101, 150, // ホーリーウォーク、ムービングアクセレーション、ウィンドウォーク
-			26, 42, 109, 110, // PE:DEX、PE:STR、ドレスマイティー、ドレスデクスタリティー
-			114, 115, 117, // グローウィングオーラ、シャイニングオーラ、ブレイブオーラ
-			148, 155, 163, // ファイアーウェポン、ファイアーブレス、バーニングウェポン
-			149, 156, 166, // ウィンドショット、ストームアイ、ストームショット
-			1002, 1005, // ブルーポーション、チャット禁止
-			COOKING_1_0_N, COOKING_1_0_S, COOKING_1_1_N, COOKING_1_1_S, // 料理(デザートは除く)
-			COOKING_1_2_N, COOKING_1_2_S, COOKING_1_3_N, COOKING_1_3_S,
-			COOKING_1_4_N, COOKING_1_4_S, COOKING_1_5_N, COOKING_1_5_S,
-			COOKING_1_6_N, COOKING_1_6_S, COOKING_2_0_N, COOKING_2_0_S,
-			COOKING_2_1_N, COOKING_2_1_S, COOKING_2_2_N, COOKING_2_2_S,
-			COOKING_2_3_N, COOKING_2_3_S, COOKING_2_4_N, COOKING_2_4_S,
-			COOKING_2_5_N, COOKING_2_5_S, COOKING_2_6_N, COOKING_2_6_S,
-			COOKING_3_0_N, COOKING_3_0_S, COOKING_3_1_N, COOKING_3_1_S,
-			COOKING_3_2_N, COOKING_3_2_S, COOKING_3_3_N, COOKING_3_3_S,
-			COOKING_3_4_N, COOKING_3_4_S, COOKING_3_5_N, COOKING_3_5_S,
-			COOKING_3_6_N, COOKING_3_6_S };
+	private static final int[] buffSkill = { 2, 67,
+		3, 99, 151, 159, 168,
+		43, 54,
+		52, 101, 150,
+		26, 42, 109, 110,
+		114, 115, 117,
+		148, 155, 163,
+		149, 156, 166,
+		STATUS_BRAVE, STATUS_HASTE, STATUS_ELFBRAVE, STATUS_RIBRAVE, // 二段加速
+		EFFECT_THIRD_SPEED, // 三段加速
+		STATUS_BLUE_POTION, STATUS_CHAT_PROHIBITED, // 藍水，禁言
+		COOKING_1_0_N, COOKING_1_0_S, COOKING_1_1_N, COOKING_1_1_S, // 魔法料理
+		COOKING_1_2_N, COOKING_1_2_S, COOKING_1_3_N, COOKING_1_3_S,
+		COOKING_1_4_N, COOKING_1_4_S, COOKING_1_5_N, COOKING_1_5_S,
+		COOKING_1_6_N, COOKING_1_6_S, COOKING_2_0_N, COOKING_2_0_S,
+		COOKING_2_1_N, COOKING_2_1_S, COOKING_2_2_N, COOKING_2_2_S,
+		COOKING_2_3_N, COOKING_2_3_S, COOKING_2_4_N, COOKING_2_4_S,
+		COOKING_2_5_N, COOKING_2_5_S, COOKING_2_6_N, COOKING_2_6_S,
+		COOKING_3_0_N, COOKING_3_0_S, COOKING_3_1_N, COOKING_3_1_S,
+		COOKING_3_2_N, COOKING_3_2_S, COOKING_3_3_N, COOKING_3_3_S,
+		COOKING_3_4_N, COOKING_3_4_S, COOKING_3_5_N, COOKING_3_5_S,
+		COOKING_3_6_N, COOKING_3_6_S, };
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
 		java.sql.Connection con = null;
@@ -100,6 +104,33 @@ public class CharBuffTable {
 				}
 				StoreBuff(pc.getId(), skillId, timeSec, polyId);
 			}
+		}
+	}
+
+	public static void buffRemainingTime(L1PcInstance pc) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		try {
+
+			con = L1DatabaseFactory.getInstance().getConnection();
+			pstm = con
+					.prepareStatement("SELECT * FROM character_buff WHERE char_obj_id=?");
+			pstm.setInt(1, pc.getId());
+			rs = pstm.executeQuery();
+			while (rs.next()) {
+				int skillid = rs.getInt("skill_id");
+				int remaining_time = rs.getInt("remaining_time");
+				if (skillid == STATUS_RIBRAVE) { // 生命之樹果實
+					pc.setSkillEffect(skillid, remaining_time * 1000);
+				}
+			}
+		} catch (SQLException e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(rs);
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
 		}
 	}
 

@@ -367,7 +367,7 @@ public class L1SkillUse {
 			if ((pc.isInvisble() || pc.isInvisDelay()) && !isInvisUsableSkill()) { // インビジ中に使用不可のスキル
 				return false;
 			}
-			if (pc.getInventory().getWeight240() >= 197) { // 重量オーバーならスキルを使用できない
+			if (pc.getInventory().getWeight240() >= 197) { // \f1你攜帶太多物品，因此無法使用法術。
 				pc.sendPackets(new S_ServerMessage(316));
 				return false;
 			}
@@ -375,7 +375,7 @@ public class L1SkillUse {
 			L1PolyMorph poly = PolyTable.getInstance().getTemplate(polyId);
 			// 魔法が使えない変身
 			if ((poly != null) && !poly.canUseSkill()) {
-				pc.sendPackets(new S_ServerMessage(285)); // \f1その状態では魔法を使えません。
+				pc.sendPackets(new S_ServerMessage(285)); // \f1在此狀態下無法使用魔法。
 				return false;
 			}
 
@@ -384,7 +384,13 @@ public class L1SkillUse {
 			}
 
 			if ((_skillId == ELEMENTAL_PROTECTION) && (pc.getElfAttr() == 0)) {
-				pc.sendPackets(new S_ServerMessage(280)); // \f1魔法が失敗しました。
+				pc.sendPackets(new S_ServerMessage(280)); // \f1施咒失敗。
+				return false;
+			}
+
+			/* 水中無法使用火屬性魔法 */
+			if (pc.getMap().isUnderwater() && _skill.getAttr() == 2) {
+				pc.sendPackets(new S_ServerMessage(280)); // \f1施咒失敗。
 				return false;
 			}
 
@@ -395,14 +401,14 @@ public class L1SkillUse {
 
 			// サイレンス状態では使用不可
 			if (pc.hasSkillEffect(SILENCE) || pc.hasSkillEffect(AREA_OF_SILENCE) || pc.hasSkillEffect(STATUS_POISON_SILENCE)) {
-				pc.sendPackets(new S_ServerMessage(285)); // \f1その状態では魔法を使えません。
+				pc.sendPackets(new S_ServerMessage(285)); // \f1在此狀態下無法使用魔法。
 				return false;
 			}
 
 			// DIGはロウフルでのみ使用可
 			if ((_skillId == DISINTEGRATE) && (pc.getLawful() < 500)) {
 				// このメッセージであってるか未確認
-				pc.sendPackets(new S_ServerMessage(352, "$967")); // この魔法を利用するには性向値が%0でなければなりません。
+				pc.sendPackets(new S_ServerMessage(352, "$967")); // 若要使用這個法術，屬性必須成為 (正義)。
 				return false;
 			}
 
@@ -422,7 +428,7 @@ public class L1SkillUse {
 					}
 				}
 				if (isNearSameCube) {
-					pc.sendPackets(new S_ServerMessage(1412)); // すでに床にキューブが召喚されています。
+					pc.sendPackets(new S_ServerMessage(1412)); // 已在地板上召喚了魔法立方塊。
 					return false;
 				}
 			}
@@ -1417,27 +1423,24 @@ public class L1SkillUse {
 		}
 	}
 
-	// 重複できないスキルの削除
-	// 例：ファイア ウェポンとバーニングウェポンなど
+	/** 刪除重複的魔法狀態 */
 	private void deleteRepeatedSkills(L1Character cha) {
 		final int[][] repeatedSkills =
 		{
-				// ホーリー ウェポン、エンチャント ウェポン、ブレス ウェポン, シャドウ ファング
-				// これらはL1ItemInstanceで管理
-				// { HOLY_WEAPON, ENCHANT_WEAPON, BLESS_WEAPON, SHADOW_FANG },
-				// ファイアー ウェポン、ウィンド ショット、ファイアー ブレス、ストーム アイ、バーニング ウェポン、ストーム ショット
+
+				// 火焰武器、風之神射、烈炎氣息、暴風之眼、烈炎武器、暴風神射
 				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE, BURNING_WEAPON, STORM_SHOT },
-				// シールド、シャドウ アーマー、アース スキン、アースブレス、アイアン スキン
+				// 防護罩、影之防護、大地防護、大地的祝福、鋼鐵防護
 				{ SHIELD, SHADOW_ARMOR, EARTH_SKIN, EARTH_BLESS, IRON_SKIN },
-				// ホーリー ウォーク、ムービング アクセレーション、ウィンド ウォーク、BP、ワッフル、ユグドラの実、ブラッドラスト
-				{ HOLY_WALK, MOVING_ACCELERATION, WIND_WALK, STATUS_BRAVE, STATUS_ELFBRAVE, STATUS_RIBRAVE, BLOODLUST },
-				// ヘイスト、グレーター ヘイスト、GP
+				// 勇敢藥水、精靈餅乾、(神聖疾走、行走加速、風之疾走)、超級加速、血之渴望
+				{ STATUS_BRAVE, STATUS_ELFBRAVE, HOLY_WALK, MOVING_ACCELERATION, WIND_WALK, STATUS_BRAVE2, BLOODLUST },
+				// 加速術、強力加速術、自我加速藥水
 				{ HASTE, GREATER_HASTE, STATUS_HASTE },
-				// フィジカル エンチャント：DEX、ドレス デクスタリティー
+				// 通暢氣脈術、敏捷提升
 				{ PHYSICAL_ENCHANT_DEX, DRESS_DEXTERITY },
-				// フィジカル エンチャント：STR、ドレス マイティー
+				// 體魄強健術、力量提升
 				{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY },
-				// グローウィングオーラ、シャイニングオーラ
+				// 激勵士氣、鋼鐵士氣
 				{ GLOWING_AURA, SHINING_AURA } };
 
 		for (int[] skills : repeatedSkills) {

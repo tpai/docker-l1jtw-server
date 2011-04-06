@@ -32,6 +32,7 @@ import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.serverpackets.S_CurseBlind;
 import l1j.server.server.serverpackets.S_Dexup;
 import l1j.server.server.serverpackets.S_HPUpdate;
+import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
@@ -552,18 +553,28 @@ class L1SkillStop {
 		}
 
 		// ****** アイテム関係
-		else if ((skillId == STATUS_BRAVE) || (skillId == STATUS_ELFBRAVE)) { // ブレイブポーション等
+		else if ((skillId == STATUS_BRAVE)
+				|| (skillId == STATUS_ELFBRAVE)
+				|| (skillId == STATUS_BRAVE2)) { // 二段加速
+			cha.setBraveSpeed(0);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_SkillBrave(pc.getId(), 0, 0));
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 0, 0));
 			}
-			cha.setBraveSpeed(0);
 		}
-		else if (skillId == STATUS_RIBRAVE) { // ユグドラの実
+		else if (skillId == EFFECT_THIRD_SPEED) { // 三段加速
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.sendPackets(new S_Liquor(pc.getId(), 0)); // 人物 * 1.15
+				pc.broadcastPacket(new S_Liquor(pc.getId(), 0)); // 人物 * 1.15
+			}
+		}
+		/** 生命之樹果實 */
+		/*else if (skillId == STATUS_RIBRAVE) { // ユグドラの実
 			// XXX ユグドラの実のアイコンを消す方法が不明
 			cha.setBraveSpeed(0);
-		}
+		}*/
 		else if (skillId == STATUS_HASTE) { // グリーン ポーション
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;

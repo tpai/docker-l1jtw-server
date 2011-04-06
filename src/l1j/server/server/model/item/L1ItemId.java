@@ -15,153 +15,134 @@
 package l1j.server.server.model.item;
 
 public class L1ItemId {
-	/**
-	 * レッドポーション
-	 */
-	public static final int POTION_OF_HEALING = 40010;
 
-	/**
-	 * 祝福されたレッドポーション
-	 */
-	public static final int B_POTION_OF_HEALING = 140010;
-
-	/**
-	 * 呪われたレッドポーション
-	 */
-	public static final int C_POTION_OF_HEALING = 240010;
-
-	/**
-	 * オレンジポーション
-	 */
-	public static final int POTION_OF_EXTRA_HEALING = 40011;
-
-	/**
-	 * 祝福されたオレンジポーション
-	 */
-	public static final int B_POTION_OF_EXTRA_HEALING = 140011;
-
-	/**
-	 * クリアーポーション
-	 */
-	public static final int POTION_OF_GREATER_HEALING = 40012;
-
-	/**
-	 * 祝福されたクリアーポーション
-	 */
-	public static final int B_POTION_OF_GREATER_HEALING = 140012;
-
-	/**
-	 * ヘイストポーション
-	 */
+//	一段加速類道具
+	/** 自我加速藥水ン */
 	public static final int POTION_OF_HASTE_SELF = 40013;
 
-	/**
-	 * 祝福されたヘイストポーション
-	 */
+	/** 受祝福的 自我加速藥水 */
 	public static final int B_POTION_OF_HASTE_SELF = 140013;
 
-	/**
-	 * 強化ヘイストポーション
-	 */
+	/** 強化 自我加速藥水 */
 	public static final int POTION_OF_GREATER_HASTE_SELF = 40018;
 
-	/**
-	 * 祝福された強化ヘイストポーション
-	 */
+	/** 受祝福的 強化 自我加速藥水 */
 	public static final int B_POTION_OF_GREATER_HASTE_SELF = 140018;
 
-	/**
-	 * ブレイブポーション
-	 */
+//	二段加速類道具
+	/** 勇敢藥水 */
 	public static final int POTION_OF_EMOTION_BRAVERY = 40014;
 
-	/**
-	 * 祝福されたブレイブポーション
-	 */
+	/** 受祝福的勇敢藥水 */
 	public static final int B_POTION_OF_EMOTION_BRAVERY = 140014;
 
-	/**
-	 * 魔力回復ポーション
-	 */
-	public static final int POTION_OF_MANA = 40015;
+	/** 強化勇氣的藥水 */
+	public static final int POTION_OF_REINFORCED_CASE = 41415;
 
-	/**
-	 * 祝福された魔力回復ポーション
-	 */
-	public static final int B_POTION_OF_MANA = 140015;
+	/** 福利勇敢藥水 */
+	public static final int W_POTION_OF_EMOTION_BRAVERY = 49305;
 
-	/**
-	 * ウィズダムポーション
-	 */
-	public static final int POTION_OF_EMOTION_WISDOM = 40016;
+	/** 惡魔之血 */
+	public static final int DEVILS_BLOOD = 40031;
 
-	/**
-	 * 祝福されたウィズダムポーション
-	 */
-	public static final int B_POTION_OF_EMOTION_WISDOM = 140016;
+	/** 名譽貨幣 */
+	public static final int COIN_OF_REPUTATION = 40733;
 
-	/**
-	 * シアンポーション
-	 */
-	public static final int POTION_OF_CURE_POISON = 40017;
+	/** 精靈餅乾 */
+	public static final int ELVEN_WAFER = 40068;
 
-	/**
-	 * 濃縮体力回復剤
-	 */
+	/** 受祝福的精靈餅乾 */
+	public static final int B_ELVEN_WAFER = 140068;
+	
+	/** 福利森林藥水 */
+	public static final int W_POTION_OF_FOREST = 49304;
+
+	/** 生命之樹果實 */
+	public static final int FORBIDDEN_FRUIT = 49158;
+
+//	三段加速類道具
+	/** 巧克力蛋糕 */
+	public static final int CHOCOLATE_CAKE = 49138;
+
+//	治癒類道具
+	/** 治癒藥水 */
+	public static final int POTION_OF_HEALING = 40010;
+
+	/** 受祝福的 治癒藥水 */
+	public static final int B_POTION_OF_HEALING = 140010;
+
+	/** 受咀咒的 治癒藥水 */
+	public static final int C_POTION_OF_HEALING = 240010;
+
+	/** 強力治癒藥水 */
+	public static final int POTION_OF_EXTRA_HEALING = 40011;
+
+	/** 受祝福的 強力治癒藥水 */
+	public static final int B_POTION_OF_EXTRA_HEALING = 140011;
+
+	/** 終極治癒藥水 */
+	public static final int POTION_OF_GREATER_HEALING = 40012;
+
+	/** 受祝福的 終極治癒藥水 */
+	public static final int B_POTION_OF_GREATER_HEALING = 140012;
+
+	/** 濃縮體力恢復劑 */
 	public static final int CONDENSED_POTION_OF_HEALING = 40019;
 
-	/**
-	 * 濃縮高級体力回復剤
-	 */
+	/** 濃縮強力體力恢復劑 */
 	public static final int CONDENSED_POTION_OF_EXTRA_HEALING = 40020;
 
-	/**
-	 * 濃縮強力体力回復剤
-	 */
+	/** 濃縮終極體力恢復劑 */
 	public static final int CONDENSED_POTION_OF_GREATER_HEALING = 40021;
 
-	/**
-	 * ブラインドポーション
-	 */
+//	藥水類道具
+	/** 藍色藥水 */
+	public static final int POTION_OF_MANA = 40015;
+
+	/** 受祝福的 藍色藥水 */
+	public static final int B_POTION_OF_MANA = 140015;
+
+	/** 福利藍色藥水 */
+	//public static final int W_POTION_OF_MANA = ;
+
+	/** 慎重藥水 */
+	public static final int POTION_OF_EMOTION_WISDOM = 40016;
+
+	/** 受祝福的 慎重藥水 */
+	public static final int B_POTION_OF_EMOTION_WISDOM = 140016;
+
+	/** 福利慎重藥水 */
+	//public static final int W_POTION_OF_EMOTION_WISDOM = 140016;
+
+	/** 翡翠藥水 */
+	public static final int POTION_OF_CURE_POISON = 40017;
+
+	/** 黑色藥水 */
 	public static final int POTION_OF_BLINDNESS = 40025;
 
-	/**
-	 * 防具強化スクロール
-	 */
+//	卷軸類道具
+	/** 對盔甲施法的卷軸 */
 	public static final int SCROLL_OF_ENCHANT_ARMOR = 40074;
 
-	/**
-	 * 祝福された防具強化スクロール
-	 */
+	/** 受祝福的 對盔甲施法的卷軸 */
 	public static final int B_SCROLL_OF_ENCHANT_ARMOR = 140074;
 
-	/**
-	 * 呪われた防具強化スクロール
-	 */
+	/** 受咀咒的 對盔甲施法的卷軸 */
 	public static final int C_SCROLL_OF_ENCHANT_ARMOR = 240074;
 
-	/**
-	 * 武器強化スクロール
-	 */
+	/** 對武器施法的卷軸 */
 	public static final int SCROLL_OF_ENCHANT_WEAPON = 40087;
 
-	/**
-	 * 祝福された武器強化スクロール
-	 */
+	/** 受祝福的 對武器施法的卷軸 */
 	public static final int B_SCROLL_OF_ENCHANT_WEAPON = 140087;
 
-	/**
-	 * 呪われた武器強化スクロール
-	 */
+	/** 受咀咒的 對武器施法的卷軸 */
 	public static final int C_SCROLL_OF_ENCHANT_WEAPON = 240087;
 
-	/**
-	 * 試練のスクロール
-	 */
+	/** 試煉卷軸 */
 	public static final int SCROLL_OF_ENCHANT_QUEST_WEAPON = 40660;
 
-	/**
-	 * アデナ
-	 */
+//	其他類道具
+	/** 金幣 */
 	public static final int ADENA = 40308;
 }

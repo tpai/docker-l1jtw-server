@@ -31,6 +31,7 @@ public class L1Speed implements L1CommandExecutor {
 		try {
 			L1BuffUtil.haste(pc, 3600 * 1000);
 			L1BuffUtil.brave(pc, 3600 * 1000);
+			L1BuffUtil.thirdSpeed(pc);
 		}
 		catch (Exception e) {
 			pc.sendPackets(new S_SystemMessage(".speed 指令錯誤"));
