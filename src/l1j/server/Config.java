@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server;
 
 import java.io.File;
@@ -60,8 +59,8 @@ public final class Config {
 
 	public static String CLIENT_LANGUAGE_CODE;
 
-	public static String[] LANGUAGE_CODE_ARRAY = { "UTF8", "EUCKR", "UTF8",
-			"BIG5", "SJIS", "GBK" };
+	public static String[] LANGUAGE_CODE_ARRAY =
+	{ "UTF8", "EUCKR", "UTF8", "BIG5", "SJIS", "GBK" };
 
 	public static boolean HOSTNAME_LOOKUPS;
 
@@ -390,6 +389,15 @@ public final class Config {
 
 	public static int LV99_EXP;
 
+	/** FightSettings control */
+	public static boolean FIGHT_IS_ACTIVE;
+
+	public static boolean NOVICE_PROTECTION_IS_ACTIVE;
+
+	public static int NOVICE_MAX_LEVEL;
+
+	public static int NOVICE_PROTECTION_LEVEL_RANGE;
+
 	/** Configuration files */
 	public static final String SERVER_CONFIG_FILE = "./config/server.properties";
 
@@ -398,6 +406,8 @@ public final class Config {
 	public static final String ALT_SETTINGS_FILE = "./config/altsettings.properties";
 
 	public static final String CHAR_SETTINGS_CONFIG_FILE = "./config/charsettings.properties";
+
+	public static final String FIGHT_SETTINGS_CONFIG_FILE = "./config/fights.properties";
 
 	/** 其他設定 */
 
@@ -416,98 +426,53 @@ public final class Config {
 			serverSettings.load(is);
 			is.close();
 
-			GAME_SERVER_HOST_NAME = serverSettings.getProperty(
-					"GameserverHostname", "*");
-			GAME_SERVER_PORT = Integer.parseInt(serverSettings.getProperty(
-					"GameserverPort", "2000"));
-			DB_DRIVER = serverSettings.getProperty("Driver",
-					"com.mysql.jdbc.Driver");
-			DB_URL = serverSettings
-					.getProperty("URL",
-							"jdbc:mysql://localhost/l1jdb?useUnicode=true&characterEncoding=utf8");
+			GAME_SERVER_HOST_NAME = serverSettings.getProperty("GameserverHostname", "*");
+			GAME_SERVER_PORT = Integer.parseInt(serverSettings.getProperty("GameserverPort", "2000"));
+			DB_DRIVER = serverSettings.getProperty("Driver", "com.mysql.jdbc.Driver");
+			DB_URL = serverSettings.getProperty("URL", "jdbc:mysql://localhost/l1jdb?useUnicode=true&characterEncoding=utf8");
 			DB_LOGIN = serverSettings.getProperty("Login", "root");
 			DB_PASSWORD = serverSettings.getProperty("Password", "");
-			THREAD_P_TYPE_GENERAL = Integer.parseInt(
-					serverSettings.getProperty("GeneralThreadPoolType", "0"),
-					10);
-			THREAD_P_SIZE_GENERAL = Integer.parseInt(
-					serverSettings.getProperty("GeneralThreadPoolSize", "0"),
-					10);
-			CLIENT_LANGUAGE = Integer.parseInt(serverSettings.getProperty(
-					"ClientLanguage", "4"));
+			THREAD_P_TYPE_GENERAL = Integer.parseInt(serverSettings.getProperty("GeneralThreadPoolType", "0"), 10);
+			THREAD_P_SIZE_GENERAL = Integer.parseInt(serverSettings.getProperty("GeneralThreadPoolSize", "0"), 10);
+			CLIENT_LANGUAGE = Integer.parseInt(serverSettings.getProperty("ClientLanguage", "4"));
 			CLIENT_LANGUAGE_CODE = LANGUAGE_CODE_ARRAY[CLIENT_LANGUAGE];
 			TIME_ZONE = serverSettings.getProperty("TimeZone", "Asia/Taipei");
-			HOSTNAME_LOOKUPS = Boolean.parseBoolean(serverSettings.getProperty(
-					"HostnameLookups", "false"));
-			AUTOMATIC_KICK = Integer.parseInt(serverSettings.getProperty(
-					"AutomaticKick", "10"));
-			AUTO_CREATE_ACCOUNTS = Boolean.parseBoolean(serverSettings
-					.getProperty("AutoCreateAccounts", "true"));
-			MAX_ONLINE_USERS = Short.parseShort(serverSettings.getProperty(
-					"MaximumOnlineUsers", "30"));
-			CACHE_MAP_FILES = Boolean.parseBoolean(serverSettings.getProperty(
-					"CacheMapFiles", "false"));
-			LOAD_V2_MAP_FILES = Boolean.parseBoolean(serverSettings
-					.getProperty("LoadV2MapFiles", "false"));
-			CHECK_MOVE_INTERVAL = Boolean.parseBoolean(serverSettings
-					.getProperty("CheckMoveInterval", "false"));
-			CHECK_ATTACK_INTERVAL = Boolean.parseBoolean(serverSettings
-					.getProperty("CheckAttackInterval", "false"));
-			CHECK_SPELL_INTERVAL = Boolean.parseBoolean(serverSettings
-					.getProperty("CheckSpellInterval", "false"));
-			INJUSTICE_COUNT = Short.parseShort(serverSettings.getProperty(
-					"InjusticeCount", "10"));
-			JUSTICE_COUNT = Integer.parseInt(serverSettings.getProperty(
-					"JusticeCount", "4"));
-			CHECK_STRICTNESS = Integer.parseInt(serverSettings.getProperty(
-					"CheckStrictness", "102"));
-			LOGGING_WEAPON_ENCHANT = Byte.parseByte(serverSettings.getProperty(
-					"LoggingWeaponEnchant", "0"));
-			LOGGING_ARMOR_ENCHANT = Byte.parseByte(serverSettings.getProperty(
-					"LoggingArmorEnchant", "0"));
-			LOGGING_CHAT_NORMAL = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatNormal", "false"));
-			LOGGING_CHAT_WHISPER = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatWhisper", "false"));
-			LOGGING_CHAT_SHOUT = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatShout", "false"));
-			LOGGING_CHAT_WORLD = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatWorld", "false"));
-			LOGGING_CHAT_CLAN = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatClan", "false"));
-			LOGGING_CHAT_PARTY = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatParty", "false"));
-			LOGGING_CHAT_COMBINED = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatCombined", "false"));
-			LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(serverSettings
-					.getProperty("LoggingChatChatParty", "false"));
-			AUTOSAVE_INTERVAL = Integer.parseInt(
-					serverSettings.getProperty("AutosaveInterval", "1200"), 10);
-			AUTOSAVE_INTERVAL_INVENTORY = Integer.parseInt(serverSettings
-					.getProperty("AutosaveIntervalOfInventory", "300"), 10);
-			SKILLTIMER_IMPLTYPE = Integer.parseInt(serverSettings.getProperty(
-					"SkillTimerImplType", "1"));
-			NPCAI_IMPLTYPE = Integer.parseInt(serverSettings.getProperty(
-					"NpcAIImplType", "1"));
-			TELNET_SERVER = Boolean.parseBoolean(serverSettings.getProperty(
-					"TelnetServer", "false"));
-			TELNET_SERVER_PORT = Integer.parseInt(serverSettings.getProperty(
-					"TelnetServerPort", "23"));
-			PC_RECOGNIZE_RANGE = Integer.parseInt(serverSettings.getProperty(
-					"PcRecognizeRange", "20"));
-			CHARACTER_CONFIG_IN_SERVER_SIDE = Boolean
-					.parseBoolean(serverSettings.getProperty(
-							"CharacterConfigInServerSide", "true"));
-			ALLOW_2PC = Boolean.parseBoolean(serverSettings.getProperty(
-					"Allow2PC", "true"));
-			LEVEL_DOWN_RANGE = Integer.parseInt(serverSettings.getProperty(
-					"LevelDownRange", "0"));
-			SEND_PACKET_BEFORE_TELEPORT = Boolean.parseBoolean(serverSettings
-					.getProperty("SendPacketBeforeTeleport", "false"));
-			DETECT_DB_RESOURCE_LEAKS = Boolean.parseBoolean(serverSettings
-					.getProperty("EnableDatabaseResourceLeaksDetection",
-							"false"));
-		} catch (Exception e) {
+			HOSTNAME_LOOKUPS = Boolean.parseBoolean(serverSettings.getProperty("HostnameLookups", "false"));
+			AUTOMATIC_KICK = Integer.parseInt(serverSettings.getProperty("AutomaticKick", "10"));
+			AUTO_CREATE_ACCOUNTS = Boolean.parseBoolean(serverSettings.getProperty("AutoCreateAccounts", "true"));
+			MAX_ONLINE_USERS = Short.parseShort(serverSettings.getProperty("MaximumOnlineUsers", "30"));
+			CACHE_MAP_FILES = Boolean.parseBoolean(serverSettings.getProperty("CacheMapFiles", "false"));
+			LOAD_V2_MAP_FILES = Boolean.parseBoolean(serverSettings.getProperty("LoadV2MapFiles", "false"));
+			CHECK_MOVE_INTERVAL = Boolean.parseBoolean(serverSettings.getProperty("CheckMoveInterval", "false"));
+			CHECK_ATTACK_INTERVAL = Boolean.parseBoolean(serverSettings.getProperty("CheckAttackInterval", "false"));
+			CHECK_SPELL_INTERVAL = Boolean.parseBoolean(serverSettings.getProperty("CheckSpellInterval", "false"));
+			INJUSTICE_COUNT = Short.parseShort(serverSettings.getProperty("InjusticeCount", "10"));
+			JUSTICE_COUNT = Integer.parseInt(serverSettings.getProperty("JusticeCount", "4"));
+			CHECK_STRICTNESS = Integer.parseInt(serverSettings.getProperty("CheckStrictness", "102"));
+			LOGGING_WEAPON_ENCHANT = Byte.parseByte(serverSettings.getProperty("LoggingWeaponEnchant", "0"));
+			LOGGING_ARMOR_ENCHANT = Byte.parseByte(serverSettings.getProperty("LoggingArmorEnchant", "0"));
+			LOGGING_CHAT_NORMAL = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatNormal", "false"));
+			LOGGING_CHAT_WHISPER = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatWhisper", "false"));
+			LOGGING_CHAT_SHOUT = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatShout", "false"));
+			LOGGING_CHAT_WORLD = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatWorld", "false"));
+			LOGGING_CHAT_CLAN = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatClan", "false"));
+			LOGGING_CHAT_PARTY = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatParty", "false"));
+			LOGGING_CHAT_COMBINED = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatCombined", "false"));
+			LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatChatParty", "false"));
+			AUTOSAVE_INTERVAL = Integer.parseInt(serverSettings.getProperty("AutosaveInterval", "1200"), 10);
+			AUTOSAVE_INTERVAL_INVENTORY = Integer.parseInt(serverSettings.getProperty("AutosaveIntervalOfInventory", "300"), 10);
+			SKILLTIMER_IMPLTYPE = Integer.parseInt(serverSettings.getProperty("SkillTimerImplType", "1"));
+			NPCAI_IMPLTYPE = Integer.parseInt(serverSettings.getProperty("NpcAIImplType", "1"));
+			TELNET_SERVER = Boolean.parseBoolean(serverSettings.getProperty("TelnetServer", "false"));
+			TELNET_SERVER_PORT = Integer.parseInt(serverSettings.getProperty("TelnetServerPort", "23"));
+			PC_RECOGNIZE_RANGE = Integer.parseInt(serverSettings.getProperty("PcRecognizeRange", "20"));
+			CHARACTER_CONFIG_IN_SERVER_SIDE = Boolean.parseBoolean(serverSettings.getProperty("CharacterConfigInServerSide", "true"));
+			ALLOW_2PC = Boolean.parseBoolean(serverSettings.getProperty("Allow2PC", "true"));
+			LEVEL_DOWN_RANGE = Integer.parseInt(serverSettings.getProperty("LevelDownRange", "0"));
+			SEND_PACKET_BEFORE_TELEPORT = Boolean.parseBoolean(serverSettings.getProperty("SendPacketBeforeTeleport", "false"));
+			DETECT_DB_RESOURCE_LEAKS = Boolean.parseBoolean(serverSettings.getProperty("EnableDatabaseResourceLeaksDetection", "false"));
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("Failed to Load " + SERVER_CONFIG_FILE + " File.");
 		}
@@ -519,47 +484,28 @@ public final class Config {
 			rateSettings.load(is);
 			is.close();
 
-			RATE_XP = Double.parseDouble(rateSettings.getProperty("RateXp",
-					"1.0"));
-			RATE_LA = Double.parseDouble(rateSettings.getProperty("RateLawful",
-					"1.0"));
-			RATE_KARMA = Double.parseDouble(rateSettings.getProperty(
-					"RateKarma", "1.0"));
-			RATE_DROP_ADENA = Double.parseDouble(rateSettings.getProperty(
-					"RateDropAdena", "1.0"));
-			RATE_DROP_ITEMS = Double.parseDouble(rateSettings.getProperty(
-					"RateDropItems", "1.0"));
-			ENCHANT_CHANCE_WEAPON = Integer.parseInt(rateSettings.getProperty(
-					"EnchantChanceWeapon", "68"));
-			ENCHANT_CHANCE_ARMOR = Integer.parseInt(rateSettings.getProperty(
-					"EnchantChanceArmor", "52"));
-			ATTR_ENCHANT_CHANCE = Integer.parseInt(rateSettings.getProperty(
-					"AttrEnchantChance", "10"));
-			RATE_WEIGHT_LIMIT = Double.parseDouble(rateSettings.getProperty(
-					"RateWeightLimit", "1"));
-			RATE_WEIGHT_LIMIT_PET = Double.parseDouble(rateSettings
-					.getProperty("RateWeightLimitforPet", "1"));
-			RATE_SHOP_SELLING_PRICE = Double.parseDouble(rateSettings
-					.getProperty("RateShopSellingPrice", "1.0"));
-			RATE_SHOP_PURCHASING_PRICE = Double.parseDouble(rateSettings
-					.getProperty("RateShopPurchasingPrice", "1.0"));
-			CREATE_CHANCE_DIARY = Integer.parseInt(rateSettings.getProperty(
-					"CreateChanceDiary", "33"));
-			CREATE_CHANCE_RECOLLECTION = Integer.parseInt(rateSettings
-					.getProperty("CreateChanceRecollection", "90"));
-			CREATE_CHANCE_MYSTERIOUS = Integer.parseInt(rateSettings
-					.getProperty("CreateChanceMysterious", "90"));
-			CREATE_CHANCE_PROCESSING = Integer.parseInt(rateSettings
-					.getProperty("CreateChanceProcessing", "90"));
-			CREATE_CHANCE_PROCESSING_DIAMOND = Integer.parseInt(rateSettings
-					.getProperty("CreateChanceProcessingDiamond", "90"));
-			CREATE_CHANCE_DANTES = Integer.parseInt(rateSettings.getProperty(
-					"CreateChanceDantes", "50"));
-			CREATE_CHANCE_ANCIENT_AMULET = Integer.parseInt(rateSettings
-					.getProperty("CreateChanceAncientAmulet", "90"));
-			CREATE_CHANCE_HISTORY_BOOK = Integer.parseInt(rateSettings
-					.getProperty("CreateChanceHistoryBook", "50"));
-		} catch (Exception e) {
+			RATE_XP = Double.parseDouble(rateSettings.getProperty("RateXp", "1.0"));
+			RATE_LA = Double.parseDouble(rateSettings.getProperty("RateLawful", "1.0"));
+			RATE_KARMA = Double.parseDouble(rateSettings.getProperty("RateKarma", "1.0"));
+			RATE_DROP_ADENA = Double.parseDouble(rateSettings.getProperty("RateDropAdena", "1.0"));
+			RATE_DROP_ITEMS = Double.parseDouble(rateSettings.getProperty("RateDropItems", "1.0"));
+			ENCHANT_CHANCE_WEAPON = Integer.parseInt(rateSettings.getProperty("EnchantChanceWeapon", "68"));
+			ENCHANT_CHANCE_ARMOR = Integer.parseInt(rateSettings.getProperty("EnchantChanceArmor", "52"));
+			ATTR_ENCHANT_CHANCE = Integer.parseInt(rateSettings.getProperty("AttrEnchantChance", "10"));
+			RATE_WEIGHT_LIMIT = Double.parseDouble(rateSettings.getProperty("RateWeightLimit", "1"));
+			RATE_WEIGHT_LIMIT_PET = Double.parseDouble(rateSettings.getProperty("RateWeightLimitforPet", "1"));
+			RATE_SHOP_SELLING_PRICE = Double.parseDouble(rateSettings.getProperty("RateShopSellingPrice", "1.0"));
+			RATE_SHOP_PURCHASING_PRICE = Double.parseDouble(rateSettings.getProperty("RateShopPurchasingPrice", "1.0"));
+			CREATE_CHANCE_DIARY = Integer.parseInt(rateSettings.getProperty("CreateChanceDiary", "33"));
+			CREATE_CHANCE_RECOLLECTION = Integer.parseInt(rateSettings.getProperty("CreateChanceRecollection", "90"));
+			CREATE_CHANCE_MYSTERIOUS = Integer.parseInt(rateSettings.getProperty("CreateChanceMysterious", "90"));
+			CREATE_CHANCE_PROCESSING = Integer.parseInt(rateSettings.getProperty("CreateChanceProcessing", "90"));
+			CREATE_CHANCE_PROCESSING_DIAMOND = Integer.parseInt(rateSettings.getProperty("CreateChanceProcessingDiamond", "90"));
+			CREATE_CHANCE_DANTES = Integer.parseInt(rateSettings.getProperty("CreateChanceDantes", "50"));
+			CREATE_CHANCE_ANCIENT_AMULET = Integer.parseInt(rateSettings.getProperty("CreateChanceAncientAmulet", "90"));
+			CREATE_CHANCE_HISTORY_BOOK = Integer.parseInt(rateSettings.getProperty("CreateChanceHistoryBook", "50"));
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("Failed to Load " + RATES_CONFIG_FILE + " File.");
 		}
@@ -571,62 +517,41 @@ public final class Config {
 			altSettings.load(is);
 			is.close();
 
-			GLOBAL_CHAT_LEVEL = Short.parseShort(altSettings.getProperty(
-					"GlobalChatLevel", "30"));
-			WHISPER_CHAT_LEVEL = Short.parseShort(altSettings.getProperty(
-					"WhisperChatLevel", "5"));
-			AUTO_LOOT = Byte
-					.parseByte(altSettings.getProperty("AutoLoot", "2"));
-			LOOTING_RANGE = Integer.parseInt(altSettings.getProperty(
-					"LootingRange", "3"));
-			ALT_NONPVP = Boolean.parseBoolean(altSettings.getProperty("NonPvP",
-					"true"));
-			ALT_ATKMSG = Boolean.parseBoolean(altSettings.getProperty(
-					"AttackMessageOn", "true"));
-			CHANGE_TITLE_BY_ONESELF = Boolean.parseBoolean(altSettings
-					.getProperty("ChangeTitleByOneself", "false"));
-			MAX_CLAN_MEMBER = Integer.parseInt(altSettings.getProperty(
-					"MaxClanMember", "0"));
-			CLAN_ALLIANCE = Boolean.parseBoolean(altSettings.getProperty(
-					"ClanAlliance", "true"));
+			GLOBAL_CHAT_LEVEL = Short.parseShort(altSettings.getProperty("GlobalChatLevel", "30"));
+			WHISPER_CHAT_LEVEL = Short.parseShort(altSettings.getProperty("WhisperChatLevel", "5"));
+			AUTO_LOOT = Byte.parseByte(altSettings.getProperty("AutoLoot", "2"));
+			LOOTING_RANGE = Integer.parseInt(altSettings.getProperty("LootingRange", "3"));
+			ALT_NONPVP = Boolean.parseBoolean(altSettings.getProperty("NonPvP", "true"));
+			ALT_ATKMSG = Boolean.parseBoolean(altSettings.getProperty("AttackMessageOn", "true"));
+			CHANGE_TITLE_BY_ONESELF = Boolean.parseBoolean(altSettings.getProperty("ChangeTitleByOneself", "false"));
+			MAX_CLAN_MEMBER = Integer.parseInt(altSettings.getProperty("MaxClanMember", "0"));
+			CLAN_ALLIANCE = Boolean.parseBoolean(altSettings.getProperty("ClanAlliance", "true"));
 			MAX_PT = Integer.parseInt(altSettings.getProperty("MaxPT", "8"));
-			MAX_CHAT_PT = Integer.parseInt(altSettings.getProperty("MaxChatPT",
-					"8"));
-			SIM_WAR_PENALTY = Boolean.parseBoolean(altSettings.getProperty(
-					"SimWarPenalty", "true"));
-			GET_BACK = Boolean.parseBoolean(altSettings.getProperty("GetBack",
-					"false"));
-			ALT_ITEM_DELETION_TYPE = altSettings.getProperty(
-					"ItemDeletionType", "auto");
-			ALT_ITEM_DELETION_TIME = Integer.parseInt(altSettings.getProperty(
-					"ItemDeletionTime", "10"));
-			ALT_ITEM_DELETION_RANGE = Integer.parseInt(altSettings.getProperty(
-					"ItemDeletionRange", "5"));
-			ALT_GMSHOP = Boolean.parseBoolean(altSettings.getProperty("GMshop",
-					"false"));
-			ALT_GMSHOP_MIN_ID = Integer.parseInt(altSettings.getProperty(
-					"GMshopMinID", "0xffffffff")); // 設定錯誤時就取消GM商店
-			ALT_GMSHOP_MAX_ID = Integer.parseInt(altSettings.getProperty(
-					"GMshopMaxID", "0xffffffff")); // 設定錯誤時就取消GM商店
-			ALT_HALLOWEENIVENT = Boolean.parseBoolean(altSettings.getProperty(
-					"HalloweenIvent", "true"));
-			ALT_JPPRIVILEGED = Boolean.parseBoolean(altSettings.getProperty(
-					"JpPrivileged", "false"));
-			ALT_TALKINGSCROLLQUEST = Boolean.parseBoolean(altSettings
-					.getProperty("TalkingScrollQuest", "false"));
-			ALT_WHO_COMMAND = Boolean.parseBoolean(altSettings.getProperty(
-					"WhoCommand", "false"));
-			ALT_REVIVAL_POTION = Boolean.parseBoolean(altSettings.getProperty(
-					"RevivalPotion", "false"));
+			MAX_CHAT_PT = Integer.parseInt(altSettings.getProperty("MaxChatPT", "8"));
+			SIM_WAR_PENALTY = Boolean.parseBoolean(altSettings.getProperty("SimWarPenalty", "true"));
+			GET_BACK = Boolean.parseBoolean(altSettings.getProperty("GetBack", "false"));
+			ALT_ITEM_DELETION_TYPE = altSettings.getProperty("ItemDeletionType", "auto");
+			ALT_ITEM_DELETION_TIME = Integer.parseInt(altSettings.getProperty("ItemDeletionTime", "10"));
+			ALT_ITEM_DELETION_RANGE = Integer.parseInt(altSettings.getProperty("ItemDeletionRange", "5"));
+			ALT_GMSHOP = Boolean.parseBoolean(altSettings.getProperty("GMshop", "false"));
+			ALT_GMSHOP_MIN_ID = Integer.parseInt(altSettings.getProperty("GMshopMinID", "0xffffffff")); // 設定錯誤時就取消GM商店
+			ALT_GMSHOP_MAX_ID = Integer.parseInt(altSettings.getProperty("GMshopMaxID", "0xffffffff")); // 設定錯誤時就取消GM商店
+			ALT_HALLOWEENIVENT = Boolean.parseBoolean(altSettings.getProperty("HalloweenIvent", "true"));
+			ALT_JPPRIVILEGED = Boolean.parseBoolean(altSettings.getProperty("JpPrivileged", "false"));
+			ALT_TALKINGSCROLLQUEST = Boolean.parseBoolean(altSettings.getProperty("TalkingScrollQuest", "false"));
+			ALT_WHO_COMMAND = Boolean.parseBoolean(altSettings.getProperty("WhoCommand", "false"));
+			ALT_REVIVAL_POTION = Boolean.parseBoolean(altSettings.getProperty("RevivalPotion", "false"));
 			String strWar;
 			strWar = altSettings.getProperty("WarTime", "2h");
 			if (strWar.indexOf("d") >= 0) {
 				ALT_WAR_TIME_UNIT = Calendar.DATE;
 				strWar = strWar.replace("d", "");
-			} else if (strWar.indexOf("h") >= 0) {
+			}
+			else if (strWar.indexOf("h") >= 0) {
 				ALT_WAR_TIME_UNIT = Calendar.HOUR_OF_DAY;
 				strWar = strWar.replace("h", "");
-			} else if (strWar.indexOf("m") >= 0) {
+			}
+			else if (strWar.indexOf("m") >= 0) {
 				ALT_WAR_TIME_UNIT = Calendar.MINUTE;
 				strWar = strWar.replace("m", "");
 			}
@@ -635,45 +560,33 @@ public final class Config {
 			if (strWar.indexOf("d") >= 0) {
 				ALT_WAR_INTERVAL_UNIT = Calendar.DATE;
 				strWar = strWar.replace("d", "");
-			} else if (strWar.indexOf("h") >= 0) {
+			}
+			else if (strWar.indexOf("h") >= 0) {
 				ALT_WAR_INTERVAL_UNIT = Calendar.HOUR_OF_DAY;
 				strWar = strWar.replace("h", "");
-			} else if (strWar.indexOf("m") >= 0) {
+			}
+			else if (strWar.indexOf("m") >= 0) {
 				ALT_WAR_INTERVAL_UNIT = Calendar.MINUTE;
 				strWar = strWar.replace("m", "");
 			}
 			ALT_WAR_INTERVAL = Integer.parseInt(strWar);
-			SPAWN_HOME_POINT = Boolean.parseBoolean(altSettings.getProperty(
-					"SpawnHomePoint", "true"));
-			SPAWN_HOME_POINT_COUNT = Integer.parseInt(altSettings.getProperty(
-					"SpawnHomePointCount", "2"));
-			SPAWN_HOME_POINT_DELAY = Integer.parseInt(altSettings.getProperty(
-					"SpawnHomePointDelay", "100"));
-			SPAWN_HOME_POINT_RANGE = Integer.parseInt(altSettings.getProperty(
-					"SpawnHomePointRange", "8"));
-			INIT_BOSS_SPAWN = Boolean.parseBoolean(altSettings.getProperty(
-					"InitBossSpawn", "true"));
-			ELEMENTAL_STONE_AMOUNT = Integer.parseInt(altSettings.getProperty(
-					"ElementalStoneAmount", "300"));
-			HOUSE_TAX_INTERVAL = Integer.parseInt(altSettings.getProperty(
-					"HouseTaxInterval", "10"));
-			MAX_DOLL_COUNT = Integer.parseInt(altSettings.getProperty(
-					"MaxDollCount", "1"));
-			RETURN_TO_NATURE = Boolean.parseBoolean(altSettings.getProperty(
-					"ReturnToNature", "false"));
-			MAX_NPC_ITEM = Integer.parseInt(altSettings.getProperty(
-					"MaxNpcItem", "8"));
-			MAX_PERSONAL_WAREHOUSE_ITEM = Integer.parseInt(altSettings
-					.getProperty("MaxPersonalWarehouseItem", "100"));
-			MAX_CLAN_WAREHOUSE_ITEM = Integer.parseInt(altSettings.getProperty(
-					"MaxClanWarehouseItem", "200"));
-			DELETE_CHARACTER_AFTER_7DAYS = Boolean.parseBoolean(altSettings
-					.getProperty("DeleteCharacterAfter7Days", "True"));
-			NPC_DELETION_TIME = Integer.parseInt(altSettings.getProperty(
-					"NpcDeletionTime", "10"));
-			DEFAULT_CHARACTER_SLOT = Integer.parseInt(altSettings.getProperty(
-					"DefaultCharacterSlot", "6"));
-		} catch (Exception e) {
+			SPAWN_HOME_POINT = Boolean.parseBoolean(altSettings.getProperty("SpawnHomePoint", "true"));
+			SPAWN_HOME_POINT_COUNT = Integer.parseInt(altSettings.getProperty("SpawnHomePointCount", "2"));
+			SPAWN_HOME_POINT_DELAY = Integer.parseInt(altSettings.getProperty("SpawnHomePointDelay", "100"));
+			SPAWN_HOME_POINT_RANGE = Integer.parseInt(altSettings.getProperty("SpawnHomePointRange", "8"));
+			INIT_BOSS_SPAWN = Boolean.parseBoolean(altSettings.getProperty("InitBossSpawn", "true"));
+			ELEMENTAL_STONE_AMOUNT = Integer.parseInt(altSettings.getProperty("ElementalStoneAmount", "300"));
+			HOUSE_TAX_INTERVAL = Integer.parseInt(altSettings.getProperty("HouseTaxInterval", "10"));
+			MAX_DOLL_COUNT = Integer.parseInt(altSettings.getProperty("MaxDollCount", "1"));
+			RETURN_TO_NATURE = Boolean.parseBoolean(altSettings.getProperty("ReturnToNature", "false"));
+			MAX_NPC_ITEM = Integer.parseInt(altSettings.getProperty("MaxNpcItem", "8"));
+			MAX_PERSONAL_WAREHOUSE_ITEM = Integer.parseInt(altSettings.getProperty("MaxPersonalWarehouseItem", "100"));
+			MAX_CLAN_WAREHOUSE_ITEM = Integer.parseInt(altSettings.getProperty("MaxClanWarehouseItem", "200"));
+			DELETE_CHARACTER_AFTER_7DAYS = Boolean.parseBoolean(altSettings.getProperty("DeleteCharacterAfter7Days", "True"));
+			NPC_DELETION_TIME = Integer.parseInt(altSettings.getProperty("NpcDeletionTime", "10"));
+			DEFAULT_CHARACTER_SLOT = Integer.parseInt(altSettings.getProperty("DefaultCharacterSlot", "6"));
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("Failed to Load " + ALT_SETTINGS_FILE + " File.");
 		}
@@ -681,144 +594,96 @@ public final class Config {
 		// charsettings.properties
 		try {
 			Properties charSettings = new Properties();
-			InputStream is = new FileInputStream(new File(
-					CHAR_SETTINGS_CONFIG_FILE));
+			InputStream is = new FileInputStream(new File(CHAR_SETTINGS_CONFIG_FILE));
 			charSettings.load(is);
 			is.close();
 
-			PRINCE_MAX_HP = Integer.parseInt(charSettings.getProperty(
-					"PrinceMaxHP", "1000"));
-			PRINCE_MAX_MP = Integer.parseInt(charSettings.getProperty(
-					"PrinceMaxMP", "800"));
-			KNIGHT_MAX_HP = Integer.parseInt(charSettings.getProperty(
-					"KnightMaxHP", "1400"));
-			KNIGHT_MAX_MP = Integer.parseInt(charSettings.getProperty(
-					"KnightMaxMP", "600"));
-			ELF_MAX_HP = Integer.parseInt(charSettings.getProperty("ElfMaxHP",
-					"1000"));
-			ELF_MAX_MP = Integer.parseInt(charSettings.getProperty("ElfMaxMP",
-					"900"));
-			WIZARD_MAX_HP = Integer.parseInt(charSettings.getProperty(
-					"WizardMaxHP", "800"));
-			WIZARD_MAX_MP = Integer.parseInt(charSettings.getProperty(
-					"WizardMaxMP", "1200"));
-			DARKELF_MAX_HP = Integer.parseInt(charSettings.getProperty(
-					"DarkelfMaxHP", "1000"));
-			DARKELF_MAX_MP = Integer.parseInt(charSettings.getProperty(
-					"DarkelfMaxMP", "900"));
-			DRAGONKNIGHT_MAX_HP = Integer.parseInt(charSettings.getProperty(
-					"DragonKnightMaxHP", "1400"));
-			DRAGONKNIGHT_MAX_MP = Integer.parseInt(charSettings.getProperty(
-					"DragonKnightMaxMP", "600"));
-			ILLUSIONIST_MAX_HP = Integer.parseInt(charSettings.getProperty(
-					"IllusionistMaxHP", "900"));
-			ILLUSIONIST_MAX_MP = Integer.parseInt(charSettings.getProperty(
-					"IllusionistMaxMP", "1100"));
-			LV50_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv50Exp", "1"));
-			LV51_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv51Exp", "1"));
-			LV52_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv52Exp", "1"));
-			LV53_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv53Exp", "1"));
-			LV54_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv54Exp", "1"));
-			LV55_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv55Exp", "1"));
-			LV56_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv56Exp", "1"));
-			LV57_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv57Exp", "1"));
-			LV58_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv58Exp", "1"));
-			LV59_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv59Exp", "1"));
-			LV60_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv60Exp", "1"));
-			LV61_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv61Exp", "1"));
-			LV62_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv62Exp", "1"));
-			LV63_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv63Exp", "1"));
-			LV64_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv64Exp", "1"));
-			LV65_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv65Exp", "2"));
-			LV66_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv66Exp", "2"));
-			LV67_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv67Exp", "2"));
-			LV68_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv68Exp", "2"));
-			LV69_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv69Exp", "2"));
-			LV70_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv70Exp", "4"));
-			LV71_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv71Exp", "4"));
-			LV72_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv72Exp", "4"));
-			LV73_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv73Exp", "4"));
-			LV74_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv74Exp", "4"));
-			LV75_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv75Exp", "8"));
-			LV76_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv76Exp", "8"));
-			LV77_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv77Exp", "8"));
-			LV78_EXP = Integer.parseInt(charSettings
-					.getProperty("Lv78Exp", "8"));
-			LV79_EXP = Integer.parseInt(charSettings.getProperty("Lv79Exp",
-					"16"));
-			LV80_EXP = Integer.parseInt(charSettings.getProperty("Lv80Exp",
-					"32"));
-			LV81_EXP = Integer.parseInt(charSettings.getProperty("Lv81Exp",
-					"64"));
-			LV82_EXP = Integer.parseInt(charSettings.getProperty("Lv82Exp",
-					"128"));
-			LV83_EXP = Integer.parseInt(charSettings.getProperty("Lv83Exp",
-					"256"));
-			LV84_EXP = Integer.parseInt(charSettings.getProperty("Lv84Exp",
-					"512"));
-			LV85_EXP = Integer.parseInt(charSettings.getProperty("Lv85Exp",
-					"1024"));
-			LV86_EXP = Integer.parseInt(charSettings.getProperty("Lv86Exp",
-					"2048"));
-			LV87_EXP = Integer.parseInt(charSettings.getProperty("Lv87Exp",
-					"4096"));
-			LV88_EXP = Integer.parseInt(charSettings.getProperty("Lv88Exp",
-					"8192"));
-			LV89_EXP = Integer.parseInt(charSettings.getProperty("Lv89Exp",
-					"16384"));
-			LV90_EXP = Integer.parseInt(charSettings.getProperty("Lv90Exp",
-					"32768"));
-			LV91_EXP = Integer.parseInt(charSettings.getProperty("Lv91Exp",
-					"65536"));
-			LV92_EXP = Integer.parseInt(charSettings.getProperty("Lv92Exp",
-					"131072"));
-			LV93_EXP = Integer.parseInt(charSettings.getProperty("Lv93Exp",
-					"262144"));
-			LV94_EXP = Integer.parseInt(charSettings.getProperty("Lv94Exp",
-					"524288"));
-			LV95_EXP = Integer.parseInt(charSettings.getProperty("Lv95Exp",
-					"1048576"));
-			LV96_EXP = Integer.parseInt(charSettings.getProperty("Lv96Exp",
-					"2097152"));
-			LV97_EXP = Integer.parseInt(charSettings.getProperty("Lv97Exp",
-					"4194304"));
-			LV98_EXP = Integer.parseInt(charSettings.getProperty("Lv98Exp",
-					"8388608"));
-			LV99_EXP = Integer.parseInt(charSettings.getProperty("Lv99Exp",
-					"16777216"));
-		} catch (Exception e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			throw new Error("Failed to Load " + CHAR_SETTINGS_CONFIG_FILE
-					+ " File.");
+			PRINCE_MAX_HP = Integer.parseInt(charSettings.getProperty("PrinceMaxHP", "1000"));
+			PRINCE_MAX_MP = Integer.parseInt(charSettings.getProperty("PrinceMaxMP", "800"));
+			KNIGHT_MAX_HP = Integer.parseInt(charSettings.getProperty("KnightMaxHP", "1400"));
+			KNIGHT_MAX_MP = Integer.parseInt(charSettings.getProperty("KnightMaxMP", "600"));
+			ELF_MAX_HP = Integer.parseInt(charSettings.getProperty("ElfMaxHP", "1000"));
+			ELF_MAX_MP = Integer.parseInt(charSettings.getProperty("ElfMaxMP", "900"));
+			WIZARD_MAX_HP = Integer.parseInt(charSettings.getProperty("WizardMaxHP", "800"));
+			WIZARD_MAX_MP = Integer.parseInt(charSettings.getProperty("WizardMaxMP", "1200"));
+			DARKELF_MAX_HP = Integer.parseInt(charSettings.getProperty("DarkelfMaxHP", "1000"));
+			DARKELF_MAX_MP = Integer.parseInt(charSettings.getProperty("DarkelfMaxMP", "900"));
+			DRAGONKNIGHT_MAX_HP = Integer.parseInt(charSettings.getProperty("DragonKnightMaxHP", "1400"));
+			DRAGONKNIGHT_MAX_MP = Integer.parseInt(charSettings.getProperty("DragonKnightMaxMP", "600"));
+			ILLUSIONIST_MAX_HP = Integer.parseInt(charSettings.getProperty("IllusionistMaxHP", "900"));
+			ILLUSIONIST_MAX_MP = Integer.parseInt(charSettings.getProperty("IllusionistMaxMP", "1100"));
+			LV50_EXP = Integer.parseInt(charSettings.getProperty("Lv50Exp", "1"));
+			LV51_EXP = Integer.parseInt(charSettings.getProperty("Lv51Exp", "1"));
+			LV52_EXP = Integer.parseInt(charSettings.getProperty("Lv52Exp", "1"));
+			LV53_EXP = Integer.parseInt(charSettings.getProperty("Lv53Exp", "1"));
+			LV54_EXP = Integer.parseInt(charSettings.getProperty("Lv54Exp", "1"));
+			LV55_EXP = Integer.parseInt(charSettings.getProperty("Lv55Exp", "1"));
+			LV56_EXP = Integer.parseInt(charSettings.getProperty("Lv56Exp", "1"));
+			LV57_EXP = Integer.parseInt(charSettings.getProperty("Lv57Exp", "1"));
+			LV58_EXP = Integer.parseInt(charSettings.getProperty("Lv58Exp", "1"));
+			LV59_EXP = Integer.parseInt(charSettings.getProperty("Lv59Exp", "1"));
+			LV60_EXP = Integer.parseInt(charSettings.getProperty("Lv60Exp", "1"));
+			LV61_EXP = Integer.parseInt(charSettings.getProperty("Lv61Exp", "1"));
+			LV62_EXP = Integer.parseInt(charSettings.getProperty("Lv62Exp", "1"));
+			LV63_EXP = Integer.parseInt(charSettings.getProperty("Lv63Exp", "1"));
+			LV64_EXP = Integer.parseInt(charSettings.getProperty("Lv64Exp", "1"));
+			LV65_EXP = Integer.parseInt(charSettings.getProperty("Lv65Exp", "2"));
+			LV66_EXP = Integer.parseInt(charSettings.getProperty("Lv66Exp", "2"));
+			LV67_EXP = Integer.parseInt(charSettings.getProperty("Lv67Exp", "2"));
+			LV68_EXP = Integer.parseInt(charSettings.getProperty("Lv68Exp", "2"));
+			LV69_EXP = Integer.parseInt(charSettings.getProperty("Lv69Exp", "2"));
+			LV70_EXP = Integer.parseInt(charSettings.getProperty("Lv70Exp", "4"));
+			LV71_EXP = Integer.parseInt(charSettings.getProperty("Lv71Exp", "4"));
+			LV72_EXP = Integer.parseInt(charSettings.getProperty("Lv72Exp", "4"));
+			LV73_EXP = Integer.parseInt(charSettings.getProperty("Lv73Exp", "4"));
+			LV74_EXP = Integer.parseInt(charSettings.getProperty("Lv74Exp", "4"));
+			LV75_EXP = Integer.parseInt(charSettings.getProperty("Lv75Exp", "8"));
+			LV76_EXP = Integer.parseInt(charSettings.getProperty("Lv76Exp", "8"));
+			LV77_EXP = Integer.parseInt(charSettings.getProperty("Lv77Exp", "8"));
+			LV78_EXP = Integer.parseInt(charSettings.getProperty("Lv78Exp", "8"));
+			LV79_EXP = Integer.parseInt(charSettings.getProperty("Lv79Exp", "16"));
+			LV80_EXP = Integer.parseInt(charSettings.getProperty("Lv80Exp", "32"));
+			LV81_EXP = Integer.parseInt(charSettings.getProperty("Lv81Exp", "64"));
+			LV82_EXP = Integer.parseInt(charSettings.getProperty("Lv82Exp", "128"));
+			LV83_EXP = Integer.parseInt(charSettings.getProperty("Lv83Exp", "256"));
+			LV84_EXP = Integer.parseInt(charSettings.getProperty("Lv84Exp", "512"));
+			LV85_EXP = Integer.parseInt(charSettings.getProperty("Lv85Exp", "1024"));
+			LV86_EXP = Integer.parseInt(charSettings.getProperty("Lv86Exp", "2048"));
+			LV87_EXP = Integer.parseInt(charSettings.getProperty("Lv87Exp", "4096"));
+			LV88_EXP = Integer.parseInt(charSettings.getProperty("Lv88Exp", "8192"));
+			LV89_EXP = Integer.parseInt(charSettings.getProperty("Lv89Exp", "16384"));
+			LV90_EXP = Integer.parseInt(charSettings.getProperty("Lv90Exp", "32768"));
+			LV91_EXP = Integer.parseInt(charSettings.getProperty("Lv91Exp", "65536"));
+			LV92_EXP = Integer.parseInt(charSettings.getProperty("Lv92Exp", "131072"));
+			LV93_EXP = Integer.parseInt(charSettings.getProperty("Lv93Exp", "262144"));
+			LV94_EXP = Integer.parseInt(charSettings.getProperty("Lv94Exp", "524288"));
+			LV95_EXP = Integer.parseInt(charSettings.getProperty("Lv95Exp", "1048576"));
+			LV96_EXP = Integer.parseInt(charSettings.getProperty("Lv96Exp", "2097152"));
+			LV97_EXP = Integer.parseInt(charSettings.getProperty("Lv97Exp", "4194304"));
+			LV98_EXP = Integer.parseInt(charSettings.getProperty("Lv98Exp", "8388608"));
+			LV99_EXP = Integer.parseInt(charSettings.getProperty("Lv99Exp", "16777216"));
 		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			throw new Error("Failed to Load " + CHAR_SETTINGS_CONFIG_FILE + " File.");
+		}
+
+		// fights.properties
+		Properties fightSettings = new Properties();
+		try {
+			InputStream is = new FileInputStream(new File(FIGHT_SETTINGS_CONFIG_FILE));
+			fightSettings.load(is);
+			is.close();
+		}
+		catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			throw new Error("無法讀取設定檔: " + FIGHT_SETTINGS_CONFIG_FILE);
+		}
+		FIGHT_IS_ACTIVE = Boolean.parseBoolean(fightSettings.getProperty("FightIsActive", "False"));
+		NOVICE_PROTECTION_IS_ACTIVE = Boolean.parseBoolean(fightSettings.getProperty("NoviceProtectionIsActive", "False"));
+		NOVICE_MAX_LEVEL = Integer.parseInt(fightSettings.getProperty("NoviceMaxLevel", "20"));
+		NOVICE_PROTECTION_LEVEL_RANGE = Integer.parseInt(fightSettings.getProperty("ProtectionLevelRange", "10"));
+
 		validate();
 	}
 
@@ -836,251 +701,368 @@ public final class Config {
 		// server.properties
 		if (pName.equalsIgnoreCase("GameserverHostname")) {
 			GAME_SERVER_HOST_NAME = pValue;
-		} else if (pName.equalsIgnoreCase("GameserverPort")) {
+		}
+		else if (pName.equalsIgnoreCase("GameserverPort")) {
 			GAME_SERVER_PORT = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Driver")) {
+		}
+		else if (pName.equalsIgnoreCase("Driver")) {
 			DB_DRIVER = pValue;
-		} else if (pName.equalsIgnoreCase("URL")) {
+		}
+		else if (pName.equalsIgnoreCase("URL")) {
 			DB_URL = pValue;
-		} else if (pName.equalsIgnoreCase("Login")) {
+		}
+		else if (pName.equalsIgnoreCase("Login")) {
 			DB_LOGIN = pValue;
-		} else if (pName.equalsIgnoreCase("Password")) {
+		}
+		else if (pName.equalsIgnoreCase("Password")) {
 			DB_PASSWORD = pValue;
-		} else if (pName.equalsIgnoreCase("ClientLanguage")) {
+		}
+		else if (pName.equalsIgnoreCase("ClientLanguage")) {
 			CLIENT_LANGUAGE = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("TimeZone")) {
+		}
+		else if (pName.equalsIgnoreCase("TimeZone")) {
 			TIME_ZONE = pValue;
-		} else if (pName.equalsIgnoreCase("AutomaticKick")) {
+		}
+		else if (pName.equalsIgnoreCase("AutomaticKick")) {
 			AUTOMATIC_KICK = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("AutoCreateAccounts")) {
+		}
+		else if (pName.equalsIgnoreCase("AutoCreateAccounts")) {
 			AUTO_CREATE_ACCOUNTS = Boolean.parseBoolean(pValue);
-		} else if (pName.equalsIgnoreCase("MaximumOnlineUsers")) {
+		}
+		else if (pName.equalsIgnoreCase("MaximumOnlineUsers")) {
 			MAX_ONLINE_USERS = Short.parseShort(pValue);
-		} else if (pName.equalsIgnoreCase("LoggingWeaponEnchant")) {
+		}
+		else if (pName.equalsIgnoreCase("LoggingWeaponEnchant")) {
 			LOGGING_WEAPON_ENCHANT = Byte.parseByte(pValue);
-		} else if (pName.equalsIgnoreCase("LoggingArmorEnchant")) {
+		}
+		else if (pName.equalsIgnoreCase("LoggingArmorEnchant")) {
 			LOGGING_ARMOR_ENCHANT = Byte.parseByte(pValue);
-		} else if (pName.equalsIgnoreCase("CharacterConfigInServerSide")) {
+		}
+		else if (pName.equalsIgnoreCase("CharacterConfigInServerSide")) {
 			CHARACTER_CONFIG_IN_SERVER_SIDE = Boolean.parseBoolean(pValue);
-		} else if (pName.equalsIgnoreCase("Allow2PC")) {
+		}
+		else if (pName.equalsIgnoreCase("Allow2PC")) {
 			ALLOW_2PC = Boolean.parseBoolean(pValue);
-		} else if (pName.equalsIgnoreCase("LevelDownRange")) {
+		}
+		else if (pName.equalsIgnoreCase("LevelDownRange")) {
 			LEVEL_DOWN_RANGE = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("SendPacketBeforeTeleport")) {
+		}
+		else if (pName.equalsIgnoreCase("SendPacketBeforeTeleport")) {
 			SEND_PACKET_BEFORE_TELEPORT = Boolean.parseBoolean(pValue);
 		}
 		// rates.properties
 		else if (pName.equalsIgnoreCase("RateXp")) {
 			RATE_XP = Double.parseDouble(pValue);
-		} else if (pName.equalsIgnoreCase("RateLawful")) {
+		}
+		else if (pName.equalsIgnoreCase("RateLawful")) {
 			RATE_LA = Double.parseDouble(pValue);
-		} else if (pName.equalsIgnoreCase("RateKarma")) {
+		}
+		else if (pName.equalsIgnoreCase("RateKarma")) {
 			RATE_KARMA = Double.parseDouble(pValue);
-		} else if (pName.equalsIgnoreCase("RateDropAdena")) {
+		}
+		else if (pName.equalsIgnoreCase("RateDropAdena")) {
 			RATE_DROP_ADENA = Double.parseDouble(pValue);
-		} else if (pName.equalsIgnoreCase("RateDropItems")) {
+		}
+		else if (pName.equalsIgnoreCase("RateDropItems")) {
 			RATE_DROP_ITEMS = Double.parseDouble(pValue);
-		} else if (pName.equalsIgnoreCase("EnchantChanceWeapon")) {
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceWeapon")) {
 			ENCHANT_CHANCE_WEAPON = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("EnchantChanceArmor")) {
+		}
+		else if (pName.equalsIgnoreCase("EnchantChanceArmor")) {
 			ENCHANT_CHANCE_ARMOR = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("AttrEnchantChance")) {
+		}
+		else if (pName.equalsIgnoreCase("AttrEnchantChance")) {
 			ATTR_ENCHANT_CHANCE = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Weightrate")) {
+		}
+		else if (pName.equalsIgnoreCase("Weightrate")) {
 			RATE_WEIGHT_LIMIT = Byte.parseByte(pValue);
 		}
 		// altsettings.properties
 		else if (pName.equalsIgnoreCase("GlobalChatLevel")) {
 			GLOBAL_CHAT_LEVEL = Short.parseShort(pValue);
-		} else if (pName.equalsIgnoreCase("WhisperChatLevel")) {
+		}
+		else if (pName.equalsIgnoreCase("WhisperChatLevel")) {
 			WHISPER_CHAT_LEVEL = Short.parseShort(pValue);
-		} else if (pName.equalsIgnoreCase("AutoLoot")) {
+		}
+		else if (pName.equalsIgnoreCase("AutoLoot")) {
 			AUTO_LOOT = Byte.parseByte(pValue);
-		} else if (pName.equalsIgnoreCase("LOOTING_RANGE")) {
+		}
+		else if (pName.equalsIgnoreCase("LOOTING_RANGE")) {
 			LOOTING_RANGE = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("AltNonPvP")) {
+		}
+		else if (pName.equalsIgnoreCase("AltNonPvP")) {
 			ALT_NONPVP = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("AttackMessageOn")) {
+		}
+		else if (pName.equalsIgnoreCase("AttackMessageOn")) {
 			ALT_ATKMSG = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("ChangeTitleByOneself")) {
+		}
+		else if (pName.equalsIgnoreCase("ChangeTitleByOneself")) {
 			CHANGE_TITLE_BY_ONESELF = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("MaxClanMember")) {
+		}
+		else if (pName.equalsIgnoreCase("MaxClanMember")) {
 			MAX_CLAN_MEMBER = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("ClanAlliance")) {
+		}
+		else if (pName.equalsIgnoreCase("ClanAlliance")) {
 			CLAN_ALLIANCE = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("MaxPT")) {
+		}
+		else if (pName.equalsIgnoreCase("MaxPT")) {
 			MAX_PT = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("MaxChatPT")) {
+		}
+		else if (pName.equalsIgnoreCase("MaxChatPT")) {
 			MAX_CHAT_PT = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("SimWarPenalty")) {
+		}
+		else if (pName.equalsIgnoreCase("SimWarPenalty")) {
 			SIM_WAR_PENALTY = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("GetBack")) {
+		}
+		else if (pName.equalsIgnoreCase("GetBack")) {
 			GET_BACK = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("AutomaticItemDeletionTime")) {
+		}
+		else if (pName.equalsIgnoreCase("AutomaticItemDeletionTime")) {
 			ALT_ITEM_DELETION_TIME = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("AutomaticItemDeletionRange")) {
+		}
+		else if (pName.equalsIgnoreCase("AutomaticItemDeletionRange")) {
 			ALT_ITEM_DELETION_RANGE = Byte.parseByte(pValue);
-		} else if (pName.equalsIgnoreCase("GMshop")) {
+		}
+		else if (pName.equalsIgnoreCase("GMshop")) {
 			ALT_GMSHOP = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("GMshopMinID")) {
+		}
+		else if (pName.equalsIgnoreCase("GMshopMinID")) {
 			ALT_GMSHOP_MIN_ID = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("GMshopMaxID")) {
+		}
+		else if (pName.equalsIgnoreCase("GMshopMaxID")) {
 			ALT_GMSHOP_MAX_ID = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("HalloweenIvent")) {
+		}
+		else if (pName.equalsIgnoreCase("HalloweenIvent")) {
 			ALT_HALLOWEENIVENT = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("JpPrivileged")) {
+		}
+		else if (pName.equalsIgnoreCase("JpPrivileged")) {
 			ALT_JPPRIVILEGED = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("TalkingScrollQuest")) {
+		}
+		else if (pName.equalsIgnoreCase("TalkingScrollQuest")) {
 			ALT_TALKINGSCROLLQUEST = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("HouseTaxInterval")) {
+		}
+		else if (pName.equalsIgnoreCase("HouseTaxInterval")) {
 			HOUSE_TAX_INTERVAL = Integer.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("MaxDollCount")) {
+		}
+		else if (pName.equalsIgnoreCase("MaxDollCount")) {
 			MAX_DOLL_COUNT = Integer.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("ReturnToNature")) {
+		}
+		else if (pName.equalsIgnoreCase("ReturnToNature")) {
 			RETURN_TO_NATURE = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("MaxNpcItem")) {
+		}
+		else if (pName.equalsIgnoreCase("MaxNpcItem")) {
 			MAX_NPC_ITEM = Integer.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("MaxPersonalWarehouseItem")) {
+		}
+		else if (pName.equalsIgnoreCase("MaxPersonalWarehouseItem")) {
 			MAX_PERSONAL_WAREHOUSE_ITEM = Integer.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("MaxClanWarehouseItem")) {
+		}
+		else if (pName.equalsIgnoreCase("MaxClanWarehouseItem")) {
 			MAX_CLAN_WAREHOUSE_ITEM = Integer.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("DeleteCharacterAfter7Days")) {
+		}
+		else if (pName.equalsIgnoreCase("DeleteCharacterAfter7Days")) {
 			DELETE_CHARACTER_AFTER_7DAYS = Boolean.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("NpcDeletionTime")) {
+		}
+		else if (pName.equalsIgnoreCase("NpcDeletionTime")) {
 			NPC_DELETION_TIME = Integer.valueOf(pValue);
-		} else if (pName.equalsIgnoreCase("DefaultCharacterSlot")) {
+		}
+		else if (pName.equalsIgnoreCase("DefaultCharacterSlot")) {
 			DEFAULT_CHARACTER_SLOT = Integer.valueOf(pValue);
 		}
 		// charsettings.properties
 		else if (pName.equalsIgnoreCase("PrinceMaxHP")) {
 			PRINCE_MAX_HP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("PrinceMaxMP")) {
+		}
+		else if (pName.equalsIgnoreCase("PrinceMaxMP")) {
 			PRINCE_MAX_MP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("KnightMaxHP")) {
+		}
+		else if (pName.equalsIgnoreCase("KnightMaxHP")) {
 			KNIGHT_MAX_HP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("KnightMaxMP")) {
+		}
+		else if (pName.equalsIgnoreCase("KnightMaxMP")) {
 			KNIGHT_MAX_MP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("ElfMaxHP")) {
+		}
+		else if (pName.equalsIgnoreCase("ElfMaxHP")) {
 			ELF_MAX_HP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("ElfMaxMP")) {
+		}
+		else if (pName.equalsIgnoreCase("ElfMaxMP")) {
 			ELF_MAX_MP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("WizardMaxHP")) {
+		}
+		else if (pName.equalsIgnoreCase("WizardMaxHP")) {
 			WIZARD_MAX_HP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("WizardMaxMP")) {
+		}
+		else if (pName.equalsIgnoreCase("WizardMaxMP")) {
 			WIZARD_MAX_MP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("DarkelfMaxHP")) {
+		}
+		else if (pName.equalsIgnoreCase("DarkelfMaxHP")) {
 			DARKELF_MAX_HP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("DarkelfMaxMP")) {
+		}
+		else if (pName.equalsIgnoreCase("DarkelfMaxMP")) {
 			DARKELF_MAX_MP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("DragonKnightMaxHP")) {
+		}
+		else if (pName.equalsIgnoreCase("DragonKnightMaxHP")) {
 			DRAGONKNIGHT_MAX_HP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("DragonKnightMaxMP")) {
+		}
+		else if (pName.equalsIgnoreCase("DragonKnightMaxMP")) {
 			DRAGONKNIGHT_MAX_MP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("IllusionistMaxHP")) {
+		}
+		else if (pName.equalsIgnoreCase("IllusionistMaxHP")) {
 			ILLUSIONIST_MAX_HP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("IllusionistMaxMP")) {
+		}
+		else if (pName.equalsIgnoreCase("IllusionistMaxMP")) {
 			ILLUSIONIST_MAX_MP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv50Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv50Exp")) {
 			LV50_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv51Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv51Exp")) {
 			LV51_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv52Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv52Exp")) {
 			LV52_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv53Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv53Exp")) {
 			LV53_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv54Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv54Exp")) {
 			LV54_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv55Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv55Exp")) {
 			LV55_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv56Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv56Exp")) {
 			LV56_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv57Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv57Exp")) {
 			LV57_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv58Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv58Exp")) {
 			LV58_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv59Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv59Exp")) {
 			LV59_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv60Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv60Exp")) {
 			LV60_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv61Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv61Exp")) {
 			LV61_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv62Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv62Exp")) {
 			LV62_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv63Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv63Exp")) {
 			LV63_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv64Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv64Exp")) {
 			LV64_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv65Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv65Exp")) {
 			LV65_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv66Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv66Exp")) {
 			LV66_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv67Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv67Exp")) {
 			LV67_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv68Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv68Exp")) {
 			LV68_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv69Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv69Exp")) {
 			LV69_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv70Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv70Exp")) {
 			LV70_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv71Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv71Exp")) {
 			LV71_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv72Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv72Exp")) {
 			LV72_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv73Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv73Exp")) {
 			LV73_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv74Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv74Exp")) {
 			LV74_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv75Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv75Exp")) {
 			LV75_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv76Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv76Exp")) {
 			LV76_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv77Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv77Exp")) {
 			LV77_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv78Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv78Exp")) {
 			LV78_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv79Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv79Exp")) {
 			LV79_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv80Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv80Exp")) {
 			LV80_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv81Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv81Exp")) {
 			LV81_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv82Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv82Exp")) {
 			LV82_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv83Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv83Exp")) {
 			LV83_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv84Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv84Exp")) {
 			LV84_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv85Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv85Exp")) {
 			LV85_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv86Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv86Exp")) {
 			LV86_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv87Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv87Exp")) {
 			LV87_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv88Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv88Exp")) {
 			LV88_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv89Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv89Exp")) {
 			LV89_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv90Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv90Exp")) {
 			LV90_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv91Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv91Exp")) {
 			LV91_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv92Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv92Exp")) {
 			LV92_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv93Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv93Exp")) {
 			LV93_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv94Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv94Exp")) {
 			LV94_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv95Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv95Exp")) {
 			LV95_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv96Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv96Exp")) {
 			LV96_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv97Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv97Exp")) {
 			LV97_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv98Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv98Exp")) {
 			LV98_EXP = Integer.parseInt(pValue);
-		} else if (pName.equalsIgnoreCase("Lv99Exp")) {
+		}
+		else if (pName.equalsIgnoreCase("Lv99Exp")) {
 			LV99_EXP = Integer.parseInt(pValue);
-		} else {
+		}
+		else {
 			return false;
 		}
 		return true;

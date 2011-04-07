@@ -1,18 +1,44 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server.clientpackets;
+
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_0_N;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_0_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_6_N;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_1_6_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_0_N;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_0_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_6_N;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_2_6_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_N;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_N;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_225;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_250;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
+import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CHAT_PROHIBITED;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_ELFBRAVE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -43,8 +69,8 @@ import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ActiveSpells;
 import l1j.server.server.serverpackets.S_AddSkill;
 import l1j.server.server.serverpackets.S_Bookmarks;
-import l1j.server.server.serverpackets.S_CharacterConfig;
 import l1j.server.server.serverpackets.S_CharTitle;
+import l1j.server.server.serverpackets.S_CharacterConfig;
 import l1j.server.server.serverpackets.S_InitialAbilityGrowth;
 import l1j.server.server.serverpackets.S_InvList;
 import l1j.server.server.serverpackets.S_Karma;
@@ -68,8 +94,6 @@ import l1j.server.server.templates.L1GetBackRestart;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.utils.SQLUtil;
 
-import static l1j.server.server.model.skill.L1SkillId.*;
-
 // Referenced classes of package l1j.server.server.clientpackets:
 // ClientBasePacket
 //
@@ -81,11 +105,10 @@ import static l1j.server.server.model.skill.L1SkillId.*;
 public class C_LoginToServer extends ClientBasePacket {
 
 	private static final String C_LOGIN_TO_SERVER = "[C] C_LoginToServer";
-	private static Logger _log = Logger.getLogger(C_LoginToServer.class
-			.getName());
 
-	public C_LoginToServer(byte abyte0[], ClientThread client)
-			throws FileNotFoundException, Exception {
+	private static Logger _log = Logger.getLogger(C_LoginToServer.class.getName());
+
+	public C_LoginToServer(byte abyte0[], ClientThread client) throws FileNotFoundException, Exception {
 		super(abyte0);
 
 		String login = client.getAccountName();
@@ -99,24 +122,21 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 
 		L1PcInstance pc = L1PcInstance.load(charName);
-		if (pc == null || !login.equals(pc.getAccountName())) {
-			_log.info("無效的角色名稱: char=" + charName + " account=" + login
-					+ " host=" + client.getHostname());
+		if ((pc == null) || !login.equals(pc.getAccountName())) {
+			_log.info("無效的角色名稱: char=" + charName + " account=" + login + " host=" + client.getHostname());
 			client.close();
 			return;
 		}
 
 		if (Config.LEVEL_DOWN_RANGE != 0) {
 			if (pc.getHighLevel() - pc.getLevel() >= Config.LEVEL_DOWN_RANGE) {
-				_log.info("登錄請求超出了容忍的等級下降的角色: char=" + charName + " account="
-						+ login + " host=" + client.getHostname());
+				_log.info("登錄請求超出了容忍的等級下降的角色: char=" + charName + " account=" + login + " host=" + client.getHostname());
 				client.kick();
 				return;
 			}
 		}
 
-		_log.info("角色登入到伺服器中: char=" + charName + " account=" + login
-				+ " host=" + client.getHostname());
+		_log.info("角色登入到伺服器中: char=" + charName + " account=" + login + " host=" + client.getHostname());
 
 		int currentHpAtLoad = pc.getCurrentHp();
 		int currentMpAtLoad = pc.getCurrentMp();
@@ -174,7 +194,8 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.setY(loc[1]);
 						pc.setMap((short) loc[2]);
 					}
-				} else {
+				}
+				else {
 					// 有城堡就回到城堡
 					int[] loc = new int[3];
 					loc = L1CastleLocation.getGetBackLoc(castle_id);
@@ -221,14 +242,14 @@ public class C_LoginToServer extends ClientBasePacket {
 		if (pc.getCurrentHp() > 0) {
 			pc.setDead(false);
 			pc.setStatus(0);
-		} else {
+		}
+		else {
 			pc.setDead(true);
 			pc.setStatus(ActionCodes.ACTION_Die);
 		}
 
-		if (pc.getLevel() >= 51 && pc.getLevel() - 50 > pc.getBonusStats()) {
-			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon()
-					+ pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < 210) {
+		if ((pc.getLevel() >= 51) && (pc.getLevel() - 50 > pc.getBonusStats())) {
+			if ((pc.getBaseStr() + pc.getBaseDex() + pc.getBaseCon() + pc.getBaseInt() + pc.getBaseWis() + pc.getBaseCha()) < 210) {
 				pc.sendPackets(new S_bonusstats(pc.getId(), 1));
 			}
 		}
@@ -244,14 +265,12 @@ public class C_LoginToServer extends ClientBasePacket {
 		if (pc.getClanid() != 0) { // 有血盟
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
-				if (pc.getClanid() == clan.getClanId() && // 血盟解散、又重新用同樣名字創立時的對策
-						pc.getClanname().toLowerCase()
-								.equals(clan.getClanName().toLowerCase())) {
+				if ((pc.getClanid() == clan.getClanId()) && // 血盟解散、又重新用同樣名字創立時的對策
+						pc.getClanname().toLowerCase().equals(clan.getClanName().toLowerCase())) {
 					L1PcInstance[] clanMembers = clan.getOnlineClanMember();
 					for (L1PcInstance clanMember : clanMembers) {
 						if (clanMember.getId() != pc.getId()) {
-							clanMember.sendPackets(new S_ServerMessage(843, pc
-									.getName())); // 只今、血盟員の%0%sがゲームに接続しました。
+							clanMember.sendPackets(new S_ServerMessage(843, pc.getName())); // 只今、血盟員の%0%sがゲームに接続しました。
 						}
 					}
 
@@ -259,17 +278,16 @@ public class C_LoginToServer extends ClientBasePacket {
 					for (L1War war : L1World.getInstance().getWarList()) {
 						boolean ret = war.CheckClanInWar(pc.getClanname());
 						if (ret) { // 盟戰中
-							String enemy_clan_name = war.GetEnemyClanName(pc
-									.getClanname());
+							String enemy_clan_name = war.GetEnemyClanName(pc.getClanname());
 							if (enemy_clan_name != null) {
 								// あなたの血盟が現在_血盟と交戦中です。
-								pc.sendPackets(new S_War(8, pc.getClanname(),
-										enemy_clan_name));
+								pc.sendPackets(new S_War(8, pc.getClanname(), enemy_clan_name));
 							}
 							break;
 						}
 					}
-				} else {
+				}
+				else {
 					pc.setClanid(0);
 					pc.setClanname("");
 					pc.setClanRank(0);
@@ -279,11 +297,9 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 
 		if (pc.getPartnerId() != 0) { // 結婚中
-			L1PcInstance partner = (L1PcInstance) L1World.getInstance()
-					.findObject(pc.getPartnerId());
-			if (partner != null && partner.getPartnerId() != 0) {
-				if (pc.getPartnerId() == partner.getId()
-						&& partner.getPartnerId() == pc.getId()) {
+			L1PcInstance partner = (L1PcInstance) L1World.getInstance().findObject(pc.getPartnerId());
+			if ((partner != null) && (partner.getPartnerId() != 0)) {
+				if ((pc.getPartnerId() == partner.getId()) && (partner.getPartnerId() == pc.getId())) {
 					pc.sendPackets(new S_ServerMessage(548)); // あなたのパートナーは今ゲーム中です。
 					partner.sendPackets(new S_ServerMessage(549)); // あなたのパートナーはたった今ログインしました。
 				}
@@ -308,6 +324,9 @@ public class C_LoginToServer extends ClientBasePacket {
 		if (pc.getHellTime() > 0) {
 			pc.beginHell(false);
 		}
+
+		// 處理新手保護系統(遭遇的守護)狀態資料的變動
+		pc.checkNoviceType();
 	}
 
 	private void items(L1PcInstance pc) {
@@ -325,8 +344,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_teleport WHERE char_id=? ORDER BY name ASC");
+			pstm = con.prepareStatement("SELECT * FROM character_teleport WHERE char_id=? ORDER BY name ASC");
 			pstm.setInt(1, pc.getId());
 
 			rs = pstm.executeQuery();
@@ -338,15 +356,16 @@ public class C_LoginToServer extends ClientBasePacket {
 				bookmark.setLocX(rs.getInt("locx"));
 				bookmark.setLocY(rs.getInt("locy"));
 				bookmark.setMapId(rs.getShort("mapid"));
-				S_Bookmarks s_bookmarks = new S_Bookmarks(bookmark.getName(),
-						bookmark.getMapId(), bookmark.getId());
+				S_Bookmarks s_bookmarks = new S_Bookmarks(bookmark.getName(), bookmark.getMapId(), bookmark.getId());
 				pc.addBookMark(bookmark);
 				pc.sendPackets(s_bookmarks);
 			}
 
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -360,8 +379,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_skills WHERE char_obj_id=?");
 			pstm.setInt(1, pc.getId());
 			rs = pstm.executeQuery();
 			int i = 0;
@@ -395,8 +413,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			int lv28 = 0;
 			while (rs.next()) {
 				int skillId = rs.getInt("skill_id");
-				L1Skills l1skills = SkillsTable.getInstance().getTemplate(
-						skillId);
+				L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
 				if (l1skills.getSkillLevel() == 1) {
 					lv1 |= l1skills.getId();
 				}
@@ -481,22 +498,20 @@ public class C_LoginToServer extends ClientBasePacket {
 				if (l1skills.getSkillLevel() == 28) {
 					lv28 |= l1skills.getId();
 				}
-				i = lv1 + lv2 + lv3 + lv4 + lv5 + lv6 + lv7 + lv8 + lv9 + lv10
-						+ lv11 + lv12 + lv13 + lv14 + lv15 + lv16 + lv17 + lv18
-						+ lv19 + lv20 + lv21 + lv22 + lv23 + lv24 + lv25 + lv26
-						+ lv27 + lv28;
+				i = lv1 + lv2 + lv3 + lv4 + lv5 + lv6 + lv7 + lv8 + lv9 + lv10 + lv11 + lv12 + lv13 + lv14 + lv15 + lv16 + lv17 + lv18 + lv19 + lv20
+						+ lv21 + lv22 + lv23 + lv24 + lv25 + lv26 + lv27 + lv28;
 				pc.setSkillMastery(skillId);
 			}
 			if (i > 0) {
-				pc.sendPackets(new S_AddSkill(lv1, lv2, lv3, lv4, lv5, lv6,
-						lv7, lv8, lv9, lv10, lv11, lv12, lv13, lv14, lv15,
-						lv16, lv17, lv18, lv19, lv20, lv21, lv22, lv23, lv24,
-						lv25, lv26, lv27, lv28));
+				pc.sendPackets(new S_AddSkill(lv1, lv2, lv3, lv4, lv5, lv6, lv7, lv8, lv9, lv10, lv11, lv12, lv13, lv14, lv15, lv16, lv17, lv18,
+						lv19, lv20, lv21, lv22, lv23, lv24, lv25, lv26, lv27, lv28));
 				// _log.warning("ここたち来るのね＠直訳");
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -508,8 +523,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			if (summon.getMaster().getId() == pc.getId()) {
 				summon.setMaster(pc);
 				pc.addPet(summon);
-				for (L1PcInstance visiblePc : L1World.getInstance()
-						.getVisiblePlayer(summon)) {
+				for (L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(summon)) {
 					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc));
 				}
 			}
@@ -523,8 +537,7 @@ public class C_LoginToServer extends ClientBasePacket {
 		try {
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_buff WHERE char_obj_id=?");
+			pstm = con.prepareStatement("SELECT * FROM character_buff WHERE char_obj_id=?");
 			pstm.setInt(1, pc.getId());
 			rs = pstm.executeQuery();
 			while (rs.next()) {
@@ -533,26 +546,22 @@ public class C_LoginToServer extends ClientBasePacket {
 				switch (skillid) {
 					case SHAPE_CHANGE: // 變身
 						int poly_id = rs.getInt("poly_id");
-						L1PolyMorph.doPoly(pc, poly_id, remaining_time,
-								L1PolyMorph.MORPH_BY_LOGIN);
+						L1PolyMorph.doPoly(pc, poly_id, remaining_time, L1PolyMorph.MORPH_BY_LOGIN);
 						break;
 					case STATUS_BRAVE: // 勇敢藥水
-						pc.sendPackets(new S_SkillBrave(pc.getId(), 1,
-								remaining_time));
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 1, remaining_time));
 						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 1, 0));
 						pc.setBraveSpeed(1);
 						pc.setSkillEffect(skillid, remaining_time * 1000);
 						break;
 					case STATUS_ELFBRAVE: // 精靈餅乾
-						pc.sendPackets(new S_SkillBrave(pc.getId(), 3,
-								remaining_time));
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 3, remaining_time));
 						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
 						pc.setBraveSpeed(3);
 						pc.setSkillEffect(skillid, remaining_time * 1000);
 						break;
 					case STATUS_HASTE: // 加速
-						pc.sendPackets(new S_SkillHaste(pc.getId(), 1,
-								remaining_time));
+						pc.sendPackets(new S_SkillHaste(pc.getId(), 1, remaining_time));
 						pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
 						pc.setMoveSpeed(1);
 						pc.setSkillEffect(skillid, remaining_time * 1000);
@@ -567,8 +576,10 @@ public class C_LoginToServer extends ClientBasePacket {
 						break;
 					case EFFECT_THIRD_SPEED: // 三段加速
 						int time = remaining_time / 4;
-						pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-						pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+						pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 *
+																		// 1.15
+						pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 *
+																			// 1.15
 						pc.sendPackets(new S_SkillIconThirdSpeed(time));
 						pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 4 * 1000);
 						break;
@@ -582,25 +593,26 @@ public class C_LoginToServer extends ClientBasePacket {
 						break;
 					default:
 						// 料理
-						if (skillid >= COOKING_1_0_N && skillid <= COOKING_1_6_N
-								|| skillid >= COOKING_1_0_S && skillid <= COOKING_1_6_S
-								|| skillid >= COOKING_2_0_N && skillid <= COOKING_2_6_N
-								|| skillid >= COOKING_2_0_S && skillid <= COOKING_2_6_S
-								|| skillid >= COOKING_3_0_N && skillid <= COOKING_3_6_N
-								|| skillid >= COOKING_3_0_S && skillid <= COOKING_3_6_S) {
+						if (((skillid >= COOKING_1_0_N) && (skillid <= COOKING_1_6_N)) || ((skillid >= COOKING_1_0_S) && (skillid <= COOKING_1_6_S))
+								|| ((skillid >= COOKING_2_0_N) && (skillid <= COOKING_2_6_N))
+								|| ((skillid >= COOKING_2_0_S) && (skillid <= COOKING_2_6_S))
+								|| ((skillid >= COOKING_3_0_N) && (skillid <= COOKING_3_6_N))
+								|| ((skillid >= COOKING_3_0_S) && (skillid <= COOKING_3_6_S))) {
 							L1Cooking.eatCooking(pc, skillid, remaining_time);
-						} else {
+						}
+						else {
 							L1SkillUse l1skilluse = new L1SkillUse();
-							l1skilluse.handleCommands(clientthread.getActiveChar(),
-									skillid, pc.getId(), pc.getX(), pc.getY(), null,
-									remaining_time, L1SkillUse.TYPE_LOGIN);
+							l1skilluse.handleCommands(clientthread.getActiveChar(), skillid, pc.getId(), pc.getX(), pc.getY(), null, remaining_time,
+									L1SkillUse.TYPE_LOGIN);
 						}
 						break;
 				}
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
