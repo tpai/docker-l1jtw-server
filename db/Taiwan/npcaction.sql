@@ -1064,3 +1064,4 @@ INSERT INTO `npcaction` VALUES ('81252', 'wa_egg1', 'wa_egg1', '', '');
 INSERT INTO `npcaction` VALUES ('81255', 'tutor', 'tutor', '', '');
 INSERT INTO `npcaction` VALUES ('81256', 'admin1', 'admin1', '', '');
 INSERT INTO `npcaction` VALUES ('81257', 'lowlv1', 'lowlv1', '', '');
+INSERT INTO `npcaction` VALUES ('70515', 'mubo1', 'mubo1', '', '');

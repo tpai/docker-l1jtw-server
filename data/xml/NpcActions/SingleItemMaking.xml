@@ -1131,4 +1131,43 @@
 			<Material Amount="1" ItemId="41035"/>
 		</MakeItem>
 	</Action>
+	<!--用1000個金幣購買象牙塔對盔甲施法的卷軸 / 旅人諮詢員-->
+	<Action Name="3" NpcId="81257">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49311"/>
+			<Material Amount="1000" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv18"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<!--用1500個金幣購買象牙塔對武器施法的卷軸 / 旅人諮詢員-->
+	<Action Name="4" NpcId="81257">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49312"/>
+			<Material Amount="1500" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv19"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<!--用250個金幣購買象牙塔妙藥 / 旅人諮詢員-->
+	<Action Name="5" NpcId="81257">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49315"/>
+			<Material Amount="250" ItemId="40308"/>
+			<Succeed>
+				<ShowHtml HtmlId="lowlv21"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="lowlv20"/>
+			</Fail>
+		</MakeItem>
+	</Action>
 </NpcActionList>

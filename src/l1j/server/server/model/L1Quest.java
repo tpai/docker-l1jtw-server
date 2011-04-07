@@ -86,7 +86,10 @@ public class L1Quest {
 
 	public static final int QUEST_GENERALHAMELOFRESENTMENT = 41;
 
-	public static final int QUEST_TUTOR = 300;
+	public static final int QUEST_TUTOR = 300;//新手導師
+	public static final int QUEST_ARMOR1 = 301;//補充象牙塔裝備
+	public static final int QUEST_ARMOR2 = 302;//補充象牙塔飾品
+	public static final int QUEST_ARMOR3 = 303;//補充象牙塔魔法袋
 
 	public static final int QUEST_END = 255; // 終了済みクエストのステップ
 

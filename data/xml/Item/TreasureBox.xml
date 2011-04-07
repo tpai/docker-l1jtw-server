@@ -1140,4 +1140,13 @@
                 <Item ItemId="49184" Count="1" />  <!--風木村莊瞬間移動卷軸 * 1-->
                 <Item ItemId="49192" Count="3" />  <!--時空裂痕水晶(綠色) * 1-->
 	</TreasureBox>
+	<TreasureBox Type="SPECIFIC" ItemId="49313">  <!--象牙塔魔法袋-->
+		<Item ItemId="49314" Count="1"></Item>  <!--象牙塔補給品卷軸-->
+	</TreasureBox>
+	<TreasureBox Type="SPECIFIC" ItemId="49314">  <!--象牙塔補給品卷軸-->
+		<Item ItemId="40029" Count="100"></Item>  <!--象牙塔治癒藥水-->
+		<Item ItemId="40030" Count="6"></Item>  <!--象牙塔加速藥水-->
+		<Item ItemId="40095" Count="2"></Item>  <!--象牙塔傳送回家的卷軸-->
+		<Item ItemId="40096" Count="2"></Item>  <!--象牙塔變身卷軸-->
+	</TreasureBox>
 </TreasureBoxList>

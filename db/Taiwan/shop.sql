@@ -2654,3 +2654,7 @@ INSERT INTO `shop` VALUES ('81244', '49133', '16', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81244', '49134', '17', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81244', '49135', '18', '1', '0', '-1');
 INSERT INTO `shop` VALUES ('81244', '49136', '19', '1', '0', '-1');
+INSERT INTO `shop` VALUES ('70006', '40010', '0', '37', '0', '-1');
+INSERT INTO `shop` VALUES ('70006', '40011', '1', '200', '0', '-1');
+INSERT INTO `shop` VALUES ('70006', '40012', '2', '600', '0', '-1');
+INSERT INTO `shop` VALUES ('70006', '40017', '3', '70', '0', '-1');

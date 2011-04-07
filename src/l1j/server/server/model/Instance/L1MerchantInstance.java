@@ -14,9 +14,13 @@
  */
 package l1j.server.server.model.Instance;
 
+import static l1j.server.server.model.skill.L1SkillId.HOLY_WEAPON;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
+import l1j.server.server.datatables.ExpTable;
 import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.datatables.TownTable;
 import l1j.server.server.model.L1Attack;
@@ -28,9 +32,14 @@ import l1j.server.server.model.L1Quest;
 import l1j.server.server.model.L1TownLocation;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.gametime.L1GameTimeClock;
+import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ChangeHeading;
+import l1j.server.server.serverpackets.S_HPUpdate;
+import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.serverpackets.S_SkillHaste;
+import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Npc;
 
 public class L1MerchantInstance extends L1NpcInstance {
@@ -3482,10 +3491,15 @@ public class L1MerchantInstance extends L1NpcInstance {
 			} else if (npcid == 81255) { // 新手導師
 				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);//任務編號階段
 				int playerLv = player.getLevel();//角色等級
+				if (playerLv < 13) {
+					newUserHelp(player, 1);// HASTE & Full HP MP
+				}
 				if (playerLv < 13 && quest_step == 0) {
 					player.addExp(125);//給予 LV2 EXP
+					L1ItemInstance item = player.getInventory().storeItem(42099, 5); //指定傳送卷軸(隱藏之谷) * 5
+					player.sendPackets(new S_ServerMessage(143, item.getItem().getName()));
 					quest.set_step(L1Quest.QUEST_TUTOR, 1); // 設定任務
-					htmlid = "tutor";//達到了2等級
+					htmlid = "";
 				} else if (playerLv < 13 && player.isDarkelf()) {
 					htmlid = "tutord";//接受幫助
 				} else if (playerLv < 13 && player.isDragonKnight()) {
@@ -3506,11 +3520,17 @@ public class L1MerchantInstance extends L1NpcInstance {
 			} else if (npcid == 81256) { // 修練場管理員
 				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);//任務編號階段
 				int playerLv = player.getLevel();//角色等級
-				if (playerLv > 4 && playerLv < 14 && quest_step == 2) {
-					if (playerLv == 5) {
-						player.addExp(750);//給予 LV6 EXP
+				if (playerLv < 13) {
+					newUserHelp(player, 2);// HASTE
+				}
+				if (playerLv > 1 && quest_step == 1) {
+					if (playerLv < 6) {
+						player.addExp(ExpTable.getNeedExpNextLevel(playerLv));//給予 up lv +1
 					}
-					quest.set_step(L1Quest.QUEST_TUTOR, 3); // 設定任務
+					newUserHelp(player, 3);// 神聖
+					quest.set_step(L1Quest.QUEST_TUTOR, 2); // 設定任務
+					htmlid = "";
+				} else if (playerLv > 4 && playerLv < 14 && quest_step == 2) {
 					htmlid = "admin3";//獲得裝備
 				} else if (playerLv < 5) {
 					htmlid = "admin2";
@@ -3812,6 +3832,56 @@ public class L1MerchantInstance extends L1NpcInstance {
 		@Override
 		public void run() {
 			setRest(false);
+		}
+	}
+
+	private void newUserHelp(L1PcInstance pc, int helpNo) {
+		switch (helpNo) {
+			case 1:// 加速 & Full HP MP
+				pc.sendPackets(new S_ServerMessage(183));
+				pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
+				pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
+				pc.sendPackets(new S_SkillSound(pc.getId(), 755));
+				pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
+				pc.setMoveSpeed(1);
+				pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
+
+				pc.setCurrentHp(pc.getMaxHp());
+				if (pc.getLevel() < 13) {
+					pc.setCurrentMp(pc.getMaxMp());
+				}
+				pc.sendPackets(new S_ServerMessage(77));
+				pc.sendPackets(new S_SkillSound(pc.getId(), 830));
+				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+				break;
+
+			case 2:// 加速
+				pc.sendPackets(new S_ServerMessage(183));
+				pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
+				pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
+				pc.sendPackets(new S_SkillSound(pc.getId(), 755));
+				pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
+				pc.setMoveSpeed(1);
+				pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
+				break;
+
+			case 3:// 神聖武器
+				if (pc.getWeapon() == null) {
+					pc.sendPackets(new S_ServerMessage(79));
+				} else {
+					for (L1ItemInstance item : pc.getInventory().getItems()) {
+						if (pc.getWeapon().equals(item)) {
+							L1SkillUse l1skilluse = new L1SkillUse();
+							l1skilluse.handleCommands(pc, HOLY_WEAPON, pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_SPELLSC);
+							break;
+						}
+					}
+				}
+				break;
+
+			default:
+				break;
 		}
 	}
 

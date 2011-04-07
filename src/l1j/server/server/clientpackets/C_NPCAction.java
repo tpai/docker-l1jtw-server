@@ -3783,7 +3783,7 @@ public class C_NPCAction extends ClientBasePacket {
 				if (pc.getLevel() < 13) {// lv < 13 傳送隱藏之谷
 					L1Teleport.teleport(pc, 32682, 32874, (short) 2005, 2, true);
 				} else {
-					htmlid = "drist1";
+					htmlid = "";
 				}
 			}
 		}
@@ -3799,181 +3799,203 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81255) {//新手導師
 			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR);//任務編號階段
 			int level = pc.getLevel();//角色等級
-			int helpNo = 0;
+			char s1 = s.charAt(0);
 			if (pc.getLevel() < 13) {
-				if (s.equalsIgnoreCase("l")) {
-					if (quest_step == 1) {
-						L1ItemInstance item = pc.getInventory().storeItem(42099, 5); //指定傳送卷軸(隱藏之谷) * 5
-						pc.sendPackets(new S_ServerMessage(143, item.getItem().getName()));
-						pc.getQuest().set_step(L1Quest.QUEST_TUTOR, 2);
-						helpNo = 1;
+				switch (s1) {
+					//isCrown
+					case 'A': case 'a':
+						if (level > 1 && level < 5) {// lv2 ~ lv4
+							htmlid = "tutorp1";//指引
+						} else if (level > 4 && level < 8) {// lv5 ~ lv7
+							htmlid = "tutorp2";//傳送服務
+						} else if (level > 7 && level < 10) {// lv8 ~ lv9
+							htmlid = "tutorp3";//傳送服務
+						} else if (level > 9 && level < 12) {// lv10 ~ lv11
+							htmlid = "tutorp4";//傳送服務
+						} else if (level > 11 && level < 13) {// lv12
+							htmlid = "tutorp5";//傳送服務
+						} else if (level > 12) {// lv13
+							htmlid = "tutorp6";//離開隱藏之谷
+						} else {
+							htmlid = "tutorend";
+						}
+						break;
+					//isKnight
+					case 'B': case 'b':
+						if (level > 1 && level < 5) {// lv2 ~ lv4
+							htmlid = "tutork1";//接受幫助
+						} else if (level > 4 && level < 8) {// lv5 ~ lv7
+							htmlid = "tutork2";//傳送服務
+						} else if (level > 7 && level < 10) {// lv8 ~ lv9
+							htmlid = "tutork3";//傳送服務
+						} else if (level > 9 && level < 13) {// lv10 ~ lv12
+							htmlid = "tutork4";//傳送服務
+						} else if (level > 12) {// lv13
+							htmlid = "tutork5";//離開隱藏之谷
+						} else {
+							htmlid = "tutorend";
+						}
+						break;
+					//isElf
+					case 'C': case 'c':
+						if (level > 1 && level < 5) {// lv2 ~ lv4
+							htmlid = "tutore1";//接受幫助
+						} else if (level > 4 && level < 8) {// lv5 ~ lv7
+							htmlid = "tutore2";//傳送服務
+						} else if (level > 7 && level < 10) {// lv8 ~ lv9
+							htmlid = "tutore3";//傳送服務
+						} else if (level > 9 && level < 12) {// lv10 ~ lv11
+							htmlid = "tutore4";//傳送服務
+						} else if (level > 11 && level < 13) {// lv12
+							htmlid = "tutore5";//傳送服務
+						} else if (level > 12) {// lv13
+							htmlid = "tutore6";//離開隱藏之谷
+						} else {
+							htmlid = "tutorend";
+						}
+						break;
+					//isWizard
+					case 'D': case 'd':
+						if (level > 1 && level < 5) {// lv2 ~ lv4
+							htmlid = "tutorm1";//接受幫助
+						} else if (level > 4 && level < 8) {// lv5 ~ lv7
+							htmlid = "tutorm2";//傳送服務
+						} else if (level > 7 && level < 10) {// lv8 ~ lv9
+							htmlid = "tutorm3";//傳送服務
+						} else if (level > 9 && level < 12) {// lv10 ~ lv11
+							htmlid = "tutorm4";//傳送服務
+						} else if (level > 11 && level < 13) {// lv12
+							htmlid = "tutorm5";//傳送服務
+						} else if (level > 12) {// lv13
+							htmlid = "tutorm6";//離開隱藏之谷
+						} else {
+							htmlid = "tutorend";
+						}
+						break;
+					//isDarkelf
+					case 'E': case 'e':
+						if (level > 1 && level < 5) {// lv2 ~ lv4
+							htmlid = "tutord1";//接受幫助
+						} else if (level > 4 && level < 8) {// lv5 ~ lv7
+							htmlid = "tutord2";//傳送服務
+						} else if (level > 7 && level < 10) {// lv8 ~ lv9
+							htmlid = "tutord3";//傳送服務
+						} else if (level > 9 && level < 12) {// lv10 ~ lv11
+							htmlid = "tutord4";//傳送服務
+						} else if (level > 11 && level < 13) {// lv12
+							htmlid = "tutord5";//傳送服務
+						} else if (level > 12) {// lv13
+							htmlid = "tutord6";//離開隱藏之谷
+						} else {
+							htmlid = "tutorend";
+						}
+						break;
+					//isDragonKnight
+					case 'F': case 'f':
+						if (level > 1 && level < 5) {// lv2 ~ lv4
+							htmlid = "tutordk1";//接受幫助
+						} else if (level > 4 && level < 8) {// lv5 ~ lv7
+							htmlid = "tutordk2";//傳送服務
+						} else if (level > 7 && level < 10) {// lv8 ~ lv9
+							htmlid = "tutordk3";//傳送服務
+						} else if (level > 9 && level < 13) {// lv10 ~ lv12
+							htmlid = "tutordk4";//傳送服務
+						} else if (level > 12) {// lv13
+							htmlid = "tutordk5";//離開隱藏之谷
+						} else {
+							htmlid = "tutorend";
+						}
+						break;
+					//isIllusionist
+					case 'G': case 'g':
+						if (level > 1 && level < 5) {// lv2 ~ lv4
+							htmlid = "tutori";//接受幫助
+						} else if (level > 4 && level < 8) {// lv5 ~ lv7
+							htmlid = "tutori2";//傳送服務
+						} else if (level > 7 && level < 10) {// lv8 ~ lv9
+							htmlid = "tutori3";//傳送服務
+						} else if (level > 9 && level < 13) {// lv10 ~ lv12
+							htmlid = "tutori4";//傳送服務
+						} else if (level > 12) {// lv13
+							htmlid = "tutori5";//離開隱藏之谷
+						} else {
+							htmlid = "tutorend";
+						}
+						break;
+					case 'H': case 'h':
+						L1Teleport.teleport(pc, 32575, 32945, (short) 0, 5, true); //說話之島倉庫管理員
 						htmlid = "";
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("A")) {//isCrown
-					newUserHelp(pc, 4);
-					if (level > 1 && level < 5) {// lv2 ~ lv4
-						htmlid = "tutorp1";//指引
-					} else if (level > 4 && level < 8) {// lv5 ~ lv7
-						htmlid = "tutorp2";//傳送服務
-					} else if (level > 7 && level < 10) {// lv8 ~ lv9
-						htmlid = "tutorp3";//傳送服務
-					} else if (level > 9 && level < 12) {// lv10 ~ lv11
-						htmlid = "tutorp4";//傳送服務
-					} else if (level > 11 && level < 13) {// lv12
-						htmlid = "tutorp5";//傳送服務
-					} else if (level > 12) {// lv13
-						htmlid = "tutorp6";//離開隱藏之谷
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("B")) {//isKnight
-					newUserHelp(pc, 4);
-					if (level > 1 && level < 5) {// lv2 ~ lv4
-						htmlid = "tutork1";//接受幫助
-					} else if (level > 4 && level < 8) {// lv5 ~ lv7
-						htmlid = "tutork2";//傳送服務
-					} else if (level > 7 && level < 10) {// lv8 ~ lv9
-						htmlid = "tutork3";//傳送服務
-					} else if (level > 9 && level < 13) {// lv10 ~ lv12
-						htmlid = "tutork4";//傳送服務
-					} else if (level > 12) {// lv13
-						htmlid = "tutork5";//離開隱藏之谷
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("C")) {//isElf
-					newUserHelp(pc, 2);
-					if (level > 1 && level < 5) {// lv2 ~ lv4
-						htmlid = "tutore1";//接受幫助
-					} else if (level > 4 && level < 8) {// lv5 ~ lv7
-						htmlid = "tutore2";//傳送服務
-					} else if (level > 7 && level < 10) {// lv8 ~ lv9
-						htmlid = "tutore3";//傳送服務
-					} else if (level > 9 && level < 12) {// lv10 ~ lv11
-						htmlid = "tutore4";//傳送服務
-					} else if (level > 11 && level < 13) {// lv12
-						htmlid = "tutore5";//傳送服務
-					} else if (level > 12) {// lv13
-						htmlid = "tutore6";//離開隱藏之谷
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("D")) {//isWizard
-					newUserHelp(pc, 2);
-					if (level > 1 && level < 5) {// lv2 ~ lv4
-						htmlid = "tutorm1";//接受幫助
-					} else if (level > 4 && level < 8) {// lv5 ~ lv7
-						htmlid = "tutorm2";//傳送服務
-					} else if (level > 7 && level < 10) {// lv8 ~ lv9
-						htmlid = "tutorm3";//傳送服務
-					} else if (level > 9 && level < 12) {// lv10 ~ lv11
-						htmlid = "tutorm4";//傳送服務
-					} else if (level > 11 && level < 13) {// lv12
-						htmlid = "tutorm5";//傳送服務
-					} else if (level > 12) {// lv13
-						htmlid = "tutorm6";//離開隱藏之谷
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("E")) {//isDarkelf
-					newUserHelp(pc, 2);
-					if (level > 1 && level < 5) {// lv2 ~ lv4
-						htmlid = "tutord1";//接受幫助
-					} else if (level > 4 && level < 8) {// lv5 ~ lv7
-						htmlid = "tutord2";//傳送服務
-					} else if (level > 7 && level < 10) {// lv8 ~ lv9
-						htmlid = "tutord3";//傳送服務
-					} else if (level > 9 && level < 12) {// lv10 ~ lv11
-						htmlid = "tutord4";//傳送服務
-					} else if (level > 11 && level < 13) {// lv12
-						htmlid = "tutord5";//傳送服務
-					} else if (level > 12) {// lv13
-						htmlid = "tutord6";//離開隱藏之谷
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("F")) {//isDragonKnight
-					newUserHelp(pc, 2);
-					if (level > 1 && level < 5) {// lv2 ~ lv4
-						htmlid = "tutordk1";//接受幫助
-					} else if (level > 4 && level < 8) {// lv5 ~ lv7
-						htmlid = "tutordk2";//傳送服務
-					} else if (level > 7 && level < 10) {// lv8 ~ lv9
-						htmlid = "tutordk3";//傳送服務
-					} else if (level > 9 && level < 13) {// lv10 ~ lv12
-						htmlid = "tutordk4";//傳送服務
-					} else if (level > 12) {// lv13
-						htmlid = "tutordk5";//離開隱藏之谷
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("G")) {//isIllusionist
-					newUserHelp(pc, 2);
-					if (level > 1 && level < 5) {// lv2 ~ lv4
-						htmlid = "tutori";//接受幫助
-					} else if (level > 4 && level < 8) {// lv5 ~ lv7
-						htmlid = "tutori2";//傳送服務
-					} else if (level > 7 && level < 10) {// lv8 ~ lv9
-						htmlid = "tutori3";//傳送服務
-					} else if (level > 9 && level < 13) {// lv10 ~ lv12
-						htmlid = "tutori4";//傳送服務
-					} else if (level > 12) {// lv13
-						htmlid = "tutori5";//離開隱藏之谷
-					} else {
-						htmlid = "tutorend";
-					}
-				} else if (s.equalsIgnoreCase("H")) {
-					L1Teleport.teleport(pc, 32575, 32945, (short) 0, 5, true); //說話之島倉庫管理員
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("I")) {
-					L1Teleport.teleport(pc, 32579, 32923, (short) 0, 5, true); //血盟執行人
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("J")) {
-					L1Teleport.teleport(pc, 32679, 32811, (short) 2005, 5, true); //隱藏之谷地下洞穴
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("K")) {
-					L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); //魔法師吉倫小屋
-				} else if (s.equalsIgnoreCase("L")) {
-					L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); //象牙塔
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("M")) {
-					L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); //黑暗魔法師賽帝亞
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("N")) {
-					L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); //幻術士史菲爾
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("O")) {
-					L1Teleport.teleport(pc, 32605, 32837, (short) 2005, 5, true); //村莊西郊
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("P")) {
-					L1Teleport.teleport(pc, 32733, 32902, (short) 2005, 5, true); //村莊東郊
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("Q")) {
-					L1Teleport.teleport(pc, 32559, 32843, (short) 2005, 5, true); //村莊南部狩獵場
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("R")) {
-					L1Teleport.teleport(pc, 32677, 32982, (short) 2005, 5, true); //村莊東南部狩獵場
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("S")) {
-					L1Teleport.teleport(pc, 32781, 32854, (short) 2005, 5, true); //村莊東北部狩獵場
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("T")) {
-					L1Teleport.teleport(pc, 32674, 32739, (short) 2005, 5, true); //村莊西北部狩獵場
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("U")) {
-					L1Teleport.teleport(pc, 32578, 32737, (short) 2005, 5, true); //村莊西部狩獵場
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("V")) {
-					L1Teleport.teleport(pc, 32542, 32996, (short) 2005, 5, true); //村莊南部狩獵場
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("W")) {
-					L1Teleport.teleport(pc, 32794, 32973, (short) 2005, 5, true); //村莊東部狩獵場
-					htmlid = "";
-				} else if (s.equalsIgnoreCase("X")) {
-					L1Teleport.teleport(pc, 32803, 32789, (short) 2005, 5, true); //村莊北部狩獵場
-					htmlid = "";
+						break;
+					case 'I': case 'i':
+						L1Teleport.teleport(pc, 32579, 32923, (short) 0, 5, true); //血盟執行人
+						htmlid = "";
+						break;
+					case 'J': case 'j':
+						L1Teleport.teleport(pc, 32679, 32811, (short) 2005, 5, true); //隱藏之谷地下洞穴
+						L1ItemInstance item = pc.getInventory().storeItem(42099, 1);
+						pc.sendPackets(new S_ServerMessage(143,
+								((L1NpcInstance) obj).getNpcTemplate()
+										.get_name(), item.getItem().getName()));
+						htmlid = "";
+						break;
+					case 'K': case 'k':
+						L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); //魔法師吉倫小屋
+						htmlid = "";
+						break;
+					case 'L': case 'l':
+						L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); //象牙塔
+						htmlid = "";
+						break;
+					case 'M': case 'm':
+						L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); //黑暗魔法師賽帝亞
+						htmlid = "";
+						break;
+					case 'N': case 'n':
+						L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); //幻術士史菲爾
+						htmlid = "";
+						break;
+					case 'O': case 'o':
+						L1Teleport.teleport(pc, 32605, 32837, (short) 2005, 5, true); //村莊西郊
+						htmlid = "";
+						break;
+					case 'P': case 'p':
+						L1Teleport.teleport(pc, 32733, 32902, (short) 2005, 5, true); //村莊東郊
+						htmlid = "";
+						break;
+					case 'Q': case 'q':
+						L1Teleport.teleport(pc, 32559, 32843, (short) 2005, 5, true); //村莊南部狩獵場
+						htmlid = "";
+						break;
+					case 'R': case 'r':
+						L1Teleport.teleport(pc, 32677, 32982, (short) 2005, 5, true); //村莊東南部狩獵場
+						htmlid = "";
+						break;
+					case 'S': case 's':
+						L1Teleport.teleport(pc, 32781, 32854, (short) 2005, 5, true); //村莊東北部狩獵場
+						htmlid = "";
+						break;
+					case 'T': case 't':
+						L1Teleport.teleport(pc, 32674, 32739, (short) 2005, 5, true); //村莊西北部狩獵場
+						htmlid = "";
+						break;
+					case 'U': case 'u':
+						L1Teleport.teleport(pc, 32578, 32737, (short) 2005, 5, true); //村莊西部狩獵場
+						htmlid = "";
+						break;
+					case 'V': case 'v':
+						L1Teleport.teleport(pc, 32542, 32996, (short) 2005, 5, true); //村莊南部狩獵場
+						htmlid = "";
+						break;
+					case 'W': case 'w':
+						L1Teleport.teleport(pc, 32794, 32973, (short) 2005, 5, true); //村莊東部狩獵場
+						htmlid = "";
+						break;
+					case 'X': case 'x':
+						L1Teleport.teleport(pc, 32803, 32789, (short) 2005, 5, true); //村莊北部狩獵場
+						htmlid = "";
+						break;
+					default:
+						break;
 				}
 			}
 		}
@@ -3981,7 +4003,7 @@ public class C_NPCAction extends ClientBasePacket {
 			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR);//任務編號階段
 			int level = pc.getLevel();//角色等級
 			if (s.equalsIgnoreCase("A")) {
-				if (level > 4 && quest_step == 3) {
+				if (level > 4 && quest_step == 2) {
 					final int[] item_ids = { 20028, 20126, 20173, 20206, 20232, 40029, 40030, 40098, 40099, 42099, }; //獲得裝備
 					final int[] item_amounts = { 1, 1, 1, 1, 1, 50, 5, 20, 30, 5,};
 					for (int i = 0; i < item_ids.length; i++) {
@@ -3991,11 +4013,185 @@ public class C_NPCAction extends ClientBasePacket {
 								((L1NpcInstance) obj).getNpcTemplate()
 										.get_name(), item.getItem().getName()));
 					}
-					pc.getQuest().set_step(L1Quest.QUEST_TUTOR, 4);
-					newUserHelp(pc, 4);
+					pc.getQuest().set_step(L1Quest.QUEST_TUTOR, 3);
 				}
 			}
 			htmlid = "";
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81257) {//旅人諮詢員
+			int quest_step1 = pc.getQuest().get_step(L1Quest.QUEST_ARMOR1);//任務編號階段
+			int quest_step2 = pc.getQuest().get_step(L1Quest.QUEST_ARMOR2);//任務編號階段
+			int quest_step3 = pc.getQuest().get_step(L1Quest.QUEST_ARMOR3);//任務編號階段
+			int level = pc.getLevel();//角色等級
+			char s1 = s.charAt(0);
+			if (pc.getLevel() < 46) {
+				switch (s1) {
+					case 'A': case 'a':
+						L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); //魔法師吉倫小屋
+						htmlid = "";
+						break;
+					case 'B': case 'b':
+						L1Teleport.teleport(pc, 33119, 32933, (short) 4, 5, true); //正義神殿
+						htmlid = "";
+						break;
+					case 'C': case 'c':
+						L1Teleport.teleport(pc, 32887, 32652, (short) 4, 5, true); //邪惡神殿
+						htmlid = "";
+						break;
+					case 'D': case 'd':
+						L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); //販售妖精精靈魔法的琳達
+						htmlid = "";
+						break;
+					case 'E': case 'e':
+						L1Teleport.teleport(pc, 32792, 32845, (short) 76, 5, true); //象牙塔的精靈魔法修煉室
+						htmlid = "";
+						break;
+					case 'F': case 'f':
+						L1Teleport.teleport(pc, 32750, 32847, (short) 76, 5, true); //象牙塔的艾利溫
+						htmlid = "";
+						break;
+					case 'G': case 'g':
+						if (pc.isDarkelf()) {
+							L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); //黑暗魔法師賽帝亞
+							htmlid = "";
+						} else {
+							htmlid = "lowlv40";
+						}
+						break;
+					case 'H': case 'h':
+						if (pc.isDragonKnight()) {
+							L1Teleport.teleport(pc, 32811, 32873, (short) 1001, 5, true); //販售龍騎士技能的森帕爾處
+							htmlid = "";
+						} else {
+							htmlid = "lowlv41";
+						}
+						break;
+					case 'I': case 'i':
+						if (pc.isIllusionist()) {
+							L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); //販售幻術士魔法的史菲爾處
+							htmlid = "";
+						} else {
+							htmlid = "lowlv42";
+						}
+						break;
+					case 'J': case 'j':
+						L1Teleport.teleport(pc, 32509, 32867, (short) 0, 5, true); //說話之島的甘特處
+						htmlid = "";
+						break;
+					case 'K': case 'k':
+						if (level > 34 && quest_step2 < 10) {
+							final int[] item_ids = { 20282, 21139, }; //補充象牙塔飾品 
+							final int[] item_amounts = { 1, 1,};
+							boolean isOK = false;
+							for (int i = 0; i < item_ids.length; i++) {
+								if (!pc.getInventory().checkItem(item_ids[i], 1)) { // check
+									L1ItemInstance item = pc.getInventory().storeItem(
+											item_ids[i], item_amounts[i]);
+									pc.sendPackets(new S_ServerMessage(143,
+											((L1NpcInstance) obj).getNpcTemplate()
+													.get_name(), item.getItem().getName()));
+									isOK = true;
+								}
+							}
+							if (isOK) {
+								quest_step2++;
+								if (quest_step2 >= 9) {
+									pc.getQuest().set_step(L1Quest.QUEST_ARMOR2, 255);
+								} else {
+									pc.getQuest().set_step(L1Quest.QUEST_ARMOR2, quest_step2);
+								}
+								pc.sendPackets(new S_SystemMessage("還可以補充 " + (9 - quest_step2) + "次。"));
+								htmlid = "lowlv43";
+							} else {
+								htmlid = "lowlv45";
+							}
+						} else if (level < 35) {
+							htmlid = "lowlv44";
+						} else if (quest_step2 > 9) {
+							htmlid = "lowlv45";
+						}
+						break;
+					case '0':
+						if (level < 13) {
+							htmlid = "lowlvS1";
+						} else if (level > 12 && level < 46) {
+							htmlid = "lowlvS2";
+						} else {
+							htmlid = "lowlvno";
+						}
+						break;
+					case '1':
+						if (level < 13) {
+							htmlid = "lowlv14";
+						} else if (level > 12 && level < 46) {
+							htmlid = "lowlv15";
+						} else {
+							htmlid = "lowlvno";
+						}
+						break;
+					case '2':
+						if (quest_step1 < 14) {
+							final int[] item_ids = { 20028, 20126, 20173, 20206, 20232, 21138, }; //補充象牙塔裝備 (可補充 10 次)
+							final int[] item_amounts = { 1, 1, 1, 1, 1, 1,};
+							boolean isOK = false;
+							for (int i = 0; i < item_ids.length; i++) {
+								if (!pc.getInventory().checkItem(item_ids[i], 1)) { // check
+									L1ItemInstance item = pc.getInventory().storeItem(
+											item_ids[i], item_amounts[i]);
+									pc.sendPackets(new S_ServerMessage(143,
+											((L1NpcInstance) obj).getNpcTemplate()
+													.get_name(), item.getItem().getName()));
+									isOK = true;
+								}
+							}
+							if (isOK) {
+								quest_step1++;
+								if (quest_step2 >= 13) {
+									pc.getQuest().set_step(L1Quest.QUEST_ARMOR1, 255);
+								} else {
+									pc.getQuest().set_step(L1Quest.QUEST_ARMOR1, quest_step1);
+								}
+								pc.sendPackets(new S_SystemMessage("還可以補充 " + (13 - quest_step1) + "次。"));
+								htmlid = "lowlv16";
+							} else {
+								htmlid = "lowlv17";
+							}
+							L1ItemInstance item = pc.getInventory().storeItem(49310, 1000);
+							pc.sendPackets(new S_ServerMessage(143,
+									((L1NpcInstance) obj).getNpcTemplate()
+											.get_name(), item.getItem().getName()));
+						} else if (quest_step1 > 13) {
+							htmlid = "lowlv17";
+						}
+						break;
+					case '6':
+						if (quest_step3 < 10 && !pc.getInventory().checkItem(49313, 1)) {
+							if (pc.getInventory().checkItem(40308, 2000)) {
+								L1ItemInstance item = pc.getInventory().storeItem(49313, 2);
+								pc.sendPackets(new S_ServerMessage(143,
+										((L1NpcInstance) obj).getNpcTemplate()
+												.get_name(), item.getItem().getName()));
+								quest_step3++;
+								if (quest_step3 >= 9) {
+									pc.getQuest().set_step(L1Quest.QUEST_ARMOR3, 255);
+								} else {
+									pc.getQuest().set_step(L1Quest.QUEST_ARMOR3, quest_step3);
+								}
+								pc.sendPackets(new S_SystemMessage("還可以購買 " + (9 - quest_step3) + "次。"));
+								htmlid = "lowlv22";
+							} else if (!pc.getInventory().checkItem(40308, 2000)) {
+								htmlid = "lowlv20";
+							}
+						} else if (pc.getInventory().checkItem(49313, 1)) {
+							htmlid = "lowlv23";
+						} else {
+							htmlid = "lowlvno";
+						}
+						break;
+					default:
+						break;
+				}
+			}
 		}
 
 		// else System.out.println("C_NpcAction: " + s);
@@ -4901,81 +5097,6 @@ public class C_NPCAction extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(181)); // \f1そのようなモンスターには変身できません。
 		}
 		return isUseItem;
-	}
-
-	private void newUserHelp(L1PcInstance pc, int helpNo) {
-		pc.sendPackets(new S_ServerMessage(183));
-		pc.sendPackets(new S_SkillHaste(pc.getId(), 1, 1600));
-		pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
-		pc.sendPackets(new S_SkillSound(pc.getId(), 755));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 755));
-		pc.setMoveSpeed(1);
-		pc.setSkillEffect(STATUS_HASTE, 1600 * 1000);
-		pc.setCurrentHp(pc.getMaxHp());
-		if (pc.getLevel() < 13) {
-			pc.setCurrentMp(pc.getMaxMp());
-		}
-		pc.sendPackets(new S_ServerMessage(77));
-		pc.sendPackets(new S_SkillSound(pc.getId(), 830));
-		pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
-		pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
-
-		while (helpNo > 0) {
-			switch (helpNo) {
-				case 1:// 武器強化
-					helpNo -= 1;
-					if (pc.getWeapon() == null) {
-						pc.sendPackets(new S_ServerMessage(79));
-					} else {
-						for (L1ItemInstance item : pc.getInventory().getItems()) {
-							if (pc.getWeapon().equals(item)) {
-								L1SkillUse l1skilluse = new L1SkillUse();
-								l1skilluse.handleCommands(pc, ENCHANT_WEAPON,
-										item.getId(), 0, 0, null, 0,
-										L1SkillUse.TYPE_SPELLSC);
-								break;
-							}
-						}
-					}
-					break;
-
-				case 2:// 防具強化
-					helpNo -= 1;
-					L1ItemInstance item = pc.getInventory().getItemEquipped(2, 2);
-					if (item != null) {
-						L1SkillUse l1skilluse = new L1SkillUse();
-						l1skilluse.handleCommands(pc, BLESSED_ARMOR, item.getId(), 0,
-								0, null, 0, L1SkillUse.TYPE_SPELLSC);
-					} else {
-						pc.sendPackets(new S_ServerMessage(79));
-					}
-					break;
-
-				case 4://
-					helpNo -= 2;
-					break;
-
-				case 8:
-					helpNo -= 4;
-					break;
-
-				case 16:
-					helpNo -= 8;
-					break;
-
-				case 32:
-					helpNo -= 16;
-					break;
-
-				case 64:
-					helpNo -= 32;
-					break;
-
-				default:
-					helpNo = 0;
-					break;
-			}
-		}
 	}
 
 	@Override
