@@ -100,6 +100,7 @@ import l1j.server.server.model.Instance.L1TowerInstance;
 import l1j.server.server.model.item.L1ItemId;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.poison.L1DamagePoison;
+import l1j.server.server.model.item.action.Effect;
 import l1j.server.server.model.item.action.Potion;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_AddSkill;
@@ -121,7 +122,6 @@ import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_ShowPolyList;
-import l1j.server.server.serverpackets.S_SkillBrave;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
@@ -659,7 +659,16 @@ public class C_ItemUSe extends ClientBasePacket {
 							L1EtcItem temp = (L1EtcItem) l1iteminstance
 									.getItem();
 							if (temp.get_delayEffect() > 0) {
-								isDelayEffect = true;
+								// 有限制再次使用的時間且可堆疊的道具
+								if (l1iteminstance.isStackable()) {
+									if (l1iteminstance.getCount() > 1) {
+										isDelayEffect = true;
+									}
+									pc.getInventory().removeItem(
+											l1iteminstance.getId(), 1);
+								} else {
+									isDelayEffect = true;
+								}
 							} else {
 								pc.getInventory().removeItem(
 										l1iteminstance.getId(), 1);
@@ -914,6 +923,9 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				} else if (itemId == L1ItemId.CHOCOLATE_CAKE) { // 巧克力蛋糕
 					Potion.ThirdSpeed(pc, l1iteminstance, 600);
+				} else if (itemId >= L1ItemId.EFFECT_POTION_OF_EXP_150
+						&& itemId <= L1ItemId.BLESS_OF_MAZU) { // 150%神力藥水 ~ 媽祖祝福平安符
+					Effect.useEffectItem(pc, l1iteminstance);
 				} else if ((itemId == 40066) || (itemId == 41413)) { // お餅、月餅
 					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
 					pc.setCurrentMp(pc.getCurrentMp() + (7 + Random.nextInt(6))); // 7~12

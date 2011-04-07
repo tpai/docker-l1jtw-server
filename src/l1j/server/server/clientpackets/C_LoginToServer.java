@@ -67,6 +67,7 @@ import l1j.server.server.templates.L1BookMark;
 import l1j.server.server.templates.L1GetBackRestart;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.utils.SQLUtil;
+
 import static l1j.server.server.model.skill.L1SkillId.*;
 
 // Referenced classes of package l1j.server.server.clientpackets:
@@ -529,54 +530,72 @@ public class C_LoginToServer extends ClientBasePacket {
 			while (rs.next()) {
 				int skillid = rs.getInt("skill_id");
 				int remaining_time = rs.getInt("remaining_time");
-				if (skillid == SHAPE_CHANGE) { // 變身
-					int poly_id = rs.getInt("poly_id");
-					L1PolyMorph.doPoly(pc, poly_id, remaining_time,
-							L1PolyMorph.MORPH_BY_LOGIN);
-				} else if (skillid == STATUS_BRAVE) { // 勇敢藥水
-					pc.sendPackets(new S_SkillBrave(pc.getId(), 1,
-							remaining_time));
-					pc.broadcastPacket(new S_SkillBrave(pc.getId(), 1, 0));
-					pc.setBraveSpeed(1);
-					pc.setSkillEffect(skillid, remaining_time * 1000);
-				} else if (skillid == STATUS_ELFBRAVE) { // 精靈餅乾
-					pc.sendPackets(new S_SkillBrave(pc.getId(), 3,
-							remaining_time));
-					pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
-					pc.setBraveSpeed(3);
-					pc.setSkillEffect(skillid, remaining_time * 1000);
-				} else if (skillid == STATUS_HASTE) { // 加速
-					pc.sendPackets(new S_SkillHaste(pc.getId(), 1,
-							remaining_time));
-					pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
-					pc.setMoveSpeed(1);
-					pc.setSkillEffect(skillid, remaining_time * 1000);
-				} else if (skillid == STATUS_BLUE_POTION) { // 藍色藥水
-					pc.sendPackets(new S_SkillIconGFX(34, remaining_time));
-					pc.setSkillEffect(skillid, remaining_time * 1000);
-				} else if (skillid == STATUS_CHAT_PROHIBITED) { // 禁言
-					pc.sendPackets(new S_SkillIconGFX(36, remaining_time));
-					pc.setSkillEffect(skillid, remaining_time * 1000);
-				} else if (skillid >= COOKING_1_0_N && skillid <= COOKING_1_6_N
-						|| skillid >= COOKING_1_0_S && skillid <= COOKING_1_6_S
-						|| skillid >= COOKING_2_0_N && skillid <= COOKING_2_6_N
-						|| skillid >= COOKING_2_0_S && skillid <= COOKING_2_6_S
-						|| skillid >= COOKING_3_0_N && skillid <= COOKING_3_6_N
-						|| skillid >= COOKING_3_0_S && skillid <= COOKING_3_6_S) { // 料理
-					L1Cooking.eatCooking(pc, skillid, remaining_time);
-				} else if (skillid == STATUS_RIBRAVE) { // 生命之樹果實
-					;
-				} else if (skillid == EFFECT_THIRD_SPEED) { // 三段加速
-					int time = remaining_time / 4;
-					pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-					pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
-					pc.sendPackets(new S_SkillIconThirdSpeed(time));
-					pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 4 * 1000);
-				} else {
-					L1SkillUse l1skilluse = new L1SkillUse();
-					l1skilluse.handleCommands(clientthread.getActiveChar(),
-							skillid, pc.getId(), pc.getX(), pc.getY(), null,
-							remaining_time, L1SkillUse.TYPE_LOGIN);
+				switch (skillid) {
+					case SHAPE_CHANGE: // 變身
+						int poly_id = rs.getInt("poly_id");
+						L1PolyMorph.doPoly(pc, poly_id, remaining_time,
+								L1PolyMorph.MORPH_BY_LOGIN);
+						break;
+					case STATUS_BRAVE: // 勇敢藥水
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 1,
+								remaining_time));
+						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 1, 0));
+						pc.setBraveSpeed(1);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_ELFBRAVE: // 精靈餅乾
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 3,
+								remaining_time));
+						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
+						pc.setBraveSpeed(3);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_HASTE: // 加速
+						pc.sendPackets(new S_SkillHaste(pc.getId(), 1,
+								remaining_time));
+						pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
+						pc.setMoveSpeed(1);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_BLUE_POTION: // 藍色藥水
+						pc.sendPackets(new S_SkillIconGFX(34, remaining_time));
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_CHAT_PROHIBITED: // 禁言
+						pc.sendPackets(new S_SkillIconGFX(36, remaining_time));
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case EFFECT_THIRD_SPEED: // 三段加速
+						int time = remaining_time / 4;
+						pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+						pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
+						pc.sendPackets(new S_SkillIconThirdSpeed(time));
+						pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 4 * 1000);
+						break;
+					case STATUS_RIBRAVE: // 生命之樹果實
+					case EFFECT_BLESS_OF_MAZU: // 媽祖的祝福
+					case EFFECT_POTION_OF_EXP_150:
+					case EFFECT_POTION_OF_EXP_175:
+					case EFFECT_POTION_OF_EXP_200:
+					case EFFECT_POTION_OF_EXP_225:
+					case EFFECT_POTION_OF_EXP_250:
+						break;
+					default:
+						// 料理
+						if (skillid >= COOKING_1_0_N && skillid <= COOKING_1_6_N
+								|| skillid >= COOKING_1_0_S && skillid <= COOKING_1_6_S
+								|| skillid >= COOKING_2_0_N && skillid <= COOKING_2_6_N
+								|| skillid >= COOKING_2_0_S && skillid <= COOKING_2_6_S
+								|| skillid >= COOKING_3_0_N && skillid <= COOKING_3_6_N
+								|| skillid >= COOKING_3_0_S && skillid <= COOKING_3_6_S) {
+							L1Cooking.eatCooking(pc, skillid, remaining_time);
+						} else {
+							L1SkillUse l1skilluse = new L1SkillUse();
+							l1skilluse.handleCommands(clientthread.getActiveChar(),
+									skillid, pc.getId(), pc.getX(), pc.getY(), null,
+									remaining_time, L1SkillUse.TYPE_LOGIN);
+						}
+						break;
 				}
 			}
 		} catch (SQLException e) {

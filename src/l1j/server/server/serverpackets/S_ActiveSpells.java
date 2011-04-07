@@ -15,6 +15,12 @@
 package l1j.server.server.serverpackets;
 
 import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_225;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_250;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.CharBuffTable;
@@ -26,9 +32,6 @@ public class S_ActiveSpells extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_ActiveSpells(L1PcInstance pc) {
-		int[] UByte8 = new int[101];
-		int[] type = new int[101];
-		int[] time = new int[101];
 		byte[] randBox = new byte[2];
 		randBox[0] = Random.nextByte();
 		randBox[1] = Random.nextByte();
@@ -36,19 +39,10 @@ public class S_ActiveSpells extends ServerBasePacket {
 		// 取得技能剩餘時間
 		CharBuffTable.buffRemainingTime(pc);
 
-		// 登入時給于角色狀態
-		if (pc.hasSkillEffect(STATUS_RIBRAVE)) { // 生命之樹果實
-			time[61] = pc.getSkillEffectTimeSec(STATUS_RIBRAVE) / 4;
-			UByte8[61] = time[61]; // 圖示時間  = 時間 * 4 - 2
-			if (time[61] != 0) {
-				pc.setSkillEffect(STATUS_RIBRAVE, time[61] * 4 * 1000);
-			}
-		}
-
 		writeC(Opcodes.S_OPCODE_ACTIVESPELLS);
 		writeC(0x14);
 
-		for (int i : UByte8) {
+		for (int i : activeSpells(pc)) {
 			if (i != 72) {
 				writeC(i);
 			} else {
@@ -56,6 +50,50 @@ public class S_ActiveSpells extends ServerBasePacket {
 			}
 		}
 		writeByte(randBox);
+	}
+
+	// 登入時給于角色狀態剩餘時間
+	private int[] activeSpells(L1PcInstance pc) {
+		int[] data = new int[101];
+		 // 生命之樹果實
+		if (pc.hasSkillEffect(STATUS_RIBRAVE)) {
+			data[61] = pc.getSkillEffectTimeSec(STATUS_RIBRAVE) / 4;
+		}
+		 // 神力藥水
+		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) { // 神力藥水250%
+			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_250) / 4;
+			if (data[42] != 0) {
+				data[43] = 36; // 狩獵經驗值將會增加。
+			}
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) { // 神力藥水225%
+			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_225) / 4;
+			if (data[42] != 0) {
+				data[43] = 35; // 狩獵經驗值將會增加。
+			}
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) { // 神力藥水200%
+			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_200) / 4;
+			if (data[42] != 0) {
+				data[43] = 34; // 狩獵經驗值將會增加。
+			}
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) { // 神力藥水175%
+			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_175) / 4;
+			if (data[42] != 0) {
+				data[43] = 33; // 狩獵經驗值將會增加。
+			}
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) { // 神力藥水150%
+			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_150) / 4;
+			if (data[42] != 0) {
+				data[43] = 32; // 狩獵經驗值將會增加。
+			}
+		}
+		// 媽祖的祝福
+		if (pc.hasSkillEffect(EFFECT_BLESS_OF_MAZU)) {
+			data[48] = pc.getSkillEffectTimeSec(EFFECT_BLESS_OF_MAZU) / 16;
+			if (data[48] != 0) {
+				data[49] = 44; // 感受到媽祖的祝福。
+			}
+		}
+		return data;
 	}
 
 	@Override

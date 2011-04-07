@@ -1530,9 +1530,9 @@ public class L1NpcInstance extends L1Character {
 					}
 				}
 			}
-			// 恨みに満ちたソルジャーゴースト、恨みに満ちたゴースト、恨みに満ちたハメル将軍
+			// 判斷士兵的怨靈、怨靈、哈蒙將軍的怨靈離開墓園範圍時傳送回墓園！
 			if ((getNpcTemplate().get_npcId() >= 45912) && (getNpcTemplate().get_npcId() <= 45916)) {
-				if ((getX() >= 32591) && (getX() <= 32644) && (getY() >= 32643) && (getY() <= 32688) && (getMapId() == 4)) {
+				if (!((getX() >= 32591) && (getX() <= 32644) && (getY() >= 32643) && (getY() <= 32688) && (getMapId() == 4))) {
 					teleport(getHomeX(), getHomeY(), getHeading());
 				}
 			}

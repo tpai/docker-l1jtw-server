@@ -593,15 +593,35 @@ public class L1SkillId {
 
 	public static final int CURSE_PARALYZE2 = 10101;
 
-/** 編號待修正 (可攻擊炎魔、火焰之影狀態) */ 
+	// 編號待修正 (可攻擊炎魔、火焰之影狀態)
 	public static final int STATUS_CURSE_BARLOG = 1015;
 
 	public static final int STATUS_CURSE_YAHEE = 1014;
 
-/** 相消無法消除的狀態 */
+	// 相消無法消除的狀態
 	public static final int EFFECT_BEGIN = 4000;
 
+	/** 三段加速 */
 	public static final int EFFECT_THIRD_SPEED = 4000;
 
-	public static final int EFFECT_END = 4000;
+	/** 神力藥水150% */
+	public static final int EFFECT_POTION_OF_EXP_150 = 4001;
+
+	/** 神力藥水175% */
+	public static final int EFFECT_POTION_OF_EXP_175 = 4002;
+
+	/** 神力藥水200% */
+	public static final int EFFECT_POTION_OF_EXP_200 = 4003;
+
+	/** 神力藥水225% */
+	public static final int EFFECT_POTION_OF_EXP_225 = 4004;
+
+	/** 神力藥水250% */
+	public static final int EFFECT_POTION_OF_EXP_250 = 4005;
+
+	/** 媽祖的祝福 */
+	public static final int EFFECT_BLESS_OF_MAZU = 4006;
+
+	public static final int EFFECT_END = 4006;
+
 }

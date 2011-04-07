@@ -1428,8 +1428,8 @@ public class L1SkillUse {
 		final int[][] repeatedSkills =
 		{
 
-				// 火焰武器、風之神射、烈炎氣息、暴風之眼、烈炎武器、暴風神射
-				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE, BURNING_WEAPON, STORM_SHOT },
+				// 火焰武器、風之神射、烈炎氣息、暴風之眼、烈炎武器、暴風神射、媽祖的祝福
+				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE, BURNING_WEAPON, STORM_SHOT, EFFECT_BLESS_OF_MAZU },
 				// 防護罩、影之防護、大地防護、大地的祝福、鋼鐵防護
 				{ SHIELD, SHADOW_ARMOR, EARTH_SKIN, EARTH_BLESS, IRON_SKIN },
 				// 勇敢藥水、精靈餅乾、(神聖疾走、行走加速、風之疾走)、超級加速、血之渴望

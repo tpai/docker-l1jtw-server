@@ -828,6 +828,14 @@ class L1SkillStop {
 				pc.setDessertId(0);
 			}
 		}
+		// ****** 
+		else if (skillId == EFFECT_BLESS_OF_MAZU) { // 媽祖的祝福
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addHitup(-3); // 攻擊成功+3
+				pc.addDmgup(3); // 額外攻擊點數+3
+			}
+		}
 
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) cha;

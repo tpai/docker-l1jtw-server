@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.item.action.Effect;
 import l1j.server.server.utils.SQLUtil;
 import static l1j.server.server.model.skill.L1SkillId.*;
 
@@ -54,7 +55,11 @@ public class CharBuffTable {
 		COOKING_3_0_N, COOKING_3_0_S, COOKING_3_1_N, COOKING_3_1_S,
 		COOKING_3_2_N, COOKING_3_2_S, COOKING_3_3_N, COOKING_3_3_S,
 		COOKING_3_4_N, COOKING_3_4_S, COOKING_3_5_N, COOKING_3_5_S,
-		COOKING_3_6_N, COOKING_3_6_S, };
+		COOKING_3_6_N, COOKING_3_6_S,
+		EFFECT_POTION_OF_EXP_150, EFFECT_POTION_OF_EXP_175, // 神力藥水
+		EFFECT_POTION_OF_EXP_200, EFFECT_POTION_OF_EXP_225,
+		EFFECT_POTION_OF_EXP_250,
+		EFFECT_BLESS_OF_MAZU }; // 媽祖的祝福
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
 		java.sql.Connection con = null;
@@ -121,8 +126,22 @@ public class CharBuffTable {
 			while (rs.next()) {
 				int skillid = rs.getInt("skill_id");
 				int remaining_time = rs.getInt("remaining_time");
-				if (skillid == STATUS_RIBRAVE) { // 生命之樹果實
-					pc.setSkillEffect(skillid, remaining_time * 1000);
+				switch (skillid) {
+					case STATUS_RIBRAVE: // 生命之樹果實
+					case EFFECT_POTION_OF_EXP_150: // 神力藥水
+					case EFFECT_POTION_OF_EXP_175:
+					case EFFECT_POTION_OF_EXP_200:
+					case EFFECT_POTION_OF_EXP_225:
+					case EFFECT_POTION_OF_EXP_250:
+						remaining_time = remaining_time / 4;
+						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
+						break;
+					case EFFECT_BLESS_OF_MAZU: // 媽祖的祝福
+						remaining_time = remaining_time / 16;
+						Effect.useEffect(pc, EFFECT_BLESS_OF_MAZU, remaining_time * 16);
+						break;
+					default:
+						break;
 				}
 			}
 		} catch (SQLException e) {

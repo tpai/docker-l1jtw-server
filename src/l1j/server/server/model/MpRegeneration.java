@@ -15,6 +15,7 @@
 package l1j.server.server.model;
 
 import static l1j.server.server.model.skill.L1SkillId.ADDITIONAL_FIRE;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
 import static l1j.server.server.model.skill.L1SkillId.CONCENTRATION;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_1_2_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_1_2_S;
@@ -94,6 +95,9 @@ public class MpRegeneration extends TimerTask {
 			baseMpr += 5;
 		}
 		if (_pc.hasSkillEffect(CONCENTRATION)) { // コンセントレーション中
+			baseMpr += 2;
+		}
+		if (_pc.hasSkillEffect(EFFECT_BLESS_OF_MAZU)) { // 媽祖的祝福
 			baseMpr += 2;
 		}
 		if (L1HouseLocation.isInHouse(_pc.getX(), _pc.getY(), _pc.getMapId())) {
