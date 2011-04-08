@@ -53,18 +53,34 @@ public class IpTable {
 			pstm.setString(1, ip);
 			pstm.execute();
 			_banip.add(ip);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 	}
 
 	public boolean isBannedIp(String s) {
-		return _banip.contains(s);
+		for (String BanIpAddress : _banip) {//被封鎖的IP
+			// 判斷如果使用*結尾
+			if (BanIpAddress.endsWith("*")) {
+				// 取回第一次出現*的index
+				int fStarindex = BanIpAddress.indexOf("*");
+				// 取得0~fStar長度
+				String reip = BanIpAddress.substring(0, fStarindex);
+				// 抓得Banip表單內ip在*號前的子字串 xxx.xxx||xxx.xxx.xxx
+				String newaddress = s.substring(0, fStarindex);
+				if (newaddress.equalsIgnoreCase(reip)) {
+					return true;
+				}
+			} else {
+				if (s.equalsIgnoreCase(BanIpAddress)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	public void getIpTable() {
@@ -84,11 +100,9 @@ public class IpTable {
 
 			isInitialized = true;
 
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -107,11 +121,9 @@ public class IpTable {
 			pstm.setString(1, ip);
 			pstm.execute();
 			ret = _banip.remove(ip);
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
