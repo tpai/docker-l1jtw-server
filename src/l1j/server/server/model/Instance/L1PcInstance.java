@@ -2369,6 +2369,16 @@ public class L1PcInstance extends L1Character {
 		_contribution = i;
 	}
 
+	private int _pay; // 村莊福利金 此欄位由 HomeTownTimeController 處理 update
+
+	public int getPay() {
+		return _pay;
+	}
+
+	public void setPay(int i) {
+		_pay = i;
+	}
+
 	// 地獄に滞在する時間（秒）
 	private int _hellTime;
 
@@ -2557,12 +2567,12 @@ public class L1PcInstance extends L1Character {
 					sendPackets(new S_ServerMessage(403, l1item.getName()));
 				}
 				else {
-					sendPackets(new S_SystemMessage("復活のポーションの入手に失敗しました。"));
+					sendPackets(new S_SystemMessage("返生藥水取得失敗。"));
 				}
 			}
 			catch (Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-				sendPackets(new S_SystemMessage("復活のポーションの入手に失敗しました。"));
+				sendPackets(new S_SystemMessage("返生藥水取得失敗。"));
 			}
 		}
 

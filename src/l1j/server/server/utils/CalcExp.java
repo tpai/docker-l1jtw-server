@@ -104,10 +104,10 @@ public class CalcExp {
 
 		if ((l1object != null) && !(npc instanceof L1PetInstance) && !(npc instanceof L1SummonInstance)) {
 			// int exp = npc.get_exp();
-			if (!L1World.getInstance().isProcessingContributionTotal() && (l1pcinstance.getHomeTownId() > 0)) {
+			/*if (!L1World.getInstance().isProcessingContributionTotal() && (l1pcinstance.getHomeTownId() > 0)) {
 				int contribution = npc.getLevel() / 10;
 				l1pcinstance.addContribution(contribution);
-			}
+			}*/ // 取消由打怪獲得村莊貢獻度，改由製作村莊福利品獲得貢獻度 for 3.3C
 			int lawful = npc.getLawful();
 
 			if (l1pcinstance.isInParty()) { // パーティー中

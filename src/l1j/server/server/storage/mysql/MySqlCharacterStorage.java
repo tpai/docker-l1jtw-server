@@ -137,6 +137,7 @@ public class MySqlCharacterStorage implements CharacterStorage {
 			pc.setOnlineStatus(rs.getInt("OnlineStatus"));
 			pc.setHomeTownId(rs.getInt("HomeTownID"));
 			pc.setContribution(rs.getInt("Contribution"));
+			pc.setPay(rs.getInt("Pay")); // 村莊福利金 此欄位由 HomeTownTimeController 處理 update
 			pc.setHellTime(rs.getInt("HellTime"));
 			pc.setBanned(rs.getBoolean("Banned"));
 			pc.setKarma(rs.getInt("Karma"));

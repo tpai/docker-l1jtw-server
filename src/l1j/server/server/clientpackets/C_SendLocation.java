@@ -18,6 +18,7 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SendLocation;
+import l1j.server.server.serverpackets.S_ServerMessage;
 
 public class C_SendLocation extends ClientBasePacket {
 
@@ -50,6 +51,7 @@ public class C_SendLocation extends ClientBasePacket {
 			target.sendPackets(new S_SendLocation(type, sender, mapId, x, y,
 					msgId));
 			// 将来的にtypeを使う可能性があるので送る
+			pc.sendPackets(new S_ServerMessage(1783, name));
 		}
 	}
 

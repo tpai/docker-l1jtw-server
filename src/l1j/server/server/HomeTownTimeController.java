@@ -68,7 +68,7 @@ public class HomeTownTimeController {
 
 	private void fixedProc(L1GameTime time) {
 		Calendar cal = time.getCalendar();
-		int day = cal.get(Calendar.DAY_OF_MONTH);
+		int day = cal.get(Calendar.DAY_OF_MONTH);//Calendar.DAY_OF_WEEK 取得週幾之值
 
 		if (day == 25) {
 			monthlyProc();

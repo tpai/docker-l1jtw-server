@@ -33,6 +33,7 @@ import java.util.logging.Logger;
 
 import l1j.server.Config;
 import l1j.server.server.ClientThread;
+import l1j.server.server.HomeTownTimeController;
 import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.DoorSpawnTable;
@@ -151,6 +152,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		int questid = 0;
 		int questvalue = 0;
+		int contribution = 0;
 
 		L1PcInstance pc = client.getActiveChar();
 		L1PcInstance target;
@@ -312,16 +314,58 @@ public class C_NPCAction extends ClientBasePacket {
 				pc.getQuest().set_end(L1Quest.QUEST_OILSKINMANT);
 				htmlid = ""; // ウィンドウを消す
 			}
-			// タウンマスター：報酬をもらう
+			// HomeTown 村莊管理人 支付福利金
 			else if ((npcId == 70528) || (npcId == 70546) || (npcId == 70567)
 					|| (npcId == 70594) || (npcId == 70654) || (npcId == 70748)
 					|| (npcId == 70774) || (npcId == 70799) || (npcId == 70815)
 					|| (npcId == 70860)) {
 
+				int townId = pc.getHomeTownId();
+				int pay = pc.getPay();
+				int cb = pc.getContribution(); // 貢獻度
+				htmlid = "";
+				if (pay < 1) {
+					pc.sendPackets(new S_ServerMessage(767));//沒有村莊支援費，請在下個月再來。
+				} else if (pay > 0 && cb < 500) {
+					pc.sendPackets(new S_ServerMessage(766));//貢獻度不足而無法得到補償金
+				} else if (townId > 0) {
+					double payBonus = 1.0; // cb > 499 && cb < 1000
+					boolean isLeader = TownTable.getInstance().isLeader(pc, townId); // 村長
+					L1ItemInstance item = pc.getInventory().findItemId(L1ItemId.ADENA);
+					if (cb > 999 && cb < 1500) {
+						payBonus = 1.5;
+					} else if (cb > 1499 && cb < 2000) {
+						payBonus = 2.0;
+					} else if (cb > 1999 && cb < 2500) {
+						payBonus = 2.5;
+					} else if (cb > 2499 && cb < 3000) {
+						payBonus = 3.0;
+					} else if (cb > 2999) {
+						payBonus = 4.0;
+					}
+					if (isLeader) {
+						payBonus++;
+					}
+					if (item != null && (item.getCount() + pay * payBonus > 2000000000)) {
+						pc.sendPackets(new S_ServerMessage(166, "所持有的金幣超過2,000,000,000。"));
+						htmlid = "";
+					} else if (item != null && (item.getCount() + pay * payBonus < 2000000001)) {
+						pay = (int) (HomeTownTimeController.getPay(pc.getId()) * payBonus);
+						pc.getInventory().storeItem(L1ItemId.ADENA, pay);
+						pc.sendPackets(new S_ServerMessage(761, "" + pay));
+						pc.setPay(0);
+					}
+				}
+			}
+		} else if (s.equalsIgnoreCase("townscore")) {//確認目前貢獻度
+			L1NpcInstance npc = (L1NpcInstance) obj;
+			int npcId = npc.getNpcTemplate().get_npcId();
+			if (npcId == 70528 || npcId == 70546 || npcId == 70567
+					|| npcId == 70594 || npcId == 70654 || npcId == 70748
+					|| npcId == 70774 || npcId == 70799 || npcId == 70815
+					|| npcId == 70860) {
 				if (pc.getHomeTownId() > 0) {
-
-				} else {
-
+					pc.sendPackets(new S_ServerMessage(1569, String.valueOf(pc.getContribution())));
 				}
 			}
 		} else if (s.equalsIgnoreCase("fix")) { // 武器的修理
@@ -1507,7 +1551,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 		}
-		// タウンアドバイザー
+		// HomeTown 各村莊 副村長 (取消副村長 for 3.3C)
 		else if ((((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70534)
 				|| (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70556)
 				|| (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70572)
@@ -4186,52 +4230,59 @@ public class C_NPCAction extends ClientBasePacket {
 			if (pc.getLevel() > 9 && townid > 0 && townid < 11) {
 				switch (s1) {
 					case '0':
-						createitem = new int[] { 49305 }; // 製作 福利勇敢藥水
+						createitem = new int[] { 49305 }; // 製作 福利勇敢藥水 addContribution + 2 
 						createcount = new int[] { 1 };
 						materials = new int[] { 40308, 40014 };
 						counts = new int[] { 1000, 3 };
+						contribution = 2;
 						htmlid = "";
 						break;
 					case '1':
-						createitem = new int[] { 49304 }; // 製作 福利森林藥水
+						createitem = new int[] { 49304 }; // 製作 福利森林藥水 addContribution + 4
 						createcount = new int[] { 1 };
 						materials = new int[] { 40308, 40068 };
 						counts = new int[] { 1000, 3 };
+						contribution = 4;
 						htmlid = "";
 						break;
 					case '2':
-						createitem = new int[] { 49307 }; // 製作 福利慎重藥水
+						createitem = new int[] { 49307 }; // 製作 福利慎重藥水 addContribution + 2
 						createcount = new int[] { 1 };
 						materials = new int[] { 40308, 40016 };
 						counts = new int[] { 500, 3 };
+						contribution = 2;
 						htmlid = "";
 						break;
 					case '3':
-						createitem = new int[] { 49306 }; // 製作 福利藍色藥水
+						createitem = new int[] { 49306 }; // 製作 福利藍色藥水 addContribution + 2
 						createcount = new int[] { 1 };
 						materials = new int[] { 40308, 40015 };
 						counts = new int[] { 1000, 3 };
+						contribution = 2;
 						htmlid = "";
 						break;
 					case '4':
-						createitem = new int[] { 49302 }; // 製作 福利加速藥水
+						createitem = new int[] { 49302 }; // 製作 福利加速藥水 addContribution + 1
 						createcount = new int[] { 1 };
 						materials = new int[] { 40308, 40013 };
 						counts = new int[] { 500, 3 };
+						contribution = 1;
 						htmlid = "";
 						break;
 					case '5':
-						createitem = new int[] { 49303 }; // 製作 福利呼吸藥水
+						createitem = new int[] { 49303 }; // 製作 福利呼吸藥水 addContribution + 1
 						createcount = new int[] { 1 };
 						materials = new int[] { 40308, 40032 };
 						counts = new int[] { 500, 3 };
+						contribution = 1;
 						htmlid = "";
 						break;
 					case '6':
-						createitem = new int[] { 49308 }; // 製作 福利變形藥水
+						createitem = new int[] { 49308 }; // 製作 福利變形藥水 addContribution + 3
 						createcount = new int[] { 1 };
 						materials = new int[] { 40308, 40088 };
 						counts = new int[] { 1000, 3 };
+						contribution = 3;
 						htmlid = "";
 						break;
 					case 'A': case 'a':
@@ -4402,6 +4453,9 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				if (questid > 0) {
 					pc.getQuest().set_step(questid, questvalue);
+				}
+				if (contribution > 0) {
+					pc.addContribution(contribution);
 				}
 			} else { // 精製失敗
 				if (failure_htmlid != null) { // html指定がある場合は表示
