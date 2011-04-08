@@ -1170,4 +1170,74 @@
 			</Fail>
 		</MakeItem>
 	</Action>
+	<Action Name="b" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21082"/>       <!--冰之女王的耳環 Lv.1 * 1-->
+			<Material Amount="1" ItemId="21081" />  <!--冰之女王的耳環 Lv.0 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="c" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21083"/>       <!--冰之女王的耳環 Lv.2 * 1-->
+			<Material Amount="1" ItemId="21082" />  <!--冰之女王的耳環 Lv.1 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="d" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21084"/>       <!--冰之女王的耳環 Lv.3 * 1-->
+			<Material Amount="1" ItemId="21083" />  <!--冰之女王的耳環 Lv.2 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="e" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21085"/>       <!--冰之女王的耳環 Lv.4 * 1-->
+			<Material Amount="1" ItemId="21084" />  <!--冰之女王的耳環 Lv.3 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="f" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21086"/>       <!--冰之女王的耳環 Lv.5 * 1-->
+			<Material Amount="1" ItemId="21085" />  <!--冰之女王的耳環 Lv.4 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="g" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21087"/>       <!--冰之女王的耳環 Lv.6 * 1-->
+			<Material Amount="1" ItemId="21086" />  <!--冰之女王的耳環 Lv.5 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="h" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21088"/>       <!--冰之女王的耳環 Lv.7 * 1-->
+			<Material Amount="1" ItemId="21087" />  <!--冰之女王的耳環 Lv.6 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="i" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21089"/>       <!--冰之女王的耳環 Lv.8 * 1-->
+			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="j" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21090"/>       <!--冰之女王的耳環 Lv.8 * 1-->
+			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
+	<Action Name="k" NpcId="81261">  <!--寶石加工師-->
+		<MakeItem>
+			<Item Amount="1" ItemId="21091"/>       <!--冰之女王的耳環 Lv.8 * 1-->
+			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7 * 1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+		</MakeItem>
+	</Action>
 </NpcActionList>

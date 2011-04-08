@@ -149,6 +149,9 @@ public class C_NPCAction extends ClientBasePacket {
 		String failure_htmlid = null;
 		String[] htmldata = null;
 
+		int questid = 0;
+		int questvalue = 0;
+
 		L1PcInstance pc = client.getActiveChar();
 		L1PcInstance target;
 		L1Object obj = L1World.getInstance().findObject(objid);
@@ -3931,11 +3934,9 @@ public class C_NPCAction extends ClientBasePacket {
 						htmlid = "";
 						break;
 					case 'J': case 'j':
+						createitem = new int[] { 42099 };
+						createcount =  new int[] { 1 };
 						L1Teleport.teleport(pc, 32679, 32811, (short) 2005, 5, true); //隱藏之谷地下洞穴
-						L1ItemInstance item = pc.getInventory().storeItem(42099, 1);
-						pc.sendPackets(new S_ServerMessage(143,
-								((L1NpcInstance) obj).getNpcTemplate()
-										.get_name(), item.getItem().getName()));
 						htmlid = "";
 						break;
 					case 'K': case 'k':
@@ -4002,18 +4003,13 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81256) {//修練場管理員
 			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR);//任務編號階段
 			int level = pc.getLevel();//角色等級
+			boolean isOK = false;
 			if (s.equalsIgnoreCase("A")) {
 				if (level > 4 && quest_step == 2) {
-					final int[] item_ids = { 20028, 20126, 20173, 20206, 20232, 40029, 40030, 40098, 40099, 42099, }; //獲得裝備
-					final int[] item_amounts = { 1, 1, 1, 1, 1, 50, 5, 20, 30, 5,};
-					for (int i = 0; i < item_ids.length; i++) {
-						L1ItemInstance item = pc.getInventory().storeItem(
-								item_ids[i], item_amounts[i]);
-						pc.sendPackets(new S_ServerMessage(143,
-								((L1NpcInstance) obj).getNpcTemplate()
-										.get_name(), item.getItem().getName()));
-					}
-					pc.getQuest().set_step(L1Quest.QUEST_TUTOR, 3);
+					createitem = new int[] { 20028, 20126, 20173, 20206, 20232, 40029, 40030, 40098, 40099, 42099 }; //獲得裝備
+					createcount =  new int[] { 1, 1, 1, 1, 1, 50, 5, 20, 30, 5 };
+					questid = L1Quest.QUEST_TUTOR;
+					questvalue = 3;
 				}
 			}
 			htmlid = "";
@@ -4080,28 +4076,26 @@ public class C_NPCAction extends ClientBasePacket {
 						break;
 					case 'K': case 'k':
 						if (level > 34 && quest_step2 < 10) {
-							final int[] item_ids = { 20282, 21139, }; //補充象牙塔飾品 
-							final int[] item_amounts = { 1, 1,};
+							createitem = new int[] { 20282, 21139 }; //補充象牙塔飾品 
+							createcount = new int[] { 0, 0 };
 							boolean isOK = false;
-							for (int i = 0; i < item_ids.length; i++) {
-								if (!pc.getInventory().checkItem(item_ids[i], 1)) { // check
-									L1ItemInstance item = pc.getInventory().storeItem(
-											item_ids[i], item_amounts[i]);
-									pc.sendPackets(new S_ServerMessage(143,
-											((L1NpcInstance) obj).getNpcTemplate()
-													.get_name(), item.getItem().getName()));
+							for (int i = 0; i < createitem.length; i++) {
+								if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
+									createcount[i] = 1;
 									isOK = true;
 								}
 							}
 							if (isOK) {
 								quest_step2++;
 								if (quest_step2 >= 9) {
-									pc.getQuest().set_step(L1Quest.QUEST_ARMOR2, 255);
+									questid = L1Quest.QUEST_ARMOR2;
+									questvalue = 255;
 								} else {
-									pc.getQuest().set_step(L1Quest.QUEST_ARMOR2, quest_step2);
+									questid = L1Quest.QUEST_ARMOR2;
+									questvalue = quest_step2;
 								}
-								pc.sendPackets(new S_SystemMessage("還可以補充 " + (9 - quest_step2) + "次。"));
-								htmlid = "lowlv43";
+								pc.sendPackets(new S_SystemMessage("還可以補充 " + (10 - quest_step2) + "次。"));
+								success_htmlid = "lowlv43";
 							} else {
 								htmlid = "lowlv45";
 							}
@@ -4130,62 +4124,190 @@ public class C_NPCAction extends ClientBasePacket {
 						}
 						break;
 					case '2':
-						if (quest_step1 < 14) {
-							final int[] item_ids = { 20028, 20126, 20173, 20206, 20232, 21138, }; //補充象牙塔裝備 (可補充 10 次)
-							final int[] item_amounts = { 1, 1, 1, 1, 1, 1,};
+						if (quest_step1 < 10) {
+							createitem = new int[] { 20028, 20126, 20173, 20206, 20232, 21138, 49310 }; //補充象牙塔裝備 (可補充 10 次)
+							createcount = new int[] { 0, 0, 0, 0, 0, 0, 1000 };
 							boolean isOK = false;
-							for (int i = 0; i < item_ids.length; i++) {
-								if (!pc.getInventory().checkItem(item_ids[i], 1)) { // check
-									L1ItemInstance item = pc.getInventory().storeItem(
-											item_ids[i], item_amounts[i]);
-									pc.sendPackets(new S_ServerMessage(143,
-											((L1NpcInstance) obj).getNpcTemplate()
-													.get_name(), item.getItem().getName()));
+							for (int i = 0; i < createitem.length - 1; i++) {
+								if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
+									createcount[i] = 1;
 									isOK = true;
 								}
 							}
 							if (isOK) {
 								quest_step1++;
-								if (quest_step2 >= 13) {
-									pc.getQuest().set_step(L1Quest.QUEST_ARMOR1, 255);
+								if (quest_step2 >= 9) {
+									questid = L1Quest.QUEST_ARMOR1;
+									questvalue = 255;
 								} else {
-									pc.getQuest().set_step(L1Quest.QUEST_ARMOR1, quest_step1);
+									questid = L1Quest.QUEST_ARMOR1;
+									questvalue = quest_step1;
 								}
-								pc.sendPackets(new S_SystemMessage("還可以補充 " + (13 - quest_step1) + "次。"));
-								htmlid = "lowlv16";
+								pc.sendPackets(new S_SystemMessage("還可以補充 " + (10 - quest_step1) + "次。"));
+								success_htmlid = "lowlv16";
 							} else {
 								htmlid = "lowlv17";
 							}
-							L1ItemInstance item = pc.getInventory().storeItem(49310, 1000);
-							pc.sendPackets(new S_ServerMessage(143,
-									((L1NpcInstance) obj).getNpcTemplate()
-											.get_name(), item.getItem().getName()));
-						} else if (quest_step1 > 13) {
+						} else if (quest_step1 > 9) {
 							htmlid = "lowlv17";
 						}
 						break;
 					case '6':
 						if (quest_step3 < 10 && !pc.getInventory().checkItem(49313, 1)) {
-							if (pc.getInventory().checkItem(40308, 2000)) {
-								L1ItemInstance item = pc.getInventory().storeItem(49313, 2);
-								pc.sendPackets(new S_ServerMessage(143,
-										((L1NpcInstance) obj).getNpcTemplate()
-												.get_name(), item.getItem().getName()));
-								quest_step3++;
-								if (quest_step3 >= 9) {
-									pc.getQuest().set_step(L1Quest.QUEST_ARMOR3, 255);
-								} else {
-									pc.getQuest().set_step(L1Quest.QUEST_ARMOR3, quest_step3);
-								}
-								pc.sendPackets(new S_SystemMessage("還可以購買 " + (9 - quest_step3) + "次。"));
-								htmlid = "lowlv22";
-							} else if (!pc.getInventory().checkItem(40308, 2000)) {
-								htmlid = "lowlv20";
+							createitem = new int[] { 49313 }; // 購買象牙塔魔法袋 (可購買 10 次)
+							createcount = new int[] { 2 };
+							materials = new int[] { 40308 };
+							counts = new int[] { 2000 };
+							quest_step3++;
+							if (quest_step3 >= 9) {
+								questid = L1Quest.QUEST_ARMOR3;
+								questvalue = 255;
+							} else {
+								questid = L1Quest.QUEST_ARMOR3;
+								questvalue = quest_step3;
 							}
+							pc.sendPackets(new S_SystemMessage("還可以購買 " + (10 - quest_step3) + "次。"));
+							success_htmlid = "lowlv22";
+							failure_htmlid = "lowlv20";
 						} else if (pc.getInventory().checkItem(49313, 1)) {
 							htmlid = "lowlv23";
 						} else {
 							htmlid = "lowlvno";
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81260) {//村莊福利員
+			int townid = pc.getHomeTownId();//角色所屬村莊
+			char s1 = s.charAt(0);
+			if (pc.getLevel() > 9 && townid > 0 && townid < 11) {
+				switch (s1) {
+					case '0':
+						createitem = new int[] { 49305 }; // 製作 福利勇敢藥水
+						createcount = new int[] { 1 };
+						materials = new int[] { 40308, 40014 };
+						counts = new int[] { 1000, 3 };
+						htmlid = "";
+						break;
+					case '1':
+						createitem = new int[] { 49304 }; // 製作 福利森林藥水
+						createcount = new int[] { 1 };
+						materials = new int[] { 40308, 40068 };
+						counts = new int[] { 1000, 3 };
+						htmlid = "";
+						break;
+					case '2':
+						createitem = new int[] { 49307 }; // 製作 福利慎重藥水
+						createcount = new int[] { 1 };
+						materials = new int[] { 40308, 40016 };
+						counts = new int[] { 500, 3 };
+						htmlid = "";
+						break;
+					case '3':
+						createitem = new int[] { 49306 }; // 製作 福利藍色藥水
+						createcount = new int[] { 1 };
+						materials = new int[] { 40308, 40015 };
+						counts = new int[] { 1000, 3 };
+						htmlid = "";
+						break;
+					case '4':
+						createitem = new int[] { 49302 }; // 製作 福利加速藥水
+						createcount = new int[] { 1 };
+						materials = new int[] { 40308, 40013 };
+						counts = new int[] { 500, 3 };
+						htmlid = "";
+						break;
+					case '5':
+						createitem = new int[] { 49303 }; // 製作 福利呼吸藥水
+						createcount = new int[] { 1 };
+						materials = new int[] { 40308, 40032 };
+						counts = new int[] { 500, 3 };
+						htmlid = "";
+						break;
+					case '6':
+						createitem = new int[] { 49308 }; // 製作 福利變形藥水
+						createcount = new int[] { 1 };
+						materials = new int[] { 40308, 40088 };
+						counts = new int[] { 1000, 3 };
+						htmlid = "";
+						break;
+					case 'A': case 'a':
+						switch (townid) {
+							case 1:
+								createitem = new int[] { 49292 }; // 購買 福利傳送卷軸：說話之島
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 2:
+								createitem = new int[] { 49297 }; // 購買 福利傳送卷軸：銀騎士
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 3:
+								createitem = new int[] { 49293 }; // 購買 福利傳送卷軸：古魯丁
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 4:
+								createitem = new int[] { 49296 }; // 購買 福利傳送卷軸：燃柳
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 5:
+								createitem = new int[] { 49295 }; // 購買 福利傳送卷軸：風木
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 6:
+								createitem = new int[] { 49294 }; // 購買 福利傳送卷軸：肯特
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 7:
+								createitem = new int[] { 49298 }; // 購買 福利傳送卷軸：奇岩
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 8:
+								createitem = new int[] { 49299 }; // 購買 福利傳送卷軸：海音
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 9:
+								createitem = new int[] { 49301 }; // 購買 福利傳送卷軸：威頓
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							case 10:
+								createitem = new int[] { 49300 }; // 購買 福利傳送卷軸：歐瑞
+								createcount = new int[] { 1 };
+								materials = new int[] { 40308 };
+								counts = new int[] { 400 };
+								htmlid = "";
+								break;
+							default:
+								break;
 						}
 						break;
 					default:
@@ -4201,13 +4323,15 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		if (createitem != null) { // アイテム精製
 			boolean isCreate = true;
-			for (int j = 0; j < materials.length; j++) {
-				if (!pc.getInventory().checkItemNotEquipped(materials[j],
-						counts[j])) {
-					L1Item temp = ItemTable.getInstance().getTemplate(
-							materials[j]);
-					pc.sendPackets(new S_ServerMessage(337, temp.getName())); // \f1%0が不足しています。
-					isCreate = false;
+			if (materials != null) {
+				for (int j = 0; j < materials.length; j++) {
+					if (!pc.getInventory().checkItemNotEquipped(materials[j],
+							counts[j])) {
+						L1Item temp = ItemTable.getInstance().getTemplate(
+								materials[j]);
+						pc.sendPackets(new S_ServerMessage(337, temp.getName())); // \f1%0が不足しています。
+						isCreate = false;
+					}
 				}
 			}
 
@@ -4216,16 +4340,20 @@ public class C_NPCAction extends ClientBasePacket {
 				int create_count = 0; // アイテムの個数（纏まる物は1個）
 				int create_weight = 0;
 				for (int k = 0; k < createitem.length; k++) {
-					L1Item temp = ItemTable.getInstance().getTemplate(
+					if (createitem[k] > 0 && createcount[k] > 0) {
+						L1Item temp = ItemTable.getInstance().getTemplate(
 							createitem[k]);
-					if (temp.isStackable()) {
-						if (!pc.getInventory().checkItem(createitem[k])) {
-							create_count += 1;
+						if (temp != null) {
+							if (temp.isStackable()) {
+								if (!pc.getInventory().checkItem(createitem[k])) {
+									create_count += 1;
+								}
+							} else {
+								create_count += createcount[k];
+							}
+							create_weight += temp.getWeight() * createcount[k] / 1000;
 						}
-					} else {
-						create_count += createcount[k];
 					}
-					create_weight += temp.getWeight() * createcount[k] / 1000;
 				}
 				// 容量確認
 				if (pc.getInventory().getSize() + create_count > 180) {
@@ -4239,34 +4367,41 @@ public class C_NPCAction extends ClientBasePacket {
 					return;
 				}
 
-				for (int j = 0; j < materials.length; j++) {
-					// 材料消費
-					pc.getInventory().consumeItem(materials[j], counts[j]);
+				if (materials != null) {
+					for (int j = 0; j < materials.length; j++) {
+						// 材料消費
+						pc.getInventory().consumeItem(materials[j], counts[j]);
+					}
 				}
 				for (int k = 0; k < createitem.length; k++) {
-					L1ItemInstance item = pc.getInventory().storeItem(
-							createitem[k], createcount[k]);
-					if (item != null) {
-						String itemName = ItemTable.getInstance()
-								.getTemplate(createitem[k]).getName();
-						String createrName = "";
-						if (obj instanceof L1NpcInstance) {
-							createrName = ((L1NpcInstance) obj)
-									.getNpcTemplate().get_name();
-						}
-						if (createcount[k] > 1) {
-							pc.sendPackets(new S_ServerMessage(143,
-									createrName, itemName + " ("
-											+ createcount[k] + ")")); // \f1%0が%1をくれました。
-						} else {
-							pc.sendPackets(new S_ServerMessage(143,
-									createrName, itemName)); // \f1%0が%1をくれました。
+					if (createitem[k] > 0 && createcount[k] > 0) {
+						L1ItemInstance item = pc.getInventory().storeItem(
+								createitem[k], createcount[k]);
+						if (item != null) {
+							String itemName = ItemTable.getInstance()
+									.getTemplate(createitem[k]).getName();
+							String createrName = "";
+							if (obj instanceof L1NpcInstance) {
+								createrName = ((L1NpcInstance) obj)
+										.getNpcTemplate().get_name();
+							}
+							if (createcount[k] > 1) {
+								pc.sendPackets(new S_ServerMessage(143,
+										createrName, itemName + " ("
+												+ createcount[k] + ")")); // \f1%0が%1をくれました。
+							} else {
+								pc.sendPackets(new S_ServerMessage(143,
+										createrName, itemName)); // \f1%0が%1をくれました。
+							}
 						}
 					}
 				}
 				if (success_htmlid != null) { // html指定がある場合は表示
 					pc.sendPackets(new S_NPCTalkReturn(objid, success_htmlid,
 							htmldata));
+				}
+				if (questid > 0) {
+					pc.getQuest().set_step(questid, questvalue);
 				}
 			} else { // 精製失敗
 				if (failure_htmlid != null) { // html指定がある場合は表示

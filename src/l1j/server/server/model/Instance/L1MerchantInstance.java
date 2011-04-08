@@ -3543,6 +3543,30 @@ public class L1MerchantInstance extends L1NpcInstance {
 				} else {
 					htmlid = "lowlvS2";
 				}
+			} else if (npcid == 81260) { // 村莊福利員
+				int townid = player.getHomeTownId();//角色所屬村莊
+				if (player.getLevel() > 9 && townid > 0 && townid < 11) {
+					htmlid = "artisan1";
+				}
+			} else if (npcid == 81261) { //寶石加工師^大衛
+				if (player.getInventory().checkItem(21082, 1)) {
+						htmlid = "gemout2";
+				} else if (player.getInventory().checkItem(21083, 1)) {
+						htmlid = "gemout3";
+				} else if (player.getInventory().checkItem(21084, 1)) {
+						htmlid = "gemout4";
+				} else if (player.getInventory().checkItem(21085, 1)) {
+						htmlid = "gemout5";
+				} else if (player.getInventory().checkItem(21086, 1)) {
+						htmlid = "gemout6";
+				} else if (player.getInventory().checkItem(21087, 1)) {
+						htmlid = "gemout7";
+				} else if (player.getInventory().checkItem(21088, 1)) {
+						htmlid = "gemout8";
+				} else if (player.getInventory().checkItem(49031, 1) 
+					&& !player.getInventory().checkItem(21081, 1)) {
+						htmlid = "gemout17";
+				}
 			}
 
 			// html表示パケット送信

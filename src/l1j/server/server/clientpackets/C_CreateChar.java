@@ -172,10 +172,10 @@ public class C_CreateChar extends ClientBasePacket {
 
 	//台版 3.3C
 	private static final int[] LOCX_LIST = new int[]
-	{ 32688, 32688, 32688, 32688, 32688, 32688, 32688 };
+	{ 32691, 32691, 32691, 32691, 32691, 32691, 32691 };
 
 	private static final int[] LOCY_LIST = new int[]
-	{ 32873, 32873, 32873, 32873, 32873, 32873, 32873 };
+	{ 32864, 32864, 32864, 32864, 32864, 32864, 32864 };
 
 	private static final short[] MAPID_LIST = new short[]
 	{ 2005, 2005, 2005, 2005, 2005, 2005, 2005 };

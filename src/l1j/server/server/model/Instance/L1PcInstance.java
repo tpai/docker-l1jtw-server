@@ -3164,7 +3164,7 @@ public class L1PcInstance extends L1Character {
 		setLevel(ExpTable.getLevelByExp(_exp));
 
 		// 根據等級判斷地圖限制
-		if ((getLevel() > 13) && (getMapId() == 2005)) {
+		if ((getLevel() > 13) && (getMapId() == 2005 || getMapId() == 86)) {
 			L1Teleport.teleport(this, 33084, 33391, (short) 4, 5, true);// 銀騎士村
 			getQuest().set_step(L1Quest.QUEST_TUTOR, 255);
 		}
