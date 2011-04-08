@@ -1,5 +1,17 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
+	<!-- 隱藏之谷-卡連傳送沉默洞穴 -->
+	<Action Name="teleport dark island-in" NpcId="71013">
+		<Teleport X="32857" Y="32896" Map="304" Heading="5" Price="0"/>
+	</Action>
+	<!-- 隱藏之谷-幻術士 艾希雅傳送希培利亞 -->
+	<Action Name="teleport illusionist island-in" NpcId="81258">
+		<Teleport X="32792" Y="32863" Map="1000" Heading="5" Price="0"/>
+	</Action>
+	<!-- 隱藏之谷-龍騎士 費艾娜傳送貝希摩斯 -->
+	<Action Name="teleport dragonknight island-in" NpcId="81259">
+		<Teleport X="32811" Y="32873" Map="1001" Heading="5" Price="0"/>
+	</Action>
 	<!-- 隱藏之谷地監-史蓋傳送隱藏之谷 -->
 	<Action Name="teleport dungeon-out" NpcId="50002">
 		<Teleport X="32682" Y="32874" Map="2005" Heading="5" Price="0"/>

@@ -148,6 +148,32 @@ public class L1TeleporterInstance extends L1NpcInstance {
 					htmlid = "barnia1";
 				}
 			}
+			else if (npcid == 81258) {// 幻術士 艾希雅
+				if (player.isIllusionist()) {
+					htmlid = "asha1";
+				} else {
+					htmlid = "asha2";
+				}
+			}
+			else if (npcid == 81259) {// 龍騎士 費艾娜
+				if (player.isDragonKnight()) {
+					htmlid = "feaena1";
+				} else {
+					htmlid = "feaena2";
+				}
+			}
+			else if (npcid == 71013) { // 卡連
+				if (player.isDarkelf()) {
+					if (player.getLevel() < 14) {
+						htmlid = "karen1";
+					} else {
+						htmlid = "karen4";
+					}
+				} else {
+					htmlid = "karen2";
+				}
+			}
+
 
 			// html表示
 			if (htmlid != null) { // htmlidが指定されている場合

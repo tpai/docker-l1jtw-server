@@ -3936,7 +3936,7 @@ public class C_NPCAction extends ClientBasePacket {
 					case 'J': case 'j':
 						createitem = new int[] { 42099 };
 						createcount =  new int[] { 1 };
-						L1Teleport.teleport(pc, 32679, 32811, (short) 2005, 5, true); //隱藏之谷地下洞穴
+						L1Teleport.teleport(pc, 32676, 32813, (short) 2005, 5, true); //隱藏之谷地下洞穴
 						htmlid = "";
 						break;
 					case 'K': case 'k':

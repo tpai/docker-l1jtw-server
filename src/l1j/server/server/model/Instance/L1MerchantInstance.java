@@ -1568,19 +1568,6 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "jpe0061";
 				}
 			}
-			else if (npcid == 71013) { // カレン
-				if (player.isDarkelf()) {
-					if (player.getLevel() <= 3) {
-						htmlid = "karen1";
-					}
-					else if ((player.getLevel() > 3) && (player.getLevel() < 50)) {
-						htmlid = "karen3";
-					}
-					else if (player.getLevel() >= 50) {
-						htmlid = "karen4";
-					}
-				}
-			}
 			else if (npcid == 71014) { // 村の自警団(右)
 				if (player.getLevel() < 13) {
 					htmlid = "en0241";
