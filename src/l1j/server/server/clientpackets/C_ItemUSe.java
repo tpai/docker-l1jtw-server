@@ -898,9 +898,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == L1ItemId.CHOCOLATE_CAKE) { // 巧克力蛋糕
 					Potion.ThirdSpeed(pc, l1iteminstance, 600);
 				}
-				else if ((itemId >= L1ItemId.EFFECT_POTION_OF_EXP_150) && (itemId <= L1ItemId.BLESS_OF_MAZU)) { // 150%神力藥水
+				else if ((itemId >= L1ItemId.POTION_OF_EXP_150) && (itemId <= L1ItemId.SCROLL_FOR_ENCHANTING_BATTLE)) { // 150%神力藥水
 																												// ~
-																												// 媽祖祝福平安符
+																												// 強化戰鬥卷軸
 					Effect.useEffectItem(pc, l1iteminstance);
 				}
 				else if ((itemId == 40066) || (itemId == 41413)) { // お餅、月餅

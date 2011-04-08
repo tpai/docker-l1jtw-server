@@ -832,8 +832,36 @@ class L1SkillStop {
 		else if (skillId == EFFECT_BLESS_OF_MAZU) { // 媽祖的祝福
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addHitup(-3); // 攻擊成功+3
-				pc.addDmgup(3); // 額外攻擊點數+3
+				pc.addHitup(-3);
+				pc.addDmgup(-3);
+			}
+		}
+		else if (skillId == EFFECT_STRENGTHENING_HP) { // 體力增強卷軸
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addMaxHp(-50);
+				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+				if (pc.isInParty()) { // 組隊中
+					pc.getParty().updateMiniHP(pc);
+				}
+			}
+		}
+		else if (skillId == EFFECT_STRENGTHENING_MP) { // 魔力增強卷軸
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addMaxMp(-40);
+				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+			}
+		}
+		else if (skillId == EFFECT_ENCHANTING_BATTLE) { // 強化戰鬥卷軸
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addHitup(-3);
+				pc.addDmgup(-3);
+				pc.addBowHitup(-3);
+				pc.addBowDmgup(-3);
+				pc.addSp(-3);
+				pc.sendPackets(new S_SPMR(pc));
 			}
 		}
 

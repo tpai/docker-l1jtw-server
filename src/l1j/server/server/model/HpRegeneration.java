@@ -136,6 +136,9 @@ public class HpRegeneration extends TimerTask {
 				|| _pc.hasSkillEffect(COOKING_3_6_S)) {
 			bonus += 2;
 		}
+ 		if (_pc.hasSkillEffect(EFFECT_STRENGTHENING_HP)) { // 體力增強卷軸
+ 			bonus += 4;
+ 		}
  		if (_pc.getOriginalHpr() > 0) { // オリジナルCON HPR補正
  			bonus += _pc.getOriginalHpr();
  		}

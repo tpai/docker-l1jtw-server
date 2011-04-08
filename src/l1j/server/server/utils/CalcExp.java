@@ -25,6 +25,7 @@ import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_225;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_250;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -361,6 +362,7 @@ public class CalcExp {
 		double exppenalty = ExpTable.getPenaltyRate(pc.getLevel());
 		double foodBonus = 1.0;
 		double expBonus = 1.0;
+		// 魔法料理經驗加成
 		if (pc.hasSkillEffect(COOKING_1_7_N) || pc.hasSkillEffect(COOKING_1_7_S)) {
 			foodBonus = 1.01;
 		}
@@ -370,22 +372,21 @@ public class CalcExp {
 		if (pc.hasSkillEffect(COOKING_3_7_N) || pc.hasSkillEffect(COOKING_3_7_S)) {
 			foodBonus = 1.03;
 		}
-		// 神力藥水經驗加成
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
-			foodBonus = 2.5;
+		// 戰鬥藥水、神力藥水經驗加成
+		if (pc.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
+			expBonus = 1.2;
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
+			expBonus = 2.5;
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
+			expBonus = 2.75;
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
+			expBonus = 3.0;
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
+			expBonus = 3.25;
+		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
+			expBonus = 3.5;
 		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
-			foodBonus = 2.75;
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
-			foodBonus = 3.0;
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
-			foodBonus = 3.25;
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
-			foodBonus = 3.5;
-		}
+
 		int add_exp = (int) (exp * exppenalty * Config.RATE_XP * foodBonus * expBonus);
 		pc.addExp(add_exp);
 	}

@@ -144,22 +144,34 @@ public class L1ItemId {
 
 //	其他類道具
 	/** 150%神力藥水 */
-	public static final int EFFECT_POTION_OF_EXP_150 = 47000;
+	public static final int POTION_OF_EXP_150 = 47000;
 
 	/** 175%神力藥水 */
-	public static final int EFFECT_POTION_OF_EXP_175 = 47001;
+	public static final int POTION_OF_EXP_175 = 47001;
 
 	/** 200%神力藥水 */
-	public static final int EFFECT_POTION_OF_EXP_200 = 47002;
+	public static final int POTION_OF_EXP_200 = 47002;
 
 	/** 225%神力藥水 */
-	public static final int EFFECT_POTION_OF_EXP_225 = 47003;
+	public static final int POTION_OF_EXP_225 = 47003;
 
 	/** 250%神力藥水 */
-	public static final int EFFECT_POTION_OF_EXP_250 = 47004;
+	public static final int POTION_OF_EXP_250 = 47004;
 
 	/** 媽祖祝福平安符 */
 	public static final int BLESS_OF_MAZU = 47005;
+
+	/** 戰鬥藥水 */
+	public static final int POTION_OF_BATTLE = 47006;
+
+	/** 體力增強卷軸 */
+	public static final int SCROLL_FOR_STRENGTHENING_HP = 47007;
+
+	/** 魔力增強卷軸 */
+	public static final int SCROLL_FOR_STRENGTHENING_MP = 47008;
+
+	/** 強化戰鬥卷軸 */
+	public static final int SCROLL_FOR_ENCHANTING_BATTLE = 47009;
 
 	/** 金幣 */
 	public static final int ADENA = 40308;

@@ -26,12 +26,8 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_225;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_250;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BEGIN;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_END;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
@@ -584,22 +580,18 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.sendPackets(new S_SkillIconThirdSpeed(time));
 						pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 4 * 1000);
 						break;
-					case STATUS_RIBRAVE: // 生命之樹果實
-					case EFFECT_BLESS_OF_MAZU: // 媽祖的祝福
-					case EFFECT_POTION_OF_EXP_150:
-					case EFFECT_POTION_OF_EXP_175:
-					case EFFECT_POTION_OF_EXP_200:
-					case EFFECT_POTION_OF_EXP_225:
-					case EFFECT_POTION_OF_EXP_250:
-						break;
 					default:
-						// 料理
+						// 魔法料理
 						if (((skillid >= COOKING_1_0_N) && (skillid <= COOKING_1_6_N)) || ((skillid >= COOKING_1_0_S) && (skillid <= COOKING_1_6_S))
 								|| ((skillid >= COOKING_2_0_N) && (skillid <= COOKING_2_6_N))
 								|| ((skillid >= COOKING_2_0_S) && (skillid <= COOKING_2_6_S))
 								|| ((skillid >= COOKING_3_0_N) && (skillid <= COOKING_3_6_N))
 								|| ((skillid >= COOKING_3_0_S) && (skillid <= COOKING_3_6_S))) {
 							L1Cooking.eatCooking(pc, skillid, remaining_time);
+						}
+						// 生命之樹果實、商城道具
+						else if (skillid == STATUS_RIBRAVE || (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END)) {
+							;
 						}
 						else {
 							L1SkillUse l1skilluse = new L1SkillUse();

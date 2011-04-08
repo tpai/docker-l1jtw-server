@@ -58,8 +58,9 @@ public class CharBuffTable {
 		COOKING_3_6_N, COOKING_3_6_S,
 		EFFECT_POTION_OF_EXP_150, EFFECT_POTION_OF_EXP_175, // 神力藥水
 		EFFECT_POTION_OF_EXP_200, EFFECT_POTION_OF_EXP_225,
-		EFFECT_POTION_OF_EXP_250,
-		EFFECT_BLESS_OF_MAZU }; // 媽祖的祝福
+		EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE, // 戰鬥藥水
+		EFFECT_BLESS_OF_MAZU, // 媽祖的祝福
+		EFFECT_ENCHANTING_BATTLE, EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP}; // 強化戰鬥卷軸、體力增強卷軸、魔力增強卷軸
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
 		java.sql.Connection con = null;
@@ -137,8 +138,15 @@ public class CharBuffTable {
 						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
 						break;
 					case EFFECT_BLESS_OF_MAZU: // 媽祖的祝福
+					case EFFECT_ENCHANTING_BATTLE : // 強化戰鬥卷軸
+					case EFFECT_STRENGTHENING_HP: // 體力增強卷軸
+					case EFFECT_STRENGTHENING_MP: // 魔力增強卷軸
 						remaining_time = remaining_time / 16;
-						Effect.useEffect(pc, EFFECT_BLESS_OF_MAZU, remaining_time * 16);
+						Effect.useEffect(pc, skillid, remaining_time * 16);
+						break;
+					case EFFECT_POTION_OF_BATTLE: // 戰鬥藥水
+						remaining_time = remaining_time / 16;
+						pc.setSkillEffect(skillid, remaining_time * 16 * 1000);
 						break;
 					default:
 						break;

@@ -23,6 +23,7 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_2_4_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_2_4_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_5_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_5_S;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_MP;
 import static l1j.server.server.model.skill.L1SkillId.EXOTIC_VITALIZE;
 import static l1j.server.server.model.skill.L1SkillId.MEDITATION;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
@@ -99,6 +100,9 @@ public class MpRegeneration extends TimerTask {
 		}
 		if (_pc.hasSkillEffect(EFFECT_BLESS_OF_MAZU)) { // 媽祖的祝福
 			baseMpr += 2;
+		}
+		if (_pc.hasSkillEffect(EFFECT_STRENGTHENING_MP)) { // 魔力增強卷軸
+			baseMpr += 4;
 		}
 		if (L1HouseLocation.isInHouse(_pc.getX(), _pc.getY(), _pc.getMapId())) {
 			baseMpr += 3;

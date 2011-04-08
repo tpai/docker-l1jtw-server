@@ -680,10 +680,10 @@ public class L1SkillId {
 	public static final int STATUS_CURSE_YAHEE = 1014;
 
 	// 相消無法消除的狀態
-	public static final int EFFECT_BEGIN = 4000;
-
 	/** 三段加速 */
 	public static final int EFFECT_THIRD_SPEED = 4000;
+
+	public static final int EFFECT_BEGIN = 4001;
 
 	/** 神力藥水150% */
 	public static final int EFFECT_POTION_OF_EXP_150 = 4001;
@@ -703,7 +703,19 @@ public class L1SkillId {
 	/** 媽祖的祝福 */
 	public static final int EFFECT_BLESS_OF_MAZU = 4006;
 
-	public static final int EFFECT_END = 4006;
+	/** 戰鬥藥水 */
+	public static final int EFFECT_POTION_OF_BATTLE = 4007;
+
+	/** 體力增強卷軸 */
+	public static final int EFFECT_STRENGTHENING_HP = 4008;
+
+	/** 魔力增強卷軸 */
+	public static final int EFFECT_STRENGTHENING_MP = 4009;
+
+	/** 強化戰鬥卷軸 */
+	public static final int EFFECT_ENCHANTING_BATTLE = 4010;
+
+	public static final int EFFECT_END = 4010;
 
 	/** 新手保護(遭遇的守護) **/
 	public static final int STATUS_NOVICE = 8000;
