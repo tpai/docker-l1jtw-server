@@ -435,6 +435,7 @@ public class ItemTable {
 				armor.set_regist_sustain(rs.getInt("regist_sustain"));
 				armor.set_regist_blind(rs.getInt("regist_blind"));
 				armor.setMaxUseTime(rs.getInt("max_use_time"));
+				armor.setGrade(rs.getInt("grade"));
 
 				result.put(new Integer(armor.getItemId()), armor);
 			}

@@ -1,22 +1,24 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
 Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-04-04 12:13:00
+Date: 2011-04-08 11:53:17
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
--- Table structure for character_items
+-- Table structure for `character_items`
 -- ----------------------------
+DROP TABLE IF EXISTS `character_items`;
 CREATE TABLE `character_items` (
   `id` int(11) NOT NULL DEFAULT '0',
   `item_id` int(11) DEFAULT NULL,
@@ -42,11 +44,11 @@ CREATE TABLE `character_items` (
   `addmp` int(11) DEFAULT NULL,
   `hpr` int(11) DEFAULT NULL,
   `mpr` int(11) DEFAULT NULL,
-  
+  `m_def` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `key_id` (`char_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records of character_items
 -- ----------------------------

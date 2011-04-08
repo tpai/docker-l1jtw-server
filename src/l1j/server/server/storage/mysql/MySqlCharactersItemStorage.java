@@ -81,6 +81,7 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 				item.setaddMp(rs.getInt("addmp"));
 				item.setHpr(rs.getInt("hpr"));
 				item.setMpr(rs.getInt("mpr"));
+				item.setM_Def(rs.getInt("m_def"));
 				item.getLastStatus().updateAll();
 				items.add(item);
 			}
@@ -101,7 +102,7 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("INSERT INTO character_items SET id = ?, item_id = ?, char_id = ?, item_name = ?, count = ?, is_equipped = 0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?");
+					.prepareStatement("INSERT INTO character_items SET id = ?, item_id = ?, char_id = ?, item_name = ?, count = ?, is_equipped = 0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?, m_def = ?");
 			pstm.setInt(1, item.getId());
 			pstm.setInt(2, item.getItem().getItemId());
 			pstm.setInt(3, objId);
@@ -125,6 +126,7 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 			pstm.setInt(21, item.getaddMp());
 			pstm.setInt(22, item.getHpr());
 			pstm.setInt(23, item.getMpr());
+			pstm.setInt(24, item.getM_Def());
 			pstm.execute();
 
 		} catch (SQLException e) {
@@ -324,6 +326,14 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 				"UPDATE character_items SET mpr = ? WHERE id = ?",
 				item.getMpr());
 		item.getLastStatus().updateMpr();
+	}
+
+	@Override
+	public void updateM_Def(L1ItemInstance item) throws Exception {
+		executeUpdate(item.getId(),
+				"UPDATE character_items SET m_def = ? WHERE id = ?",
+				item.getM_Def());
+		item.getLastStatus().updateM_Def();
 	}
 
 	@Override

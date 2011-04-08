@@ -79,6 +79,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 				item.setaddMp(rs.getInt("addmp"));
 				item.setHpr(rs.getInt("hpr"));
 				item.setMpr(rs.getInt("mpr"));
+				item.setM_Def(rs.getInt("m_def"));
 
 				_items.add(item);
 				L1World.getInstance().storeObject(item);
@@ -101,7 +102,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 			pstm = con
-					.prepareStatement("INSERT INTO character_elf_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?");
+					.prepareStatement("INSERT INTO character_elf_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
 			pstm.setInt(1, item.getId());
 			pstm.setString(2, _owner.getAccountName());
 			pstm.setInt(3, item.getItemId());
@@ -125,6 +126,7 @@ public class L1DwarfForElfInventory extends L1Inventory {
 			pstm.setInt(21, item.getaddMp());
 			pstm.setInt(22, item.getHpr());
 			pstm.setInt(23, item.getMpr());
+			pstm.setInt(24, item.getM_Def());
 			pstm.execute();
 		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

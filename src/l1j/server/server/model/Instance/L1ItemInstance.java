@@ -260,6 +260,10 @@ public class L1ItemInstance extends L1Object {
 				|| (getItemId() == L1ArmorId.C_CLOAK_OF_MAGIC_RESISTANCE)) { // 受咀咒的 抗魔法斗篷
 			mr += getEnchantLevel() * 2;
 		}
+		// 飾品強化效果
+		if (getM_Def() != 0) {
+			mr += getM_Def();
+		}
 		return mr;
 	}
 
@@ -331,6 +335,8 @@ public class L1ItemInstance extends L1Object {
 
 		public int addsp;
 
+		public int m_def;
+
 		public void updateAll() {
 			count = getCount();
 			itemId = getItemId();
@@ -353,6 +359,7 @@ public class L1ItemInstance extends L1Object {
 			addsp = getaddSp();
 			hpr = getHpr();
 			mpr = getMpr();
+			m_def = getM_Def();
 		}
 
 		public void updateCount() {
@@ -438,6 +445,10 @@ public class L1ItemInstance extends L1Object {
 		public void updateMpr() {
 			mpr = getMpr();
 		}
+
+		public void updateM_Def() {
+			m_def = getM_Def();
+		}
 	}
 
 	public LastStatus getLastStatus() {
@@ -512,6 +523,9 @@ public class L1ItemInstance extends L1Object {
 		}
 		if (getMpr() != _lastStatus.mpr) {
 			column += L1PcInventory.COL_MPR;
+		}
+		if (getM_Def() != _lastStatus.m_def) {
+			column += L1PcInventory.COL_M_DEF;
 		}
 
 		return column;
@@ -715,7 +729,7 @@ public class L1ItemInstance extends L1Object {
 				}
 				os.writeC(ac);
 				os.writeC(getItem().getMaterial());
-				os.writeC(-1); // 飾品級別 - 0:上等 1:中等 2:初級 3:特等
+				os.writeC(getItem().getGrade()); // 飾品級別 - 0:上等 1:中等 2:初級 3:特等
 				os.writeD(getWeight());
 			}
 			/** 強化數判斷 */
@@ -904,14 +918,14 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(6);
 			}
 			// 體力回復率
-			if (getItem().get_addhpr() != 0) {
+			if (getItem().get_addhpr() != 0 || getHpr() != 0) {
 				os.writeC(37);
-				os.writeC(getItem().get_addhpr());
+				os.writeC(getItem().get_addhpr() + getHpr());
 			}
 			// 魔力回復率
-			if (getItem().get_addmpr() != 0) {
+			if (getItem().get_addmpr() != 0 || getMpr() != 0) {
 				os.writeC(38);
-				os.writeC(getItem().get_addmpr());
+				os.writeC(getItem().get_addmpr() + getMpr());
 			}
 			// 幸運
 			// if (getItem.getLuck() != 0) {
@@ -1039,6 +1053,16 @@ public class L1ItemInstance extends L1Object {
 
 	public void setWindMr(int i) {
 		_WindMr = i;
+	}
+
+	private int _M_Def = 0;
+
+	public int getM_Def() {
+		return _M_Def;
+	}
+
+	public void setM_Def(int i) {
+		_M_Def = i;
 	}
 
 	private int _Mpr = 0;

@@ -80,6 +80,8 @@ public abstract class CharactersItemStorage {
 
 	public abstract void updateaddSp(L1ItemInstance item) throws Exception;
 
+	public abstract void updateM_Def(L1ItemInstance item) throws Exception;
+
 	public static CharactersItemStorage create() {
 		if (_instance == null) {
 			_instance = new MySqlCharactersItemStorage();

@@ -2888,119 +2888,124 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				/** 飾品強化卷軸 Scroll of Enchant Accessory */
 				else if (itemId == 49148) {
-					if (!pc.getInventory().checkItem(itemId, 1)) {
+					if (!pc.getInventory().checkItem(itemId, 1)) { // 身上沒有飾品強化卷軸
 						return;
 					}
-					if (l1iteminstance1.getItem().getType2() != 2) {
+					if (l1iteminstance1 == null) { // 目標飾品為空值
 						pc.sendPackets(new S_ServerMessage(79));
 						return;
 					}
-					else if ((l1iteminstance1 != null)
-							&& ((l1iteminstance1.getItem().getType() == 8) || (l1iteminstance1.getItem().getType() == 9)
-									|| (l1iteminstance1.getItem().getType() == 10) || (l1iteminstance1.getItem().getType() == 12))) {
-						int chance = Random.nextInt(100) + 1;
-						switch (l1iteminstance1.getEnchantLevel()) {
-							case -1:
-							case 0:
-							case 1:
-							case 2:
-							case 3:
-							case 4:
-							case 6:
-							case 7:
-							case 8:
-							case 9:
-								if (l1iteminstance1.getEnchantLevel() == -1) {
-									l1iteminstance1.setEnchantLevel(0);
+					if (l1iteminstance1.getBless() >= 128) { // 封印中
+						pc.sendPackets(new S_ServerMessage(79));
+						return;
+					}
+					if (l1iteminstance1.getItem().getType2() != 2
+							|| l1iteminstance1.getItem().getType() < 8
+							|| l1iteminstance1.getItem().getType() > 12
+							|| l1iteminstance1.getItem().getGrade() == -1) { // 非防具、非飾品類、無飾品等級
+						pc.sendPackets(new S_ServerMessage(79));
+						return;
+					}
+					int enchant_level = l1iteminstance1.getEnchantLevel();
+
+					if (enchant_level < 0 || enchant_level >= 10) { // 強化上限 + 10
+						pc.sendPackets(new S_ServerMessage(79));
+						return;
+					}
+
+					int rnd = Random.nextInt(100) + 1;
+					int enchant_chance_accessory;
+					int enchant_level_tmp = enchant_level;
+					// +6 時獎勵效果判斷
+					boolean award = false;
+					// 成功率： +0-70% ~ +9-25%
+					enchant_chance_accessory = (50 + enchant_level_tmp) / (enchant_level_tmp + 1) + 20;
+
+					if (rnd < enchant_chance_accessory) { // 成功
+						if (l1iteminstance1.getEnchantLevel() == 5) {
+							award = true;
+						}
+						switch (l1iteminstance1.getItem().getGrade()) {
+							case 0: // 上等
+								// 四屬性 +1
+								l1iteminstance1.setFireMr(l1iteminstance1.getFireMr() + 1);
+								l1iteminstance1.setWaterMr(l1iteminstance1.getWaterMr() + 1);
+								l1iteminstance1.setEarthMr(l1iteminstance1.getEarthMr() + 1);
+								l1iteminstance1.setWindMr(l1iteminstance1.getWindMr() + 1);
+								// LV6 額外獎勵：體力與魔力回復量 +1
+								if (award) {
+									l1iteminstance1.setHpr(l1iteminstance1.getHpr() + 1);
+									l1iteminstance1.setMpr(l1iteminstance1.getMpr() + 1);
 								}
-								if (chance < 25) {
-									l1iteminstance1.setaddHp(l1iteminstance1.getaddHp() + 2);
-									if (l1iteminstance1.isEquipped()) {
-										pc.addMaxHp(2);
-										// pc.addAc(-1);
-									}
-								}
-								else if ((chance > 25) && (chance < 50)) {
-									l1iteminstance1.setaddMp(l1iteminstance1.getaddMp() + 1);
-									if (l1iteminstance1.isEquipped()) {
-										pc.addMaxMp(1);
-										// pc.addAc(-1);
-									}
-								}
-								else if ((chance > 50) && (chance < 75)) {
-									l1iteminstance1.setFireMr(l1iteminstance1.getFireMr() + 1);
-									l1iteminstance1.setWaterMr(l1iteminstance1.getWaterMr() + 1);
-									l1iteminstance1.setEarthMr(l1iteminstance1.getEarthMr() + 1);
-									l1iteminstance1.setWindMr(l1iteminstance1.getWindMr() + 1);
-									if (l1iteminstance1.isEquipped()) {
-										pc.addFire(1);
-										pc.addWater(1);
-										pc.addEarth(1);
-										pc.addWind(1);
-										// pc.addAc(-1);
-									}
-								}
-								else {
-									FailureEnchant(pc, l1iteminstance1, client);
-									pc.getInventory().removeItem(l1iteminstance, 1);
-									return;
+								// 裝備中
+								if (l1iteminstance1.isEquipped()) {
+									pc.addFire(1);
+									pc.addWater(1);
+									pc.addEarth(1);
+									pc.addWind(1);
 								}
 								break;
-							case 5:
-								if (chance < 25) {
-									l1iteminstance1.setaddHp(l1iteminstance1.getaddHp() + 2);
-									l1iteminstance1.setMpr(l1iteminstance1.getItem().get_addmpr() + 1);
-									if (l1iteminstance1.isEquipped()) {
-										pc.addMaxHp(2);
-										// pc.addAc(-1);
+							case 1: // 中等
+								// HP +2
+								l1iteminstance1.setaddHp(l1iteminstance1.getaddHp() + 2);
+								// LV6 額外獎勵：魔防 +1
+								if (award) {
+									l1iteminstance1.setM_Def(l1iteminstance1.getM_Def() + 1);
+								}
+								// 裝備中
+								if (l1iteminstance1.isEquipped()) {
+									pc.addMaxHp(2);
+									if (award) {
+										pc.addMr(1);
+										pc.sendPackets(new S_SPMR(pc));
 									}
 								}
-								else if ((chance > 25) && (chance < 50)) {
-									l1iteminstance1.setaddMp(l1iteminstance1.getaddMp() + 1);
-									l1iteminstance1.setaddSp(l1iteminstance1.getItem().get_addsp() + 1);
-									if (l1iteminstance1.isEquipped()) {
-										pc.addMaxMp(1);
-										// pc.addAc(-1);
+								break;
+							case 2: // 初等
+								// MP +1
+								l1iteminstance1.setaddMp(l1iteminstance1.getaddMp() + 1);
+								// LV6 額外獎勵：魔攻 +1
+								if (award) {
+									l1iteminstance1.setaddSp(l1iteminstance1.getaddSp() + 1);
+								}
+								// 裝備中
+								if (l1iteminstance1.isEquipped()) {
+									pc.addMaxMp(1);
+									if (award) {
+										pc.addSp(1);
+										pc.sendPackets(new S_SPMR(pc));
 									}
 								}
-								else if ((chance > 50) && (chance < 75)) {
-									l1iteminstance1.setFireMr(l1iteminstance1.getFireMr() + 1);
-									l1iteminstance1.setWaterMr(l1iteminstance1.getWaterMr() + 1);
-									l1iteminstance1.setEarthMr(l1iteminstance1.getEarthMr() + 1);
-									l1iteminstance1.setWindMr(l1iteminstance1.getWindMr() + 1);
-									l1iteminstance1.setMpr(l1iteminstance1.getMpr() + 1);
-									l1iteminstance1.setHpr(l1iteminstance1.getHpr() + 1);
-									if (l1iteminstance1.isEquipped()) {
-										pc.addFire(1);
-										pc.addWater(1);
-										pc.addEarth(1);
-										pc.addWind(1);
-									}
-								}
-								else {
-									FailureEnchant(pc, l1iteminstance1, client);
-									pc.getInventory().removeItem(l1iteminstance, 1);
-									return;
-								}
+								break;
+							case 3: // 特等
+								// 功能台版未實裝。
 								break;
 							default:
 								pc.sendPackets(new S_ServerMessage(79));
 								return;
 						}
-						SuccessEnchant(pc, l1iteminstance1, client, 1);
-						pc.sendPackets(new S_ItemStatus(l1iteminstance1));
-						CharactersItemStorage storage = CharactersItemStorage.create();// 儲存道具
-						storage.updateFireMr(l1iteminstance1);
-						storage.updateWaterMr(l1iteminstance1);
-						storage.updateEarthMr(l1iteminstance1);
-						storage.updateWindMr(l1iteminstance1);
-						storage.updateaddSp(l1iteminstance1);
-						storage.updateaddHp(l1iteminstance1);
-						storage.updateaddMp(l1iteminstance1);
-						storage.updateHpr(l1iteminstance1);
-						storage.updateMpr(l1iteminstance1);
-						pc.getInventory().removeItem(l1iteminstance, 1);// Del
+					} else { // 飾品強化失敗
+						FailureEnchant(pc, l1iteminstance1, client);
+						pc.getInventory().removeItem(l1iteminstance, 1);
+						return;
 					}
+					SuccessEnchant(pc, l1iteminstance1, client, 1);
+					pc.sendPackets(new S_ItemStatus(l1iteminstance1));
+					// 儲存道具
+					CharactersItemStorage storage = CharactersItemStorage.create();
+					// 更新 character_items
+					storage.updateFireMr(l1iteminstance1);
+					storage.updateWaterMr(l1iteminstance1);
+					storage.updateEarthMr(l1iteminstance1);
+					storage.updateWindMr(l1iteminstance1);
+					storage.updateaddSp(l1iteminstance1);
+					storage.updateaddHp(l1iteminstance1);
+					storage.updateaddMp(l1iteminstance1);
+					storage.updateHpr(l1iteminstance1);
+					storage.updateMpr(l1iteminstance1);
+					storage.updateM_Def(l1iteminstance1);
+					// 刪除
+					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
 				else if (itemId == 41426) { // 封印スクロール
 					L1ItemInstance lockItem = pc.getInventory().getItem(l);
@@ -3482,7 +3487,10 @@ public class C_ItemUSe extends ClientBasePacket {
 
 		if (item.getItem().getType2() == 2) {
 			if (item.isEquipped()) {
-				pc.addAc(-i);
+				if ((item.getItem().getType() < 8
+						|| item.getItem().getType() > 12)) {
+					pc.addAc(-i);
+				}
 				int i2 = item.getItem().getItemId();
 				if ((i2 == 20011) || (i2 == 20110) || (i2 == 21108) || (i2 == 120011)) { // マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
 					pc.addMr(i);

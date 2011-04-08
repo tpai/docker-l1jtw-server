@@ -210,4 +210,15 @@ public class L1Armor extends L1Item {
 		return this._regist_blind;
 	}
 
+	private int _grade = 0; // 飾品級別
+
+	public void setGrade(int i) {
+		_grade = i;
+	}
+
+	@Override
+	public int getGrade() {
+		return this._grade;
+	}
+
 }

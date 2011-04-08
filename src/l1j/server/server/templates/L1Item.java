@@ -701,4 +701,8 @@ public abstract class L1Item implements Cloneable, Serializable {
 		return 0;
 	}
 
+	public int getGrade() {
+		return 0;
+	}
+
 }

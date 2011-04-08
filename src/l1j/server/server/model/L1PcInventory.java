@@ -231,6 +231,8 @@ public class L1PcInventory extends L1Inventory {
 	public static final int COL_WATERMR = 136;
 
 	public static final int COL_FIREMR = 137;
+	
+	public static final int COL_M_DEF = 138;
 
 	public static final int COL_REMAINING_TIME = 256;
 
@@ -302,6 +304,10 @@ public class L1PcInventory extends L1Inventory {
 		if (column >= COL_MPR) {
 			_owner.sendPackets(new S_ItemStatus(item));
 			column -= COL_MPR;
+		}
+		if (column >= COL_M_DEF) {
+			_owner.sendPackets(new S_ItemStatus(item));
+			column -= COL_M_DEF;
 		}
 		if (column >= COL_BLESS) { // 祝福・封印
 			_owner.sendPackets(new S_ItemColor(item));
@@ -459,6 +465,10 @@ public class L1PcInventory extends L1Inventory {
 			if (column >= COL_MPR) {
 				storage.updateMpr(item);
 				column -= COL_MPR;
+			}
+			if (column >= COL_M_DEF) {
+				storage.updateM_Def(item);
+				column -= COL_M_DEF;
 			}
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -711,7 +721,7 @@ public class L1PcInventory extends L1Inventory {
 		for (Object itemObject : _items) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
 			if (item.isEquipped()) {
-				hpr += item.getItem().get_addhpr();
+				hpr += item.getItem().get_addhpr() + item.getHpr();
 			}
 		}
 		return hpr;
@@ -723,7 +733,7 @@ public class L1PcInventory extends L1Inventory {
 		for (Object itemObject : _items) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
 			if (item.isEquipped()) {
-				mpr += item.getItem().get_addmpr();
+				mpr += item.getItem().get_addmpr() + item.getMpr();
 			}
 		}
 		return mpr;
