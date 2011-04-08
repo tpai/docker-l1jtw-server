@@ -86,26 +86,6 @@ public final class Config {
 
 	public static int CHECK_STRICTNESS;
 
-	public static byte LOGGING_WEAPON_ENCHANT;
-
-	public static byte LOGGING_ARMOR_ENCHANT;
-
-	public static boolean LOGGING_CHAT_NORMAL;
-
-	public static boolean LOGGING_CHAT_WHISPER;
-
-	public static boolean LOGGING_CHAT_SHOUT;
-
-	public static boolean LOGGING_CHAT_WORLD;
-
-	public static boolean LOGGING_CHAT_CLAN;
-
-	public static boolean LOGGING_CHAT_PARTY;
-
-	public static boolean LOGGING_CHAT_COMBINED;
-
-	public static boolean LOGGING_CHAT_CHAT_PARTY;
-
 	public static int AUTOSAVE_INTERVAL;
 
 	public static int AUTOSAVE_INTERVAL_INVENTORY;
@@ -397,6 +377,27 @@ public final class Config {
 	public static int NOVICE_MAX_LEVEL;
 
 	public static int NOVICE_PROTECTION_LEVEL_RANGE;
+	
+	/**Record Settings*/
+	public static byte LOGGING_WEAPON_ENCHANT;
+
+	public static byte LOGGING_ARMOR_ENCHANT;
+
+	public static boolean LOGGING_CHAT_NORMAL;
+
+	public static boolean LOGGING_CHAT_WHISPER;
+
+	public static boolean LOGGING_CHAT_SHOUT;
+
+	public static boolean LOGGING_CHAT_WORLD;
+
+	public static boolean LOGGING_CHAT_CLAN;
+
+	public static boolean LOGGING_CHAT_PARTY;
+
+	public static boolean LOGGING_CHAT_COMBINED;
+
+	public static boolean LOGGING_CHAT_CHAT_PARTY;
 
 	/** Configuration files */
 	public static final String SERVER_CONFIG_FILE = "./config/server.properties";
@@ -408,6 +409,8 @@ public final class Config {
 	public static final String CHAR_SETTINGS_CONFIG_FILE = "./config/charsettings.properties";
 
 	public static final String FIGHT_SETTINGS_CONFIG_FILE = "./config/fights.properties";
+	
+	public static final String RECORD_SETTINGS_CONFIG_FILE = "./config/record.properties";
 
 	/** 其他設定 */
 
@@ -449,16 +452,6 @@ public final class Config {
 			INJUSTICE_COUNT = Short.parseShort(serverSettings.getProperty("InjusticeCount", "10"));
 			JUSTICE_COUNT = Integer.parseInt(serverSettings.getProperty("JusticeCount", "4"));
 			CHECK_STRICTNESS = Integer.parseInt(serverSettings.getProperty("CheckStrictness", "102"));
-			LOGGING_WEAPON_ENCHANT = Byte.parseByte(serverSettings.getProperty("LoggingWeaponEnchant", "0"));
-			LOGGING_ARMOR_ENCHANT = Byte.parseByte(serverSettings.getProperty("LoggingArmorEnchant", "0"));
-			LOGGING_CHAT_NORMAL = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatNormal", "false"));
-			LOGGING_CHAT_WHISPER = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatWhisper", "false"));
-			LOGGING_CHAT_SHOUT = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatShout", "false"));
-			LOGGING_CHAT_WORLD = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatWorld", "false"));
-			LOGGING_CHAT_CLAN = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatClan", "false"));
-			LOGGING_CHAT_PARTY = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatParty", "false"));
-			LOGGING_CHAT_COMBINED = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatCombined", "false"));
-			LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(serverSettings.getProperty("LoggingChatChatParty", "false"));
 			AUTOSAVE_INTERVAL = Integer.parseInt(serverSettings.getProperty("AutosaveInterval", "1200"), 10);
 			AUTOSAVE_INTERVAL_INVENTORY = Integer.parseInt(serverSettings.getProperty("AutosaveIntervalOfInventory", "300"), 10);
 			SKILLTIMER_IMPLTYPE = Integer.parseInt(serverSettings.getProperty("SkillTimerImplType", "1"));
@@ -674,15 +667,39 @@ public final class Config {
 			InputStream is = new FileInputStream(new File(FIGHT_SETTINGS_CONFIG_FILE));
 			fightSettings.load(is);
 			is.close();
+			
+			FIGHT_IS_ACTIVE = Boolean.parseBoolean(fightSettings.getProperty("FightIsActive", "False"));
+			NOVICE_PROTECTION_IS_ACTIVE = Boolean.parseBoolean(fightSettings.getProperty("NoviceProtectionIsActive", "False"));
+			NOVICE_MAX_LEVEL = Integer.parseInt(fightSettings.getProperty("NoviceMaxLevel", "20"));
+			NOVICE_PROTECTION_LEVEL_RANGE = Integer.parseInt(fightSettings.getProperty("ProtectionLevelRange", "10"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			throw new Error("無法讀取設定檔: " + FIGHT_SETTINGS_CONFIG_FILE);
 		}
-		FIGHT_IS_ACTIVE = Boolean.parseBoolean(fightSettings.getProperty("FightIsActive", "False"));
-		NOVICE_PROTECTION_IS_ACTIVE = Boolean.parseBoolean(fightSettings.getProperty("NoviceProtectionIsActive", "False"));
-		NOVICE_MAX_LEVEL = Integer.parseInt(fightSettings.getProperty("NoviceMaxLevel", "20"));
-		NOVICE_PROTECTION_LEVEL_RANGE = Integer.parseInt(fightSettings.getProperty("ProtectionLevelRange", "10"));
+		
+		// record.properties
+		try {
+			Properties recordSettings = new Properties();
+			InputStream is = new FileInputStream(new File(RECORD_SETTINGS_CONFIG_FILE));
+			recordSettings.load(is);
+			is.close();
+			
+			LOGGING_WEAPON_ENCHANT = Byte.parseByte(recordSettings.getProperty("LoggingWeaponEnchant", "0"));
+			LOGGING_ARMOR_ENCHANT = Byte.parseByte(recordSettings.getProperty("LoggingArmorEnchant", "0"));
+			LOGGING_CHAT_NORMAL = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatNormal", "false"));
+			LOGGING_CHAT_WHISPER = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatWhisper", "false"));
+			LOGGING_CHAT_SHOUT = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatShout", "false"));
+			LOGGING_CHAT_WORLD = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatWorld", "false"));
+			LOGGING_CHAT_CLAN = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatClan", "false"));
+			LOGGING_CHAT_PARTY = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatParty", "false"));
+			LOGGING_CHAT_COMBINED = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatCombined", "false"));
+			LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatChatParty", "false"));
+			
+		}catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			throw new Error("Failed to Load: " + RECORD_SETTINGS_CONFIG_FILE);
+		}
 
 		validate();
 	}
@@ -731,12 +748,6 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("MaximumOnlineUsers")) {
 			MAX_ONLINE_USERS = Short.parseShort(pValue);
-		}
-		else if (pName.equalsIgnoreCase("LoggingWeaponEnchant")) {
-			LOGGING_WEAPON_ENCHANT = Byte.parseByte(pValue);
-		}
-		else if (pName.equalsIgnoreCase("LoggingArmorEnchant")) {
-			LOGGING_ARMOR_ENCHANT = Byte.parseByte(pValue);
 		}
 		else if (pName.equalsIgnoreCase("CharacterConfigInServerSide")) {
 			CHARACTER_CONFIG_IN_SERVER_SIDE = Boolean.parseBoolean(pValue);
@@ -1061,6 +1072,13 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("Lv99Exp")) {
 			LV99_EXP = Integer.parseInt(pValue);
+		}
+		//record.properties
+		else if (pName.equalsIgnoreCase("LoggingWeaponEnchant")) {
+			LOGGING_WEAPON_ENCHANT = Byte.parseByte(pValue);
+		}
+		else if (pName.equalsIgnoreCase("LoggingArmorEnchant")) {
+			LOGGING_ARMOR_ENCHANT = Byte.parseByte(pValue);
 		}
 		else {
 			return false;
