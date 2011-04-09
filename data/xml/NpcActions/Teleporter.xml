@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
+	<!-- 魔法師 梅琳 / 傳送到奇岩地監去 -->
+	<Action Name="teleport giranD" NpcId="81287">
+		<Teleport X="32810" Y="32731" Map="53" Heading="5" Price="1000"/>
+	</Action>
 	<!-- 隱藏之谷-卡連傳送沉默洞穴 -->
 	<Action Name="teleport dark island-in" NpcId="71013">
 		<Teleport X="32857" Y="32896" Map="304" Heading="5" Price="0"/>

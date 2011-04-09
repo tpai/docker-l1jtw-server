@@ -1240,4 +1240,63 @@
 			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
 		</MakeItem>
 	</Action>
+	<!--米米 兌換 地龍之魔眼 / 受封印地龍之魔眼x1,金幣x100000-->
+	<Action Name="a" NpcId="81286">
+		<MakeItem>
+			<Item Amount="1" ItemId="47017"/>
+			<Material Amount="1" ItemId="47013"/>
+			<Material Amount="100000" ItemId="40308"/>
+			</MakeItem>
+	</Action>
+	<!--米米 兌換 水龍之魔眼 / 受封印水龍之魔眼x1,金幣x100000-->
+	<Action Name="b" NpcId="81286">
+		<MakeItem>
+			<Item Amount="1" ItemId="47018"/>
+			<Material Amount="1" ItemId="47014"/>
+			<Material Amount="100000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
+	<!--米米 兌換 火龍之魔眼 / 受封印火龍之魔眼x1,金幣x100000-->
+	<Action Name="c" NpcId="81286">
+		<MakeItem>
+			<Item Amount="1" ItemId="47020"/>
+			<Material Amount="1" ItemId="47016"/>
+			<Material Amount="100000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
+	<!--米米 兌換 風龍之魔眼 / 受封印風龍之魔眼x1,金幣x100000-->
+	<Action Name="d" NpcId="81286">
+		<MakeItem>
+			<Item Amount="1" ItemId="47019"/>
+			<Material Amount="1" ItemId="47015"/>
+			<Material Amount="100000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
+	<!--米米 兌換 誕生之魔眼 / 地龍之精緻魔眼x1,水龍之精緻魔眼x1,金幣x200000-->
+	<Action Name="e" NpcId="81286">
+		<MakeItem>
+			<Item Amount="1" ItemId="47021"/>
+			<Material Amount="1" ItemId="47041"/>
+			<Material Amount="1" ItemId="47042"/>
+			<Material Amount="200000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
+	<!--米米 兌換 形象之魔眼 / 誕生之精緻魔眼x1,風龍之精緻魔眼x1,金幣x200000-->
+	<Action Name="f" NpcId="81286">
+		<MakeItem>
+			<Item Amount="1" ItemId="47022"/>
+			<Material Amount="1" ItemId="47045"/>
+			<Material Amount="1" ItemId="47043"/>
+			<Material Amount="200000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
+	<!--米米 兌換 生命之魔眼 / 形象之精緻魔眼x1,火龍之精緻魔眼x1,金幣x200000-->
+	<Action Name="g" NpcId="81286">
+		<MakeItem>
+			<Item Amount="1" ItemId="47023"/>
+			<Material Amount="1" ItemId="47046"/>
+			<Material Amount="1" ItemId="47044"/>
+			<Material Amount="200000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
 </NpcActionList>

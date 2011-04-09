@@ -1149,4 +1149,31 @@
 		<Item ItemId="40095" Count="2"></Item>  <!--象牙塔傳送回家的卷軸-->
 		<Item ItemId="40096" Count="2"></Item>  <!--象牙塔變身卷軸-->
 	</TreasureBox>
+	<TreasureBox Type="RANDOM" ItemId="46000">  <!--多魯嘉之袋-->
+		<Item ItemId="40020" Count="30" Chance="10" />  <!--濃縮強力體力恢復劑 * 30-->
+		<Item ItemId="40021" Count="20" Chance="10" />  <!--濃縮終極體力恢復劑 * 20-->
+		<Item ItemId="40023" Count="30" Chance="10" />  <!--古代強力體力恢復劑 * 30-->
+		<Item ItemId="40024" Count="20" Chance="10" />  <!--古代終極體力恢復劑 * 20-->
+		<Item ItemId="40015" Count="10" Chance="8" />   <!--加速魔力回復藥水 * 10-->
+		<Item ItemId="40499" Count="20" Chance="8" />   <!--蘑菇汁 * 20-->
+		<Item ItemId="41263" Count="20" Chance="6" />   <!--太陽花籽 * 20-->
+		<Item ItemId="40506" Count="20" Chance="5" />   <!--安特的水果 * 20-->
+		<Item ItemId="49299" Count="1" Chance="5" />    <!--龍之鑰匙 * 1-->
+		<Item ItemId="40524" Count="2" Chance="3" />    <!--黑色血痕 * 2-->
+		<Item ItemId="26" Count="1" Chance="2" />       <!--小侏儒短劍 * 1-->
+		<Item ItemId="144" Count="1" Chance="2" />      <!--侏儒鐵斧 * 1-->
+		<Item ItemId="20007" Count="1" Chance="2" />    <!--侏儒鐵盔 * 1-->
+		<Item ItemId="20052" Count="1" Chance="2" />    <!--侏儒斗篷 * 1-->
+		<Item ItemId="20223" Count="1" Chance="2" />    <!--侏儒圓盾 * 1-->
+		<Item ItemId="40393" Count="1" Chance="2" />    <!--火龍鱗 * 1-->
+		<Item ItemId="40394" Count="1" Chance="2" />    <!--風龍鱗 * 1-->
+		<Item ItemId="40395" Count="1" Chance="2" />    <!--水龍鱗 * 1-->
+		<Item ItemId="40396" Count="1" Chance="2" />    <!--地龍鱗 * 1-->
+		<Item ItemId="40513" Count="1" Chance="2" />    <!--食人巨魔的血 * 1-->
+		<Item ItemId="41352" Count="1" Chance="1" />    <!--神聖獨角獸之角 * 1-->
+		<Item ItemId="47029" Count="1" Chance="1" />    <!--地龍之渴望的眼淚 * 1-->
+		<Item ItemId="47030" Count="1" Chance="1" />    <!--火龍之渴望的眼淚 * 1-->
+		<Item ItemId="47031" Count="1" Chance="1" />    <!--水龍之渴望的眼淚 * 1-->
+		<Item ItemId="47032" Count="1" Chance="1" />    <!--風龍之渴望的眼淚 * 1-->
+	</TreasureBox>
 </TreasureBoxList>

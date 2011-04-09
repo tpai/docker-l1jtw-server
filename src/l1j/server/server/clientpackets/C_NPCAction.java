@@ -3956,7 +3956,7 @@ public class C_NPCAction extends ClientBasePacket {
 					//isIllusionist
 					case 'G': case 'g':
 						if (level > 1 && level < 5) {// lv2 ~ lv4
-							htmlid = "tutori";//接受幫助
+							htmlid = "tutori1";//接受幫助
 						} else if (level > 4 && level < 8) {// lv5 ~ lv7
 							htmlid = "tutori2";//傳送服務
 						} else if (level > 7 && level < 10) {// lv8 ~ lv9
@@ -4364,6 +4364,22 @@ public class C_NPCAction extends ClientBasePacket {
 					default:
 						break;
 				}
+			}
+		}
+		// 多魯嘉貝爾
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81278) { // 多魯嘉之袋 
+            if (s.equalsIgnoreCase("0")) {
+				if (pc.getInventory().checkItem(46000, 1)) { // 檢查身上是否有多魯嘉之袋
+					htmlid = "veil3"; // 已經有袋子了
+				} else if (pc.getInventory().checkItem(40308, 1000000)) { // 檢查身上金幣是否足夠
+					pc.getInventory().consumeItem(40308,1000000);
+					pc.getInventory().storeItem(46000, 1);
+					htmlid = "veil7"; //購買成功顯示
+				} else if (!pc.getInventory().checkItem(40308, 1000000)) { // 檢查身上金幣是否足夠
+					htmlid = "veil4"; // 錢不夠顯示 我們還是不要約定了
+				}
+			} else if (s.equalsIgnoreCase("1")) {
+				htmlid = "veil9"; // 聽取建議
 			}
 		}
 

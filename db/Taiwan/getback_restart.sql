@@ -225,3 +225,6 @@ INSERT INTO `getback_restart` VALUES ('22528', 'Heine Hotel', '33604', '33276', 
 INSERT INTO `getback_restart` VALUES ('23040', 'Heine Hotel', '33604', '33276', '4');
 INSERT INTO `getback_restart` VALUES ('2005', '新隱藏之谷', '32691', '32864', '2005');
 INSERT INTO `getback_restart` VALUES ('86', '隱藏之谷地監', '32691', '32864', '2005');
+INSERT INTO `getback_restart` VALUES ('1002', '侏儒部落', '33705', '32504', '4');
+INSERT INTO `getback_restart` VALUES ('783', '提卡爾 廢墟村落', '32795', '32751', '783');
+INSERT INTO `getback_restart` VALUES ('784', '提卡爾 庫庫爾坎祭壇', '32795', '32751', '783');

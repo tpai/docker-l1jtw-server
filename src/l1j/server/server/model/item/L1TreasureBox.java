@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.model.L1Inventory;
+import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -219,6 +220,17 @@ public class L1TreasureBox {
 			if ((itemId == 40576) || (itemId == 40577) || (itemId == 40578) || (itemId == 40411) || (itemId == 49013)) {
 				pc.death(null); // キャラクターを死亡させる
 			}
+
+			// 多魯嘉之袋
+			if ((itemId == 46000)) {
+				L1ItemInstance box = pc.getInventory().findItemId(itemId);
+				box.setChargeCount(box.getChargeCount() - 1);
+				pc.getInventory().updateItem(box, L1PcInventory.COL_CHARGE_COUNT);
+				if (box.getChargeCount() < 1) {
+					pc.getInventory().removeItem(box, 1);
+				}
+			}
+
 			return true;
 		}
 	}
