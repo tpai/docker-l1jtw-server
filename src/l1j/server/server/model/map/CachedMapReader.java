@@ -12,7 +12,7 @@
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server;
+package l1j.server.server.model.map;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import l1j.server.server.datatables.MapsTable;
-import l1j.server.server.model.map.L1Map;
-import l1j.server.server.model.map.L1V1Map;
 import l1j.server.server.utils.FileUtil;
 import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;

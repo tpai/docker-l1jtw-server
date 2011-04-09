@@ -12,7 +12,7 @@
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server;
+package l1j.server.server.model.map;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -25,8 +25,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.server.datatables.MapsTable;
-import l1j.server.server.model.map.L1Map;
-import l1j.server.server.model.map.L1V1Map;
 import l1j.server.server.utils.collections.Maps;
 
 /**

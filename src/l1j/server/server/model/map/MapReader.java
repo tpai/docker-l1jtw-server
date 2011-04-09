@@ -13,12 +13,12 @@
  * 
  */
 
-package l1j.server;
+package l1j.server.server.model.map;
 
 import java.io.IOException;
 import java.util.Map;
 
-import l1j.server.server.model.map.L1Map;
+import l1j.server.Config;
 
 /**
  * 讀取地圖的 abstract 類別
