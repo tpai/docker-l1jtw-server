@@ -1,17 +1,16 @@
 /**
- *                            License
- * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
- * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
- * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
- * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
- * COPYRIGHT LAW IS PROHIBITED.
+ * License THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). THE WORK IS PROTECTED
+ * BY COPYRIGHT AND/OR OTHER APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS
+ * AUTHORIZED UNDER THIS LICENSE OR COPYRIGHT LAW IS PROHIBITED.
  * 
- * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
- * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
- * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND AGREE TO
+ * BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE MAY BE
+ * CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
+
 package l1j.server.server;
 
 import java.io.UnsupportedEncodingException;
@@ -24,6 +23,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import l1j.server.Base64;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
@@ -59,6 +59,9 @@ public class Account {
 	/** 帳戶是否有效 (True 代表有效). */
 	private boolean _isValid = false;
 
+	/** 倉庫密碼 */
+	private int _warhousePasswd = 0;
+
 	/** 紀錄用 */
 	private static Logger _log = Logger.getLogger(Account.class.getName());
 
@@ -79,8 +82,7 @@ public class Account {
 	 * @throws UnsupportedEncodingException
 	 *             文字編碼不支援
 	 */
-	private static String encodePassword(final String rawPassword)
-			throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	private static String encodePassword(final String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		byte[] buf = rawPassword.getBytes("UTF-8");
 		buf = MessageDigest.getInstance("SHA").digest(buf);
 
@@ -100,8 +102,7 @@ public class Account {
 	 *            連結時的 dns 反查
 	 * @return Account
 	 */
-	public static Account create(final String name, final String rawPassword,
-			final String ip, final String host) {
+	public static Account create(final String name, final String rawPassword, final String ip, final String host) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -129,13 +130,17 @@ public class Account {
 			_log.info("created new account for " + name);
 
 			return account;
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (NoSuchAlgorithmException e) {
+		}
+		catch (NoSuchAlgorithmException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -173,11 +178,14 @@ public class Account {
 			account._host = rs.getString("host");
 			account._banned = rs.getInt("banned") == 0 ? false : true;
 			account._characterSlot = rs.getInt("character_slot");
+			account._warhousePasswd = rs.getInt("warhousePW");
 
 			_log.fine("account exists");
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -207,9 +215,11 @@ public class Account {
 			pstm.execute();
 			account._lastActive = ts;
 			_log.fine("update lastactive for " + account.getName());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -234,9 +244,11 @@ public class Account {
 			pstm.execute();
 			account._characterSlot = account.getCharacterSlot();
 			_log.fine("update characterslot for " + account.getName());
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -261,9 +273,11 @@ public class Account {
 			if (rs.next()) {
 				result = rs.getInt("cnt");
 			}
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -286,9 +300,11 @@ public class Account {
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, login);
 			pstm.execute();
-		} catch (SQLException e) {
+		}
+		catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
+		}
+		finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -312,10 +328,37 @@ public class Account {
 				_password = null; // 認證成功後就將記憶體中的密碼清除
 			}
 			return _isValid;
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return false;
+	}
+
+	/**
+	 * 變更倉庫密碼
+	 * 
+	 * @param newPassword
+	 *            新的密碼
+	 */
+	public void changeWarhousePasswd(int newPassword) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+
+			pstm = con.prepareStatement("UPDATE `accounts` SET `warhousePW` = ? WHERE `login` = ?");
+			pstm.setInt(1, newPassword);
+			pstm.setString(2, getName());
+			pstm.execute();
+
+			_warhousePasswd = newPassword;
+		}
+		catch (SQLException e) {}
+		finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 	/**
@@ -405,5 +448,14 @@ public class Account {
 	 */
 	public void setCharacterSlot(int i) {
 		_characterSlot = i;
+	}
+
+	/**
+	 * 取得倉庫密碼
+	 * 
+	 * @return 倉庫密碼
+	 */
+	public int getWarhousePasswd() {
+		return _warhousePasswd;
 	}
 }
