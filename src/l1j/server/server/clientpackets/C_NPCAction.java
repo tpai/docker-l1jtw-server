@@ -271,7 +271,7 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 		else if (s.equalsIgnoreCase("retrieve")) { // 「個人倉庫：領取物品」
 			if (pc.getLevel() >= 5) {
-				if (client.getAccount().getWarhousePasswd() > 0) {
+				if (client.getAccount().getWarePassword() > 0) {
 					pc.sendPackets(new S_ServerMessage(834));
 				}
 				else {
@@ -282,7 +282,7 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (s.equalsIgnoreCase("retrieve-elven")) { // 「妖精倉庫：領取物品」
 			if ((pc.getLevel() >= 5) && pc.isElf()) {
 				if (pc.isElf() && (pc.getLevel() > 4)) {
-					if (client.getAccount().getWarhousePasswd() > 0) {
+					if (client.getAccount().getWarePassword() > 0) {
 						pc.sendPackets(new S_ServerMessage(834));
 					}
 					else {
@@ -309,7 +309,7 @@ public class C_NPCAction extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(728));
 					return;
 				}
-				if (client.getAccount().getWarhousePasswd() > 0) {
+				if (client.getAccount().getWarePassword() > 0) {
 					pc.sendPackets(new S_ServerMessage(834));
 				}
 				else {

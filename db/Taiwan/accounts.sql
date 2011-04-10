@@ -27,7 +27,7 @@ CREATE TABLE `accounts` (
   `online` int(11) NOT NULL DEFAULT '0',
   `banned` int(11) unsigned NOT NULL DEFAULT '0',
   `character_slot` int(2) unsigned NOT NULL DEFAULT '0',
-  `warhousePW` int(6) unsigned NOT NULL DEFAULT '0' COMMENT '­Ü®w±K½X',
+  `warepassword` int(6) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`login`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 

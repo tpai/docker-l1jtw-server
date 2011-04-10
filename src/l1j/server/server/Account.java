@@ -60,7 +60,7 @@ public class Account {
 	private boolean _isValid = false;
 
 	/** 倉庫密碼 */
-	private int _warhousePasswd = 0;
+	private int _WarePassword = 0;
 
 	/** 紀錄用 */
 	private static Logger _log = Logger.getLogger(Account.class.getName());
@@ -178,7 +178,7 @@ public class Account {
 			account._host = rs.getString("host");
 			account._banned = rs.getInt("banned") == 0 ? false : true;
 			account._characterSlot = rs.getInt("character_slot");
-			account._warhousePasswd = rs.getInt("warhousePW");
+			account._WarePassword = rs.getInt("warepassword");
 
 			_log.fine("account exists");
 		}
@@ -341,18 +341,18 @@ public class Account {
 	 * @param newPassword
 	 *            新的密碼
 	 */
-	public void changeWarhousePasswd(int newPassword) {
+	public void changeWarePassword(int newPassword) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con.prepareStatement("UPDATE `accounts` SET `warhousePW` = ? WHERE `login` = ?");
+			pstm = con.prepareStatement("UPDATE `accounts` SET `WarePassword` = ? WHERE `login` = ?");
 			pstm.setInt(1, newPassword);
 			pstm.setString(2, getName());
 			pstm.execute();
 
-			_warhousePasswd = newPassword;
+			_WarePassword = newPassword;
 		}
 		catch (SQLException e) {}
 		finally {
@@ -455,7 +455,7 @@ public class Account {
 	 * 
 	 * @return 倉庫密碼
 	 */
-	public int getWarhousePasswd() {
-		return _warhousePasswd;
+	public int getWarePassword() {
+		return _WarePassword;
 	}
 }
