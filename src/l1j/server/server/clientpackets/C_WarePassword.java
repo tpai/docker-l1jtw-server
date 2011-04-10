@@ -45,12 +45,13 @@ public class C_WarePassword extends ClientBasePacket {
 		// 取得角色物件
 		L1PcInstance pc = client.getActiveChar();
 		Account account = client.getAccount();
-		
-		//取得對話的npc
+
+		// 取得對話的npc
 		L1NpcInstance targetNpc = null;
 		int targetObj = pc.getTempID();
 		if (targetObj != 0) {
-			targetNpc = (L1NpcInstance) L1World.getInstance().findObject(targetObj);
+			targetNpc = (L1NpcInstance) L1World.getInstance().findObject(
+					targetObj);
 		}
 
 		// 變更密碼
@@ -71,13 +72,12 @@ public class C_WarePassword extends ClientBasePacket {
 			// 進行密碼變更
 			else if ((pass1 > 0) && (pass1 == account.getWarePassword())) {
 				// 進行密碼變更
-				if (pass2 > 0) {
-					account.changeWarePassword(pass2);
-
-					pc.sendPackets(new S_SystemMessage("倉庫密碼變更完成，請牢記您的新密碼。"));
-				} else if (pass1 == pass2) {
+				if (pass1 == pass2) {
 					// [342::你不能使用舊的密碼當作新的密碼。請再次輸入密碼。]
 					pc.sendPackets(new S_ServerMessage(342));
+				} else if (pass2 > 0) {
+					account.changeWarePassword(pass2);
+					pc.sendPackets(new S_SystemMessage("倉庫密碼變更完成，請牢記您的新密碼。"));
 				} else {
 					account.changeWarePassword(0);
 					pc.sendPackets(new S_SystemMessage("倉庫密碼取消完成。"));
