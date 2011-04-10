@@ -32,7 +32,7 @@ public class S_RetrieveList extends ServerBasePacket {
 				for (Object itemObject : pc.getDwarfInventory().getItems()) {
 					L1ItemInstance item = (L1ItemInstance) itemObject;
 					writeD(item.getId());
-					writeC(0);
+					writeC(0); // 道具:0 武器:1  防具:2...
 					writeH(item.get_gfxid());
 					writeC(item.getBless());
 					writeD(item.getCount());
@@ -40,6 +40,7 @@ public class S_RetrieveList extends ServerBasePacket {
 					writeS(item.getViewName());
 				}
 			}
+			writeD(0x0000001e); // 金幣30
 			// クライアントに適当なメッセージ見つからなかったので非表示
 			/*
 			 * else { l1pcinstance.sendPackets(new

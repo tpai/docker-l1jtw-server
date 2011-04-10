@@ -566,8 +566,6 @@ public class L1ItemInstance extends L1Object {
 				name.append(" ($9)"); // 装備(Armed)
 			} else if (itemType2 == 2) {
 				name.append(" ($117)"); // 装備(Worn)
-			} else if ((itemType2 == 0) && (getItem().getType() == 11)) { // petitem
-				name.append(" ($117)"); // 装備(Worn)
 			}
 		}
 		return name.toString();

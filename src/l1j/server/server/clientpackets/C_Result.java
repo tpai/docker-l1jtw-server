@@ -17,6 +17,8 @@ package l1j.server.server.clientpackets;
 import java.util.List;
 
 import l1j.server.server.ClientThread;
+import l1j.server.server.datatables.NpcTable;
+import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.ShopTable;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1Inventory;
@@ -32,6 +34,8 @@ import l1j.server.server.model.shop.L1Shop;
 import l1j.server.server.model.shop.L1ShopBuyOrderList;
 import l1j.server.server.model.shop.L1ShopSellOrderList;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.templates.L1Npc;
+import l1j.server.server.templates.L1Pet;
 import l1j.server.server.templates.L1PrivateShopBuyList;
 import l1j.server.server.templates.L1PrivateShopSellList;
 
@@ -46,8 +50,7 @@ public class C_Result extends ClientBasePacket {
 		super(abyte0);
 		int npcObjectId = readD();
 		int resultType = readC();
-		int size = readC();
-		readC();
+		int size = readH();
 
 		L1PcInstance pc = clientthread.getActiveChar();
 		int level = pc.getLevel();
@@ -502,6 +505,72 @@ public class C_Result extends ClientBasePacket {
 				}
 			}
 			targetPc.setTradingInPrivateShop(false);
+		}
+		else if ((resultType == 12) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 領取寵物
+			int petCost, petCount, divisor, itemObjectId, itemCount = 0;
+			boolean chackAdena = true;
+
+			for (int i = 0; i < size; i++) {
+				petCost = 0;
+				petCount = 0;
+				divisor = 6;
+				itemObjectId = readD();
+				itemCount = readD();
+
+				if (itemCount == 0) {
+					continue;
+				}
+				Object[] petList = pc.getPetList().values().toArray();
+				for (Object pet : petList) {
+					petCost += ((L1NpcInstance) pet).getPetcost();
+				}
+				int charisma = pc.getCha();
+				if (pc.isCrown()) { // 王族
+					charisma += 6;
+				}
+				else if (pc.isElf()) { // 妖精
+					charisma += 12;
+				}
+				else if (pc.isWizard()) { // 法師
+					charisma += 6;
+				}
+				else if (pc.isDarkelf()) { // 黑暗妖精
+					charisma += 6;
+				}
+				else if (pc.isDragonKnight()) { // 龍騎士
+					charisma += 6;
+				}
+				else if (pc.isIllusionist()) { // 幻術師
+					charisma += 6;
+				}
+
+				if (!pc.getInventory().consumeItem(L1ItemId.ADENA, 115)) {
+					chackAdena = false;
+				}
+				L1Pet l1pet = PetTable.getInstance().getTemplate(itemObjectId);
+				if (l1pet != null && chackAdena) {
+					npcId = l1pet.get_npcid();
+					charisma -= petCost;
+					if ((npcId == 45313) || (npcId == 45710 // タイガー、バトルタイガー
+							) || (npcId == 45711) || (npcId == 45712)) { // 紀州犬の子犬、紀州犬
+						divisor = 12;
+					}
+					else {
+						divisor = 6;
+					}
+					petCount = charisma / divisor;
+					if (petCount <= 0) {
+						pc.sendPackets(new S_ServerMessage(489)); // 你無法一次控制那麼多寵物。
+						return;
+					}
+					L1Npc npcTemp = NpcTable.getInstance().getTemplate(npcId);
+					L1PetInstance pet = new L1PetInstance(npcTemp, pc, l1pet);
+					pet.setPetcost(divisor);
+				}
+			}
+			if (!chackAdena) {
+				pc.sendPackets(new S_ServerMessage(189)); // \f1金幣不足。
+			}
 		}
 	}
 

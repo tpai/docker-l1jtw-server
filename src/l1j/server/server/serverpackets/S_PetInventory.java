@@ -17,6 +17,7 @@ package l1j.server.server.serverpackets;
 import java.util.List;
 
 import l1j.server.server.Opcodes;
+import l1j.server.server.datatables.PetItemTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 
@@ -36,19 +37,30 @@ public class S_PetInventory extends ServerBasePacket {
 		writeD(pet.getId());
 		writeH(itemList.size());
 		writeC(0x0b);
+
 		for (Object itemObject : itemList) {
-			L1ItemInstance item = (L1ItemInstance) itemObject;
-			if (item != null) {
-				writeD(item.getId());
-				writeC(0x13);
-				writeH(item.get_gfxid());
-				writeC(item.getBless());
-				writeD(item.getCount());
-				writeC(item.isIdentified() ? 1 : 0);
-				writeS(item.getViewName());
+			L1ItemInstance petItem = (L1ItemInstance) itemObject;
+			if (petItem == null) {
+				continue;
 			}
+			writeD(petItem.getId());
+			writeC(0x02); // 值:0x00  無、0x01:武器類、0x02:防具類、0x16:牙齒類 、0x33:藥水類
+			writeH(petItem.get_gfxid());
+			writeC(petItem.getBless());
+			writeD(petItem.getCount());
+
+			// 顯示裝備中的寵物裝備
+			if (petItem.getItem().getType2() == 0 
+					&& petItem.getItem().getType() == 11
+					&& petItem.isEquipped()) {
+				writeC(petItem.isIdentified() ? 3 : 2);
+			} else {
+				writeC(petItem.isIdentified() ? 1 : 0);
+			}
+			writeS(petItem.getViewName());
+
 		}
-		writeC(0x0a);
+		writeC(pet.getAc()); // 寵物防禦
 	}
 
 	@Override

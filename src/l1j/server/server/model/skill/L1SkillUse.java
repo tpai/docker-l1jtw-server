@@ -399,7 +399,7 @@ public class L1SkillUse {
 				return false;
 			}
 
-			// サイレンス状態では使用不可
+			// 魔法封印、封印禁地、卡毒
 			if (pc.hasSkillEffect(SILENCE) || pc.hasSkillEffect(AREA_OF_SILENCE) || pc.hasSkillEffect(STATUS_POISON_SILENCE)) {
 				pc.sendPackets(new S_ServerMessage(285)); // \f1在此狀態下無法使用魔法。
 				return false;
@@ -622,12 +622,12 @@ public class L1SkillUse {
 			return false;
 		}
 
-		// 攻撃系スキルで対象が自分は対象外
+		// 攻擊型魔法無法攻擊自己
 		if ((_skill.getType() == L1Skills.TYPE_ATTACK) && (cha.getId() == _user.getId())) {
 			return false;
 		}
 
-		// ターゲットが自分でH-Aの場合効果無し
+		// 體力回復術判斷施法者不補血
 		if ((cha.getId() == _user.getId()) && (_skillId == HEAL_ALL)) {
 			return false;
 		}
@@ -898,6 +898,10 @@ public class L1SkillUse {
 	private void sendHappenMessage(L1PcInstance pc) {
 		int msgID = _skill.getSysmsgIdHappen();
 		if (msgID > 0) {
+			// 效果訊息排除施法者本身。
+			if (_skillId == AREA_OF_SILENCE && _user.getId() == pc.getId()) {// 封印禁地
+				return;
+			}
 			pc.sendPackets(new S_ServerMessage(msgID));
 		}
 	}
@@ -1115,13 +1119,13 @@ public class L1SkillUse {
 			_getBuffDuration = _shockStunDuration;
 		}
 
-		if (_skillId == CURSE_POISON) { // カーズポイズンの効果処理はL1Poisonに移譲。
+		if (_skillId == CURSE_POISON) {  // 毒咒持續時間移至 L1Poison 處理。
 			return;
 		}
-		if ((_skillId == CURSE_PARALYZE) || (_skillId == CURSE_PARALYZE2)) { // カーズパラライズの効果処理はL1CurseParalysisに移譲。
+		if ((_skillId == CURSE_PARALYZE) || (_skillId == CURSE_PARALYZE2)) { // 木乃伊的咀咒、石化持續時間移至 L1CurseParalysis 處理。
 			return;
 		}
-		if (_skillId == SHAPE_CHANGE) { // シェイプチェンジの効果処理はL1PolyMorphに移譲。
+		if (_skillId == SHAPE_CHANGE) { // 變形術持續時間移至 L1PolyMorph 處理。
 			return;
 		}
 		if ((_skillId == BLESSED_ARMOR) || (_skillId == HOLY_WEAPON // 武器・防具に効果がある処理はL1ItemInstanceに移譲。
@@ -1329,18 +1333,19 @@ public class L1SkillUse {
 				_player.broadcastPacket(new S_RangeSkill(_player, cha, castgfx, actionId, S_RangeSkill.TYPE_NODIR));
 			}
 			else { // 補助魔法
-					// テレポート、マステレ、テレポートトゥマザー以外
-				if ((_skillId != 5) && (_skillId != 69) && (_skillId != 131)) {
-					// 魔法を使う動作のエフェクトは使用者だけ
+				// 指定傳送、集體傳送術、世界樹的呼喚以外
+				if ((_skillId != TELEPORT) && (_skillId != MASS_TELEPORT) && (_skillId != TELEPORT_TO_MATHER)) {
+					// 施法動作
 					if (isSkillAction) {
 						S_DoActionGFX gfx = new S_DoActionGFX(_player.getId(), _skill.getActionId());
 						_player.sendPackets(gfx);
 						_player.broadcastPacket(gfx);
 					}
+					// 魔法屏障、反擊屏障、鏡反射 魔法效果只有自身顯示
 					if ((_skillId == COUNTER_MAGIC) || (_skillId == COUNTER_BARRIER) || (_skillId == COUNTER_MIRROR)) {
 						_player.sendPackets(new S_SkillSound(targetid, castgfx));
 					}
-					else if (_skillId == TRUE_TARGET) { // トゥルーターゲットは個別処理で送信済
+					else if (_skillId == TRUE_TARGET) { // 精準目標 效果另外處理
 						return;
 					}
 					else if ((_skillId == AWAKEN_ANTHARAS // 覚醒：アンタラス
@@ -1564,7 +1569,7 @@ public class L1SkillUse {
 					}
 				}
 
-				deleteRepeatedSkills(cha); // 重複したスキルの削除
+				deleteRepeatedSkills(cha); // 刪除魔法狀態無法共同存在的效果
 
 				if ((_skill.getType() == L1Skills.TYPE_ATTACK) && (_user.getId() != cha.getId())) { // 攻撃系スキル＆ターゲットが使用者以外であること。
 					if (isUseCounterMagic(cha)) { // カウンターマジックが発動した場合、リストから削除
@@ -1597,24 +1602,37 @@ public class L1SkillUse {
 						continue;
 					}
 				}
-				else if (_skill.getType() == L1Skills.TYPE_HEAL) { // 回復系スキル
-					// 回復量はマイナスダメージで表現
+				// 治癒性魔法
+				else if (_skill.getType() == L1Skills.TYPE_HEAL) {
+					// 回復量
 					dmg = -1 * _magic.calcHealing(_skillId);
-					if (cha.hasSkillEffect(WATER_LIFE)) { // ウォーターライフ中は回復量２倍
+					if (cha.hasSkillEffect(WATER_LIFE)) { // 水之元氣-效果 2倍
 						dmg *= 2;
+						cha.killSkillEffectTimer(WATER_LIFE); // 效果只有一次
 					}
-					if (cha.hasSkillEffect(POLLUTE_WATER)) { // ポルートウォーター中は回復量1/2倍
+					if (cha.hasSkillEffect(POLLUTE_WATER)) { // 汙濁之水-效果減半
 						dmg /= 2;
+					}
+				}
+				// 顯示團體魔法效果在隊友或盟友
+				else if ((_skillId == FIRE_BLESS || _skillId == STORM_EYE // 烈炎氣息、暴風之眼
+						|| _skillId == EARTH_BLESS // 大地的祝福
+						|| _skillId == GLOWING_AURA // 激勵士氣
+						|| _skillId == SHINING_AURA || _skillId == BRAVE_AURA) // 鋼鐵士氣、衝擊士氣 
+							&& _user.getId() != cha.getId()) {
+					if (cha instanceof L1PcInstance) {
+						L1PcInstance _targetPc = (L1PcInstance) cha;
+						_targetPc.sendPackets(new S_SkillSound(_targetPc.getId(), _skill.getCastGfx()));
+						_targetPc.broadcastPacket(new S_SkillSound(_targetPc.getId(), _skill.getCastGfx()));
 					}
 				}
 
 				// ■■■■ 個別処理のあるスキルのみ書いてください。 ■■■■
 
-				// すでにスキルを使用済みの場合なにもしない
-				// ただしショックスタンは重ねがけ出来るため例外
+				// 除了衝暈之外魔法效果存在時，只更新效果時間跟圖示。
 				if (cha.hasSkillEffect(_skillId) && (_skillId != SHOCK_STUN)) {
-					addMagicList(cha, true); // ターゲットに魔法の効果時間を上書き
-					if (_skillId != SHAPE_CHANGE) { // シェイプ チェンジは変身を上書き出来るため例外
+					addMagicList(cha, true); // 魔法效果已存在時
+					if (_skillId != SHAPE_CHANGE) { // 除了變形術之外
 						continue;
 					}
 				}
@@ -1847,14 +1865,8 @@ public class L1SkillUse {
 						}
 					}
 				}
-				// ★★★ 回復系スキル ★★★
-				else if (((_skillId == HEAL) || (_skillId == EXTRA_HEAL) || (_skillId == GREATER_HEAL) || (_skillId == FULL_HEAL)
-						|| (_skillId == HEAL_ALL) || (_skillId == NATURES_TOUCH) || (_skillId == NATURES_BLESSING))
-						&& (_user instanceof L1PcInstance)) {
-					cha.removeSkillEffect(WATER_LIFE);
-				}
-				// ★★★ 攻撃系スキル ★★★
-				// チルタッチ、バンパイアリックタッチ
+				// ★★★ 攻擊性補血效果 ★★★
+				// 寒冷戰慄、吸血鬼之吻
 				else if ((_skillId == CHILL_TOUCH) || (_skillId == VAMPIRIC_TOUCH)) {
 					heal = dmg;
 				}
@@ -2695,7 +2707,7 @@ public class L1SkillUse {
 						pc.addDmgup(4);
 						pc.sendPackets(new S_SkillIconAura(147, _getBuffIconDuration));
 					}
-					else if (_skillId == FIRE_BLESS) { // ファイアー ブレス
+					else if (_skillId == FIRE_BLESS) { // 烈炎氣息
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.addDmgup(4);
 						pc.sendPackets(new S_SkillIconAura(154, _getBuffIconDuration));
@@ -2823,13 +2835,23 @@ public class L1SkillUse {
 						pc.addDmgup(10);
 						pc.addBowDmgup(10);
 					}
-					else if (_skillId == INSIGHT) { // インサイト
-						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addStr((byte) 1);
-						pc.addCon((byte) 1);
-						pc.addDex((byte) 1);
-						pc.addWis((byte) 1);
-						pc.addInt((byte) 1);
+					else if (_skillId == INSIGHT) { // 洞察
+						if (cha != null) {
+							cha.addStr((byte) 1); 
+							cha.addCon((byte) 1);
+							cha.addDex((byte) 1);
+							cha.addWis((byte) 1);
+							cha.addInt((byte) 1);
+						}
+					}
+					else if (_skillId == PANIC) { // 恐慌
+						if (cha != null) {
+							cha.addStr((byte) -1);
+							cha.addCon((byte) -1);
+							cha.addDex((byte) -1);
+							cha.addWis((byte) -1);
+							cha.addInt((byte) -1);
+						}
 					}
 				}
 
@@ -2929,7 +2951,7 @@ public class L1SkillUse {
 				// ■■■■ 個別処理ここまで ■■■■
 
 				if ((_skill.getType() == L1Skills.TYPE_HEAL) && (_calcType == PC_NPC) && (undeadType == 1)) {
-					dmg *= -1; // もし、アンデットで回復系スキルならばダメージになる。
+					dmg *= -1; // 治癒性魔法攻擊不死係的怪物。
 				}
 
 				if ((_skill.getType() == L1Skills.TYPE_HEAL) && (_calcType == PC_NPC) && (undeadType == 3)) {
@@ -2944,11 +2966,12 @@ public class L1SkillUse {
 					_magic.commit(dmg, drainMana); // ダメージ系、回復系の値をターゲットにコミットする。
 				}
 
+				// 補血判斷
 				if ((_skill.getType() == L1Skills.TYPE_HEAL) && (dmg < 0)) {
-					_target.setCurrentHp((dmg * -1) + _target.getCurrentHp());
+					cha.setCurrentHp((dmg * -1) + cha.getCurrentHp());
 				}
 
-				// ヒール系の他に、別途回復した場合（V-Tなど）
+				// 非治癒性魔法自身補血判斷(寒戰、吸吻等)
 				if (heal > 0) {
 					_user.setCurrentHp(heal + _user.getCurrentHp());
 				}
@@ -2969,7 +2992,7 @@ public class L1SkillUse {
 				}
 			}
 
-			if ((_skillId == DETECTION) || (_skillId == COUNTER_DETECTION)) { // ディテクション、カウンターディテクション
+			if ((_skillId == DETECTION) || (_skillId == COUNTER_DETECTION)) { // 無所遁形、強力無所遁形
 				detection(_player);
 			}
 
@@ -2989,12 +3012,12 @@ public class L1SkillUse {
 	}
 
 	private void detection(L1PcInstance pc) {
-		if (!pc.isGmInvis() && pc.isInvisble()) { // 自分
+		if (!pc.isGmInvis() && pc.isInvisble()) { // 自己
 			pc.delInvis();
 			pc.beginInvisTimer();
 		}
 
-		for (L1PcInstance tgt : L1World.getInstance().getVisiblePlayer(pc)) {
+		for (L1PcInstance tgt : L1World.getInstance().getVisiblePlayer(pc)) { // 畫面內其他隱身者
 			if (!tgt.isGmInvis() && tgt.isInvisble()) {
 				tgt.delInvis();
 			}

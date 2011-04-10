@@ -383,14 +383,22 @@ class L1SkillStop {
 				pc.addBowDmgup(-10);
 			}
 		}
-		else if (skillId == INSIGHT) { // インサイト
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addStr((byte) -1);
-				pc.addCon((byte) -1);
-				pc.addDex((byte) -1);
-				pc.addWis((byte) -1);
-				pc.addInt((byte) -1);
+		else if (skillId == INSIGHT) { // 洞察
+			if (cha != null) {
+				cha.addStr((byte) -1);
+				cha.addCon((byte) -1);
+				cha.addDex((byte) -1);
+				cha.addWis((byte) -1);
+				cha.addInt((byte) -1);
+			}
+		}
+		else if (skillId == PANIC) { // 恐慌
+			if (cha != null) {
+				cha.addStr((byte) 1);
+				cha.addCon((byte) 1);
+				cha.addDex((byte) 1);
+				cha.addWis((byte) 1);
+				cha.addInt((byte) 1);
 			}
 		}
 

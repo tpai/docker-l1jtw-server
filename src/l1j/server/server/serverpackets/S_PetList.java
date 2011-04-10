@@ -37,6 +37,7 @@ public class S_PetList extends ServerBasePacket {
 
 	private void buildPacket(int npcObjId, L1PcInstance pc) {
 		List<L1ItemInstance> amuletList = Lists.newList();
+		// 判斷身上是否有寵物項圈！
 		for (Object itemObject : pc.getInventory().getItems()) {
 			L1ItemInstance item = (L1ItemInstance) itemObject;
 			if ((item.getItem().getItemId() == 40314) || (item.getItem().getItemId() == 40316)) {
@@ -45,15 +46,23 @@ public class S_PetList extends ServerBasePacket {
 				}
 			}
 		}
+
 		if (amuletList.size() != 0) {
-			writeC(Opcodes.S_OPCODE_SELECTLIST);
-			writeD(0x00000046); // Price
+			writeC(Opcodes.S_OPCODE_SHOWRETRIEVELIST);
+			writeD(npcObjId);
 			writeH(amuletList.size());
+			writeC(0x0c);
 			for (L1ItemInstance item : amuletList) {
 				writeD(item.getId());
-				writeC(item.getCount());
+				writeC(0x00);
+				writeH(item.get_gfxid());
+				writeC(item.getBless());
+				writeD(item.getCount());
+				writeC(item.isIdentified() ? 1 : 0);
+				writeS(item.getViewName());
 			}
 		}
+		writeD(0x00000073); // Price
 	}
 
 	private boolean isWithdraw(L1PcInstance pc, L1ItemInstance item) {

@@ -316,14 +316,18 @@ public class L1SkillId {
 	/*
 	 * Royal Magic
 	 */
+	/** 精準目標 */
 	public static final int TRUE_TARGET = 113;
 
+	/** 激勵士氣 */
 	public static final int GLOWING_AURA = 114;
 
+	/** 鋼鐵士氣 */
 	public static final int SHINING_AURA = 115;
 
 	public static final int CALL_CLAN = 116; // E: CALL_PLEDGE_MEMBER
 
+	/** 衝擊士氣 */
 	public static final int BRAVE_AURA = 117;
 
 	public static final int RUN_CLAN = 118;
@@ -337,12 +341,14 @@ public class L1SkillId {
 
 	public static final int BODY_TO_MIND = 130;
 
+	/** 世界樹的呼喚 */
 	public static final int TELEPORT_TO_MATHER = 131;
 
 	public static final int TRIPLE_ARROW = 132;
 
 	public static final int ELEMENTAL_FALL_DOWN = 133;
 
+	/** 鏡反射 */
 	public static final int COUNTER_MIRROR = 134;
 
 	// none = 135 - 136
@@ -371,18 +377,22 @@ public class L1SkillId {
 
 	public static final int LESSER_ELEMENTAL = 154; // E:SUMMON_LESSER_ELEMENTAL
 
+	/** 烈炎氣息 */
 	public static final int FIRE_BLESS = 155; // E: BLESS_OF_FIRE
 
+	/** 暴風之眼 */
 	public static final int STORM_EYE = 156; // E: EYE_OF_STORM
 
 	public static final int EARTH_BIND = 157;
 
 	public static final int NATURES_TOUCH = 158;
 
+	/** 大地的祝福 */
 	public static final int EARTH_BLESS = 159; // E: BLESS_OF_EARTH
 
 	public static final int AQUA_PROTECTER = 160;
 
+	/** 精靈魔法 (封印禁地)*/
 	public static final int AREA_OF_SILENCE = 161;
 
 	public static final int GREATER_ELEMENTAL = 162; // E:SUMMON_GREATER_ELEMENTAL
@@ -443,6 +453,7 @@ public class L1SkillId {
 
 	public static final int THUNDER_GRAB = 192;
 
+	/** 龍騎士魔法 (驚悚死神) */
 	public static final int HORROR_OF_DEATH = 193;
 
 	public static final int FREEZING_BREATH = 194;
@@ -455,6 +466,7 @@ public class L1SkillId {
 	 */
 	public static final int MIRROR_IMAGE = 201;
 
+	/** 幻術士魔法 (混亂)*/
 	public static final int CONFUSION = 202;
 
 	public static final int SMASH = 203;
@@ -483,8 +495,10 @@ public class L1SkillId {
 
 	public static final int CUBE_SHOCK = 215;
 
+	/** 幻術士魔法 (洞察)*/
 	public static final int INSIGHT = 216;
 
+	/** 幻術士魔法 (恐慌)*/
 	public static final int PANIC = 217;
 
 	public static final int JOY_OF_PAIN = 218;
