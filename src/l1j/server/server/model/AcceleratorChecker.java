@@ -46,9 +46,11 @@ public class AcceleratorChecker {
 	// それを考慮して-5としている。
 	private static final double CHECK_STRICTNESS = (Config.CHECK_STRICTNESS - 5) / 100D;
 
-	private static final double HASTE_RATE = 0.745;
+	private static final double HASTE_RATE = 0.75; // 速度 * 1.33
 
-	private static final double WAFFLE_RATE = 0.874;
+	private static final double WAFFLE_RATE = 0.87; // 速度 * 1.15
+
+	private static final double DOUBLE_HASTE_RATE = 0.375; // 速度 * 2.66
 
 	private final EnumMap<ACT_TYPE, Long> _actTimers =
 			new EnumMap<ACT_TYPE, Long>(ACT_TYPE.class);
@@ -145,6 +147,7 @@ public class AcceleratorChecker {
 	private int getRightInterval(ACT_TYPE type) {
 		int interval;
 
+		// 動作判斷
 		switch (type) {
 		case ATTACK:
 			interval = SprTable.getInstance().getAttackSpeed(
@@ -166,22 +169,56 @@ public class AcceleratorChecker {
 			return 0;
 		}
 
-		if (_pc.isHaste()) {
-			interval *= HASTE_RATE;
+		// 一段加速
+		switch(_pc.getMoveSpeed()) {
+			case 1: // 加速術
+				interval *= HASTE_RATE;
+				break;
+			case 2: // 緩速術
+				interval /= HASTE_RATE; 
+				break;
+			default:
+				break;
 		}
-		if (type.equals(ACT_TYPE.MOVE) && _pc.isFastMovable()) {
-			interval *= HASTE_RATE;
+
+		// 二段加速
+		switch(_pc.getBraveSpeed()) {
+			case 1: // 勇水
+				interval *= HASTE_RATE; // 攻速、移速 * 1.33倍
+				break;
+			case 3: // 精餅
+				interval *= WAFFLE_RATE; // 攻速、移速 * 1.15倍
+				break;
+			case 4: // 神疾、風走、行走
+				if (type.equals(ACT_TYPE.MOVE)) {
+					interval *= HASTE_RATE; // 移速 * 1.33倍
+				}
+				break;
+			case 5: // 超級加速
+				interval *= DOUBLE_HASTE_RATE; // 攻速、移速 * 2.66倍
+				break;
+			case 6: // 血之渴望
+				if (type.equals(ACT_TYPE.ATTACK)) { 
+					interval *= HASTE_RATE; // 攻速 * 1.33倍
+				}
+				break;
+			default:
+				break;
 		}
-		if (type.equals(ACT_TYPE.ATTACK) && _pc.isFastAttackable()) {
-			interval *= HASTE_RATE;
-		}
-		if (_pc.isBrave()) {
-			interval *= HASTE_RATE;
-		}
-		if (_pc.isElfBrave()) {
+
+		// 生命之樹果實
+		if (_pc.isRibrave() && type.equals(ACT_TYPE.MOVE)) { // 移速 * 1.15倍
 			interval *= WAFFLE_RATE;
 		}
-		if(_pc.getMapId() == 5143){//寵物競速例外
+		// 三段加速
+		if (_pc.isThirdSpeed()) { // 攻速、移速 * 1.15倍
+			interval *= WAFFLE_RATE;
+		}
+		// 風之枷鎖
+		if (_pc.isWindShackle()) { // 攻速 / 2倍
+			interval *= 2;
+		}
+		if(_pc.getMapId() == 5143){ // 寵物競速例外
 			interval *= 0.1;
 		}
 		return interval;

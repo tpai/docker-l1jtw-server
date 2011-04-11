@@ -43,25 +43,16 @@ public class S_UseArrowSkill extends ServerBasePacket {
 		writeD(targetobj);
 		writeH(isHit ? 6 : 0);
 		writeC(cha.getHeading());
-		// writeD(0x12000000);
-		// writeD(246);
 		writeD(_sequentialNumber.incrementAndGet());
 		writeH(spellgfx);
-		writeC(127); // スキル使用時の光源の広さ？
+		writeC(0); // 箭
 		writeH(cha.getX());
 		writeH(cha.getY());
 		writeH(x);
 		writeH(y);
-		// writeC(228);
-		// writeC(231);
-		// writeC(95);
-		// writeC(82);
-		// writeC(170);
 		writeC(0);
 		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeC(0);
+		writeC(0); // 0:none 2:爪痕 4:雙擊 8:鏡返射
 	}
 
 	@Override
@@ -71,10 +62,10 @@ public class S_UseArrowSkill extends ServerBasePacket {
 		}
 		else {
 			int seq = _sequentialNumber.incrementAndGet();
-			_byte[12] = (byte) (seq & 0xff);
-			_byte[13] = (byte) (seq >> 8 & 0xff);
-			_byte[14] = (byte) (seq >> 16 & 0xff);
-			_byte[15] = (byte) (seq >> 24 & 0xff);
+			_byte[13] = (byte) (seq & 0xff);
+			_byte[14] = (byte) (seq >> 8 & 0xff);
+			_byte[15] = (byte) (seq >> 16 & 0xff);
+			_byte[16] = (byte) (seq >> 24 & 0xff);
 		}
 		return _byte;
 	}

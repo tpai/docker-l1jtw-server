@@ -15,35 +15,30 @@
 package l1j.server.server.model.Instance;
 
 import static l1j.server.server.model.skill.L1SkillId.BLIND_HIDING;
-import static l1j.server.server.model.skill.L1SkillId.BLOODLUST;
 import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
 import static l1j.server.server.model.skill.L1SkillId.COUNTER_BARRIER;
 import static l1j.server.server.model.skill.L1SkillId.DECREASE_WEIGHT;
 import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_FINDINVIS;
 import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_HPBAR;
 import static l1j.server.server.model.skill.L1SkillId.GREATER_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.HASTE;
-import static l1j.server.server.model.skill.L1SkillId.HOLY_WALK;
 import static l1j.server.server.model.skill.L1SkillId.ILLUSION_AVATAR;
 import static l1j.server.server.model.skill.L1SkillId.INVISIBILITY;
 import static l1j.server.server.model.skill.L1SkillId.JOY_OF_PAIN;
 import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
 import static l1j.server.server.model.skill.L1SkillId.MORTAL_BODY;
-import static l1j.server.server.model.skill.L1SkillId.MOVING_ACCELERATION;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import static l1j.server.server.model.skill.L1SkillId.SLOW;
 import static l1j.server.server.model.skill.L1SkillId.SOLID_CARRIAGE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE2;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_CHAT_PROHIBITED;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_ELFBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STRIKER_GALE;
-import static l1j.server.server.model.skill.L1SkillId.WIND_WALK;
+import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -2496,27 +2491,16 @@ public class L1PcInstance extends L1Character {
 		return maxWeight;
 	}
 
-	public boolean isFastMovable() {
-		return (hasSkillEffect(HOLY_WALK) || hasSkillEffect(MOVING_ACCELERATION) || hasSkillEffect(WIND_WALK) || hasSkillEffect(STATUS_RIBRAVE) || hasSkillEffect(STATUS_BRAVE2)// 寵物競速
-																																												// //
-																																												// 超級加速效果
-		);
+	public boolean isRibrave() { // 生命之樹果實 移速 * 1.15
+		return hasSkillEffect(STATUS_RIBRAVE);
 	}
 
-	public boolean isFastAttackable() {
-		return hasSkillEffect(BLOODLUST);
+	public boolean isThirdSpeed() { // 三段加速 * 1.15
+		return hasSkillEffect(EFFECT_THIRD_SPEED);
 	}
 
-	public boolean isBrave() {
-		return hasSkillEffect(STATUS_BRAVE);
-	}
-
-	public boolean isElfBrave() {
-		return hasSkillEffect(STATUS_ELFBRAVE);
-	}
-
-	public boolean isHaste() {
-		return (hasSkillEffect(STATUS_HASTE) || hasSkillEffect(HASTE) || hasSkillEffect(GREATER_HASTE) || (getMoveSpeed() == 1));
+	public boolean isWindShackle() { // 風之枷鎖  攻速 / 2
+		return hasSkillEffect(WIND_SHACKLE);
 	}
 
 	private int invisDelayCounter = 0;

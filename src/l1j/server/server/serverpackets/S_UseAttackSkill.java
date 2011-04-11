@@ -91,16 +91,14 @@ public class S_UseAttackSkill extends ServerBasePacket {
 		writeC(newheading);
 		writeD(_sequentialNumber.incrementAndGet()); // 番号がダブらないように送る。
 		writeH(spellgfx);
-		writeC(6); // タケッジゾング:6,範囲&タケッジゾング:8,範囲:0
+		writeC(6); // 0:弓箭 6:遠距離魔法 8:遠距離範圍魔法
 		writeH(cha.getX());
 		writeH(cha.getY());
 		writeH(x);
 		writeH(y);
 		writeC(0);
 		writeC(0);
-		writeC(0);
-		writeC(0);
-		writeC(0);
+		writeC(0); // 0:none 2:爪痕 4:雙擊 8:鏡返射
 	}
 
 	@Override
@@ -110,10 +108,10 @@ public class S_UseAttackSkill extends ServerBasePacket {
 		}
 		else {
 			int seq = _sequentialNumber.incrementAndGet();
-			_byte[12] = (byte) (seq & 0xff);
-			_byte[13] = (byte) (seq >> 8 & 0xff);
-			_byte[14] = (byte) (seq >> 16 & 0xff);
-			_byte[15] = (byte) (seq >> 24 & 0xff);
+			_byte[13] = (byte) (seq & 0xff);
+			_byte[14] = (byte) (seq >> 8 & 0xff);
+			_byte[15] = (byte) (seq >> 16 & 0xff);
+			_byte[16] = (byte) (seq >> 24 & 0xff);
 		}
 
 		return _byte;

@@ -32,6 +32,7 @@ import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE2;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_CHAT_PROHIBITED;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_ELFBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
@@ -555,6 +556,12 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.sendPackets(new S_SkillBrave(pc.getId(), 3, remaining_time));
 						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 3, 0));
 						pc.setBraveSpeed(3);
+						pc.setSkillEffect(skillid, remaining_time * 1000);
+						break;
+					case STATUS_BRAVE2: // 超級加速
+						pc.sendPackets(new S_SkillBrave(pc.getId(), 5, remaining_time));
+						pc.broadcastPacket(new S_SkillBrave(pc.getId(), 5, 0));
+						pc.setBraveSpeed(5);
 						pc.setSkillEffect(skillid, remaining_time * 1000);
 						break;
 					case STATUS_HASTE: // 加速

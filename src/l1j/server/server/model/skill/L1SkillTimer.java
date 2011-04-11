@@ -486,10 +486,11 @@ class L1SkillStop {
 				pc.startMpRegenerationByDoll();
 			}
 		}
-		else if (skillId == WIND_SHACKLE) { // ウィンド シャックル
+		else if (skillId == WIND_SHACKLE) { // 風之枷鎖
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), 0));
+				pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), 0));
 			}
 		}
 		else if ((skillId == SLOW) || (skillId == ENTANGLE) || (skillId == MASS_SLOW)) { // スロー、エンタングル、マススロー

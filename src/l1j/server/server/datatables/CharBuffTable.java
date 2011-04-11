@@ -36,13 +36,13 @@ public class CharBuffTable {
 
 	private static final int[] buffSkill = { 2, 67,
 		3, 99, 151, 159, 168,
-		43, 54,
 		52, 101, 150,
 		26, 42, 109, 110,
 		114, 115, 117,
 		148, 155, 163,
 		149, 156, 166,
-		STATUS_BRAVE, STATUS_HASTE, STATUS_ELFBRAVE, STATUS_RIBRAVE, // 二段加速
+		43, 54, STATUS_HASTE, // 一段加速
+		STATUS_BRAVE, STATUS_ELFBRAVE, STATUS_RIBRAVE, STATUS_BRAVE2, // 二段加速
 		EFFECT_THIRD_SPEED, // 三段加速
 		STATUS_BLUE_POTION, STATUS_CHAT_PROHIBITED, // 藍水，禁言
 		COOKING_1_0_N, COOKING_1_0_S, COOKING_1_1_N, COOKING_1_1_S, // 魔法料理

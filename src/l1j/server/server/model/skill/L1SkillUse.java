@@ -1229,6 +1229,10 @@ public class L1SkillUse {
 		else if (_skillId == IMMUNE_TO_HARM) {
 			pc.sendPackets(new S_SkillIconGFX(40, _getBuffIconDuration));
 		}
+		else if (_skillId == WIND_SHACKLE) { // 風之枷鎖
+			pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
+			pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), 0));
+		}
 		pc.sendPackets(new S_OwnCharStatus(pc));
 	}
 
@@ -1865,7 +1869,7 @@ public class L1SkillUse {
 						}
 					}
 				}
-				// ★★★ 攻擊性補血效果 ★★★
+				// ★★★ 攻擊性魔法 ★★★
 				// 寒冷戰慄、吸血鬼之吻
 				else if ((_skillId == CHILL_TOUCH) || (_skillId == VAMPIRIC_TOUCH)) {
 					heal = dmg;
@@ -2052,10 +2056,11 @@ public class L1SkillUse {
 						npc.setParalysisTime(_shockStunDuration);
 					}
 				}
-				else if (_skillId == WIND_SHACKLE) { // ウィンド シャックル
+				else if (_skillId == WIND_SHACKLE) { // 風之枷鎖
 					if (cha instanceof L1PcInstance) {
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
+						pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), 0));
 					}
 				}
 				else if (_skillId == CANCELLATION) {

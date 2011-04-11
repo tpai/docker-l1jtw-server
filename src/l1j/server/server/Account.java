@@ -347,7 +347,7 @@ public class Account {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con.prepareStatement("UPDATE `accounts` SET `WarePassword` = ? WHERE `login` = ?");
+			pstm = con.prepareStatement("UPDATE `accounts` SET `warepassword` = ? WHERE `login` = ?");
 			pstm.setInt(1, newPassword);
 			pstm.setString(2, getName());
 			pstm.execute();

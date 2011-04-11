@@ -405,6 +405,7 @@ public class L1SkillId {
 
 	public static final int STORM_SHOT = 166;
 
+	/** 妖精魔法 (風之枷鎖) */
 	public static final int WIND_SHACKLE = 167;
 
 	public static final int IRON_SKIN = 168;
@@ -485,6 +486,7 @@ public class L1SkillId {
 
 	public static final int CUBE_QUAKE = 210;
 
+	/** 幻術士魔法 (耐力) */
 	public static final int PATIENCE = 211;
 
 	public static final int PHANTASM = 212;
@@ -501,8 +503,10 @@ public class L1SkillId {
 	/** 幻術士魔法 (恐慌)*/
 	public static final int PANIC = 217;
 
+	/** 幻術士魔法 (疼痛的歡愉) */
 	public static final int JOY_OF_PAIN = 218;
 
+	/** 幻術士魔法 (幻覺：化身) */
 	public static final int ILLUSION_AVATAR = 219;
 
 	public static final int CUBE_BALANCE = 220;
