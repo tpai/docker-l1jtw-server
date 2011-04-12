@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-04-06 18:55:00
+Date: 2011-04-13 00:39:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1450,3 +1450,5 @@ INSERT INTO `spawnlist_npc` VALUES ('88740', '警衛', '1', '80139', '32796', '3
 INSERT INTO `spawnlist_npc` VALUES ('88741', '警衛', '1', '80139', '32810', '32823', '0', '0', '0', '0', '1001', '0');
 INSERT INTO `spawnlist_npc` VALUES ('88742', '警衛', '1', '80139', '32800', '32823', '0', '0', '0', '0', '1001', '0');
 INSERT INTO `spawnlist_npc` VALUES ('88743', '警衛', '1', '80139', '32815', '32806', '0', '0', '7', '0', '1001', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89000', '扭曲的空間', '1', '80048', '34267', '32188', '0', '0', '6', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89001', '次元之門', '1', '80058', '32760', '33459', '0', '0', '4', '0', '4', '0');
