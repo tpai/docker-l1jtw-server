@@ -29,6 +29,7 @@ import l1j.server.server.model.L1CastleLocation;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1NpcTalkData;
 import l1j.server.server.model.L1Quest;
+import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1TownLocation;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.gametime.L1GameTimeClock;
@@ -3560,6 +3561,36 @@ public class L1MerchantInstance extends L1NpcInstance {
 					&& !player.getInventory().checkItem(21081, 1)) {
 						htmlid = "gemout17";
 				}
+			} else if (npcid >= 81273 && npcid <= 81276) { // 龍之門扉
+				switch (npcid) {
+					case 81273: // 安塔瑞斯 Antharas
+						if (getRBplayerCount((short) 1005) < 32) {
+							L1Teleport.teleport(player, 32599, 32742, (short) 1005, 5, true);
+						} else {
+							player.sendPackets(new S_ServerMessage(1229));
+						}
+						break;
+					case 81274: // 法利昂 Fafurion
+						if (getRBplayerCount((short) 1011) < 32) {
+							L1Teleport.teleport(player, 32927, 32741, (short) 1011, 5, true);
+						} else {
+							player.sendPackets(new S_ServerMessage(1229));
+						}
+						break;
+					case 81275: // 未開放 Lindvior
+						/*if (getRBplayerCount((short) 1005) < 32) {
+							L1Teleport.teleport(player, 32599, 32742, (short) 1005, 5, true);
+						} else {
+							player.sendPackets(new S_ServerMessage(1229));
+						}*/
+						break;
+					case 81276: // 未開放 Valakas
+						/*if (getRBplayerCount((short) 1005) < 32) {
+							L1Teleport.teleport(player, 32599, 32742, (short) 1005, 5, true);
+						} else {
+							player.sendPackets(new S_ServerMessage(1229));
+						}*/
+				}		
 			}
 
 			// html表示パケット送信
@@ -3900,6 +3931,21 @@ public class L1MerchantInstance extends L1NpcInstance {
 			default:
 				break;
 		}
+	}
+
+	// 計算某地圖內玩家數量
+	private int getRBplayerCount(short mapId) {
+		int playerCount = 0;
+		for (Object obj : L1World.getInstance().getVisibleObjects(mapId)
+				.values()) {
+			if (obj instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) obj;
+				if (pc != null) {
+				   playerCount++;
+				}
+			}
+		}
+		return playerCount;
 	}
 
 }

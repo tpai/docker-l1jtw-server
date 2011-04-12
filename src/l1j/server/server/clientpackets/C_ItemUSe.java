@@ -99,6 +99,7 @@ import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_AddSkill;
 import l1j.server.server.serverpackets.S_AttackPacket;
 import l1j.server.server.serverpackets.S_CurseBlind;
+import l1j.server.server.serverpackets.S_DragonGate;
 import l1j.server.server.serverpackets.S_Fishing;
 import l1j.server.server.serverpackets.S_IdentifyDesc;
 import l1j.server.server.serverpackets.S_ItemName;
@@ -3241,6 +3242,13 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					// 幻術士試練 增加 end
 
+				} else if (itemId == 47010) { // 龍之鑰匙// 檢查是否在城堡區域內
+					if (!L1CastleLocation.checkInAllWarArea(pc.getLocation())) {//pc.getMapId() == 4 && 
+						int[] i = {1, 1, 0, 0};//安塔瑞斯=1, 法利昂=1, 林德拜爾=0, 巴拉卡斯=0, 等於 0 就是還沒開放
+						pc.sendPackets(new S_DragonGate(pc ,i));
+					} else {
+						pc.sendPackets(new S_SystemMessage("這個地方受到了詛咒，因此無法使用這個物品。"));
+					}
 				}
 				else {
 					int locX = ((L1EtcItem) l1iteminstance.getItem()).get_locx();

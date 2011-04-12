@@ -14,11 +14,17 @@
  */
 package l1j.server.server.clientpackets;
 
+import java.util.Calendar;
+
 import l1j.server.server.ClientThread;
+import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
+import l1j.server.server.model.Instance.L1MonsterInstance;
+import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SendLocation;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.utils.L1SpawnUtil;
 
 public class C_SendLocation extends ClientBasePacket {
 
@@ -33,25 +39,65 @@ public class C_SendLocation extends ClientBasePacket {
 		// マップ座標転送時は0x0bパケット
 		if (type == 0x0d) {
 			return;
+			/**視窗內:0d 01 xx // xx 就是值會變動，不知原因。
+			視窗外:0d 00 xx // xx 就是值會變動，不知原因。**/
 		}
 
-		String name = readS();
-		int mapId = readH();
-		int x = readH();
-		int y = readH();
-		int msgId = readC();
+		if (type == 0x0b) {
+			String name = readS();
+			int mapId = readH();
+			int x = readH();
+			int y = readH();
+			int msgId = readC();
 
-		if (name.isEmpty()) {
-			return;
-		}
-		L1PcInstance target = L1World.getInstance().getPlayer(name);
-		if (target != null) {
+			if (name.isEmpty()) {
+				return;
+			}
+			L1PcInstance target = L1World.getInstance().getPlayer(name);
+			if (target != null) {
+				L1PcInstance pc = client.getActiveChar();
+				String sender = pc.getName();
+				target.sendPackets(new S_SendLocation(type, sender, mapId, x, y,
+						msgId));
+				// 将来的にtypeを使う可能性があるので送る
+				pc.sendPackets(new S_ServerMessage(1783, name));
+			}
+		} else if (type == 0x06) {
+			int objectId = readD();
+			int gate = readC();
+			int unknow2 = readD();
+			int dragonGate[] = { 81273, 81274, 81275, 81276 };
 			L1PcInstance pc = client.getActiveChar();
-			String sender = pc.getName();
-			target.sendPackets(new S_SendLocation(type, sender, mapId, x, y,
-					msgId));
-			// 将来的にtypeを使う可能性があるので送る
-			pc.sendPackets(new S_ServerMessage(1783, name));
+			if (gate >=0 && gate <= 3) {
+				Calendar nowTime = Calendar.getInstance();
+				if (nowTime.get(Calendar.HOUR_OF_DAY) >= 8 && nowTime.get(Calendar.HOUR_OF_DAY) <= 12) {
+					pc.sendPackets(new S_ServerMessage(1643)); // 每日上午 8 點到 12 點為止，暫時無法使用龍之鑰匙。
+				} else if (!pc.getInventory().checkItem(47010, 1)) {
+					pc.sendPackets(new S_ServerMessage(74, "身上無龍之鑰匙，"));
+				} else {
+					boolean found = false;
+					for (L1Object obj : L1World.getInstance().getObject()) {
+						if (obj instanceof L1NpcInstance) {
+							L1NpcInstance mob = (L1NpcInstance) obj;
+							if (mob != null) {
+								int mobId = mob.getNpcTemplate().get_npcId();
+								if (mobId >= dragonGate[0] && mobId <= dragonGate[3]) {
+									if (mobId == dragonGate[gate]) {
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+					}
+					if (found) {
+						pc.sendPackets(new S_ServerMessage(74, "此龍之門扉已經開啟，"));
+					} else {
+						pc.getInventory().consumeItem(47010, 1);
+						L1SpawnUtil.spawn(pc, dragonGate[gate], 0, 120 * 60 * 1000);//開啟 2 小時
+					}
+				}
+			}
 		}
 	}
 

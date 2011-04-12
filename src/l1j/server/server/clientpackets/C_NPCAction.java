@@ -4039,41 +4039,82 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 		// 然柳寵物商
-		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70077) { // 羅德尼
-			int consumeItem = 40308;
-			int consumeItemCount = 50000;
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70077 // 羅德尼
+			|| ((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81290) { // 班酷
+			int consumeItem = 0;
+			int consumeItemCount = 0;
 			int petNpcId = 0;
-			int petItemId = 40314;// 40314 低等寵物項圈
-			int upLv = 5; // 等級
-			int lvExp = ExpTable.getExpByLevel(upLv); // LV.upLv 經驗值
+			int petItemId = 0;// 40314 低等寵物項圈
+			int upLv = 0; // 等級
+			int lvExp = 0; // LV.upLv 經驗值
+			String msg = "";
 			if (s.equalsIgnoreCase("buy 1")) {
 				petNpcId = 45042;// 杜賓狗
+				consumeItem = 40308;
+				consumeItemCount = 50000;
+				petItemId = 40314;
+				upLv = 5;
+				lvExp = ExpTable.getExpByLevel(upLv);
+				msg = "金幣";
 			}
 			else if (s.equalsIgnoreCase("buy 2")) {
 				petNpcId = 45034;// 牧羊犬
+				consumeItem = 40308;
+				consumeItemCount = 50000;
+				petItemId = 40314;
+				upLv = 5;
+				lvExp = ExpTable.getExpByLevel(upLv);
+				msg = "金幣";
 			}
 			else if (s.equalsIgnoreCase("buy 3")) {
 				petNpcId = 45046;// 小獵犬
+				consumeItem = 40308;
+				consumeItemCount = 50000;
+				petItemId = 40314;
+				upLv = 5;
+				lvExp = ExpTable.getExpByLevel(upLv);
+				msg = "金幣";
 			}
 			else if (s.equalsIgnoreCase("buy 4")) {
 				petNpcId = 45047;// 聖伯納犬
+				consumeItem = 40308;
+				consumeItemCount = 50000;
+				petItemId = 40314;
+				upLv = 5;
+				lvExp = ExpTable.getExpByLevel(upLv);
+				msg = "金幣";
+			}
+			else if (s.equalsIgnoreCase("buy 7")) {
+				petNpcId = 97023;// 淘氣龍
+				consumeItem = 47011;
+				consumeItemCount = 1;
+				petItemId = 40314;
+				upLv = 5;
+				lvExp = ExpTable.getExpByLevel(upLv);
+				msg = "淘氣幼龍蛋";
+			}
+			else if (s.equalsIgnoreCase("buy 8")) {
+				petNpcId = 97022;// 頑皮龍
+				consumeItem = 47012;
+				consumeItemCount = 1;
+				petItemId = 40314;
+				upLv = 5;
+				lvExp = ExpTable.getExpByLevel(upLv);
+				msg = "頑皮幼龍蛋";
 			}
 			if (petNpcId > 0) {
-				if (!pc.getInventory().checkItem(consumeItem, consumeItemCount)) { // 檢查扣除物品是否足夠
-					pc.sendPackets(new S_ServerMessage(337, "$4"));
+				if (!pc.getInventory().checkItem(consumeItem, consumeItemCount)) {
+					pc.sendPackets(new S_ServerMessage(337, msg));
 				}
-				else if (pc.getInventory().getSize() > 180) { // 檢查身上空間足夠
+				else if (pc.getInventory().getSize() > 180) {
 					pc.sendPackets(new S_ServerMessage(337, "身上空間"));
 				}
-				else if (pc.getInventory().checkItem(consumeItem, consumeItemCount)) { // 檢查扣除物品是否足夠
-					pc.getInventory().consumeItem(consumeItem, consumeItemCount); // 扣除物品
+				else if (pc.getInventory().checkItem(consumeItem, consumeItemCount)) {
+					pc.getInventory().consumeItem(consumeItem, consumeItemCount);
 					L1PcInventory inv = pc.getInventory();
-					L1ItemInstance petamu = inv.storeItem(petItemId, 1);// 40314
-																		// 低等寵物項圈
+					L1ItemInstance petamu = inv.storeItem(petItemId, 1);
 					if (petamu != null) {
-						PetTable.getInstance().buyNewPet(petNpcId, petamu.getId() + 1, petamu.getId(), upLv, lvExp);// 將獲得的寵物寫入
-																													// pets
-																													// 資料表
+						PetTable.getInstance().buyNewPet(petNpcId, petamu.getId() + 1, petamu.getId(), upLv, lvExp);
 						pc.sendPackets(new S_ItemName(petamu));
 						pc.sendPackets(new S_ServerMessage(403, petamu.getName()));
 					}
