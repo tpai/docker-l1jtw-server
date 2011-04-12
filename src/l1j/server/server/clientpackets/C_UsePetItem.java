@@ -16,6 +16,7 @@ package l1j.server.server.clientpackets;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.datatables.PetItemTable;
+import l1j.server.server.datatables.PetTypeTable;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -23,6 +24,7 @@ import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.serverpackets.S_PetEquipment;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1PetItem;
+import l1j.server.server.templates.L1PetType;
 
 // Referenced classes of package l1j.server.server.clientpackets:
 // ClientBasePacket
@@ -62,6 +64,13 @@ public class C_UsePetItem extends ClientBasePacket {
 
 		if ((item.getItem().getType2() == 0)
 				&& (item.getItem().getType() == 11)) { // 寵物道具
+			L1PetType petType = PetTypeTable.getInstance().get(pet.getNpcTemplate().get_npcId());
+			if (petType != null) {
+				if (petType.getItemIdForTaming() != 0) {
+					pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
+					return;
+				}
+			}
 			int itemId = item.getItem().getItemId();
 			if (((itemId >= 40749) && (itemId <= 40752)) || ((itemId >= 40756) && (itemId <= 40758))) { // 牙齒
 				usePetWeapon(pc, pet, item);
@@ -70,11 +79,10 @@ public class C_UsePetItem extends ClientBasePacket {
 				usePetArmor(pc, pet, item);
 				pc.sendPackets(new S_PetEquipment(data, pet, listNo)); // 裝備時更新寵物資訊
 			} else {
-				pc.sendPackets(new S_ServerMessage(79));
+				pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
 			}
-		}
-		else {
-			pc.sendPackets(new S_ServerMessage(79));
+		} else {
+			pc.sendPackets(new S_ServerMessage(74, item.getLogName()));
 		}
 	}
 

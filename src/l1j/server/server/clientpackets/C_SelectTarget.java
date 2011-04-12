@@ -19,6 +19,8 @@ import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
+import l1j.server.server.model.Instance.L1SummonInstance;
+import l1j.server.server.serverpackets.S_ServerMessage;
 
 // Referenced classes of package l1j.server.server.clientpackets:
 // ClientBasePacket
@@ -41,9 +43,42 @@ public class C_SelectTarget extends ClientBasePacket {
 		L1Character target = (L1Character) L1World.getInstance().findObject(targetId);
 
 		if ((pet != null) && (target != null)) {
+			// 目標為玩家
 			if (target instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) target;
-				if (pc.checkNonPvP(pc, pet)) {
+				// 目標在安區、攻擊者在安區、NOPVP
+				if ((pc.getZoneType() == 1) || (pet.getZoneType() == 1) || (pc.checkNonPvP(pc, pet))) {
+					// 寵物主人
+					if (pet.getMaster() instanceof L1PcInstance) {
+						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						petMaster.sendPackets(new S_ServerMessage(328)); // 請選擇正確的對象。
+					}
+					return;
+				}
+			}
+			// 目標為寵物
+			else if (target instanceof L1PetInstance) {
+				L1PetInstance targetPet = (L1PetInstance) target;
+				// 目標在安區、攻擊者在安區
+				if ((targetPet.getZoneType() == 1) || (pet.getZoneType() == 1)) {
+					// 寵物主人
+					if (pet.getMaster() instanceof L1PcInstance) {
+						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						petMaster.sendPackets(new S_ServerMessage(328)); // 請選擇正確的對象。
+					}
+					return;
+				}
+			}
+			// 目標為召喚怪
+			else if (target instanceof L1SummonInstance) {
+				L1SummonInstance targetSummon = (L1SummonInstance) target;
+				// 目標在安區、攻擊者在安區
+				if ((targetSummon.getZoneType() == 1) || (pet.getZoneType() == 1)) {
+					// 寵物主人
+					if (pet.getMaster() instanceof L1PcInstance) {
+						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						petMaster.sendPackets(new S_ServerMessage(328)); // 請選擇正確的對象。
+					}
 					return;
 				}
 			}

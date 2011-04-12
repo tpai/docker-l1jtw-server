@@ -442,6 +442,7 @@ public class L1SkillId {
 
 	public static final int BLOODLUST = 186;
 
+	/** 龍騎士魔法 (屠宰者) */
 	public static final int FOE_SLAYER = 187;
 
 	public static final int RESIST_FEAR = 188;
@@ -735,6 +736,21 @@ public class L1SkillId {
 
 	public static final int EFFECT_END = 4010;
 
+	// 特殊狀態
+	public static final int SPECIAL_EFFECT_BEGIN = 5001;
+
+	/** 鎖鏈劍 (弱點曝光 LV1) **/
+	public static final int SPECIAL_EFFECT_WEAKNESS_LV1 = 5001;
+
+	/** 鎖鏈劍 (弱點曝光 LV2) **/
+	public static final int SPECIAL_EFFECT_WEAKNESS_LV2 = 5002;
+
+	/** 鎖鏈劍 (弱點曝光 LV3) **/
+	public static final int SPECIAL_EFFECT_WEAKNESS_LV3 = 5003;
+
+	public static final int SPECIAL_EFFECT_END = 5003;
+
+	// 戰鬥特化狀態
 	/** 新手保護(遭遇的守護) **/
 	public static final int STATUS_NOVICE = 8000;
 }

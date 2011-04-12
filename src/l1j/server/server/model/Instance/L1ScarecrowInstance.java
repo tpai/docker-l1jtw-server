@@ -32,16 +32,20 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
-		L1Attack attack = new L1Attack(player, this);
+	public void onAction(L1PcInstance pc) {
+		L1Attack attack = new L1Attack(pc, this);
 		if (attack.calcHit()) {
-			if (player.getLevel() < 5) { // ＬＶ制限もうける場合はここを変更
+			attack.calcDamage();
+			attack.calcStaffOfMana();
+			attack.addPcPoisonAttack(pc, this);
+			attack.addChaserAttack();
+			if (pc.getLevel() < 5) { // ＬＶ制限もうける場合はここを変更
 				List<L1Character> targetList = Lists.newList();
 
-				targetList.add(player);
+				targetList.add(pc);
 				List<Integer> hateList = Lists.newList();
 				hateList.add(1);
-				CalcExp.calcExp(player, getId(), targetList, hateList, getExp());
+				CalcExp.calcExp(pc, getId(), targetList, hateList, getExp());
 			}
 			if (getHeading() < 7) { // 今の向きを取得
 				setHeading(getHeading() + 1); // 今の向きを設定
@@ -52,6 +56,7 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 			broadcastPacket(new S_ChangeHeading(this)); // 向きの変更
 		}
 		attack.action();
+		attack.commit();
 	}
 
 	@Override

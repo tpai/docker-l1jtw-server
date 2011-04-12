@@ -349,19 +349,19 @@ public class L1Magic {
 		}
 
 		String msg0 = "";
-		String msg1 = "に";
+		String msg1 = " 施放魔法 ";
 		String msg2 = "";
 		String msg3 = "";
 		String msg4 = "";
 
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
-			msg0 = _pc.getName();
+			msg0 = _pc.getName() + " 對";
 		}
 		else if (_calcType == NPC_PC) { // アタッカーがＮＰＣの場合
 			msg0 = _npc.getName();
 		}
 
-		msg2 = "probability:" + probability + "%";
+		msg2 = "，機率：" + probability + "%";
 		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
 			msg4 = _targetPc.getName();
 		}
@@ -374,14 +374,14 @@ public class L1Magic {
 		else {
 			msg3 = "失敗";
 		}
-
-		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
-			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
-																						// %2
+   
+		// 0 4 1 3 2 攻擊者 對 目標 施放魔法 成功/失敗，機率：X%。
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
+			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4));
 		}
-		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
-																							// %2
+		// 攻擊者 施放魔法 成功/失敗，機率：X%。
+		else if ((_calcType == NPC_PC)) {
+			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, null));
 		}
 
 		return isSuccess;
@@ -1065,41 +1065,43 @@ public class L1Magic {
 			if (((_calcType == PC_PC) || (_calcType == PC_NPC)) && !_pc.isGm()) {
 				return;
 			}
-			if (((_calcType == PC_PC) || (_calcType == NPC_PC)) && !_targetPc.isGm()) {
+			if ((_calcType == NPC_PC) && !_targetPc.isGm()) {
 				return;
 			}
 		}
 
 		String msg0 = "";
-		String msg1 = "に";
+		String msg1 = " 造成 ";
 		String msg2 = "";
 		String msg3 = "";
 		String msg4 = "";
 
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {// アタッカーがＰＣの場合
-			msg0 = _pc.getName();
+			msg0 = "魔攻 對";
 		}
 		else if (_calcType == NPC_PC) { // アタッカーがＮＰＣの場合
-			msg0 = _npc.getName();
+			msg0 = _npc.getName() + "(魔攻)：";
 		}
 
 		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
 			msg4 = _targetPc.getName();
-			msg2 = "THP" + _targetPc.getCurrentHp();
+			msg2 = "，剩餘 " + _targetPc.getCurrentHp();
 		}
 		else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
 			msg4 = _targetNpc.getName();
-			msg2 = "THp" + _targetNpc.getCurrentHp();
+			msg2 = "，剩餘 " + _targetNpc.getCurrentHp();
 		}
 
-		msg3 = damage + "与えた";
+		msg3 = damage  + " 傷害";
 
+		// 魔攻 對 目標 造成 X 傷害，剩餘 Y。
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
 			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
 																						// %2
 		}
-		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3, msg4)); // \f1%0が%4%1%3
+		// 攻擊者(魔攻)： X傷害，剩餘 Y。
+		else if ((_calcType == NPC_PC)) { // ターゲットがＰＣの場合
+			_targetPc.sendPackets(new S_ServerMessage(166, msg0, null, msg2, msg3, null)); // \f1%0が%4%1%3
 																							// %2
 		}
 	}

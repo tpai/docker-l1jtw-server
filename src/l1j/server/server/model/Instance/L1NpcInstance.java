@@ -57,16 +57,19 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
 import l1j.server.server.model.skill.L1SkillUse;
+import l1j.server.server.serverpackets.S_ChangeHeading;
 import l1j.server.server.serverpackets.S_ChangeShape;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_MoveCharPacket;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_RemoveObject;
+import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1NpcChat;
 import l1j.server.server.types.Point;
+import l1j.server.server.utils.CalcExp;
 import l1j.server.server.utils.Random;
 import l1j.server.server.utils.TimerPool;
 import l1j.server.server.utils.collections.Lists;
@@ -555,6 +558,16 @@ public class L1NpcInstance extends L1Character {
 			}
 			if (!isCounterBarrier) {
 				attack.calcDamage();
+			}
+			// 目標為木人
+			if (target instanceof L1ScarecrowInstance) {
+				if (target.getHeading() < 7) {
+					target.setHeading(target.getHeading() + 1);
+				}
+				else {
+					target.setHeading(0);
+				}
+				target.broadcastPacket(new S_ChangeHeading(target));
 			}
 		}
 		if (isCounterBarrier) {

@@ -58,8 +58,14 @@ public class L1MerchantInstance extends L1NpcInstance {
 	@Override
 	public void onAction(L1PcInstance pc) {
 		L1Attack attack = new L1Attack(pc, this);
-		attack.calcHit();
+		if (attack.calcHit()) {
+			attack.calcDamage();
+			attack.calcStaffOfMana();
+			attack.addPcPoisonAttack(pc, this);
+			attack.addChaserAttack();
+		}
 		attack.action();
+		attack.commit();
 	}
 
 	@Override

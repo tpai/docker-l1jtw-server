@@ -102,10 +102,16 @@ public class C_GiveItem extends ClientBasePacket {
 			return;
 		}
 
+		// 捕抓寵物
 		if (item.getItemId() == petType.getItemIdForTaming()) {
 			tamePet(pc, target);
 		}
+		// 進化果實
 		if ((item.getItemId() == 40070) && petType.canEvolve()) {
+			evolvePet(pc, target);
+		}
+		// 勝利果實
+		if ((item.getItemId() == 41310) && petType.canEvolve()) {
 			evolvePet(pc, target);
 		}
 	}

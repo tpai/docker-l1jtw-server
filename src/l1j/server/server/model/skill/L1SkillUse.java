@@ -1231,7 +1231,7 @@ public class L1SkillUse {
 		}
 		else if (_skillId == WIND_SHACKLE) { // 風之枷鎖
 			pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
-			pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), 0));
+			pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
 		}
 		pc.sendPackets(new S_OwnCharStatus(pc));
 	}
@@ -1874,7 +1874,7 @@ public class L1SkillUse {
 				else if ((_skillId == CHILL_TOUCH) || (_skillId == VAMPIRIC_TOUCH)) {
 					heal = dmg;
 				}
-				else if (_skillId == TRIPLE_ARROW) { // トリプルアロー
+				else if (_skillId == TRIPLE_ARROW) { // 三重矢
 					// 1回射出する毎にアロー、ダメージ、命中を計算する
 					// アローが残り1でサイハの弓を持ってるとき、
 					// 最初は普通の攻撃その後は魔法攻撃
@@ -1904,7 +1904,9 @@ public class L1SkillUse {
 					_player.sendPackets(new S_SkillSound(_player.getId(), 4394));
 					_player.broadcastPacket(new S_SkillSound(_player.getId(), 4394));
 				}
-				else if (_skillId == FOE_SLAYER) { // フォースレイヤー
+				else if (_skillId == FOE_SLAYER) { // 屠宰者
+					// 給予屠宰者狀態，用於判斷是否加成３０％傷害
+					_player.setSkillEffect(FOE_SLAYER, 5 * 1000);
 					for (int i = 3; i > 0; i--) {
 						_target.onAction(_player);
 					}
@@ -1912,6 +1914,16 @@ public class L1SkillUse {
 					_player.sendPackets(new S_SkillSound(_player.getId(), 7020));
 					_player.broadcastPacket(new S_SkillSound(_target.getId(), 6509));
 					_player.broadcastPacket(new S_SkillSound(_player.getId(), 7020));
+					// 施放屠宰者時，弱點曝光 LV1、LV2 消失
+					if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
+						_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
+						_player.sendPackets(new S_SkillIconGFX(75, 0));
+					} else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
+						_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
+						_player.sendPackets(new S_SkillIconGFX(75, 0));
+					}
+					// 刪除屠宰者狀態
+					_player.killSkillEffectTimer(FOE_SLAYER);
 				}
 				else if ((_skillId == 10026) || (_skillId == 10027) || (_skillId == 10028) || (_skillId == 10029)) { // 安息攻撃
 					if (_user instanceof L1NpcInstance) {
@@ -2060,7 +2072,7 @@ public class L1SkillUse {
 					if (cha instanceof L1PcInstance) {
 						L1PcInstance pc = (L1PcInstance) cha;
 						pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
-						pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), 0));
+						pc.broadcastPacket(new S_SkillIconWindShackle(pc.getId(), _getBuffIconDuration));
 					}
 				}
 				else if (_skillId == CANCELLATION) {
@@ -2847,6 +2859,7 @@ public class L1SkillUse {
 							cha.addDex((byte) 1);
 							cha.addWis((byte) 1);
 							cha.addInt((byte) 1);
+							cha.addCha((byte) 1);
 						}
 					}
 					else if (_skillId == PANIC) { // 恐慌
@@ -2856,6 +2869,7 @@ public class L1SkillUse {
 							cha.addDex((byte) -1);
 							cha.addWis((byte) -1);
 							cha.addInt((byte) -1);
+							cha.addCha((byte) -1);
 						}
 					}
 				}

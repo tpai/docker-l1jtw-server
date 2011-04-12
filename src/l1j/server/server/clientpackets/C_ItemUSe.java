@@ -558,11 +558,11 @@ public class C_ItemUSe extends ClientBasePacket {
 				int item_minlvl = ((L1EtcItem) l1iteminstance.getItem()).getMinLevel();
 				int item_maxlvl = ((L1EtcItem) l1iteminstance.getItem()).getMaxLevel();
 				if ((item_minlvl != 0) && (item_minlvl > pc.getLevel()) && !pc.isGm()) {
-					pc.sendPackets(new S_ServerMessage(318, String.valueOf(item_minlvl))); // このアイテムは%0レベル以上にならなければ使用できません。
+					pc.sendPackets(new S_ServerMessage(318, String.valueOf(item_minlvl))); // 等級 %0以上才可使用此道具。
 					return;
 				}
 				else if ((item_maxlvl != 0) && (item_maxlvl < pc.getLevel()) && !pc.isGm()) {
-					pc.sendPackets(new S_ServerMessage(673, String.valueOf(item_maxlvl))); // このアイテムは%dレベル以上のみ使用できます。
+					pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, item_maxlvl)); // 等級%d以下才能使用此道具。
 					return;
 				}
 
@@ -3271,18 +3271,11 @@ public class C_ItemUSe extends ClientBasePacket {
 				int min = l1iteminstance.getItem().getMinLevel();
 				int max = l1iteminstance.getItem().getMaxLevel();
 				if ((min != 0) && (min > pc.getLevel())) {
-					// このアイテムは%0レベル以上にならなければ使用できません。
+					// 等級 %0以上才可使用此道具。
 					pc.sendPackets(new S_ServerMessage(318, String.valueOf(min)));
 				}
 				else if ((max != 0) && (max < pc.getLevel())) {
-					// このアイテムは%dレベル以下のみ使用できます。
-					// S_ServerMessageでは引数が表示されない
-					if (max < 50) {
-						pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, max));
-					}
-					else {
-						pc.sendPackets(new S_SystemMessage("このアイテムは" + max + "レベル以下のみ使用できます。"));
-					}
+					pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, max)); // 等級%d以下才能使用此道具。
 				}
 				else {
 					if ((pc.isCrown() && l1iteminstance.getItem().isUseRoyal()) || (pc.isKnight() && l1iteminstance.getItem().isUseKnight())
@@ -3308,18 +3301,11 @@ public class C_ItemUSe extends ClientBasePacket {
 					int min = ((L1Armor) l1iteminstance.getItem()).getMinLevel();
 					int max = ((L1Armor) l1iteminstance.getItem()).getMaxLevel();
 					if ((min != 0) && (min > pc.getLevel())) {
-						// このアイテムは%0レベル以上にならなければ使用できません。
+						// 等級 %0以上才可使用此道具。
 						pc.sendPackets(new S_ServerMessage(318, String.valueOf(min)));
 					}
 					else if ((max != 0) && (max < pc.getLevel())) {
-						// このアイテムは%dレベル以下のみ使用できます。
-						// S_ServerMessageでは引数が表示されない
-						if (max < 50) {
-							pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, max));
-						}
-						else {
-							pc.sendPackets(new S_SystemMessage("このアイテムは" + max + "レベル以下のみ使用できます。"));
-						}
+						pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_LEVEL_OVER, max)); // 等級%d以下才能使用此道具。
 					}
 					else {
 						UseArmor(pc, l1iteminstance);

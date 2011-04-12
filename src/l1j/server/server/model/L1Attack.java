@@ -54,6 +54,7 @@ import static l1j.server.server.model.skill.L1SkillId.ELEMENTAL_FIRE;
 import static l1j.server.server.model.skill.L1SkillId.ENCHANT_VENOM;
 import static l1j.server.server.model.skill.L1SkillId.FIRE_BLESS;
 import static l1j.server.server.model.skill.L1SkillId.FIRE_WEAPON;
+import static l1j.server.server.model.skill.L1SkillId.FOE_SLAYER;
 import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
 import static l1j.server.server.model.skill.L1SkillId.FREEZING_BREATH;
 import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
@@ -70,6 +71,9 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
 import static l1j.server.server.model.skill.L1SkillId.UNCANNY_DODGE;
 import static l1j.server.server.model.skill.L1SkillId.BONE_BREAK;
+import static l1j.server.server.model.skill.L1SkillId.SPECIAL_EFFECT_WEAKNESS_LV1;
+import static l1j.server.server.model.skill.L1SkillId.SPECIAL_EFFECT_WEAKNESS_LV2;
+import static l1j.server.server.model.skill.L1SkillId.SPECIAL_EFFECT_WEAKNESS_LV3;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.WarTimeController;
@@ -89,6 +93,7 @@ import l1j.server.server.serverpackets.S_AttackPacket;
 import l1j.server.server.serverpackets.S_AttackPacketForNpc;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_UseArrowSkill;
 import l1j.server.server.serverpackets.S_UseAttackSkill;
@@ -556,17 +561,13 @@ public class L1Attack {
 
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
+		} else if (_targetPc.hasSkillEffect(ICE_LANCE)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
+		} else if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
+		} else if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
+		} else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			_hitRate = 0;
 		}
 		int rnd = Random.nextInt(100) + 1;
@@ -850,18 +851,24 @@ public class L1Attack {
 
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
+		} else if (_targetPc.hasSkillEffect(ICE_LANCE)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
+		} else if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
+		} else if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
 			_hitRate = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
+		} else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			_hitRate = 0;
+		} else if (_npc instanceof L1PetInstance) {
+			// 目標在安區、攻擊者在安區、NOPVP
+			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1) || (_targetPc.checkNonPvP(_targetPc, _npc))) {
+				_hitRate = 0;
+			}
+		} else if (_npc instanceof L1SummonInstance) {
+			// 目標在安區、攻擊者在安區、NOPVP
+			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1) || (_targetPc.checkNonPvP(_targetPc, _npc))) {
+				_hitRate = 0;
+			}
 		}
 
 		int rnd = Random.nextInt(100) + 1;
@@ -923,6 +930,29 @@ public class L1Attack {
 				_hitRate = 100;
 			} else if (attackerDice <= defenderDice) {
 				_hitRate = 0;
+			}
+		}
+		if (_npc instanceof L1PetInstance) {
+			// 目標在安區、攻擊者在安區、NOPVP
+			if (_targetNpc instanceof L1PetInstance) {
+				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+					_hitRate = 0;
+				}
+			} else if (_targetNpc instanceof L1SummonInstance) {
+				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+					_hitRate = 0;
+				}
+			}
+		} else if (_npc instanceof L1SummonInstance) {
+			// 目標在安區、攻擊者在安區、NOPVP
+			if (_targetNpc instanceof L1PetInstance) {
+				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+					_hitRate = 0;
+				}
+			} else if (_targetNpc instanceof L1SummonInstance) {
+				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+					_hitRate = 0;
+				}
 			}
 		}
 
@@ -1020,6 +1050,16 @@ public class L1Attack {
 				add_dmg = 1;
 			}
 			dmg = dmg + Random.nextInt(add_dmg) + 1;
+		}
+
+		// 弱點曝光發動判斷
+		WeaknessExposure();
+		// 弱點曝光 LV3 時，使用屠宰者加成 30% 傷害，弱點消失
+		if (_pc.hasSkillEffect(FOE_SLAYER)
+				&& _pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
+			dmg *= 1.3;
+			_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
+			_pc.sendPackets(new S_SkillIconGFX(75, 0));
 		}
 
 		dmg = calcBuffDamage(dmg);
@@ -1254,6 +1294,16 @@ public class L1Attack {
 				add_dmg = 1;
 			}
 			dmg = dmg + Random.nextInt(add_dmg) + 1;
+		}
+
+		// 弱點曝光發動判斷
+		WeaknessExposure();
+		// 弱點曝光 LV3 時，使用屠宰者加成 30% 傷害，弱點消失
+		if (_pc.hasSkillEffect(FOE_SLAYER)
+				&& _pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
+			dmg *= 1.3;
+			_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
+			_pc.sendPackets(new S_SkillIconGFX(75, 0));
 		}
 
 		dmg = calcBuffDamage(dmg);
@@ -1554,6 +1604,16 @@ public class L1Attack {
 				}
 				double diffDmg = dmg - tempDmg;
 				dmg = tempDmg * 1.5 + diffDmg;
+			}
+		}
+		if (_weaponType2 == 18) { // 鎖鏈劍
+			// 弱點曝光 - 傷害加成
+			if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
+				dmg += 9;
+			} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
+				dmg += 6;
+			} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
+				dmg += 3;
 			}
 		}
 
@@ -1903,34 +1963,33 @@ public class L1Attack {
 			}
 		}
 		String msg0 = "";
-		String msg1 = "に";
+		String msg1 = " 造成 ";
 		String msg2 = "";
 		String msg3 = "";
 		String msg4 = "";
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
-			msg0 = _pc.getName();
+			msg0 = "物攻 對";
 		} else if (_calcType == NPC_PC) { // アタッカーがＮＰＣの場合
-			msg0 = _npc.getName();
+			msg0 = _npc.getNameId() + "(物攻)：";
 		}
 
 		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
 			msg4 = _targetPc.getName();
-			msg2 = "HitR" + _hitRate + "% THP" + _targetPc.getCurrentHp();
+			msg2 = "，剩餘 " + _targetPc.getCurrentHp() + "，命中	" + _hitRate + "%";
 		} else if (_calcType == PC_NPC) { // ターゲットがＮＰＣの場合
-			msg4 = _targetNpc.getName();
-			msg2 = "Hit" + _hitRate + "% Hp" + _targetNpc.getCurrentHp();
+			msg4 = _targetNpc.getNameId();
+			msg2 = "，剩餘 " + _targetNpc.getCurrentHp() + "，命中 " + _hitRate + "%";
 		}
-		msg3 = _isHit ? _damage + "与えた" : "ミスしました";
+		msg3 = _isHit ? _damage + " 傷害" : "  0 傷害";
 
-		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) { // アタッカーがＰＣの場合
+		// 物攻 對 目標 造成 X 傷害，剩餘 Y，命中 Z %。
+		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			_pc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2, msg3,
-					msg4)); // \f1%0が%4%1%3
-							// %2
+					msg4));
 		}
-		if ((_calcType == NPC_PC) || (_calcType == PC_PC)) { // ターゲットがＰＣの場合
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, msg1, msg2,
-					msg3, msg4)); // \f1%0が%4%1%3
-									// %2
+		// 攻擊者(物攻)： X傷害，剩餘 Y，命中%。
+		else if ((_calcType == NPC_PC)) {
+			_targetPc.sendPackets(new S_ServerMessage(166, msg0, null, msg2, msg3, null));
 		}
 	}
 
@@ -2107,6 +2166,56 @@ public class L1Attack {
 			// \f1あなたの%0が損傷しました。
 			_pc.sendPackets(new S_ServerMessage(268, weapon.getLogName()));
 			_pc.getInventory().receiveDamage(weapon);
+		}
+	}
+
+	/** 弱點曝光 */
+	private void WeaknessExposure() {
+		weapon = _pc.getWeapon();
+		if (weapon != null) {
+			int random = 0;
+			if (_weaponType2 == 18) { // 鎖鏈劍
+				// 使用屠宰者狀態...
+				if (_pc.hasSkillEffect(FOE_SLAYER)) {
+					return;
+				}
+				if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) { // 目前階段三
+					random = Random.nextInt(100) + 1;
+					if (random > 40 && random <= 55) { // 階段三
+						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
+						_pc.sendPackets(new S_SkillIconGFX(75, 3));
+					}
+				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) { // 目前階段二
+					random = Random.nextInt(100) + 1;
+					if (random <= 25) { // 階段二
+						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
+						_pc.sendPackets(new S_SkillIconGFX(75, 2));
+					} else if (random >= 85) { // 階段三
+						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
+						_pc.sendPackets(new S_SkillIconGFX(75, 3));
+					}
+				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) { // 目前 階段一
+					random = Random.nextInt(100) + 1;
+					if (random <= 40) { // 階段一
+						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1, 16 * 1000);
+						_pc.sendPackets(new S_SkillIconGFX(75, 1));
+					} else if (random >= 75) { // 階段二
+						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
+						_pc.sendPackets(new S_SkillIconGFX(75, 2));
+					}
+				} else {
+					random = Random.nextInt(100) + 1;
+					if (random <= 40) { // 階段一
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1, 16 * 1000);
+						_pc.sendPackets(new S_SkillIconGFX(75, 1));
+					}
+				}
+			}
 		}
 	}
 }

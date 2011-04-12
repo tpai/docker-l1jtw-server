@@ -240,6 +240,20 @@ public class L1SummonInstance extends L1NpcInstance {
 				player.setPetTarget(this);
 			}
 
+			if (attacker instanceof L1PetInstance) {
+				L1PetInstance pet = (L1PetInstance) attacker;
+				// 目標在安區、攻擊者在安區、NOPVP
+				if ((getZoneType() == 1) || (pet.getZoneType() == 1)) {
+					damage = 0;
+				}
+			} else if (attacker instanceof L1SummonInstance) {
+				L1SummonInstance summon = (L1SummonInstance) attacker;
+				// 目標在安區、攻擊者在安區、NOPVP
+				if ((getZoneType() == 1) || (summon.getZoneType() == 1)) {
+					damage = 0;
+				}
+			}
+
 			int newHp = getCurrentHp() - damage;
 			if (newHp <= 0) {
 				Death(attacker);

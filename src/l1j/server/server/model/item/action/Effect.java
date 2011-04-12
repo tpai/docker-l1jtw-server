@@ -16,6 +16,7 @@ package l1j.server.server.model.item.action;
 
 import static l1j.server.server.model.skill.L1SkillId.*;
 
+import l1j.server.server.model.L1Character;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.item.L1ItemId;
@@ -46,20 +47,20 @@ public class Effect {
 				skillId = itemId - 42999;
 				time = 900;
 				gfxid = itemId - 39699;
-				deleteExpEffect(pc); // 與戰鬥藥水等相衝
+				deleteRepeatedSkills(pc, skillId); // 與戰鬥藥水等相衝
 				pc.sendPackets(new S_ServerMessage(1292)); // 狩獵的經驗值將會增加。
 				break;
 			case L1ItemId.BLESS_OF_MAZU: // 媽祖祝福平安符
 				skillId = EFFECT_BLESS_OF_MAZU;
 				time = 2400;
 				gfxid = 7321;
-				deleteElfEffect(pc); // 與妖精屬性魔法相衝！
+				deleteRepeatedSkills(pc, skillId); // 與妖精屬性魔法相衝！
 				break;
 			case L1ItemId.POTION_OF_BATTLE: // 戰鬥藥水
 				skillId = EFFECT_POTION_OF_BATTLE;
 				time = 3600;
 				gfxid = 7013;
-				deleteExpEffect(pc); // 與神力藥水等相衝
+				deleteRepeatedSkills(pc, skillId); // 與神力藥水等相衝
 				break;
 			case L1ItemId.SCROLL_FOR_STRENGTHENING_HP: // 體力增強卷軸
 			case L1ItemId.SCROLL_FOR_STRENGTHENING_MP: // 魔力增強卷軸
@@ -67,7 +68,7 @@ public class Effect {
 				skillId = itemId - 42999;
 				time = 3600;
 				gfxid = itemId - 40014;
-				deleteScrollEffect(pc);
+				deleteRepeatedSkills(pc, skillId);
 				break;
 			default:
 				pc.sendPackets(new S_ServerMessage(79)); // 沒有任何事情發生。
@@ -83,7 +84,8 @@ public class Effect {
 	}
 
 	public static void useEffect(L1PcInstance pc, int skillId, int time) {
-		switch(skillId) {
+		if (!pc.hasSkillEffect(skillId)) {
+			switch(skillId) {
 			case EFFECT_BLESS_OF_MAZU: // 媽祖的祝福
 				pc.addHitup(3); // 攻擊成功 +3
 				pc.addDmgup(3); // 額外攻擊點數 +3
@@ -110,64 +112,39 @@ public class Effect {
 			default:
 				break;
 		}
+		}
 		pc.setSkillEffect(skillId, time * 1000);
 	}
 
-	// 刪除經驗加成狀態
-	private static void deleteExpEffect(L1PcInstance pc) {
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
-			pc.killSkillEffectTimer(EFFECT_POTION_OF_EXP_150);
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
-			pc.killSkillEffectTimer(EFFECT_POTION_OF_EXP_175);
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
-			pc.killSkillEffectTimer(EFFECT_POTION_OF_EXP_200);
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
-			pc.killSkillEffectTimer(EFFECT_POTION_OF_EXP_225);
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
-			pc.killSkillEffectTimer(EFFECT_POTION_OF_EXP_250);
-		}
-		if (pc.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
-			pc.killSkillEffectTimer(EFFECT_POTION_OF_BATTLE);
+	// 設定不可重複的魔法狀態 
+	public static void deleteRepeatedSkills(L1PcInstance pc, int skillId) {
+		final int[][] repeatedSkills =
+		{
+				// 經驗加成狀態
+				{ EFFECT_POTION_OF_EXP_150, EFFECT_POTION_OF_EXP_175, EFFECT_POTION_OF_EXP_200,
+					EFFECT_POTION_OF_EXP_225, EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE },
+				// 體力增強卷軸、魔力增強卷軸、強化戰鬥卷
+				{ EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP, EFFECT_ENCHANTING_BATTLE },
+				// 火焰武器、風之神射、烈炎氣息、暴風之眼、烈炎武器、暴風神射、媽祖的祝福
+				{ FIRE_WEAPON, WIND_SHOT, FIRE_BLESS, STORM_EYE, BURNING_WEAPON, STORM_SHOT, EFFECT_BLESS_OF_MAZU }
+		};
+
+		for (int[] skills : repeatedSkills) {
+			for (int id : skills) {
+				if (id == skillId) {
+					stopSkillList(pc, skillId, skills);
+				}
+			}
 		}
 	}
 
-	// 刪除體力增強卷軸、魔力增強卷軸、強化戰鬥卷軸重複狀態
-	private static void deleteScrollEffect(L1PcInstance pc) {
-		if (pc.hasSkillEffect(EFFECT_STRENGTHENING_HP)) {
-			pc.removeSkillEffect(EFFECT_STRENGTHENING_HP);
-		}
-		if (pc.hasSkillEffect(EFFECT_STRENGTHENING_MP)) {
-			pc.removeSkillEffect(EFFECT_STRENGTHENING_MP);
-		}
-		if (pc.hasSkillEffect(EFFECT_ENCHANTING_BATTLE)) {
-			pc.removeSkillEffect(EFFECT_ENCHANTING_BATTLE);
-		}
-
-	}
-
-	// 刪除妖精屬性魔法狀態
-	private static void deleteElfEffect(L1PcInstance pc) {
-		if (pc.hasSkillEffect(FIRE_WEAPON)) {
-			pc.removeSkillEffect(FIRE_WEAPON);
-		}
-		if (pc.hasSkillEffect(WIND_SHOT)) {
-			pc.removeSkillEffect(WIND_SHOT);
-		}
-		if (pc.hasSkillEffect(FIRE_BLESS)) {
-			pc.removeSkillEffect(FIRE_BLESS);
-		}
-		if (pc.hasSkillEffect(STORM_EYE)) {
-			pc.removeSkillEffect(STORM_EYE);
-		}
-		if (pc.hasSkillEffect(BURNING_WEAPON)) {
-			pc.removeSkillEffect(BURNING_WEAPON);
-		}
-		if (pc.hasSkillEffect(STORM_SHOT)) {
-			pc.removeSkillEffect(STORM_SHOT);
+	// 將重複的狀態刪除
+	private static void stopSkillList(L1PcInstance pc, int _skillId, int[] repeat_skill) {
+		for (int skillId : repeat_skill) {
+			if (skillId != _skillId) {
+				pc.removeSkillEffect(skillId);
+			}
 		}
 	}
+
 }

@@ -390,6 +390,7 @@ class L1SkillStop {
 				cha.addDex((byte) -1);
 				cha.addWis((byte) -1);
 				cha.addInt((byte) -1);
+				cha.addCha((byte) -1);
 			}
 		}
 		else if (skillId == PANIC) { // 恐慌
@@ -399,6 +400,7 @@ class L1SkillStop {
 				cha.addDex((byte) 1);
 				cha.addWis((byte) 1);
 				cha.addInt((byte) 1);
+				cha.addCha((byte) 1);
 			}
 		}
 

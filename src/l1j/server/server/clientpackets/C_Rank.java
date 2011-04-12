@@ -33,86 +33,97 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 public class C_Rank extends ClientBasePacket {
 
 	private static final String C_RANK = "[C] C_Rank";
-
 	private static Logger _log = Logger.getLogger(C_Rank.class.getName());
 
-	public C_Rank(byte abyte0[], ClientThread clientthread) throws Exception {
+	public C_Rank(byte abyte0[], ClientThread clientthread)
+			throws Exception {
 		super(abyte0);
 
-		readC(); // ?
-		int rank = readC();
-		String name = readS();
+		int data = readC(); // ?
+		// int rank = readC();
+		// String name = readS();
 
 		L1PcInstance pc = clientthread.getActiveChar();
-		L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 
-		if (pc == null) {
-			return;
-		}
+		if (data == 2) {
+			pc.sendPackets(new S_ServerMessage(74, "同盟目錄"));
+		} else if (data == 3) {
+			pc.sendPackets(new S_ServerMessage(74, "加入同盟"));
+		} else if (data == 4) {
+			pc.sendPackets(new S_ServerMessage(74, "退出同盟"));
+		} else {
+			/*
+			L1PcInstance pc = clientthread.getActiveChar();
+			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 
-		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
-		if (clan == null) {
-			return;
-		}
-
-		if ((rank < 1) && (3 < rank)) {
-			// ランクを変更する人の名前とランクを入力してください。[ランク=ガーディアン、一般、見習い]
-			pc.sendPackets(new S_ServerMessage(781));
-			return;
-		}
-
-		if (pc.isCrown()) { // 君主
-			if (pc.getId() != clan.getLeaderId()) { // 血盟主
-				pc.sendPackets(new S_ServerMessage(785)); // あなたはもう君主ではありません。
+			if (pc == null) {
 				return;
 			}
-		}
-		else {
-			pc.sendPackets(new S_ServerMessage(518)); // この命令は血盟の君主のみが利用できます。
-			return;
-		}
 
-		if (targetPc != null) { // 玩家在線上
-			if (pc.getClanid() == targetPc.getClanid()) { // 同血盟
-				try {
-					targetPc.setClanRank(rank);
-					targetPc.save(); // 儲存玩家的資料到資料庫中
-					String rankString = "$772";
-					if (rank == L1Clan.CLAN_RANK_PROBATION) {
-						rankString = "$774";
-					}
-					else if (rank == L1Clan.CLAN_RANK_PUBLIC) {
-						rankString = "$773";
-					}
-					else if (rank == L1Clan.CLAN_RANK_GUARDIAN) {
-						rankString = "$772";
-					}
-					targetPc.sendPackets(new S_ServerMessage(784, rankString)); // あなたのランクが%sに変更されました。
-				}
-				catch (Exception e) {
-					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+			if (clan == null) {
+				return;
+			}
+
+			if ((rank < 1) && (3 < rank)) {
+				// ランクを変更する人の名前とランクを入力してください。[ランク=ガーディアン、一般、見習い]
+				pc.sendPackets(new S_ServerMessage(781));
+				return;
+			}
+
+			if (pc.isCrown()) { // 君主
+				if (pc.getId() != clan.getLeaderId()) { // 血盟主
+					pc.sendPackets(new S_ServerMessage(785)); // あなたはもう君主ではありません。
+					return;
 				}
 			}
 			else {
-				pc.sendPackets(new S_ServerMessage(414)); // 同じ血盟員ではありません。
+				pc.sendPackets(new S_ServerMessage(518)); // この命令は血盟の君主のみが利用できます。
 				return;
 			}
-		}
-		else { // オフライン中
-			L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
-			if ((restorePc != null) && (restorePc.getClanid() == pc.getClanid())) { // 同じ血盟
-				try {
-					restorePc.setClanRank(rank);
-					restorePc.save(); // 儲存玩家的資料到資料庫中
+
+			if (targetPc != null) { // 玩家在線上
+				if (pc.getClanid() == targetPc.getClanid()) { // 同血盟
+					try {
+						targetPc.setClanRank(rank);
+						targetPc.save(); // 儲存玩家的資料到資料庫中
+						String rankString = "$772";
+						if (rank == L1Clan.CLAN_RANK_PROBATION) {
+							rankString = "$774";
+						}
+						else if (rank == L1Clan.CLAN_RANK_PUBLIC) {
+							rankString = "$773";
+						}
+						else if (rank == L1Clan.CLAN_RANK_GUARDIAN) {
+							rankString = "$772";
+						}
+						targetPc.sendPackets(new S_ServerMessage(784, rankString)); // あなたのランクが%sに変更されました。
+					}
+					catch (Exception e) {
+						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+					}
 				}
-				catch (Exception e) {
-					_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+				else {
+					pc.sendPackets(new S_ServerMessage(414)); // 同じ血盟員ではありません。
+					return;
 				}
 			}
-			else {
-				pc.sendPackets(new S_ServerMessage(109, name)); // %0という名前の人はいません。
-				return;
-			}
+			else { // オフライン中
+				L1PcInstance restorePc = CharacterTable.getInstance().restoreCharacter(name);
+				if ((restorePc != null) && (restorePc.getClanid() == pc.getClanid())) { // 同じ血盟
+					try {
+						restorePc.setClanRank(rank);
+						restorePc.save(); // 儲存玩家的資料到資料庫中
+					}
+					catch (Exception e) {
+						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+					}
+				}
+				else {
+					pc.sendPackets(new S_ServerMessage(109, name)); // %0という名前の人はいません。
+					return;
+				}
+			}*/
 		}
 	}
 
