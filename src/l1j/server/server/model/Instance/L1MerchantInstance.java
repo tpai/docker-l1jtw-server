@@ -81,42 +81,14 @@ public class L1MerchantInstance extends L1NpcInstance {
 	@Override
 	public void onTalkAction(L1PcInstance player) {
 		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
 		int npcid = getNpcTemplate().get_npcId();
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(npcid);
 		L1Quest quest = player.getQuest();
 		String htmlid = null;
 		String[] htmldata = null;
 
-		int pcX = player.getX();
-		int pcY = player.getY();
-		int npcX = getX();
-		int npcY = getY();
-
 		if (getNpcTemplate().getChangeHead()) {
-			if ((pcX == npcX) && (pcY < npcY)) {
-				setHeading(0);
-			}
-			else if ((pcX > npcX) && (pcY < npcY)) {
-				setHeading(1);
-			}
-			else if ((pcX > npcX) && (pcY == npcY)) {
-				setHeading(2);
-			}
-			else if ((pcX > npcX) && (pcY > npcY)) {
-				setHeading(3);
-			}
-			else if ((pcX == npcX) && (pcY > npcY)) {
-				setHeading(4);
-			}
-			else if ((pcX < npcX) && (pcY > npcY)) {
-				setHeading(5);
-			}
-			else if ((pcX < npcX) && (pcY == npcY)) {
-				setHeading(6);
-			}
-			else if ((pcX < npcX) && (pcY < npcY)) {
-				setHeading(7);
-			}
+			setHeading(targetDirection(player.getX(), player.getY()));
 			broadcastPacket(new S_ChangeHeading(this));
 
 			synchronized (this) {
@@ -3543,32 +3515,26 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "artisan1";
 				}
 			} else if (npcid == 81261) { //寶石加工師^大衛
-				if (player.getInventory().checkItem(21088, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
-						htmlid = "gemout8";
-				} else if (player.getInventory().checkItem(21087, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
-						htmlid = "gemout7";
-				} else if (player.getInventory().checkItem(21086, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
-						htmlid = "gemout6";
-				} else if (player.getInventory().checkItem(21085, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
-						htmlid = "gemout5";
-				} else if (player.getInventory().checkItem(21084, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
-						htmlid = "gemout4";
-				} else if (player.getInventory().checkItem(21083, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
-						htmlid = "gemout3";
-				} else if (player.getInventory().checkItem(21082, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
-						htmlid = "gemout2";
-				} else if (player.getInventory().checkItem(21081, 1) 
-					&& player.getInventory().checkItem(49031, 1)) {
+				if (player.getInventory().checkItem(49031, 1)) { // 冰之結晶
+					if (player.getInventory().checkItem(21081, 1)) {
 						htmlid = "gemout1";
-				} else if (player.getInventory().checkItem(49031, 1)) {
+					} else if (player.getInventory().checkItem(21082, 1)) {
+						htmlid = "gemout2";
+					} else if (player.getInventory().checkItem(21083, 1)) {
+						htmlid = "gemout3";
+					} else if (player.getInventory().checkItem(21084, 1)) {
+						htmlid = "gemout4";
+					} else if (player.getInventory().checkItem(21085, 1)) {
+						htmlid = "gemout5";
+					} else if (player.getInventory().checkItem(21086, 1)) {
+						htmlid = "gemout6";
+					} else if (player.getInventory().checkItem(21087, 1)) {
+						htmlid = "gemout7";
+					} else if (player.getInventory().checkItem(21088, 1)) {
+						htmlid = "gemout8";
+					} else {
 						htmlid = "gemout17";
+					}
 				}
 			} else if (npcid >= 81273 && npcid <= 81276) { // 龍之門扉
 				switch (npcid) {
@@ -3909,8 +3875,6 @@ public class L1MerchantInstance extends L1NpcInstance {
 				}
 				pc.sendPackets(new S_ServerMessage(77));
 				pc.sendPackets(new S_SkillSound(pc.getId(), 830));
-				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
-				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 				break;
 
 			case 2:// 加速
