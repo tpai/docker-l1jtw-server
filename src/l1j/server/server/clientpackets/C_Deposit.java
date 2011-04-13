@@ -19,7 +19,7 @@ import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.model.item.L1ItemId;
+import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.templates.L1Castle;
 
 // Referenced classes of package l1j.server.server.clientpackets:

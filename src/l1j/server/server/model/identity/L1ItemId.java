@@ -12,11 +12,11 @@
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.model.item;
+package l1j.server.server.model.identity;
 
 public class L1ItemId {
 
-//	一段加速類道具
+    //一段加速類道具
 	/** 自我加速藥水ン */
 	public static final int POTION_OF_HASTE_SELF = 40013;
 
@@ -29,7 +29,7 @@ public class L1ItemId {
 	/** 受祝福的 強化 自我加速藥水 */
 	public static final int B_POTION_OF_GREATER_HASTE_SELF = 140018;
 
-//	二段加速類道具
+    //二段加速類道具
 	/** 勇敢藥水 */
 	public static final int POTION_OF_EMOTION_BRAVERY = 40014;
 
@@ -60,11 +60,11 @@ public class L1ItemId {
 	/** 生命之樹果實 */
 	public static final int FORBIDDEN_FRUIT = 49158;
 
-//	三段加速類道具
+    //三段加速類道具
 	/** 巧克力蛋糕 */
 	public static final int CHOCOLATE_CAKE = 49138;
 
-//	治癒類道具
+    //治癒類道具
 	/** 治癒藥水 */
 	public static final int POTION_OF_HEALING = 40010;
 
@@ -95,7 +95,7 @@ public class L1ItemId {
 	/** 濃縮終極體力恢復劑 */
 	public static final int CONDENSED_POTION_OF_GREATER_HEALING = 40021;
 
-//	藥水類道具
+    //藥水類道具
 	/** 藍色藥水 */
 	public static final int POTION_OF_MANA = 40015;
 
@@ -120,7 +120,7 @@ public class L1ItemId {
 	/** 黑色藥水 */
 	public static final int POTION_OF_BLINDNESS = 40025;
 
-//	卷軸類道具
+    //卷軸類道具
 	/** 對盔甲施法的卷軸 */
 	public static final int SCROLL_OF_ENCHANT_ARMOR = 40074;
 
@@ -142,7 +142,7 @@ public class L1ItemId {
 	/** 試煉卷軸 */
 	public static final int SCROLL_OF_ENCHANT_QUEST_WEAPON = 40660;
 
-//	其他類道具
+    //其他類道具
 	/** 150%神力藥水 */
 	public static final int POTION_OF_EXP_150 = 47000;
 

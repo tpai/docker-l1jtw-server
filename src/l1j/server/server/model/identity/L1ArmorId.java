@@ -12,7 +12,7 @@
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.model.item;
+package l1j.server.server.model.identity;
 
 public class L1ArmorId {
 	/** 抗魔法頭盔 */

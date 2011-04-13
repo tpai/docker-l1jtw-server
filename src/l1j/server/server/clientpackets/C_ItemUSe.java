@@ -90,7 +90,7 @@ import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1TowerInstance;
-import l1j.server.server.model.item.L1ItemId;
+import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.item.action.Effect;
 import l1j.server.server.model.item.action.Potion;

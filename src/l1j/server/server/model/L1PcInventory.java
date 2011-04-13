@@ -24,7 +24,7 @@ import l1j.server.server.datatables.RaceTicketTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
-import l1j.server.server.model.item.L1ItemId;
+import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.serverpackets.S_AddItem;
 import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_DeleteInventoryItem;

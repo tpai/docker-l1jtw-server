@@ -14,13 +14,13 @@
  */
 package l1j.server.server.model.Instance;
 
-import static l1j.server.server.model.item.L1ItemId.B_POTION_OF_GREATER_HASTE_SELF;
-import static l1j.server.server.model.item.L1ItemId.B_POTION_OF_HASTE_SELF;
-import static l1j.server.server.model.item.L1ItemId.POTION_OF_EXTRA_HEALING;
-import static l1j.server.server.model.item.L1ItemId.POTION_OF_GREATER_HASTE_SELF;
-import static l1j.server.server.model.item.L1ItemId.POTION_OF_GREATER_HEALING;
-import static l1j.server.server.model.item.L1ItemId.POTION_OF_HASTE_SELF;
-import static l1j.server.server.model.item.L1ItemId.POTION_OF_HEALING;
+import static l1j.server.server.model.identity.L1ItemId.B_POTION_OF_GREATER_HASTE_SELF;
+import static l1j.server.server.model.identity.L1ItemId.B_POTION_OF_HASTE_SELF;
+import static l1j.server.server.model.identity.L1ItemId.POTION_OF_EXTRA_HEALING;
+import static l1j.server.server.model.identity.L1ItemId.POTION_OF_GREATER_HASTE_SELF;
+import static l1j.server.server.model.identity.L1ItemId.POTION_OF_GREATER_HEALING;
+import static l1j.server.server.model.identity.L1ItemId.POTION_OF_HASTE_SELF;
+import static l1j.server.server.model.identity.L1ItemId.POTION_OF_HEALING;
 import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
 import static l1j.server.server.model.skill.L1SkillId.COUNTER_BARRIER;
 import static l1j.server.server.model.skill.L1SkillId.POLLUTE_WATER;
