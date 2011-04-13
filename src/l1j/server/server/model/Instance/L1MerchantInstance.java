@@ -3543,22 +3543,31 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "artisan1";
 				}
 			} else if (npcid == 81261) { //寶石加工師^大衛
-				if (player.getInventory().checkItem(21082, 1)) {
-						htmlid = "gemout2";
-				} else if (player.getInventory().checkItem(21083, 1)) {
-						htmlid = "gemout3";
-				} else if (player.getInventory().checkItem(21084, 1)) {
-						htmlid = "gemout4";
-				} else if (player.getInventory().checkItem(21085, 1)) {
-						htmlid = "gemout5";
-				} else if (player.getInventory().checkItem(21086, 1)) {
-						htmlid = "gemout6";
-				} else if (player.getInventory().checkItem(21087, 1)) {
-						htmlid = "gemout7";
-				} else if (player.getInventory().checkItem(21088, 1)) {
+				if (player.getInventory().checkItem(21088, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
 						htmlid = "gemout8";
-				} else if (player.getInventory().checkItem(49031, 1) 
-					&& !player.getInventory().checkItem(21081, 1)) {
+				} else if (player.getInventory().checkItem(21087, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
+						htmlid = "gemout7";
+				} else if (player.getInventory().checkItem(21086, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
+						htmlid = "gemout6";
+				} else if (player.getInventory().checkItem(21085, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
+						htmlid = "gemout5";
+				} else if (player.getInventory().checkItem(21084, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
+						htmlid = "gemout4";
+				} else if (player.getInventory().checkItem(21083, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
+						htmlid = "gemout3";
+				} else if (player.getInventory().checkItem(21082, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
+						htmlid = "gemout2";
+				} else if (player.getInventory().checkItem(21081, 1) 
+					&& player.getInventory().checkItem(49031, 1)) {
+						htmlid = "gemout1";
+				} else if (player.getInventory().checkItem(49031, 1)) {
 						htmlid = "gemout17";
 				}
 			} else if (npcid >= 81273 && npcid <= 81276) { // 龍之門扉
