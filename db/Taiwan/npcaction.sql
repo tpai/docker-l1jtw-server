@@ -1066,7 +1066,7 @@ INSERT INTO `npcaction` VALUES ('81256', 'admin1', 'admin1', '', '');
 INSERT INTO `npcaction` VALUES ('81257', 'lowlv1', 'lowlv1', '', '');
 INSERT INTO `npcaction` VALUES ('70515', 'mubo1', 'mubo1', '', '');
 INSERT INTO `npcaction` VALUES ('81260', 'artisan2', 'artisan2', '', '');
-INSERT INTO `npcaction` VALUES ('81261', 'gemout1', 'gemout1', '', '');
+INSERT INTO `npcaction` VALUES ('81261', '8event3', '8event3', '', '');
 INSERT INTO `npcaction` VALUES ('81262', 'warechar1', 'warechar1', '', '');
 INSERT INTO `npcaction` VALUES ('81263', 'warechar1', 'warechar1', '', '');
 INSERT INTO `npcaction` VALUES ('81264', 'warechar1', 'warechar1', '', '');

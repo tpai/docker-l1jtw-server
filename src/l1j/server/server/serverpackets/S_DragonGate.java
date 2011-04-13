@@ -20,7 +20,7 @@ import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
 /**
- * スキルアイコンや遮断リストの表示など複数の用途に使われるパケットのクラス
+ * 送出顯示龍門選單動作
  */
 public class S_DragonGate extends ServerBasePacket {
 	private static final String S_DRAGON_GATE = "[S] S_DragonGate";

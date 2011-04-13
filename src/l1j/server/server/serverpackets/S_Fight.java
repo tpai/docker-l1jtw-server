@@ -58,7 +58,7 @@ public class S_Fight extends ServerBasePacket {
 	}
 
 	@Override
-	public byte[] getContent() throws IOException {
+	public byte[] getContent() {
 		if (_byte == null) {
 			_byte = getBytes();
 		}

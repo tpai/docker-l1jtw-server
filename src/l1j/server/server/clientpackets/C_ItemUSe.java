@@ -3178,8 +3178,8 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 						pc.getInventory().consumeItem(49222, 1);
 					}
-					// 幻術士試練 增加 start
 				}
+				// 幻術士試練 增加 start
 				else if (itemId == 49188) { // 索夏依卡靈魂之石
 					if (l1iteminstance1.getItem().getItemId() == 49186) {
 						L1ItemInstance item1 = ItemTable.getInstance().createItem(49189);
@@ -3210,10 +3210,10 @@ public class C_ItemUSe extends ClientBasePacket {
 							}
 						}
 						if (found) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1
+							pc.sendPackets(new S_ServerMessage(79));
 						}
 						else {
-							L1SpawnUtil.spawn(pc, 46163, 0, 0); //  ?
+							L1SpawnUtil.spawn(pc, 46163, 0, 0);
 						}
 						pc.getInventory().consumeItem(49189, 1);
 					}
@@ -3233,17 +3233,17 @@ public class C_ItemUSe extends ClientBasePacket {
 							}
 						}
 						if (found) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1
+							pc.sendPackets(new S_ServerMessage(79));
 						}
 						else {
-							L1SpawnUtil.spawn(pc, 81254, 0, 0); //  ?
+							L1SpawnUtil.spawn(pc, 81254, 0, 0);
 						}
 						pc.getInventory().consumeItem(49201, 1);
 					}
-					// 幻術士試練 增加 end
+				// 幻術士試練 增加 end
 
-				} else if (itemId == 47010) { // 龍之鑰匙// 檢查是否在城堡區域內
-					if (!L1CastleLocation.checkInAllWarArea(pc.getLocation())) {//pc.getMapId() == 4 && 
+				} else if (itemId == 47010) { // 龍之鑰匙
+					if (!L1CastleLocation.checkInAllWarArea(pc.getLocation())) {// 檢查是否在城堡區域內
 						int[] i = {1, 1, 0, 0};//安塔瑞斯=1, 法利昂=1, 林德拜爾=0, 巴拉卡斯=0, 等於 0 就是還沒開放
 						pc.sendPackets(new S_DragonGate(pc ,i));
 					} else {
