@@ -412,6 +412,7 @@ public class L1SkillId {
 
 	public static final int EXOTIC_VITALIZE = 169;
 
+	/** 水之元氣 */
 	public static final int WATER_LIFE = 170;
 
 	public static final int ELEMENTAL_FIRE = 171;

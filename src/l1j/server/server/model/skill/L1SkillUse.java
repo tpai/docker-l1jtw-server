@@ -91,6 +91,7 @@ import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconAura;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillIconShield;
+import l1j.server.server.serverpackets.S_SkillIconWaterLife;
 import l1j.server.server.serverpackets.S_SkillIconWindShackle;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Sound;
@@ -288,7 +289,7 @@ public class L1SkillUse {
 
 		// ファイアーウォール、ライフストリームは詠唱対象が座標
 		// キューブは詠唱者の座標に配置されるため例外
-		if ((_skillId == FIRE_WALL) || (_skillId == LIFE_STREAM)) {
+		if ((_skillId == FIRE_WALL) || (_skillId == LIFE_STREAM) || (_skillId == TRUE_TARGET)) {
 			return true;
 		}
 
@@ -1349,9 +1350,6 @@ public class L1SkillUse {
 					if ((_skillId == COUNTER_MAGIC) || (_skillId == COUNTER_BARRIER) || (_skillId == COUNTER_MIRROR)) {
 						_player.sendPackets(new S_SkillSound(targetid, castgfx));
 					}
-					else if (_skillId == TRUE_TARGET) { // 精準目標 效果另外處理
-						return;
-					}
 					else if ((_skillId == AWAKEN_ANTHARAS // 覚醒：アンタラス
 							)
 							|| (_skillId == AWAKEN_FAFURION // 覚醒：パプリオン
@@ -1479,34 +1477,52 @@ public class L1SkillUse {
 
 	private void runSkill() {
 
-		if (_skillId == LIFE_STREAM) {
-			L1EffectSpawn.getInstance().spawnEffect(81169, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId());
-			return;
-		}
-		else if (_skillId == CUBE_IGNITION) {
-			L1EffectSpawn.getInstance().spawnEffect(80149, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
+		switch(_skillId) {
+			case LIFE_STREAM:
+				L1EffectSpawn.getInstance().spawnEffect(81169, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId());
+				return;
+			case CUBE_IGNITION:
+				L1EffectSpawn.getInstance().spawnEffect(80149, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
 					(L1PcInstance) _user, _skillId);
-			return;
-		}
-		else if (_skillId == CUBE_QUAKE) {
-			L1EffectSpawn.getInstance().spawnEffect(80150, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
-					(L1PcInstance) _user, _skillId);
-			return;
-		}
-		else if (_skillId == CUBE_SHOCK) {
-			L1EffectSpawn.getInstance().spawnEffect(80151, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
-					(L1PcInstance) _user, _skillId);
-			return;
-		}
-		else if (_skillId == CUBE_BALANCE) {
-			L1EffectSpawn.getInstance().spawnEffect(80152, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
-					(L1PcInstance) _user, _skillId);
-			return;
-		}
-
-		if (_skillId == FIRE_WALL) { // ファイアーウォール
-			L1EffectSpawn.getInstance().doSpawnFireWall(_user, _targetX, _targetY);
-			return;
+				return;
+			case CUBE_QUAKE:
+				L1EffectSpawn.getInstance().spawnEffect(80150, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
+						(L1PcInstance) _user, _skillId);
+				return;
+			case CUBE_SHOCK:
+				L1EffectSpawn.getInstance().spawnEffect(80151, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
+						(L1PcInstance) _user, _skillId);
+				return;
+			case CUBE_BALANCE:
+				L1EffectSpawn.getInstance().spawnEffect(80152, _skill.getBuffDuration() * 1000, _targetX, _targetY, _user.getMapId(),
+						(L1PcInstance) _user, _skillId);
+				return;
+			case FIRE_WALL: // 火牢
+				L1EffectSpawn.getInstance().doSpawnFireWall(_user, _targetX, _targetY);
+				return;
+			case TRUE_TARGET: // 精準目標
+				if (_user instanceof L1PcInstance) {
+					L1PcInstance pri = (L1PcInstance) _user;
+					L1EffectInstance effect = L1EffectSpawn.getInstance().spawnEffect(80153, 5 * 1000, _targetX + 2, _targetY - 1, _user.getMapId());
+					if (_targetID != 0) {
+						pri.sendPackets(new S_TrueTarget(_targetID, pri.getId(), _message));
+						L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
+						for (L1PcInstance pc : players) {
+							pc.sendPackets(new S_TrueTarget(_targetID, pc.getId(), _message));
+						}
+						return;
+					} else if (effect != null) {
+						pri.sendPackets(new S_TrueTarget(effect.getId(), pri.getId(), _message));
+						L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
+						for (L1PcInstance pc : players) {
+							pc.sendPackets(new S_TrueTarget(effect.getId(), pc.getId(), _message));
+						}
+						return;
+					}
+				}
+				break;
+			default:
+				break;
 		}
 
 		// カウンターマジック有/無効の設定
@@ -1613,6 +1629,10 @@ public class L1SkillUse {
 					if (cha.hasSkillEffect(WATER_LIFE)) { // 水之元氣-效果 2倍
 						dmg *= 2;
 						cha.killSkillEffectTimer(WATER_LIFE); // 效果只有一次
+						if (cha instanceof L1PcInstance) {
+							L1PcInstance pc = (L1PcInstance) cha;
+							pc.sendPackets(new S_SkillIconWaterLife());
+						}
 					}
 					if (cha.hasSkillEffect(POLLUTE_WATER)) { // 汙濁之水-效果減半
 						dmg /= 2;
@@ -1799,16 +1819,6 @@ public class L1SkillUse {
 					}
 					else {
 						dmg = 0;
-					}
-				}
-				else if (_skillId == TRUE_TARGET) { // トゥルーターゲット
-					if (_user instanceof L1PcInstance) {
-						L1PcInstance pri = (L1PcInstance) _user;
-						pri.sendPackets(new S_TrueTarget(_targetID, pri.getId(), _message));
-						L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
-						for (L1PcInstance pc : players) {
-							pc.sendPackets(new S_TrueTarget(_targetID, pc.getId(), _message));
-						}
 					}
 				}
 				else if (_skillId == ELEMENTAL_FALL_DOWN) { // エレメンタルフォールダウン
