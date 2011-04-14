@@ -25,18 +25,22 @@ import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.DropTable;
 import l1j.server.server.datatables.NpcTable;
+import l1j.server.server.datatables.PetTypeTable;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1World;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_HPMeter;
+import l1j.server.server.serverpackets.S_NpcChatPacket;
 import l1j.server.server.serverpackets.S_PetCtrlMenu;
 import l1j.server.server.serverpackets.S_PetMenuPacket;
+import l1j.server.server.serverpackets.S_PetPack;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.templates.L1Npc;
+import l1j.server.server.templates.L1PetType;
 import l1j.server.server.utils.Random;
 
 public class L1SummonInstance extends L1NpcInstance {
@@ -450,12 +454,26 @@ public class L1SummonInstance extends L1NpcInstance {
 			return;
 		}
 		if (status == 6) {
+			L1PcInstance petMaster = (L1PcInstance) _master;
 			if (_tamed) {
 				// テイミングモンスター、クリエイトゾンビの解放
 				liberate();
 			} else {
 				// サモンの解散
 				Death(null);
+			}
+			// 更新寵物控制介面
+			Object[] petList = petMaster.getPetList().values().toArray();
+			for (Object petObject : petList) {
+				if (petObject instanceof L1SummonInstance) {
+					L1SummonInstance summon = (L1SummonInstance) petObject;
+					petMaster.sendPackets(new S_SummonPack(summon, petMaster));
+					return;
+				} else if (petObject instanceof L1PetInstance) {
+					L1PetInstance pet = (L1PetInstance) petObject;
+					petMaster.sendPackets(new S_PetPack(pet, petMaster));
+					return;
+				}
 			}
 		} else {
 			// 同じ主人のペットの状態をすべて更新
@@ -465,8 +483,20 @@ public class L1SummonInstance extends L1NpcInstance {
 					// サモンモンスター
 					L1SummonInstance summon = (L1SummonInstance) petObject;
 					summon.set_currentPetStatus(status);
-				} else {
-					// ペット
+				} else if (petObject instanceof L1PetInstance) { // ペット
+					L1PetInstance pet = (L1PetInstance) petObject;
+					if ((player != null)
+							&& (player.getLevel() >= pet.getLevel())) {
+						pet.setCurrentPetStatus(status);
+					} else {
+						L1PetType type = PetTypeTable.getInstance().get(
+								pet.getNpcTemplate().get_npcId());
+						int id = type.getDefyMessageId();
+						if (id != 0) {
+							broadcastPacket(new S_NpcChatPacket(pet, "$" + id,
+									0));
+						}
+					}
 				}
 			}
 		}

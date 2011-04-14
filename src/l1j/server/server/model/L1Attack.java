@@ -14,66 +14,6 @@
  */
 package l1j.server.server.model;
 
-import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
-import static l1j.server.server.model.skill.L1SkillId.BERSERKERS;
-import static l1j.server.server.model.skill.L1SkillId.BOUNCE_ATTACK;
-import static l1j.server.server.model.skill.L1SkillId.BURNING_SPIRIT;
-import static l1j.server.server.model.skill.L1SkillId.BURNING_WEAPON;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_0_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_1_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_2_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_3_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_4_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_5_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_6_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_7_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_0_N;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_0_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_1_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_2_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_3_N;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_3_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_4_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_5_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_6_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_7_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_N;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_1_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_2_N;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_2_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_3_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_4_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_5_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_7_S;
-import static l1j.server.server.model.skill.L1SkillId.DOUBLE_BRAKE;
-import static l1j.server.server.model.skill.L1SkillId.DRAGON_SKIN;
-import static l1j.server.server.model.skill.L1SkillId.EARTH_BIND;
-import static l1j.server.server.model.skill.L1SkillId.ELEMENTAL_FIRE;
-import static l1j.server.server.model.skill.L1SkillId.ENCHANT_VENOM;
-import static l1j.server.server.model.skill.L1SkillId.FIRE_BLESS;
-import static l1j.server.server.model.skill.L1SkillId.FIRE_WEAPON;
-import static l1j.server.server.model.skill.L1SkillId.FOE_SLAYER;
-import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
-import static l1j.server.server.model.skill.L1SkillId.FREEZING_BREATH;
-import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
-import static l1j.server.server.model.skill.L1SkillId.IMMUNE_TO_HARM;
-import static l1j.server.server.model.skill.L1SkillId.MIRROR_IMAGE;
-import static l1j.server.server.model.skill.L1SkillId.PATIENCE;
-import static l1j.server.server.model.skill.L1SkillId.REDUCTION_ARMOR;
-import static l1j.server.server.model.skill.L1SkillId.RESIST_FEAR;
-import static l1j.server.server.model.skill.L1SkillId.SOUL_OF_FLAME;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_BARLOG;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_YAHEE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_MITHRIL_POWDER;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
-import static l1j.server.server.model.skill.L1SkillId.UNCANNY_DODGE;
-import static l1j.server.server.model.skill.L1SkillId.BONE_BREAK;
-import static l1j.server.server.model.skill.L1SkillId.SPECIAL_EFFECT_WEAKNESS_LV1;
-import static l1j.server.server.model.skill.L1SkillId.SPECIAL_EFFECT_WEAKNESS_LV2;
-import static l1j.server.server.model.skill.L1SkillId.SPECIAL_EFFECT_WEAKNESS_LV3;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.WarTimeController;
@@ -100,6 +40,8 @@ import l1j.server.server.serverpackets.S_UseAttackSkill;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.types.Point;
 import l1j.server.server.utils.Random;
+
+import static l1j.server.server.model.skill.L1SkillId.*;
 
 public class L1Attack {
 	private L1PcInstance _pc = null;
@@ -1089,7 +1031,7 @@ public class L1Attack {
 			dmg += _skillDamage;
 		}
 
-		if (_weaponType2 == 17) { // キーリンク
+		if (_weaponType2 == 17) { // 奇古獸
 			dmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 			dmg += calcAttrEnchantDmg();
 		}
@@ -1177,6 +1119,13 @@ public class L1Attack {
 		}
 		if (_targetPc.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2;
+		}
+		// 使用暴擊增加15點傷害，而奇古獸只有15點傷害
+		if (_pc.hasSkillEffect(SMASH)) {
+			dmg += 15;
+			if (_weaponType2 == 17) {
+				dmg = 15;
+			}
 		}
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			dmg = 0;
@@ -1370,7 +1319,15 @@ public class L1Attack {
 
 		dmg -= calcNpcDamageReduction();
 
-		// プレイヤーからペット、サモンに攻撃
+		// 使用暴擊增加15點傷害，而奇古獸只有15點傷害
+		if (_pc.hasSkillEffect(SMASH)) {
+			dmg += 15;
+			if (_weaponType2 == 17) {
+				dmg = 15;
+			}
+		}
+
+		// 非攻城區域對寵物、召喚獸傷害減少
 		boolean isNowWar = false;
 		int castleId = L1CastleLocation.getCastleIdByArea(_targetNpc);
 		if (castleId > 0) {
@@ -1582,7 +1539,7 @@ public class L1Attack {
 		return (int) dmg;
 	}
 
-	// ●●●● プレイヤーのダメージ強化魔法 ●●●●
+	// ●●●● 強化魔法 ●●●●
 	private double calcBuffDamage(double dmg) {
 		// 火武器、バーサーカーのダメージは1.5倍しない
 		if (_pc.hasSkillEffect(BURNING_SPIRIT)

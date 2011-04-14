@@ -28,7 +28,6 @@ import static l1j.server.server.model.skill.L1SkillId.GREATER_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.HASTE;
 import static l1j.server.server.model.skill.L1SkillId.ILLUSION_AVATAR;
 import static l1j.server.server.model.skill.L1SkillId.INVISIBILITY;
-import static l1j.server.server.model.skill.L1SkillId.JOY_OF_PAIN;
 import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
 import static l1j.server.server.model.skill.L1SkillId.MORTAL_BODY;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
@@ -1178,22 +1177,6 @@ public class L1PcInstance extends L1Character {
 						L1NpcInstance attackNpc = (L1NpcInstance) attacker;
 						attackNpc.broadcastPacket(new S_DoActionGFX(attackNpc.getId(), ActionCodes.ACTION_Damage));
 						attackNpc.receiveDamage(this, 30);
-					}
-				}
-			}
-			if (attacker.hasSkillEffect(JOY_OF_PAIN) && (getId() != attacker.getId())) {
-				int nowDamage = getMaxHp() - getCurrentHp();
-				if (nowDamage > 0) {
-					if (attacker instanceof L1PcInstance) {
-						L1PcInstance attackPc = (L1PcInstance) attacker;
-						attackPc.sendPackets(new S_DoActionGFX(attackPc.getId(), ActionCodes.ACTION_Damage));
-						attackPc.broadcastPacket(new S_DoActionGFX(attackPc.getId(), ActionCodes.ACTION_Damage));
-						attackPc.receiveDamage(this, (nowDamage / 5), false);
-					}
-					else if (attacker instanceof L1NpcInstance) {
-						L1NpcInstance attackNpc = (L1NpcInstance) attacker;
-						attackNpc.broadcastPacket(new S_DoActionGFX(attackNpc.getId(), ActionCodes.ACTION_Damage));
-						attackNpc.receiveDamage(this, (nowDamage / 5));
 					}
 				}
 			}

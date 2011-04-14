@@ -22,20 +22,23 @@ public class S_AttackPacket extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_AttackPacket(L1PcInstance pc, int objid, int type) {
-		buildpacket(pc, objid, type);
+	public S_AttackPacket(L1PcInstance pc, int objid, int actId) {
+		buildpacket(pc, objid, actId, 1, 0 );
 	}
 
-	private void buildpacket(L1PcInstance pc, int objid, int type) {
+	public S_AttackPacket(L1PcInstance pc, int objid, int actId, int dmg) {
+		buildpacket(pc, objid, actId, dmg, 0);
+	}
+
+	private void buildpacket(L1PcInstance pc, int objid, int actId, int dmg, int type) {
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(type);
+		writeC(actId);
 		writeD(pc.getId());
 		writeD(objid);
-		writeH(0x01); // 3.3C damage
+		writeH(dmg); // 3.3C damage
 		writeC(pc.getHeading());
-		writeH(0x0000); // target x
-		writeH(0x0000); // target y
-		writeC(0x00); // 0x00:none 0x04:Claw 0x08:CounterMirror
+		writeD(0x00000000);
+		writeC(type); // 0x00:none 0x04:Claw 0x08:CounterMirror
 	}
 
 	@Override

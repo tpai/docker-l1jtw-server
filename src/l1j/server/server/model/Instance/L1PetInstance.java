@@ -35,6 +35,7 @@ import l1j.server.server.serverpackets.S_PetCtrlMenu;
 import l1j.server.server.serverpackets.S_PetMenuPacket;
 import l1j.server.server.serverpackets.S_PetPack;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1Pet;
 import l1j.server.server.templates.L1PetType;
@@ -458,7 +459,21 @@ public class L1PetInstance extends L1NpcInstance {
 			return;
 		}
 		if (status == 6) {
+			L1PcInstance petMaster = (L1PcInstance) _master;
 			liberate(); // ペットの解放
+			// 更新寵物控制介面
+			Object[] petList = petMaster.getPetList().values().toArray();
+			for (Object petObject : petList) {
+				if (petObject instanceof L1SummonInstance) {
+					L1SummonInstance summon = (L1SummonInstance) petObject;
+					petMaster.sendPackets(new S_SummonPack(summon, petMaster));
+					return;
+				} else if (petObject instanceof L1PetInstance) {
+					L1PetInstance pet = (L1PetInstance) petObject;
+					petMaster.sendPackets(new S_PetPack(pet, petMaster));
+					return;
+				}
+			}
 		} else {
 			// 同じ主人のペットの状態をすべて更新
 			Object[] petList = _petMaster.getPetList().values().toArray();
@@ -477,6 +492,9 @@ public class L1PetInstance extends L1NpcInstance {
 									0));
 						}
 					}
+				} else if (petObject instanceof L1SummonInstance) {
+					L1SummonInstance summon = (L1SummonInstance) petObject;
+					summon.set_currentPetStatus(status);
 				}
 			}
 		}

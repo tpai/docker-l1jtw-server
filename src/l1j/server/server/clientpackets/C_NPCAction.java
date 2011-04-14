@@ -101,6 +101,7 @@ import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillSound;
+import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_TaxRate;
 import l1j.server.server.templates.L1Castle;
@@ -531,6 +532,16 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 			if (pc.getPetList().isEmpty()) {
 				pc.sendPackets(new S_PetCtrlMenu(false));// 關閉寵物控制圖形介面
+			} else {
+				// 更新寵物控制介面
+				for (Object petObject : petList) {
+					if (petObject instanceof L1SummonInstance) {
+						L1SummonInstance summon = (L1SummonInstance) petObject;
+						pc.sendPackets(new S_SummonPack(summon, pc));
+						pc.sendPackets(new S_ServerMessage(79));
+						break;
+					}
+				}
 			}
 			htmlid = ""; // ウィンドウを消す
 		}

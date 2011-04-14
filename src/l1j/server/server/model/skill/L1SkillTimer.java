@@ -354,14 +354,11 @@ class L1SkillStop {
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 0, 0));
 			}
 		}
-		else if (skillId == ILLUSION_OGRE) { // イリュージョン：オーガ
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addDmgup(-4);
-				pc.addHitup(-4);
-				pc.addBowDmgup(-4);
-				pc.addBowHitup(-4);
-			}
+		else if (skillId == ILLUSION_OGRE) { // 幻覺：歐吉
+			cha.addDmgup(-4);
+			cha.addHitup(-4);
+			cha.addBowDmgup(-4);
+			cha.addBowHitup(-4);
 		}
 		else if (skillId == ILLUSION_LICH) { // イリュージョン：リッチ
 			if (cha instanceof L1PcInstance) {

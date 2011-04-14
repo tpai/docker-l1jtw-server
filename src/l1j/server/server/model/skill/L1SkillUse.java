@@ -62,6 +62,7 @@ import l1j.server.server.model.Instance.L1TeleporterInstance;
 import l1j.server.server.model.Instance.L1TowerInstance;
 import l1j.server.server.model.poison.L1DamagePoison;
 import l1j.server.server.model.trap.L1WorldTraps;
+import l1j.server.server.serverpackets.S_AttackPacket;
 import l1j.server.server.serverpackets.S_ChangeHeading;
 import l1j.server.server.serverpackets.S_ChangeName;
 import l1j.server.server.serverpackets.S_ChangeShape;
@@ -118,6 +119,8 @@ public class L1SkillUse {
 	private L1Skills _skill;
 
 	private int _skillId;
+
+	private int _dmg;
 
 	private int _getBuffDuration;
 
@@ -1142,6 +1145,17 @@ public class L1SkillUse {
 
 		cha.setSkillEffect(_skillId, _getBuffDuration);
 
+		if (_skillId == ELEMENTAL_FALL_DOWN && repetition) { // 弱化屬性重複施放
+			if (_skillTime == 0) {
+				_getBuffIconDuration = _skill.getBuffDuration(); // 効果時間
+			}
+			else {
+				_getBuffIconDuration = _skillTime;
+			}
+			_target.removeSkillEffect(ELEMENTAL_FALL_DOWN);
+			runSkill();
+			return;
+		}
 		if ((cha instanceof L1PcInstance) && repetition) { // 対象がPCで既にスキルが重複している場合
 			L1PcInstance pc = (L1PcInstance) cha;
 			sendIcon(pc);
@@ -1246,41 +1260,53 @@ public class L1SkillUse {
 		}
 
 		if (_user instanceof L1PcInstance) {
-			if ((_skillId == FIRE_WALL) || (_skillId == LIFE_STREAM)) {
-				L1PcInstance pc = (L1PcInstance) _user;
-				if (_skillId == FIRE_WALL) {
-					pc.setHeading(pc.targetDirection(_targetX, _targetY));
-					pc.sendPackets(new S_ChangeHeading(pc));
-					pc.broadcastPacket(new S_ChangeHeading(pc));
-				}
-				S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), actionId);
-				pc.sendPackets(gfx);
-				pc.broadcastPacket(gfx);
-				return;
+
+			int targetid = 0;
+			if (_skillId != FIRE_WALL) {
+				targetid = _target.getId();
 			}
+			L1PcInstance pc = (L1PcInstance) _user;
 
-			int targetid = _target.getId();
-
-			if (_skillId == SHOCK_STUN) {
-				if (_targetList.isEmpty()) { // 失敗
-					return;
-				}
-				else {
-					if (_target instanceof L1PcInstance) {
-						L1PcInstance pc = (L1PcInstance) _target;
-						pc.sendPackets(new S_SkillSound(pc.getId(), 4434));
-						pc.broadcastPacket(new S_SkillSound(pc.getId(), 4434));
+			switch(_skillId) {
+				case FIRE_WALL: // 火牢
+				case LIFE_STREAM: // 治癒能量風暴
+				case ELEMENTAL_FALL_DOWN: // 弱化屬性
+					if (_skillId == FIRE_WALL) {
+						pc.setHeading(pc.targetDirection(_targetX, _targetY));
+						pc.sendPackets(new S_ChangeHeading(pc));
+						pc.broadcastPacket(new S_ChangeHeading(pc));
 					}
-					else if (_target instanceof L1NpcInstance) {
-						_target.broadcastPacket(new S_SkillSound(_target.getId(), 4434));
+					S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), actionId);
+					pc.sendPackets(gfx);
+					pc.broadcastPacket(gfx);
+					return;
+				case SHOCK_STUN: // 衝擊之暈
+					if (_targetList.isEmpty()) { // 失敗
+						return;
+					} else {
+						if (_target instanceof L1PcInstance) {
+							L1PcInstance targetPc = (L1PcInstance) _target;
+							targetPc.sendPackets(new S_SkillSound(targetid, 4434));
+							targetPc.broadcastPacket(new S_SkillSound(targetid, 4434));
+						} else if (_target instanceof L1NpcInstance) {
+							_target.broadcastPacket(new S_SkillSound(targetid, 4434));
+						}
+						return;
+					}
+				case LIGHT: // 日光術
+					pc.sendPackets(new S_Sound(145));
+					break;
+				case MIND_BREAK: // 心靈破壞
+				case JOY_OF_PAIN: // 疼痛的歡愉
+					if (_user instanceof L1PcInstance) {
+						pc.sendPackets(new S_AttackPacket(pc, targetid, actionId, _dmg));
+						pc.broadcastPacket(new S_AttackPacket(pc, targetid, actionId, _dmg));
+						pc.sendPackets(new S_SkillSound(targetid, castgfx));
+						pc.broadcastPacket(new S_SkillSound(targetid, castgfx));
 					}
 					return;
-				}
-			}
-
-			if (_skillId == LIGHT) {
-				L1PcInstance pc = (L1PcInstance) _target;
-				pc.sendPackets(new S_Sound(145));
+				default:
+					break;
 			}
 
 			if (_targetList.isEmpty() && !(_skill.getTarget().equals("none"))) {
@@ -1372,8 +1398,8 @@ public class L1SkillUse {
 				for (TargetStatus ts : _targetList) {
 					L1Character cha = ts.getTarget();
 					if (cha instanceof L1PcInstance) {
-						L1PcInstance pc = (L1PcInstance) cha;
-						pc.sendPackets(new S_OwnCharStatus(pc));
+						L1PcInstance chaPc = (L1PcInstance) cha;
+						chaPc.sendPackets(new S_OwnCharStatus(chaPc));
 					}
 				}
 			}
@@ -1506,21 +1532,23 @@ public class L1SkillUse {
 					L1EffectInstance effect = L1EffectSpawn.getInstance().spawnEffect(80153, 5 * 1000, _targetX + 2, _targetY - 1, _user.getMapId());
 					if (_targetID != 0) {
 						pri.sendPackets(new S_TrueTarget(_targetID, pri.getId(), _message));
-						L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
-						for (L1PcInstance pc : players) {
-							pc.sendPackets(new S_TrueTarget(_targetID, pc.getId(), _message));
+						if (pri.getClanid() != 0) {
+							L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
+							for (L1PcInstance pc : players) {
+								pc.sendPackets(new S_TrueTarget(_targetID, pc.getId(), _message));
+							}
 						}
-						return;
 					} else if (effect != null) {
 						pri.sendPackets(new S_TrueTarget(effect.getId(), pri.getId(), _message));
-						L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
-						for (L1PcInstance pc : players) {
-							pc.sendPackets(new S_TrueTarget(effect.getId(), pc.getId(), _message));
+						if (pri.getClanid() != 0) {
+							L1PcInstance players[] = L1World.getInstance().getClan(pri.getClanname()).getOnlineClanMember();
+							for (L1PcInstance pc : players) {
+								pc.sendPackets(new S_TrueTarget(effect.getId(), pc.getId(), _message));
+							}
 						}
-						return;
 					}
 				}
-				break;
+				return;
 			default:
 				break;
 		}
@@ -1597,6 +1625,7 @@ public class L1SkillUse {
 						continue;
 					}
 					dmg = _magic.calcMagicDamage(_skillId);
+					_dmg = dmg;
 					cha.removeSkillEffect(ERASE_MAGIC); // イレースマジック中なら、攻撃魔法で解除
 				}
 				else if ((_skill.getType() == L1Skills.TYPE_CURSE) || (_skill.getType() == L1Skills.TYPE_PROBABILITY)) { // 確率系スキル
@@ -1821,10 +1850,14 @@ public class L1SkillUse {
 						dmg = 0;
 					}
 				}
-				else if (_skillId == ELEMENTAL_FALL_DOWN) { // エレメンタルフォールダウン
+				else if (_skillId == ELEMENTAL_FALL_DOWN) { // 弱化屬性
 					if (_user instanceof L1PcInstance) {
 						int playerAttr = _player.getElfAttr();
 						int i = -50;
+						if (playerAttr != 0) {
+							_player.sendPackets(new S_SkillSound(cha.getId(), 4396));
+							_player.broadcastPacket(new S_SkillSound(cha.getId(), 4396));
+						}
 						if (cha instanceof L1PcInstance) {
 							L1PcInstance pc = (L1PcInstance) cha;
 							switch (playerAttr) {
@@ -1850,28 +1883,27 @@ public class L1SkillUse {
 								default:
 									break;
 							}
-						}
-						else if (cha instanceof L1MonsterInstance) {
-							L1MonsterInstance mob = (L1MonsterInstance) cha;
+						} else if (cha instanceof L1NpcInstance) {
+							L1NpcInstance npc = (L1NpcInstance) cha;
 							switch (playerAttr) {
 								case 0:
 									_player.sendPackets(new S_ServerMessage(79));
 									break;
 								case 1:
-									mob.addEarth(i);
-									mob.setAddAttrKind(1);
+									npc.addEarth(i);
+									npc.setAddAttrKind(1);
 									break;
 								case 2:
-									mob.addFire(i);
-									mob.setAddAttrKind(2);
+									npc.addFire(i);
+									npc.setAddAttrKind(2);
 									break;
 								case 4:
-									mob.addWater(i);
-									mob.setAddAttrKind(4);
+									npc.addWater(i);
+									npc.setAddAttrKind(4);
 									break;
 								case 8:
-									mob.addWind(i);
-									mob.setAddAttrKind(8);
+									npc.addWind(i);
+									npc.setAddAttrKind(8);
 									break;
 								default:
 									break;
@@ -1934,6 +1966,13 @@ public class L1SkillUse {
 					}
 					// 刪除屠宰者狀態
 					_player.killSkillEffectTimer(FOE_SLAYER);
+				}
+				else if (_skillId == SMASH) { // 暴擊
+					_player.setSkillEffect(SMASH, 2 * 1000);
+					_target.onAction(_player);
+					_player.killSkillEffectTimer(SMASH);
+					_player.sendPackets(new S_SkillSound(_target.getId(), 6526));
+					_player.broadcastPacket(new S_SkillSound(_target.getId(), 6526));
 				}
 				else if ((_skillId == 10026) || (_skillId == 10027) || (_skillId == 10028) || (_skillId == 10029)) { // 安息攻撃
 					if (_user instanceof L1NpcInstance) {
@@ -2841,12 +2880,11 @@ public class L1SkillUse {
 						L1PcInstance pc = (L1PcInstance) cha;
 						L1Awake.start(pc, _skillId);
 					}
-					else if (_skillId == ILLUSION_OGRE) { // イリュージョン：オーガ
-						L1PcInstance pc = (L1PcInstance) cha;
-						pc.addDmgup(4);
-						pc.addHitup(4);
-						pc.addBowDmgup(4);
-						pc.addBowHitup(4);
+					else if (_skillId == ILLUSION_OGRE) { // 幻覺：歐吉
+						cha.addDmgup(4);
+						cha.addHitup(4);
+						cha.addBowDmgup(4);
+						cha.addBowHitup(4);
 					}
 					else if (_skillId == ILLUSION_LICH) { // イリュージョン：リッチ
 						L1PcInstance pc = (L1PcInstance) cha;
@@ -2945,21 +2983,26 @@ public class L1SkillUse {
 							_player.sendPackets(new S_ServerMessage(319)); // \f1これ以上のモンスターを操ることはできません。
 						}
 					}
-					else if (_skillId == WEAK_ELEMENTAL) { // ウィーク エレメンタル
+					else if (_skillId == WEAK_ELEMENTAL) { // 能量感測
 						if (cha instanceof L1MonsterInstance) {
 							L1Npc npcTemp = ((L1MonsterInstance) cha).getNpcTemplate();
 							int weakAttr = npcTemp.get_weakAttr();
 							if ((weakAttr & 1) == 1) { // 地
 								cha.broadcastPacket(new S_SkillSound(cha.getId(), 2169));
-							}
-							if ((weakAttr & 2) == 2) { // 火
+							} else if ((weakAttr & 2) == 2) { // 火
 								cha.broadcastPacket(new S_SkillSound(cha.getId(), 2167));
-							}
-							if ((weakAttr & 4) == 4) { // 水
+							} else if ((weakAttr & 4) == 4) { // 水
 								cha.broadcastPacket(new S_SkillSound(cha.getId(), 2166));
-							}
-							if ((weakAttr & 8) == 8) { // 風
+							} else if ((weakAttr & 8) == 8) { // 風
 								cha.broadcastPacket(new S_SkillSound(cha.getId(), 2168));
+							} else {
+								if (_user instanceof L1PcInstance) {
+									_player.sendPackets(new S_ServerMessage(79));
+								}
+							}
+						} else {
+							if (_user instanceof L1PcInstance) {
+								_player.sendPackets(new S_ServerMessage(79));
 							}
 						}
 					}

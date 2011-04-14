@@ -341,14 +341,15 @@ public class L1SkillId {
 
 	public static final int BODY_TO_MIND = 130;
 
-	/** 世界樹的呼喚 */
+	/** 妖精魔法 (世界樹的呼喚) */
 	public static final int TELEPORT_TO_MATHER = 131;
 
 	public static final int TRIPLE_ARROW = 132;
 
+	/** 妖精魔法 (弱化屬性) */
 	public static final int ELEMENTAL_FALL_DOWN = 133;
 
-	/** 鏡反射 */
+	/** 妖精魔法 (鏡反射) */
 	public static final int COUNTER_MIRROR = 134;
 
 	// none = 135 - 136
@@ -472,12 +473,15 @@ public class L1SkillId {
 	/** 幻術士魔法 (混亂)*/
 	public static final int CONFUSION = 202;
 
+	/** 幻術士魔法 (暴擊)*/
 	public static final int SMASH = 203;
 
+	/** 幻術士魔法 (幻覺：歐吉)*/
 	public static final int ILLUSION_OGRE = 204;
 
 	public static final int CUBE_IGNITION = 205;
 
+	/** 幻術士魔法 (專注) */
 	public static final int CONCENTRATION = 206;
 
 	public static final int MIND_BREAK = 207;

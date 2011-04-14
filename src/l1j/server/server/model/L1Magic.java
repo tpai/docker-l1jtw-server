@@ -14,75 +14,6 @@
  */
 package l1j.server.server.model;
 
-import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
-import static l1j.server.server.model.skill.L1SkillId.AREA_OF_SILENCE;
-import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_0_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_1_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_2_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_3_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_4_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_5_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_6_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_1_7_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_0_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_1_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_2_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_3_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_4_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_5_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_6_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_2_7_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_1_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_2_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_3_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_4_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_5_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_3_7_S;
-import static l1j.server.server.model.skill.L1SkillId.COUNTER_BARRIER;
-import static l1j.server.server.model.skill.L1SkillId.COUNTER_MIRROR;
-import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
-import static l1j.server.server.model.skill.L1SkillId.CURSE_PARALYZE;
-import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
-import static l1j.server.server.model.skill.L1SkillId.DARK_BLIND;
-import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
-import static l1j.server.server.model.skill.L1SkillId.DISEASE;
-import static l1j.server.server.model.skill.L1SkillId.DRAGON_SKIN;
-import static l1j.server.server.model.skill.L1SkillId.EARTH_BIND;
-import static l1j.server.server.model.skill.L1SkillId.ELEMENTAL_FALL_DOWN;
-import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
-import static l1j.server.server.model.skill.L1SkillId.ERASE_MAGIC;
-import static l1j.server.server.model.skill.L1SkillId.FINAL_BURN;
-import static l1j.server.server.model.skill.L1SkillId.FIRE_WALL;
-import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
-import static l1j.server.server.model.skill.L1SkillId.FREEZING_BLIZZARD;
-import static l1j.server.server.model.skill.L1SkillId.FREEZING_BREATH;
-import static l1j.server.server.model.skill.L1SkillId.GUARD_BRAKE;
-import static l1j.server.server.model.skill.L1SkillId.HORROR_OF_DEATH;
-import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
-import static l1j.server.server.model.skill.L1SkillId.ILLUSION_AVATAR;
-import static l1j.server.server.model.skill.L1SkillId.IMMUNE_TO_HARM;
-import static l1j.server.server.model.skill.L1SkillId.MANA_DRAIN;
-import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
-import static l1j.server.server.model.skill.L1SkillId.PATIENCE;
-import static l1j.server.server.model.skill.L1SkillId.POLLUTE_WATER;
-import static l1j.server.server.model.skill.L1SkillId.REDUCTION_ARMOR;
-import static l1j.server.server.model.skill.L1SkillId.RESIST_FEAR;
-import static l1j.server.server.model.skill.L1SkillId.RETURN_TO_NATURE;
-import static l1j.server.server.model.skill.L1SkillId.SHOCK_STUN;
-import static l1j.server.server.model.skill.L1SkillId.SLOW;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_BARLOG;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_YAHEE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_MITHRIL_POWDER;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
-import static l1j.server.server.model.skill.L1SkillId.STRIKER_GALE;
-import static l1j.server.server.model.skill.L1SkillId.TAMING_MONSTER;
-import static l1j.server.server.model.skill.L1SkillId.WEAKNESS;
-import static l1j.server.server.model.skill.L1SkillId.WEAPON_BREAK;
-import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.WarTimeController;
@@ -98,6 +29,8 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.utils.Random;
+
+import static l1j.server.server.model.skill.L1SkillId.*;
 
 public class L1Magic {
 	private int _calcType;
@@ -580,7 +513,9 @@ public class L1Magic {
 			damage = calcNpcMagicDamage(skillId);
 		}
 
-		damage = calcMrDefense(damage);
+		if (skillId != MIND_BREAK && skillId != JOY_OF_PAIN) { // 心靈破壞、疼痛的歡愉無視魔免
+			damage = calcMrDefense(damage);
+		}
 
 		return damage;
 	}
@@ -646,14 +581,12 @@ public class L1Magic {
 	private int calcPcMagicDamage(int skillId) {
 		int dmg = 0;
 		if (skillId == FINAL_BURN) {
-			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
+			if (_calcType == PC_PC) {
 				dmg = _pc.getCurrentMp();
-			}
-			else {
+			} else {
 				dmg = _npc.getCurrentMp();
 			}
-		}
-		else {
+		} else {
 			dmg = calcMagicDiceDamage(skillId);
 			dmg = (dmg * getLeverage()) / 10;
 		}
@@ -724,6 +657,28 @@ public class L1Magic {
 		if (_targetPc.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2;
 		}
+		// 心靈破壞消耗目標5點MP造成25傷害
+		if (skillId == MIND_BREAK) {
+			if (_targetPc.getCurrentMp() >= 5) {
+				_targetPc.setCurrentMp(_targetPc.getCurrentMp() - 5);
+				dmg = 25;
+			}
+		}
+		// 疼痛的歡愉傷害：(最大血量 - 目前血量 /5)
+		else if (skillId == JOY_OF_PAIN) {
+			int nowDamage = 0;
+			if (_calcType == PC_PC) {
+				nowDamage = _pc.getMaxHp() - _pc.getCurrentHp();
+				if (nowDamage > 0) {
+					dmg = nowDamage / 5;
+				}
+			} else if (_calcType == NPC_PC) {
+				nowDamage = _npc.getMaxHp() - _npc.getCurrentHp();
+				if (nowDamage > 0) {
+					dmg = nowDamage / 5;
+				}
+			}
+		}
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			dmg = 0;
 		}
@@ -780,16 +735,38 @@ public class L1Magic {
 	private int calcNpcMagicDamage(int skillId) {
 		int dmg = 0;
 		if (skillId == FINAL_BURN) {
-			if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
+			if (_calcType == PC_NPC) {
 				dmg = _pc.getCurrentMp();
-			}
-			else {
+			} else {
 				dmg = _npc.getCurrentMp();
 			}
 		}
 		else {
 			dmg = calcMagicDiceDamage(skillId);
 			dmg = (dmg * getLeverage()) / 10;
+		}
+
+		// 心靈破壞消耗目標5點MP造成25傷害
+		if (skillId == MIND_BREAK) {
+			if (_targetNpc.getCurrentMp() >= 5) {
+				_targetNpc.setCurrentMp(_targetNpc.getCurrentMp() - 5);
+				dmg = 25;
+			}
+		}
+		// 疼痛的歡愉傷害：(最大血量 - 目前血量 /5)
+		else if (skillId == JOY_OF_PAIN) {
+			int nowDamage = 0;
+			if (_calcType == PC_NPC) {
+				nowDamage = _pc.getMaxHp() - _pc.getCurrentHp();
+				if (nowDamage > 0) {
+					dmg = nowDamage / 5;
+				}
+			} else if (_calcType == NPC_NPC) {
+				nowDamage = _npc.getMaxHp() - _npc.getCurrentHp();
+				if (nowDamage > 0) {
+					dmg = nowDamage / 5;
+				}
+			}
 		}
 
 		if (_calcType == PC_NPC) { // プレイヤーからペット、サモンに攻撃
