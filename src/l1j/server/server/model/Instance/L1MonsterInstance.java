@@ -23,7 +23,9 @@ import java.util.logging.Logger;
 import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
+import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.DropTable;
+import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.datatables.UBTable;
 import l1j.server.server.model.L1Attack;
@@ -333,6 +335,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 					Death death = new Death(attacker);
 					GeneralThreadPool.getInstance().execute(death);
 					// Death(attacker);
+					if (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007 
+						|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045) {
+						doNextDragonStep(attacker, getNpcTemplate().get_npcId());
+					}
 				}
 				else { // 変身するモンスター
 					// distributeExpDropKarma(attacker);
@@ -350,6 +356,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 			Death death = new Death(attacker);
 			GeneralThreadPool.getInstance().execute(death);
 			// Death(attacker);
+			if (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007 
+				|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045) {
+				doNextDragonStep(attacker, getNpcTemplate().get_npcId());
+			}
 		}
 	}
 
@@ -777,5 +787,102 @@ public class L1MonsterInstance extends L1NpcInstance {
 		getInventory().clearItems();
 		DropTable.getInstance().setDrop(this, getInventory());
 		getInventory().shuffle();
+	}
+
+	private boolean _nextDragonStepRunning = false;
+	protected void setNextDragonStepRunning(boolean nextDragonStepRunning) {
+		_nextDragonStepRunning = nextDragonStepRunning;
+	}
+
+	protected boolean isNextDragonStepRunning() {
+		return _nextDragonStepRunning;
+	}
+
+	private void doNextDragonStep(L1Character attacker, int npcid) {
+		if (!isNextDragonStepRunning()) {
+			int[] dragonId = { 97006, 97007, 97044, 97045 };
+			int[] nextStepId = { 97007, 97008, 97045, 97046 };
+			int nextSpawnId = 0;
+			for (int i = 0; i < dragonId.length; i++) {
+				if (npcid == dragonId[i]) {
+					nextSpawnId = nextStepId[i];
+					break;
+				}
+			}
+			if (attacker != null && nextSpawnId > 0) {
+				L1PcInstance _pc = null;
+				if (attacker instanceof L1PcInstance) {
+					_pc = (L1PcInstance) attacker;
+				}
+				else if (attacker instanceof L1PetInstance) {
+					L1PetInstance pet = (L1PetInstance) attacker;
+					L1Character cha = pet.getMaster();
+					if (cha instanceof L1PcInstance) {
+						_pc = (L1PcInstance) cha;
+					}
+				}
+				else if (attacker instanceof L1SummonInstance) {
+					L1SummonInstance summon = (L1SummonInstance) attacker;
+					L1Character cha = summon.getMaster();
+					if (cha instanceof L1PcInstance) {
+						_pc = (L1PcInstance) cha;
+					}
+				}
+				if (_pc != null) {
+					NextDragonStep nextDragonStep = new NextDragonStep(_pc, this, nextSpawnId);
+					GeneralThreadPool.getInstance().execute(nextDragonStep);
+				}
+			}
+		}
+	}
+
+	class NextDragonStep implements Runnable {
+		L1PcInstance _pc;
+		L1MonsterInstance _mob;
+		int _npcid;
+		int _transformId;
+		int _x;
+		int _y;
+		int _h;
+		short _m;
+		L1Location _loc = new L1Location();
+
+		public NextDragonStep(L1PcInstance pc, L1MonsterInstance mob, int transformId) {
+			_pc = pc;
+			_mob = mob;
+			_transformId = transformId;
+			_x = mob.getX();
+			_y = mob.getY();
+			_h = mob.getHeading();
+			_m = mob.getMapId();
+			_loc = mob.getLocation();
+		}
+
+		@Override
+		public void run() {
+			setNextDragonStepRunning(true);
+			try {
+				Thread.sleep(10500);
+				L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(_transformId);
+				npc.setId(IdFactory.getInstance().nextId());
+				npc.setMap((short) _m);
+				npc.setHomeX(_x);
+				npc.setHomeY(_y);
+				npc.setHeading(_h);
+				npc.getLocation().set(_loc);
+				npc.getLocation().forward(_h);
+
+				_pc.sendPackets(new S_NPCPack(npc));
+				_pc.sendPackets(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Hide));//test
+
+				L1World.getInstance().storeObject(npc);
+				L1World.getInstance().addVisibleObject(npc);
+				npc.turnOnOffLight();
+				npc.startChat(L1NpcInstance.CHAT_TIMING_APPEARANCE); // チャット開始
+				setNextDragonStepRunning(false);
+			}
+			catch (InterruptedException e) {
+			}
+		}
 	}
 }
