@@ -1,3 +1,17 @@
+/**
+ *                            License
+ * THE WORK (AS DEFINED BELOW) IS PROVIDED UNDER THE TERMS OF THIS  
+ * CREATIVE COMMONS PUBLIC LICENSE ("CCPL" OR "LICENSE"). 
+ * THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER APPLICABLE LAW.  
+ * ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE OR  
+ * COPYRIGHT LAW IS PROHIBITED.
+ * 
+ * BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED HERE, YOU ACCEPT AND  
+ * AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE EXTENT THIS LICENSE  
+ * MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU THE RIGHTS CONTAINED 
+ * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
+ * 
+ */
 package l1j.server.server.model.identity;
 
 /**
@@ -11,103 +25,204 @@ public class L1SystemMessageId {
 	/** 騎士 */
 	public static final int $2 = 2;
 	/** 騎士 */
-	public static final int $3 = 3; 
-	public static final int $4 = 4;//TODO 其他編號註解補完
+	public static final int $3 = 3;
+	/** 魔法師 */
+	public static final int $4 = 4;// TODO 其他編號註解補完
+	/** 魔法師 */
 	public static final int $5 = 5;
+	/** 妖精 */
 	public static final int $6 = 6;
+	/** 妖精 */
 	public static final int $7 = 7;
+	/** 黑暗妖精 */
 	public static final int $8 = 8;
+	/** 黑暗妖精 */
 	public static final int $9 = 9;
+	/** 技師 */
 	public static final int $10 = 10;
+	/** 技師 */
 	public static final int $11 = 11;
+	/** 邪惡 */
 	public static final int $12 = 12;
+	/** 中立 */
 	public static final int $13 = 13;
+	/** 正義 */
 	public static final int $14 = 14;
+	/** 王子是一個隊伍的領導者，擅於武器和盔甲，能使用少許的魔法。 */
 	public static final int $15 = 15;
+	/** 公主是一個隊伍的領導者，擅於武器和盔甲，能使用少許的魔法。 */
 	public static final int $16 = 16;
+	/** 騎士可裝備武器和盔甲，且對戰鬥非常出色，但是無法使用魔法。 */
 	public static final int $17 = 17;
+	/** 魔法師很了解法術，但是只能使用部份的武器和較輕的盔甲。 */
 	public static final int $18 = 18;
+	/** 影子的動作很快，且移動的時候幾乎沒有聲音。 */
 	public static final int $19 = 19;
+	/** 妖精具有很高的神力，且可製造妖精族武器和盔甲。 */
 	public static final int $20 = 20;
+	/** 盜賊可偷其他人的東西。 */
 	public static final int $21 = 21;
+	/** 技師了解有關各種不同的物品，尤其粉末和槍。 */
 	public static final int $22 = 22;
+	/** 請指定在遊戲上使用的名稱。中文1~6字，英文2~12字，請勿使用特殊字元。 */
 	public static final int $23 = 23;
+	/** 請指定密碼。最少8字。 */
 	public static final int $24 = 24;
+	/** 為了確認密碼，請再輸入一次。 */
 	public static final int $25 = 25;
+	/** 請選擇遊戲裡的性別。 */
 	public static final int $26 = 26;
+	/** 名稱 */
 	public static final int $27 = 27;
+	/** 密碼 */
 	public static final int $28 = 28;
+	/** 確認密碼 */
 	public static final int $29 = 29;
+	/** 性別 */
 	public static final int $30 = 30;
+	/** 男 */
 	public static final int $31 = 31;
+	/** 女 */
 	public static final int $32 = 32;
+	/** 職業 */
 	public static final int $33 = 33;
+	/** 創造 */
 	public static final int $34 = 34;
+	/** 取消 */
 	public static final int $35 = 35;
+	/** 創造人物 */
 	public static final int $36 = 36;
+	/** 登錄 */
 	public static final int $37 = 37;
+	/** 創造新的角色… */
 	public static final int $38 = 38;
+	/** 天堂 */
 	public static final int $39 = 39;
+	/** 正在連接伺服器… */
 	public static final int $40 = 40;
+	/** 正在檢查更新案… */
 	public static final int $41 = 41;
+	/** 連結關閉 */
 	public static final int $42 = 42;
+	/** 無法知道%s的位址。 */
 	public static final int $43 = 43;
+	/** 連結關閉 */
 	public static final int $44 = 44;
+	/** 未知的錯誤%d */
 	public static final int $45 = 45;
+	/** 錯誤 */
 	public static final int $46 = 46;
+	/** 斷線。 */
 	public static final int $47 = 47;
+	/** 正在接收檔案。 */
 	public static final int $48 = 48;
+	/** 無法執行lin。bin。 */
 	public static final int $49 = 49;
+	/** 確定要離開？ [Y/N] */
 	public static final int $50 = 50;
+	/** 無法讀取%s。 */
 	public static final int $51 = 51;
+	/** 用戶端版本配合錯誤。請重新下載用戶端程式。 */
 	public static final int $52 = 52;
+	/** 無效的名字。 若您擅自修改，將無法進行遊戲。 */
 	public static final int $53 = 53;
+	/** 密碼不同。請重新輸入。 */
 	public static final int $54 = 54;
+	/** 密碼太短。請至少輸入８個字元。 */
 	public static final int $55 = 55;
+	/** 您輸入的密碼錯誤。再次確認您所輸入的密碼是否正確，或電洽遊戲橘子客服中心(02)8024-2002。 */
 	public static final int $56 = 56;
+	/** 已經有同樣的帳號。請重新輸入。 */
 	public static final int $57 = 57;
+	/** 已經有同樣的角色名稱。請重新輸入。 */
 	public static final int $58 = 58;
+	/** 您的電子郵件是無效的。請再輸入電子郵件的正確的地址。 */
 	public static final int $59 = 59;
+	/** 國家名稱是無效的。請重新輸入國家名稱。 */
 	public static final int $60 = 60;
+	/** 錯誤職業。請將此BUG通知製作單位。 */
 	public static final int $61 = 61;
+	/** 錯誤性別。請將此BUG通知製作單位。 */
 	public static final int $62 = 62;
+	/** 錯誤能力值。請將此BUG通知製作單位 */
 	public static final int $63 = 63;
+	/** 連線中斷。 */
 	public static final int $64 = 64;
+	/**
+	 * 無法登入的原因如下： 1.您的帳號密碼輸入錯誤。 2.帳號受PlaySafe保護但未用PlaySafe登入。
+	 * 3.帳號受GAMAOTP保護但未用GAMAOTP登入。 4.帳號已升級為GASH+，但未用beanfun! 登入。
+	 * 5.使用GAMAOTP或PlaySafe或beanfun!登入逾時，請重新登入。 若仍有疑問請洽客服中心02-8024-2002
+	 */
 	public static final int $65 = 65;
+	/** 已經使用中。 */
 	public static final int $66 = 66;
+	/** 刪除5級以上的角色需要等候7天。 在七天之內能取消刪除，您確定真的要刪除角色\fZ%s\f>嗎？ */
 	public static final int $67 = 67;
+	/** 若想觀看遊戲說明請同時按Ctrl+H鍵。 */
 	public static final int $68 = 68;
+	/** \f1%0%s 進入遊戲。 */
 	public static final int $69 = 69;
+	/** \f1%0%s 離開遊戲。 */
 	public static final int $70 = 70;
+	/** 中斷與\f1%0的連接。 */
 	public static final int $71 = 71;
+	/** \f3伺服器將會在 %0 秒後關機。請玩家先行離線。 */
 	public static final int $72 = 72;
+	/** \f1%0%d 不在線上。 */
 	public static final int $73 = 73;
+	/** \f1%0%o 無法使用。 */
 	public static final int $74 = 74;
+	/** \f1沒有多餘的空間可以儲存。 */
 	public static final int $75 = 75;
+	/** \f1吃 %0%o。 */
 	public static final int $76 = 76;
+	/** \f1你覺得舒服多了。 */
 	public static final int $77 = 77;
+	/** 你想要什麼？ */
 	public static final int $78 = 78;
+	/** \f1沒有任何事情發生。 */
 	public static final int $79 = 79;
+	/** 你要去那裡？ */
 	public static final int $80 = 80;
+	/** \f1目前線上的使用者: %0 */
 	public static final int $81 = 81;
+	/** 此物品太重了，所以你無法攜帶。 */
 	public static final int $82 = 82;
+	/** 你所創立的血盟名稱？ */
 	public static final int $83 = 83;
+	/** 創立\f1%0 血盟。 */
 	public static final int $84 = 84;
+	/** \f1王子和公主才可創立血盟。 */
 	public static final int $85 = 85;
+	/** \f1已經創立血盟。 */
 	public static final int $86 = 86;
+	/** \f1你是王子！無法加入別的血盟！ */
 	public static final int $87 = 87;
+	/** \f1你是公主！無法加入別的血盟！ */
 	public static final int $88 = 88;
+	/** \f1你已經有血盟了。 */
 	public static final int $89 = 89;
+	/** \f1%0%d 尚未創立血盟。 */
 	public static final int $90 = 90;
+	/** \f1%0%s 沒有面對看你。 */
 	public static final int $91 = 91;
+	/** \f1%0%d 不是王子或公主。 */
 	public static final int $92 = 92;
+	/** \f1你注視的地方沒有人。 */
 	public static final int $93 = 93;
+	/** \f1你接受%0當你的血盟成員。 */
 	public static final int $94 = 94;
+	/** \f1加入%0血盟。 */
 	public static final int $95 = 95;
+	/** \f1%0%s 拒絕你的請求。 */
 	public static final int $96 = 96;
+	/** \f3%0%s 想加入你的血盟。你接受嗎。(Y/N) */
 	public static final int $97 = 97;
+	/** \f1血盟的名稱太長。 */
 	public static final int $98 = 98;
+	/** \f1那個血盟名稱已經存在。 */
 	public static final int $99 = 99;
+	/** 委託他對誰報仇？ */
 	public static final int $100 = 100;
 	public static final int $101 = 101;
 	public static final int $102 = 102;
