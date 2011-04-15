@@ -403,6 +403,11 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(L1PcInstance attacker) {
+		onAction(attacker, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance attacker, int skillId) {
 		// XXX:NullPointerException回避。onActionの引数の型はL1Characterのほうが良い？
 		if (attacker == null) {
 			return;
@@ -420,7 +425,7 @@ public class L1SummonInstance extends L1NpcInstance {
 				&& isExsistMaster()) {
 			// 攻撃される側がセーフティーゾーン
 			// 攻撃モーション送信
-			L1Attack attack_mortion = new L1Attack(attacker, this);
+			L1Attack attack_mortion = new L1Attack(attacker, this, skillId);
 			attack_mortion.action();
 			return;
 		}
@@ -429,7 +434,7 @@ public class L1SummonInstance extends L1NpcInstance {
 			return;
 		}
 
-		L1Attack attack = new L1Attack(attacker, this);
+		L1Attack attack = new L1Attack(attacker, this, skillId);
 		if (attack.calcHit()) {
 			attack.calcDamage();
 		}

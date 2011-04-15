@@ -39,9 +39,20 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(L1PcInstance pc) {
-		L1Attack attack = new L1Attack(pc, this);
-		attack.calcHit();
+		onAction(pc, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc, int skillId) {
+		L1Attack attack = new L1Attack(pc, this, skillId);
+		if (attack.calcHit()) {
+			attack.calcDamage();
+			attack.calcStaffOfMana();
+			attack.addPcPoisonAttack(pc, this);
+			attack.addChaserAttack();
+		}
 		attack.action();
+		attack.commit();
 	}
 
 	@Override

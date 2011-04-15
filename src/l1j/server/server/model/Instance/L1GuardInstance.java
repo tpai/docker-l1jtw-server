@@ -102,9 +102,14 @@ public class L1GuardInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(L1PcInstance pc) {
+		onAction(pc, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc, int skillId) {
 		if (!isDead()) {
 			if (getCurrentHp() > 0) {
-				L1Attack attack = new L1Attack(pc, this);
+				L1Attack attack = new L1Attack(pc, this, skillId);
 				if (attack.calcHit()) {
 					attack.calcDamage();
 					attack.calcStaffOfMana();
@@ -115,7 +120,7 @@ public class L1GuardInstance extends L1NpcInstance {
 				attack.commit();
 			}
 			else {
-				L1Attack attack = new L1Attack(pc, this);
+				L1Attack attack = new L1Attack(pc, this, skillId);
 				attack.calcHit();
 				attack.action();
 			}

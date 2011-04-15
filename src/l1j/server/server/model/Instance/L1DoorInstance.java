@@ -39,12 +39,17 @@ public class L1DoorInstance extends L1NpcInstance {
 
 	@Override
 	public void onAction(L1PcInstance pc) {
+		onAction(pc, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc, int skillId) {
 		if ((getMaxHp() == 0) || (getMaxHp() == 1)) { // 破壊不可能なドアは対象外
 			return;
 		}
 
 		if ((getCurrentHp() > 0) && !isDead()) {
-			L1Attack attack = new L1Attack(pc, this);
+			L1Attack attack = new L1Attack(pc, this, skillId);
 			if (attack.calcHit()) {
 				attack.calcDamage();
 				attack.addPcPoisonAttack(pc, this);

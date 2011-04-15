@@ -53,12 +53,17 @@ public class L1TowerInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
+	public void onAction(L1PcInstance pc) {
+		onAction(pc, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc, int skillId) {
 		if ((getCurrentHp() > 0) && !isDead()) {
-			L1Attack attack = new L1Attack(player, this);
+			L1Attack attack = new L1Attack(pc, this, skillId);
 			if (attack.calcHit()) {
 				attack.calcDamage();
-				attack.addPcPoisonAttack(player, this);
+				attack.addPcPoisonAttack(pc, this);
 				attack.addChaserAttack();
 			}
 			attack.action();

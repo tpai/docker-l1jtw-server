@@ -409,23 +409,28 @@ public class L1PetInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
+	public void onAction(L1PcInstance pc) {
+		onAction(pc, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc, int skillId) {
 		L1Character cha = getMaster();
 		L1PcInstance master = (L1PcInstance) cha;
 		if (master.isTeleport()) { // テレポート処理中
 			return;
 		}
 		if (getZoneType() == 1) { // 攻撃される側がセーフティーゾーン
-			L1Attack attack_mortion = new L1Attack(player, this); // 攻撃モーション送信
+			L1Attack attack_mortion = new L1Attack(pc, this, skillId); // 攻撃モーション送信
 			attack_mortion.action();
 			return;
 		}
 
-		if (player.checkNonPvP(player, this)) {
+		if (pc.checkNonPvP(pc, this)) {
 			return;
 		}
 
-		L1Attack attack = new L1Attack(player, this);
+		L1Attack attack = new L1Attack(pc, this, skillId);
 		if (attack.calcHit()) {
 			attack.calcDamage();
 		}

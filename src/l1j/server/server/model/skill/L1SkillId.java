@@ -486,6 +486,7 @@ public class L1SkillId {
 
 	public static final int MIND_BREAK = 207;
 
+	/** 幻術士魔法 (骷髏毀壞) */
 	public static final int BONE_BREAK = 208;
 
 	public static final int ILLUSION_LICH = 209;
@@ -753,7 +754,19 @@ public class L1SkillId {
 	/** 鎖鏈劍 (弱點曝光 LV3) **/
 	public static final int SPECIAL_EFFECT_WEAKNESS_LV3 = 5003;
 
-	public static final int SPECIAL_EFFECT_END = 5003;
+	/** 骷髏毀壞 (發動) **/
+	public static final int BONE_BREAK_START = 5004;
+
+	/** 骷髏毀壞 (結束) **/
+	public static final int BONE_BREAK_END = 5005;
+
+	/** 混亂 (發動中)*/
+	public static final int CONFUSION_ING = 5006;
+
+	/** 奪命之雷 (發動)*/
+	public static final int THUNDER_GRAB_START = 5007;
+
+	public static final int SPECIAL_EFFECT_END = 5007;
 
 	// 戰鬥特化狀態
 	/** 新手保護(遭遇的守護) **/

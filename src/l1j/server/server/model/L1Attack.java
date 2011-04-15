@@ -20,6 +20,7 @@ import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
+import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
@@ -32,6 +33,7 @@ import l1j.server.server.serverpackets.S_AttackMissPacket;
 import l1j.server.server.serverpackets.S_AttackPacket;
 import l1j.server.server.serverpackets.S_AttackPacketForNpc;
 import l1j.server.server.serverpackets.S_DoActionGFX;
+import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillSound;
@@ -1023,12 +1025,8 @@ public class L1Attack {
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId);
 		}
 
-		if (_weaponType == 0) { // 素手
+		if (_weaponType == 0) { // 空手
 			dmg = (Random.nextInt(5) + 4) / 4;
-		}
-		if(_weaponType2 != 17
-				&& _skillId == BONE_BREAK){
-			dmg += _skillDamage;
 		}
 
 		if (_weaponType2 == 17) { // 奇古獸
@@ -1120,11 +1118,27 @@ public class L1Attack {
 		if (_targetPc.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2;
 		}
-		// 使用暴擊增加15點傷害，而奇古獸只有15點傷害
-		if (_pc.hasSkillEffect(SMASH)) {
+		// 使用暴擊增加15點傷害，而奇古獸固定15點傷害
+		if (_skillId == SMASH) {
 			dmg += 15;
 			if (_weaponType2 == 17) {
 				dmg = 15;
+			}
+		}
+		// 使用骷髏毀壞增加10點傷害，而奇古獸固定10點傷害
+		else if (_skillId == BONE_BREAK) {
+			dmg += 10;
+			if (_weaponType2 == 17) {
+				dmg = 10;
+			}
+			// 再次發動判斷
+			if (!_targetPc.hasSkillEffect(BONE_BREAK)) {
+				int change = Random.nextInt(100) + 1;
+				if (change < (30 + Random.nextInt(11))) { // 30 ~ 40%
+					L1EffectSpawn.getInstance().spawnEffect(93001, 1700, _targetPc.getX(), _targetPc.getY(), _targetPc.getMapId());
+					_targetPc.setSkillEffect(BONE_BREAK, 2 * 1000); // 發動後再次發動間隔 2秒
+					_targetPc.setSkillEffect(BONE_BREAK_START, 700);
+				}
 			}
 		}
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
@@ -1274,14 +1288,11 @@ public class L1Attack {
 			dmg += L1WeaponSkill.getWeaponSkillDamage(_pc, _target, _weaponId);
 		}
 
-		if (_weaponType == 0) { // 素手
+		if (_weaponType == 0) { // 空手
 			dmg = (Random.nextInt(5) + 4) / 4;
 		}
-		if (_weaponType2 != 17 && _skillId == BONE_BREAK) {
-			dmg += _skillDamage;
-		}
 
-		if (_weaponType2 == 17) { // キーリンク
+		if (_weaponType2 == 17) { // 奇古獸
 			dmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 			dmg += calcAttrEnchantDmg();
 		}
@@ -1319,11 +1330,27 @@ public class L1Attack {
 
 		dmg -= calcNpcDamageReduction();
 
-		// 使用暴擊增加15點傷害，而奇古獸只有15點傷害
-		if (_pc.hasSkillEffect(SMASH)) {
+		// 使用暴擊增加15點傷害，而奇古獸固定15點傷害
+		if (_skillId == SMASH) {
 			dmg += 15;
 			if (_weaponType2 == 17) {
 				dmg = 15;
+			}
+		}
+		// 使用骷髏毀壞增加10點傷害，而奇古獸固定10點傷害
+		else if (_skillId == BONE_BREAK) {
+			dmg += 10;
+			if (_weaponType2 == 17) {
+				dmg = 10;
+			}
+			// 再次發動判斷
+			if (!_targetNpc.hasSkillEffect(BONE_BREAK)) {
+				int change = Random.nextInt(100) + 1;
+				if (change < (30 + Random.nextInt(11))) { // 30 ~ 40%
+					L1EffectSpawn.getInstance().spawnEffect(93001, 1700, _targetNpc.getX(), _targetNpc.getY(), _targetNpc.getMapId());
+					_targetNpc.setSkillEffect(BONE_BREAK, 2 * 1000); // 發動後再次發動間隔 2秒
+					_targetNpc.setSkillEffect(BONE_BREAK_START, 700);
+				}
 			}
 		}
 

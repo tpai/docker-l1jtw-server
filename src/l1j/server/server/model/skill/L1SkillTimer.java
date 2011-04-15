@@ -23,6 +23,7 @@ import java.util.logging.Logger;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.model.L1Character;
+import l1j.server.server.model.L1EffectSpawn;
 import l1j.server.server.model.L1PolyMorph;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
@@ -48,6 +49,7 @@ import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
 import l1j.server.server.serverpackets.S_SkillIconShield;
 import l1j.server.server.serverpackets.S_SkillIconWindShackle;
 import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
+import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Strup;
 import l1j.server.server.templates.L1Skills;
 
@@ -178,64 +180,39 @@ class L1SkillStop {
 				int attr = pc.getElfAttr();
 				if (attr == 1) {
 					cha.addEarth(-50);
-				}
-				else if (attr == 2) {
+				} else if (attr == 2) {
 					cha.addFire(-50);
-				}
-				else if (attr == 4) {
+				} else if (attr == 4) {
 					cha.addWater(-50);
-				}
-				else if (attr == 8) {
+				} else if (attr == 8) {
 					cha.addWind(-50);
 				}
 				pc.sendPackets(new S_OwnCharAttrDef(pc));
 			}
 		}
-		else if (skillId == ELEMENTAL_FALL_DOWN) { // エレメンタルフォールダウン
+		else if (skillId == ELEMENTAL_FALL_DOWN) { // 弱化屬性
+			int attr = cha.getAddAttrKind();
+			int i = 50;
+			switch (attr) {
+				case 1:
+					cha.addEarth(i);
+					break;
+				case 2:
+					cha.addFire(i);
+					break;
+				case 4:
+					cha.addWater(i);
+					break;
+				case 8:
+					cha.addWind(i);
+					break;
+				default:
+					break;
+			}
+			cha.setAddAttrKind(0);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				int attr = pc.getAddAttrKind();
-				int i = 50;
-				switch (attr) {
-					case 1:
-						pc.addEarth(i);
-						break;
-					case 2:
-						pc.addFire(i);
-						break;
-					case 4:
-						pc.addWater(i);
-						break;
-					case 8:
-						pc.addWind(i);
-						break;
-					default:
-						break;
-				}
-				pc.setAddAttrKind(0);
 				pc.sendPackets(new S_OwnCharAttrDef(pc));
-			}
-			else if (cha instanceof L1NpcInstance) {
-				L1NpcInstance npc = (L1NpcInstance) cha;
-				int attr = npc.getAddAttrKind();
-				int i = 50;
-				switch (attr) {
-					case 1:
-						npc.addEarth(i);
-						break;
-					case 2:
-						npc.addFire(i);
-						break;
-					case 4:
-						npc.addWater(i);
-						break;
-					case 8:
-						npc.addWind(i);
-						break;
-					default:
-						break;
-				}
-				npc.setAddAttrKind(0);
 			}
 		}
 		else if (skillId == IRON_SKIN) { // アイアン スキン
@@ -361,44 +338,32 @@ class L1SkillStop {
 			cha.addBowHitup(-4);
 		}
 		else if (skillId == ILLUSION_LICH) { // イリュージョン：リッチ
+			cha.addSp(-2);
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addSp(-2);
 				pc.sendPackets(new S_SPMR(pc));
 			}
 		}
 		else if (skillId == ILLUSION_DIA_GOLEM) { // イリュージョン：ダイアモンドゴーレム
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addAc(20);
-			}
+			cha.addAc(20);
 		}
 		else if (skillId == ILLUSION_AVATAR) { // イリュージョン：アバター
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addDmgup(-10);
-				pc.addBowDmgup(-10);
-			}
+			cha.addDmgup(-10);
+			cha.addBowDmgup(-10);
 		}
 		else if (skillId == INSIGHT) { // 洞察
-			if (cha != null) {
-				cha.addStr((byte) -1);
-				cha.addCon((byte) -1);
-				cha.addDex((byte) -1);
-				cha.addWis((byte) -1);
-				cha.addInt((byte) -1);
-				cha.addCha((byte) -1);
-			}
+			cha.addStr((byte) -1);
+			cha.addCon((byte) -1);
+			cha.addDex((byte) -1);
+			cha.addWis((byte) -1);
+			cha.addInt((byte) -1);
 		}
 		else if (skillId == PANIC) { // 恐慌
-			if (cha != null) {
-				cha.addStr((byte) 1);
-				cha.addCon((byte) 1);
-				cha.addDex((byte) 1);
-				cha.addWis((byte) 1);
-				cha.addInt((byte) 1);
-				cha.addCha((byte) 1);
-			}
+			cha.addStr((byte) 1);
+			cha.addCon((byte) 1);
+			cha.addDex((byte) 1);
+			cha.addWis((byte) 1);
+			cha.addInt((byte) 1);
 		}
 
 		// ****** 状態変化が解けた場合
@@ -416,19 +381,13 @@ class L1SkillStop {
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_PARALYSIS, false));
 			}
 		}
-		else if (skillId == WEAKNESS) { // ウィークネス
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addDmgup(5);
-				pc.addHitup(1);
-			}
+		else if (skillId == WEAKNESS) { // 弱化術
+			cha.addDmgup(5);
+			cha.addHitup(1);
 		}
-		else if (skillId == DISEASE) { // ディジーズ
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addDmgup(6);
-				pc.addAc(-12);
-			}
+		else if (skillId == DISEASE) { // 疾病術
+			cha.addDmgup(6);
+			cha.addAc(-12);
 		}
 		else if ((skillId == ICE_LANCE // アイスランス
 				)
@@ -459,12 +418,31 @@ class L1SkillStop {
 				npc.setParalyzed(false);
 			}
 		}
-		else if (skillId == SHOCK_STUN) { // ショック スタン
+		else if (skillId == SHOCK_STUN) { // 衝擊之暈
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, false));
+			} else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
+				L1NpcInstance npc = (L1NpcInstance) cha;
+				npc.setParalyzed(false);
 			}
-			else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
+		}
+		else if (skillId == BONE_BREAK_START) { // 骷髏毀壞 (發動)
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, true));
+				pc.setSkillEffect(BONE_BREAK_END, 1 * 1000);
+			} else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
+				L1NpcInstance npc = (L1NpcInstance) cha;
+				npc.setParalyzed(true);
+				npc.setSkillEffect(BONE_BREAK_END, 1 * 1000);
+			}
+		}
+		else if (skillId == BONE_BREAK_END) { // 骷髏毀壞 (結束)
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_STUN, false));
+			} else if ((cha instanceof L1MonsterInstance) || (cha instanceof L1SummonInstance) || (cha instanceof L1PetInstance)) {
 				L1NpcInstance npc = (L1NpcInstance) cha;
 				npc.setParalyzed(false);
 			}
@@ -500,7 +478,7 @@ class L1SkillStop {
 			}
 			cha.setMoveSpeed(0);
 		}
-		else if (skillId == STATUS_FREEZE) { // Freeze
+		else if (skillId == STATUS_FREEZE) { // 束縛
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, false));
@@ -510,18 +488,18 @@ class L1SkillStop {
 				npc.setParalyzed(false);
 			}
 		}
-		else if (skillId == GUARD_BRAKE) { // ガードブレイク
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addAc(-15);
-			}
+		else if (skillId == THUNDER_GRAB_START) {
+			L1Skills _skill = SkillsTable.getInstance().getTemplate(THUNDER_GRAB); // 奪命之雷
+			int _fetterDuration = _skill.getBuffDuration() * 1000;
+			cha.setSkillEffect(STATUS_FREEZE, _fetterDuration);
+			L1EffectSpawn.getInstance().spawnEffect(81182, _fetterDuration, cha.getX(), cha.getY(), cha.getMapId());
 		}
-		else if (skillId == HORROR_OF_DEATH) { // ホラーオブデス
-			if (cha instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) cha;
-				pc.addStr(5);
-				pc.addInt(5);
-			}
+		else if (skillId == GUARD_BRAKE) { // 護衛毀滅
+			cha.addAc(-15);
+		}
+		else if (skillId == HORROR_OF_DEATH) { // 驚悚死神
+			cha.addStr(5);
+			cha.addInt(5);
 		}
 		else if (skillId == STATUS_CUBE_IGNITION_TO_ALLY) { // キューブ[イグニション]：味方
 			cha.addFire(-30);

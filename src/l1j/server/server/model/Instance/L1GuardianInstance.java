@@ -105,54 +105,59 @@ public class L1GuardianInstance extends L1NpcInstance {
 	}
 
 	@Override
-	public void onAction(L1PcInstance player) {
-		if ((player.getType() == 2) && (player.getCurrentWeapon() == 0) && player.isElf()) {
-			L1Attack attack = new L1Attack(player, this);
+	public void onAction(L1PcInstance pc) {
+		onAction(pc, 0);
+	}
+
+	@Override
+	public void onAction(L1PcInstance pc, int skillId) {
+		if ((pc.getType() == 2) && (pc.getCurrentWeapon() == 0) && pc.isElf()) {
+			L1Attack attack = new L1Attack(pc, this, skillId);
 
 			if (attack.calcHit()) {
 				if (getNpcTemplate().get_npcId() == 70848) { // エント
 					int chance = Random.nextInt(100) + 1;
 					if (chance <= 10) {
-						player.getInventory().storeItem(40506, 1);
-						player.sendPackets(new S_ServerMessage(143, "$755", "$794")); // \f1%0が%1をくれました。
+						pc.getInventory().storeItem(40506, 1);
+						pc.sendPackets(new S_ServerMessage(143, "$755", "$794")); // \f1%0が%1をくれました。
 					}
 					else if ((chance <= 60) && (chance > 10)) {
-						player.getInventory().storeItem(40507, 1);
-						player.sendPackets(new S_ServerMessage(143, "$755", "$763")); // \f1%0が%1をくれました。
+						pc.getInventory().storeItem(40507, 1);
+						pc.sendPackets(new S_ServerMessage(143, "$755", "$763")); // \f1%0が%1をくれました。
 					}
 					else if ((chance <= 70) && (chance > 60)) {
-						player.getInventory().storeItem(40505, 1);
-						player.sendPackets(new S_ServerMessage(143, "$755", "$770")); // \f1%0が%1をくれました。
+						pc.getInventory().storeItem(40505, 1);
+						pc.sendPackets(new S_ServerMessage(143, "$755", "$770")); // \f1%0が%1をくれました。
 					}
 				}
 				if (getNpcTemplate().get_npcId() == 70850) { // パン
 					int chance = Random.nextInt(100) + 1;
 					if (chance <= 30) {
-						player.getInventory().storeItem(40519, 5);
-						player.sendPackets(new S_ServerMessage(143, "$753", "$760" + " (" + 5 + ")")); // \f1%0が%1をくれました。
+						pc.getInventory().storeItem(40519, 5);
+						pc.sendPackets(new S_ServerMessage(143, "$753", "$760" + " (" + 5 + ")")); // \f1%0が%1をくれました。
 					}
 				}
 				if (getNpcTemplate().get_npcId() == 70846) { // アラクネ
 					int chance = Random.nextInt(100) + 1;
 					if (chance <= 30) {
-						player.getInventory().storeItem(40503, 1);
-						player.sendPackets(new S_ServerMessage(143, "$752", "$769")); // \f1%0が%1をくれました。
+						pc.getInventory().storeItem(40503, 1);
+						pc.sendPackets(new S_ServerMessage(143, "$752", "$769")); // \f1%0が%1をくれました。
 					}
 				}
 				attack.calcDamage();
 				attack.calcStaffOfMana();
-				attack.addPcPoisonAttack(player, this);
+				attack.addPcPoisonAttack(pc, this);
 				attack.addChaserAttack();
 			}
 			attack.action();
 			attack.commit();
 		}
 		else if ((getCurrentHp() > 0) && !isDead()) {
-			L1Attack attack = new L1Attack(player, this);
+			L1Attack attack = new L1Attack(pc, this, skillId);
 			if (attack.calcHit()) {
 				attack.calcDamage();
 				attack.calcStaffOfMana();
-				attack.addPcPoisonAttack(player, this);
+				attack.addPcPoisonAttack(pc, this);
 				attack.addChaserAttack();
 			}
 			attack.action();

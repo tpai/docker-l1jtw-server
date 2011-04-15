@@ -513,7 +513,7 @@ public class L1Magic {
 			damage = calcNpcMagicDamage(skillId);
 		}
 
-		if (skillId != MIND_BREAK && skillId != JOY_OF_PAIN) { // 心靈破壞、疼痛的歡愉無視魔免
+		if (skillId != JOY_OF_PAIN) { // 疼痛的歡愉無視魔免
 			damage = calcMrDefense(damage);
 		}
 
@@ -591,6 +591,18 @@ public class L1Magic {
 			dmg = (dmg * getLeverage()) / 10;
 		}
 
+		// 心靈破壞消耗目標5點MP造成5倍精神傷害
+		if (skillId == MIND_BREAK) {
+			if (_targetPc.getCurrentMp() >= 5) {
+				_targetPc.setCurrentMp(_targetPc.getCurrentMp() - 5);
+				if (_calcType == PC_PC) {
+					dmg += _pc.getWis() * 5;
+				} else if (_calcType == NPC_PC) {
+					dmg += _npc.getWis() * 5;
+				}
+			}
+		}
+
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
 		Object[] targetDollList = _targetPc.getDollList().values().toArray(); // マジックドールによるダメージ軽減
@@ -657,15 +669,8 @@ public class L1Magic {
 		if (_targetPc.hasSkillEffect(IMMUNE_TO_HARM)) {
 			dmg /= 2;
 		}
-		// 心靈破壞消耗目標5點MP造成25傷害
-		if (skillId == MIND_BREAK) {
-			if (_targetPc.getCurrentMp() >= 5) {
-				_targetPc.setCurrentMp(_targetPc.getCurrentMp() - 5);
-				dmg = 25;
-			}
-		}
 		// 疼痛的歡愉傷害：(最大血量 - 目前血量 /5)
-		else if (skillId == JOY_OF_PAIN) {
+		if (skillId == JOY_OF_PAIN) {
 			int nowDamage = 0;
 			if (_calcType == PC_PC) {
 				nowDamage = _pc.getMaxHp() - _pc.getCurrentHp();
@@ -746,15 +751,20 @@ public class L1Magic {
 			dmg = (dmg * getLeverage()) / 10;
 		}
 
-		// 心靈破壞消耗目標5點MP造成25傷害
+		// 心靈破壞消耗目標5點MP造成5倍精神傷害
 		if (skillId == MIND_BREAK) {
 			if (_targetNpc.getCurrentMp() >= 5) {
 				_targetNpc.setCurrentMp(_targetNpc.getCurrentMp() - 5);
-				dmg = 25;
+				if (_calcType == PC_NPC) {
+					dmg += _pc.getWis() * 5;
+				} else if (_calcType == NPC_NPC) {
+					dmg += _npc.getWis() * 5;
+				}
 			}
 		}
+
 		// 疼痛的歡愉傷害：(最大血量 - 目前血量 /5)
-		else if (skillId == JOY_OF_PAIN) {
+		if (skillId == JOY_OF_PAIN) {
 			int nowDamage = 0;
 			if (_calcType == PC_NPC) {
 				nowDamage = _pc.getMaxHp() - _pc.getCurrentHp();
