@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-04-13 00:39:00
+Date: 2011-04-16 00:12:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1453,3 +1453,10 @@ INSERT INTO `spawnlist_npc` VALUES ('88743', '警衛', '1', '80139', '32815', '3
 INSERT INTO `spawnlist_npc` VALUES ('88744', '屠龍佈告欄', '1', '81295', '33691', '32521', '0', '0', '0', '0', '4', '0');
 INSERT INTO `spawnlist_npc` VALUES ('89000', '扭曲的空間', '1', '80048', '34267', '32188', '0', '0', '6', '0', '4', '0');
 INSERT INTO `spawnlist_npc` VALUES ('89001', '次元之門', '1', '80058', '32760', '33459', '0', '0', '4', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89002', '守護者之塔', '1', '81111', '32798', '32291', '0', '0', '0', '0', '4', '100');
+INSERT INTO `spawnlist_npc` VALUES ('89003', '守護者之塔', '1', '81111', '33139', '32768', '0', '0', '0', '0', '4', '100');
+INSERT INTO `spawnlist_npc` VALUES ('89004', '守護者之塔', '1', '81111', '32623', '33379', '0', '0', '0', '0', '4', '100');
+INSERT INTO `spawnlist_npc` VALUES ('89005', '守護者之塔', '1', '81111', '33631', '32678', '0', '0', '0', '0', '4', '100');
+INSERT INTO `spawnlist_npc` VALUES ('89006', '守護者之塔', '1', '81111', '33524', '33396', '0', '0', '0', '0', '4', '100');
+INSERT INTO `spawnlist_npc` VALUES ('89007', '守護者之塔', '1', '81111', '32828', '32818', '0', '0', '0', '0', '66', '100');
+INSERT INTO `spawnlist_npc` VALUES ('89008', '守護者之塔', '1', '81111', '34090', '33260', '0', '0', '0', '0', '4', '100');
