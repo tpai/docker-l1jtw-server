@@ -174,16 +174,16 @@ public class L1Clan {
 		String rank = "";
 		if (pc != null) {
 			if (pc.getClanRank() == CLAN_RANK_PROBATION) {
-				rank = "[見習い]";
+				rank = "[見習]";
 			}
 			else if (pc.getClanRank() == CLAN_RANK_PUBLIC) {
 				rank = "[一般]";
 			}
 			else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
-				rank = "[ガーディアン]";
+				rank = "[守護騎士]";
 			}
 			else if (pc.getClanRank() == CLAN_RANK_PRINCE) {
-				rank = "[血盟君主]";
+				rank = "[血盟王族]";
 			}
 			else {
 				rank = "";

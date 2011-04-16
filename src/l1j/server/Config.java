@@ -398,6 +398,8 @@ public final class Config {
 	public static boolean LOGGING_CHAT_COMBINED;
 
 	public static boolean LOGGING_CHAT_CHAT_PARTY;
+	
+	public static boolean writeTradeLog;
 
 	/** Configuration files */
 	public static final String SERVER_CONFIG_FILE = "./config/server.properties";
@@ -695,6 +697,7 @@ public final class Config {
 			LOGGING_CHAT_PARTY = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatParty", "false"));
 			LOGGING_CHAT_COMBINED = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatCombined", "false"));
 			LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatChatParty", "false"));
+			writeTradeLog = Boolean.parseBoolean(recordSettings.getProperty("writeTradeLog", "false"));
 			
 		}catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
