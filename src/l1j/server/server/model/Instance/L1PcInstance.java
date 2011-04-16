@@ -2527,11 +2527,19 @@ public class L1PcInstance extends L1Character {
 			}
 		}
 		sendPackets(new S_OwnCharStatus(this));
-		if (getLevel() >= 52) { // 指定レベル
+
+		// 根據等級判斷地圖限制
+		if ((getMapId() == 2005 || getMapId() == 86)) { // 新手村
+			if (getLevel() >= 13) { // 等級大於13
+				if (getQuest().get_step(L1Quest.QUEST_TUTOR) != 255) {
+					getQuest().set_step(L1Quest.QUEST_TUTOR, 255);
+				}
+				L1Teleport.teleport(this, 33084, 33391, (short) 4, 5, true);// 銀騎士村
+			}
+		} else if (getLevel() >= 52) { // 指定レベル
 			if (getMapId() == 777) { // 見捨てられた者たちの地(影の神殿)
 				L1Teleport.teleport(this, 34043, 32184, (short) 4, 5, true); // 象牙の塔前
-			}
-			else if ((getMapId() == 778) || (getMapId() == 779)) { // 見捨てられた者たちの地(欲望の洞窟)
+			} else if ((getMapId() == 778) || (getMapId() == 779)) { // 見捨てられた者たちの地(欲望の洞窟)
 				L1Teleport.teleport(this, 32608, 33178, (short) 4, 5, true); // WB
 			}
 		}
@@ -3096,15 +3104,6 @@ public class L1PcInstance extends L1Character {
 	 */
 	public void resetLevel() {
 		setLevel(ExpTable.getLevelByExp(_exp));
-
-		// 根據等級判斷地圖限制
-		if ((getLevel() > 13) && (getMapId() == 2005 || getMapId() == 86)) {
-			L1Teleport.teleport(this, 33084, 33391, (short) 4, 5, true);// 銀騎士村
-			getQuest().set_step(L1Quest.QUEST_TUTOR, 255);
-		}
-		else if ((getLevel() > 13) && (getQuest().get_step(L1Quest.QUEST_TUTOR) != 255)) {
-			getQuest().set_step(L1Quest.QUEST_TUTOR, 255);
-		}
 
 		if (_hpRegen != null) {
 			_hpRegen.updateLevel();
