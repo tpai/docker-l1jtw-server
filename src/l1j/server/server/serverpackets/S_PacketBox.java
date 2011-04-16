@@ -223,10 +223,11 @@ public class S_PacketBox extends ServerBasePacket {
 			case FOOD:
 				writeC(value);
 				break;
-			case MSG_ELF:
-			case MSG_RANK_CHANGED:
-			case MSG_COLOSSEUM:
+			case MSG_ELF: // 忽然全身充滿了%s的靈力。
+			case MSG_RANK_CHANGED: // 你的階級變更為%s
+			case MSG_COLOSSEUM: // 大圓形競技場，混沌的大戰開始！結束！取消！
 				writeC(value); // msg id
+				writeC(0);
 				break;
 			case MSG_LEVEL_OVER:
 				writeC(0); // ?

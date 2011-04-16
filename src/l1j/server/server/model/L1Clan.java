@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import l1j.server.Config;
 import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.utils.collections.Lists;
@@ -172,22 +173,30 @@ public class L1Clan {
 
 	private String getRankString(L1PcInstance pc) {
 		String rank = "";
+		String[] msg = {
+				"[見習]", "[一般]", "[守護騎士]", "[血盟君主]",
+				"[见习]", "[一般]", "[守护骑士]", "[血盟君主]",
+				"[見習い]", "[一般]", "[ガーディアン]", "[血盟君主]"
+		};
+		byte i = 0; // 預設：繁體
+		if (Config.CLIENT_LANGUAGE == 5) { // 簡體
+			i = 4;
+		} else if (Config.CLIENT_LANGUAGE == 4) { // 日文
+			i = 8;
+		}
 		if (pc != null) {
 			if (pc.getClanRank() == CLAN_RANK_PROBATION) {
-				rank = "[見習]";
-			}
-			else if (pc.getClanRank() == CLAN_RANK_PUBLIC) {
-				rank = "[一般]";
-			}
-			else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
-				rank = "[守護騎士]";
-			}
-			else if (pc.getClanRank() == CLAN_RANK_PRINCE) {
-				rank = "[血盟王族]";
-			}
-			else {
+				rank = msg[0 + i];
+			} else if (pc.getClanRank() == CLAN_RANK_PUBLIC) {
+				rank = msg[1 + i];
+			} else if (pc.getClanRank() == CLAN_RANK_GUARDIAN) {
+				rank = msg[2 + i];
+			} else if (pc.getClanRank() == CLAN_RANK_PRINCE) {
+				rank = msg[3 + i];
+			} else {
 				rank = "";
 			}
+			
 		}
 		return rank;
 	}

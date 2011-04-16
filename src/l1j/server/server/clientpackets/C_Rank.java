@@ -22,6 +22,7 @@ import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
 
 // Referenced classes of package l1j.server.server.clientpackets:
@@ -40,22 +41,13 @@ public class C_Rank extends ClientBasePacket {
 		super(abyte0);
 
 		int data = readC(); // ?
-		// int rank = readC();
-		// String name = readS();
+		int rank = readC();
+		String name = readS();
 
 		L1PcInstance pc = clientthread.getActiveChar();
+		L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 
-		if (data == 2) {
-			pc.sendPackets(new S_ServerMessage(74, "同盟目錄"));
-		} else if (data == 3) {
-			pc.sendPackets(new S_ServerMessage(74, "加入同盟"));
-		} else if (data == 4) {
-			pc.sendPackets(new S_ServerMessage(74, "退出同盟"));
-		} else {
-			/*
-			L1PcInstance pc = clientthread.getActiveChar();
-			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
-
+		if (data == 1) {
 			if (pc == null) {
 				return;
 			}
@@ -66,19 +58,19 @@ public class C_Rank extends ClientBasePacket {
 			}
 
 			if ((rank < 1) && (3 < rank)) {
-				// ランクを変更する人の名前とランクを入力してください。[ランク=ガーディアン、一般、見習い]
+				// 請輸入想要變更階級的人的名稱與階級。[階級 = 守護騎士、一般、見習]
 				pc.sendPackets(new S_ServerMessage(781));
 				return;
 			}
 
 			if (pc.isCrown()) { // 君主
 				if (pc.getId() != clan.getLeaderId()) { // 血盟主
-					pc.sendPackets(new S_ServerMessage(785)); // あなたはもう君主ではありません。
+					pc.sendPackets(new S_ServerMessage(785)); // 你不再是君主了
 					return;
 				}
 			}
 			else {
-				pc.sendPackets(new S_ServerMessage(518)); // この命令は血盟の君主のみが利用できます。
+				pc.sendPackets(new S_ServerMessage(518)); // 血盟君主才可使用此命令。
 				return;
 			}
 
@@ -87,24 +79,14 @@ public class C_Rank extends ClientBasePacket {
 					try {
 						targetPc.setClanRank(rank);
 						targetPc.save(); // 儲存玩家的資料到資料庫中
-						String rankString = "$772";
-						if (rank == L1Clan.CLAN_RANK_PROBATION) {
-							rankString = "$774";
-						}
-						else if (rank == L1Clan.CLAN_RANK_PUBLIC) {
-							rankString = "$773";
-						}
-						else if (rank == L1Clan.CLAN_RANK_GUARDIAN) {
-							rankString = "$772";
-						}
-						targetPc.sendPackets(new S_ServerMessage(784, rankString)); // あなたのランクが%sに変更されました。
+						targetPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_RANK_CHANGED, rank)); // 你的階級變更為%s
 					}
 					catch (Exception e) {
 						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 					}
 				}
 				else {
-					pc.sendPackets(new S_ServerMessage(414)); // 同じ血盟員ではありません。
+					pc.sendPackets(new S_ServerMessage(414)); // 您只能邀請您血盟中的成員。
 					return;
 				}
 			}
@@ -123,7 +105,16 @@ public class C_Rank extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(109, name)); // %0という名前の人はいません。
 					return;
 				}
-			}*/
+			}
+		} else if (data == 2) {
+			pc.sendPackets(new S_ServerMessage(74, "同盟目錄"));
+		} else if (data == 3) {
+			pc.sendPackets(new S_ServerMessage(74, "加入同盟"));
+		} else if (data == 4) {
+			pc.sendPackets(new S_ServerMessage(74, "退出同盟"));
+		} else {
+			/*
+			*/
 		}
 	}
 

@@ -87,6 +87,7 @@ import l1j.server.server.serverpackets.S_ItemName;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
+import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_PetCtrlMenu;
 import l1j.server.server.serverpackets.S_PetList;
 import l1j.server.server.serverpackets.S_RetrieveElfList;
@@ -99,7 +100,6 @@ import l1j.server.server.serverpackets.S_ShopBuyList;
 import l1j.server.server.serverpackets.S_ShopSellList;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
-import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.serverpackets.S_SystemMessage;
@@ -731,7 +731,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				pc.setElfAttr(2);
 				pc.save(); // DBにキャラクター情報を書き込む
-				pc.sendPackets(new S_SkillIconGFX(15, 1)); // 体の隅々に火の精霊力が染みこんできます。
+				pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_ELF, 1)); // 忽然全身充滿了火的靈力。
 				htmlid = ""; // ウィンドウを消す
 			}
 		}
@@ -742,7 +742,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				pc.setElfAttr(4);
 				pc.save(); // DBにキャラクター情報を書き込む
-				pc.sendPackets(new S_SkillIconGFX(15, 2)); // 体の隅々に水の精霊力が染みこんできます。
+				pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_ELF, 2)); // 忽然全身充滿了水的靈力。
 				htmlid = ""; // ウィンドウを消す
 			}
 		}
@@ -753,7 +753,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				pc.setElfAttr(8);
 				pc.save(); // DBにキャラクター情報を書き込む
-				pc.sendPackets(new S_SkillIconGFX(15, 3)); // 体の隅々に風の精霊力が染みこんできます。
+				pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_ELF, 3)); // 忽然全身充滿了風的靈力。
 				htmlid = ""; // ウィンドウを消す
 			}
 		}
@@ -764,7 +764,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 				pc.setElfAttr(1);
 				pc.save(); // DBにキャラクター情報を書き込む
-				pc.sendPackets(new S_SkillIconGFX(15, 4)); // 体の隅々に地の精霊力が染みこんできます。
+				pc.sendPackets(new S_PacketBox(S_PacketBox.MSG_ELF, 4)); // 忽然全身充滿了地的靈力。
 				htmlid = ""; // ウィンドウを消す
 			}
 		}

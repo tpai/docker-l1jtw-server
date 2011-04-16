@@ -4546,6 +4546,9 @@ public class C_ItemUSe extends ClientBasePacket {
 			if (Config.CLIENT_LANGUAGE == 3) {
 				s1 = (new StringBuilder()).append("魔法書 (").append(l1skills.getName()).append(")").toString();
 			}
+			else if (Config.CLIENT_LANGUAGE == 5) {
+				s1 = (new StringBuilder()).append("魔法书 (").append(l1skills.getName()).append(")").toString();
+			}
 			else {
 				s1 = (new StringBuilder()).append("魔法書(").append(l1skills.getName()).append(")").toString();
 			}
@@ -4697,6 +4700,9 @@ public class C_ItemUSe extends ClientBasePacket {
 			if (Config.CLIENT_LANGUAGE == 3) {
 				s1 = (new StringBuilder()).append("黑暗精靈水晶(").append(l1skills.getName()).append(")").toString();
 			}
+			else if (Config.CLIENT_LANGUAGE == 5) {
+				s1 = (new StringBuilder()).append("黑暗精灵水晶(").append(l1skills.getName()).append(")").toString();
+			}
 			else {
 				s1 = (new StringBuilder()).append("闇精霊の水晶(").append(l1skills.getName()).append(")").toString();
 			}
@@ -4846,6 +4852,9 @@ public class C_ItemUSe extends ClientBasePacket {
 			String s1 = null;
 			if (Config.CLIENT_LANGUAGE == 3) {
 				s1 = (new StringBuilder()).append("精靈水晶(").append(l1skills.getName()).append(")").toString();
+			}
+			else if (Config.CLIENT_LANGUAGE == 5) {
+				s1 = (new StringBuilder()).append("精灵水晶(").append(l1skills.getName()).append(")").toString();
 			}
 			else {
 				s1 = (new StringBuilder()).append("精霊の水晶(").append(l1skills.getName()).append(")").toString();
@@ -5005,6 +5014,9 @@ public class C_ItemUSe extends ClientBasePacket {
 			if (Config.CLIENT_LANGUAGE == 3) {
 				s1 = (new StringBuilder()).append("技術書(").append(l1skills.getName()).append(")").toString();
 			}
+			else if (Config.CLIENT_LANGUAGE == 5) {
+				s1 = (new StringBuilder()).append("技术书(").append(l1skills.getName()).append(")").toString();
+			}
 			else {
 				s1 = (new StringBuilder()).append("技術書(").append(l1skills.getName()).append(")").toString();
 			}
@@ -5154,6 +5166,9 @@ public class C_ItemUSe extends ClientBasePacket {
 			String s1 = null;
 			if (Config.CLIENT_LANGUAGE == 3) {
 				s1 = (new StringBuilder()).append("魔法書 (").append(l1skills.getName()).append(")").toString();
+			}
+			else if (Config.CLIENT_LANGUAGE == 5) {
+				s1 = (new StringBuilder()).append("魔法书 (").append(l1skills.getName()).append(")").toString();
 			}
 			else {
 				s1 = (new StringBuilder()).append("魔法書(").append(l1skills.getName()).append(")").toString();
@@ -5308,6 +5323,9 @@ public class C_ItemUSe extends ClientBasePacket {
 			String s1 = null;
 			if (Config.CLIENT_LANGUAGE == 3) {
 				s1 = (new StringBuilder()).append("龍騎士書板(").append(l1skills.getName()).append(")").toString();
+			}
+			else if (Config.CLIENT_LANGUAGE == 5) {
+				s1 = (new StringBuilder()).append("龙骑士书板(").append(l1skills.getName()).append(")").toString();
 			}
 			else {
 				s1 = (new StringBuilder()).append("ドラゴンナイトの書板（").append(l1skills.getName()).append("）").toString();
@@ -5477,6 +5495,9 @@ public class C_ItemUSe extends ClientBasePacket {
 			String s1 = null;
 			if (Config.CLIENT_LANGUAGE == 3) {
 				s1 = (new StringBuilder()).append("記憶水晶(").append(l1skills.getName()).append(")").toString();
+			}
+			else if (Config.CLIENT_LANGUAGE == 5) {
+				s1 = (new StringBuilder()).append("记忆水晶(").append(l1skills.getName()).append(")").toString();
 			}
 			else {
 				s1 = (new StringBuilder()).append("記憶の水晶（").append(l1skills.getName()).append("）").toString();
