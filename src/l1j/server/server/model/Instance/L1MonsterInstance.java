@@ -877,8 +877,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 				npc.getLocation().set(_loc);
 				npc.getLocation().forward(_h);
 
-				_pc.sendPackets(new S_NPCPack(npc));
-				_pc.sendPackets(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Hide));//test
+				broadcastPacket(new S_NPCPack(npc));
+				broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Hide));
 
 				L1World.getInstance().storeObject(npc);
 				L1World.getInstance().addVisibleObject(npc);
