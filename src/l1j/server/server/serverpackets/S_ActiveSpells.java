@@ -14,7 +14,7 @@
  */
 package l1j.server.server.serverpackets;
 
-import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
+import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
@@ -25,6 +25,7 @@ import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_HP;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_MP;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_ENCHANTING_BATTLE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.CharBuffTable;
@@ -62,6 +63,10 @@ public class S_ActiveSpells extends ServerBasePacket {
 		 // 生命之樹果實
 		if (pc.hasSkillEffect(STATUS_RIBRAVE)) {
 			data[61] = pc.getSkillEffectTimeSec(STATUS_RIBRAVE) / 4;
+		}
+		// 迴避提升
+		if (pc.hasSkillEffect(DRESS_EVASION)) {
+			data[17] = pc.getSkillEffectTimeSec(DRESS_EVASION) / 4;
 		}
 		// 戰鬥藥水、神力藥水
 		if (pc.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {

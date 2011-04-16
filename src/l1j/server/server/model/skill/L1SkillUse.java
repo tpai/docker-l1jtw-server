@@ -1467,7 +1467,10 @@ public class L1SkillUse {
 				// 體魄強健術、力量提升
 				{ PHYSICAL_ENCHANT_STR, DRESS_MIGHTY },
 				// 激勵士氣、鋼鐵士氣
-				{ GLOWING_AURA, SHINING_AURA } };
+				{ GLOWING_AURA, SHINING_AURA },
+				// 鏡像、暗影閃避
+				{ MIRROR_IMAGE, UNCANNY_DODGE } };
+				
 
 		for (int[] skills : repeatedSkills) {
 			for (int id : skills) {

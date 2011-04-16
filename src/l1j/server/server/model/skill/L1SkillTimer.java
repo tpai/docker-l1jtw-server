@@ -849,7 +849,7 @@ class L1SkillStop {
 				pc.sendPackets(new S_SPMR(pc));
 			}
 		}
-		else if (skillId == MIRROR_IMAGE) { // 鏡像
+		else if (skillId == MIRROR_IMAGE || skillId == UNCANNY_DODGE) { // 鏡像、暗影閃避
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				byte dodge = pc.getDodge();

@@ -38,6 +38,7 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_CHAT_PROHIBITED;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_ELFBRAVE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
+import static l1j.server.server.model.skill.L1SkillId.UNCANNY_DODGE;
 
 import java.io.FileNotFoundException;
 import java.sql.Connection;
@@ -598,6 +599,7 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.setSkillEffect(skillid, time * 4 * 1000);
 						break;
 					case MIRROR_IMAGE: // 鏡像
+					case UNCANNY_DODGE: // 暗影閃避
 						time = remaining_time / 16;
 						int[] type = {5, 0, time};
 						pc.setDodge((byte) (pc.getDodge() + 5));

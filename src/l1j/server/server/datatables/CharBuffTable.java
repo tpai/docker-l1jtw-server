@@ -41,7 +41,8 @@ public class CharBuffTable {
 		114, 115, 117,
 		148, 155, 163,
 		149, 156, 166,
-		MIRROR_IMAGE,
+		DRESS_EVASION, // 迴避提升
+		MIRROR_IMAGE, UNCANNY_DODGE, // 鏡像、暗影閃避
 		43, 54, STATUS_HASTE, // 一段加速
 		STATUS_BRAVE, STATUS_ELFBRAVE, STATUS_RIBRAVE, STATUS_BRAVE2, // 二段加速
 		EFFECT_THIRD_SPEED, // 三段加速
@@ -148,6 +149,10 @@ public class CharBuffTable {
 					case EFFECT_POTION_OF_BATTLE: // 戰鬥藥水
 						remaining_time = remaining_time / 16;
 						pc.setSkillEffect(skillid, remaining_time * 16 * 1000);
+						break;
+					case DRESS_EVASION: // 迴避提升
+						remaining_time = remaining_time / 4;
+						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
 						break;
 					default:
 						break;

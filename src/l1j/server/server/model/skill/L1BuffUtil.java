@@ -612,8 +612,9 @@ public class L1BuffUtil {
 				break;
 
 		// 輔助性魔法
-			// 鏡像
+			// 鏡像、暗影閃避
 			case MIRROR_IMAGE:
+			case UNCANNY_DODGE:
 				if (_user instanceof L1PcInstance) {
 					L1PcInstance pc = (L1PcInstance) _user;
 					byte dodge = pc.getDodge(); // 取得角色目前閃避率
