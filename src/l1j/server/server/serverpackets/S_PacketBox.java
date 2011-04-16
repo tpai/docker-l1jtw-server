@@ -290,6 +290,29 @@ public class S_PacketBox extends ServerBasePacket {
 		}
 	}
 
+	public S_PacketBox(int subCode, int[] type) {
+		writeC(Opcodes.S_OPCODE_PACKETBOX);
+		writeC(subCode);
+
+		switch (subCode) {
+			case 88: // 閃避率
+			writeC(type[0]);
+			writeC(0x00);
+				break;
+			case 101: // 閃避率
+				writeC(type[1]);
+				break;
+			case 21: // 狀態圖示
+				writeC(0x00);
+				writeC(0x00);
+				writeC(0x00);
+				writeC(type[2]); // 鏡像
+				break;
+			default:
+				break;
+		}
+	}
+
 	public S_PacketBox(int subCode, String name) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);

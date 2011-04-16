@@ -20,7 +20,6 @@ import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.model.L1Awake;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1CurseParalysis;
-import l1j.server.server.model.L1EffectSpawn;
 import l1j.server.server.model.L1PinkName;
 import l1j.server.server.model.L1PolyMorph;
 import l1j.server.server.model.L1Teleport;
@@ -41,6 +40,7 @@ import l1j.server.server.serverpackets.S_ChatPacket;
 import l1j.server.server.serverpackets.S_CurseBlind;
 import l1j.server.server.serverpackets.S_Dexup;
 import l1j.server.server.serverpackets.S_DoActionShop;
+import l1j.server.server.serverpackets.S_EffectLocation;
 import l1j.server.server.serverpackets.S_HPUpdate;
 import l1j.server.server.serverpackets.S_Invis;
 import l1j.server.server.serverpackets.S_Liquor;
@@ -48,6 +48,7 @@ import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_NpcChatPacket;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
+import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_SPMR;
@@ -148,8 +149,8 @@ public class L1BuffUtil {
 
 		pc.setSkillEffect(EFFECT_THIRD_SPEED, 600 * 1000);
 
-		pc.sendPackets(new S_SkillSound(pc.getId(), 751));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 751));
+		pc.sendPackets(new S_SkillSound(pc.getId(), 8031));
+		pc.broadcastPacket(new S_SkillSound(pc.getId(), 8031));
 		pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
 		pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
 		pc.sendPackets(new S_ServerMessage(1065)); // 將發生神秘的奇蹟力量。
@@ -348,24 +349,28 @@ public class L1BuffUtil {
 				break;
 			// 屠宰者
 			case FOE_SLAYER:
-				// 給予屠宰者狀態，用於判斷是否加成３０％傷害
-				_player.setSkillEffect(FOE_SLAYER, 3 * 1000);
+				_player.setFoeSlayer(true);
 				for (int i = 3; i > 0; i--) {
 					_target.onAction(_player);
 				}
-				_player.sendPackets(new S_SkillSound(_target.getId(), 6509));
-				_player.broadcastPacket(new S_SkillSound(_target.getId(), 6509));
-				// 施放屠宰者時，弱點曝光 LV1、LV2 消失
-				if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
-					_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
-					_player.sendPackets(new S_SkillIconGFX(75, 0));
-				} else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
+				_player.setFoeSlayer(false);
+
+				_player.sendPackets(new S_EffectLocation(_target.getX(), _target.getY(), 6509));
+				_player.broadcastPacket(new S_EffectLocation(_target.getX(), _target.getY(), 6509));
+				_player.sendPackets(new S_SkillSound(_player.getId(), 7020));
+				_player.broadcastPacket(new S_SkillSound(_player.getId(), 7020));
+
+				if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
 					_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
 					_player.sendPackets(new S_SkillIconGFX(75, 0));
+				} else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) {
+					_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
+					_player.sendPackets(new S_SkillIconGFX(75, 0));
+				} else if (_player.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
+					_player.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
+					_player.sendPackets(new S_SkillIconGFX(75, 0));
 				}
-				// 刪除屠宰者狀態
-				_player.killSkillEffectTimer(FOE_SLAYER);
-				break;
+			break;
 			// 暴擊
 			case SMASH:
 				_target.onAction(_player, SMASH);
@@ -607,6 +612,17 @@ public class L1BuffUtil {
 				break;
 
 		// 輔助性魔法
+			// 鏡像
+			case MIRROR_IMAGE:
+				if (_user instanceof L1PcInstance) {
+					L1PcInstance pc = (L1PcInstance) _user;
+					byte dodge = pc.getDodge(); // 取得角色目前閃避率
+					dodge = (byte) (dodge + 5); // 鏡像閃避率增加50
+					int[] type = {dodge};
+					pc.setDodge(dodge);
+					pc.sendPackets(new S_PacketBox(88, type));
+				}
+				break;
 			// 激勵士氣
 			case GLOWING_AURA:
 				if (cha instanceof L1PcInstance) {

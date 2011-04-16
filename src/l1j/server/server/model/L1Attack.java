@@ -33,6 +33,7 @@ import l1j.server.server.serverpackets.S_AttackMissPacket;
 import l1j.server.server.serverpackets.S_AttackPacket;
 import l1j.server.server.serverpackets.S_AttackPacketForNpc;
 import l1j.server.server.serverpackets.S_DoActionGFX;
+import l1j.server.server.serverpackets.S_EffectLocation;
 import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
@@ -998,13 +999,6 @@ public class L1Attack {
 
 		// 弱點曝光發動判斷
 		WeaknessExposure();
-		// 弱點曝光 LV3 時，使用屠宰者加成 30% 傷害，弱點消失
-		if (_pc.hasSkillEffect(FOE_SLAYER)
-				&& _pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
-			dmg *= 1.3;
-			_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
-			_pc.sendPackets(new S_SkillIconGFX(75, 0));
-		}
 
 		dmg = calcBuffDamage(dmg);
 
@@ -1261,13 +1255,6 @@ public class L1Attack {
 
 		// 弱點曝光發動判斷
 		WeaknessExposure();
-		// 弱點曝光 LV3 時，使用屠宰者加成 30% 傷害，弱點消失
-		if (_pc.hasSkillEffect(FOE_SLAYER)
-				&& _pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
-			dmg *= 1.3;
-			_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
-			_pc.sendPackets(new S_SkillIconGFX(75, 0));
-		}
 
 		dmg = calcBuffDamage(dmg);
 
@@ -1590,7 +1577,8 @@ public class L1Attack {
 				dmg = tempDmg * 1.5 + diffDmg;
 			}
 		}
-		if (_weaponType2 == 18) { // 鎖鏈劍
+		// 鎖鏈劍
+		if (_weaponType2 == 18) {
 			// 弱點曝光 - 傷害加成
 			if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
 				dmg += 9;
@@ -1599,6 +1587,17 @@ public class L1Attack {
 			} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) {
 				dmg += 3;
 			}
+		}
+		// 屠宰者 & 弱點曝光LV3 - 傷害 *1.3
+		if (_pc.isFoeSlayer()
+				&& _pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) {
+			dmg *= 1.3;
+		}
+		if (_pc.hasSkillEffect(BURNING_SLASH)) { // 燃燒擊砍
+			dmg += 10;
+			_pc.sendPackets(new S_EffectLocation(_targetX, _targetY, 6591));
+			_pc.broadcastPacket(new S_EffectLocation(_targetX, _targetY, 6591));
+			_pc.killSkillEffectTimer(BURNING_SLASH);
 		}
 
 		return dmg;
@@ -2159,24 +2158,24 @@ public class L1Attack {
 		if (weapon != null) {
 			int random = 0;
 			if (_weaponType2 == 18) { // 鎖鏈劍
-				// 使用屠宰者狀態...
-				if (_pc.hasSkillEffect(FOE_SLAYER)) {
+				// 使用屠宰者...
+				if (_pc.isFoeSlayer()) {
 					return;
 				}
 				if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3)) { // 目前階段三
 					random = Random.nextInt(100) + 1;
-					if (random > 40 && random <= 55) { // 階段三
+					if (random > 30 && random <= 60) { // 階段三
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
 						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 3));
 					}
 				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) { // 目前階段二
 					random = Random.nextInt(100) + 1;
-					if (random <= 25) { // 階段二
+					if (random <= 30) { // 階段二
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
 						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 2));
-					} else if (random >= 85) { // 階段三
+					} else if (random >= 70) { // 階段三
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
 						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 3));
@@ -2187,7 +2186,7 @@ public class L1Attack {
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
 						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 1));
-					} else if (random >= 75) { // 階段二
+					} else if (random >= 70) { // 階段二
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
 						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 2));

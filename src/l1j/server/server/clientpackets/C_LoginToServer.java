@@ -29,6 +29,7 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BEGIN;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_END;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
+import static l1j.server.server.model.skill.L1SkillId.MIRROR_IMAGE;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BRAVE;
@@ -77,6 +78,7 @@ import l1j.server.server.serverpackets.S_LoginGame;
 import l1j.server.server.serverpackets.S_MapID;
 import l1j.server.server.serverpackets.S_OwnCharPack;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
+import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillBrave;
@@ -228,14 +230,21 @@ public class C_LoginToServer extends ClientBasePacket {
 
 		pc.sendVisualEffectAtLogin(); // 皇冠，毒，水和其他視覺效果顯示
 
-		pc.sendPackets(new S_Karma(pc)); // 友好度
-
 		pc.sendPackets(new S_Weather(L1World.getInstance().getWeather()));
 
 		items(pc);
 		skills(pc);
 		buff(client, pc);
 		pc.turnOnOffLight();
+
+		pc.sendPackets(new S_Karma(pc)); // 友好度
+		/* 閃避率 */
+		byte dodge = pc.getDodge(); // 取得角色目前閃避率
+		int[] type = {dodge, 0};
+		pc.setDodge(dodge);
+		pc.sendPackets(new S_PacketBox(88, type));
+		pc.sendPackets(new S_PacketBox(101, type));
+		/* 閃避率 */
 
 		if (pc.getCurrentHp() > 0) {
 			pc.setDead(false);
@@ -541,6 +550,7 @@ public class C_LoginToServer extends ClientBasePacket {
 			while (rs.next()) {
 				int skillid = rs.getInt("skill_id");
 				int remaining_time = rs.getInt("remaining_time");
+				int time = 0;
 				switch (skillid) {
 					case SHAPE_CHANGE: // 變身
 						int poly_id = rs.getInt("poly_id");
@@ -579,13 +589,21 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.setSkillEffect(skillid, remaining_time * 1000);
 						break;
 					case EFFECT_THIRD_SPEED: // 三段加速
-						int time = remaining_time / 4;
+						time = remaining_time / 4;
 						pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 *
 																		// 1.15
 						pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 *
 																			// 1.15
 						pc.sendPackets(new S_SkillIconThirdSpeed(time));
-						pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 4 * 1000);
+						pc.setSkillEffect(skillid, time * 4 * 1000);
+						break;
+					case MIRROR_IMAGE: // 鏡像
+						time = remaining_time / 16;
+						int[] type = {5, 0, time};
+						pc.setDodge((byte) (pc.getDodge() + 5));
+						pc.sendPackets(new S_PacketBox(88, type));
+						pc.sendPackets(new S_PacketBox(21, type));
+						pc.setSkillEffect(skillid, time * 16 * 1000);
 						break;
 					default:
 						// 魔法料理

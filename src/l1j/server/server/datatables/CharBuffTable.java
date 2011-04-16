@@ -41,6 +41,7 @@ public class CharBuffTable {
 		114, 115, 117,
 		148, 155, 163,
 		149, 156, 166,
+		MIRROR_IMAGE,
 		43, 54, STATUS_HASTE, // 一段加速
 		STATUS_BRAVE, STATUS_ELFBRAVE, STATUS_RIBRAVE, STATUS_BRAVE2, // 二段加速
 		EFFECT_THIRD_SPEED, // 三段加速
@@ -60,7 +61,7 @@ public class CharBuffTable {
 		EFFECT_POTION_OF_EXP_200, EFFECT_POTION_OF_EXP_225,
 		EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE, // 戰鬥藥水
 		EFFECT_BLESS_OF_MAZU, // 媽祖的祝福
-		EFFECT_ENCHANTING_BATTLE, EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP}; // 強化戰鬥卷軸、體力增強卷軸、魔力增強卷軸
+		EFFECT_ENCHANTING_BATTLE, EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP }; // 強化戰鬥卷軸、體力增強卷軸、魔力增強卷軸
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
 		java.sql.Connection con = null;

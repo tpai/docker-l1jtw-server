@@ -132,8 +132,8 @@ public class Potion {
 
 		pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 1000);
 
-		pc.sendPackets(new S_SkillSound(pc.getId(), 751));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 751));
+		pc.sendPackets(new S_SkillSound(pc.getId(), 8031));
+		pc.broadcastPacket(new S_SkillSound(pc.getId(), 8031));
 		pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
 		pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
 		pc.sendPackets(new S_ServerMessage(1065)); // 將發生神秘的奇蹟力量。

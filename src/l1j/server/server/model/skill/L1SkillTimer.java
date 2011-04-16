@@ -49,7 +49,6 @@ import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
 import l1j.server.server.serverpackets.S_SkillIconShield;
 import l1j.server.server.serverpackets.S_SkillIconWindShackle;
 import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
-import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Strup;
 import l1j.server.server.templates.L1Skills;
 
@@ -848,6 +847,16 @@ class L1SkillStop {
 				pc.addBowDmgup(-3);
 				pc.addSp(-3);
 				pc.sendPackets(new S_SPMR(pc));
+			}
+		}
+		else if (skillId == MIRROR_IMAGE) { // 鏡像
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				byte dodge = pc.getDodge();
+				dodge = (byte) (dodge - 5);
+				int[] type = {dodge};
+				pc.setDodge(dodge);
+				pc.sendPackets(new S_PacketBox(88, type));
 			}
 		}
 

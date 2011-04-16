@@ -468,6 +468,7 @@ public class L1SkillId {
 	/*
 	 * Illusionist Magic
 	 */
+	/** 幻術士魔法 (鏡像) */
 	public static final int MIRROR_IMAGE = 201;
 
 	/** 幻術士魔法 (混亂)*/
