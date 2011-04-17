@@ -58,6 +58,7 @@ import l1j.server.server.serverpackets.S_ShowSummonList;
 import l1j.server.server.serverpackets.S_SkillBrave;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconAura;
+import l1j.server.server.serverpackets.S_SkillIconBloodstain;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillIconShield;
 import l1j.server.server.serverpackets.S_SkillIconWindShackle;
@@ -154,6 +155,30 @@ public class L1BuffUtil {
 		pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
 		pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
 		pc.sendPackets(new S_ServerMessage(1065)); // 將發生神秘的奇蹟力量。
+	}
+
+	public static void bloodstain(L1PcInstance pc, byte type, int time, boolean showGfx) {
+		if (showGfx) {
+			pc.sendPackets(new S_SkillSound(pc.getId(), 7783));
+			pc.broadcastPacket(new S_SkillSound(pc.getId(), 7783));
+		}
+
+		int skillId = EFFECT_BLOODSTAIN_OF_ANTHARAS;
+		if (type == 0) { // 安塔瑞斯
+			if (!pc.hasSkillEffect(skillId)) {
+				pc.addAc(-2); // 防禦 -2
+				pc.addWater(50); // 水屬性 +50
+			}
+			pc.sendPackets(new S_SkillIconBloodstain(82, time)); // 安塔瑞斯的血痕
+		} else if (type == 1) { // 法利昂
+			skillId = EFFECT_BLOODSTAIN_OF_FAFURION;
+			if (!pc.hasSkillEffect(skillId)) {
+				pc.addWind(50); // 風屬性 +50
+			}
+			pc.sendPackets(new S_SkillIconBloodstain(85, time)); // 法利昂的血痕
+		}
+		pc.sendPackets(new S_OwnCharAttrDef(pc));
+		pc.setSkillEffect(skillId, (time * 60 * 1000));
 	}
 
 	public static int skillEffect(L1Character _user, L1Character cha, L1Character _target, int skillId, int _getBuffIconDuration, int dmg) {

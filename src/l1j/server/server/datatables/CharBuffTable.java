@@ -63,7 +63,8 @@ public class CharBuffTable {
 		EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE, // 戰鬥藥水
 		EFFECT_BLESS_OF_MAZU, // 媽祖的祝福
 		EFFECT_ENCHANTING_BATTLE, EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP, // 強化戰鬥卷軸、體力增強卷軸、魔力增強卷軸
-		COOKING_WONDER_DRUG // 象牙塔妙藥
+		COOKING_WONDER_DRUG, // 象牙塔妙藥
+		EFFECT_BLOODSTAIN_OF_ANTHARAS, EFFECT_BLOODSTAIN_OF_FAFURION
 	};
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {

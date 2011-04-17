@@ -744,7 +744,13 @@ public class L1SkillId {
 	/** 強化戰鬥卷軸 */
 	public static final int EFFECT_ENCHANTING_BATTLE = 4010;
 
-	public static final int EFFECT_END = 4010;
+	/** 安塔瑞斯的血痕 */
+	public static final int EFFECT_BLOODSTAIN_OF_ANTHARAS = 4011;
+
+	/** 法利昂的血痕 */
+	public static final int EFFECT_BLOODSTAIN_OF_FAFURION = 4012;
+
+	public static final int EFFECT_END = 4012;
 
 	// 特殊狀態
 	public static final int SPECIAL_EFFECT_BEGIN = 5001;

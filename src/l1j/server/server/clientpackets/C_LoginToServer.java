@@ -27,6 +27,8 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_3_0_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BEGIN;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_ANTHARAS;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_END;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
@@ -66,6 +68,7 @@ import l1j.server.server.model.L1War;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
+import l1j.server.server.model.skill.L1BuffUtil;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ActiveSpells;
 import l1j.server.server.serverpackets.S_AddSkill;
@@ -78,6 +81,7 @@ import l1j.server.server.serverpackets.S_Karma;
 import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_LoginGame;
 import l1j.server.server.serverpackets.S_MapID;
+import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharPack;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
 import l1j.server.server.serverpackets.S_PacketBox;
@@ -85,6 +89,7 @@ import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillBrave;
 import l1j.server.server.serverpackets.S_SkillHaste;
+import l1j.server.server.serverpackets.S_SkillIconBloodstain;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillIconThirdSpeed;
 import l1j.server.server.serverpackets.S_SummonPack;
@@ -607,6 +612,18 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.sendPackets(new S_PacketBox(88, type));
 						pc.sendPackets(new S_PacketBox(21, type));
 						pc.setSkillEffect(skillid, time * 16 * 1000);
+						break;
+					case EFFECT_BLOODSTAIN_OF_ANTHARAS: // 安塔瑞斯的血痕
+						remaining_time = remaining_time / 60;
+						if (remaining_time != 0) {
+							L1BuffUtil.bloodstain(pc, (byte) 0, remaining_time, false);
+						}
+						break;
+					case EFFECT_BLOODSTAIN_OF_FAFURION: // 法利昂的血痕
+						remaining_time = remaining_time / 60;
+						if (remaining_time != 0) {
+							L1BuffUtil.bloodstain(pc, (byte) 1, remaining_time, false);
+						}
 						break;
 					default:
 						// 魔法料理

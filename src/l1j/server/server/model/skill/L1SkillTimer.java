@@ -46,6 +46,7 @@ import l1j.server.server.serverpackets.S_SkillBrave;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillIconAura;
 import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
+import l1j.server.server.serverpackets.S_SkillIconBloodstain;
 import l1j.server.server.serverpackets.S_SkillIconShield;
 import l1j.server.server.serverpackets.S_SkillIconWindShackle;
 import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
@@ -857,6 +858,21 @@ class L1SkillStop {
 				int[] type = {dodge};
 				pc.setDodge(dodge);
 				pc.sendPackets(new S_PacketBox(88, type));
+			}
+		}
+		else if (skillId == EFFECT_BLOODSTAIN_OF_ANTHARAS) { // 安塔瑞斯的血痕
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addAc(2);
+				pc.addWater(-50);
+				pc.sendPackets(new S_SkillIconBloodstain(82, 0));
+			}
+		}
+		else if (skillId == EFFECT_BLOODSTAIN_OF_FAFURION) { // 法利昂的血痕
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addWind(-50);
+				pc.sendPackets(new S_SkillIconBloodstain(85, 0));
 			}
 		}
 

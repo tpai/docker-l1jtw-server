@@ -14,6 +14,8 @@
  */
 package l1j.server.server.model.Instance;
 
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_ANTHARAS;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 
 import java.util.ArrayList;
@@ -36,12 +38,18 @@ import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1UltimateBattle;
 import l1j.server.server.model.L1World;
+import l1j.server.server.model.skill.L1BuffUtil;
+import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
+import l1j.server.server.serverpackets.S_NpcChatPacket;
+import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillBrave;
+import l1j.server.server.serverpackets.S_SkillIconBloodstain;
+import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.CalcExp;
 import l1j.server.server.utils.Random;
@@ -328,11 +336,21 @@ public class L1MonsterInstance extends L1NpcInstance {
 				}
 			}
 
+			// 血痕相剋傷害增加 1.5倍
+			if ((getNpcTemplate().get_npcId() == 97044
+					|| getNpcTemplate().get_npcId() == 97045
+					|| getNpcTemplate().get_npcId() == 97046)
+					&& (attacker.hasSkillEffect(EFFECT_BLOODSTAIN_OF_ANTHARAS))) { // 有安塔瑞斯的血痕時對法利昂增傷
+				damage *= 1.5;
+			}
 			int newHp = getCurrentHp() - damage;
 			if ((newHp <= 0) && !isDead()) {
 				int transformId = getNpcTemplate().getTransformId();
 				// 変身しないモンスター
 				if (transformId == -1) {
+					if (getNpcTemplate().get_npcId() == 97008 || getNpcTemplate().get_npcId() == 97046) {
+						bloodstain();
+					}
 					setCurrentHpDirect(0);
 					setDead(true);
 					setStatus(ActionCodes.ACTION_Die);
@@ -801,6 +819,19 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 	protected boolean isNextDragonStepRunning() {
 		return _nextDragonStepRunning;
+	}
+
+	// 龍之血痕
+	private void bloodstain() {
+		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this, 30)) {
+			if (getNpcTemplate().get_npcId() == 97008) {
+				pc.sendPackets(new S_ServerMessage(1580)); // 安塔瑞斯：黑暗的詛咒將會降臨到你們身上！席琳， 我的母親，請讓我安息吧...
+				L1BuffUtil.bloodstain(pc, (byte) 0, 4320, true);
+			} else if (getNpcTemplate().get_npcId() == 97046) {
+				pc.sendPackets(new S_ServerMessage(1668)); // 法利昂：莎爾...你這個傢伙...怎麼...對得起我的母親...席琳啊...請拿走...我的生命吧...
+				L1BuffUtil.bloodstain(pc, (byte) 1, 4320, true);
+			}
+		}
 	}
 
 	private void doNextDragonStep(L1Character attacker, int npcid) {
