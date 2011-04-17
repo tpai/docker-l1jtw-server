@@ -29,6 +29,7 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BEGIN;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_END;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
 import static l1j.server.server.model.skill.L1SkillId.MIRROR_IMAGE;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
@@ -617,7 +618,8 @@ public class C_LoginToServer extends ClientBasePacket {
 							L1Cooking.eatCooking(pc, skillid, remaining_time);
 						}
 						// 生命之樹果實、商城道具
-						else if (skillid == STATUS_RIBRAVE || (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END)) {
+						else if (skillid == STATUS_RIBRAVE || (skillid >= EFFECT_BEGIN && skillid <= EFFECT_END)
+								|| skillid == COOKING_WONDER_DRUG) {
 							;
 						}
 						else {

@@ -2780,7 +2780,8 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
 				else if (((itemId >= 41277) && (itemId <= 41292)) || ((itemId >= 49049) && (itemId <= 49064))
-						|| ((itemId >= 49244) && (itemId <= 49259))) { // 料理
+						|| ((itemId >= 49244) && (itemId <= 49259))
+						|| itemId == L1ItemId.POTION_OF_WONDER_DRUG) { // 魔法料理、象牙塔妙藥
 					L1Cooking.useCookingItem(pc, l1iteminstance);
 				}
 				else if ((itemId >= 41383) && (itemId <= 41400)) { // 家具

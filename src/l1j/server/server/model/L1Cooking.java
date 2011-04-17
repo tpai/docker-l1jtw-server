@@ -62,6 +62,8 @@ import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_6_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_7_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_7_S;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
+import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_HPUpdate;
@@ -88,20 +90,21 @@ public class L1Cooking {
 			}
 		}
 
-		if (((itemId >= 41277) && (itemId <= 41283 // Lv1料理
-				))
-				|| ((itemId >= 41285) && (itemId <= 41291 // Lv1幻想の料理
-				)) || ((itemId >= 49049) && (itemId <= 49055 // Lv2料理
-				)) || ((itemId >= 49057) && (itemId <= 49063 // Lv2幻想の料理
-				)) || ((itemId >= 49244) && (itemId <= 49250 // Lv3料理
-				)) || ((itemId >= 49252) && (itemId <= 49258))) { // Lv3幻想の料理
+		// 料理 LV1、特別的料理 LV1、料理 LV2、特別的料理 LV2、料理 LV3、特別的料理 LV3 - 不可重複
+		if (((itemId >= 41277) && (itemId <= 41283))
+				|| ((itemId >= 41285) && (itemId <= 41291))
+				|| ((itemId >= 49049) && (itemId <= 49055))
+				|| ((itemId >= 49057) && (itemId <= 49063))
+				|| ((itemId >= 49244) && (itemId <= 49250))
+				|| ((itemId >= 49252) && (itemId <= 49258))) {
 			int cookingId = pc.getCookingId();
 			if (cookingId != 0) {
 				pc.removeSkillEffect(cookingId);
 			}
 		}
 
-		if ((itemId == 41284) || (itemId == 41292) || (itemId == 49056) || (itemId == 49064) || (itemId == 49251) || (itemId == 49259)) { // デザート
+		// 蘑菇湯、特別的蘑菇湯、蟹肉湯、特別的蟹肉湯、邪惡蜥蜴蛋湯、特別的邪惡蜥蜴蛋湯 - 不可重複
+		if ((itemId == 41284) || (itemId == 41292) || (itemId == 49056) || (itemId == 49064) || (itemId == 49251) || (itemId == 49259)) {
 			int dessertId = pc.getDessertId();
 			if (dessertId != 0) {
 				pc.removeSkillEffect(dessertId);
@@ -326,7 +329,11 @@ public class L1Cooking {
 			}
 			eatCooking(pc, cookingId, time);
 		}
-		pc.sendPackets(new S_ServerMessage(76, item.getNumberedName(1))); // \f1%0を食べました。
+		else if (itemId == L1ItemId.POTION_OF_WONDER_DRUG) { // 象牙塔妙藥
+			cookingId = COOKING_WONDER_DRUG;
+			eatCooking(pc, cookingId, time);
+		}
+		pc.sendPackets(new S_ServerMessage(76, item.getNumberedName(1))); // \f1吃 %0%o。
 		pc.getInventory().removeItem(item, 1);
 	}
 
@@ -455,6 +462,9 @@ public class L1Cooking {
 		}
 		else if ((cookingId == COOKING_3_7_N) || (cookingId == COOKING_3_7_S)) { // バシリスクの卵スープ
 			cookingType = 23;
+		}
+		else if (cookingId == COOKING_WONDER_DRUG) { // 象牙塔妙藥
+			cookingType = 54;
 		}
 		pc.sendPackets(new S_PacketBox(53, cookingType, time));
 		pc.setSkillEffect(cookingId, time * 1000);

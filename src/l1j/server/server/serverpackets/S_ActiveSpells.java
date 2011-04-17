@@ -15,6 +15,7 @@
 package l1j.server.server.serverpackets;
 
 import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
@@ -68,6 +69,13 @@ public class S_ActiveSpells extends ServerBasePacket {
 		if (pc.hasSkillEffect(DRESS_EVASION)) {
 			data[17] = pc.getSkillEffectTimeSec(DRESS_EVASION) / 4;
 		}
+		// 象牙塔妙藥
+		if (pc.hasSkillEffect(COOKING_WONDER_DRUG)) {
+			data[42] = pc.getSkillEffectTimeSec(COOKING_WONDER_DRUG) / 4;
+			if (data[42] != 0) {
+				data[43] = 54; // 因為妙藥，身心都很輕鬆。提升體力回復量和魔力回復量。
+			}
+		}
 		// 戰鬥藥水、神力藥水
 		if (pc.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
 			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_BATTLE) / 16;
@@ -75,29 +83,29 @@ public class S_ActiveSpells extends ServerBasePacket {
 				data[62] = 20; // 經驗值加成20%。
 			}
 		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
-			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_250) / 4;
-			if (data[42] != 0) {
-				data[43] = 36; // 狩獵經驗值將會增加。
+			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_250) / 16;
+			if (data[45] != 0) {
+				data[62] = 50; // 狩獵經驗值將會增加。
 			}
 		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
-			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_225) / 4;
-			if (data[42] != 0) {
-				data[43] = 35; // 狩獵經驗值將會增加。
+			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_225) / 16;
+			if (data[45] != 0) {
+				data[62] = 50; // 狩獵經驗值將會增加。
 			}
 		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
-			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_200) / 4;
-			if (data[42] != 0) {
-				data[43] = 34; // 狩獵經驗值將會增加。
+			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_200) / 16;
+			if (data[45] != 0) {
+				data[62] = 50; // 狩獵經驗值將會增加。
 			}
 		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
-			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_175) / 4;
-			if (data[42] != 0) {
-				data[43] = 33; // 狩獵經驗值將會增加。
+			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_175) / 16;
+			if (data[45] != 0) {
+				data[62] = 50; // 狩獵經驗值將會增加。
 			}
 		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
-			data[42] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_150) / 4;
-			if (data[42] != 0) {
-				data[43] = 32; // 狩獵經驗值將會增加。
+			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_150) / 16;
+			if (data[45] != 0) {
+				data[62] = 50; // 狩獵經驗值將會增加。
 			}
 		}
 		// 媽祖的祝福

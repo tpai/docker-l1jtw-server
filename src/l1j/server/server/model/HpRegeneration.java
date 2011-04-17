@@ -136,6 +136,9 @@ public class HpRegeneration extends TimerTask {
 				|| _pc.hasSkillEffect(COOKING_3_6_S)) {
 			bonus += 2;
 		}
+ 		if (_pc.hasSkillEffect(COOKING_WONDER_DRUG)) { // 象牙塔妙藥
+ 			bonus += 10;
+ 		}
  		if (_pc.hasSkillEffect(EFFECT_STRENGTHENING_HP)) { // 體力增強卷軸
  			bonus += 4;
  		}

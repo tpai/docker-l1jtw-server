@@ -252,34 +252,42 @@ public class S_PacketBox extends ServerBasePacket {
 
 		switch (subCode) {
 			case ICON_COOKING:
-				if (type != 7) {
-					writeC(0x0c);
-					writeC(0x0c);
-					writeC(0x0c);
+				if (type == 54) { // 象牙塔妙藥
 					writeC(0x12);
 					writeC(0x0c);
-					writeC(0x09);
-					writeC(0x00);
-					writeC(0x00);
-					writeC(type);
+					writeC(0x0c);
+					writeC(0x07);
+					writeC(0x12);
+					writeC(0x08);
+					writeH(0x0000); // 飽和度 值:2000，飽和度100%
+					writeC(type); // 類型
+					writeC(0x2a);
+					writeH(time); // 時間
+					writeC(0x0); // 負重度 值:240，負重度100%
+				} else if (type != 7) {
+					writeC(0x12);
+					writeC(0x0b);
+					writeC(0x0c);
+					writeC(0x0b);
+					writeC(0x0f);
+					writeC(0x08);
+					writeH(0x0000); // 飽和度 值:2000，飽和度100%
+					writeC(type); // 類型
 					writeC(0x24);
-					writeH(time);
-					writeH(0x00);
-				}
-				else {
-					writeC(0x0c);
-					writeC(0x0c);
-					writeC(0x0c);
+					writeH(time); // 時間
+					writeC(0x00); // 負重度 值:240，負重度100%
+				} else {
 					writeC(0x12);
+					writeC(0x0b);
 					writeC(0x0c);
-					writeC(0x09);
-					writeC(0xc8);
-					writeC(0x00);
-					writeC(type);
+					writeC(0x0b);
+					writeC(0x0f);
+					writeC(0x08);
+					writeH(0x0000); // 飽和度 值:2000，飽和度100%
+					writeC(type); // 類型
 					writeC(0x26);
-					writeH(time);
-					writeC(0x3e);
-					writeC(0x87);
+					writeH(time); // 時間
+					writeC(0x00); // 負重度 值:240，負重度100%
 				}
 				break;
 			case MSG_DUEL:

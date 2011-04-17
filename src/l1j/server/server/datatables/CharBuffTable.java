@@ -62,7 +62,9 @@ public class CharBuffTable {
 		EFFECT_POTION_OF_EXP_200, EFFECT_POTION_OF_EXP_225,
 		EFFECT_POTION_OF_EXP_250, EFFECT_POTION_OF_BATTLE, // 戰鬥藥水
 		EFFECT_BLESS_OF_MAZU, // 媽祖的祝福
-		EFFECT_ENCHANTING_BATTLE, EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP }; // 強化戰鬥卷軸、體力增強卷軸、魔力增強卷軸
+		EFFECT_ENCHANTING_BATTLE, EFFECT_STRENGTHENING_HP, EFFECT_STRENGTHENING_MP, // 強化戰鬥卷軸、體力增強卷軸、魔力增強卷軸
+		COOKING_WONDER_DRUG // 象牙塔妙藥
+	};
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
 		java.sql.Connection con = null;
@@ -131,11 +133,8 @@ public class CharBuffTable {
 				int remaining_time = rs.getInt("remaining_time");
 				switch (skillid) {
 					case STATUS_RIBRAVE: // 生命之樹果實
-					case EFFECT_POTION_OF_EXP_150: // 神力藥水
-					case EFFECT_POTION_OF_EXP_175:
-					case EFFECT_POTION_OF_EXP_200:
-					case EFFECT_POTION_OF_EXP_225:
-					case EFFECT_POTION_OF_EXP_250:
+					case DRESS_EVASION: // 迴避提升
+					case COOKING_WONDER_DRUG: // 象牙塔妙藥
 						remaining_time = remaining_time / 4;
 						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
 						break;
@@ -147,12 +146,13 @@ public class CharBuffTable {
 						Effect.useEffect(pc, skillid, remaining_time * 16);
 						break;
 					case EFFECT_POTION_OF_BATTLE: // 戰鬥藥水
+					case EFFECT_POTION_OF_EXP_150: // 神力藥水
+					case EFFECT_POTION_OF_EXP_175:
+					case EFFECT_POTION_OF_EXP_200:
+					case EFFECT_POTION_OF_EXP_225:
+					case EFFECT_POTION_OF_EXP_250:
 						remaining_time = remaining_time / 16;
 						pc.setSkillEffect(skillid, remaining_time * 16 * 1000);
-						break;
-					case DRESS_EVASION: // 迴避提升
-						remaining_time = remaining_time / 4;
-						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
 						break;
 					default:
 						break;

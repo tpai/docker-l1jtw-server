@@ -173,6 +173,9 @@ public class L1ItemId {
 	/** 強化戰鬥卷軸 */
 	public static final int SCROLL_FOR_ENCHANTING_BATTLE = 47009;
 
+	/** 象牙塔妙藥 */
+	public static final int POTION_OF_WONDER_DRUG = 49315;
+
 	/** 金幣 */
 	public static final int ADENA = 40308;
 }

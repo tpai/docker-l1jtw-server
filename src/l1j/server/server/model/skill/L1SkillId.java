@@ -694,7 +694,10 @@ public class L1SkillId {
 
 	public static final int COOKING_3_7_S = 3047;
 
-	public static final int COOKING_END = 3047;
+	/** 象牙塔妙藥 */
+	public static final int COOKING_WONDER_DRUG = 3048;
+
+	public static final int COOKING_END = 3048;
 
 	public static final int STATUS_FREEZE = 10071;
 
