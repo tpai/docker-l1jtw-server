@@ -15,7 +15,6 @@
 package l1j.server.server.model.Instance;
 
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_ANTHARAS;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 
 import java.util.ArrayList;
@@ -39,17 +38,12 @@ import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1UltimateBattle;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.skill.L1BuffUtil;
-import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
-import l1j.server.server.serverpackets.S_NpcChatPacket;
-import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillBrave;
-import l1j.server.server.serverpackets.S_SkillIconBloodstain;
-import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.CalcExp;
 import l1j.server.server.utils.Random;

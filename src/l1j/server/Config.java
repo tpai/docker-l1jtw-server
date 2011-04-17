@@ -239,6 +239,8 @@ public final class Config {
 	public static int NPC_DELETION_TIME;
 
 	public static int DEFAULT_CHARACTER_SLOT;
+	
+	public static int GDROPITEM_TIME;
 
 	/** CharSettings control */
 	public static int PRINCE_MAX_HP;
@@ -536,6 +538,8 @@ public final class Config {
 			ALT_TALKINGSCROLLQUEST = Boolean.parseBoolean(altSettings.getProperty("TalkingScrollQuest", "false"));
 			ALT_WHO_COMMAND = Boolean.parseBoolean(altSettings.getProperty("WhoCommand", "false"));
 			ALT_REVIVAL_POTION = Boolean.parseBoolean(altSettings.getProperty("RevivalPotion", "false"));
+			GDROPITEM_TIME = Integer.parseInt(altSettings.getProperty("GDropItemTime", "10")); 
+
 			String strWar;
 			strWar = altSettings.getProperty("WarTime", "2h");
 			if (strWar.indexOf("d") >= 0) {
@@ -883,6 +887,10 @@ public final class Config {
 		else if (pName.equalsIgnoreCase("DefaultCharacterSlot")) {
 			DEFAULT_CHARACTER_SLOT = Integer.valueOf(pValue);
 		}
+	    else if (pName.equalsIgnoreCase("GDropItemTime")) { 
+				GDROPITEM_TIME = Integer.parseInt(pValue);
+		}
+
 		// charsettings.properties
 		else if (pName.equalsIgnoreCase("PrinceMaxHP")) {
 			PRINCE_MAX_HP = Integer.parseInt(pValue);
@@ -1082,8 +1090,7 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("LoggingArmorEnchant")) {
 			LOGGING_ARMOR_ENCHANT = Byte.parseByte(pValue);
-		}
-		else {
+		} else {
 			return false;
 		}
 		return true;

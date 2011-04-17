@@ -35,8 +35,6 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.gametime.L1GameTimeClock;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ChangeHeading;
-import l1j.server.server.serverpackets.S_HPUpdate;
-import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillHaste;
