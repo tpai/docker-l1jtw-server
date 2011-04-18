@@ -159,6 +159,7 @@ public class ItemTable {
 		_weaponTypes.put("tohandstaff", new Integer(16));
 		_weaponTypes.put("kiringku", new Integer(17));
 		_weaponTypes.put("chainsword", new Integer(18));
+		_weaponTypes.put("tohandkiringku", new Integer(19));
 
 		_weaponId.put("sword", new Integer(4));
 		_weaponId.put("dagger", new Integer(46));
@@ -178,6 +179,7 @@ public class ItemTable {
 		_weaponId.put("tohandstaff", new Integer(40));
 		_weaponId.put("kiringku", new Integer(58));
 		_weaponId.put("chainsword", new Integer(24));
+		_weaponId.put("tohandkiringku", new Integer(58)); 
 
 		_materialTypes.put("none", new Integer(0));
 		_materialTypes.put("liquid", new Integer(1));

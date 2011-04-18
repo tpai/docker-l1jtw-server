@@ -125,6 +125,8 @@ public class L1Attack {
 	private int _leverage = 10; // 1/10倍で表現する。
 
 	private int _skillId;
+	
+	@SuppressWarnings("unused")
 	private double _skillDamage = 0;
 
 	public void setLeverage(int i) {
@@ -498,7 +500,7 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponType2 == 17) {
+		if (_weaponType2 == 17 || _weaponType2 == 19) {
 			_hitRate = 100; // キーリンクの命中率は100%
 		}
 
@@ -674,7 +676,7 @@ public class L1Attack {
 			}
 		}
 
-		if (_weaponType2 == 17) {
+		if (_weaponType2 == 17 || _weaponType2 == 19) {
 			_hitRate = 100; // キーリンクの命中率は100%
 		}
 
@@ -804,12 +806,14 @@ public class L1Attack {
 			_hitRate = 0;
 		} else if (_npc instanceof L1PetInstance) {
 			// 目標在安區、攻擊者在安區、NOPVP
-			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1) || (_targetPc.checkNonPvP(_targetPc, _npc))) {
+			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
+					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
 				_hitRate = 0;
 			}
 		} else if (_npc instanceof L1SummonInstance) {
 			// 目標在安區、攻擊者在安區、NOPVP
-			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1) || (_targetPc.checkNonPvP(_targetPc, _npc))) {
+			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
+					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
 				_hitRate = 0;
 			}
 		}
@@ -878,22 +882,26 @@ public class L1Attack {
 		if (_npc instanceof L1PetInstance) {
 			// 目標在安區、攻擊者在安區、NOPVP
 			if (_targetNpc instanceof L1PetInstance) {
-				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+				if ((_targetNpc.getZoneType() == 1)
+						|| (_npc.getZoneType() == 1)) {
 					_hitRate = 0;
 				}
 			} else if (_targetNpc instanceof L1SummonInstance) {
-				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+				if ((_targetNpc.getZoneType() == 1)
+						|| (_npc.getZoneType() == 1)) {
 					_hitRate = 0;
 				}
 			}
 		} else if (_npc instanceof L1SummonInstance) {
 			// 目標在安區、攻擊者在安區、NOPVP
 			if (_targetNpc instanceof L1PetInstance) {
-				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+				if ((_targetNpc.getZoneType() == 1)
+						|| (_npc.getZoneType() == 1)) {
 					_hitRate = 0;
 				}
 			} else if (_targetNpc instanceof L1SummonInstance) {
-				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+				if ((_targetNpc.getZoneType() == 1)
+						|| (_npc.getZoneType() == 1)) {
 					_hitRate = 0;
 				}
 			}
@@ -1000,15 +1008,20 @@ public class L1Attack {
 
 		dmg = calcBuffDamage(dmg);
 
-		if (_weaponId == 124) { // バフォメットスタッフ
+		if (_weaponId == 124 || _weaponId == 292 || _weaponId == 293
+				|| _weaponId == 294 || _weaponId == 295 || _weaponId == 296
+				|| _weaponId == 297 || _weaponId == 298 || _weaponId == 299
+				|| _weaponId == 300 || _weaponId == 301 || _weaponId == 302
+				|| _weaponId == 303 || _weaponId == 304 || _weaponId == 305
+				|| _weaponId == 306) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if ((_weaponId == 2) || (_weaponId == 200002)) { // ダイスダガー
 			dmg += L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
 		} else if ((_weaponId == 204) || (_weaponId == 100204)) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetPc);
-		} else if (_weaponId == 264) { // ライトニングエッジ
+		} else if (_weaponId == 264 || _weaponId == 291) { // ライトニングエッジ
 			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
-		} else if ((_weaponId == 260) || (_weaponId == 263)) { // レイジングウィンド、フリージングランサー
+		} else if ((_weaponId == 260) || (_weaponId == 263 || _weaponId == 290)) { // レイジングウィンド、フリージングランサー
 			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
 					_weaponId);
 		} else if (_weaponId == 261) { // アークメイジスタッフ
@@ -1021,7 +1034,7 @@ public class L1Attack {
 			dmg = (Random.nextInt(5) + 4) / 4;
 		}
 
-		if (_weaponType2 == 17) { // 奇古獸
+		if (_weaponType2 == 17 || _weaponType2 == 19) { // 奇古獸
 			dmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 			dmg += calcAttrEnchantDmg();
 		}
@@ -1113,22 +1126,25 @@ public class L1Attack {
 		// 使用暴擊增加15點傷害，而奇古獸固定15點傷害
 		if (_skillId == SMASH) {
 			dmg += 15;
-			if (_weaponType2 == 17) {
+			if (_weaponType2 == 17 || _weaponType2 == 19) {
 				dmg = 15;
 			}
 		}
 		// 使用骷髏毀壞增加10點傷害，而奇古獸固定10點傷害
 		else if (_skillId == BONE_BREAK) {
 			dmg += 10;
-			if (_weaponType2 == 17) {
+			if (_weaponType2 == 17 || _weaponType2 == 19) {
 				dmg = 10;
 			}
 			// 再次發動判斷
 			if (!_targetPc.hasSkillEffect(BONE_BREAK)) {
 				int change = Random.nextInt(100) + 1;
 				if (change < (30 + Random.nextInt(11))) { // 30 ~ 40%
-					L1EffectSpawn.getInstance().spawnEffect(93001, 1700, _targetPc.getX(), _targetPc.getY(), _targetPc.getMapId());
-					_targetPc.setSkillEffect(BONE_BREAK, 2 * 1000); // 發動後再次發動間隔 2秒
+					L1EffectSpawn.getInstance().spawnEffect(93001, 1700,
+							_targetPc.getX(), _targetPc.getY(),
+							_targetPc.getMapId());
+					_targetPc.setSkillEffect(BONE_BREAK, 2 * 1000); // 發動後再次發動間隔
+																	// 2秒
 					_targetPc.setSkillEffect(BONE_BREAK_START, 700);
 				}
 			}
@@ -1256,15 +1272,20 @@ public class L1Attack {
 
 		dmg = calcBuffDamage(dmg);
 
-		if (_weaponId == 124) { // バフォメットスタッフ
+		if (_weaponId == 124 || _weaponId == 292 || _weaponId == 293
+				|| _weaponId == 294 || _weaponId == 295 || _weaponId == 296
+				|| _weaponId == 297 || _weaponId == 298 || _weaponId == 299
+				|| _weaponId == 300 || _weaponId == 301 || _weaponId == 302
+				|| _weaponId == 303 || _weaponId == 304 || _weaponId == 305
+				|| _weaponId == 306) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if ((_weaponId == 2) || (_weaponId == 200002)) { // ダイスダガー
 			dmg += L1WeaponSkill.getDiceDaggerDamage(_pc, _targetNpc, weapon);
 		} else if ((_weaponId == 204) || (_weaponId == 100204)) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetNpc);
-		} else if (_weaponId == 264) { // ライトニングエッジ
+		} else if (_weaponId == 264 || _weaponId == 291) { // ライトニングエッジ
 			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
-		} else if ((_weaponId == 260) || (_weaponId == 263)) { // レイジングウィンド、フリージングランサー
+		} else if ((_weaponId == 260) || (_weaponId == 263 || _weaponId == 290)) { // レイジングウィンド、フリージングランサー
 			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
 					_weaponId);
 		} else if (_weaponId == 261) { // アークメイジスタッフ
@@ -1277,7 +1298,7 @@ public class L1Attack {
 			dmg = (Random.nextInt(5) + 4) / 4;
 		}
 
-		if (_weaponType2 == 17) { // 奇古獸
+		if (_weaponType2 == 17 || _weaponType2 == 19) { // 奇古獸
 			dmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 			dmg += calcAttrEnchantDmg();
 		}
@@ -1318,22 +1339,25 @@ public class L1Attack {
 		// 使用暴擊增加15點傷害，而奇古獸固定15點傷害
 		if (_skillId == SMASH) {
 			dmg += 15;
-			if (_weaponType2 == 17) {
+			if (_weaponType2 == 17 || _weaponType2 == 19) {
 				dmg = 15;
 			}
 		}
 		// 使用骷髏毀壞增加10點傷害，而奇古獸固定10點傷害
 		else if (_skillId == BONE_BREAK) {
 			dmg += 10;
-			if (_weaponType2 == 17) {
+			if (_weaponType2 == 17 || _weaponType2 == 19) {
 				dmg = 10;
 			}
 			// 再次發動判斷
 			if (!_targetNpc.hasSkillEffect(BONE_BREAK)) {
 				int change = Random.nextInt(100) + 1;
 				if (change < (30 + Random.nextInt(11))) { // 30 ~ 40%
-					L1EffectSpawn.getInstance().spawnEffect(93001, 1700, _targetNpc.getX(), _targetNpc.getY(), _targetNpc.getMapId());
-					_targetNpc.setSkillEffect(BONE_BREAK, 2 * 1000); // 發動後再次發動間隔 2秒
+					L1EffectSpawn.getInstance().spawnEffect(93001, 1700,
+							_targetNpc.getX(), _targetNpc.getY(),
+							_targetNpc.getMapId());
+					_targetNpc.setSkillEffect(BONE_BREAK, 2 * 1000); // 發動後再次發動間隔
+																		// 2秒
 					_targetNpc.setSkillEffect(BONE_BREAK_START, 700);
 				}
 			}
@@ -1772,7 +1796,7 @@ public class L1Attack {
 	public void addChaserAttack() {
 		if (5 > Random.nextInt(100) + 1) {
 			if (_weaponId == 265 || _weaponId == 266 || _weaponId == 267
-					|| _weaponId == 268) {
+					|| _weaponId == 268 || _weaponId == 280 || _weaponId == 281) {
 				L1Chaser chaser = new L1Chaser(_pc, _target,
 						L1Skills.ATTR_EARTH, 7025);
 				chaser.begin();
@@ -1970,7 +1994,8 @@ public class L1Attack {
 		}
 		// 攻擊者(物攻)： X傷害，剩餘 Y，命中%。
 		else if ((_calcType == NPC_PC)) {
-			_targetPc.sendPackets(new S_ServerMessage(166, msg0, null, msg2, msg3, null));
+			_targetPc.sendPackets(new S_ServerMessage(166, msg0, null, msg2,
+					msg3, null));
 		}
 	}
 
@@ -2164,35 +2189,42 @@ public class L1Attack {
 					random = Random.nextInt(100) + 1;
 					if (random > 30 && random <= 60) { // 階段三
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV3);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3,
+								16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 3));
 					}
 				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2)) { // 目前階段二
 					random = Random.nextInt(100) + 1;
 					if (random <= 30) { // 階段二
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2,
+								16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 2));
 					} else if (random >= 70) { // 階段三
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV2);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3, 16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV3,
+								16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 3));
 					}
-				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) { // 目前 階段一
+				} else if (_pc.hasSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1)) { // 目前
+																				// 階段一
 					random = Random.nextInt(100) + 1;
 					if (random <= 40) { // 階段一
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1, 16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1,
+								16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 1));
 					} else if (random >= 70) { // 階段二
 						_pc.killSkillEffectTimer(SPECIAL_EFFECT_WEAKNESS_LV1);
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2, 16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV2,
+								16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 2));
 					}
 				} else {
 					random = Random.nextInt(100) + 1;
 					if (random <= 40) { // 階段一
-						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1, 16 * 1000);
+						_pc.setSkillEffect(SPECIAL_EFFECT_WEAKNESS_LV1,
+								16 * 1000);
 						_pc.sendPackets(new S_SkillIconGFX(75, 1));
 					}
 				}

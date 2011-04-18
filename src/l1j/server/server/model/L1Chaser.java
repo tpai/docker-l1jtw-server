@@ -86,6 +86,17 @@ public class L1Chaser extends TimerTask {
 		}
 		S_EffectLocation packet = new S_EffectLocation(_cha.getX(),
 				_cha.getY(), _gfxid);
+		if (_pc.getWeapon().getItem().getItemId() == 265
+				|| _pc.getWeapon().getItem().getItemId() == 266
+				|| _pc.getWeapon().getItem().getItemId() == 267
+				|| _pc.getWeapon().getItem().getItemId() == 268) {
+			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7025);
+		} else if (_pc.getWeapon().getItem().getItemId() == 280
+				|| _pc.getWeapon().getItem().getItemId() == 281) {
+			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7224);
+		} else {
+			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7025);
+		}
 		_pc.sendPackets(packet);
 		_pc.broadcastPacket(packet);
 		if (_cha instanceof L1PcInstance) {
