@@ -332,7 +332,7 @@ public class L1WeaponSkill {
 		int probability = 0;
 		int attr = 0;
 		int chance = Random.nextInt(100) + 1;
-		if (weaponId == 263 || weaponId == 290) { // フリージングランサー
+		if (weaponId == 263 || weaponId == 287) { // フリージングランサー
 			probability = 5;
 			attr = L1Skills.ATTR_WATER;
 		} else if (weaponId == 260) { // レイジングウィンド

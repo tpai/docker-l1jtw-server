@@ -91,8 +91,8 @@ public class L1Chaser extends TimerTask {
 				|| _pc.getWeapon().getItem().getItemId() == 267
 				|| _pc.getWeapon().getItem().getItemId() == 268) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7025);
-		} else if (_pc.getWeapon().getItem().getItemId() == 280
-				|| _pc.getWeapon().getItem().getItemId() == 281) {
+		} else if (_pc.getWeapon().getItem().getItemId() == 276
+				|| _pc.getWeapon().getItem().getItemId() == 277) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7224);
 		} else {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7025);
