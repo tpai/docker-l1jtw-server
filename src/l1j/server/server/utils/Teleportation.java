@@ -20,6 +20,7 @@ import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
 import java.util.HashSet;
 
 import l1j.server.server.model.L1Clan;
+import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.L1Location;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1DollInstance;
@@ -183,17 +184,33 @@ public class Teleportation {
 		if (pc.hasSkillEffect(WIND_SHACKLE)) {
 			pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), pc.getSkillEffectTimeSec(WIND_SHACKLE)));
 		}
+		startSpawnDragon(pc, mapId, x, y);
 	}
 
 	private static void teleport(L1NpcInstance npc, int x, int y, short map, int head) {
 		L1World.getInstance().moveVisibleObject(npc, map);
-
 		L1WorldMap.getInstance().getMap(npc.getMapId()).setPassable(npc.getX(), npc.getY(), true);
 		npc.setX(x);
 		npc.setY(y);
 		npc.setMap(map);
 		npc.setHeading(head);
 		L1WorldMap.getInstance().getMap(npc.getMapId()).setPassable(npc.getX(), npc.getY(), false);
+	}
+
+	// 進入龍之棲息地時召喚龍
+	private static void startSpawnDragon(L1PcInstance pc, short mapId, int x, int y) {
+		// 安塔瑞斯棲息地
+		if (mapId == 1005 || mapId == 1006 || mapId == 1007 || mapId == 1008 || mapId == 1009 || mapId == 1010) {
+			if (x > 32794 && x < 32800 && y > 32657 && y < 32666) {
+				L1DragonSlayer.getInstance().spawnDragon(pc);
+			}
+		}
+		// 法利昂棲息地
+		else if (mapId == 1011 || mapId == 1012 || mapId == 1013 || mapId == 1014 || mapId == 1015 || mapId == 1016) {
+			if (x > 32984 && x < 32994 && y > 32836 && y < 32844) {
+				L1DragonSlayer.getInstance().spawnDragon(pc);
+			}
+		}
 	}
 
 }

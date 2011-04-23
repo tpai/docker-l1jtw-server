@@ -1672,4 +1672,13 @@ public class L1Character extends L1Object {
 		_ownLightSize = i;
 	}
 
+	private byte _portalNumber = -1; // 龍之門扉編號
+
+	public byte getPortalNumber() {
+		return _portalNumber;
+	}
+
+	public void setPortalNumber(byte i) {
+		_portalNumber = i;
+	}
 }

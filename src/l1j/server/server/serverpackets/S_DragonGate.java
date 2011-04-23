@@ -29,15 +29,15 @@ public class S_DragonGate extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_DragonGate(L1PcInstance pc ,int[] i) {
+	public S_DragonGate(L1PcInstance pc ,boolean[] i) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x66); // = 102
 		writeD(pc.getId());
-		// i[]=1 可點選，=0 不能點選
-		writeC(i[0]); // 安塔瑞斯
-		writeC(i[1]); // 法利昂
-		writeC(i[2]); // 林德拜爾
-		writeC(i[3]); // 巴拉卡斯
+		// true 可點選，false 不能點選
+		writeC(i[0] ? 1 : 0); // 安塔瑞斯
+		writeC(i[1] ? 1 : 0); // 法利昂
+		writeC(i[2] ? 1 : 0); // 林德拜爾
+		writeC(i[3] ? 1 : 0); // 巴拉卡斯
 	}
 
 	@Override

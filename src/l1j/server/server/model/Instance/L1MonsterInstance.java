@@ -31,6 +31,7 @@ import l1j.server.server.datatables.NPCTalkDataTable;
 import l1j.server.server.datatables.UBTable;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
+import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.L1Location;
 import l1j.server.server.model.L1NpcTalkData;
 import l1j.server.server.model.L1Object;
@@ -344,6 +345,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 				if (transformId == -1) {
 					if (getNpcTemplate().get_npcId() == 97008 || getNpcTemplate().get_npcId() == 97046) {
 						bloodstain();
+						// 結束屠龍副本
+						L1DragonSlayer.getInstance().endDragonSlayer(getPortalNumber());
 					}
 					setCurrentHpDirect(0);
 					setDead(true);
@@ -817,7 +820,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 	// 龍之血痕
 	private void bloodstain() {
-		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this, 30)) {
+		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this, 50)) {
 			if (getNpcTemplate().get_npcId() == 97008) {
 				pc.sendPackets(new S_ServerMessage(1580)); // 安塔瑞斯：黑暗的詛咒將會降臨到你們身上！席琳， 我的母親，請讓我安息吧...
 				L1BuffUtil.bloodstain(pc, (byte) 0, 4320, true);
@@ -901,6 +904,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				npc.setHeading(_h);
 				npc.getLocation().set(_loc);
 				npc.getLocation().forward(_h);
+				npc.setPortalNumber(getPortalNumber());
 
 				broadcastPacket(new S_NPCPack(npc));
 				broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Hide));

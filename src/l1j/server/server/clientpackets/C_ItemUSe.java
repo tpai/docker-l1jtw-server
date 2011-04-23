@@ -68,6 +68,7 @@ import l1j.server.server.model.L1CastleLocation;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1Cooking;
+import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.L1EffectSpawn;
 import l1j.server.server.model.L1HouseLocation;
 import l1j.server.server.model.L1Inventory;
@@ -3245,8 +3246,7 @@ public class C_ItemUSe extends ClientBasePacket {
 
 				} else if (itemId == 47010) { // 龍之鑰匙
 					if (!L1CastleLocation.checkInAllWarArea(pc.getLocation())) {// 檢查是否在城堡區域內
-						int[] i = {1, 1, 0, 0};//安塔瑞斯=1, 法利昂=1, 林德拜爾=0, 巴拉卡斯=0, 等於 0 就是還沒開放
-						pc.sendPackets(new S_DragonGate(pc ,i));
+						pc.sendPackets(new S_DragonGate(pc ,L1DragonSlayer.getInstance().checkDragonPortal()));
 					} else {
 						pc.sendPackets(new S_SystemMessage("這個地方受到了詛咒，因此無法使用這個物品。"));
 					}

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-02-04 06:56:00
+Date: 2011-04-23 17:40:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -228,3 +228,15 @@ INSERT INTO `getback_restart` VALUES ('86', '隱藏之谷地監', '32691', '3286
 INSERT INTO `getback_restart` VALUES ('1002', '侏儒部落', '33705', '32504', '4');
 INSERT INTO `getback_restart` VALUES ('783', '提卡爾 廢墟村落', '32795', '32751', '783');
 INSERT INTO `getback_restart` VALUES ('784', '提卡爾 庫庫爾坎祭壇', '32795', '32751', '783');
+INSERT INTO `getback_restart` VALUES ('1005', '安塔瑞斯棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1006', '安塔瑞斯棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1007', '安塔瑞斯棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1008', '安塔瑞斯棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1009', '安塔瑞斯棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1010', '安塔瑞斯棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1011', '法利昂棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1012', '法利昂棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1013', '法利昂棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1014', '法利昂棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1015', '法利昂棲息地', '33710', '32521', '4');
+INSERT INTO `getback_restart` VALUES ('1016', '法利昂棲息地', '33710', '32521', '4');
