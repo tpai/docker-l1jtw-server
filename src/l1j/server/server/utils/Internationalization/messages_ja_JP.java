@@ -23,9 +23,24 @@ import java.util.ListResourceBundle;
  */
 public class messages_ja_JP extends ListResourceBundle {
 	static final Object[][] contents = { { "l1j.server.memoryUse", "利用メモリ" },
-			{ "l1j.server.server.model.onGroundItem", "ワールドマップ上のアイテム" },
-			{ "l1j.server.server.model.seconds", "10秒後に削除されます" },
-			{ "l1j.server.server.model.deleted", "削除されました" }};
+		{ "l1j.server.server.model.onGroundItem", "ワールドマップ上のアイテム" },
+		{ "l1j.server.server.model.seconds", "10秒後に削除されます" },
+		{ "l1j.server.server.model.deleted", "削除されました" },
+		{ "l1j.server.server.GameServer.ver","バージョン: Lineage 3.3C 開発  By L1J For All User" },
+		{ "l1j.server.server.GameServer.settingslist","●●●●〈サーバー設定〉●●●●"},
+		{ "l1j.server.server.GameServer.exp","「経験値」"},
+		{ "l1j.server.server.GameServer.x","【倍】"},
+		{ "l1j.server.server.GameServer.level",""},
+		{ "l1j.server.server.GameServer.justice","「アライメント」"},
+		{ "l1j.server.server.GameServer.karma","「カルマ」"},
+		{ "l1j.server.server.GameServer.dropitems","「ドロップ率」"},
+		{ "l1j.server.server.GameServer.dropadena","「取得アデナ」"},
+		{ "l1j.server.server.GameServer.enchantweapon","「武器エンチャント成功率」"},
+		{ "l1j.server.server.GameServer.enchantarmor","「防具エンチャント成功率」"},
+		{ "l1j.server.server.GameServer.chatlevel","「全体チャット可能Lv」"},
+		{ "l1j.server.server.GameServer.nonpvp1","「Non-PvP設定」: 無効（PvP可能）"},
+		{ "l1j.server.server.GameServer.nonpvp2","「Non-PvP設定」: 有効（PvP不可）"}
+		};
 
 	@Override
 	protected Object[][] getContents() {

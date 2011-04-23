@@ -141,30 +141,30 @@ public class GameServer extends Thread {
 		}
 
 		System.out.println("┌───────────────────────────────┐");
-		System.out.println("│     版本: Lineage 3.3C  開發 By L1J-TW For All User"+"\t"+"\t"+"│");
+		System.out.println("│     "+L1Message.ver+"\t"+"\t"+"│");
 		System.out.println("└───────────────────────────────┘"+ "\n");
 		
-		System.out.println("●●●●〈伺服器設置清單〉●●●●" + "\n");
-		System.out.println("┌「經驗值」: " + (rateXp) + "【倍】"
-					+ "\n\r├「正義值」: " + (LA) + "【倍】"
-					+ "\n\r├「友好度」: " + (rateKarma) + "【倍】"
-					+ "\n\r├「物品掉落」: " + (rateDropItems) + "【倍】"
-					+ "\n\r├「金幣掉落」: " + (rateDropAdena) + "【倍】"
-					+ "\n\r├「衝武」: "+ (Config.ENCHANT_CHANCE_WEAPON) + "【%】" 
-					+ "\n\r├「衝防」: "+ (Config.ENCHANT_CHANCE_ARMOR) + "【%】");
-		System.out.println("├「廣播頻道可用等級」: " + (chatlvl) + "【級】");
+		System.out.println(L1Message.settingslist + "\n");
+		System.out.println("┌" + L1Message.exp + ": " + (rateXp) + L1Message.x
+					+ "\n\r├"  + L1Message.justice + ": " + (LA) + L1Message.x
+					+ "\n\r├"  + L1Message.karma+": " + (rateKarma) + L1Message.x
+					+ "\n\r├"  + L1Message.dropitems + ": " + (rateDropItems) + L1Message.x
+					+ "\n\r├" + L1Message.dropadena + ": " + (rateDropAdena) + L1Message.x
+					+ "\n\r├" + L1Message.enchantweapon + ": "+ (Config.ENCHANT_CHANCE_WEAPON) + L1Message.x 
+					+ "\n\r├" + L1Message.enchantarmor + ": "+ (Config.ENCHANT_CHANCE_ARMOR) + L1Message.x);
+		System.out.println("├"+ L1Message.chatlevel+": "+  (chatlvl) + L1Message.level);
 		
 		if (Config.ALT_NONPVP) { // Non-PvP設定
-		    System.out.println("└「Non-PvP設定」: 【無效 (PvP可能)】" +"\n");
+		    System.out.println("└"+L1Message.nonpvpNo+"\n");
 		} else {
-		    System.out.println("└「Non-PvP設定」: 【有效 (PvP不可)】" +"\n");
+		    System.out.println("└"+L1Message.nonpvpYes+"\n");
 			}
 
 		int maxOnlineUsers = Config.MAX_ONLINE_USERS;
 		System.out.println("連線人數上限為 " + (maxOnlineUsers) + " 人");
 		
 		System.out.println("┌───────────────────────────────┐");
-		System.out.println("│     版本: Lineage 3.3C  開發 By L1J-TW For All User"+"\t"+"\t"+"│");
+		System.out.println("│     "+L1Message.ver+"\t"+"\t"+"│");
 		System.out.println("└───────────────────────────────┘"+ "\n");
 		
 		IdFactory.getInstance();

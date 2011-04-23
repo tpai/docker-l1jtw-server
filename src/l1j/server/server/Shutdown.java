@@ -117,10 +117,12 @@ public class Shutdown extends Thread {
 			switch (shutdownMode) {
 			case GM_SHUTDOWN:
 				_instance.setMode(GM_SHUTDOWN);
+				System.gc();// 記憶體回收
 				System.exit(0);
 				break;
 			case GM_RESTART:
 				_instance.setMode(GM_RESTART);
+				System.gc(); // 記憶體回收
 				System.exit(1);
 				break;
 			}
@@ -140,9 +142,8 @@ public class Shutdown extends Thread {
 	public void startShutdown(L1PcInstance activeChar, int seconds,
 			boolean restart) {
 		Announcements _an = Announcements.getInstance();
-		_log.warning("GM: " + activeChar.getId()
-				+ " issued shutdown command. " + _modeText[shutdownMode]
-				+ " in " + seconds + " seconds!");
+		_log.warning("GM: " + activeChar.getId() + " issued shutdown command. "
+				+ _modeText[shutdownMode] + " in " + seconds + " seconds!");
 		_an.announceToAll("Server is " + _modeText[shutdownMode] + " in "
 				+ seconds + " seconds!");
 
@@ -164,10 +165,8 @@ public class Shutdown extends Thread {
 	 */
 	public void abort(L1PcInstance activeChar) {
 		Announcements _an = Announcements.getInstance();
-		_log.warning("GM: " + activeChar.getName()
-				+ " issued shutdown ABORT. ");
-		_an
-				.announceToAll("Server aborts shutdown and continues normal operation!");
+		_log.warning("GM: " + activeChar.getName() + " issued shutdown ABORT. ");
+		_an.announceToAll("Server aborts shutdown and continues normal operation!");
 
 		if (_counterInstance != null) {
 			_counterInstance._abort();
@@ -226,12 +225,10 @@ public class Shutdown extends Thread {
 					_an.announceToAll("The server will shutdown in 1 minute.");
 					break;
 				case 30:
-					_an
-							.announceToAll("The server will shutdown in 30 seconds.");
+					_an.announceToAll("The server will shutdown in 30 seconds.");
 					break;
 				case 10:
-					_an
-							.announceToAll("The server will shutdown in 10 seconds.");
+					_an.announceToAll("The server will shutdown in 10 seconds.");
 					break;
 				case 5:
 					_an.announceToAll("The server will shutdown in 5 seconds.");

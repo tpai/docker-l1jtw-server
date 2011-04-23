@@ -24,10 +24,24 @@ import java.util.ListResourceBundle;
 
 public class messages_en_US extends ListResourceBundle {
 	static final Object[][] contents = {
-			{ "l1j.server.memoryUse", "Used" },
-			{ "l1j.server.server.model.onGroundItem", "items on the ground" },
-			{ "l1j.server.server.model.seconds","will be delete after 10 seconds" },
-			{ "l1j.server.server.model.deleted", "was deleted" } };
+		{ "l1j.server.memoryUse", "Used" },
+		{ "l1j.server.server.model.onGroundItem", "items on the ground" },
+		{ "l1j.server.server.model.seconds","will be delete after 10 seconds" },
+		{ "l1j.server.server.model.deleted", "was deleted" }, 
+		{ "l1j.server.server.GameServer.ver","Version: Lineage 3.3C  Dev. By L1J-TW For All User" },
+		{ "l1j.server.server.GameServer.settingslist","●●●●〈Server Config List〉●●●●"},
+		{ "l1j.server.server.GameServer.exp","「exp」"},
+		{ "l1j.server.server.GameServer.x","【times】"},
+		{ "l1j.server.server.GameServer.level","【LV】"},
+		{ "l1j.server.server.GameServer.justice","「justice」"},
+		{ "l1j.server.server.GameServer.karma","「karma」"},
+		{ "l1j.server.server.GameServer.dropitems","「dropitems」"},
+		{ "l1j.server.server.GameServer.dropadena","「dropadena」"},
+		{ "l1j.server.server.GameServer.enchantweapon","「enchantweapon」"},
+		{ "l1j.server.server.GameServer.enchantarmor","「enchantarmor」"},
+		{ "l1j.server.server.GameServer.chatlevel","「chatLevel」"},
+		{ "l1j.server.server.GameServer.nonpvp1","「Non-PvP」: Not Work (PvP)"},
+		{ "l1j.server.server.GameServer.nonpvp2","「Non-PvP」: Work (Non-PvP)"}};
 
 	@Override
 	protected Object[][] getContents() {

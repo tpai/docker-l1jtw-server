@@ -48,6 +48,20 @@ public class L1Message {
 		onGroundItem = resource.getString("l1j.server.server.model.onGroundItem");
 		secondsDelete = resource.getString("l1j.server.server.model.seconds");
 		deleted = resource.getString("l1j.server.server.model.deleted");
+		ver = resource.getString("l1j.server.server.GameServer.ver");
+		settingslist = resource.getString("l1j.server.server.GameServer.settingslist");
+		exp = resource.getString("l1j.server.server.GameServer.exp");
+		x = resource.getString("l1j.server.server.GameServer.x");
+		level = resource.getString("l1j.server.server.GameServer.level");
+		justice = resource.getString("l1j.server.server.GameServer.justice");
+		karma = resource.getString("l1j.server.server.GameServer.karma");
+		dropitems = resource.getString("l1j.server.server.GameServer.dropitems");
+		dropadena = resource.getString("l1j.server.server.GameServer.dropadena");
+		enchantweapon = resource.getString("l1j.server.server.GameServer.enchantweapon");
+		enchantarmor = resource.getString("l1j.server.server.GameServer.enchantarmor");
+		chatlevel = resource.getString("l1j.server.server.GameServer.chatlevel");
+		nonpvpNo = resource.getString("l1j.server.server.GameServer.nonpvp1");
+		nonpvpYes = resource.getString("l1j.server.server.GameServer.nonpvp2");
 	}
 
 	/** static 變數 */
@@ -55,5 +69,18 @@ public class L1Message {
 	public static String onGroundItem;
 	public static String secondsDelete;
 	public static String deleted;
-
+	public static String ver;
+	public static String settingslist;
+	public static String exp;
+	public static String x;
+	public static String level;
+	public static String justice;
+	public static String karma;
+	public static String dropitems;
+	public static String dropadena;
+	public static String enchantweapon;
+	public static String enchantarmor;
+	public static String chatlevel;
+	public static String nonpvpNo;
+	public static String nonpvpYes;
 }
