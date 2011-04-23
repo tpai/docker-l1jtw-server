@@ -16,9 +16,11 @@ package l1j.server.server.model.Instance;
 
 import static l1j.server.server.model.skill.L1SkillId.BLIND_HIDING;
 import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
+import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
 import static l1j.server.server.model.skill.L1SkillId.COUNTER_BARRIER;
 import static l1j.server.server.model.skill.L1SkillId.DECREASE_WEIGHT;
 import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
@@ -1275,6 +1277,19 @@ public class L1PcInstance extends L1Character {
 			// キャンセレーションをエフェクトなしでかける
 			L1SkillUse l1skilluse = new L1SkillUse();
 			l1skilluse.handleCommands(L1PcInstance.this, CANCELLATION, getId(), getX(), getY(), null, 0, L1SkillUse.TYPE_LOGIN);
+
+			// 三段加速
+			if (hasSkillEffect(EFFECT_THIRD_SPEED)) {
+				removeSkillEffect(EFFECT_THIRD_SPEED);
+			}
+			// 戰鬥藥水
+			if (hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
+				removeSkillEffect(EFFECT_POTION_OF_BATTLE);
+			}
+			// 象牙塔妙藥
+			if (hasSkillEffect(COOKING_WONDER_DRUG)) {
+				removeSkillEffect(COOKING_WONDER_DRUG);
+			}
 
 			// シャドウ系変身中に死亡するとクライアントが落ちるため暫定対応
 			if ((tempchargfx == 5727) || (tempchargfx == 5730) || (tempchargfx == 5733) || (tempchargfx == 5736)) {

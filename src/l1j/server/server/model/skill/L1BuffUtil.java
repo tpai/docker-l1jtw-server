@@ -1235,6 +1235,7 @@ public class L1BuffUtil {
 				|| (skillNum == SHOCK_STUN) || (skillNum == SHADOW_FANG)
 				|| (skillNum == REDUCTION_ARMOR) || (skillNum == SOLID_CARRIAGE)
 				|| (skillNum == COUNTER_BARRIER) || (skillNum == AWAKEN_ANTHARAS)
-				|| (skillNum == AWAKEN_FAFURION) || (skillNum == AWAKEN_VALAKAS);
+				|| (skillNum == AWAKEN_FAFURION) || (skillNum == AWAKEN_VALAKAS)
+				|| (skillNum == COOKING_WONDER_DRUG);
 	}
 }
