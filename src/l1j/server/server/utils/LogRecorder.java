@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import l1j.server.server.model.TimeInform;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 
@@ -148,8 +149,25 @@ public class LogRecorder {
 		}
 	}
 
-	/** Robots Log */
+	/**
+	 *  Robots Log 
+	 * @param player 使用外掛或加速器的玩家
+	 */
 	public static void writeRobotsLog(L1PcInstance player) {
-		// TODO 外掛+加速器的紀錄
+		try {
+			File TradeLog = new File("log\\RobotsLog.log");
+			if (TradeLog.createNewFile()) {
+				out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", false));
+				out.write("※以下是玩家[使用加速器&外掛]的所有紀錄※" + "\r\n");
+				out.close();
+			}
+			out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", true));
+			out.write("\r\n");// 每次填寫資料都控一行
+			out.write("加速器紀錄 → 來自帳號: " + player.getAccountName() + ", 來自玩家: " + player.getName() +"ㄝ, 〈時間〉"+TimeInform.getNowTime(3,0)+"\r\n");
+			out.close();
+		}
+		catch (IOException e) {
+			System.out.println("以下是錯誤訊息: " + e.getMessage());
+		}
 	}
 }

@@ -36,7 +36,7 @@ public class TimeInform {
 	/**
 	 * @return getYear 年 param type 1:西元 2:民國
 	 */
-	public static String getYear(byte type) {
+	public static String getYear(int type) {
 		String year;
 		if (type == 0)// 西元
 			year = "西元 " + String.valueOf(rightNow.get(Calendar.YEAR));
@@ -97,7 +97,7 @@ public class TimeInform {
 	 *            0:西元 1:民國
 	 * @return
 	 */
-	public static String getNowTime(int type, byte type_year) {
+	public static String getNowTime(int type, int type_year) {
 		String NowTime = null;
 		switch (type) {
 		case 1:

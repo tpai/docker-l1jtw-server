@@ -23,6 +23,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_Disconnect;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SystemMessage;
+import l1j.server.server.utils.LogRecorder;
 
 /**
  * 加速器の使用をチェックするクラス。
@@ -125,12 +126,12 @@ public class AcceleratorChecker {
 		if (!_pc.isGm()) {
 			_pc.sendPackets(new S_ServerMessage(945)); // 違法プログラムが見つかったので、終了します。
 			_pc.sendPackets(new S_Disconnect());
-			_log.info(String.format(
-					"因為檢測使用加速器%s，強制切斷連線。", _pc.getName()));
+			_log.info(String.format("因為檢測使用加速器%s，強制切斷連線。", _pc.getName()));
+			LogRecorder.writeRobotsLog(_pc);//加速器紀錄
 		} else {
 			// GMは切断しない
 			_pc.sendPackets(new S_SystemMessage(
-					"在遊戲中，檢測使用加速器掛著。"));
+					"遊戲管理員在遊戲中使用加速器檢測中。"));
 			_injusticeCount = 0;
 		}
 	}
