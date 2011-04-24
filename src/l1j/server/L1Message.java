@@ -45,6 +45,7 @@ public class L1Message {
 	/** 簡短化變數名詞 */
 	public void initLocaleMessage() {
 		memoryUse = resource.getString("l1j.server.memoryUse");
+		memory = resource.getString("l1j.server.memory");
 		onGroundItem = resource.getString("l1j.server.server.model.onGroundItem");
 		secondsDelete = resource.getString("l1j.server.server.model.seconds");
 		deleted = resource.getString("l1j.server.server.model.deleted");
@@ -62,7 +63,6 @@ public class L1Message {
 		chatlevel = resource.getString("l1j.server.server.GameServer.chatlevel");
 		nonpvpNo = resource.getString("l1j.server.server.GameServer.nonpvp1");
 		nonpvpYes = resource.getString("l1j.server.server.GameServer.nonpvp2");
-		memory = resource.getString("l1j.server.server.GameServer.memory");
 		maxplayer = resource.getString("l1j.server.server.GameServer.maxplayer");
 		player = resource.getString("l1j.server.server.GameServer.player");
 		waitingforuser = resource.getString("l1j.server.server.GameServer.waitingforuser");
