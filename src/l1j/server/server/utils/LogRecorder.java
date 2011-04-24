@@ -155,15 +155,15 @@ public class LogRecorder {
 	 */
 	public static void writeRobotsLog(L1PcInstance player) {
 		try {
-			File TradeLog = new File("log\\RobotsLog.log");
-			if (TradeLog.createNewFile()) {
+			File RobotsLog = new File("log\\RobotsLog.log");
+			if (RobotsLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", false));
 				out.write("※以下是玩家[使用加速器&外掛]的所有紀錄※" + "\r\n");
 				out.close();
 			}
 			out = new BufferedWriter(new FileWriter("log\\RobotsLog.log", true));
 			out.write("\r\n");// 每次填寫資料都控一行
-			out.write("加速器紀錄 → 來自帳號: " + player.getAccountName() + ", 來自玩家: " + player.getName() +"ㄝ, 〈時間〉"+TimeInform.getNowTime(3,0)+"\r\n");
+			out.write("加速器紀錄 → 來自帳號: " + player.getAccountName() + ", 來自玩家: " + player.getName() +", 〈時間〉"+TimeInform.getNowTime(3,0)+"\r\n");
 			out.close();
 		}
 		catch (IOException e) {
