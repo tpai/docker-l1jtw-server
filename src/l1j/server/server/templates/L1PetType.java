@@ -36,18 +36,25 @@ public class L1PetType {
 
 	private final int _defyMsgId;
 
+	private final int _evolvItemId;
+
+	private final boolean _canUseEquipment;
+
 	public L1PetType(int baseNpcId, String name, int itemIdForTaming,
-			IntRange hpUpRange, IntRange mpUpRange, int npcIdForEvolving,
-			int msgIds[], int defyMsgId) {
+			IntRange hpUpRange, IntRange mpUpRange, int evolvItemId, int npcIdForEvolving,
+			int msgIds[], int defyMsgId, boolean canUseEquipment) {
 		_baseNpcId = baseNpcId;
 		_baseNpcTemplate = NpcTable.getInstance().getTemplate(baseNpcId);
 		_name = name;
 		_itemIdForTaming = itemIdForTaming;
 		_hpUpRange = hpUpRange;
 		_mpUpRange = mpUpRange;
+		_evolvItemId = evolvItemId;
 		_npcIdForEvolving = npcIdForEvolving;
 		_msgIds = msgIds;
 		_defyMsgId = defyMsgId;
+		_canUseEquipment = canUseEquipment;
+		
 	}
 
 	public int getBaseNpcId() {
@@ -114,6 +121,16 @@ public class L1PetType {
 
 	public int getDefyMessageId() {
 		return _defyMsgId;
+	}
+
+	// 進化道具
+	public int getEvolvItemId() {
+		return _evolvItemId;
+	}
+
+	// 可使用寵物裝備
+	public boolean canUseEquipment() {
+		return _canUseEquipment;
 	}
 
 }

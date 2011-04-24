@@ -22,11 +22,13 @@ import java.util.List;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.ExpTable;
+import l1j.server.server.datatables.PetItemTable;
 import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.PetTypeTable;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Inventory;
+import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_HPMeter;
@@ -35,9 +37,11 @@ import l1j.server.server.serverpackets.S_PetCtrlMenu;
 import l1j.server.server.serverpackets.S_PetMenuPacket;
 import l1j.server.server.serverpackets.S_PetPack;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1Pet;
+import l1j.server.server.templates.L1PetItem;
 import l1j.server.server.templates.L1PetType;
 import l1j.server.server.utils.Random;
 
@@ -252,6 +256,7 @@ public class L1PetInstance extends L1NpcInstance {
 		}
 	}
 
+	/** 寵物進化 */
 	public void evolvePet(int new_itemobjid) {
 
 		L1Pet l1pet = PetTable.getInstance().getTemplate(_itemObjId);
@@ -260,7 +265,8 @@ public class L1PetInstance extends L1NpcInstance {
 		}
 
 		int newNpcId = _type.getNpcIdForEvolving();
-		// 進化前のmaxHp,maxMpを退避
+		int evolvItem = _type.getEvolvItemId();
+		// 取得進化前最大血魔
 		int tmpMaxHp = getMaxHp();
 		int tmpMaxMp = getMaxMp();
 
@@ -268,16 +274,47 @@ public class L1PetInstance extends L1NpcInstance {
 		_type = PetTypeTable.getInstance().get(newNpcId);
 
 		setLevel(1);
-		// HPMPを元の半分にする
+		// 進化後血魔減半
 		setMaxHp(tmpMaxHp / 2);
 		setMaxMp(tmpMaxMp / 2);
 		setCurrentHpDirect(getMaxHp());
 		setCurrentMpDirect(getMaxMp());
 		setExp(0);
 		setExpPercent(0);
+		getInventory().consumeItem(evolvItem, 1); // 吃掉進化道具
 
-		// インベントリを空にする
-		getInventory().clearItems();
+		// 將原寵物身上道具移交到進化後的寵物身上
+		L1Object obj= L1World.getInstance().findObject(l1pet.get_objid());
+		if ((obj != null) && (obj instanceof L1NpcInstance)) {
+			L1PetInstance new_pet = (L1PetInstance) obj;
+			L1Inventory new_petInventory = new_pet.getInventory();
+			List<L1ItemInstance> itemList = getInventory().getItems();
+			for (Object itemObject : itemList) {
+				L1ItemInstance item = (L1ItemInstance) itemObject;
+				if (item == null) {
+					continue;
+				}
+				if (item.isEquipped()) { // 裝備中
+					item.setEquipped(false);
+					L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
+					if (petItem.getUseType() == 1) { // 牙齒
+						setWeapon(null);
+						new_pet.usePetWeapon(this, item);
+					} else if (petItem.getUseType() == 0) { // 盔甲
+						setArmor(null);
+						new_pet.usePetArmor(this, item);
+					}
+				}
+				if (new_pet.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
+					getInventory().tradeItem(item, item.getCount(), new_petInventory);
+				} else { // 掉落地面
+					new_petInventory = L1World.getInstance().getInventory(getX(),
+							getY(), getMapId());
+					getInventory().tradeItem(item, item.getCount(), new_petInventory);
+				}
+			}
+			new_pet.broadcastPacket(new S_SkillSound(new_pet.getId(), 2127)); // 升級光芒
+		}
 
 		// 古いペットをDBから消す
 		PetTable.getInstance().deletePet(_itemObjId);
@@ -332,30 +369,41 @@ public class L1PetInstance extends L1NpcInstance {
 		}
 	}
 
-	// ペットの持ち物を収集
-	public void collect() {
+	// 收集寵物身上道具
+	public void collect(boolean isDepositnpc) {
 		L1Inventory targetInventory = _petMaster.getInventory();
-		List<L1ItemInstance> items = _inventory.getItems();
-		int size = _inventory.getSize();
-		for (int i = 0; i < size; i++) {
-			L1ItemInstance item = items.get(0);
-			if (item.isEquipped()) { // 装備中のペットアイテム
+		List<L1ItemInstance> itemList = getInventory().getItems();
+		for (Object itemObject : itemList) {
+			L1ItemInstance item = (L1ItemInstance) itemObject;
+			if (item == null) {
 				continue;
 			}
-			if (_petMaster.getInventory().checkAddItem( // 容量重量確認及びメッセージ送信
+			if (item.isEquipped()) { // 裝備中
+				if (!isDepositnpc) { // 非寄放寵物
+					continue;
+				} else {
+					L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
+					if (petItem.getUseType() == 1) { // 牙齒
+						setWeapon(null);
+					} else if (petItem.getUseType() == 0) { // 盔甲
+						setArmor(null);
+					}
+					item.setEquipped(false);
+				}
+			}
+			if (_petMaster.getInventory().checkAddItem( // 主人可否拿取判斷
 					item, item.getCount()) == L1Inventory.OK) {
-				_inventory.tradeItem(item, item.getCount(), targetInventory);
-				_petMaster.sendPackets(new S_ServerMessage(143, getName(), item
-						.getLogName())); // \f1%0が%1をくれました。
-			} else { // 持てないので足元に落とす
+				getInventory().tradeItem(item, item.getCount(), targetInventory);
+				_petMaster.sendPackets(new S_ServerMessage(143, getName(), item.getLogName()));
+			} else { // 掉落地面
 				targetInventory = L1World.getInstance().getInventory(getX(),
 						getY(), getMapId());
-				_inventory.tradeItem(item, item.getCount(), targetInventory);
+				getInventory().tradeItem(item, item.getCount(), targetInventory);
 			}
 		}
 	}
 
-	// リスタート時にDROPを地面に落とす
+	// 重登時寵物身上道具掉落地面
 	public void dropItem() {
 		L1Inventory targetInventory = L1World.getInstance().getInventory(
 				getX(), getY(), getMapId());
@@ -363,7 +411,10 @@ public class L1PetInstance extends L1NpcInstance {
 		int size = _inventory.getSize();
 		for (int i = 0; i < size; i++) {
 			L1ItemInstance item = items.get(0);
-			item.setEquipped(false);
+			if (item.isEquipped()) { // 裝備中
+				setArmor(null);
+				item.setEquipped(false);
+			}
 			_inventory.tradeItem(item, item.getCount(), targetInventory);
 		}
 	}
@@ -547,7 +598,7 @@ public class L1PetInstance extends L1NpcInstance {
 		} else if (action.equalsIgnoreCase("dismiss")) { // 解散
 			status = 6;
 		} else if (action.equalsIgnoreCase("getitem")) { // 収集
-			collect();
+			collect(false);
 		}
 		return status;
 	}
@@ -671,5 +722,126 @@ public class L1PetInstance extends L1NpcInstance {
 
 	public L1PetType getPetType() {
 		return _type;
+	}
+
+	// 使用寵物裝備
+	public void usePetWeapon(L1PetInstance pet, L1ItemInstance weapon) {
+		if (pet.getWeapon() == null) {
+			setPetWeapon(pet, weapon);
+		}
+		else { // 既に何かを装備している場合、前の装備をはずす
+			if (pet.getWeapon().equals(weapon)) {
+				removePetWeapon(pet, pet.getWeapon());
+			}
+			else {
+				removePetWeapon(pet, pet.getWeapon());
+				setPetWeapon(pet, weapon);
+			}
+		}
+	}
+
+	public void usePetArmor(L1PetInstance pet, L1ItemInstance armor) {
+		if (pet.getArmor() == null) {
+			setPetArmor(pet, armor);
+		}
+		else { // 既に何かを装備している場合、前の装備をはずす
+			if (pet.getArmor().equals(armor)) {
+				removePetArmor(pet, pet.getArmor());
+			}
+			else {
+				removePetArmor(pet, pet.getArmor());
+				setPetArmor(pet, armor);
+			}
+		}
+	}
+
+	private void setPetWeapon(L1PetInstance pet, L1ItemInstance weapon) {
+		int itemId = weapon.getItem().getItemId();
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
+		if (petItem == null) {
+			return;
+		}
+
+		pet.setHitByWeapon(petItem.getHitModifier());
+		pet.setDamageByWeapon(petItem.getDamageModifier());
+		pet.addStr(petItem.getAddStr());
+		pet.addCon(petItem.getAddCon());
+		pet.addDex(petItem.getAddDex());
+		pet.addInt(petItem.getAddInt());
+		pet.addWis(petItem.getAddWis());
+		pet.addMaxHp(petItem.getAddHp());
+		pet.addMaxMp(petItem.getAddMp());
+		pet.addSp(petItem.getAddSp());
+		pet.addMr(petItem.getAddMr());
+
+		pet.setWeapon(weapon);
+		weapon.setEquipped(true);
+	}
+
+	private void removePetWeapon(L1PetInstance pet, L1ItemInstance weapon) {
+		int itemId = weapon.getItem().getItemId();
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
+		if (petItem == null) {
+			return;
+		}
+
+		pet.setHitByWeapon(0);
+		pet.setDamageByWeapon(0);
+		pet.addStr(-petItem.getAddStr());
+		pet.addCon(-petItem.getAddCon());
+		pet.addDex(-petItem.getAddDex());
+		pet.addInt(-petItem.getAddInt());
+		pet.addWis(-petItem.getAddWis());
+		pet.addMaxHp(-petItem.getAddHp());
+		pet.addMaxMp(-petItem.getAddMp());
+		pet.addSp(-petItem.getAddSp());
+		pet.addMr(-petItem.getAddMr());
+
+		pet.setWeapon(null);
+		weapon.setEquipped(false);
+	}
+
+	private void setPetArmor(L1PetInstance pet, L1ItemInstance armor) {
+		int itemId = armor.getItem().getItemId();
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
+		if (petItem == null) {
+			return;
+		}
+
+		pet.addAc(petItem.getAddAc());
+		pet.addStr(petItem.getAddStr());
+		pet.addCon(petItem.getAddCon());
+		pet.addDex(petItem.getAddDex());
+		pet.addInt(petItem.getAddInt());
+		pet.addWis(petItem.getAddWis());
+		pet.addMaxHp(petItem.getAddHp());
+		pet.addMaxMp(petItem.getAddMp());
+		pet.addSp(petItem.getAddSp());
+		pet.addMr(petItem.getAddMr());
+
+		pet.setArmor(armor);
+		armor.setEquipped(true);
+	}
+
+	private void removePetArmor(L1PetInstance pet, L1ItemInstance armor) {
+		int itemId = armor.getItem().getItemId();
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
+		if (petItem == null) {
+			return;
+		}
+
+		pet.addAc(-petItem.getAddAc());
+		pet.addStr(-petItem.getAddStr());
+		pet.addCon(-petItem.getAddCon());
+		pet.addDex(-petItem.getAddDex());
+		pet.addInt(-petItem.getAddInt());
+		pet.addWis(-petItem.getAddWis());
+		pet.addMaxHp(-petItem.getAddHp());
+		pet.addMaxMp(-petItem.getAddMp());
+		pet.addSp(-petItem.getAddSp());
+		pet.addMr(-petItem.getAddMr());
+
+		pet.setArmor(null);
+		armor.setEquipped(false);
 	}
 }

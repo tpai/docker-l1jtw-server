@@ -148,4 +148,15 @@ public class L1PetItem {
 		_addMr = i;
 	}
 
+	// 使用類型 - 牙齒? 1  防具? 0
+	private int _useType;
+
+	public int getUseType() {
+		return _useType;
+	}
+
+	public void setUseType(int i) {
+		_useType = i;
+	}
+
 }

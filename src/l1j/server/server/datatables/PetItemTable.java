@@ -34,6 +34,13 @@ public class PetItemTable {
 
 	private final Map<Integer, L1PetItem> _petItemIdIndex = Maps.newMap();
 
+	private static final Map<String, Integer> _useTypes = Maps.newMap();
+
+	static {
+		_useTypes.put("armor", new Integer(0));
+		_useTypes.put("tooth", new Integer(1));
+	}
+
 	public static PetItemTable getInstance() {
 		if (_instance == null) {
 			_instance = new PetItemTable();
@@ -70,6 +77,7 @@ public class PetItemTable {
 		while (rs.next()) {
 			L1PetItem petItem = new L1PetItem();
 			petItem.setItemId(rs.getInt("item_id"));
+			petItem.setUseType((_useTypes.get(rs.getString("use_type"))).intValue());
 			petItem.setHitModifier(rs.getInt("hitmodifier"));
 			petItem.setDamageModifier(rs.getInt("dmgmodifier"));
 			petItem.setAddAc(rs.getInt("ac"));

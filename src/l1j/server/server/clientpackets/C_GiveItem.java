@@ -15,6 +15,7 @@
 package l1j.server.server.clientpackets;
 
 import l1j.server.server.ClientThread;
+import l1j.server.server.datatables.PetItemTable;
 import l1j.server.server.datatables.PetTypeTable;
 import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1Object;
@@ -28,6 +29,7 @@ import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.serverpackets.S_ItemName;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
+import l1j.server.server.templates.L1PetItem;
 import l1j.server.server.templates.L1PetType;
 import l1j.server.server.utils.Random;
 
@@ -106,13 +108,30 @@ public class C_GiveItem extends ClientBasePacket {
 		if (item.getItemId() == petType.getItemIdForTaming()) {
 			tamePet(pc, target);
 		}
-		// 進化果實
-		if ((item.getItemId() == 40070) && petType.canEvolve()) {
-			evolvePet(pc, target);
+		// 進化道具
+		else if (item.getItemId() == petType.getEvolvItemId()) {
+			evolvePet(pc, target, item.getItemId());
 		}
-		// 勝利果實
-		if ((item.getItemId() == 41310) && petType.canEvolve()) {
-			evolvePet(pc, target);
+		// 寵物裝備
+		else if ((item.getItem().getType2() == 0)
+				&& (item.getItem().getType() == 11)) {
+			// 判斷是否可用寵物裝備
+			if (petType.canUseEquipment()) {
+				usePetWeaponArmor(target, item);
+			}
+		}
+	}
+
+	private void usePetWeaponArmor(L1NpcInstance target, L1ItemInstance item) {
+		if (!(target instanceof L1PetInstance)) {
+			return;
+		}
+		L1PetInstance pet = (L1PetInstance) target;
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
+		if (petItem.getUseType() == 1) { // 牙齒
+			 pet.usePetWeapon(pet, item);
+		} else if (petItem.getUseType() == 0) { // 盔甲
+			 pet.usePetArmor(pet, item);
 		}
 	}
 
@@ -178,19 +197,19 @@ public class C_GiveItem extends ClientBasePacket {
 		}
 	}
 
-	private void evolvePet(L1PcInstance pc, L1NpcInstance target) {
+	private void evolvePet(L1PcInstance pc, L1NpcInstance target, int itemId) {
 		if (!(target instanceof L1PetInstance)) {
 			return;
 		}
 		L1PcInventory inv = pc.getInventory();
 		L1PetInstance pet = (L1PetInstance) target;
 		L1ItemInstance petamu = inv.getItem(pet.getItemObjId());
-		if ((pet.getLevel() >= 30) && // Lv30以上
+		if (((pet.getLevel() >= 30) || (itemId == 41310)) && // Lv30以上或是使用勝利果實
 				(pc == pet.getMaster()) && // 自分のペット
 				(petamu != null)) {
 			L1ItemInstance highpetamu = inv.storeItem(40316, 1);
 			if (highpetamu != null) {
-				pet.evolvePet( // 進化させる
+				pet.evolvePet( // 寵物進化
 				highpetamu.getId());
 				pc.sendPackets(new S_ItemName(highpetamu));
 				inv.removeItem(petamu, 1);

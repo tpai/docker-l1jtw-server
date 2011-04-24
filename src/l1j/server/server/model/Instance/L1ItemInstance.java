@@ -24,6 +24,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import l1j.server.server.datatables.NpcTable;
+import l1j.server.server.datatables.PetItemTable;
 import l1j.server.server.datatables.PetTable;
 import l1j.server.server.model.L1EquipmentTimer;
 import l1j.server.server.model.L1ItemOwnerTimer;
@@ -36,6 +37,7 @@ import l1j.server.server.templates.L1Armor;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1Pet;
+import l1j.server.server.templates.L1PetItem;
 import l1j.server.server.utils.BinaryOutputStream;
 
 // Referenced classes of package l1j.server.server.model:
@@ -680,8 +682,72 @@ public class L1ItemInstance extends L1Object {
 		int itemType2 = getItem().getType2();
 		int itemId = getItemId();
 		BinaryOutputStream os = new BinaryOutputStream();
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(itemId);
 
-		if (itemType2 == 0) { // etcitem
+		if (petItem != null) { // 寵物裝備
+			if (petItem.getUseType() == 1) { // 牙齒
+				os.writeC(7); // 可使用職業：
+				os.writeC(128); // [高等寵物]
+				os.writeC(23); // 材質
+				os.writeC(getItem().getMaterial());
+				os.writeD(getWeight());
+			} else { // 盔甲
+				// AC
+				os.writeC(19);
+				int ac = petItem.getAddAc();
+				if (ac < 0) {
+					ac = ac - ac - ac;
+				}
+				os.writeC(ac);
+				os.writeC(getItem().getMaterial());
+				os.writeC(-1); // 飾品級別 - 0:上等 1:中等 2:初級 3:特等
+				os.writeD(getWeight());
+
+				os.writeC(7); // 可使用職業：
+				os.writeC(128); // [高等寵物]
+
+				// STR~CHA
+				if (petItem.getAddStr() != 0) {
+					os.writeC(8);
+					os.writeC(petItem.getAddStr());
+				}
+				if (petItem.getAddDex() != 0) {
+					os.writeC(9);
+					os.writeC(petItem.getAddDex());
+				}
+				if (petItem.getAddCon() != 0) {
+					os.writeC(10);
+					os.writeC(petItem.getAddCon());
+				}
+				if (petItem.getAddWis() != 0) {
+					os.writeC(11);
+					os.writeC(petItem.getAddWis());
+				}
+				if (petItem.getAddInt() != 0) {
+					os.writeC(12);
+					os.writeC(petItem.getAddInt());
+				}
+				// HP, MP
+				if (petItem.getAddHp() != 0) {
+					os.writeC(14);
+					os.writeH(petItem.getAddHp());
+				}
+				if (petItem.getAddMp() != 0) {
+					os.writeC(32);
+					os.writeC(petItem.getAddMp());
+				}
+				// MR
+				if (petItem.getAddMr() != 0) {
+					os.writeC(15);
+					os.writeH(petItem.getAddMr());
+				}
+				// SP(魔力)
+				if (petItem.getAddSp() != 0) {
+					os.writeC(17);
+					os.writeC(petItem.getAddSp());
+				}
+			}
+		} else if (itemType2 == 0) { // etcitem
 			switch (getItem().getType()) {
 			case 2: // light
 				os.writeC(22); // 明るさ
@@ -698,18 +764,12 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(getItem().getDmgSmall());
 				os.writeC(getItem().getDmgLarge());
 				break;
-			case 11: // 可使用職業：[高等寵物]
-				os.writeC(7);
-				os.writeC(128);
-				os.writeC(23); // 材質
-				break;
 			default:
 				os.writeC(23); // 材質
 				break;
 			}
 			os.writeC(getItem().getMaterial());
 			os.writeD(getWeight());
-
 		} else if ((itemType2 == 1) || (itemType2 == 2)) { // weapon | armor
 			if (itemType2 == 1) { // weapon
 				// 打撃値

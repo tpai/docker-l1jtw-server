@@ -520,12 +520,12 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 			htmlid = ""; // ウィンドウを消す
 		}
-		else if (s.equalsIgnoreCase("depositnpc")) { // 「動物を預ける」
+		else if (s.equalsIgnoreCase("depositnpc")) { // 寄託寵物
 			Object[] petList = pc.getPetList().values().toArray();
 			for (Object petObject : petList) {
 				if (petObject instanceof L1PetInstance) { // ペット
 					L1PetInstance pet = (L1PetInstance) petObject;
-					pet.collect();
+					pet.collect(true);
 					pc.getPetList().remove(pet.getId());
 					pet.deleteMe();
 				}
@@ -545,7 +545,7 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 			htmlid = ""; // ウィンドウを消す
 		}
-		else if (s.equalsIgnoreCase("withdrawnpc")) { // 「動物を受け取る」
+		else if (s.equalsIgnoreCase("withdrawnpc")) { // 領取寵物
 			pc.sendPackets(new S_PetList(objid, pc));
 		}
 		else if (s.equalsIgnoreCase("changename")) { // 「名前を決める」
