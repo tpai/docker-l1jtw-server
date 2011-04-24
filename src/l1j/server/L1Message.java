@@ -62,6 +62,14 @@ public class L1Message {
 		chatlevel = resource.getString("l1j.server.server.GameServer.chatlevel");
 		nonpvpNo = resource.getString("l1j.server.server.GameServer.nonpvp1");
 		nonpvpYes = resource.getString("l1j.server.server.GameServer.nonpvp2");
+		memory = resource.getString("l1j.server.server.GameServer.memory");
+		maxplayer = resource.getString("l1j.server.server.GameServer.maxplayer");
+		player = resource.getString("l1j.server.server.GameServer.player");
+		waitingforuser = resource.getString("l1j.server.server.GameServer.waitingforuser");
+		from = resource.getString("l1j.server.server.GameServer.from");
+		attempt = resource.getString("l1j.server.server.GameServer.attempt");
+		setporton = resource.getString("l1j.server.server.GameServer.setporton");
+		initialfinished = resource.getString("l1j.server.server.GameServer.initialfinished");
 	}
 
 	/** static 變數 */
@@ -83,4 +91,12 @@ public class L1Message {
 	public static String chatlevel;
 	public static String nonpvpNo;
 	public static String nonpvpYes;
+	public static String memory;
+	public static String maxplayer;
+	public static String player;
+	public static String waitingforuser;
+	public static String from;
+	public static String attempt;
+	public static String setporton;
+	public static String initialfinished;
 }

@@ -86,12 +86,12 @@ public class GameServer extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println("使用了 " + SystemUtil.getUsedMemoryMB() + "MB 的記憶體");
-		System.out.println("等待客戶端連接中...");
+		System.out.println(L1Message.memoryUse + SystemUtil.getUsedMemoryMB() + L1Message.memory);
+		System.out.println(L1Message.waitingforuser);
 		while (true) {
 			try {
 				Socket socket = _serverSocket.accept();
-				System.out.println("從 " + socket.getInetAddress() + " 試圖連線");
+				System.out.println(L1Message.from + socket.getInetAddress() + L1Message.attempt);
 				String host = socket.getInetAddress().getHostAddress();
 				if (IpTable.getInstance().isBannedIp(host)) {
 					_log.info("banned IP(" + host + ")");
@@ -134,10 +134,10 @@ public class GameServer extends Thread {
 			InetAddress inetaddress = InetAddress.getByName(s);
 			inetaddress.getHostAddress();
 			_serverSocket = new ServerSocket(_port, 50, inetaddress);
-			System.out.println("伺服器成功建立在 port " + _port);
+			System.out.println(L1Message.setporton + _port);
 		} else {
 			_serverSocket = new ServerSocket(_port);
-			System.out.println("伺服器成功建立在 port " + _port);
+			System.out.println(L1Message.setporton + _port);
 		}
 
 		System.out.println("┌───────────────────────────────┐");
@@ -150,8 +150,8 @@ public class GameServer extends Thread {
 					+ "\n\r├"  + L1Message.karma+": " + (rateKarma) + L1Message.x
 					+ "\n\r├"  + L1Message.dropitems + ": " + (rateDropItems) + L1Message.x
 					+ "\n\r├" + L1Message.dropadena + ": " + (rateDropAdena) + L1Message.x
-					+ "\n\r├" + L1Message.enchantweapon + ": "+ (Config.ENCHANT_CHANCE_WEAPON) + L1Message.x 
-					+ "\n\r├" + L1Message.enchantarmor + ": "+ (Config.ENCHANT_CHANCE_ARMOR) + L1Message.x);
+					+ "\n\r├" + L1Message.enchantweapon + ": "+ (Config.ENCHANT_CHANCE_WEAPON) + "%" 
+					+ "\n\r├" + L1Message.enchantarmor + ": "+ (Config.ENCHANT_CHANCE_ARMOR) + "%");
 		System.out.println("├"+ L1Message.chatlevel+": "+  (chatlvl) + L1Message.level);
 		
 		if (Config.ALT_NONPVP) { // Non-PvP設定
@@ -161,7 +161,7 @@ public class GameServer extends Thread {
 			}
 
 		int maxOnlineUsers = Config.MAX_ONLINE_USERS;
-		System.out.println("連線人數上限為 " + (maxOnlineUsers) + " 人");
+		System.out.println(L1Message.maxplayer + (maxOnlineUsers) + L1Message.player);
 		
 		System.out.println("┌───────────────────────────────┐");
 		System.out.println("│     "+L1Message.ver+"\t"+"\t"+"│");
@@ -272,7 +272,7 @@ public class GameServer extends Thread {
 		RaceTicketTable.getInstance();
 		L1BugBearRace.getInstance();
 
-		System.out.println("初始化完畢");
+		System.out.println(L1Message.initialfinished);
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 
 		this.start();

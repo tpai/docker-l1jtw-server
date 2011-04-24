@@ -24,7 +24,8 @@ import java.util.ListResourceBundle;
 
 public class messages_en_US extends ListResourceBundle {
 	static final Object[][] contents = {
-		{ "l1j.server.memoryUse", "Used" },
+		{ "l1j.server.memoryUse", "Used: " },
+		{ "l1j.server.memory", "MB of memory" },
 		{ "l1j.server.server.model.onGroundItem", "items on the ground" },
 		{ "l1j.server.server.model.seconds","will be delete after 10 seconds" },
 		{ "l1j.server.server.model.deleted", "was deleted" }, 
@@ -41,7 +42,14 @@ public class messages_en_US extends ListResourceBundle {
 		{ "l1j.server.server.GameServer.enchantarmor","「enchantarmor」"},
 		{ "l1j.server.server.GameServer.chatlevel","「chatLevel」"},
 		{ "l1j.server.server.GameServer.nonpvp1","「Non-PvP」: Not Work (PvP)"},
-		{ "l1j.server.server.GameServer.nonpvp2","「Non-PvP」: Work (Non-PvP)"}};
+		{ "l1j.server.server.GameServer.nonpvp2","「Non-PvP」: Work (Non-PvP)"},
+		{ "l1j.server.server.GameServer.maxplayer","Max connection limit "},
+		{ "l1j.server.server.GameServer.player"," players"},
+		{ "l1j.server.server.GameServer.waitingforuser","Waiting for user's connection..."},
+		{ "l1j.server.server.GameServer.from","from "},
+		{ "l1j.server.server.GameServer.attempt"," attempt to connect."},
+		{ "l1j.server.server.GameServer.setporton","Server is successfully set on port "},
+		{ "l1j.server.server.GameServer.initialfinished","Initialize finished.."}};
 
 	@Override
 	protected Object[][] getContents() {
