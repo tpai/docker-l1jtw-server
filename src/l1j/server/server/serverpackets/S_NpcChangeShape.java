@@ -19,26 +19,18 @@ import l1j.server.server.Opcodes;
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket, S_SkillIconGFX, S_CharVisualUpdate
 
-public class S_ChangeShape extends ServerBasePacket {
+public class S_NpcChangeShape extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_ChangeShape(int objId, int polyId) {
-		buildPacket(objId, polyId, false);
-	}
-
-	public S_ChangeShape(int objId, int polyId, boolean weaponTakeoff) {
-		buildPacket(objId, polyId, weaponTakeoff);
-	}
-
-	private void buildPacket(int objId, int polyId, boolean weaponTakeoff) {
-		writeC(Opcodes.S_OPCODE_POLY);
+	/** 使用於怪物變身 */
+	public S_NpcChangeShape(int objId, int polyId, int lawful, int status) {
+		writeC(Opcodes.S_OPCODE_SPOLY);
 		writeD(objId);
+		writeD(0); // ???
 		writeH(polyId);
-		// 武器類型?
-		writeC(weaponTakeoff ? 0 : 11);
-		writeC(0xff);
-		writeC(0xff);
+		writeH(lawful); // 正義值
+		writeH(status); // 狀態
 	}
 
 	@Override

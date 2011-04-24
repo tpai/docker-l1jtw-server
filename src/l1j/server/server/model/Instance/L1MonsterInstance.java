@@ -28,6 +28,7 @@ import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.DropTable;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.NPCTalkDataTable;
+import l1j.server.server.datatables.SprTable;
 import l1j.server.server.datatables.UBTable;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
@@ -39,10 +40,11 @@ import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1UltimateBattle;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.skill.L1BuffUtil;
+import l1j.server.server.serverpackets.S_ChangeName;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
-import l1j.server.server.serverpackets.S_RemoveObject;
+import l1j.server.server.serverpackets.S_NpcChangeShape;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillBrave;
 import l1j.server.server.templates.L1Npc;
@@ -60,32 +62,65 @@ public class L1MonsterInstance extends L1NpcInstance {
 
 	private boolean _storeDroped; // ドロップアイテムの読込が完了したか
 
+	private boolean isDoppel;
+
 	// アイテム使用処理
 	@Override
 	public void onItemUse() {
 		if (!isActived() && (_target != null)) {
-			useItem(USEITEM_HASTE, 40); // ４０％の確率でヘイストポーション使用
-
-			// アイテムじゃないけどドッペル処理
-			if (getNpcTemplate().is_doppel() && (_target instanceof L1PcInstance)) {
-				L1PcInstance targetPc = (L1PcInstance) _target;
-				setName(_target.getName());
-				setNameId(_target.getName());
-				setTitle(_target.getTitle());
-				setTempLawful(_target.getLawful());
-				setTempCharGfx(targetPc.getClassId());
-				setGfxId(targetPc.getClassId());
-				setPassispeed(640);
-				setAtkspeed(900); // 正確な値がわからん
-				for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
-					pc.sendPackets(new S_RemoveObject(this));
-					pc.removeKnownObject(this);
-					pc.updateObject();
-				}
-			}
+			useItem(USEITEM_HASTE, 40); // ４０％使用加速藥水
+			// 變形判斷
+			onDoppel(true);
 		}
 		if (getCurrentHp() * 100 / getMaxHp() < 40) { // ＨＰが４０％きったら
 			useItem(USEITEM_HEAL, 50); // ５０％の確率で回復ポーション使用
+		}
+	}
+
+	// 變形怪變成玩家判斷
+	@Override
+	public void onDoppel(boolean isChangeShape) {
+		if (getNpcTemplate().is_doppel()) {
+			boolean updateObject = false;
+
+			if (!isChangeShape) { // 復原
+				updateObject = true;
+				// setName(getNpcTemplate().get_name());
+				// setNameId(getNpcTemplate().get_nameid());
+				setTempLawful(getNpcTemplate().get_lawful());
+				setGfxId(getNpcTemplate().get_gfxid());
+				setTempCharGfx(getNpcTemplate().get_gfxid());
+			} else if (!isDoppel && (_target instanceof L1PcInstance)) { // 未變形
+				setSleepTime(300);
+				L1PcInstance targetPc = (L1PcInstance) _target;
+				isDoppel = true;
+				updateObject = true;
+				setName(targetPc.getName());
+				setNameId(targetPc.getName());
+				setTempLawful(targetPc.getLawful());
+				setGfxId(targetPc.getClassId());
+				setTempCharGfx(targetPc.getClassId());
+
+				if (targetPc.getClassId() != 6671) { // 非幻術師拿劍
+					setStatus(4);
+				} else { // 幻術師拿斧頭
+					setStatus(11);
+				}
+			}
+			// 移動、攻擊速度
+			setPassispeed(SprTable.getInstance().getMoveSpeed(getTempCharGfx(), getStatus()));
+			setAtkspeed(SprTable.getInstance().getAttackSpeed(getTempCharGfx(), getStatus() + 1));
+			// 變形
+			if (updateObject) {
+				for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
+					if (!isChangeShape) {
+						pc.sendPackets(new S_ChangeName(getId(), getNpcTemplate().get_nameid()));
+					} else {
+						pc.sendPackets(new S_ChangeName(getId(), getNameId()));
+					}
+					pc.sendPackets(new S_NpcChangeShape(getId(), getGfxId(), getTempLawful(), getStatus()));
+				}
+			}
 		}
 	}
 
@@ -101,8 +136,9 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 			perceivedFrom.sendPackets(new S_NPCPack(this));
 			onNpcAI(); // モンスターのＡＩを開始
-			if (getBraveSpeed() == 1) { // ちゃんとした方法がわからない
+			if (getBraveSpeed() == 1) { // 二段加速狀態
 				perceivedFrom.sendPackets(new S_SkillBrave(getId(), 1, 600000));
+				setBraveSpeed(1);
 			}
 		}
 		else {
@@ -470,6 +506,8 @@ public class L1MonsterInstance extends L1NpcInstance {
 			getMap().setPassable(getLocation(), true);
 
 			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Die));
+			// 變形判斷
+			onDoppel(false);
 
 			startChat(CHAT_TIMING_DEAD);
 

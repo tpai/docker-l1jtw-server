@@ -285,6 +285,7 @@ public class L1NpcInstance extends L1Character {
 			searchTarget();
 		}
 
+		onDoppel(true);
 		onItemUse();
 
 		if (_target == null) {
@@ -322,6 +323,10 @@ public class L1NpcInstance extends L1Character {
 		}
 
 		return false; // ＡＩ処理続行
+	}
+
+	// 變形怪變形
+	public void onDoppel(boolean isChangeShape) {
 	}
 
 	// アイテム使用処理（Ｔｙｐｅによって結構違うのでオーバライドで実装）

@@ -44,12 +44,7 @@ public class S_NPCPack extends ServerBasePacket {
 		else {
 			writeH(npc.getTempCharGfx());
 		}
-		if (npc.getNpcTemplate().is_doppel() && (npc.getGfxId() != 31)) { // スライムの姿をしていなければドッペル
-			writeC(4); // 長剣
-		}
-		else {
-			writeC(npc.getStatus());
-		}
+		writeC(npc.getStatus());
 		writeC(npc.getHeading());
 		writeC(npc.getChaLightSize());
 		writeC(npc.getMoveSpeed());
@@ -80,11 +75,14 @@ public class S_NPCPack extends ServerBasePacket {
 			}
 		}
 		if (npc.getNpcTemplate().is_doppel()) {
-			// PC属性だとエヴァの祝福を渡せないためWIZクエストのドッペルは例外
-			if (npc.getNpcTemplate().get_npcId() != 81069) {
+			// 變形怪需強制攻擊判斷
+			if (npc.getGfxId() != 31 && npc.getNpcTemplate().get_npcId() != 81069) {
 				status |= STATUS_PC;
 			}
 		}
+		// 二段加速狀態
+		status |= npc.getBraveSpeed() * 16;
+
 		writeC(status);
 
 		writeD(0); // 0以外にするとC_27が飛ぶ
