@@ -1681,4 +1681,15 @@ public class L1Character extends L1Object {
 	public void setPortalNumber(byte i) {
 		_portalNumber = i;
 	}
+
+	// 飽食度
+	private int _food;
+
+	public int get_food() {
+		return _food;
+	}
+
+	public void set_food(int i) {
+		_food = i;
+	}
 }

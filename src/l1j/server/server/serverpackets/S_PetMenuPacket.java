@@ -70,7 +70,20 @@ public class S_PetMenuPacket extends ServerBasePacket {
 			// }
 			// writeS(pet_name);
 			writeS(""); // ペットの名前を表示させると不安定になるので、非表示にする
-			writeS("$611"); // お腹いっぱい
+
+			String s = "$610";
+			if (pet.get_food() > 80) {
+				s = "$612"; // 非常飽。
+			} else if (pet.get_food() > 60) {
+				s = "$611"; // 稍微飽。
+			} else if (pet.get_food() > 30) {
+				s = "$610"; // 普通。
+			} else if (pet.get_food() > 10) {
+				s = "$609"; // 稍微餓。
+			} else if (pet.get_food() >= 0) {
+				s = "$608"; // 非常餓。
+			}
+			writeS(s); // 飽食度
 			writeS(Integer.toString(exppercet)); // 経験値
 			writeS(Integer.toString(pet.getLawful())); // アライメント
 		} else if (npc instanceof L1SummonInstance) { // サモンモンスター

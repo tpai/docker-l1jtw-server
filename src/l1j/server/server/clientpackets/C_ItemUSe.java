@@ -1590,6 +1590,11 @@ public class C_ItemUSe extends ClientBasePacket {
 								if ((npc.getCurrentHp() == 0) && npc.isDead()) {
 									npc.resurrect(npc.getMaxHp() / 4);
 									npc.setResurrect(true);
+									if ((npc instanceof L1PetInstance)) {
+										L1PetInstance pet = (L1PetInstance) npc;
+										// 開始飽食度計時
+										pet.startFoodTimer(pet);
+									}
 								}
 							}
 						}
@@ -3248,7 +3253,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					if (!L1CastleLocation.checkInAllWarArea(pc.getLocation())) {// 檢查是否在城堡區域內
 						pc.sendPackets(new S_DragonGate(pc ,L1DragonSlayer.getInstance().checkDragonPortal()));
 					} else {
-						pc.sendPackets(new S_SystemMessage("這個地方受到了詛咒，因此無法使用這個物品。"));
+						pc.sendPackets(new S_ServerMessage(79)); // 沒有任何事情發生
 					}
 				}
 				else {
@@ -4545,10 +4550,10 @@ public class C_ItemUSe extends ClientBasePacket {
 			L1Skills l1skills = SkillsTable.getInstance().getTemplate(skillId);
 			String s1 = null;
 			if (Config.CLIENT_LANGUAGE == 3) {
-				s1 = (new StringBuilder()).append("魔法書 (").append(l1skills.getName()).append(")").toString();
+				s1 = (new StringBuilder()).append("魔法書(").append(l1skills.getName()).append(")").toString();
 			}
 			else if (Config.CLIENT_LANGUAGE == 5) {
-				s1 = (new StringBuilder()).append("魔法书 (").append(l1skills.getName()).append(")").toString();
+				s1 = (new StringBuilder()).append("魔法书(").append(l1skills.getName()).append(")").toString();
 			}
 			else {
 				s1 = (new StringBuilder()).append("魔法書(").append(l1skills.getName()).append(")").toString();
@@ -5166,10 +5171,10 @@ public class C_ItemUSe extends ClientBasePacket {
 			L1Skills l1skills = SkillsTable.getInstance().getTemplate(j6);
 			String s1 = null;
 			if (Config.CLIENT_LANGUAGE == 3) {
-				s1 = (new StringBuilder()).append("魔法書 (").append(l1skills.getName()).append(")").toString();
+				s1 = (new StringBuilder()).append("魔法書(").append(l1skills.getName()).append(")").toString();
 			}
 			else if (Config.CLIENT_LANGUAGE == 5) {
-				s1 = (new StringBuilder()).append("魔法书 (").append(l1skills.getName()).append(")").toString();
+				s1 = (new StringBuilder()).append("魔法书(").append(l1skills.getName()).append(")").toString();
 			}
 			else {
 				s1 = (new StringBuilder()).append("魔法書(").append(l1skills.getName()).append(")").toString();
@@ -5501,7 +5506,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				s1 = (new StringBuilder()).append("记忆水晶(").append(l1skills.getName()).append(")").toString();
 			}
 			else {
-				s1 = (new StringBuilder()).append("記憶の水晶（").append(l1skills.getName()).append("）").toString();
+				s1 = (new StringBuilder()).append("記憶の水晶(").append(l1skills.getName()).append("）").toString();
 			}
 			if (l1iteminstance.getItem().getName().equalsIgnoreCase(s1)) {
 				int l6 = l1skills.getSkillLevel();

@@ -525,6 +525,8 @@ public class C_NPCAction extends ClientBasePacket {
 			for (Object petObject : petList) {
 				if (petObject instanceof L1PetInstance) { // ペット
 					L1PetInstance pet = (L1PetInstance) petObject;
+					// 停止飽食度計時
+					pet.stopFoodTimer(pet);
 					pet.collect(true);
 					pc.getPetList().remove(pet.getId());
 					pet.deleteMe();

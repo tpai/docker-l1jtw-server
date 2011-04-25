@@ -491,15 +491,17 @@ public class L1SummonInstance extends L1NpcInstance {
 				} else if (petObject instanceof L1PetInstance) { // ペット
 					L1PetInstance pet = (L1PetInstance) petObject;
 					if ((player != null)
-							&& (player.getLevel() >= pet.getLevel())) {
+							&& (player.getLevel() >= pet.getLevel()) && pet.get_food() > 0) {
 						pet.setCurrentPetStatus(status);
 					} else {
-						L1PetType type = PetTypeTable.getInstance().get(
-								pet.getNpcTemplate().get_npcId());
-						int id = type.getDefyMessageId();
-						if (id != 0) {
-							broadcastPacket(new S_NpcChatPacket(pet, "$" + id,
-									0));
+						if (!pet.isDead()) {
+							L1PetType type = PetTypeTable.getInstance().get(
+									pet.getNpcTemplate().get_npcId());
+							int id = type.getDefyMessageId();
+							if (id != 0) {
+								pet.broadcastPacket(new S_NpcChatPacket(pet, "$" + id,
+										0));
+							}
 						}
 					}
 				}

@@ -2349,16 +2349,6 @@ public class L1PcInstance extends L1Character {
 		_banned = flag;
 	}
 
-	private int _food; // ● 満腹度
-
-	public int get_food() {
-		return _food;
-	}
-
-	public void set_food(int i) {
-		_food = i;
-	}
-
 	public L1EquipmentSlot getEquipSlot() {
 		return _equipSlot;
 	}

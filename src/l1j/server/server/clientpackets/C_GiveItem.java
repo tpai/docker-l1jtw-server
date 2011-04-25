@@ -16,6 +16,7 @@ package l1j.server.server.clientpackets;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.datatables.PetItemTable;
+import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.PetTypeTable;
 import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1Object;
@@ -29,6 +30,7 @@ import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.serverpackets.S_ItemName;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
+import l1j.server.server.templates.L1Pet;
 import l1j.server.server.templates.L1PetItem;
 import l1j.server.server.templates.L1PetType;
 import l1j.server.server.utils.Random;
@@ -108,6 +110,11 @@ public class C_GiveItem extends ClientBasePacket {
 		if (item.getItemId() == petType.getItemIdForTaming()) {
 			tamePet(pc, target);
 		}
+		// 食物
+		else if (item.getItem().getType2() == 0
+				&& item.getItem().getType() == 7) {
+			eatFood(pc, target, item, count);
+		}
 		// 進化道具
 		else if (item.getItemId() == petType.getEvolvItemId()) {
 			evolvePet(pc, target, item.getItemId());
@@ -118,6 +125,47 @@ public class C_GiveItem extends ClientBasePacket {
 			// 判斷是否可用寵物裝備
 			if (petType.canUseEquipment()) {
 				usePetWeaponArmor(target, item);
+			}
+		}
+	}
+
+	private void eatFood(L1PcInstance pc, L1NpcInstance target, L1ItemInstance item, int count) {
+		if (!(target instanceof L1PetInstance)) {
+			return;
+		}
+		L1PetInstance pet= (L1PetInstance) target;
+		L1Pet _l1pet = PetTable.getInstance().getTemplate(item.getId());
+		int food = 0;
+		int foodCount = 0;
+		boolean isFull = false;
+
+		if (pet.get_food() == 100) { // 非常飽
+			return;
+		}
+		// 食物營養度判斷
+		if (item.getItem().getFoodVolume() != 0) {
+			// 吃掉食物的數量判斷
+			for (int i = 0; i < count; i++) {
+				food = item.getItem().getFoodVolume() / 10;
+				food += pet.get_food();
+				if (!isFull) {
+					if (food >= 100) {
+						isFull = true;
+						pet.set_food(100);
+						foodCount++;
+					} else {
+						pet.set_food(food);
+						foodCount++;
+					}
+				} else {
+					break;
+				}
+			}
+			if (foodCount != 0) {
+				pet.getInventory().consumeItem(item.getItemId(), foodCount); // 吃掉食物
+				// 紀錄寵物飽食度
+				_l1pet.set_food(pet.get_food());
+				PetTable.getInstance().storePetFood(_l1pet);
 			}
 		}
 	}
