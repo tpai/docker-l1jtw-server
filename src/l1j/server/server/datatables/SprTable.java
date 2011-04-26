@@ -14,6 +14,8 @@
  */
 package l1j.server.server.datatables;
 
+import static l1j.server.server.ActionCodes.ACTION_Aggress;
+import static l1j.server.server.ActionCodes.ACTION_AltAttack;
 import static l1j.server.server.ActionCodes.ACTION_Attack;
 import static l1j.server.server.ActionCodes.ACTION_AxeAttack;
 import static l1j.server.server.ActionCodes.ACTION_AxeWalk;
@@ -29,10 +31,12 @@ import static l1j.server.server.ActionCodes.ACTION_SkillAttack;
 import static l1j.server.server.ActionCodes.ACTION_SkillBuff;
 import static l1j.server.server.ActionCodes.ACTION_SpearAttack;
 import static l1j.server.server.ActionCodes.ACTION_SpearWalk;
+import static l1j.server.server.ActionCodes.ACTION_SpellDirectionExtra;
 import static l1j.server.server.ActionCodes.ACTION_StaffAttack;
 import static l1j.server.server.ActionCodes.ACTION_StaffWalk;
 import static l1j.server.server.ActionCodes.ACTION_SwordAttack;
 import static l1j.server.server.ActionCodes.ACTION_SwordWalk;
+import static l1j.server.server.ActionCodes.ACTION_Think;
 import static l1j.server.server.ActionCodes.ACTION_ThrowingKnifeAttack;
 import static l1j.server.server.ActionCodes.ACTION_ThrowingKnifeWalk;
 import static l1j.server.server.ActionCodes.ACTION_TwoHandSwordAttack;
@@ -59,6 +63,8 @@ public class SprTable {
 		private final Map<Integer, Integer> moveSpeed = Maps.newMap();
 
 		private final Map<Integer, Integer> attackSpeed = Maps.newMap();
+
+		private final Map<Integer, Integer> specialSpeed = Maps.newMap();
 
 		private int nodirSpellSpeed = 1200;
 
@@ -129,6 +135,8 @@ public class SprTable {
 					case ACTION_AxeAttack:
 					case ACTION_BowAttack:
 					case ACTION_SpearAttack:
+					case ACTION_AltAttack:
+					case ACTION_SpellDirectionExtra:
 					case ACTION_StaffAttack:
 					case ACTION_DaggerAttack:
 					case ACTION_TwoHandSwordAttack:
@@ -136,6 +144,11 @@ public class SprTable {
 					case ACTION_ClawAttack:
 					case ACTION_ThrowingKnifeAttack:
 						spr.attackSpeed.put(actid, speed);
+						break;
+					case ACTION_Think:
+					case ACTION_Aggress:
+						spr.specialSpeed.put(actid, speed);
+						break;
 					default:
 						break;
 				}
@@ -208,6 +221,65 @@ public class SprTable {
 	public int getNodirSpellSpeed(int sprid) {
 		if (_dataMap.containsKey(sprid)) {
 			return _dataMap.get(sprid).nodirSpellSpeed;
+		}
+		return 0;
+	}
+
+	public int getSpecialSpeed(int sprid, int actid) {
+		if (_dataMap.containsKey(sprid)) {
+			if (_dataMap.get(sprid).specialSpeed.containsKey(actid)) {
+				return _dataMap.get(sprid).specialSpeed.get(actid);
+			}
+			else {
+				return 1200;
+			}
+		}
+		return 0;
+	}
+
+	/** Npc 各動作延遲時間 */
+	public int getSprSpeed(int sprid, int actid) {
+		switch (actid) {
+			case ACTION_Walk:
+			case ACTION_SwordWalk:
+			case ACTION_AxeWalk:
+			case ACTION_BowWalk:
+			case ACTION_SpearWalk:
+			case ACTION_StaffWalk:
+			case ACTION_DaggerWalk:
+			case ACTION_TwoHandSwordWalk:
+			case ACTION_EdoryuWalk:
+			case ACTION_ClawWalk:
+			case ACTION_ThrowingKnifeWalk:
+				// 移動
+				return getMoveSpeed(sprid, actid);
+			case ACTION_SkillAttack:
+				// 有向施法
+				return getDirSpellSpeed(sprid);
+			case ACTION_SkillBuff:
+				// 無向施法
+				return getNodirSpellSpeed(sprid);
+			case ACTION_Attack:
+			case ACTION_SwordAttack:
+			case ACTION_AxeAttack:
+			case ACTION_BowAttack:
+			case ACTION_SpearAttack:
+			case ACTION_AltAttack:
+			case ACTION_SpellDirectionExtra:
+			case ACTION_StaffAttack:
+			case ACTION_DaggerAttack:
+			case ACTION_TwoHandSwordAttack:
+			case ACTION_EdoryuAttack:
+			case ACTION_ClawAttack:
+			case ACTION_ThrowingKnifeAttack:
+				// 攻擊
+				return getAttackSpeed(sprid, actid);
+			case ACTION_Think:
+			case ACTION_Aggress:
+				// 魔法娃娃表情動作
+				return getSpecialSpeed(sprid, actid);
+			default:
+				break;
 		}
 		return 0;
 	}

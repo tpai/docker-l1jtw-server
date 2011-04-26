@@ -56,60 +56,54 @@ public class L1SummonInstance extends L1NpcInstance {
 
 	private boolean _isReturnToNature = false;
 
+	private int _dir;
+
 	// ターゲットがいない場合の処理
 	@Override
 	public boolean noTarget() {
-		if (_currentPetStatus == 3) {
-			// ● 休憩の場合
-			return true;
-		} else if (_currentPetStatus == 4) {
-			// ● 配備の場合
-			if ((_master != null)
-					&& (_master.getMapId() == getMapId())
-					&& (getLocation()
-							.getTileLineDistance(_master.getLocation()) < 5)) {
-				int dir = targetReverseDirection(_master.getX(), _master.getY());
-				dir = checkObject(getX(), getY(), getMapId(), dir);
-				setDirectionMove(dir);
-				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-			} else {
-				// 主人を見失うか５マス以上はなれたら休憩状態に
-				_currentPetStatus = 3;
+		switch (_currentPetStatus) {
+			case 3: // 休息
 				return true;
-			}
-		} else if (_currentPetStatus == 5) {
-			// ● 警戒の場合はホームへ
-			if ((Math.abs(getHomeX() - getX()) > 1)
-					|| (Math.abs(getHomeY() - getY()) > 1)) {
-				int dir = moveDirection(getHomeX(), getHomeY());
-				if (dir == -1) {
-					// ホームが離れすぎてたら現在地がホーム
-					setHomeX(getX());
-					setHomeY(getY());
-				} else {
-					setDirectionMove(dir);
+			case 4: // 散開
+				if ((_master != null)
+						&& (_master.getMapId() == getMapId())
+						&& (getLocation()
+								.getTileLineDistance(_master.getLocation()) < 5)) {
+					_dir = targetReverseDirection(_master.getX(), _master.getY());
+					_dir = checkObject(getX(), getY(), getMapId(), _dir);
+					setDirectionMove(_dir);
 					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-				}
-			}
-		} else if ((_master != null) && (_master.getMapId() == getMapId())) {
-			// ●主人を追尾
-			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
-				int dir = moveDirection(_master.getX(), _master.getY());
-				if (dir == -1) {
-					// 主人が離れすぎたら休憩状態に
+				} else {
 					_currentPetStatus = 3;
 					return true;
-				} else {
-					setDirectionMove(dir);
-					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				}
-			}
-		} else {
-			// ● 主人を見失ったら休憩状態に
-			_currentPetStatus = 3;
-			return true;
+				return false;
+			case 5:
+				if ((Math.abs(getHomeX() - getX()) > 1)
+						|| (Math.abs(getHomeY() - getY()) > 1)) {
+					_dir = moveDirection(getHomeX(), getHomeY());
+					if (_dir == -1) {
+						setHomeX(getX());
+						setHomeY(getY());
+					} else {
+						setDirectionMove(_dir);
+						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+					}
+				}
+				return false;
+			default:
+				if ((_master != null) && (_master.getMapId() == getMapId())) {
+					if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
+						_dir = moveDirection(_master.getX(), _master.getY());
+						setDirectionMove(_dir);
+						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+					}
+				} else {
+					_currentPetStatus = 3;
+					return true;
+				}
+				return false;
 		}
-		return false;
 	}
 
 	// １時間計測用

@@ -349,23 +349,27 @@ public class L1DragonSlayer {
 
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
-			for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(npc)) {
-				npc.onPerceive(pc);
-			}
+
 			if (npc.getGfxId() == 7548 || npc.getGfxId() == 7550 || npc.getGfxId() == 7552
-					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585
-					|| npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
+					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585) {
+				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, npc.ATTACK_SPEED);
+				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc)) {
+					npc.onPerceive(pc);
+					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
+					pc.sendPackets(gfx);
+				}
+			} else if (npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
 					|| npc.getGfxId() == 7864 || npc.getGfxId() == 7869 || npc.getGfxId() == 7870) {
-				S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), 11);
-				npc.broadcastPacket(gfx);
-				if (npc.getGfxId() == 7539) {
-					for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
+				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, npc.ATTACK_SPEED);
+				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
+					if (npc.getGfxId() == 7539) {
 						pc.sendPackets(new S_ServerMessage(1570));
-					}
-				} else if (npc.getGfxId() == 7864) {
-					for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
+					} else if (npc.getGfxId() == 7864) {
 						pc.sendPackets(new S_ServerMessage(1657));
 					}
+					npc.onPerceive(pc);
+					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
+					pc.sendPackets(gfx);
 				}
 			}
 

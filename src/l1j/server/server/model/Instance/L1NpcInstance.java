@@ -41,6 +41,7 @@ import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.datatables.NpcChatTable;
 import l1j.server.server.datatables.NpcTable;
+import l1j.server.server.datatables.SprTable;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1GroundInventory;
@@ -1182,13 +1183,27 @@ public class L1NpcInstance extends L1Character {
 			addHitup((int) diff * 2);
 			addDmgup((int) diff * 2);
 		}
-		setPassispeed(template.get_passispeed());
-		setAtkspeed(template.get_atkspeed());
 		setAgro(template.is_agro());
 		setAgrocoi(template.is_agrocoi());
 		setAgrososc(template.is_agrososc());
 		setTempCharGfx(template.get_gfxid());
 		setGfxId(template.get_gfxid());
+
+		// 移動
+		if (template.get_passispeed() != 0) {
+			setPassispeed(SprTable.getInstance()
+					.getSprSpeed(getTempCharGfx(), getStatus()));
+		} else {
+			setPassispeed(0);
+		}
+		// 攻擊
+		if (template.get_atkspeed() != 0) {
+			setAtkspeed(SprTable.getInstance()
+					.getSprSpeed(getTempCharGfx(), getStatus() + 1));
+		} else {
+			setAtkspeed(0);
+		}
+
 		if (template.get_randomexp() == 0) {
 			setExp(template.get_exp());
 		} else {
@@ -1220,6 +1235,12 @@ public class L1NpcInstance extends L1Character {
 		setLightSize(template.getLightSize());
 
 		mobSkill = new L1MobSkillUse(this);
+	}
+
+	// 延遲時間
+	public void npcSleepTime(int i, int type) {
+		setSleepTime(calcSleepTime(SprTable.getInstance()
+				.getSprSpeed(getTempCharGfx(), i), type));
 	}
 
 	private int _passispeed;

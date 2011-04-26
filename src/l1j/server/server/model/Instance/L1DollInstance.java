@@ -14,12 +14,15 @@
  */
 package l1j.server.server.model.Instance;
 
-import java.util.Arrays;
-
+import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.IdFactory;
+import l1j.server.server.datatables.SprTable;
 import l1j.server.server.model.L1World;
+import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_DollPack;
+import l1j.server.server.serverpackets.S_OwnCharStatus;
+import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.Random;
@@ -45,29 +48,30 @@ public class L1DollInstance extends L1NpcInstance {
 
 	private int _itemObjId;
 
+	private  int run;
+
+	private boolean _isDelete = false;
+
 	// ターゲットがいない場合の処理
 	@Override
 	public boolean noTarget() {
 		if (_master.isDead()) {
+			_isDelete = true;
 			deleteDoll();
 			return true;
 		}
 		else if ((_master != null) && (_master.getMapId() == getMapId())) {
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
 				int dir = moveDirection(_master.getX(), _master.getY());
-				if (dir == -1) {
-					if (!isAiRunning()) {
-						startAI();
-					}
-					return true;
-				}
-				else {
-					setDirectionMove(dir);
-					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
-				}
+				setDirectionMove(dir);
+				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
+			} else {
+				// 魔法娃娃 - 特殊動作
+				dollAction();
 			}
 		}
 		else {
+			_isDelete = true;
 			deleteDoll();
 			return true;
 		}
@@ -115,6 +119,12 @@ public class L1DollInstance extends L1NpcInstance {
 	}
 
 	public void deleteDoll() {
+		broadcastPacket(new S_SkillSound(getId(), 5936));
+		if (_master != null && _isDelete) {
+			L1PcInstance pc = (L1PcInstance) _master;
+			pc.sendPackets(new S_SkillIconGFX(56, 0));
+			pc.sendPackets(new S_OwnCharStatus(pc));
+		}
 		if (isMpRegeneration()) {
 			((L1PcInstance) _master).stopMpRegenerationByDoll();
 		}
@@ -130,20 +140,10 @@ public class L1DollInstance extends L1NpcInstance {
 
 	@Override
 	public void onItemUse() {
-		if (!isActived()) {
-			// １００％の確率でヘイストポーション使用
-			useItem(USEITEM_HASTE, 100);
-		}
 	}
 
 	@Override
 	public void onGetItem(L1ItemInstance item) {
-		if (getNpcTemplate().get_digestitem() > 0) {
-			setDigestItem(item);
-		}
-		if (Arrays.binarySearch(haestPotions, item.getItem().getItemId()) >= 0) {
-			useItem(USEITEM_HASTE, 100);
-		}
 	}
 
 	public int getDollType() {
@@ -209,4 +209,18 @@ public class L1DollInstance extends L1NpcInstance {
 		return damageReduction;
 	}
 
+	private void dollAction() {
+		run = Random.nextInt(100) + 1;
+		if (run <= 6) {
+			if (run <= 3) {
+				broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Think));
+				setSleepTime(calcSleepTime(SprTable.getInstance()
+						.getSprSpeed(getTempCharGfx(), ActionCodes.ACTION_Think), MOVE_SPEED)); // 66
+			} else {
+				broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Aggress));
+				setSleepTime(calcSleepTime(SprTable.getInstance()
+						.getSprSpeed(getTempCharGfx(), ActionCodes.ACTION_Aggress), MOVE_SPEED)); // 67
+			}
+		}
+	}
 }

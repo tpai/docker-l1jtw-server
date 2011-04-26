@@ -17,6 +17,7 @@ package l1j.server.server.utils;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import l1j.server.server.ActionCodes;
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.model.L1DragonSlayer;
@@ -25,6 +26,7 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_DoActionGFX;
+import l1j.server.server.serverpackets.S_ServerMessage;
 
 public class L1SpawnUtil {
 	private static Logger _log = Logger.getLogger(L1SpawnUtil.class.getName());
@@ -82,15 +84,28 @@ public class L1SpawnUtil {
 			}
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
-			for (L1PcInstance _pc : L1World.getInstance().getRecognizePlayer(npc)) {
-				npc.onPerceive(_pc);
-			}
+
 			if (npc.getGfxId() == 7548 || npc.getGfxId() == 7550 || npc.getGfxId() == 7552
-					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585
-					|| npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
+					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585) {
+				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, npc.ATTACK_SPEED);
+				for (L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc)) {
+					npc.onPerceive(_pc);
+					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
+					_pc.sendPackets(gfx);
+				}
+			} else if (npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
 					|| npc.getGfxId() == 7864 || npc.getGfxId() == 7869 || npc.getGfxId() == 7870) {
-				S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), 11);
-				npc.broadcastPacket(gfx);
+				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, npc.ATTACK_SPEED);
+				for (L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
+					if (npc.getGfxId() == 7539) {
+						_pc.sendPackets(new S_ServerMessage(1570));
+					} else if (npc.getGfxId() == 7864) {
+						_pc.sendPackets(new S_ServerMessage(1657));
+					}
+					npc.onPerceive(_pc);
+					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
+					_pc.sendPackets(gfx);
+				}
 			}
 
 			npc.turnOnOffLight();

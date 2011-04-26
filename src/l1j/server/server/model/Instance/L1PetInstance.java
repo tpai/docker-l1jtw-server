@@ -51,6 +51,8 @@ public class L1PetInstance extends L1NpcInstance {
 
 	private static final long serialVersionUID = 1L;
 
+	private int _dir;
+
 	// ターゲットがいない場合の処理
 	@Override
 	public boolean noTarget() {
@@ -62,10 +64,10 @@ public class L1PetInstance extends L1NpcInstance {
 						&& (_petMaster.getMapId() == getMapId())
 						&& (getLocation().getTileLineDistance(
 								_petMaster.getLocation()) < 5)) {
-					int dir = targetReverseDirection(_petMaster.getX(),
+					_dir = targetReverseDirection(_petMaster.getX(),
 							_petMaster.getY());
-					dir = checkObject(getX(), getY(), getMapId(), dir);
-					setDirectionMove(dir);
+					_dir = checkObject(getX(), getY(), getMapId(), _dir);
+					setDirectionMove(_dir);
 					setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				} else { // 距離主人 5格以上休息
 					_currentPetStatus = 3;
@@ -95,24 +97,20 @@ public class L1PetInstance extends L1NpcInstance {
 				}
 				int locx = _petMaster.getX() + Random.nextInt(1);
 				int locy = _petMaster.getY() + Random.nextInt(1);
-				int dir = moveDirection(locx, locy);
-				if (dir == -1) { // 與主人走失則休息
+				_dir = moveDirection(locx, locy);
+				if (_dir == -1) {
 					_currentPetStatus = 3;
 					return true;
 				}
-				setDirectionMove(dir);
+				setDirectionMove(_dir);
 				setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 				return false;
 			default:
 				if ((_petMaster != null)
 						&& (_petMaster.getMapId() == getMapId())) {
 					if (getLocation().getTileLineDistance(_petMaster.getLocation()) > 2) {
-						dir = moveDirection(_petMaster.getX(), _petMaster.getY());
-						/*if (dir == -1) { // 主人が離れすぎたら休憩状態に
-							_currentPetStatus = 3;
-							return true;
-						}*/
-						setDirectionMove(dir);
+						_dir = moveDirection(_petMaster.getX(), _petMaster.getY());
+						setDirectionMove(_dir);
 						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
 					}
 				} else { // 與主人走失則休息

@@ -26,6 +26,7 @@ import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.MobSkillTable;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.SkillsTable;
+import l1j.server.server.datatables.SprTable;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -222,6 +223,7 @@ public class L1MobSkillUse {
 		int min = getMobSkillTemplate().getSummonMin(idx);
 		int max = getMobSkillTemplate().getSummonMax(idx);
 		int count = 0;
+		int actId = getMobSkillTemplate().getActid(idx);
 
 		if (summonId == 0) {
 			return false;
@@ -233,11 +235,14 @@ public class L1MobSkillUse {
 		// 魔方陣の表示
 		_attacker.broadcastPacket(new S_SkillSound(_attacker.getId(), 761));
 
-		// 魔法を使う動作のエフェクト
-		S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), ActionCodes.ACTION_SkillBuff);
+		// 施法動作
+		if (actId == 0) {
+			actId = ActionCodes.ACTION_SkillBuff;
+		}
+		S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
 		_attacker.broadcastPacket(gfx);
 
-		_sleepTime = _attacker.getNpcTemplate().getSubMagicSpeed();
+		_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
 		return true;
 	}
 
@@ -246,6 +251,7 @@ public class L1MobSkillUse {
 	 */
 	private boolean poly(int idx) {
 		int polyId = getMobSkillTemplate().getPolyId(idx);
+		int actId = getMobSkillTemplate().getActid(idx);
 		boolean usePoly = false;
 
 		if (polyId == 0) {
@@ -285,11 +291,14 @@ public class L1MobSkillUse {
 				pc.broadcastPacket(new S_SkillSound(pc.getId(), 230));
 				break;
 			}
-			// 魔法を使う動作のエフェクト
-			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), ActionCodes.ACTION_SkillBuff);
+			// 施法動作
+			if (actId == 0) {
+				actId = ActionCodes.ACTION_SkillBuff;
+			}
+			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
 			_attacker.broadcastPacket(gfx);
 
-			_sleepTime = _attacker.getNpcTemplate().getSubMagicSpeed();
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
 		}
 
 		return usePoly;
@@ -310,14 +319,10 @@ public class L1MobSkillUse {
 				skillUse.setLeverage(getMobSkillTemplate().getLeverage(idx));
 			}
 			skillUse.handleCommands(null, skillid, _target.getId(), _target.getX(), _target.getX(), null, 0, L1SkillUse.TYPE_NORMAL, _attacker);
-			// 使用スキルによるsleepTimeの設定
+
+			// 延遲時間判斷
 			L1Skills skill = SkillsTable.getInstance().getTemplate(skillid);
-			if (skill.getTarget().equals("attack") && (skillid != 18)) { // 有方向魔法
-				_sleepTime = _attacker.getNpcTemplate().getAtkMagicSpeed();
-			}
-			else { // 無方向魔法
-				_sleepTime = _attacker.getNpcTemplate().getSubMagicSpeed();
-			}
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), skill.getActionId());
 
 			return true;
 		}
@@ -420,7 +425,11 @@ public class L1MobSkillUse {
 			attack.commit();
 		}
 
-		_sleepTime = _attacker.getAtkspeed();
+		if (actId > 0) {
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
+		} else {
+			_sleepTime = _attacker.getAtkspeed();
+		}
 		return true;
 	}
 
