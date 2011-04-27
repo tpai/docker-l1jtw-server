@@ -18,8 +18,6 @@ import java.util.TimerTask;
 
 import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.PetTypeTable;
-import l1j.server.server.model.Instance.L1ItemInstance;
-import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.serverpackets.S_NpcChatPacket;
 import l1j.server.server.templates.L1Pet;

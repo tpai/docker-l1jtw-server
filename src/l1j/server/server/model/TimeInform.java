@@ -16,6 +16,7 @@ package l1j.server.server.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import l1j.server.Config;
@@ -34,19 +35,20 @@ public class TimeInform {
 	static Calendar rightNow = Calendar.getInstance(timezone);
 
 	/**
-	 * @return getYear 年 param type 1:西元 2:民國
-	 * @param i
-	 *            = +|- years
+	 * @return getYear 年 param type 0:原始(可加減) 1:西元 2:民國
+	 * @param i = +|- years
 	 */
 	public static String getYear(int type, int i) {
-		String year;
+		String year = null;
 		if (type == 0)
 			year = String.valueOf(rightNow.get(Calendar.YEAR + i));
 		else if (type == 1)// 西元
 			year = "西元 " + String.valueOf(rightNow.get(Calendar.YEAR));
-		else
+		else if (type == 2)
 			// 民國
 			year = "民國 " + String.valueOf(rightNow.get(Calendar.YEAR) - 1911);
+		else
+			year = null;
 		return year;
 	}
 
@@ -162,7 +164,7 @@ public class TimeInform {
 	public String getNowTime_Standard() {
 
 		String NowTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-				.format(rightNow);
+				.format(new Date());
 
 		return NowTime;
 	}

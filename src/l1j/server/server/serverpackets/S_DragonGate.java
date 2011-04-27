@@ -14,8 +14,6 @@
  */
 package l1j.server.server.serverpackets;
 
-import java.util.logging.Logger;
-
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
@@ -25,11 +23,9 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public class S_DragonGate extends ServerBasePacket {
 	private static final String S_DRAGON_GATE = "[S] S_DragonGate";
 
-	private static Logger _log = Logger.getLogger(S_DragonGate.class.getName());
-
 	private byte[] _byte = null;
 
-	public S_DragonGate(L1PcInstance pc ,boolean[] i) {
+	public S_DragonGate(L1PcInstance pc, boolean[] i) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(0x66); // = 102
 		writeD(pc.getId());

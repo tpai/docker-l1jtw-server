@@ -14,7 +14,6 @@
  */
 package l1j.server.server.serverpackets;
 
-import java.io.IOException;
 
 import l1j.server.server.Opcodes;
 
