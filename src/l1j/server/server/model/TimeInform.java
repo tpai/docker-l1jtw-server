@@ -35,10 +35,14 @@ public class TimeInform {
 
 	/**
 	 * @return getYear 年 param type 1:西元 2:民國
+	 * @param i
+	 *            = +|- years
 	 */
-	public static String getYear(int type) {
+	public static String getYear(int type, int i) {
 		String year;
-		if (type == 0)// 西元
+		if (type == 0)
+			year = String.valueOf(rightNow.get(Calendar.YEAR + i));
+		else if (type == 1)// 西元
 			year = "西元 " + String.valueOf(rightNow.get(Calendar.YEAR));
 		else
 			// 民國
@@ -101,7 +105,7 @@ public class TimeInform {
 		String NowTime = null;
 		switch (type) {
 		case 1:
-			NowTime = TimeInform.getYear(type_year) + "年 "
+			NowTime = TimeInform.getYear(type_year, 0) + "年 "
 					+ TimeInform.getMonth() + "月" + TimeInform.getDay() + "日 "
 					+ TimeInform.getDayOfWeek();
 			break;
@@ -110,7 +114,7 @@ public class TimeInform {
 					+ TimeInform.getSecond() + "秒";
 			break;
 		case 3:
-			NowTime = TimeInform.getYear(type_year) + "年"
+			NowTime = TimeInform.getYear(type_year, 0) + "年"
 					+ TimeInform.getMonth() + "月" + TimeInform.getDay() + "日"
 					+ TimeInform.getHour() + "時" + TimeInform.getMinute() + "分"
 					+ TimeInform.getSecond() + "秒";

@@ -14,75 +14,46 @@
  */
 package l1j.server.server.serverpackets;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.*;
-
-import l1j.server.L1DatabaseFactory;
+import java.util.List;
 import l1j.server.server.Opcodes;
-import l1j.server.server.model.Instance.L1NpcInstance;
-import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.templates.L1BoardTopic;
 
 public class S_Board extends ServerBasePacket {
 
 	private static final String S_BOARD = "[S] S_Board";
 
-	private static Logger _log = Logger.getLogger(S_Board.class.getName());
+	private static final int TOPIC_LIMIT = 8;
 
 	private byte[] _byte = null;
 
-	public S_Board(L1NpcInstance board) {
-		buildPacket(board, 0);
+	public S_Board(int boardObjId) {
+		buildPacket(boardObjId, 0);
 	}
 
-	public S_Board(L1NpcInstance board, int number) {
-		buildPacket(board, number);
+	public S_Board(int boardObjId, int number) {
+		buildPacket(boardObjId, number);
 	}
 
-	private void buildPacket(L1NpcInstance board, int number) {
-		int count = 0;
-		String[][] db = null;
-		int[] id = null;
-		Connection con = null;
-		PreparedStatement pstm = null;
-		ResultSet rs = null;
-		try {
-			db = new String[8][3];
-			id = new int[8];
-			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con.prepareStatement("SELECT * FROM board order by id desc");
-			rs = pstm.executeQuery();
-			while (rs.next() && count < 8) {
-				if (rs.getInt("id") <= number || number == 0) {
-					id[count] = rs.getInt(1);
-					db[count][0] = rs.getString(2);
-					db[count][1] = rs.getString(3);
-					db[count][2] = rs.getString(4);
-					count++;
-				}
-			}
-		} catch (SQLException e) {
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		} finally {
-			SQLUtil.close(rs);
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
-		}
-
+	private void buildPacket(int boardObjId, int number) {
+		List<L1BoardTopic> topics = L1BoardTopic.index(number, TOPIC_LIMIT);
 		writeC(Opcodes.S_OPCODE_BOARD);
 		writeC(0); // DragonKeybbs = 1
-		writeD(board.getId());
-		writeC(0xFF); // ?
-		writeC(0xFF); // ?
-		writeC(0xFF); // ?
-		writeC(0x7F); // ?
-		writeH(count);
-		writeH(300);
-		for (int i = 0; i < count; ++i) {
-			writeD(id[i]);
-			writeS(db[i][0]);
-			writeS(db[i][1]);
-			writeS(db[i][2]);
+		writeD(boardObjId);
+		if (number == 0) {
+			writeD(0x7FFFFFFF);
+		} else {
+			writeD(number);
+		}
+		writeC(topics.size());
+		if (number == 0) {
+			writeC(0);
+			writeH(300);
+		}
+		for (L1BoardTopic topic : topics) {
+			writeD(topic.getId());
+			writeS(topic.getName());
+			writeS(topic.getDate());
+			writeS(topic.getTitle());
 		}
 	}
 
