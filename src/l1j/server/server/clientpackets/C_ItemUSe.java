@@ -2064,17 +2064,11 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
-				else if ((itemId == 40006) || (itemId == 40412) || (itemId == 140006)) { // パインワンド
+				else if ((itemId == 40006) || (itemId == 40412) || (itemId == 140006)) { // 松木魔杖、黑暗安特的樹枝
 					if (pc.getMap().isUsePainwand()) {
 						S_AttackPacket s_attackPacket = new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand);
 						pc.sendPackets(s_attackPacket);
 						pc.broadcastPacket(s_attackPacket);
-						int chargeCount = l1iteminstance.getChargeCount();
-						if ((chargeCount <= 0) && (itemId != 40412)) {
-							// \f1何も起きませんでした。
-							pc.sendPackets(new S_ServerMessage(79));
-							return;
-						}
 						int[] mobArray =
 						{ 45008, 45140, 45016, 45021, 45025, 45033, 45099, 45147, 45123, 45130, 45046, 45092, 45138, 45098, 45127, 45143, 45149,
 								45171, 45040, 45155, 45192, 45173, 45213, 45079, 45144 };
@@ -2098,6 +2092,9 @@ public class C_ItemUSe extends ClientBasePacket {
 						if ((itemId == 40006) || (itemId == 140006)) {
 							l1iteminstance.setChargeCount(l1iteminstance.getChargeCount() - 1);
 							pc.getInventory().updateItem(l1iteminstance, L1PcInventory.COL_CHARGE_COUNT);
+							if (l1iteminstance.getChargeCount() <= 0) { // 次數為 0時刪除
+								pc.getInventory().removeItem(l1iteminstance, 1);
+							}
 						}
 						else {
 							pc.getInventory().removeItem(l1iteminstance, 1);
@@ -2108,33 +2105,33 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
-				else if (itemId == 40007) { // エボニー ワンド
+				else if (itemId == 40007) { // 閃電魔杖
 					cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
-					int chargeCount = l1iteminstance.getChargeCount();
-					if (chargeCount <= 0) {
-						// \f1何も起きませんでした。
-						pc.sendPackets(new S_ServerMessage(79));
-						return;
-					}
+					int dmg = 0;
+					int[] data = null;
 					L1Object target = L1World.getInstance().findObject(spellsc_objid);
-					pc.sendPackets(new S_UseAttackSkill(pc, spellsc_objid, 10, spellsc_x, spellsc_y, ActionCodes.ACTION_Wand));
-					pc.broadcastPacket(new S_UseAttackSkill(pc, spellsc_objid, 10, spellsc_x, spellsc_y, ActionCodes.ACTION_Wand));
 					if (target != null) {
-						doWandAction(pc, target);
+						dmg = doWandAction(pc, target);
 					}
+					data = new int[] {ActionCodes.ACTION_Wand, dmg, 10, 6}; // data = {actid, dmg, spellgfx, use_type}
+					pc.sendPackets(new S_UseAttackSkill(pc, spellsc_objid, spellsc_x, spellsc_y, data));
+					pc.broadcastPacket(new S_UseAttackSkill(pc, spellsc_objid, spellsc_x, spellsc_y, data));
 					l1iteminstance.setChargeCount(l1iteminstance.getChargeCount() - 1);
 					pc.getInventory().updateItem(l1iteminstance, L1PcInventory.COL_CHARGE_COUNT);
+					if (l1iteminstance.getChargeCount() <= 0) { // 次數為 0時刪除
+						pc.getInventory().removeItem(l1iteminstance, 1);
+					}
 				}
-				else if ((itemId == 40008) || (itemId == 40410) || (itemId == 140008)) { // メイプルワンド
+				else if ((itemId == 40008) || (itemId == 40410) || (itemId == 140008)) { // 楓木魔杖、黑暗安特的樹皮
 					if ((pc.getMapId() == 63) || (pc.getMapId() == 552) || (pc.getMapId() == 555) || (pc.getMapId() == 557) || (pc.getMapId() == 558)
 							|| (pc.getMapId() == 779)) { // 水中では使用不可
 						pc.sendPackets(new S_ServerMessage(563)); // \f1ここでは使えません。
 					}
 					else {
-						pc.sendPackets(new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand));
-						pc.broadcastPacket(new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand));
-						int chargeCount = l1iteminstance.getChargeCount();
-						if (((chargeCount <= 0) && (itemId != 40410)) || (pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
+						S_AttackPacket s_attackPacket = new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand);
+						pc.sendPackets(s_attackPacket);
+						pc.broadcastPacket(s_attackPacket);
+						if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
 							// \f1何も起きませんでした。
 							pc.sendPackets(new S_ServerMessage(79));
 							return;
@@ -2147,6 +2144,9 @@ public class C_ItemUSe extends ClientBasePacket {
 							if ((itemId == 40008) || (itemId == 140008)) {
 								l1iteminstance.setChargeCount(l1iteminstance.getChargeCount() - 1);
 								pc.getInventory().updateItem(l1iteminstance, L1PcInventory.COL_CHARGE_COUNT);
+								if (l1iteminstance.getChargeCount() <= 0) { // 次數為 0時刪除
+									pc.getInventory().removeItem(l1iteminstance, 1);
+								}
 							}
 							else {
 								pc.getInventory().removeItem(l1iteminstance, 1);
@@ -5637,12 +5637,12 @@ public class C_ItemUSe extends ClientBasePacket {
 		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
-	private void doWandAction(L1PcInstance user, L1Object target) {
+	private int doWandAction(L1PcInstance user, L1Object target) {
 		if (user.getId() == target.getId()) {
-			return; // 自分自身に当てた
+			return 0; // 目標為自身
 		}
 		if (user.glanceCheck(target.getX(), target.getY()) == false) {
-			return; // 直線上に障害物がある
+			return 0; // 有障礙物
 		}
 
 		// XXX 適当なダメージ計算、要修正
@@ -5652,12 +5652,10 @@ public class C_ItemUSe extends ClientBasePacket {
 		if (target instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) target;
 			if (pc.getMap().isSafetyZone(pc.getLocation()) || user.checkNonPvP(user, pc)) {
-				// 攻撃できないゾーン
-				return;
+				return 0;
 			}
 			if ((pc.hasSkillEffect(50) == true) || (pc.hasSkillEffect(78) == true) || (pc.hasSkillEffect(157) == true)) {
-				// ターゲットがアイス ランス、アブソルート、バリア アース バインド状態
-				return;
+				return 0;
 			}
 
 			int newHp = pc.getCurrentHp() - dmg;
@@ -5670,11 +5668,14 @@ public class C_ItemUSe extends ClientBasePacket {
 			else if ((newHp <= 0) && !pc.isGm()) {
 				pc.death(user);
 			}
+			return dmg;
 		}
 		else if (target instanceof L1MonsterInstance) {
 			L1MonsterInstance mob = (L1MonsterInstance) target;
 			mob.receiveDamage(user, dmg);
+			return dmg;
 		}
+		return 0;
 	}
 
 	private void polyAction(L1PcInstance attacker, L1Character cha) {
@@ -6837,6 +6838,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		}
 	}
 
+	// 傢俱移除魔杖
 	private void useFurnitureRemovalWand(L1PcInstance pc, int targetId, L1ItemInstance item) {
 		S_AttackPacket s_attackPacket = new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand);
 		pc.sendPackets(s_attackPacket);

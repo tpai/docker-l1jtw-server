@@ -357,17 +357,8 @@ public class L1BuffUtil {
 					return 0;
 				}
 
-				L1ItemInstance bow = _player.getWeapon();
-				L1ItemInstance arrow = null;
-				arrow = _player.getInventory().getArrow();
-
 				for (int i = 3; i > 0; i--) {
-					if (arrow == null && bow.getItem().getItemId() != 190) {
-						_player.sendPackets(new S_AttackPacket(_player, _target.getId(), 1, 0));
-						_player.broadcastPacket(new S_AttackPacket(_player, _target.getId(), 1, 0));
-					} else {
-						_target.onAction(_player);
-					}
+					_target.onAction(_player);
 				}
 				_player.sendPackets(new S_SkillSound(_player.getId(), 4394));
 				_player.broadcastPacket(new S_SkillSound(_player.getId(), 4394));

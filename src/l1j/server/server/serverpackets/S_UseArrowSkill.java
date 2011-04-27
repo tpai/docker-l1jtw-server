@@ -30,22 +30,22 @@ public class S_UseArrowSkill extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_UseArrowSkill(L1Character cha, int targetobj, int spellgfx, int x, int y, boolean isHit) {
+	public S_UseArrowSkill(L1Character cha, int targetobj, int x, int y, int[] data) { // data = {actid, dmg, spellgfx}
 
-		int aid = 1;
-		// オークアーチャーのみ変更
+		// 攻擊動作變更
 		if (cha.getTempCharGfx() == 3860) {
-			aid = 21;
+			data[0] = 21;
 		}
+
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(aid);
+		writeC(data[0]); // actid
 		writeD(cha.getId());
 		writeD(targetobj);
-		writeH(isHit ? 6 : 0);
+		writeH(data[1]); // dmg
 		writeC(cha.getHeading());
 		writeD(_sequentialNumber.incrementAndGet());
-		writeH(spellgfx);
-		writeC(0); // 箭
+		writeH(data[2]); // spellgfx
+		writeC(0); // use_type 箭
 		writeH(cha.getX());
 		writeH(cha.getY());
 		writeH(x);

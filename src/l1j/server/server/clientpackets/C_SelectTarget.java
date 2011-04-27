@@ -17,6 +17,7 @@ package l1j.server.server.clientpackets;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1World;
+import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
@@ -75,6 +76,18 @@ public class C_SelectTarget extends ClientBasePacket {
 				// 目標在安區、攻擊者在安區
 				if ((targetSummon.getZoneType() == 1) || (pet.getZoneType() == 1)) {
 					// 寵物主人
+					if (pet.getMaster() instanceof L1PcInstance) {
+						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
+						petMaster.sendPackets(new S_ServerMessage(328)); // 請選擇正確的對象。
+					}
+					return;
+				}
+			}
+			// 目標為怪物
+			else if (target instanceof L1MonsterInstance) {
+				L1MonsterInstance mob = (L1MonsterInstance) target;
+				// 特定狀態下才可攻擊
+				if (pet.getMaster().isAttackMiss(pet.getMaster(), mob.getNpcId())) {
 					if (pet.getMaster() instanceof L1PcInstance) {
 						L1PcInstance petMaster = (L1PcInstance) pet.getMaster();
 						petMaster.sendPackets(new S_ServerMessage(328)); // 請選擇正確的對象。

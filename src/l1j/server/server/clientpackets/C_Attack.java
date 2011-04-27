@@ -21,6 +21,7 @@ import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.AcceleratorChecker;
+import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
@@ -39,17 +40,11 @@ import l1j.server.server.serverpackets.S_UseArrowSkill;
  */
 public class C_Attack extends ClientBasePacket {
 
-	private int _targetX = 0;
-
-	private int _targetY = 0;
-
 	public C_Attack(byte[] decrypt, ClientThread client) {
 		super(decrypt);
 		int targetId = readD();
 		int x = readH();
 		int y = readH();
-		_targetX = x;
-		_targetY = y;
 
 		L1PcInstance pc = client.getActiveChar();
 
@@ -111,103 +106,16 @@ public class C_Attack extends ClientBasePacket {
 
 		pc.setRegenState(REGENSTATE_ATTACK);
 
-		if ((target != null) && !((L1Character) target).isDead()) {
+		if ((target != null)
+				&& !((L1Character) target).isDead()) {
 			target.onAction(pc);
-		} else { // 空攻撃
-			L1ItemInstance weapon = pc.getWeapon();
-			int weaponId = 0;
-			int weaponType = 0;
-			L1ItemInstance arrow = null;
-			L1ItemInstance sting = null;
-			if (weapon != null) {
-				weaponId = weapon.getItem().getItemId();
-				weaponType = weapon.getItem().getType1();
-				if (weaponType == 20) {
-					arrow = pc.getInventory().getArrow();
-				}
-				if (weaponType == 62) {
-					sting = pc.getInventory().getSting();
-				}
-			}
-			pc.setHeading(pc.targetDirection(x, y));
-			if ((weaponType == 20) && ((weaponId == 190) || (arrow != null))) {
-				calcOrbit(pc.getX(), pc.getY(), pc.getHeading()); // 軌道計算
-				if (arrow != null) { // 使用弓箭
-					pc.sendPackets(new S_UseArrowSkill(pc, 0, 66, _targetX,
-							_targetY, true));
-					pc.broadcastPacket(new S_UseArrowSkill(pc, 0, 66, _targetX,
-							_targetY, true));
-					pc.getInventory().removeItem(arrow, 1);
-				} else if (weaponId == 190) { // 撒哈弓
-					pc.sendPackets(new S_UseArrowSkill(pc, 0, 2349, _targetX,
-							_targetY, true));
-					pc.broadcastPacket(new S_UseArrowSkill(pc, 0, 2349,
-							_targetX, _targetY, true));
-				}
-			} else if ((weaponType == 62) && (sting != null)) {
-				calcOrbit(pc.getX(), pc.getY(), pc.getHeading()); // 軌道計算
-				pc.sendPackets(new S_UseArrowSkill(pc, 0, 2989, _targetX,
-						_targetY, true));
-				pc.broadcastPacket(new S_UseArrowSkill(pc, 0, 2989, _targetX,
-						_targetY, true));
-				pc.getInventory().removeItem(sting, 1);
-			} else {
-				pc.sendPackets(new S_AttackPacket(pc, 0,
-						ActionCodes.ACTION_Attack));
-				pc.broadcastPacket(new S_AttackPacket(pc, 0,
-						ActionCodes.ACTION_Attack));
-			}
+		} else { // 目標為空或死亡
+			L1Character cha = new L1Character();
+			cha.setId(targetId);
+			cha.setX(x);
+			cha.setY(y);
+			L1Attack atk = new L1Attack(pc, cha);
+			atk.actionPc();
 		}
-	}
-
-	private void calcOrbit(int cX, int cY, int head) {
-		float disX = Math.abs(cX - _targetX);
-		float disY = Math.abs(cY - _targetY);
-		float dis = Math.max(disX, disY);
-		float avgX = 0;
-		float avgY = 0;
-		if (dis == 0) {
-			if (head == 1) {
-				avgX = 1;
-				avgY = -1;
-			} else if (head == 2) {
-				avgX = 1;
-				avgY = 0;
-			} else if (head == 3) {
-				avgX = 1;
-				avgY = 1;
-			} else if (head == 4) {
-				avgX = 0;
-				avgY = 1;
-			} else if (head == 5) {
-				avgX = -1;
-				avgY = 1;
-			} else if (head == 6) {
-				avgX = -1;
-				avgY = 0;
-			} else if (head == 7) {
-				avgX = -1;
-				avgY = -1;
-			} else if (head == 0) {
-				avgX = 0;
-				avgY = -1;
-			}
-		} else {
-			avgX = disX / dis;
-			avgY = disY / dis;
-		}
-
-		int addX = (int) Math.floor((avgX * 15) + 0.59f);
-		int addY = (int) Math.floor((avgY * 15) + 0.59f);
-
-		if (cX > _targetX) {
-			addX *= -1;
-		}
-		if (cY > _targetY) {
-			addY *= -1;
-		}
-
-		_targetX = _targetX + addX;
-		_targetY = _targetY + addY;
 	}
 }

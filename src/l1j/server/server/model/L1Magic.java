@@ -147,63 +147,9 @@ public class L1Magic {
 			return true;
 		}
 
+		// 判斷特定狀態下才可攻擊 NPC
 		if ((_calcType == PC_NPC) && (_targetNpc != null)) {
-			int npcId = _targetNpc.getNpcTemplate().get_npcId();
-			if ((npcId >= 45912) && (npcId <= 45915 // 恨みに満ちたソルジャー＆ソルジャーゴースト
-					) && !_pc.hasSkillEffect(STATUS_HOLY_WATER)) {
-				return false;
-			}
-			if ((npcId == 45916 // 恨みに満ちたハメル将軍
-					)
-					&& !_pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
-				return false;
-			}
-			if ((npcId == 45941 // 呪われた巫女サエル
-					)
-					&& !_pc.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
-				return false;
-			}
-			if ((npcId == 45752 // バルログ(変身前)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-				return false;
-			}
-			if ((npcId == 45753 // バルログ(変身後)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-				return false;
-			}
-			if ((npcId == 45675 // ヤヒ(変身前)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return false;
-			}
-			if ((npcId == 81082 // ヤヒ(変身後)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return false;
-			}
-			if ((npcId == 45625 // 混沌
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return false;
-			}
-			if ((npcId == 45674 // 死
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return false;
-			}
-			if ((npcId == 45685 // 堕落
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				return false;
-			}
-			if ((npcId >= 46068) && (npcId <= 46091 // 欲望の洞窟側mob
-					) && (_pc.getTempCharGfx() == 6035)) {
-				return false;
-			}
-			if ((npcId >= 46092) && (npcId <= 46106 // 影の神殿側mob
-					) && (_pc.getTempCharGfx() == 6034)) {
+			if (_pc.isAttackMiss(_pc, _targetNpc.getNpcTemplate().get_npcId())) {
 				return false;
 			}
 		}
@@ -684,20 +630,27 @@ public class L1Magic {
 				}
 			}
 		}
+
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
 			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(ICE_LANCE)) {
+		} else if (_targetPc.hasSkillEffect(ICE_LANCE)) {
+			dmg = 0;
+		} else if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
+			dmg = 0;
+		} else if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
+			dmg = 0;
+		} else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			dmg = 0;
 		}
-		if (_targetPc.hasSkillEffect(FREEZING_BLIZZARD)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(FREEZING_BREATH)) {
-			dmg = 0;
-		}
-		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
-			dmg = 0;
+
+		if (_calcType == NPC_PC) {
+			if ((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance)) {
+				// 目標在安區、攻擊者在安區、NOPVP
+				if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
+						|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
+					dmg = 0;
+				}
+			}
 		}
 
 		if (_targetPc.hasSkillEffect(COUNTER_MIRROR)) {
@@ -800,75 +753,27 @@ public class L1Magic {
 
 		if (_targetNpc.hasSkillEffect(ICE_LANCE)) {
 			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
+		} else if (_targetNpc.hasSkillEffect(FREEZING_BLIZZARD)) {
 			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
+		} else if (_targetNpc.hasSkillEffect(FREEZING_BREATH)) {
 			dmg = 0;
-		}
-		if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
+		} else if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
 			dmg = 0;
 		}
 
+		// 判斷特定狀態下才可攻擊 NPC
 		if ((_calcType == PC_NPC) && (_targetNpc != null)) {
-			int npcId = _targetNpc.getNpcTemplate().get_npcId();
-			if ((npcId >= 45912) && (npcId <= 45915 // 恨みに満ちたソルジャー＆ソルジャーゴースト
-					) && !_pc.hasSkillEffect(STATUS_HOLY_WATER)) {
+			if (_pc.isAttackMiss(_pc, _targetNpc.getNpcTemplate().get_npcId())) {
 				dmg = 0;
 			}
-			if ((npcId == 45916 // 恨みに満ちたハメル将軍
-					)
-					&& !_pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
-				dmg = 0;
-			}
-			if ((npcId == 45941 // 呪われた巫女サエル
-					)
-					&& !_pc.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
-				dmg = 0;
-			}
-			if ((npcId == 45752 // バルログ(変身前)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-				dmg = 0;
-			}
-			if ((npcId == 45753 // バルログ(変身後)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-				dmg = 0;
-			}
-			if ((npcId == 45675 // ヤヒ(変身前)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				dmg = 0;
-			}
-			if ((npcId == 81082 // ヤヒ(変身後)
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				dmg = 0;
-			}
-			if ((npcId == 45625 // 混沌
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				dmg = 0;
-			}
-			if ((npcId == 45674 // 死
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				dmg = 0;
-			}
-			if ((npcId == 45685 // 堕落
-					)
-					&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-				dmg = 0;
-			}
-			if ((npcId >= 46068) && (npcId <= 46091 // 欲望の洞窟側mob
-					) && (_pc.getTempCharGfx() == 6035)) {
-				dmg = 0;
-			}
-			if ((npcId >= 46092) && (npcId <= 46106 // 影の神殿側mob
-					) && (_pc.getTempCharGfx() == 6034)) {
-				dmg = 0;
+		}
+		if (_calcType == NPC_NPC) {
+			if (((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance))
+					&& ((_targetNpc instanceof L1PetInstance) || (_targetNpc instanceof L1SummonInstance))) {
+				// 目標在安區、攻擊者在安區
+				if ((_targetNpc.getZoneType() == 1) || (_npc.getZoneType() == 1)) {
+					dmg = 0;
+				}
 			}
 		}
 

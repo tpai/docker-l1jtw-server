@@ -15,30 +15,31 @@
 package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
-import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.L1Character;
 
 public class S_AttackPacket extends ServerBasePacket {
 	private static final String S_ATTACK_PACKET = "[S] S_AttackPacket";
 
 	private byte[] _byte = null;
 
-	public S_AttackPacket(L1PcInstance pc, int objid, int actId) {
-		buildpacket(pc, objid, actId, 1, 0 );
+	public S_AttackPacket(L1Character atk, int objid, int[] data) {
+		buildpacket(atk, objid, data);
 	}
 
-	public S_AttackPacket(L1PcInstance pc, int objid, int actId, int dmg) {
-		buildpacket(pc, objid, actId, dmg, 0);
+	public S_AttackPacket(L1Character atk, int objid, int actid) {
+		int[] data = {actid, 0, 0};
+		buildpacket(atk, objid, data);
 	}
 
-	private void buildpacket(L1PcInstance pc, int objid, int actId, int dmg, int type) {
+	private void buildpacket(L1Character atk, int objid, int[] data) { // data = {actid, dmg, effect}
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(actId);
-		writeD(pc.getId());
+		writeC(data[0]); // actid
+		writeD(atk.getId());
 		writeD(objid);
-		writeH(dmg); // 3.3C damage
-		writeC(pc.getHeading());
+		writeH(data[1]); // dmg
+		writeC(atk.getHeading());
 		writeD(0x00000000);
-		writeC(type); // 0x00:none 0x04:Claw 0x08:CounterMirror
+		writeC(data[2]); // effect 0:none 2:爪痕 4:雙擊 8:鏡返射
 	}
 
 	@Override

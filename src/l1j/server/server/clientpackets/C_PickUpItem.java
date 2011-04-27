@@ -84,9 +84,10 @@ public class C_PickUpItem extends ClientBasePacket {
 					groundInventory.tradeItem(item, pickupCount, pc.getInventory());
 					pc.turnOnOffLight();
 
-					pc.sendPackets(new S_AttackPacket(pc, objectId, ActionCodes.ACTION_Pickup));
+					S_AttackPacket s_attackPacket = new S_AttackPacket(pc, objectId, ActionCodes.ACTION_Pickup);
+					pc.sendPackets(s_attackPacket);
 					if (!pc.isGmInvis()) {
-						pc.broadcastPacket(new S_AttackPacket(pc, objectId, ActionCodes.ACTION_Pickup));
+						pc.broadcastPacket(s_attackPacket);
 					}
 				}
 			}

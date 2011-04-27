@@ -110,23 +110,23 @@ public class C_GiveItem extends ClientBasePacket {
 		if (item.getItemId() == petType.getItemIdForTaming()) {
 			tamePet(pc, target);
 		}
-		// 食物
-		else if (item.getItem().getType2() == 0
-				&& item.getItem().getType() == 7) {
-			eatFood(pc, target, item, count);
-		}
-		// 進化道具
+		// 進化寵物
 		else if (item.getItemId() == petType.getEvolvItemId()) {
 			evolvePet(pc, target, item.getItemId());
 		}
-		// 寵物裝備
-		else if ((item.getItem().getType2() == 0)
-				&& (item.getItem().getType() == 11)) {
-			// 判斷是否可用寵物裝備
-			if (petType.canUseEquipment()) {
+
+		if (item.getItem().getType2() == 0) { // 道具類
+			// 食物類
+			if (item.getItem().getType() == 7) {
+				eatFood(pc, target, item, count);
+			}
+			// 寵物裝備類
+			else if ((item.getItem().getType() == 11)
+					&& (petType.canUseEquipment())) { // 判斷是否可用寵物裝備
 				usePetWeaponArmor(target, item);
 			}
 		}
+
 	}
 
 	private void eatFood(L1PcInstance pc, L1NpcInstance target, L1ItemInstance item, int count) {

@@ -166,9 +166,8 @@ public class L1WeaponSkill {
 				pc.sendPackets(new S_SkillSound(chaId, effectId));
 				pc.broadcastPacket(new S_SkillSound(chaId, effectId));
 			} else {
-				S_UseAttackSkill packet = new S_UseAttackSkill(pc, cha.getId(),
-						effectId, cha.getX(), cha.getY(),
-						ActionCodes.ACTION_Attack, false);
+				int[] data = {ActionCodes.ACTION_Attack, 0, effectId, 6};
+				S_UseAttackSkill packet = new S_UseAttackSkill(pc, cha.getId(), cha.getX(), cha.getY(), data, false);
 				pc.sendPackets(packet);
 				pc.broadcastPacket(packet);
 			}

@@ -34,64 +34,47 @@ public class S_UseAttackSkill extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	// public S_UseAttackSkill(L1Character caster, L1Character target,
-	// int spellgfx, boolean motion) {
-	// Point pt = target.getLocation();
-	// buildPacket(caster, target.getId(), spellgfx, pt.getX(), pt.getY(),
-	// ActionCodes.ACTION_SkillAttack, 6, motion);
-	// }
-
-	// public S_UseAttackSkill(L1Character cha, int targetobj, int spellgfx,
-	// int x, int y) {
-	// buildPacket(cha, targetobj, spellgfx, x, y,
-	// ActionCodes.ACTION_SkillAttack, 6, true);
-	// }
-
-	public S_UseAttackSkill(L1Character cha, int targetobj, int spellgfx, int x, int y, int actionId) {
-		buildPacket(cha, targetobj, spellgfx, x, y, actionId, 6, true);
+	public S_UseAttackSkill(L1Character cha, int targetobj, int x, int y, int[] data) {
+		buildPacket(cha, targetobj, x, y, data, true);
 	}
 
-	public S_UseAttackSkill(L1Character cha, int targetobj, int spellgfx, int x, int y, int actionId, boolean motion) {
-		buildPacket(cha, targetobj, spellgfx, x, y, actionId, 0, motion);
+	public S_UseAttackSkill(L1Character cha, int targetobj, int x, int y, int[] data, boolean withCastMotion) {
+		buildPacket(cha, targetobj, x, y, data, withCastMotion);
 	}
 
-	public S_UseAttackSkill(L1Character cha, int targetobj, int spellgfx, int x, int y, int actionId, int isHit) {
-		buildPacket(cha, targetobj, spellgfx, x, y, actionId, isHit, true);
-	}
-
-	private void buildPacket(L1Character cha, int targetobj, int spellgfx, int x, int y, int actionId, int isHit, boolean withCastMotion) {
+	private void buildPacket(L1Character cha, int targetobj, int x, int y, int[] data, boolean withCastMotion) {
 		if (cha instanceof L1PcInstance) {
 			// シャドウ系変身中に攻撃魔法を使用するとクライアントが落ちるため暫定対応
-			if (cha.hasSkillEffect(SHAPE_CHANGE) && (actionId == ActionCodes.ACTION_SkillAttack)) {
+			if (cha.hasSkillEffect(SHAPE_CHANGE) && (data[0] == ActionCodes.ACTION_SkillAttack)) {
 				int tempchargfx = cha.getTempCharGfx();
 				if ((tempchargfx == 5727) || (tempchargfx == 5730)) {
-					actionId = ActionCodes.ACTION_SkillBuff;
+					data[0] = ActionCodes.ACTION_SkillBuff;
 				}
 				else if ((tempchargfx == 5733) || (tempchargfx == 5736)) {
 					// 補助魔法モーションにすると攻撃魔法のグラフィックと
 					// 対象へのダメージモーションが発生しなくなるため
 					// 攻撃モーションで代用
-					actionId = ActionCodes.ACTION_Attack;
+					data[0] = ActionCodes.ACTION_Attack;
 				}
 			}
 		}
 		// 火の精の主がデフォルトだと攻撃魔法のグラフィックが発生しないので強制置き換え
 		// どこか別で管理した方が良い？
 		if (cha.getTempCharGfx() == 4013) {
-			actionId = ActionCodes.ACTION_Attack;
+			data[0] = ActionCodes.ACTION_Attack;
 		}
 
 		int newheading = calcheading(cha.getX(), cha.getY(), x, y);
 		cha.setHeading(newheading);
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
-		writeC(actionId);
+		writeC(data[0]); // actionId
 		writeD(withCastMotion ? cha.getId() : 0);
 		writeD(targetobj);
-		writeH(isHit);
+		writeH(data[1]); // dmg
 		writeC(newheading);
 		writeD(_sequentialNumber.incrementAndGet()); // 番号がダブらないように送る。
-		writeH(spellgfx);
-		writeC(6); // 0:弓箭 6:遠距離魔法 8:遠距離範圍魔法
+		writeH(data[2]); // spellgfx
+		writeC(data[3]); // use_type 0:弓箭 6:遠距離魔法 8:遠距離範圍魔法
 		writeH(cha.getX());
 		writeH(cha.getY());
 		writeH(x);

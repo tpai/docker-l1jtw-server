@@ -30,12 +30,10 @@ import l1j.server.server.model.poison.L1ParalysisPoison;
 import l1j.server.server.model.poison.L1SilencePoison;
 import l1j.server.server.serverpackets.S_AttackMissPacket;
 import l1j.server.server.serverpackets.S_AttackPacket;
-import l1j.server.server.serverpackets.S_AttackPacketForNpc;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_EffectLocation;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
-import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_UseArrowSkill;
 import l1j.server.server.serverpackets.S_UseAttackSkill;
 import l1j.server.server.templates.L1Skills;
@@ -82,6 +80,8 @@ public class L1Attack {
 	private int _drainMana = 0;
 
 	private int _drainHp = 0;
+
+	private byte _effectId = 0;
 
 	private int _attckGrfxId = 0;
 
@@ -677,65 +677,11 @@ public class L1Attack {
 		}
 
 		if (_weaponType2 == 17 || _weaponType2 == 19) {
-			_hitRate = 100; // キーリンクの命中率は100%
+			_hitRate = 100; // 奇古獸 命中率 100%
 		}
 
-		int npcId = _targetNpc.getNpcTemplate().get_npcId();
-		if ((npcId >= 45912) && (npcId <= 45915 // 恨みに満ちたソルジャー＆ソルジャーゴースト
-				) && !_pc.hasSkillEffect(STATUS_HOLY_WATER)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45916 // 恨みに満ちたハメル将軍
-				)
-				&& !_pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45941 // 呪われた巫女サエル
-				)
-				&& !_pc.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45752 // バルログ(変身前)
-				)
-				&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45753 // バルログ(変身後)
-				)
-				&& !_pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45675 // ヤヒ(変身前)
-				)
-				&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 81082 // ヤヒ(変身後)
-				)
-				&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45625 // 混沌
-				)
-				&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45674 // 死
-				)
-				&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-			_hitRate = 0;
-		}
-		if ((npcId == 45685 // 堕落
-				)
-				&& !_pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-			_hitRate = 0;
-		}
-		if ((npcId >= 46068) && (npcId <= 46091 // 欲望の洞窟側mob
-				) && (_pc.getTempCharGfx() == 6035)) {
-			_hitRate = 0;
-		}
-		if ((npcId >= 46092) && (npcId <= 46106 // 影の神殿側mob
-				) && (_pc.getTempCharGfx() == 6034)) {
+		// 特定狀態下才可攻擊 NPC
+		if (_pc.isAttackMiss(_pc, _targetNpc.getNpcTemplate().get_npcId())) {
 			_hitRate = 0;
 		}
 
@@ -804,13 +750,7 @@ public class L1Attack {
 			_hitRate = 0;
 		} else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			_hitRate = 0;
-		} else if (_npc instanceof L1PetInstance) {
-			// 目標在安區、攻擊者在安區、NOPVP
-			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
-					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
-				_hitRate = 0;
-			}
-		} else if (_npc instanceof L1SummonInstance) {
+		} else if ((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance)) {
 			// 目標在安區、攻擊者在安區、NOPVP
 			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
 					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
@@ -879,31 +819,12 @@ public class L1Attack {
 				_hitRate = 0;
 			}
 		}
-		if (_npc instanceof L1PetInstance) {
+		if (((_npc instanceof L1PetInstance) || (_npc instanceof L1SummonInstance))
+				&& ((_targetNpc instanceof L1PetInstance) || (_targetNpc instanceof L1SummonInstance))) {
 			// 目標在安區、攻擊者在安區、NOPVP
-			if (_targetNpc instanceof L1PetInstance) {
-				if ((_targetNpc.getZoneType() == 1)
-						|| (_npc.getZoneType() == 1)) {
-					_hitRate = 0;
-				}
-			} else if (_targetNpc instanceof L1SummonInstance) {
-				if ((_targetNpc.getZoneType() == 1)
-						|| (_npc.getZoneType() == 1)) {
-					_hitRate = 0;
-				}
-			}
-		} else if (_npc instanceof L1SummonInstance) {
-			// 目標在安區、攻擊者在安區、NOPVP
-			if (_targetNpc instanceof L1PetInstance) {
-				if ((_targetNpc.getZoneType() == 1)
-						|| (_npc.getZoneType() == 1)) {
-					_hitRate = 0;
-				}
-			} else if (_targetNpc instanceof L1SummonInstance) {
-				if ((_targetNpc.getZoneType() == 1)
-						|| (_npc.getZoneType() == 1)) {
-					_hitRate = 0;
-				}
+			if ((_targetNpc.getZoneType() == 1)
+					|| (_npc.getZoneType() == 1)) {
+				_hitRate = 0;
 			}
 		}
 
@@ -939,13 +860,17 @@ public class L1Attack {
 		int weaponMaxDamage = _weaponSmall;
 
 		int weaponDamage = 0;
-		if ((_weaponType == 58)
-				&& ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // クリティカルヒット
-			weaponDamage = weaponMaxDamage;
-			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3671));
-			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3671));
+		if ((_weaponType == 58)) { // 鋼爪
+			if ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // 額外出現最大值的機率
+				weaponDamage = weaponMaxDamage;
+			} else {
+				weaponDamage = Random.nextInt(weaponMaxDamage) + 1;
+			}
+			if (weaponDamage == weaponMaxDamage) { // 出現最大值時 - 爪痕
+				_effectId = 2;
+			}
 		} else if ((_weaponType == 0) || (_weaponType == 20)
-				|| (_weaponType == 62)) { // 素手、弓、ガントトレット
+				|| (_weaponType == 62)) { // 空手、弓、鐵手甲
 			weaponDamage = 0;
 		} else {
 			weaponDamage = Random.nextInt(weaponMaxDamage) + 1;
@@ -958,10 +883,9 @@ public class L1Attack {
 
 		int weaponTotalDamage = weaponDamage + _weaponAddDmg + _weaponEnchant;
 		if ((_weaponType == 54)
-				&& ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // ダブルヒット
+				&& ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // 雙刀 - 發動雙擊
 			weaponTotalDamage *= 2;
-			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3398));
-			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3398));
+			_effectId = 4;
 		}
 
 		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
@@ -1186,13 +1110,17 @@ public class L1Attack {
 		}
 
 		int weaponDamage = 0;
-		if ((_weaponType == 58)
-				&& ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // クリティカルヒット
-			weaponDamage = weaponMaxDamage;
-			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3671));
-			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3671));
+		if ((_weaponType == 58)) { // 鋼爪
+			if (((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // 額外出現最大值的機率
+				weaponDamage = weaponMaxDamage;
+			} else {
+				weaponDamage = Random.nextInt(weaponMaxDamage) + 1;
+			}
+			if (weaponDamage == weaponMaxDamage) { // 出現最大值時 - 爪痕
+				_effectId = 2;
+			}
 		} else if ((_weaponType == 0) || (_weaponType == 20)
-				|| (_weaponType == 62)) { // 素手、弓、ガントトレット
+				|| (_weaponType == 62)) { // 空手、弓、鐵手甲
 			weaponDamage = 0;
 		} else {
 			weaponDamage = Random.nextInt(weaponMaxDamage) + 1;
@@ -1207,10 +1135,9 @@ public class L1Attack {
 
 		weaponTotalDamage += calcMaterialBlessDmg(); // 銀祝福ダメージボーナス
 		if ((_weaponType == 54)
-				&& ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // ダブルヒット
+				&& ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // 雙刀 - 發動雙擊
 			weaponTotalDamage *= 2;
-			_pc.sendPackets(new S_SkillSound(_pc.getId(), 3398));
-			_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 3398));
+			_effectId = 4;
 		}
 
 		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
@@ -1817,71 +1744,59 @@ public class L1Attack {
 		}
 	}
 
-	// ●●●● プレイヤーの攻撃モーション送信 ●●●●
-	private void actionPc() {
-		_pc.setHeading(_pc.targetDirection(_targetX, _targetY)); // 向きのセット
-		if (_weaponType == 20) {
-			if (_arrow != null) { // 矢がある場合
-				_pc.sendPackets(new S_UseArrowSkill(_pc, _targetId, 66,
-						_targetX, _targetY, _isHit));
-				_pc.broadcastPacket(new S_UseArrowSkill(_pc, _targetId, 66,
-						_targetX, _targetY, _isHit));
-				if (_isHit) {
-					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-							_targetId, ActionCodes.ACTION_Damage), _pc);
-				}
+	// ●●●● ＰＣ攻擊動作 ●●●●
+	public void actionPc() {
+		_attckActId = 1;
+		boolean isFly = false;
+		_pc.setHeading(_pc.targetDirection(_targetX, _targetY)); // 改變面向
+
+		if (_weaponType == 20
+				&& (_arrow != null || _weaponId == 190)) { // 弓 - 有箭 或 沙哈之弓
+			if (_arrow != null) { // 弓 - 有箭
 				_pc.getInventory().removeItem(_arrow, 1);
-			} else if (_weaponId == 190) { // 矢が無くてサイハの場合
-				_pc.sendPackets(new S_UseArrowSkill(_pc, _targetId, 2349,
-						_targetX, _targetY, _isHit));
-				_pc.broadcastPacket(new S_UseArrowSkill(_pc, _targetId, 2349,
-						_targetX, _targetY, _isHit));
-				if (_isHit) {
-					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-							_targetId, ActionCodes.ACTION_Damage), _pc);
-				}
+				_attckGrfxId = 66; // 箭
+			} else if (_weaponId == 190) { // 沙哈 - 無箭
+				_attckGrfxId = 2349; // 魔法箭
 			}
-		} else if ((_weaponType == 62) && (_sting != null)) { // ガントレット
-			_pc.sendPackets(new S_UseArrowSkill(_pc, _targetId, 2989, _targetX,
-					_targetY, _isHit));
-			_pc.broadcastPacket(new S_UseArrowSkill(_pc, _targetId, 2989,
-					_targetX, _targetY, _isHit));
-			if (_isHit) {
-				_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-						_targetId, ActionCodes.ACTION_Damage), _pc);
-			}
+			isFly = true;
+		} else if ((_weaponType == 62)
+				&& (_sting != null)) { // 鐵手甲 - 有飛刀
 			_pc.getInventory().removeItem(_sting, 1);
-		} else {
-			if (_isHit) {
-				_pc.sendPackets(new S_AttackPacket(_pc, _targetId,
-						ActionCodes.ACTION_Attack));
-				_pc.broadcastPacket(new S_AttackPacket(_pc, _targetId,
-						ActionCodes.ACTION_Attack));
-				_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-						_targetId, ActionCodes.ACTION_Damage), _pc);
-			} else {
-				if (_targetId > 0) {
-					_pc.sendPackets(new S_AttackMissPacket(_pc, _targetId));
-					_pc.broadcastPacket(new S_AttackMissPacket(_pc, _targetId));
-				} else {
-					_pc.sendPackets(new S_AttackPacket(_pc, 0,
-							ActionCodes.ACTION_Attack));
-					_pc.broadcastPacket(new S_AttackPacket(_pc, 0,
-							ActionCodes.ACTION_Attack));
-				}
-			}
+			_attckGrfxId = 2989; // 飛刀
+			isFly = true;
+		}
+
+		if (!_isHit) { // Miss
+			_damage = 0;
+		}
+
+		int[] data = null;
+
+		if (isFly) { // 遠距離攻擊
+			data = new int[] {_attckActId, _damage, _attckGrfxId};
+			_pc.sendPackets(new S_UseArrowSkill(_pc, _targetId, _targetX, _targetY, data));
+			_pc.broadcastPacket(new S_UseArrowSkill(_pc, _targetId, _targetX, _targetY, data));
+		} else { // 近距離攻擊
+			data = new int[] {_attckActId, _damage, _effectId};
+			_pc.sendPackets(new S_AttackPacket(_pc, _targetId, data));
+			_pc.broadcastPacket(new S_AttackPacket(_pc, _targetId, data));
+		}
+
+		if (_isHit) {
+			_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
+					_targetId, ActionCodes.ACTION_Damage), _pc);
 		}
 	}
 
-	// ●●●● ＮＰＣの攻撃モーション送信 ●●●●
+	// ●●●● ＮＰＣ攻擊動作 ●●●●
 	private void actionNpc() {
-		int _npcObjectId = _npc.getId();
 		int bowActId = 0;
 		int actId = 0;
+		int[] data = null;
 
-		_npc.setHeading(_npc.targetDirection(_targetX, _targetY)); // 向きのセット
+		_npc.setHeading(_npc.targetDirection(_targetX, _targetY)); // 改變面向
 
-		// ターゲットとの距離が2以上あれば遠距離攻撃
+		// 與目標距離2格以上
 		boolean isLongRange = (_npc.getLocation().getTileLineDistance(
 				new Point(_targetX, _targetY)) > 1);
 		bowActId = _npc.getNpcTemplate().getBowActId();
@@ -1892,33 +1807,26 @@ public class L1Attack {
 			actId = ActionCodes.ACTION_Attack;
 		}
 
-		// 距離が2以上、攻撃者の弓のアクションIDがある場合は遠攻撃
+		if (!_isHit) { // Miss
+			_damage = 0;
+		}
+
+		// 距離2格以上攻使用 弓 攻擊
 		if (isLongRange && (bowActId > 0)) {
-			_npc.broadcastPacket(new S_UseArrowSkill(_npc, _targetId, bowActId,
-					_targetX, _targetY, _isHit));
+			data = new int[] {actId, _damage, bowActId}; // data = {actid, dmg, spellgfx}
+			_npc.broadcastPacket(new S_UseArrowSkill(_npc, _targetId, _targetX, _targetY, data));
 		} else {
-			if (_isHit) {
-				if (getGfxId() > 0) {
-					_npc.broadcastPacket(new S_UseAttackSkill(_target,
-							_npcObjectId, getGfxId(), _targetX, _targetY, actId));
-					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-							_targetId, ActionCodes.ACTION_Damage), _npc);
-				} else {
-					_npc.broadcastPacket(new S_AttackPacketForNpc(_target,
-							_npcObjectId, actId));
-					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
-							_targetId, ActionCodes.ACTION_Damage), _npc);
-				}
+			if (getGfxId() > 0) {
+				data = new int[] {actId, _damage, getGfxId(), 0}; // data = {actid, dmg, spellgfx, use_type}
+				_npc.broadcastPacket(new S_UseAttackSkill(_npc, _target.getId(), _targetX, _targetY, data));
 			} else {
-				if (getGfxId() > 0) {
-					_npc.broadcastPacket(new S_UseAttackSkill(_target,
-							_npcObjectId, getGfxId(), _targetX, _targetY,
-							actId, 0));
-				} else {
-					_npc.broadcastPacket(new S_AttackMissPacket(_npc,
-							_targetId, actId));
-				}
+				data =  new int[] {actId, _damage, 0}; // data = {actid, dmg, effect}
+				_npc.broadcastPacket(new S_AttackPacket(_npc, _targetId, data));
 			}
+		}
+		if (_isHit) {
+			_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(
+					_targetId, ActionCodes.ACTION_Damage), _npc);
 		}
 	}
 
@@ -2066,8 +1974,9 @@ public class L1Attack {
 				actId = ActionCodes.ACTION_Attack;
 			}
 			if (getGfxId() > 0) {
+				int[] data = {actId, 0, getGfxId(), 0}; // data = {actId, dmg, getGfxId(), use_type}
 				_npc.broadcastPacket(new S_UseAttackSkill(_target,
-						_npc.getId(), getGfxId(), _targetX, _targetY, actId, 0));
+						_npc.getId(), _targetX, _targetY, data));
 			} else {
 				_npc.broadcastPacket(new S_AttackMissPacket(_npc, _targetId,
 						actId));

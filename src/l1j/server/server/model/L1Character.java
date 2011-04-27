@@ -18,6 +18,11 @@ import static l1j.server.server.model.skill.L1SkillId.BLIND_HIDING;
 import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_FINDINVIS;
 import static l1j.server.server.model.skill.L1SkillId.INVISIBILITY;
 import static l1j.server.server.model.skill.L1SkillId.LIGHT;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_BARLOG;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_YAHEE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_MITHRIL_POWDER;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
 
 import java.util.List;
 import java.util.Map;
@@ -1691,5 +1696,74 @@ public class L1Character extends L1Object {
 
 	public void set_food(int i) {
 		_food = i;
+	}
+
+	// 判斷特定狀態下才可攻擊 NPC
+	public boolean isAttackMiss(L1Character cha , int npcId) {
+		switch (npcId) {
+			case 45912:
+			case 45913:
+			case 45914:
+			case 45915:
+				if (!cha.hasSkillEffect(STATUS_HOLY_WATER)) {
+					return true;
+				}
+				return false;
+			case 45916:
+				if (!cha.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
+					return true;
+				}
+				return false;
+			case 45941:
+				if (!cha.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
+					return true;
+				}
+				return false;
+			case 45752:
+				if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
+					return true;
+				}
+				return false;
+			case 45753:
+				if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
+					return true;
+				}
+				return false;
+			case 45675:
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 81082:
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 45625:
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 45674:
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			case 45685:
+				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
+					return true;
+				}
+				return false;
+			default:
+				if ((npcId >= 46068) && (npcId <= 46091)
+						&& (cha.getTempCharGfx() == 6035)) {
+					return true;
+				}
+				else if ((npcId >= 46092) && (npcId <= 46106)
+						&& (cha.getTempCharGfx() == 6034)) {
+					return true;
+				}
+				return false;
+		}
 	}
 }

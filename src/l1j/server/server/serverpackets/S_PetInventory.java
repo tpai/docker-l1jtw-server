@@ -17,7 +17,6 @@ package l1j.server.server.serverpackets;
 import java.util.List;
 
 import l1j.server.server.Opcodes;
-import l1j.server.server.datatables.PetItemTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 

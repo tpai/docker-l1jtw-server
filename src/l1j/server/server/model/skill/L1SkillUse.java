@@ -1234,6 +1234,7 @@ public class L1SkillUse {
 	private void sendGrfx(boolean isSkillAction) {
 		int actionId = _skill.getActionId();
 		int castgfx = _skill.getCastGfx();
+		int[] data = null;
 		if (castgfx == 0) {
 			return; // 表示するグラフィックが無い
 		}
@@ -1278,16 +1279,18 @@ public class L1SkillUse {
 				case MIND_BREAK: // 心靈破壞
 				case JOY_OF_PAIN: // 疼痛的歡愉
 					if (_user instanceof L1PcInstance) {
-						pc.sendPackets(new S_AttackPacket(pc, targetid, actionId, _dmg));
-						pc.broadcastPacket(new S_AttackPacket(pc, targetid, actionId, _dmg));
+						data = new int[] {actionId, _dmg, 0}; // data = {actid, dmg, effect}
+						pc.sendPackets(new S_AttackPacket(pc, targetid, data));
+						pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
 						pc.sendPackets(new S_SkillSound(targetid, castgfx));
 						pc.broadcastPacket(new S_SkillSound(targetid, castgfx));
 					}
 					return;
 				case CONFUSION: // 混亂
 					if (_user instanceof L1PcInstance) {
-						pc.sendPackets(new S_AttackPacket(pc, targetid, actionId, _dmg));
-						pc.broadcastPacket(new S_AttackPacket(pc, targetid, actionId, _dmg));
+						data = new int[] {actionId, _dmg, 0}; // data = {actid, dmg, effect}
+						pc.sendPackets(new S_AttackPacket(pc, targetid, data));
+						pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
 					}
 					return;
 				case SMASH: // 暴擊
@@ -1318,18 +1321,20 @@ public class L1SkillUse {
 			}
 
 			if (_skill.getTarget().equals("attack") && (_skillId != 18)) {
-				if (isPcSummonPet(_target)) { // 対象がPC、サモン、ペット
-					if ((_player.getZoneType() == 1) || (_target.getZoneType() == 1 // 攻撃する側または攻撃される側がセーフティーゾーン
-							) || _player.checkNonPvP(_player, _target)) { // Non-PvP設定
-						_player.sendPackets(new S_UseAttackSkill(_player, 0, castgfx, _targetX, _targetY, actionId)); // ターゲットへのモーションはなし
-						_player.broadcastPacket(new S_UseAttackSkill(_player, 0, castgfx, _targetX, _targetY, actionId));
+				if (isPcSummonPet(_target)) { // 目標玩家、寵物、召喚獸
+					if ((_player.getZoneType() == 1) || (_target.getZoneType() == 1)
+							|| _player.checkNonPvP(_player, _target)) { // Non-PvP設定
+						data = new int[] {actionId, 0, castgfx, 6};
+						_player.sendPackets(new S_UseAttackSkill(_player, _target.getId(), _targetX, _targetY, data));
+						_player.broadcastPacket(new S_UseAttackSkill(_player, _target.getId(), _targetX, _targetY, data));
 						return;
 					}
 				}
 
-				if (_skill.getArea() == 0) { // 単体攻撃魔法
-					_player.sendPackets(new S_UseAttackSkill(_player, targetid, castgfx, _targetX, _targetY, actionId));
-					_player.broadcastPacket(new S_UseAttackSkill(_player, targetid, castgfx, _targetX, _targetY, actionId));
+				if (_skill.getArea() == 0) { // 單體攻擊魔法
+					data = new int[] {actionId, _dmg, castgfx, 6};
+					_player.sendPackets(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
+					_player.broadcastPacket(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
 					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), _player);
 				}
 				else { // 有方向範囲攻撃魔法
@@ -1411,8 +1416,9 @@ public class L1SkillUse {
 			}
 
 			if (_skill.getTarget().equals("attack") && (_skillId != 18)) {
-				if (_skill.getArea() == 0) { // 単体攻撃魔法
-					_user.broadcastPacket(new S_UseAttackSkill(_user, targetid, castgfx, _targetX, _targetY, actionId));
+				if (_skill.getArea() == 0) { // 單體攻擊魔法
+					data = new int[] {actionId, _dmg, castgfx, 6};
+					_user.broadcastPacket(new S_UseAttackSkill(_user, targetid, _targetX, _targetY, data));
 					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), _user);
 				}
 				else { // 有方向範囲攻撃魔法
