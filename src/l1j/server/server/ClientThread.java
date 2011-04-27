@@ -304,7 +304,9 @@ public class ClientThread implements Runnable, PacketOutput {
 						setActiveChar(null);
 					}
 				}
-
+				// 玩家離線時, online=0
+				if (getAccount() != null) Account.online(getAccount(), false);
+				
 				// 送出斷線的封包
 				sendPacket(new S_Disconnect());
 

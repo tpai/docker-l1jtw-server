@@ -55,7 +55,9 @@ public class BadNamesList {
 				}
 				StringTokenizer st = new StringTokenizer(line, ";");
 
-				_nameList.add(st.nextToken());
+				while (st.hasMoreTokens()) {
+					_nameList.add(st.nextToken());
+				}
 			}
 
 			_log.config("loaded " + _nameList.size() + " bad names");

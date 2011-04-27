@@ -292,6 +292,8 @@ public class GameServer extends Thread {
 		for (L1PcInstance pc : players) {
 			ClientThread.quitGame(pc);
 			L1World.getInstance().removeObject(pc);
+			Account account = Account.load(pc.getAccountName());
+			Account.online(account, false);
 		}
 	}
 

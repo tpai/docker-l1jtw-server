@@ -62,6 +62,9 @@ public class Account {
 	/** 倉庫密碼 */
 	private int _WarePassword = 0;
 
+	/** 是否在線上 */
+	private boolean _online = false;
+
 	/** 紀錄用 */
 	private static Logger _log = Logger.getLogger(Account.class.getName());
 
@@ -82,7 +85,8 @@ public class Account {
 	 * @throws UnsupportedEncodingException
 	 *             文字編碼不支援
 	 */
-	private static String encodePassword(final String rawPassword) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+	private static String encodePassword(final String rawPassword)
+			throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		byte[] buf = rawPassword.getBytes("UTF-8");
 		buf = MessageDigest.getInstance("SHA").digest(buf);
 
@@ -102,7 +106,8 @@ public class Account {
 	 *            連結時的 dns 反查
 	 * @return Account
 	 */
-	public static Account create(final String name, final String rawPassword, final String ip, final String host) {
+	public static Account create(final String name, final String rawPassword,
+			final String ip, final String host) {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
@@ -116,7 +121,7 @@ public class Account {
 			account._lastActive = new Timestamp(System.currentTimeMillis());
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,banned=?,character_slot=?";
+			String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,online?,banned=?,character_slot=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, account._name);
 			pstm.setString(2, account._password);
@@ -124,23 +129,20 @@ public class Account {
 			pstm.setInt(4, 0);
 			pstm.setString(5, account._ip);
 			pstm.setString(6, account._host);
-			pstm.setInt(7, account._banned ? 1 : 0);
-			pstm.setInt(8, 0);
+			pstm.setInt(7, 0);
+			pstm.setInt(8, account._banned ? 1 : 0);
+			pstm.setInt(9, 0);
 			pstm.execute();
 			_log.info("created new account for " + name);
 
 			return account;
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		catch (UnsupportedEncodingException e) {
+		} catch (UnsupportedEncodingException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -177,15 +179,14 @@ public class Account {
 			account._ip = rs.getString("ip");
 			account._host = rs.getString("host");
 			account._banned = rs.getInt("banned") == 0 ? false : true;
+			account._online = rs.getInt("online") == 0 ? false : true;
 			account._characterSlot = rs.getInt("character_slot");
 			account._WarePassword = rs.getInt("warepassword");
 
 			_log.fine("account exists");
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
@@ -215,11 +216,9 @@ public class Account {
 			pstm.execute();
 			account._lastActive = ts;
 			_log.fine("update lastactive for " + account.getName());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -244,11 +243,9 @@ public class Account {
 			pstm.execute();
 			account._characterSlot = account.getCharacterSlot();
 			_log.fine("update characterslot for " + account.getName());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -273,16 +270,37 @@ public class Account {
 			if (rs.next()) {
 				result = rs.getInt("cnt");
 			}
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(rs);
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
 		return result;
+	}
+
+	/**
+	 * @category 寫入是否在線上
+	 * @param account 玩家帳號
+	 * @param i isOnline?
+	 */
+	public synchronized static void online(Account account, boolean i) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			String sqlstr = "UPDATE accounts SET online=? WHERE login=?";
+			pstm = con.prepareStatement(sqlstr);
+			pstm.setInt(1, i ? 1 : 0);
+			pstm.setString(2, account.getName());
+			pstm.execute();
+			account.setOnline(i);
+		} catch (SQLException e) {
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
 	}
 
 	/**
@@ -300,11 +318,9 @@ public class Account {
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, login);
 			pstm.execute();
-		}
-		catch (SQLException e) {
+		} catch (SQLException e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-		}
-		finally {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -328,8 +344,7 @@ public class Account {
 				_password = null; // 認證成功後就將記憶體中的密碼清除
 			}
 			return _isValid;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 		}
 		return false;
@@ -347,15 +362,15 @@ public class Account {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con.prepareStatement("UPDATE `accounts` SET `warepassword` = ? WHERE `login` = ?");
+			pstm = con
+					.prepareStatement("UPDATE `accounts` SET `warepassword` = ? WHERE `login` = ?");
 			pstm.setInt(1, newPassword);
 			pstm.setString(2, getName());
 			pstm.execute();
 
 			_WarePassword = newPassword;
-		}
-		catch (SQLException e) {}
-		finally {
+		} catch (SQLException e) {
+		} finally {
 			SQLUtil.close(pstm);
 			SQLUtil.close(con);
 		}
@@ -422,6 +437,22 @@ public class Account {
 		return _host;
 	}
 
+	/**
+	 * 設定是否在線上
+	 * @param i
+	 */
+	public synchronized void setOnline(boolean i) {
+		_online = i;
+	}
+
+	/**
+	 * 取得是否在線上
+	 * @return
+	 */
+	public synchronized boolean isOnlined() {
+		return _online;
+	}
+	
 	/**
 	 * 取得是否被禁止登入
 	 * 

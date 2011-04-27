@@ -72,6 +72,10 @@ public class C_AuthLogin extends ClientBasePacket {
 					S_LoginResult.REASON_USER_OR_PASS_WRONG));
 			return;
 		}
+		if (account.isOnlined()) {
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_ACCOUNT_IN_USE));
+			return;
+		}
 		if (account.isBanned()) { // BANアカウント
 			_log.info("禁止登入的帳號嘗試登入。account=" + accountName + " host="
 					+ host);
@@ -86,6 +90,7 @@ public class C_AuthLogin extends ClientBasePacket {
 			client.setAccount(account);
 			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_LOGIN_OK));
 			client.sendPacket(new S_CommonNews());
+			Account.online(account, true);
 		} catch (GameServerFullException e) {
 			client.kick();
 			_log.info("線上人數已經飽和，切斷 (" + client.getHostname()

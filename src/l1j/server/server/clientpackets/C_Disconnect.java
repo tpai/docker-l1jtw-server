@@ -16,6 +16,7 @@ package l1j.server.server.clientpackets;
 
 import java.util.logging.Logger;
 
+import l1j.server.server.Account;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.Instance.L1PcInstance;
 
@@ -33,6 +34,9 @@ public class C_Disconnect extends ClientBasePacket {
 		if (pc != null) {
 
 			_log.fine("Disconnect from: " + pc.getName());
+
+			if (client.getAccount() != null)
+				Account.online(client.getAccount(), false);
 
 			ClientThread.quitGame(pc);
 
