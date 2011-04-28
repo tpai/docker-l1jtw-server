@@ -19,7 +19,6 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collection;
-import java.util.Timer;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
@@ -69,6 +68,7 @@ import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.map.L1WorldMap;
 import l1j.server.server.model.trap.L1WorldTraps;
 import l1j.server.server.storage.mysql.MysqlAutoBackup;
+import l1j.server.server.utils.MysqlAutoBackupTimer;
 import l1j.server.server.utils.SystemUtil;
 
 // Referenced classes of package l1j.server.server:
@@ -235,7 +235,7 @@ public class GameServer extends Thread {
 		MysqlAutoBackup.getInstance();
 
 		// 開始 MySQL自動備份程序 計時器
-		MysqlAutoBackupTimer();
+		MysqlAutoBackupTimer.TimerStart();
 
 		NpcTable.getInstance();
 		L1DeleteItemOnGround deleteitem = new L1DeleteItemOnGround();
@@ -370,16 +370,5 @@ public class GameServer extends Thread {
 
 		_shutdownThread.interrupt();
 		_shutdownThread = null;
-	}
-
-	/**
-	 * Mysql自動備份程序計時器
-	 */
-	public synchronized void MysqlAutoBackupTimer() {
-		int minutes = Config.MysqlAutoBackup;
-		if(minutes == 0) 
-			return;
-		Timer timer = new Timer();
-		timer.schedule(new MysqlAutoBackup(), 60000, minutes * 1000);// 開機1分鐘後,每隔設定之時間備份一次
 	}
 }

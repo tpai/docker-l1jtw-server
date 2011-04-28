@@ -76,7 +76,7 @@ public class MysqlAutoBackup extends TimerTask {
 				Runtime rt = Runtime.getRuntime();
 				rt.exec("cmd /c " + exeText.toString());
 			} finally {
-				System.out.println("(MYSQL is backing over.)" + "\n"
+				System.out.println("(MYSQL is backed over.)" + "\n"
 						+ L1Message.waitingforuser);// 等待玩家連線
 			}
 		} catch (IOException ioe) {
