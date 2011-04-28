@@ -1074,13 +1074,16 @@ public class C_ItemUSe extends ClientBasePacket {
 						|| (itemId >= 47084 && itemId <= 47092) || (itemId >= 47094 && itemId <= 47102)) { // 1 ~ 9 階附魔石(近戰)(遠攻)(恢復)(防禦)
 					Effect.useEffectItem(pc, l1iteminstance);
 				}
-				else if ((itemId == 40097) || (itemId == 40119) || (itemId == 140119) || (itemId == 140329)) { // 解呪スクロール、原住民のトーテム
+				else if ((itemId == 40097) || (itemId == 40119)
+						|| (itemId == 140119) || (itemId == 140329)) { // 解除咀咒的卷軸、原住民圖騰
 					for (L1ItemInstance eachItem : pc.getInventory().getItems()) {
-						if ((eachItem.getItem().getBless() != 2) && (eachItem.getItem().getBless() != 130)) {
+						if ((eachItem.getItem().getBless() != 2)
+								&& (eachItem.getItem().getBless() != 130)) {
 							continue;
 						}
-						if (!eachItem.isEquipped() && ((itemId == 40119) || (itemId == 40097))) {
-							// n解呪は装備しているものしか解呪しない
+						if (!eachItem.isEquipped()
+								&& ((itemId == 40119) || (itemId == 40097))) {
+							// 裝備中才可解除咀咒
 							continue;
 						}
 						int id_normal = eachItem.getItemId() - 200000;
@@ -1088,7 +1091,11 @@ public class C_ItemUSe extends ClientBasePacket {
 						if (template == null) {
 							continue;
 						}
-						eachItem.setBless(1);
+						if (eachItem.getBless() == 130) { // 封印中的咀咒裝備
+							eachItem.setBless(129);
+						} else { // 未封印的咀咒裝備
+							eachItem.setBless(1);
+						}
 						if (pc.getInventory().checkItem(id_normal) && template.isStackable()) {
 							pc.getInventory().storeItem(id_normal, eachItem.getCount());
 							pc.getInventory().removeItem(eachItem, eachItem.getCount());

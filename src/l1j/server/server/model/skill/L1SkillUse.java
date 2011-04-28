@@ -990,13 +990,13 @@ public class L1SkillUse {
 				_mpConsume /= 2;
 			}
 
-			if (0 < _skill.getMpConsume()) { // MPを消費するスキルであれば
-				_mpConsume = Math.max(_mpConsume, 1); // 最低でも1消費する。
-			}
-
-			// MPのオリジナルINT軽減
+			// 初始能力減免
 			if (_player.getOriginalMagicConsumeReduction() > 0) {
 				_mpConsume -= _player.getOriginalMagicConsumeReduction();
+			}
+
+			if (0 < _skill.getMpConsume()) {
+				_mpConsume = Math.max(_mpConsume, 1); // 最小值 1
 			}
 		}
 
