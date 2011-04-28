@@ -152,13 +152,10 @@ public class GameServer extends Thread {
 		System.out.println("┌" + L1Message.exp + ": " + (rateXp) + L1Message.x
 				+ "\n\r├" + L1Message.justice + ": " + (LA) + L1Message.x
 				+ "\n\r├" + L1Message.karma + ": " + (rateKarma) + L1Message.x
-				+ "\n\r├" + L1Message.dropitems + ": " + (rateDropItems)
-				+ L1Message.x + "\n\r├" + L1Message.dropadena + ": "
-				+ (rateDropAdena) + L1Message.x + "\n\r├"
-				+ L1Message.enchantweapon + ": "
-				+ (Config.ENCHANT_CHANCE_WEAPON) + "%" + "\n\r├"
-				+ L1Message.enchantarmor + ": " + (Config.ENCHANT_CHANCE_ARMOR)
-				+ "%");
+				+ "\n\r├" + L1Message.dropitems + ": " + (rateDropItems)+ L1Message.x 
+				+ "\n\r├" + L1Message.dropadena + ": "+ (rateDropAdena) + L1Message.x 
+				+ "\n\r├"+ L1Message.enchantweapon + ": "+ (Config.ENCHANT_CHANCE_WEAPON) + "%" 
+				+ "\n\r├"+ L1Message.enchantarmor + ": " + (Config.ENCHANT_CHANCE_ARMOR)+ "%");
 		System.out.println("├" + L1Message.chatlevel + ": " + (chatlvl)
 				+ L1Message.level);
 
@@ -200,8 +197,7 @@ public class GameServer extends Thread {
 
 		// 設定精靈石的產生
 		if (Config.ELEMENTAL_STONE_AMOUNT > 0) {
-			ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator
-					.getInstance();
+			ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator.getInstance();
 			GeneralThreadPool.getInstance().execute(elementalStoneGenerator);
 		}
 
@@ -209,8 +205,7 @@ public class GameServer extends Thread {
 		HomeTownTimeController.getInstance();
 
 		// 初始化盟屋拍賣
-		AuctionTimeController auctionTimeController = AuctionTimeController
-				.getInstance();
+		AuctionTimeController auctionTimeController = AuctionTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(auctionTimeController);
 
 		// 初始化盟屋的稅金
@@ -381,8 +376,10 @@ public class GameServer extends Thread {
 	 * Mysql自動備份程序計時器
 	 */
 	public synchronized void MysqlAutoBackupTimer() {
+		int minutes = Config.MysqlAutoBackup;
+		if(minutes == 0) 
+			return;
 		Timer timer = new Timer();
-		timer.schedule(new MysqlAutoBackup(), 60000,
-				Config.MysqlAutoBackup * 1000);// 開機1分鐘後,每隔設定之時間備份一次
+		timer.schedule(new MysqlAutoBackup(), 60000, minutes * 1000);// 開機1分鐘後,每隔設定之時間備份一次
 	}
 }
