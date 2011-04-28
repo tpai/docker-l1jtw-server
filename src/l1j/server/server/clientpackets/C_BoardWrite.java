@@ -41,7 +41,7 @@ public class C_BoardWrite extends ClientBasePacket {
 
 		L1Object tg = L1World.getInstance().findObject(id);
 
-		if (tg != null) {
+		if (tg == null) {
 			_log.warning("不正確的 NPCID : " + id);
 			return;
 		}
