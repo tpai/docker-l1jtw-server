@@ -239,7 +239,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	public void startMpRegenerationByDoll() {
-		final int INTERVAL_BY_DOLL = 60000;
+		final int INTERVAL_BY_DOLL = 64000;
 		boolean isExistMprDoll = false;
 		Object[] dollList = getDollList().values().toArray();
 		for (Object dollObject : dollList) {

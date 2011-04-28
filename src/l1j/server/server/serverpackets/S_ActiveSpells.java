@@ -14,19 +14,7 @@
  */
 package l1j.server.server.serverpackets;
 
-import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_150;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_175;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_200;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_225;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_EXP_250;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_HP;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_MP;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_ENCHANTING_BATTLE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
+import static l1j.server.server.model.skill.L1SkillId.*;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.CharBuffTable;
@@ -49,18 +37,14 @@ public class S_ActiveSpells extends ServerBasePacket {
 		writeC(0x14);
 
 		for (int i : activeSpells(pc)) {
-			if (i != 72) {
-				writeC(i);
-			} else {
-				writeD(0x00000000); // 時間???
-			}
+			writeC(i);
 		}
 		writeByte(randBox);
 	}
 
 	// 登入時給于角色狀態剩餘時間
 	private int[] activeSpells(L1PcInstance pc) {
-		int[] data = new int[101];
+		int[] data = new int[104];
 		 // 生命之樹果實
 		if (pc.hasSkillEffect(STATUS_RIBRAVE)) {
 			data[61] = pc.getSkillEffectTimeSec(STATUS_RIBRAVE) / 4;
@@ -130,6 +114,14 @@ public class S_ActiveSpells extends ServerBasePacket {
 			data[46] = pc.getSkillEffectTimeSec(EFFECT_ENCHANTING_BATTLE) / 16;
 			if (data[46] != 0) {
 				data[47] = 2; // 攻擊成功及攻擊力+3,魔攻+3,遠距離攻擊及命中率+3。
+			}
+		}
+		// 附魔石
+		if (pc.getMagicStoneLevel() != 0) {
+			int skillId = pc.getMagicStoneLevel() + 3929;
+			data[102] = pc.getSkillEffectTimeSec(skillId) / 32;
+			if (data[102] != 0) {
+				data[103] = pc.getMagicStoneLevel() ;
 			}
 		}
 		return data;

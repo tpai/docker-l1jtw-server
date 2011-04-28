@@ -32,8 +32,6 @@ public class Potion {
 			return;
 		}
 
-		cancelAbsoluteBarrier(pc);
-
 		int time = 0;
 
 		// 判斷持續時間 && 使用類型
@@ -64,7 +62,7 @@ public class Potion {
 				|| item_id == L1ItemId.B_ELVEN_WAFER
 				|| item_id == L1ItemId.W_POTION_OF_FOREST) {
 			if (item_id == L1ItemId.ELVEN_WAFER) { // 精靈餅乾
-				time = 600;
+				time = 480;
 			} else if (item_id == L1ItemId.B_ELVEN_WAFER) { // 祝福的精靈餅乾
 				time = 700;
 			} else if (item_id == L1ItemId.W_POTION_OF_FOREST) { // 福利森林藥水
@@ -115,16 +113,12 @@ public class Potion {
 		pc.setBraveSpeed(type);
 	}
 
-	/** 2段加速效果 結束 **/
-
 	/** 3段加速效果 **/
 	public static void ThirdSpeed(L1PcInstance pc, L1ItemInstance item, int time) {
 		if (pc.hasSkillEffect(DECAY_POTION)) { // 藥水霜化術狀態
 			pc.sendPackets(new S_ServerMessage(698)); // 喉嚨灼熱，無法喝東西。
 			return;
 		}
-
-		cancelAbsoluteBarrier(pc);
 
 		if (pc.hasSkillEffect(EFFECT_THIRD_SPEED)) {
 			pc.killSkillEffectTimer(EFFECT_THIRD_SPEED);
@@ -138,16 +132,5 @@ public class Potion {
 		pc.broadcastPacket(new S_Liquor(pc.getId(), 8)); // 人物 * 1.15
 		pc.sendPackets(new S_ServerMessage(1065)); // 將發生神秘的奇蹟力量。
 		pc.getInventory().removeItem(item, 1);
-	}
-
-	/** 3段加速效果 結束 **/
-
-	private static void cancelAbsoluteBarrier(L1PcInstance pc) { // 絕對屏障效果解除
-		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
-			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
-			pc.startHpRegeneration();
-			pc.startMpRegeneration();
-			pc.startMpRegenerationByDoll();
-		}
 	}
 }

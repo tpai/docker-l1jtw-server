@@ -236,7 +236,12 @@ public class C_ItemUSe extends ClientBasePacket {
 				) || (itemId == 41429 // 風の武器強化スクロール
 				) || (itemId == 41430 // 地の武器強化スクロール
 				) || (itemId == 41431 // 水の武器強化スクロール
-				) || (itemId == 41432)) { // 火の武器強化スクロール
+				) || (itemId == 41432
+				) || (itemId == 47048
+				) || (itemId == 47049
+				) || (itemId == 47050
+				) || (itemId == 47051
+				) || (itemId == 47052)) { // 火の武器強化スクロール
 			l = readD();
 		}
 		else if ((itemId == 140100) || (itemId == 40100) || (itemId == 40099) || (itemId == 40086) || (itemId == 40863)) {
@@ -1016,6 +1021,59 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
+				else if (itemId >= 47049 && itemId <= 47052) { // XX附魔轉換卷軸
+					if (l1iteminstance1.getItemId() >= 47053
+							&& l1iteminstance1.getItemId() <= 47062) { // 附魔石 ~ 9階附魔石
+						int type = (itemId - 47048) * 10; // type = 10,20,30,40
+						int rnd = Random.nextInt(100) + 1;
+						if (Config.MAGIC_STONE_ATTR < rnd) {
+							int newItem = l1iteminstance1.getItemId() + type; // 附魔石(近戰) ~ 9階附魔石(近戰)
+							L1Item template = ItemTable.getInstance().getTemplate(newItem);
+							if (template == null) {
+								pc.sendPackets(new S_ServerMessage(79));
+							}
+							createNewItem(pc, newItem, 1); // 獲得附魔石(XX)
+						} else {
+							pc.sendPackets(new S_ServerMessage(1411, l1iteminstance1.getName())); // 對\f1%0附加魔法失敗。
+						}
+						pc.getInventory().removeItem(l1iteminstance1, 1); // 刪除 - 附魔石
+						pc.getInventory().removeItem(l1iteminstance, 1); // 刪除 - 附魔轉換卷軸
+					} else {
+						pc.sendPackets(new S_ServerMessage(79));
+					}
+				}
+				else if (itemId == 47048) { // 附魔強化卷軸
+					if ((l1iteminstance1.getItemId() < 47053) || (l1iteminstance1.getItemId() > 47102)
+							|| (l1iteminstance1.getItemId() == 47062) || (l1iteminstance1.getItemId() == 47072)
+							|| (l1iteminstance1.getItemId() == 47082) || (l1iteminstance1.getItemId() == 47092)
+							|| (l1iteminstance1.getItemId() == 47102)) {
+						pc.sendPackets(new S_ServerMessage(79));
+						return;
+					}
+
+					int rnd = Random.nextInt(100) + 1;
+					if (Config.MAGIC_STONE_LEVEL < rnd) {
+						int newItem = l1iteminstance1.getItemId() + 1; // X 階附魔石 -> X+1 階附魔石
+						L1Item template = ItemTable.getInstance().getTemplate(newItem);
+						if (template == null) {
+							pc.sendPackets(new S_ServerMessage(79));
+							return;
+						}
+						pc.sendPackets(new S_ServerMessage(1410, l1iteminstance1.getName())); // 對\f1%0附加強大的魔法力量成功。
+
+						l1iteminstance1.setItem(template);
+						pc.getInventory().updateItem(l1iteminstance1, L1PcInventory.COL_ITEMID);
+						pc.getInventory().saveItem(l1iteminstance1, L1PcInventory.COL_ITEMID);
+					} else {
+						pc.sendPackets(new S_ServerMessage(1411, l1iteminstance1.getName())); // 對\f1%0附加魔法失敗。
+						pc.getInventory().removeItem(l1iteminstance1, 1);
+					}
+					pc.getInventory().removeItem(l1iteminstance, 1);
+				}
+				else if ((itemId >= 47064 && itemId <= 47072) || (itemId >= 47074 && itemId <= 47082)
+						|| (itemId >= 47084 && itemId <= 47092) || (itemId >= 47094 && itemId <= 47102)) { // 1 ~ 9 階附魔石(近戰)(遠攻)(恢復)(防禦)
+					Effect.useEffectItem(pc, l1iteminstance);
+				}
 				else if ((itemId == 40097) || (itemId == 40119) || (itemId == 140119) || (itemId == 140329)) { // 解呪スクロール、原住民のトーテム
 					for (L1ItemInstance eachItem : pc.getInventory().getItems()) {
 						if ((eachItem.getItem().getBless() != 2) && (eachItem.getItem().getBless() != 130)) {
@@ -1030,6 +1088,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						if (template == null) {
 							continue;
 						}
+						eachItem.setBless(1);
 						if (pc.getInventory().checkItem(id_normal) && template.isStackable()) {
 							pc.getInventory().storeItem(id_normal, eachItem.getCount());
 							pc.getInventory().removeItem(eachItem, eachItem.getCount());

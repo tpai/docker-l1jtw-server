@@ -750,7 +750,79 @@ public class L1SkillId {
 	/** 法利昂的血痕 */
 	public static final int EFFECT_BLOODSTAIN_OF_FAFURION = 4012;
 
-	public static final int EFFECT_END = 4012;
+	public static final int EFFECT_MAGIC_STONE_A_1 = 4013; // 1階(近戰)
+	
+	public static final int EFFECT_MAGIC_STONE_A_2 = 4014; // 2階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_A_3 = 4015; // 3階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_A_4 = 4016; // 4階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_A_5 = 4017; // 5階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_A_6 = 4018; // 6階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_A_7 = 4019; // 7階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_A_8 = 4020; // 8階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_A_9 = 4021; // 9階(近戰)
+				
+	public static final int EFFECT_MAGIC_STONE_B_1 = 4022; // 1階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_2 = 4023; // 2階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_3 = 4024; // 3階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_4 = 4025; // 4階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_5 = 4026; // 5階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_6 = 4027; // 6階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_7 = 4028; // 7階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_8 = 4029; // 8階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_B_9 = 4030; // 9階(遠攻)
+				
+	public static final int EFFECT_MAGIC_STONE_C_1 = 4031; // 1階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_2 = 4032; // 2階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_3 = 4033; // 3階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_4 = 4034; // 4階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_5 = 4035; // 5階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_6 = 4036; // 6階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_7 = 4037; // 7階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_8 = 4038; // 8階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_C_9 = 4039; // 9階(恢復)
+				
+	public static final int EFFECT_MAGIC_STONE_D_1 = 4040; // 1階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_2 = 4041; // 2階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_3 = 4042; // 3階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_4 = 4043; // 4階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_5 = 4044; // 5階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_6 = 4045; // 6階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_7 = 4046; // 7階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_8 = 4047; // 8階(防禦)
+				
+	public static final int EFFECT_MAGIC_STONE_D_9 = 4048; // 9階(防禦)
+
+	public static final int EFFECT_END = 4048;
 
 	// 特殊狀態
 	public static final int SPECIAL_EFFECT_BEGIN = 5001;
@@ -781,4 +853,10 @@ public class L1SkillId {
 	// 戰鬥特化狀態
 	/** 新手保護(遭遇的守護) **/
 	public static final int STATUS_NOVICE = 8000;
+
+	public static final int MAGIC_STONE = 6001;
+
+
+
+	public static final int MAGIC_STONE_END = 6036;
 }

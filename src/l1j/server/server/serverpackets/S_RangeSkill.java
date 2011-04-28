@@ -59,7 +59,7 @@ public class S_RangeSkill extends ServerBasePacket {
 		writeH(target.length);
 		for (L1Character element : target) {
 			writeD(element.getId());
-			writeC(0x20); // 0:ダメージモーションあり 0以外:なし
+			writeH(0x20); // 0:ダメージモーションあり 0以外:なし
 		}
 	}
 

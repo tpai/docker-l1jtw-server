@@ -1698,6 +1698,17 @@ public class L1Character extends L1Object {
 		_food = i;
 	}
 
+	// 附魔石階級
+	private byte _magicStoneLevel;
+
+	public byte getMagicStoneLevel() {
+		return _magicStoneLevel;
+	}
+
+	public void setMagicStoneLevel(byte i) {
+		_magicStoneLevel = i;
+	}
+
 	// 判斷特定狀態下才可攻擊 NPC
 	public boolean isAttackMiss(L1Character cha , int npcId) {
 		switch (npcId) {

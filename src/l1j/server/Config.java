@@ -151,6 +151,10 @@ public final class Config {
 
 	public static int CREATE_CHANCE_HISTORY_BOOK;
 
+	public static int MAGIC_STONE_TYPE; // 附魔石類型
+
+	public static int MAGIC_STONE_LEVEL; // 附魔石階級
+
 	/** AltSettings control */
 	public static short GLOBAL_CHAT_LEVEL;
 
@@ -501,6 +505,8 @@ public final class Config {
 			CREATE_CHANCE_DANTES = Integer.parseInt(rateSettings.getProperty("CreateChanceDantes", "50"));
 			CREATE_CHANCE_ANCIENT_AMULET = Integer.parseInt(rateSettings.getProperty("CreateChanceAncientAmulet", "90"));
 			CREATE_CHANCE_HISTORY_BOOK = Integer.parseInt(rateSettings.getProperty("CreateChanceHistoryBook", "50"));
+			MAGIC_STONE_TYPE = Integer.parseInt(rateSettings.getProperty("MagicStoneAttr", "50"));
+			MAGIC_STONE_LEVEL = Integer.parseInt(rateSettings.getProperty("MagicStoneLevel", "50"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
