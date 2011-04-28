@@ -1026,7 +1026,7 @@ public class C_ItemUSe extends ClientBasePacket {
 							&& l1iteminstance1.getItemId() <= 47062) { // 附魔石 ~ 9階附魔石
 						int type = (itemId - 47048) * 10; // type = 10,20,30,40
 						int rnd = Random.nextInt(100) + 1;
-						if (Config.MAGIC_STONE_ATTR < rnd) {
+						if (Config.MAGIC_STONE_TYPE < rnd) {
 							int newItem = l1iteminstance1.getItemId() + type; // 附魔石(近戰) ~ 9階附魔石(近戰)
 							L1Item template = ItemTable.getInstance().getTemplate(newItem);
 							if (template == null) {

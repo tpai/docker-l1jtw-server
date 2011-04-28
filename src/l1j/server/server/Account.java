@@ -121,7 +121,7 @@ public class Account {
 			account._lastActive = new Timestamp(System.currentTimeMillis());
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,online?,banned=?,character_slot=?";
+			String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,online=?,banned=?,character_slot=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, account._name);
 			pstm.setString(2, account._password);
