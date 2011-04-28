@@ -19,6 +19,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collection;
+import java.util.Timer;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
@@ -67,6 +68,7 @@ import l1j.server.server.model.gametime.L1GameTimeClock;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.map.L1WorldMap;
 import l1j.server.server.model.trap.L1WorldTraps;
+import l1j.server.server.storage.mysql.MysqlAutoBackup;
 import l1j.server.server.utils.SystemUtil;
 
 // Referenced classes of package l1j.server.server:
@@ -86,12 +88,14 @@ public class GameServer extends Thread {
 
 	@Override
 	public void run() {
-		System.out.println(L1Message.memoryUse + SystemUtil.getUsedMemoryMB() + L1Message.memory);
+		System.out.println(L1Message.memoryUse + SystemUtil.getUsedMemoryMB()
+				+ L1Message.memory);
 		System.out.println(L1Message.waitingforuser);
 		while (true) {
 			try {
 				Socket socket = _serverSocket.accept();
-				System.out.println(L1Message.from + socket.getInetAddress() + L1Message.attempt);
+				System.out.println(L1Message.from + socket.getInetAddress()
+						+ L1Message.attempt);
 				String host = socket.getInetAddress().getHostAddress();
 				if (IpTable.getInstance().isBannedIp(host)) {
 					_log.info("banned IP(" + host + ")");
@@ -125,9 +129,9 @@ public class GameServer extends Thread {
 		double rateDropItems = Config.RATE_DROP_ITEMS;
 		double rateDropAdena = Config.RATE_DROP_ADENA;
 
-		//Locale 多國語系
+		// Locale 多國語系
 		L1Message.getInstance();
-		
+
 		chatlvl = Config.GLOBAL_CHAT_LEVEL;
 		_port = Config.GAME_SERVER_PORT;
 		if (!"*".equals(s)) {
@@ -141,32 +145,37 @@ public class GameServer extends Thread {
 		}
 
 		System.out.println("┌───────────────────────────────┐");
-		System.out.println("│     "+L1Message.ver+"\t"+"\t"+"│");
-		System.out.println("└───────────────────────────────┘"+ "\n");
-		
+		System.out.println("│     " + L1Message.ver + "\t" + "\t" + "│");
+		System.out.println("└───────────────────────────────┘" + "\n");
+
 		System.out.println(L1Message.settingslist + "\n");
 		System.out.println("┌" + L1Message.exp + ": " + (rateXp) + L1Message.x
-					+ "\n\r├"  + L1Message.justice + ": " + (LA) + L1Message.x
-					+ "\n\r├"  + L1Message.karma+": " + (rateKarma) + L1Message.x
-					+ "\n\r├"  + L1Message.dropitems + ": " + (rateDropItems) + L1Message.x
-					+ "\n\r├" + L1Message.dropadena + ": " + (rateDropAdena) + L1Message.x
-					+ "\n\r├" + L1Message.enchantweapon + ": "+ (Config.ENCHANT_CHANCE_WEAPON) + "%" 
-					+ "\n\r├" + L1Message.enchantarmor + ": "+ (Config.ENCHANT_CHANCE_ARMOR) + "%");
-		System.out.println("├"+ L1Message.chatlevel+": "+  (chatlvl) + L1Message.level);
-		
+				+ "\n\r├" + L1Message.justice + ": " + (LA) + L1Message.x
+				+ "\n\r├" + L1Message.karma + ": " + (rateKarma) + L1Message.x
+				+ "\n\r├" + L1Message.dropitems + ": " + (rateDropItems)
+				+ L1Message.x + "\n\r├" + L1Message.dropadena + ": "
+				+ (rateDropAdena) + L1Message.x + "\n\r├"
+				+ L1Message.enchantweapon + ": "
+				+ (Config.ENCHANT_CHANCE_WEAPON) + "%" + "\n\r├"
+				+ L1Message.enchantarmor + ": " + (Config.ENCHANT_CHANCE_ARMOR)
+				+ "%");
+		System.out.println("├" + L1Message.chatlevel + ": " + (chatlvl)
+				+ L1Message.level);
+
 		if (Config.ALT_NONPVP) { // Non-PvP設定
-		    System.out.println("└"+L1Message.nonpvpNo+"\n");
+			System.out.println("└" + L1Message.nonpvpNo + "\n");
 		} else {
-		    System.out.println("└"+L1Message.nonpvpYes+"\n");
-			}
+			System.out.println("└" + L1Message.nonpvpYes + "\n");
+		}
 
 		int maxOnlineUsers = Config.MAX_ONLINE_USERS;
-		System.out.println(L1Message.maxplayer + (maxOnlineUsers) + L1Message.player);
-		
+		System.out.println(L1Message.maxplayer + (maxOnlineUsers)
+				+ L1Message.player);
+
 		System.out.println("┌───────────────────────────────┐");
-		System.out.println("│     "+L1Message.ver+"\t"+"\t"+"│");
-		System.out.println("└───────────────────────────────┘"+ "\n");
-		
+		System.out.println("│     " + L1Message.ver + "\t" + "\t" + "│");
+		System.out.println("└───────────────────────────────┘" + "\n");
+
 		IdFactory.getInstance();
 		L1WorldMap.getInstance();
 		_loginController = LoginController.getInstance();
@@ -191,8 +200,8 @@ public class GameServer extends Thread {
 
 		// 設定精靈石的產生
 		if (Config.ELEMENTAL_STONE_AMOUNT > 0) {
-			ElementalStoneGenerator elementalStoneGenerator
-					= ElementalStoneGenerator.getInstance();
+			ElementalStoneGenerator elementalStoneGenerator = ElementalStoneGenerator
+					.getInstance();
 			GeneralThreadPool.getInstance().execute(elementalStoneGenerator);
 		}
 
@@ -224,7 +233,15 @@ public class GameServer extends Thread {
 				.getInstance();
 		GeneralThreadPool.getInstance().execute(lightTimeController);
 
+		// 初始化遊戲公告
 		Announcements.getInstance();
+
+		// 初始化MySQL自動備份程序
+		MysqlAutoBackup.getInstance();
+
+		// 開始 MySQL自動備份程序 計時器
+		MysqlAutoBackupTimer();
+
 		NpcTable.getInstance();
 		L1DeleteItemOnGround deleteitem = new L1DeleteItemOnGround();
 		deleteitem.initialize();
@@ -358,5 +375,14 @@ public class GameServer extends Thread {
 
 		_shutdownThread.interrupt();
 		_shutdownThread = null;
+	}
+
+	/**
+	 * Mysql自動備份程序計時器
+	 */
+	public synchronized void MysqlAutoBackupTimer() {
+		Timer timer = new Timer();
+		timer.schedule(new MysqlAutoBackup(), 60000,
+				Config.MysqlAutoBackup * 1000);// 開機1分鐘後,每隔設定之時間備份一次
 	}
 }
