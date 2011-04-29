@@ -16,6 +16,7 @@ package l1j.server.server.clientpackets;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1World;
+import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
@@ -47,13 +48,24 @@ public class C_DropItem extends ClientBasePacket {
 				return;
 			}
 
+			// 使用中的寵物項鍊 - 無法丟棄
 			Object[] petlist = pc.getPetList().values().toArray();
 			for (Object petObject : petlist) {
 				if (petObject instanceof L1PetInstance) {
 					L1PetInstance pet = (L1PetInstance) petObject;
 					if (item.getId() == pet.getItemObjId()) {
-						// \f1%0%d是不可轉移的…
-						pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
+						pc.sendPackets(new S_ServerMessage(1187)); // 寵物項鍊正在使用中。
+						return;
+					}
+				}
+			}
+			// 使用中的魔法娃娃 - 無法丟棄
+			Object[] dollList = pc.getDollList().values().toArray();
+			for (Object dollObject : dollList) {
+				if (dollObject instanceof L1DollInstance) {
+					L1DollInstance doll = (L1DollInstance) dollObject;
+					if (doll.getItemObjId() == item.getId()) {
+						pc.sendPackets(new S_ServerMessage(1181)); // 這個魔法娃娃目前正在使用中。
 						return;
 					}
 				}

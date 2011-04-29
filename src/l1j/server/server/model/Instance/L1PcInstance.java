@@ -4356,17 +4356,6 @@ public class L1PcInstance extends L1Character {
 		return _acceleratorChecker;
 	}
 
-	// 閃避率
-	private byte _dodge = 0;
-
-	public byte getDodge() {
-		return _dodge;
-	}
-
-	public void setDodge(byte i) {
-		_dodge = i;
-	}
-
 	// 使用屠宰者判斷
 	private boolean _FoeSlayer = false;
 

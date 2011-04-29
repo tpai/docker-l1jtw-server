@@ -186,7 +186,7 @@ public class L1BuffUtil {
 			L1PcInstance _pc = (L1PcInstance) _user;
 			_player = _pc;
 		}
-		
+
 		switch(skillId) {
 		// PC、NPC 2方皆有效果
 			// 解毒術
@@ -344,7 +344,7 @@ public class L1BuffUtil {
 				int[] BowGFX =
 				{ 138, 37, 3860, 3126, 3420, 2284, 3105, 3145, 3148, 3151, 3871, 4125, 2323, 3892, 3895, 3898, 3901, 4917, 4918, 4919, 4950,
 						6087, 6140, 6145, 6150, 6155, 6160, 6269, 6272, 6275, 6278, 6826, 6827, 6836, 6837, 6846, 6847, 6856, 6857, 6866, 6867,
-						6876, 6877, 6886, 6887 };
+						6876, 6877, 6886, 6887, 8719 };
 				int playerGFX = _player.getTempCharGfx();
 				for (int gfx : BowGFX) {
 					if (playerGFX == gfx) {
@@ -598,6 +598,23 @@ public class L1BuffUtil {
 				cha.addStr(-5);
 				cha.addInt(-5);
 				break;
+			// 恐慌
+			case PANIC:
+				cha.addStr((byte) -1);
+				cha.addCon((byte) -1);
+				cha.addDex((byte) -1);
+				cha.addWis((byte) -1);
+				cha.addInt((byte) -1);
+				break;
+			// 恐懼無助
+			case RESIST_FEAR:
+				cha.addNdodge((byte) 5); // 閃避率 - 50%
+				if (cha instanceof L1PcInstance) {
+					L1PcInstance pc = (L1PcInstance) cha;
+					// 更新閃避率顯示
+					pc.sendPackets(new S_PacketBox(101, pc.getNdodge()));
+				}
+				break;
 			// 釋放元素
 			case RETURN_TO_NATURE:
 				if (Config.RETURN_TO_NATURE && (cha instanceof L1SummonInstance)) {
@@ -632,11 +649,9 @@ public class L1BuffUtil {
 			case UNCANNY_DODGE:
 				if (_user instanceof L1PcInstance) {
 					L1PcInstance pc = (L1PcInstance) _user;
-					byte dodge = pc.getDodge(); // 取得角色目前閃避率
-					dodge = (byte) (dodge + 5); // 鏡像閃避率增加50
-					int[] type = {dodge};
-					pc.setDodge(dodge);
-					pc.sendPackets(new S_PacketBox(88, type));
+					pc.addDodge((byte) 5); // 閃避率 + 50%
+					// 更新閃避率顯示
+					pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
 				}
 				break;
 			// 激勵士氣
@@ -952,14 +967,6 @@ public class L1BuffUtil {
 				cha.addDex((byte) 1);
 				cha.addWis((byte) 1);
 				cha.addInt((byte) 1);
-				break;
-			// 恐慌
-			case PANIC:
-				cha.addStr((byte) -1);
-				cha.addCon((byte) -1);
-				cha.addDex((byte) -1);
-				cha.addWis((byte) -1);
-				cha.addInt((byte) -1);
 				break;
 			// 絕對屏障
 			case ABSOLUTE_BARRIER:

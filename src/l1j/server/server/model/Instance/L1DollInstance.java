@@ -211,8 +211,8 @@ public class L1DollInstance extends L1NpcInstance {
 
 	private void dollAction() {
 		run = Random.nextInt(100) + 1;
-		if (run <= 6) {
-			if (run <= 3) {
+		if (run <= 10) {
+			if (run <= 5) {
 				broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Think));
 				setSleepTime(calcSleepTime(SprTable.getInstance()
 						.getSprSpeed(getTempCharGfx(), ActionCodes.ACTION_Think), MOVE_SPEED)); // 66

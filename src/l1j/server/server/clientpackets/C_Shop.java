@@ -18,6 +18,7 @@ import java.util.List;
 
 import l1j.server.server.ActionCodes;
 import l1j.server.server.ClientThread;
+import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
@@ -118,14 +119,26 @@ public class C_Shop extends ClientBasePacket {
 					return;
 				}
 
+				// 使用中的寵物項鍊 - 無法販賣
 				Object[] petlist = pc.getPetList().values().toArray();
 				for (Object petObject : petlist) {
 					if (petObject instanceof L1PetInstance) {
 						L1PetInstance pet = (L1PetInstance) petObject;
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
-							pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
-									checkItem.getItem().getName(), "這是不可能處理。"));
+							pc.sendPackets(new S_ServerMessage(1187)); // 寵物項鍊正在使用中。
+							break;
+						}
+					}
+				}
+				// 使用中的魔法娃娃 - 無法販賣
+				Object[] dollList = pc.getDollList().values().toArray();
+				for (Object dollObject : dollList) {
+					if (dollObject instanceof L1DollInstance) {
+						L1DollInstance doll = (L1DollInstance) dollObject;
+						if (doll.getItemObjId() == checkItem.getId()) {
+							tradable = false;
+							pc.sendPackets(new S_ServerMessage(1181));
 							break;
 						}
 					}

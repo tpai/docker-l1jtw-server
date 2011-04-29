@@ -244,11 +244,8 @@ public class C_LoginToServer extends ClientBasePacket {
 
 		pc.sendPackets(new S_Karma(pc)); // 友好度
 		/* 閃避率 */
-		byte dodge = pc.getDodge(); // 取得角色目前閃避率
-		int[] type = {dodge, 0};
-		pc.setDodge(dodge);
-		pc.sendPackets(new S_PacketBox(88, type));
-		pc.sendPackets(new S_PacketBox(101, type));
+		pc.sendPackets(new S_PacketBox(88, pc.getDodge())); // 正
+		pc.sendPackets(new S_PacketBox(101, pc.getNdodge())); // 負
 		/* 閃避率 */
 
 		if (pc.getCurrentHp() > 0) {
@@ -605,10 +602,10 @@ public class C_LoginToServer extends ClientBasePacket {
 					case MIRROR_IMAGE: // 鏡像
 					case UNCANNY_DODGE: // 暗影閃避
 						time = remaining_time / 16;
-						int[] type = {5, 0, time};
-						pc.setDodge((byte) (pc.getDodge() + 5));
-						pc.sendPackets(new S_PacketBox(88, type));
-						pc.sendPackets(new S_PacketBox(21, type));
+						pc.addDodge((byte) 5); // 閃避率 + 50%
+						// 更新閃避率顯示
+						pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+						pc.sendPackets(new S_PacketBox(21, time));
 						pc.setSkillEffect(skillid, time * 16 * 1000);
 						break;
 					case EFFECT_BLOODSTAIN_OF_ANTHARAS: // 安塔瑞斯的血痕

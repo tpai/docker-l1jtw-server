@@ -53,6 +53,10 @@ public class S_ActiveSpells extends ServerBasePacket {
 		if (pc.hasSkillEffect(DRESS_EVASION)) {
 			data[17] = pc.getSkillEffectTimeSec(DRESS_EVASION) / 4;
 		}
+		// 恐懼無助
+		if (pc.hasSkillEffect(RESIST_FEAR)) {
+			data[57] = pc.getSkillEffectTimeSec(RESIST_FEAR) / 4;
+		}
 		// 象牙塔妙藥
 		if (pc.hasSkillEffect(COOKING_WONDER_DRUG)) {
 			data[42] = pc.getSkillEffectTimeSec(COOKING_WONDER_DRUG) / 4;
@@ -60,36 +64,20 @@ public class S_ActiveSpells extends ServerBasePacket {
 				data[43] = 54; // 因為妙藥，身心都很輕鬆。提升體力回復量和魔力回復量。
 			}
 		}
-		// 戰鬥藥水、神力藥水
+		// 戰鬥藥水
 		if (pc.hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
 			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_BATTLE) / 16;
 			if (data[45] != 0) {
 				data[62] = 20; // 經驗值加成20%。
 			}
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_250)) {
-			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_250) / 16;
-			if (data[45] != 0) {
-				data[62] = 50; // 狩獵經驗值將會增加。
-			}
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_225)) {
-			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_225) / 16;
-			if (data[45] != 0) {
-				data[62] = 50; // 狩獵經驗值將會增加。
-			}
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_200)) {
-			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_200) / 16;
-			if (data[45] != 0) {
-				data[62] = 50; // 狩獵經驗值將會增加。
-			}
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_175)) {
-			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_175) / 16;
-			if (data[45] != 0) {
-				data[62] = 50; // 狩獵經驗值將會增加。
-			}
-		} else if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150)) {
-			data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_150) / 16;
-			if (data[45] != 0) {
-				data[62] = 50; // 狩獵經驗值將會增加。
+		}
+		// 150% ~ 250% 神力藥水
+		for (int i = 0; i < 5; i++) {
+			if (pc.hasSkillEffect(EFFECT_POTION_OF_EXP_150 + i)) {
+				data[45] = pc.getSkillEffectTimeSec(EFFECT_POTION_OF_EXP_150 + i) / 16;
+				if (data[45] != 0) {
+					data[62] = 50; // 狩獵經驗值將會增加。
+				}
 			}
 		}
 		// 媽祖的祝福
@@ -100,30 +88,32 @@ public class S_ActiveSpells extends ServerBasePacket {
 			}
 		}
 		// 體力增強卷軸、魔力增強卷軸、強化戰鬥卷軸
-		if (pc.hasSkillEffect(EFFECT_STRENGTHENING_HP)) {
-			data[46] = pc.getSkillEffectTimeSec(EFFECT_STRENGTHENING_HP) / 16;
-			if (data[46] != 0) {
-				data[47] = 0; // 體力上限+50，體力回復+4。
-			}
-		} else if (pc.hasSkillEffect(EFFECT_STRENGTHENING_MP)) {
-			data[46] = pc.getSkillEffectTimeSec(EFFECT_STRENGTHENING_MP) / 16;
-			if (data[46] != 0) {
-				data[47] = 1; // 魔力上限+40，魔力回復+4。
-			}
-		} else if (pc.hasSkillEffect(EFFECT_ENCHANTING_BATTLE)) {
-			data[46] = pc.getSkillEffectTimeSec(EFFECT_ENCHANTING_BATTLE) / 16;
-			if (data[46] != 0) {
-				data[47] = 2; // 攻擊成功及攻擊力+3,魔攻+3,遠距離攻擊及命中率+3。
-			}
+		for (int i = 0; i < 3; i++) {
+			if (pc.hasSkillEffect(EFFECT_STRENGTHENING_HP + i)) {
+				data[46] = pc.getSkillEffectTimeSec(EFFECT_STRENGTHENING_HP + i) / 16;
+				if (data[46] != 0) {
+					data[47] = i; // 體力上限+50，體力回復+4。
+				}
+			} 
 		}
 		// 附魔石
 		if (pc.getMagicStoneLevel() != 0) {
-			int skillId = pc.getMagicStoneLevel() + 3929;
+			int skillId = pc.getMagicStoneLevel() + 3929; // skillId = 4013 ~ 4048
 			data[102] = pc.getSkillEffectTimeSec(skillId) / 32;
 			if (data[102] != 0) {
 				data[103] = pc.getMagicStoneLevel() ;
 			}
 		}
+		// 龍之魔眼
+		for (int i = 0; i < 7; i++) {
+			if (pc.hasSkillEffect(EFFECT_MAGIC_EYE_OF_AHTHARTS + i)) {
+				data[78] = pc.getSkillEffectTimeSec(EFFECT_MAGIC_EYE_OF_AHTHARTS + i) / 32;
+				if (data[78] != 0) {
+					data[79] = 46 + i;
+				}
+			}
+		}
+
 		return data;
 	}
 

@@ -436,6 +436,7 @@ public class L1SkillId {
 
 	public static final int BURNING_SLASH = 182;
 
+	/** 龍騎士魔法 (護衛毀滅) */
 	public static final int GUARD_BRAKE = 183;
 
 	public static final int MAGMA_BREATH = 184;
@@ -447,6 +448,7 @@ public class L1SkillId {
 	/** 龍騎士魔法 (屠宰者) */
 	public static final int FOE_SLAYER = 187;
 
+	/** 龍騎士魔法 (恐懼無助) */
 	public static final int RESIST_FEAR = 188;
 
 	public static final int SHOCK_SKIN = 189;
@@ -822,7 +824,28 @@ public class L1SkillId {
 				
 	public static final int EFFECT_MAGIC_STONE_D_9 = 4048; // 9階(防禦)
 
-	public static final int EFFECT_END = 4048;
+	/** 地龍之魔眼 */
+	public static final int EFFECT_MAGIC_EYE_OF_AHTHARTS = 4049;
+
+	/** 水龍之魔眼 */
+	public static final int EFFECT_MAGIC_EYE_OF_FAFURION = 4050;
+
+	/** 風龍之魔眼 */
+	public static final int EFFECT_MAGIC_EYE_OF_LINDVIOR = 4051;
+
+	/** 火龍之魔眼 */
+	public static final int EFFECT_MAGIC_EYE_OF_VALAKAS = 4052;
+
+	/** 誕生之魔眼 */
+	public static final int EFFECT_MAGIC_EYE_OF_BIRTH = 4053;
+
+	/** 形象之魔眼 */
+	public static final int EFFECT_MAGIC_EYE_OF_FIGURE = 4054;
+
+	/** 生命之魔眼 */
+	public static final int EFFECT_MAGIC_EYE_OF_LIFE = 4055;
+
+	public static final int EFFECT_END = 4055;
 
 	// 特殊狀態
 	public static final int SPECIAL_EFFECT_BEGIN = 5001;

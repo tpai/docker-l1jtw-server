@@ -854,7 +854,7 @@ public class C_ItemUSe extends ClientBasePacket {
 																			// 勇敢藥水
 						|| (itemId == L1ItemId.POTION_OF_REINFORCED_CASE) // 強化勇氣的藥水
 						|| (itemId == L1ItemId.W_POTION_OF_EMOTION_BRAVERY)) { // 福利勇敢藥水
-					if (pc.isKnight()) {
+					if (pc.isKnight()) { // 騎士
 						Potion.Brave(pc, l1iteminstance, itemId);
 					}
 					else {
@@ -863,19 +863,18 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				}
 				else if (itemId == L1ItemId.FORBIDDEN_FRUIT) { // 生命之樹果實
-					if (pc.isDragonKnight() || pc.isIllusionist()) {
+					if (pc.isDragonKnight() || pc.isIllusionist()) { // 龍騎士、幻術師
 						Potion.Brave(pc, l1iteminstance, itemId);
 					}
 					else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
-					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
 				else if ((itemId == L1ItemId.ELVEN_WAFER) // 精靈餅乾
 						|| (itemId == L1ItemId.B_ELVEN_WAFER) // 受祝福的 精靈餅乾
 						|| (itemId == L1ItemId.W_POTION_OF_FOREST)) { // 福利森林藥水
-					if (pc.isElf()) {
+					if (pc.isElf()) { // 妖精
 						Potion.Brave(pc, l1iteminstance, itemId);
 					}
 					else {
@@ -884,7 +883,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				}
 				else if (itemId == L1ItemId.DEVILS_BLOOD) { // 惡魔之血
-					if (pc.isCrown()) {
+					if (pc.isCrown()) { // 王族
 						Potion.Brave(pc, l1iteminstance, itemId);
 					}
 					else {
@@ -1020,6 +1019,13 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
+				}
+				else if (itemId >= 47017 && itemId <= 47023) { // 龍之魔眼
+					if (pc.getInventory().consumeItem(41246, 500)) {
+						Effect.useEffectItem(pc, l1iteminstance);
+					} else {
+						pc.sendPackets(new S_ServerMessage(337, "$5240"));
+					}
 				}
 				else if (itemId >= 47049 && itemId <= 47052) { // XX附魔轉換卷軸
 					if (l1iteminstance1.getItemId() >= 47053

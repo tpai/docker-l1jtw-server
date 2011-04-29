@@ -853,11 +853,17 @@ class L1SkillStop {
 		else if (skillId == MIRROR_IMAGE || skillId == UNCANNY_DODGE) { // 鏡像、暗影閃避
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				byte dodge = pc.getDodge();
-				dodge = (byte) (dodge - 5);
-				int[] type = {dodge};
-				pc.setDodge(dodge);
-				pc.sendPackets(new S_PacketBox(88, type));
+				pc.addDodge((byte) -5); // 閃避率 - 50%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+			}
+		}
+		else if (skillId == RESIST_FEAR) { // 恐懼無助
+			cha.addNdodge((byte) -5); // 閃避率 + 50%
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(101, pc.getNdodge()));
 			}
 		}
 		else if (skillId == EFFECT_BLOODSTAIN_OF_ANTHARAS) { // 安塔瑞斯的血痕
@@ -1268,6 +1274,73 @@ class L1SkillStop {
 				pc.addDamageReductionByArmor(-3);
 				pc.sendPackets(new S_SPMR(pc));
 				pc.setMagicStoneLevel((byte) 0);
+			}
+		}
+		else if (skillId == EFFECT_MAGIC_EYE_OF_AHTHARTS) {
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addRegistStone(-3); // 石化耐性
+
+				pc.addDodge((byte) -1); // 閃避率 - 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+			}
+		}
+		else if (skillId == EFFECT_MAGIC_EYE_OF_FAFURION) {
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.add_regist_freeze(-3); // 寒冰耐性
+				// 魔法傷害減免
+			}
+		}
+		else if (skillId == EFFECT_MAGIC_EYE_OF_LINDVIOR) {
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addRegistSleep(-3); // 睡眠耐性
+				// 魔法暴擊率
+			}
+		}
+		else if (skillId == EFFECT_MAGIC_EYE_OF_VALAKAS) {
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addRegistStun(-3); // 昏迷耐性
+				pc.addDmgup(-2); // 額外攻擊點數
+			}
+		}
+		else if (skillId == EFFECT_MAGIC_EYE_OF_BIRTH) {
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addRegistBlind(-3); // 闇黑耐性
+				// 魔法傷害減免
+
+				pc.addDodge((byte) -1); // 閃避率 - 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+			}
+		}
+		else if (skillId == EFFECT_MAGIC_EYE_OF_FIGURE) {
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addRegistSustain(-3); // 支撐耐性
+				// 魔法傷害減免
+				// 魔法暴擊率
+
+				pc.addDodge((byte) -1); // 閃避率 - 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+			}
+		}
+		else if (skillId == EFFECT_MAGIC_EYE_OF_LIFE) {
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addDmgup(2); // 額外攻擊點數
+				// 魔法傷害減免
+				// 魔法暴擊率
+				// 防護中毒狀態
+
+				pc.addDodge((byte) -1); // 閃避率 - 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
 			}
 		}
 

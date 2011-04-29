@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.item.action.Effect;
+import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.utils.SQLUtil;
 import static l1j.server.server.model.skill.L1SkillId.*;
 
@@ -42,6 +43,7 @@ public class CharBuffTable {
 		148, 155, 163,
 		149, 156, 166,
 		DRESS_EVASION, // 迴避提升
+		RESIST_FEAR, // 恐懼無助
 		MIRROR_IMAGE, UNCANNY_DODGE, // 鏡像、暗影閃避
 		43, 54, STATUS_HASTE, // 一段加速
 		STATUS_BRAVE, STATUS_ELFBRAVE, STATUS_RIBRAVE, STATUS_BRAVE2, // 二段加速
@@ -76,7 +78,10 @@ public class CharBuffTable {
 		EFFECT_MAGIC_STONE_C_7, EFFECT_MAGIC_STONE_C_8, EFFECT_MAGIC_STONE_C_9,
 		EFFECT_MAGIC_STONE_D_1, EFFECT_MAGIC_STONE_D_2, EFFECT_MAGIC_STONE_D_3,
 		EFFECT_MAGIC_STONE_D_4, EFFECT_MAGIC_STONE_D_5, EFFECT_MAGIC_STONE_D_6,
-		EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9
+		EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9,
+		EFFECT_MAGIC_EYE_OF_AHTHARTS, EFFECT_MAGIC_EYE_OF_FAFURION, EFFECT_MAGIC_EYE_OF_LINDVIOR, // 魔眼
+		EFFECT_MAGIC_EYE_OF_VALAKAS, EFFECT_MAGIC_EYE_OF_BIRTH, EFFECT_MAGIC_EYE_OF_FIGURE,
+		EFFECT_MAGIC_EYE_OF_LIFE
 	};
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
@@ -166,6 +171,23 @@ public class CharBuffTable {
 					case EFFECT_POTION_OF_EXP_250:
 						remaining_time = remaining_time / 16;
 						pc.setSkillEffect(skillid, remaining_time * 16 * 1000);
+						break;
+					case EFFECT_MAGIC_EYE_OF_AHTHARTS: // 魔眼
+					case EFFECT_MAGIC_EYE_OF_FAFURION:
+					case EFFECT_MAGIC_EYE_OF_LINDVIOR:
+					case EFFECT_MAGIC_EYE_OF_VALAKAS:
+					case EFFECT_MAGIC_EYE_OF_BIRTH:
+					case EFFECT_MAGIC_EYE_OF_FIGURE:
+					case EFFECT_MAGIC_EYE_OF_LIFE:
+						remaining_time = remaining_time / 32;
+						Effect.useEffect(pc, skillid, remaining_time * 32);
+						break;
+					case RESIST_FEAR: // 恐懼無助
+						remaining_time = remaining_time / 4;
+						pc.addNdodge((byte) 5); // 閃避率 - 50%
+						// 更新閃避率顯示
+						pc.sendPackets(new S_PacketBox(101, pc.getNdodge()));
+						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
 						break;
 					default:
 						if (skillid >= EFFECT_MAGIC_STONE_A_1 && skillid <= EFFECT_MAGIC_STONE_D_9) { // 附魔石

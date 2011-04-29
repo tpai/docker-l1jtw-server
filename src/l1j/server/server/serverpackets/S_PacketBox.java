@@ -241,6 +241,19 @@ public class S_PacketBox extends ServerBasePacket {
 				writeC(0x01);
 				writeC(value); // level
 				break;
+			case 88: // + 閃避率
+				writeC(value);
+				writeC(0x00);
+				break;
+			case 101: // - 閃避率
+				writeC(value);
+				break;
+			case 21: // 狀態圖示
+				writeC(0x00);
+				writeC(0x00);
+				writeC(0x00);
+				writeC(value); // 閃避圖示 (幻術:鏡像、黑妖:闇影閃避)
+				break;
 			default:
 				break;
 		}
@@ -293,29 +306,6 @@ public class S_PacketBox extends ServerBasePacket {
 			case MSG_DUEL:
 				writeD(type); // 相手のオブジェクトID
 				writeD(time); // 自分のオブジェクトID
-				break;
-			default:
-				break;
-		}
-	}
-
-	public S_PacketBox(int subCode, int[] type) {
-		writeC(Opcodes.S_OPCODE_PACKETBOX);
-		writeC(subCode);
-
-		switch (subCode) {
-			case 88: // 閃避率
-			writeC(type[0]);
-			writeC(0x00);
-				break;
-			case 101: // 閃避率
-				writeC(type[1]);
-				break;
-			case 21: // 狀態圖示
-				writeC(0x00);
-				writeC(0x00);
-				writeC(0x00);
-				writeC(type[2]); // 鏡像
 				break;
 			default:
 				break;

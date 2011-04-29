@@ -21,6 +21,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharStatus2;
+import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_HPUpdate;
 import l1j.server.server.serverpackets.S_SkillSound;
@@ -31,6 +32,7 @@ public class Effect {
 
 	public static void useEffectItem(L1PcInstance pc, L1ItemInstance item) {
 		boolean isMagicStone = false;
+		boolean deteleItem = true;
 
 		if (pc.hasSkillEffect(DECAY_POTION)) { // 藥水霜化術狀態
 			pc.sendPackets(new S_ServerMessage(698)); // 喉嚨灼熱，無法喝東西。
@@ -71,6 +73,22 @@ public class Effect {
 				skillId = itemId - 42999;
 				time = 3600;
 				gfxid = itemId - 40014;
+				deleteRepeatedSkills(pc, skillId);
+				break;
+			case 47017: // 地龍之魔眼
+			case 47018: // 水龍之魔眼
+			case 47019: // 風龍之魔眼
+			case 47020: // 火龍之魔眼
+			case 47021: // 誕生之魔眼
+			case 47022: // 形象之魔眼
+			case 47023: // 生命之魔眼
+				skillId = itemId - 42968;
+				time = 600;
+				gfxid = itemId - 39346; // gfxid = 7671 ~ 7676、7678
+				if (itemId == 47023) {
+					gfxid = 7678;
+				}
+				deteleItem = false;
 				deleteRepeatedSkills(pc, skillId);
 				break;
 			default:
@@ -116,7 +134,9 @@ public class Effect {
 			
 		} else {
 			useEffect(pc, skillId, time);
-			pc.getInventory().removeItem(item, 1);
+			if (deteleItem) { // 刪除道具
+				pc.getInventory().removeItem(item, 1);
+			}
 		}
 	}
 
@@ -145,6 +165,52 @@ public class Effect {
 			case EFFECT_STRENGTHENING_MP: // 魔力增強卷軸
 				pc.addMaxMp(40);
 				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+				break;
+			case EFFECT_MAGIC_EYE_OF_AHTHARTS: // 地龍之魔眼
+				pc.addRegistStone(3); // 石化耐性 +3
+
+				pc.addDodge((byte) 1); // 閃避率 + 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+				break;
+			case EFFECT_MAGIC_EYE_OF_FAFURION: // 水龍之魔眼
+				pc.add_regist_freeze(3); // 寒冰耐性 +3
+				// 魔法傷害減免 +50
+				break;
+			case EFFECT_MAGIC_EYE_OF_LINDVIOR: // 風龍之魔眼
+				pc.addRegistSleep(3); // 睡眠耐性 +3
+				// 魔法暴擊率 +1
+				break;
+			case EFFECT_MAGIC_EYE_OF_VALAKAS: // 火龍之魔眼
+				pc.addRegistStun(3); // 昏迷耐性 +3
+				pc.addDmgup(2); // 額外攻擊點數 +2
+				break;
+			case EFFECT_MAGIC_EYE_OF_BIRTH: // 誕生之魔眼
+				pc.addRegistBlind(3); // 闇黑耐性 +3
+				// 魔法傷害減免 +50
+
+				pc.addDodge((byte) 1); // 閃避率 + 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+				break;
+			case EFFECT_MAGIC_EYE_OF_FIGURE: // 形象之魔眼
+				pc.addRegistSustain(3); // 支撐耐性 +3
+				// 魔法傷害減免 +50
+				// 魔法暴擊率 +1
+
+				pc.addDodge((byte) 1); // 閃避率 + 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+				break;
+			case EFFECT_MAGIC_EYE_OF_LIFE: // 生命之魔眼
+				pc.addDmgup(2); // 額外攻擊點數 +2
+				// 魔法傷害減免 +50
+				// 魔法暴擊率 +1
+				// 防護中毒狀態
+
+				pc.addDodge((byte) 1); // 閃避率 + 10%
+				// 更新閃避率顯示
+				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
 				break;
 			default:
 				break;
@@ -176,7 +242,11 @@ public class Effect {
 					EFFECT_MAGIC_STONE_C_7, EFFECT_MAGIC_STONE_C_8, EFFECT_MAGIC_STONE_C_9,
 					EFFECT_MAGIC_STONE_D_1, EFFECT_MAGIC_STONE_D_2, EFFECT_MAGIC_STONE_D_3,
 					EFFECT_MAGIC_STONE_D_4, EFFECT_MAGIC_STONE_D_5, EFFECT_MAGIC_STONE_D_6,
-					EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9 }
+					EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9 },
+				// 魔眼
+				{EFFECT_MAGIC_EYE_OF_AHTHARTS, EFFECT_MAGIC_EYE_OF_FAFURION, EFFECT_MAGIC_EYE_OF_LINDVIOR,
+					EFFECT_MAGIC_EYE_OF_VALAKAS, EFFECT_MAGIC_EYE_OF_BIRTH, EFFECT_MAGIC_EYE_OF_FIGURE,
+					EFFECT_MAGIC_EYE_OF_LIFE}
 		};
 
 		for (int[] skills : repeatedSkills) {

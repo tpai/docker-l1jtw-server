@@ -463,17 +463,9 @@ public class L1Attack {
 
 		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 10;
 
-		if (_targetPc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 閃避率
+		attackerDice -= _targetPc.getDodge();
+		attackerDice += _targetPc.getNdodge();
 
 		int defenderDice = 0;
 
@@ -647,17 +639,9 @@ public class L1Attack {
 
 		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 10;
 
-		if (_targetNpc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 閃避率
+		attackerDice -= _targetNpc.getDodge();
+		attackerDice += _targetNpc.getNdodge();
 
 		int defenderDice = 10 - _targetNpc.getAc();
 
@@ -703,17 +687,9 @@ public class L1Attack {
 
 		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 1;
 
-		if (_targetPc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetPc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 閃避率
+		attackerDice -= _targetPc.getDodge();
+		attackerDice += _targetPc.getNdodge();
 
 		int defenderDice = 0;
 
@@ -783,17 +759,9 @@ public class L1Attack {
 
 		int attackerDice = Random.nextInt(20) + 1 + _hitRate - 1;
 
-		if (_targetNpc.hasSkillEffect(UNCANNY_DODGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(MIRROR_IMAGE)) {
-			attackerDice -= 5;
-		}
-
-		if (_targetNpc.hasSkillEffect(RESIST_FEAR)) {
-			attackerDice += 5;
-		}
+		// 閃避率
+		attackerDice -= _targetNpc.getDodge();
+		attackerDice += _targetNpc.getNdodge();
 
 		int defenderDice = 0;
 
@@ -1757,6 +1725,9 @@ public class L1Attack {
 				_attckGrfxId = 66; // 箭
 			} else if (_weaponId == 190) { // 沙哈 - 無箭
 				_attckGrfxId = 2349; // 魔法箭
+			}
+			if (_pc.getTempCharGfx() == 8719) { // 柑橘
+				_attckGrfxId = 8721; // 橘子籽
 			}
 			isFly = true;
 		} else if ((_weaponType == 62)

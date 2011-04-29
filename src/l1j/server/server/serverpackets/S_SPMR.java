@@ -37,7 +37,7 @@ public class S_SPMR extends ServerBasePacket {
 		else {
 			writeC(pc.getSp() - pc.getTrueSp()); // 装備増加したSP
 		}
-		writeC(pc.getTrueMr() - pc.getBaseMr()); // 装備や魔法で増加したMR
+		writeH(pc.getTrueMr() - pc.getBaseMr()); // 装備や魔法で増加したMR
 	}
 
 	@Override
