@@ -439,9 +439,14 @@ public class L1MobSkillUse {
 	private boolean isSkillUseble(int skillIdx, boolean isTriRnd) {
 		boolean useble = false;
 		int type = getMobSkillTemplate().getType(skillIdx);
+		int chance = Random.nextInt(100) + 1;
+
+		if (chance > getMobSkillTemplate().getTriggerRandom(skillIdx)) {
+			return false;
+		}
 
 		if (isTriRnd || (type == L1MobSkill.TYPE_SUMMON) || (type == L1MobSkill.TYPE_POLY)) {
-			if (getMobSkillTemplate().getTriggerRandom(skillIdx) > 0) {
+			/*if (getMobSkillTemplate().getTriggerRandom(skillIdx) > 0) {
 				int chance = Random.nextInt(100) + 1;
 				if (chance < getMobSkillTemplate().getTriggerRandom(skillIdx)) {
 					useble = true;
@@ -449,7 +454,8 @@ public class L1MobSkillUse {
 				else {
 					return false;
 				}
-			}
+			}*/ // 確定此修改後的模式是仿正的，再移除此註解掉的程式碼
+			useble = true;
 		}
 
 		if (getMobSkillTemplate().getTriggerHp(skillIdx) > 0) {
