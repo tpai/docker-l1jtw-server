@@ -35,8 +35,8 @@ public class S_ChangeShape extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_POLY);
 		writeD(objId);
 		writeH(polyId);
-		// 武器類型?
-		writeC(weaponTakeoff ? 0 : 11);
+		/** 武器類型? */
+		writeC(weaponTakeoff ? 0 : 0);//不明為何 false = 0, 無論是 = 11 OR = 29 空手狀態角色都會被恢復為拿單手斧， = 0 則正常
 		writeC(0xff);
 		writeC(0xff);
 	}
