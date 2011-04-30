@@ -131,7 +131,7 @@ public class Account {
 			pstm.setString(6, account._host);
 			pstm.setInt(7, 0);
 			pstm.setInt(8, account._banned ? 1 : 0);
-			pstm.setInt(9, 0);
+			pstm.setInt(9, account._online ? 1 : 0);
 			pstm.execute();
 			_log.info("created new account for " + name);
 
@@ -208,7 +208,7 @@ public class Account {
 
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET lastactive=?, ip=? WHERE login = ?";
+			String sqlstr = "UPDATE accounts SET lastactive=?, ip=? ,online=1 WHERE login = ?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setTimestamp(1, ts);
 			pstm.setString(2, ip);
@@ -314,7 +314,7 @@ public class Account {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET banned=1 WHERE login=?";
+			String sqlstr = "UPDATE accounts SET banned=1, online=0 WHERE login=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, login);
 			pstm.execute();
