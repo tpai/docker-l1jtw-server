@@ -324,6 +324,7 @@ public class ClientThread implements Runnable, PacketOutput {
 			System.out.println("使用了 " + SystemUtil.getUsedMemoryMB()
 					+ "MB 的記憶體");
 			System.out.println("等待客戶端連接...");
+			Account.online(getAccount(), false);
 		}
 		return;
 	}
@@ -331,6 +332,7 @@ public class ClientThread implements Runnable, PacketOutput {
 	private int _kick = 0;
 
 	public void kick() {
+		Account.online(getAccount(), false);
 		sendPacket(new S_Disconnect());
 		_kick = 1;
 		StreamUtil.close(_out, _in);
@@ -415,6 +417,7 @@ public class ClientThread implements Runnable, PacketOutput {
 						|| _activeChar != null && !_activeChar.isPrivateShop()) { // 正在個人商店
 					kick();
 					_log.warning("一定時間沒有收到封包回應，所以強制切斷 (" + _hostname + ") 的連線。");
+					Account.online(getAccount(), false);
 					cancel();
 					return;
 				}
@@ -565,6 +568,10 @@ public class ClientThread implements Runnable, PacketOutput {
 		pc.stopEtcMonitor();
 		// 設定線上狀態為下線
 		pc.setOnlineStatus(0);
+		// 設定帳號為下線
+		Account account = Account.load(pc.getAccountName());
+		Account.online(account, false);
+		
 		try {
 			pc.save();
 			pc.saveInventory();
