@@ -75,7 +75,8 @@ public class NpcSpawnTable {
 				}
 				if (Config.ALT_HALLOWEENIVENT == false) {
 					int npcid = rs.getInt("id");
-					if (((npcid >= 130852) && (npcid <= 130862)) || ((npcid >= 26656) && (npcid <= 26734))) {
+					if (((npcid >= 130852) && (npcid <= 130862)) || ((npcid >= 26656) && (npcid <= 26734)) 
+						|| ((npcid >= 89634) && (npcid <= 89644))) {
 						continue;
 					}
 				}
