@@ -311,7 +311,7 @@ public class Account {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET online_status=0 WHERE online_status=1";
+			String sqlstr = "UPDATE accounts SET online=0 WHERE online=1";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.execute();
 		} catch (Exception e) {
