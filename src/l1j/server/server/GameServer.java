@@ -32,6 +32,7 @@ import l1j.server.server.datatables.DropTable;
 import l1j.server.server.datatables.DropItemTable;
 import l1j.server.server.datatables.FurnitureSpawnTable;
 import l1j.server.server.datatables.GetBackRestartTable;
+import l1j.server.server.datatables.InnTable;
 import l1j.server.server.datatables.IpTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.MailTable;
@@ -283,6 +284,7 @@ public class GameServer extends Thread {
 		MailTable.getInstance();
 		RaceTicketTable.getInstance();
 		L1BugBearRace.getInstance();
+		InnTable.getInstance();
 
 		System.out.println(L1Message.initialfinished);
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());

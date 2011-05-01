@@ -4,19 +4,19 @@ Navicat MySQL Data Transfer
 Source Server         : localhost
 Source Server Version : 50508
 Source Host           : localhost:3306
-Source Database       : l1j-99
+Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-04-29 21:11:43
+Date: 2011-05-01 11:49:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `etcitem`
+-- Table structure for etcitem
 -- ----------------------------
 DROP TABLE IF EXISTS `etcitem`;
 CREATE TABLE `etcitem` (
@@ -366,7 +366,7 @@ INSERT INTO `etcitem` VALUES ('40308', '金幣', '$4', '$4', 'other', 'none', 'g
 INSERT INTO `etcitem` VALUES ('40309', '食人妖精競賽票', '$1247', '$1247', 'other', 'none', 'paper', '1000', '143', '151', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '1', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40310', '信紙', '$1075', '$1075', 'other', 'letter', 'paper', '0', '464', '1215', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40311', '血盟的信紙', '$1146', '$1146', 'other', 'letter', 'paper', '0', '464', '1215', '357', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
-INSERT INTO `etcitem` VALUES ('40312', '旅館鑰匙', '$954', '$954', 'other', 'none', 'iron', '1000', '59', '151', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '0', '0', '0', '0', '1');
+INSERT INTO `etcitem` VALUES ('40312', '旅館鑰匙', '$954', '$954', 'other', 'none', 'iron', '1000', '59', '151', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '1', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40313', '銀鑰匙', '$308', '$308', 'other', 'none', 'iron', '3000', '59', '137', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40314', '項圈', '$1173', '$1173', 'other', 'normal', 'iron', '5000', '487', '1317', '361', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '1', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40315', '哨子', '$1086', '$1086', 'other', 'instrument', 'wood', '8000', '477', '1218', '343', '0', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');

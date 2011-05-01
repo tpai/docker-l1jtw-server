@@ -87,7 +87,10 @@ public class C_Chat extends ClientBasePacket {
 			}
 			for (L1PcInstance listner : L1World.getInstance()
 					.getRecognizePlayer(pc)) {
-				if (!listner.getExcludingList().contains(pc.getName())) {
+				if (listner.getMapId() > 10000
+						&& listner.getInnKeyId() != pc.getInnKeyId()) { // 旅館內判斷
+					break;
+				} else if (!listner.getExcludingList().contains(pc.getName())) {
 					listner.sendPackets(s_chatpacket);
 				}
 			}
@@ -114,7 +117,10 @@ public class C_Chat extends ClientBasePacket {
 			}
 			for (L1PcInstance listner : L1World.getInstance().getVisiblePlayer(
 					pc, 50)) {
-				if (!listner.getExcludingList().contains(pc.getName())) {
+				if (listner.getMapId() > 10000
+						&& listner.getInnKeyId() != pc.getInnKeyId()) { // 旅館內判斷
+					break;
+				} else if (!listner.getExcludingList().contains(pc.getName())) {
 					listner.sendPackets(s_chatpacket);
 				}
 			}

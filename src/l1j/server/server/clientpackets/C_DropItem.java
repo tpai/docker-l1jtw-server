@@ -38,6 +38,9 @@ public class C_DropItem extends ClientBasePacket {
 		L1PcInstance pc = client.getActiveChar();
 		if (pc.isGhost()) {
 			return;
+		} else if (pc.getMapId() > 10000) { // 旅館內判斷
+			pc.sendPackets(new S_ServerMessage(539)); // \f1你無法將它放在這。
+			return;
 		}
 
 		L1ItemInstance item = pc.getInventory().getItem(objectId);

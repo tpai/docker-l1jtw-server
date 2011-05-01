@@ -35,6 +35,13 @@ public class S_DropItem extends ServerBasePacket {
 		// int addbyte1 = 1;
 		// int addbyte2 = 13;
 		// int setting = 4;
+
+		String itemName = item.getItem().getUnidentifiedNameId();
+		// 已鑑定
+		int isId = item.isIdentified() ? 1 : 0;
+		if (isId == 1) {
+			itemName = item.getItem().getIdentifiedNameId();
+		}
 		writeC(Opcodes.S_OPCODE_DROPITEM);
 		writeH(item.getX());
 		writeH(item.getY());
@@ -53,23 +60,28 @@ public class S_DropItem extends ServerBasePacket {
 		writeC(0);
 		writeC(0);
 		if (item.getCount() > 1) {
-			writeS(item.getItem().getName() + " (" + item.getCount() + ")");
+			if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅館鑰匙
+				writeS(itemName + item.getInnKeyName() + " (" + item.getCount() + ")");
+			} else {
+				writeS(itemName + " (" + item.getCount() + ")");
+			}
 		}
 		else {
 			int itemId = item.getItem().getItemId();
-			int isId = item.isIdentified() ? 1 : 0;
-			if ((itemId == 20383) && (isId == 1)) { // 騎馬用ヘルム
-				writeS(item.getItem().getName() + " [" + item.getChargeCount() + "]");
+			if ((itemId == 20383) && (isId == 1)) { // 軍馬頭盔
+				writeS(itemName + " [" + item.getChargeCount() + "]");
 			}
-			else if (((itemId == 40006) || (itemId == 40007) || (itemId == 40008) || (itemId == 40009) || (itemId == 140006) || (itemId == 140008))
-					&& (isId == 1)) { // ワンド類
-				writeS(item.getItem().getName() + " (" + item.getChargeCount() + ")");
+			else if (item.getChargeCount() != 0 && (isId == 1)) { // 可使用的次數
+				writeS(itemName + " (" + item.getChargeCount() + ")");
 			}
-			else if ((item.getItem().getLightRange() != 0) && item.isNowLighting()) {
-				writeS(item.getItem().getName() + " ($10)");
+			else if ((item.getItem().getLightRange() != 0) && item.isNowLighting()) { // 燈具
+				writeS(itemName + " ($10)");
+			}
+			else if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) { // 旅館鑰匙
+				writeS(itemName + item.getInnKeyName());
 			}
 			else {
-				writeS(item.getItem().getName());
+				writeS(itemName);
 			}
 		}
 		writeC(0);

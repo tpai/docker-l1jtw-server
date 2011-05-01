@@ -22,6 +22,7 @@ import java.util.Comparator;
 import l1j.server.Config;
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.FurnitureSpawnTable;
+import l1j.server.server.datatables.InnKeyTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.LetterTable;
 import l1j.server.server.datatables.PetTable;
@@ -146,7 +147,17 @@ public class L1Inventory extends L1Object {
 			return null;
 		}
 
-		if (temp.isStackable()) {
+		if (id == 40312) {
+			L1ItemInstance item = new L1ItemInstance(temp, count);
+
+			if (findKeyId(id) == null) { // 新しく生成する必要がある場合のみIDの発行とL1Worldへの登録を行う
+				item.setId(IdFactory.getInstance().nextId());
+				L1World.getInstance().storeObject(item);
+			}
+
+			return storeItem(item);
+		}
+		else if (temp.isStackable()) {
 			L1ItemInstance item = new L1ItemInstance(temp, count);
 
 			if (findItemId(id) == null) { // 新しく生成する必要がある場合のみIDの発行とL1Worldへの登録を行う
@@ -178,8 +189,10 @@ public class L1Inventory extends L1Object {
 		int itemId = item.getItem().getItemId();
 		if (item.isStackable()) {
 			L1ItemInstance findItem = findItemId(itemId);
-			if (itemId == 40309) {// Race Tickets
+			if (itemId == 40309) { // Race Tickets
 				findItem = findItemNameId(item.getItem().getIdentifiedNameId());
+			} else if (itemId == 40312) { // 旅館鑰匙
+				findItem = findKeyId(itemId);
 			} else {
 				findItem = findItemId(itemId);
 			}
@@ -220,6 +233,12 @@ public class L1Inventory extends L1Object {
 			item.setRemainingTime(item.getItem().getMaxUseTime());
 		}
 		item.setBless(item.getItem().getBless());
+		// 登入鑰匙紀錄
+		if (item.getItem().getItemId() == 40312) {
+			if (!InnKeyTable.checkey(item)) {
+				InnKeyTable.StoreKey(item);
+			}
+		}
 		_items.add(item);
 		insertItem(item);
 		return item;
@@ -227,7 +246,14 @@ public class L1Inventory extends L1Object {
 
 	// /trade、倉庫から入手したアイテムの格納
 	public synchronized L1ItemInstance storeTradeItem(L1ItemInstance item) {
-		if (item.isStackable()) {
+		if (item.getItem().getItemId() == 40312) { // 旅館鑰匙
+			L1ItemInstance findItem = findKeyId(item.getKeyId()); // 檢查鑰匙編號是否相同
+			if (findItem != null) {
+				findItem.setCount(findItem.getCount() + item.getCount());
+				updateItem(findItem);
+				return findItem;
+			}
+		} else if (item.isStackable()) {
 			L1ItemInstance findItem = findItemId(item.getItem().getItemId());
 			if (findItem != null) {
 				findItem.setCount(findItem.getCount() + item.getCount());
@@ -238,6 +264,12 @@ public class L1Inventory extends L1Object {
 		item.setX(getX());
 		item.setY(getY());
 		item.setMap(getMapId());
+		// 登入鑰匙紀錄
+		if (item.getItem().getItemId() == 40312) {
+			if (!InnKeyTable.checkey(item)) {
+				InnKeyTable.StoreKey(item);
+			}
+		}
 		_items.add(item);
 		insertItem(item);
 		return item;
@@ -340,6 +372,10 @@ public class L1Inventory extends L1Object {
 
 	// _itemsから指定オブジェクトを削除(L1PcInstance、L1DwarfInstance、L1GroundInstanceでこの部分をオーバライドする)
 	public void deleteItem(L1ItemInstance item) {
+		// 刪除鑰匙紀錄
+		if (item.getItem().getItemId() == 40312) {
+			InnKeyTable.DeleteKey(item);
+		}
 		_items.remove(item);
 	}
 
@@ -381,6 +417,13 @@ public class L1Inventory extends L1Object {
 			carryItem.setRemainingTime(item.getRemainingTime());
 			carryItem.setLastUsed(item.getLastUsed());
 			carryItem.setBless(item.getBless());
+			// 旅館鑰匙
+			if (carryItem.getItem().getItemId() == 40312) {
+				carryItem.setInnNpcId(item.getInnNpcId()); // 旅館NPC
+				carryItem.setKeyId(item.getKeyId()); // 鑰匙編號
+				carryItem.setHall(item.checkRoomOrHall()); // 房間或會議室
+				carryItem.setDueTime(item.getDueTime()); // 租用時間
+			}
 		}
 		return inventory.storeTradeItem(carryItem);
 	}
@@ -461,6 +504,15 @@ public class L1Inventory extends L1Object {
 	public L1ItemInstance findItemId(int id) {
 		for (L1ItemInstance item : _items) {
 			if (item.getItem().getItemId() == id) {
+				return item;
+			}
+		}
+		return null;
+	}
+
+	public L1ItemInstance findKeyId(int id) {
+		for (L1ItemInstance item : _items) {
+			if (item.getKeyId() == id) {
 				return item;
 			}
 		}

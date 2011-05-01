@@ -346,6 +346,11 @@ public class L1PcInstance extends L1Character {
 
 	@Override
 	public void onPerceive(L1PcInstance perceivedFrom) {
+		// 判斷旅館內是否使用相同鑰匙
+		if (perceivedFrom.getMapId() > 10000
+				&& perceivedFrom.getInnKeyId() != getInnKeyId()) {
+			return;
+		}
 		if (isGmInvis() || isGhost()) {
 			return;
 		}
@@ -397,25 +402,37 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	// オブジェクト認識処理
+	// 更新範圍內的物件
 	public void updateObject() {
 		removeOutOfRangeObjects();
 
-		// 認識範囲内のオブジェクトリストを作成
-		for (L1Object visible : L1World.getInstance().getVisibleObjects(this, Config.PC_RECOGNIZE_RANGE)) {
-			if (!knownsObject(visible)) {
-				visible.onPerceive(this);
-			}
-			else {
-				if (visible instanceof L1NpcInstance) {
-					L1NpcInstance npc = (L1NpcInstance) visible;
-					if (getLocation().isInScreen(npc.getLocation()) && (npc.getHiddenStatus() != 0)) {
-						npc.approachPlayer(this);
+		if (getMapId() <= 10000) {
+			for (L1Object visible : L1World.getInstance().getVisibleObjects(this, Config.PC_RECOGNIZE_RANGE)) {
+				if (!knownsObject(visible)) {
+					visible.onPerceive(this);
+				}
+				else {
+					if (visible instanceof L1NpcInstance) {
+						L1NpcInstance npc = (L1NpcInstance) visible;
+						if (getLocation().isInScreen(npc.getLocation()) && (npc.getHiddenStatus() != 0)) {
+							npc.approachPlayer(this);
+						}
 					}
 				}
+				if (hasSkillEffect(GMSTATUS_HPBAR) && L1HpBar.isHpBarTarget(visible)) {
+					sendPackets(new S_HPMeter((L1Character) visible));
+				}
 			}
-			if (hasSkillEffect(GMSTATUS_HPBAR) && L1HpBar.isHpBarTarget(visible)) {
-				sendPackets(new S_HPMeter((L1Character) visible));
+		} else { // 旅館內判斷
+			for (L1Object visible : L1World.getInstance().getVisiblePlayer(this)) {
+				if (!knownsObject(visible)) {
+					visible.onPerceive(this);
+				}
+				if (hasSkillEffect(GMSTATUS_HPBAR) && L1HpBar.isHpBarTarget(visible)) {
+					if (getInnKeyId() == ((L1Character) visible).getInnKeyId()) {
+						sendPackets(new S_HPMeter((L1Character) visible));
+					}
+				}
 			}
 		}
 	}

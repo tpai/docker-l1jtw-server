@@ -43,6 +43,11 @@ public class S_IdentifyDesc extends ServerBasePacket {
 
 		name.append(item.getItem().getIdentifiedNameId());
 
+		// 旅館鑰匙
+		if (item.getItem().getItemId() == 40312 && item.getKeyId() != 0) {
+			name.append(item.getInnKeyName());
+		}
+
 		if (item.getItem().getType2() == 1) { // weapon
 			writeH(134); // \f1%0：小さなモンスター打撃%1 大きなモンスター打撃%2
 			writeC(3);

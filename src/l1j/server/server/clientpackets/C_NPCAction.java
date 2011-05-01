@@ -25,6 +25,7 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_BARLOG;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_YAHEE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -38,6 +39,8 @@ import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.DoorSpawnTable;
 import l1j.server.server.datatables.ExpTable;
 import l1j.server.server.datatables.HouseTable;
+import l1j.server.server.datatables.InnKeyTable;
+import l1j.server.server.datatables.InnTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.NpcActionTable;
 import l1j.server.server.datatables.NpcTable;
@@ -51,6 +54,7 @@ import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1HauntedHouse;
 import l1j.server.server.model.L1HouseLocation;
+import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1Location;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1PcInventory;
@@ -83,6 +87,7 @@ import l1j.server.server.serverpackets.S_Deposit;
 import l1j.server.server.serverpackets.S_Drawal;
 import l1j.server.server.serverpackets.S_HPUpdate;
 import l1j.server.server.serverpackets.S_HouseMap;
+import l1j.server.server.serverpackets.S_HowManyKey;
 import l1j.server.server.serverpackets.S_ItemName;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_Message_YN;
@@ -106,6 +111,7 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.serverpackets.S_TaxRate;
 import l1j.server.server.templates.L1Castle;
 import l1j.server.server.templates.L1House;
+import l1j.server.server.templates.L1Inn;
 import l1j.server.server.templates.L1Item;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.templates.L1Skills;
@@ -392,17 +398,224 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (s.equalsIgnoreCase("fix")) { // 武器的修理
 
 		}
-		else if (s.equalsIgnoreCase("room")) { // 部屋を借りる
+		else if (s.equalsIgnoreCase("room")) { // 租房間
+			L1NpcInstance npc = (L1NpcInstance) obj;
+			int npcId = npc.getNpcTemplate().get_npcId();
+			boolean canRent = false;
+			boolean findRoom = false;
+			boolean isRent = false;
+			boolean isHall = false;
+			int roomNumber = 0;
+			byte roomCount = 0;
+			for (int i = 0; i < 16; i++) {
+				L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+				if (inn != null) { // 此旅館NPC資訊不為空值
+					Timestamp dueTime = inn.getDueTime();
+					Calendar cal = Calendar.getInstance();
+					long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
+					if (dueTime != null) { // 時間不為空值
+						if (inn.getLodgerId() == pc.getId()
+								&& checkDueTime < 0) { // 租用者判斷
+							if (inn.isHall()) {
+								isHall = true;
+							}
+							isRent = true; // 已租用，且時間未到
+							break;
+						}
+						if ((!findRoom)) { // 尚未找到可租用的房間
+							if (checkDueTime >= 0) { // 租用時間已到
+								canRent = true;
+								findRoom = true;
+								roomNumber = inn.getRoomNumber();
+								break;
+							} else { // 計算出租時間未到的數量
+								if (!inn.isHall()) { // 一般房間
+									roomCount++;
+								}
+							}
+						}
+					} else { // 無出租時間，直接租用
+						if (!findRoom) { // 尚未找到可租用的房間
+							canRent = true;
+							findRoom = true;
+							roomNumber = inn.getRoomNumber();
+							break;
+						}
+					}
+				}
+			}
 
+			if (isRent) {
+				if (isHall) {
+					htmlid = "inn15"; // 真是抱歉，你已經租借過會議廳了。
+				} else {
+					htmlid = "inn5"; // 對不起，你已經有租房間了。
+				}
+			}
+			else if (roomCount >= 12) {
+				htmlid = "inn6"; // 真不好意思，現在沒有房間了。
+			}
+			else if (canRent) {
+				pc.setInnRoomNumber(roomNumber); // 房間編號
+				pc.setHall(false); // 一般房間
+				pc.sendPackets(new S_HowManyKey(npc, 300, 1, 8, "inn2"));
+			}
 		}
-		else if (s.equalsIgnoreCase("hall") && (obj instanceof L1MerchantInstance)) { // ホールを借りる
+		else if (s.equalsIgnoreCase("hall") && (obj instanceof L1MerchantInstance)) { // 租會議廳
+			if (pc.isCrown()) {
+				L1NpcInstance npc = (L1NpcInstance) obj;
+				int npcId = npc.getNpcTemplate().get_npcId();
+				boolean canRent = false;
+				boolean findRoom = false;
+				boolean isRent = false;
+				boolean isHall = false;
+				int roomNumber = 0;
+				byte roomCount = 0;
+				for (int i = 0; i < 16; i++) {
+					L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+					if (inn != null) { // 此旅館NPC資訊不為空值
+						Timestamp dueTime = inn.getDueTime();
+						Calendar cal = Calendar.getInstance();
+						long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
+						if (dueTime != null) { // 時間不為空值
+							if (inn.getLodgerId() == pc.getId()
+									&& checkDueTime < 0) { // 租用者判斷
+								if (inn.isHall()) {
+									isHall = true;
+								}
+								isRent = true; // 已租用，且時間未到
+								break;
+							}
+							if ((!findRoom)) { // 尚未找到可租用的會議室
+								if (checkDueTime >= 0) { // 租用時間已到
+									canRent = true;
+									findRoom = true;
+									roomNumber = inn.getRoomNumber();
+									break;
+								} else { // 計算出租時間未到的數量
+									if (inn.isHall()) { // 會議室
+										roomCount++;
+									}
+								}
+							}
+						} else { // 無出租時間，直接租用
+							if (!findRoom) { // 尚未找到可租用的會議室
+								canRent = true;
+								findRoom = true;
+								roomNumber = inn.getRoomNumber();
+								break;
+							}
+						}
+					}
+				}
 
+				if (isRent) {
+					if (isHall) {
+						htmlid = "inn15"; // 真是抱歉，你已經租借過會議廳了。
+					} else {
+						htmlid = "inn5"; // 對不起，你已經有租房間了。
+					}
+				}
+				else if (roomCount >= 4) {
+					htmlid = "inn16"; // 不好意思，目前正好沒有空的會議廳。
+				}
+				else if (canRent) {
+					pc.setInnRoomNumber(roomNumber); // 房間編號
+					pc.setHall(true); // 會議室
+					pc.sendPackets(new S_HowManyKey(npc, 300, 1, 8, "inn12"));
+				}
+			} else {
+				// 王子和公主才能租用會議廳。
+				htmlid = "inn10";
+			}
 		}
-		else if (s.equalsIgnoreCase("return")) { // 部屋・ホールを返す
+		else if (s.equalsIgnoreCase("return")) { // 退租
+			L1NpcInstance npc = (L1NpcInstance) obj;
+			int npcId = npc.getNpcTemplate().get_npcId();
+			int price = 0;
+			boolean isBreak = false;
+			// 退租判斷
+			for (int i = 0; i < 16; i++) {
+				L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+				if (inn != null) { // 此旅館NPC房間資訊不為空值
+					if (inn.getLodgerId() == pc.getId()) { // 欲退租的租用人
+						Timestamp dueTime = inn.getDueTime();
+						if (dueTime != null) { // 時間不為空值
+							Calendar cal = Calendar.getInstance();
+							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) <= 0) { // 租用時間未到
+								isBreak = true;
+								price += 60; // 退 20%租金
+							}
+						}
+						Timestamp ts = new Timestamp(System.currentTimeMillis()); // 目前時間
+						inn.setDueTime(ts); // 退租時間
+						inn.setLodgerId(0); // 租用人
+						inn.setKeyId(0); // 旅館鑰匙
+						inn.setHall(false);
+						// DB更新
+						InnTable.getInstance().updateInn(inn);
+						break;
+					}
+				}
+			}
+			// 刪除鑰匙判斷
+			for (L1ItemInstance item : pc.getInventory().getItems()) {
+				if (item.getInnNpcId() == npcId) { // 鑰匙與退租的NPC相符
+					price += 20 * item.getCount(); // 鑰匙的價錢 20 * 鑰匙數量
+					InnKeyTable.DeleteKey(item); // 刪除鑰匙紀錄
+					pc.getInventory().removeItem(item); // 刪除鑰匙
+					isBreak = true;
+				}
+			}
 
+			if (isBreak) {
+				htmldata = new String[]  {npc.getName(), String.valueOf(price)};
+				htmlid = "inn20";
+				pc.getInventory().storeItem(L1ItemId.ADENA, price); // 取得金幣
+			} else {
+				htmlid = "";
+			}
 		}
-		else if (s.equalsIgnoreCase("enter")) { // 部屋・ホールに入る
+		else if (s.equalsIgnoreCase("enter")) { // 進入房間或會議廳
+			L1NpcInstance npc = (L1NpcInstance) obj;
+			int npcId = npc.getNpcTemplate().get_npcId();
 
+			for (L1ItemInstance item : pc.getInventory().getItems()) {
+				if (item.getInnNpcId() == npcId) { // 鑰匙與NPC相符
+					Timestamp dueTime = item.getDueTime();
+					if (dueTime != null) { // 時間不為空值
+						Calendar cal = Calendar.getInstance();
+						if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) <= 0) { // 鑰匙租用時間未到
+							switch (npcId) {
+								case 70012: // 說話之島 - 瑟琳娜
+									if (item.checkRoomOrHall()) { // 會議室
+										pc.setInnKeyId(item.getKeyId()); // 登入鑰匙編號
+										L1Teleport.teleport(pc, 32743, 32808, (short) 16896, 6, false);
+									} else { // 房間
+										pc.setInnKeyId(item.getKeyId()); // 登入鑰匙編號
+										L1Teleport.teleport(pc, 32745, 32803, (short) 16384, 6, false);
+										break;
+									}
+									break;
+								case 70019: // 古魯丁 - 羅利雅
+									break;
+								case 70031: // 奇岩 - 瑪理
+									break;
+								case 70065: // 歐瑞 - 小安安
+									break;
+								case 70070: // 風木 - 維萊莎
+									break;
+								case 70075: // 銀騎士 - 米蘭德
+									break;
+								case 70084: // 海音 - 伊莉
+									break;
+								default:
+									break;
+							}
+						}
+					}
+				}
+			}
 		}
 		else if (s.equalsIgnoreCase("openigate")) { // ゲートキーパー / 城門を開ける
 			L1NpcInstance npc = (L1NpcInstance) obj;

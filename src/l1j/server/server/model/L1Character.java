@@ -234,7 +234,13 @@ public class L1Character extends L1Object {
 	 */
 	public void broadcastPacket(ServerBasePacket packet) {
 		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
-			pc.sendPackets(packet);
+			if (pc.getMapId() <= 10000) {
+				pc.sendPackets(packet);
+			}
+			// 旅館內判斷
+			else if (pc.getInnKeyId() == getInnKeyId()) {
+				pc.sendPackets(packet);
+			}
 		}
 	}
 
@@ -1739,6 +1745,37 @@ public class L1Character extends L1Object {
 		} else if (_nDodge <= 0){
 			_nDodge = 0;
 		}
+	}
+
+	// 旅館
+	private int _innRoomNumber;
+
+	public int getInnRoomNumber() {
+		return _innRoomNumber;
+	}
+
+	public void setInnRoomNumber(int i) {
+		_innRoomNumber = i;
+	}
+
+	private int _innKeyId;
+
+	public int getInnKeyId() {
+		return _innKeyId;
+	}
+
+	public void setInnKeyId(int i) {
+		_innKeyId = i;
+	}
+
+	private boolean _isHall;
+
+	public boolean checkRoomOrHall() {
+		return _isHall;
+	}
+
+	public void setHall(boolean i) {
+		_isHall = i;
 	}
 
 	// 判斷特定狀態下才可攻擊 NPC

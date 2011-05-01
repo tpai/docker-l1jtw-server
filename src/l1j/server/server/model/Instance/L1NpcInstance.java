@@ -1198,41 +1198,31 @@ public class L1NpcInstance extends L1Character {
 		}
 		// 攻擊
 		if (template.get_atkspeed() != 0) {
+			int actid = 0;
+			int atkSpeed = 0;
 			switch (getTempCharGfx()) {
-				case 2747:
-				case 2757:
-				case 4104:
-				case 4405:
-				case 4667:
-				case 4854:
-				case 4855:
-				case 7880:
-				case 8331:
-				case 8679:
-					setAtkspeed(SprTable.getInstance()
-							.getSprSpeed(getTempCharGfx(), 18));
+				case 2747: case 2757: case 4104: case 4405: case 4667:
+				case 4854: case 4855: case 7880: case 8331: case 8679:
+					actid = 18;
 					break;
-				case 2738:
-				case 4404:
-				case 7886:
-					setAtkspeed(SprTable.getInstance()
-							.getSprSpeed(getTempCharGfx(), 19));
+				case 2738: case 4404: case 7886:
+					actid = 19;
 					break;
-				case 57:
-				case 3860:
-					setAtkspeed(SprTable.getInstance()
-							.getSprSpeed(getTempCharGfx(), 21));
+				case 57: case 3860:
+					actid = 21;
 					break;
-				case 1780:
-				case 7434:
-					setAtkspeed(SprTable.getInstance()
-							.getSprSpeed(getTempCharGfx(), 30));
+				case 1780: case 7434:
+					actid = 30;
 					break;
 				default:
-					setAtkspeed(SprTable.getInstance()
-							.getSprSpeed(getTempCharGfx(), getStatus() + 1));
+					actid = getStatus() + 1;
 					break;
 			}
+			atkSpeed = SprTable.getInstance().getSprSpeed(getTempCharGfx(), actid);
+			if (atkSpeed == 0) {
+				atkSpeed = template.get_atkspeed();
+			}
+			setAtkspeed(atkSpeed);
 		} else {
 			setAtkspeed(0);
 		}

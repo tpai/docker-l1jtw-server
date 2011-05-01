@@ -134,6 +134,11 @@ public class L1DollInstance extends L1NpcInstance {
 
 	@Override
 	public void onPerceive(L1PcInstance perceivedFrom) {
+		// 判斷旅館內是否使用相同鑰匙
+		if (perceivedFrom.getMapId() > 10000
+				&& perceivedFrom.getInnKeyId() != _master.getInnKeyId()) {
+			return;
+		}
 		perceivedFrom.addKnownObject(this);
 		perceivedFrom.sendPackets(new S_DollPack(this, perceivedFrom));
 	}

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
+import l1j.server.server.datatables.InnKeyTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.storage.CharactersItemStorage;
@@ -83,6 +84,10 @@ public class MySqlCharactersItemStorage extends CharactersItemStorage {
 				item.setMpr(rs.getInt("mpr"));
 				item.setM_Def(rs.getInt("m_def"));
 				item.getLastStatus().updateAll();
+				// 登入鑰匙紀錄
+				if (item.getItem().getItemId() == 40312) {
+					InnKeyTable.checkey(item);
+				}
 				items.add(item);
 			}
 		} catch (SQLException e) {

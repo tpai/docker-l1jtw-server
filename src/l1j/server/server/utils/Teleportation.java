@@ -185,6 +185,11 @@ public class Teleportation {
 			pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), pc.getSkillEffectTimeSec(WIND_SHACKLE)));
 		}
 		startSpawnDragon(pc, mapId, x, y);
+
+		// 離開旅館地圖，旅館鑰匙歸零
+		if (pc.getMapId() <= 10000 && pc.getInnKeyId() != 0) {
+			pc.setInnKeyId(0);
+		}
 	}
 
 	private static void teleport(L1NpcInstance npc, int x, int y, short map, int head) {

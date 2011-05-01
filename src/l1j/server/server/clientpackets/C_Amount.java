@@ -14,6 +14,7 @@
  */
 package l1j.server.server.clientpackets;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -23,8 +24,11 @@ import l1j.server.Config;
 import l1j.server.server.ClientThread;
 import l1j.server.server.datatables.AuctionBoardTable;
 import l1j.server.server.datatables.HouseTable;
+import l1j.server.server.datatables.InnKeyTable;
+import l1j.server.server.datatables.InnTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.NpcActionTable;
+import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
@@ -37,6 +41,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.storage.CharactersItemStorage;
 import l1j.server.server.templates.L1AuctionBoard;
 import l1j.server.server.templates.L1House;
+import l1j.server.server.templates.L1Inn;
 
 // Referenced classes of package l1j.server.server.clientpackets:
 // ClientBasePacket, C_Amount
@@ -145,13 +150,82 @@ public class C_Amount extends ClientBasePacket {
 				HouseTable.getInstance().updateHouse(house); // 更新到資料庫中
 			}
 		} else {
-			L1NpcAction action = NpcActionTable.getInstance().get(s, pc, npc);
-			if (action != null) {
-				L1NpcHtml result = action.executeWithAmount(s, pc, npc, amount);
-				if (result != null) {
-					pc.sendPackets(new S_NPCTalkReturn(npc.getId(), result));
+			// 旅館NPC
+			int npcId = npc.getNpcId();
+			if (npcId == 70070 || npcId == 70019 || npcId == 70075 || npcId == 70012
+					|| npcId == 70031 || npcId == 70084 || npcId == 70065 || npcId == 70054 || npcId == 70096) {
+
+				if (pc.getInventory().checkItem(L1ItemId.ADENA, (300 * amount))) { // 所需金幣 = 鑰匙價格(300) * 鑰匙數量(amount)
+					L1Inn inn = InnTable.getInstance().getTemplate(npcId, pc.getInnRoomNumber());
+					if (inn != null) {
+						Timestamp dueTime = inn.getDueTime();
+						if (dueTime != null) { // 再次判斷房間租用時間
+							Calendar cal = Calendar.getInstance();
+							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用時間未到
+								// 此房間被搶走了...
+								pc.sendPackets(new S_NPCTalkReturn(npcId, ""));
+								return;
+							}
+						}
+						// 租用時間 4小時
+						Timestamp ts = new Timestamp(System.currentTimeMillis() + (60 * 60 * 4 * 1000));
+						// 登入旅館資料
+						L1ItemInstance item = ItemTable.getInstance().createItem(40312); // 旅館鑰匙
+						if (item != null) {
+							item.setKeyId(item.getId()); // 鑰匙編號
+							item.setInnNpcId(npcId); // 旅館NPC
+							item.setHall(pc.checkRoomOrHall()); // 判斷租房間 or 會議室
+							item.setDueTime(ts); // 租用時間
+							item.setCount(amount); // 鑰匙數量
+
+							inn.setKeyId(item.getKeyId()); // 旅館鑰匙
+							inn.setLodgerId(pc.getId()); // 租用人
+							inn.setHall(pc.checkRoomOrHall()); // 判斷租房間 or 會議室
+							inn.setDueTime(ts); // 租用時間
+							// DB更新
+							InnTable.getInstance().updateInn(inn);
+
+							pc.getInventory().consumeItem(L1ItemId.ADENA, (300 * amount)); // 扣除金幣
+
+							// 給予鑰匙並登入鑰匙資料
+							L1Inventory inventory;
+							if (pc.getInventory().checkAddItem(item, amount) == L1Inventory.OK) {
+								inventory = pc.getInventory();
+							} else {
+								inventory = L1World.getInstance().getInventory(pc.getLocation());
+							}
+							inventory.storeItem(item);
+
+							if (InnKeyTable.checkey(item)) {
+								InnKeyTable.DeleteKey(item);
+								InnKeyTable.StoreKey(item);
+							} else {
+								InnKeyTable.StoreKey(item);
+							}
+
+							String itemName = (item.getItem().getName() + item.getInnKeyName());
+							if (amount > 1) {
+								itemName = (itemName + " (" + amount + ")");
+							}
+							pc.sendPackets(new S_ServerMessage(143, npc.getName(), itemName)); // \f1%0%s 給你 %1%o 。
+							String[] msg = {npc.getName()};
+							pc.sendPackets(new S_NPCTalkReturn(npcId, "inn4", msg)); // 要一起使用房間的話，請把鑰匙給其他人，往旁邊的樓梯上去即可。
+						}
+					}
 				}
-				return;
+				else {
+					String[] msg = {npc.getName()};
+					pc.sendPackets(new S_NPCTalkReturn(npcId, "inn3", msg)); // 對不起，你手中的金幣不夠哦！
+				}
+			} else {
+				L1NpcAction action = NpcActionTable.getInstance().get(s, pc, npc);
+				if (action != null) {
+					L1NpcHtml result = action.executeWithAmount(s, pc, npc, amount);
+					if (result != null) {
+						pc.sendPackets(new S_NPCTalkReturn(npcId, result));
+					}
+					return;
+				}
 			}
 		}
 	}

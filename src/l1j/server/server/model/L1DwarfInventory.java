@@ -23,6 +23,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
+import l1j.server.server.datatables.InnKeyTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -82,7 +83,10 @@ public class L1DwarfInventory extends L1Inventory {
 				item.setHpr(rs.getInt("hpr"));
 				item.setMpr(rs.getInt("mpr"));
 				item.setM_Def(rs.getInt("m_def"));
-
+				// 登入鑰匙紀錄
+				if (item.getItem().getItemId() == 40312) {
+					InnKeyTable.checkey(item);
+				}
 				_items.add(item);
 				L1World.getInstance().storeObject(item);
 			}

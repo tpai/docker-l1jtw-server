@@ -19,7 +19,11 @@ import static l1j.server.server.model.skill.L1SkillId.ENCHANT_WEAPON;
 import static l1j.server.server.model.skill.L1SkillId.HOLY_WEAPON;
 import static l1j.server.server.model.skill.L1SkillId.SHADOW_FANG;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.LineNumberReader;
 import java.sql.Timestamp;
+import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -668,10 +672,40 @@ public class L1ItemInstance extends L1Object {
 			}
 		}
 
+		// 旅館鑰匙
+		if (getItem().getItemId() == 40312 && getKeyId() != 0) {
+			name.append(getInnKeyName());
+		}
+
 		if (count > 1) {
 			name.append(" (" + count + ")");
 		}
 
+		return name.toString();
+	}
+
+	// 旅館鑰匙
+	public String getInnKeyName() {
+		StringBuilder name = new StringBuilder();
+		name.append(" #");
+		String chatText = String.valueOf(getKeyId());
+		String s1 = "";
+		String s2 = "";
+		for (int i = 0 ; i < chatText.length(); i++) {
+			if (i >= 5) {
+				break;
+			}
+			s1 =  s1 + String.valueOf(chatText.charAt(i));
+		}
+		name.append(s1);
+		for (int i = 0 ; i < chatText.length(); i++) {
+			if ((i % 2) == 0) {
+				s1 =  String.valueOf(chatText.charAt(i));
+			} else {
+				s2 = s1 + String.valueOf(chatText.charAt(i));
+				name.append(Integer.toHexString(Integer.valueOf(s2)).toLowerCase()); // 轉成16進位
+			}
+		}
 		return name.toString();
 	}
 
@@ -1285,5 +1319,46 @@ public class L1ItemInstance extends L1Object {
 
 	public void setNowLighting(boolean flag) {
 		_isNowLighting = flag;
+	}
+
+	// 旅館鑰匙
+	private int _keyId = 0;
+
+	public int getKeyId() {
+		return _keyId;
+	}
+
+	public void setKeyId(int i) {
+		_keyId = i;
+	}
+
+	private int _innNpcId = 0;
+
+	public int getInnNpcId() {
+		return _innNpcId;
+	}
+
+	public void setInnNpcId(int i) {
+		_innNpcId = i;
+	}
+
+	private boolean _isHall;
+
+	public boolean checkRoomOrHall() {
+		return _isHall;
+	}
+
+	public void setHall(boolean i) {
+		_isHall = i;
+	}
+
+	private Timestamp _dueTime;
+
+	public Timestamp getDueTime() {
+		return _dueTime;
+	}
+
+	public void setDueTime(Timestamp i) {
+		_dueTime = i;
 	}
 }
