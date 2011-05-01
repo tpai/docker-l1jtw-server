@@ -410,6 +410,8 @@ public final class Config {
 	public static boolean writeRobotsLog;
 	
 	public static int MysqlAutoBackup;
+	
+	public static boolean CompressGzip;
 
 	/** Configuration files */
 	public static final String SERVER_CONFIG_FILE = "./config/server.properties";
@@ -714,6 +716,7 @@ public final class Config {
 			writeTradeLog = Boolean.parseBoolean(recordSettings.getProperty("writeTradeLog", "false"));
 			writeRobotsLog = Boolean.parseBoolean(recordSettings.getProperty("writeRobotsLog", "false"));
 			MysqlAutoBackup = Integer.parseInt(recordSettings.getProperty("MysqlAutoBackup", "false"));
+			CompressGzip = Boolean.parseBoolean(recordSettings.getProperty("CompressGzip", "false"));
 			
 		}catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

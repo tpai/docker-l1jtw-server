@@ -33,8 +33,11 @@ public class MysqlAutoBackup extends TimerTask {
 	private static MysqlAutoBackup _instance;
 	final String Username = Config.DB_LOGIN;
 	final String Passwords = Config.DB_PASSWORD;
+	static String FilenameEx = "";
+	static String GzipCmd = "";
 	public static String Database = null;
 	static File dir = new File(".\\DbBackup\\");
+	boolean GzipUse = Config.CompressGzip;
 
 	public static MysqlAutoBackup getInstance() {
 		if (_instance == null) {
@@ -55,6 +58,9 @@ public class MysqlAutoBackup extends TimerTask {
 		if (!dir.isDirectory()) {
 			dir.mkdir();
 		}
+		// 壓縮是否開啟
+		GzipCmd = GzipUse ? " | gzip" : "";
+		FilenameEx = GzipUse ? ".sql.gz" : ".sql";
 	}
 
 	@Override
@@ -68,10 +74,10 @@ public class MysqlAutoBackup extends TimerTask {
 			StringBuilder exeText = new StringBuilder("mysqldump --user=");
 			exeText.append(Username + " --password=");
 			exeText.append(Passwords + " ");
-			exeText.append(Database + " > ");
+			exeText.append(Database + GzipCmd + " > ");
 			exeText.append(dir.getAbsolutePath()
-					+ new SimpleDateFormat("\\yyyy-MM-dd-hhmm")
-							.format(new Date()) + ".sql");
+					+ new SimpleDateFormat("\\yyyy-MM-dd-kkmm")
+							.format(new Date()) + FilenameEx);
 			try {
 				Runtime rt = Runtime.getRuntime();
 				rt.exec("cmd /c " + exeText.toString());
