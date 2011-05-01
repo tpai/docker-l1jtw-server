@@ -213,12 +213,12 @@ public class ClientThread implements Runnable, PacketOutput {
 		}
 
 		try {
-			//long seed = 0x7c98bdfa; // 3.0
+			// long seed = 0x7c98bdfa; // 3.0
 			long seed = 0x1a986541;// 3.3C Taiwan Server
 			byte Bogus = (byte) (FIRST_PACKET.length + 7);
 			_out.write(Bogus & 0xFF);
 			_out.write(Bogus >> 8 & 0xFF);
-			_out.write(Opcodes.S_OPCODE_INITPACKET);// 3.3C Taiwan Server 
+			_out.write(Opcodes.S_OPCODE_INITPACKET);// 3.3C Taiwan Server
 			_out.write((byte) (seed & 0xFF));
 			_out.write((byte) (seed >> 8 & 0xFF));
 			_out.write((byte) (seed >> 16 & 0xFF));
@@ -305,8 +305,10 @@ public class ClientThread implements Runnable, PacketOutput {
 					}
 				}
 				// 玩家離線時, online=0
-				if (getAccount() != null) Account.online(getAccount(), false);
-				
+				if (getAccount() != null) {
+					Account.online(getAccount(), false);
+				}
+
 				// 送出斷線的封包
 				sendPacket(new S_Disconnect());
 
@@ -324,7 +326,9 @@ public class ClientThread implements Runnable, PacketOutput {
 			System.out.println("使用了 " + SystemUtil.getUsedMemoryMB()
 					+ "MB 的記憶體");
 			System.out.println("等待客戶端連接...");
-			Account.online(getAccount(), false);
+			if (getAccount() != null) {
+				Account.online(getAccount(), false);
+			}
 		}
 		return;
 	}
@@ -571,7 +575,7 @@ public class ClientThread implements Runnable, PacketOutput {
 		// 設定帳號為下線
 		Account account = Account.load(pc.getAccountName());
 		Account.online(account, false);
-		
+
 		try {
 			pc.save();
 			pc.saveInventory();

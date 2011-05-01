@@ -302,6 +302,25 @@ public class Account {
 			SQLUtil.close(con);
 		}
 	}
+	
+	/**
+	 * 歸零所有帳號online=0
+	 */
+	public static void InitialOnlineStatus() {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			String sqlstr = "UPDATE accounts SET online_status=0 WHERE online_status=1";
+			pstm = con.prepareStatement(sqlstr);
+			pstm.execute();
+		} catch (Exception e) {
+			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
 
 	/**
 	 * 設定該帳號為禁止登入

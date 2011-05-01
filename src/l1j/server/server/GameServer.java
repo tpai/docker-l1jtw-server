@@ -237,6 +237,9 @@ public class GameServer extends Thread {
 
 		// 開始 MySQL自動備份程序 計時器
 		MysqlAutoBackupTimer.TimerStart();
+		
+		// 初始化帳號使用狀態
+		Account.InitialOnlineStatus();
 
 		NpcTable.getInstance();
 		L1DeleteItemOnGround deleteitem = new L1DeleteItemOnGround();
