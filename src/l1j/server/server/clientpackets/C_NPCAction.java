@@ -54,7 +54,6 @@ import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1HauntedHouse;
 import l1j.server.server.model.L1HouseLocation;
-import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1Location;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1PcInventory;
@@ -542,7 +541,7 @@ public class C_NPCAction extends ClientBasePacket {
 						Timestamp dueTime = inn.getDueTime();
 						if (dueTime != null) { // 時間不為空值
 							Calendar cal = Calendar.getInstance();
-							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) <= 0) { // 租用時間未到
+							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用時間未到
 								isBreak = true;
 								price += 60; // 退 20%租金
 							}
@@ -585,32 +584,41 @@ public class C_NPCAction extends ClientBasePacket {
 					Timestamp dueTime = item.getDueTime();
 					if (dueTime != null) { // 時間不為空值
 						Calendar cal = Calendar.getInstance();
-						if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) <= 0) { // 鑰匙租用時間未到
+						if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 鑰匙租用時間未到
+							int[] data = null;
 							switch (npcId) {
 								case 70012: // 說話之島 - 瑟琳娜
-									if (item.checkRoomOrHall()) { // 會議室
-										pc.setInnKeyId(item.getKeyId()); // 登入鑰匙編號
-										L1Teleport.teleport(pc, 32743, 32808, (short) 16896, 6, false);
-									} else { // 房間
-										pc.setInnKeyId(item.getKeyId()); // 登入鑰匙編號
-										L1Teleport.teleport(pc, 32745, 32803, (short) 16384, 6, false);
-										break;
-									}
+									data = new int[] {32745, 32803, 16384, 32743, 32808, 16896};
 									break;
 								case 70019: // 古魯丁 - 羅利雅
+									data = new int[] {32743, 32803, 17408, 32744, 32807, 17920};
 									break;
 								case 70031: // 奇岩 - 瑪理
+									data = new int[] {32744, 32803, 18432, 32744, 32807, 18944};
 									break;
 								case 70065: // 歐瑞 - 小安安
+									data = new int[] {32744, 32803, 19456, 32744, 32807, 19968};
 									break;
 								case 70070: // 風木 - 維萊莎
+									data = new int[] {32744, 32803, 20480, 32744, 32807, 20992};
 									break;
 								case 70075: // 銀騎士 - 米蘭德
+									data = new int[] {32744, 32803, 21504, 32744, 32807, 22016};
 									break;
 								case 70084: // 海音 - 伊莉
+									data = new int[] {32744, 32803, 22528, 32744, 32807, 23040};
 									break;
 								default:
 									break;
+							}
+
+							pc.setInnKeyId(item.getKeyId()); // 登入鑰匙編號
+
+							if (!item.checkRoomOrHall()) { // 房間
+								L1Teleport.teleport(pc, data[0], data[1], (short) data[2], 6, false);
+							} else { // 會議室
+								L1Teleport.teleport(pc, data[3], data[4], (short) data[5], 6, false);
+								break;
 							}
 						}
 					}

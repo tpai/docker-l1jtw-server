@@ -1,22 +1,24 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
-Source Database       : l1jtw_db
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
+Source Database       : l1j-99
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-04-23 17:40:00
+Date: 2011-05-02 09:40:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
--- Table structure for dungeon
+-- Table structure for `dungeon`
 -- ----------------------------
+DROP TABLE IF EXISTS `dungeon`;
 CREATE TABLE `dungeon` (
   `src_x` int(10) NOT NULL DEFAULT '0',
   `src_y` int(10) NOT NULL DEFAULT '0',
@@ -30,8 +32,29 @@ CREATE TABLE `dungeon` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records of dungeon
 -- ----------------------------
+INSERT INTO `dungeon` VALUES ('32600', '32931', '0', '32745', '32803', '16384', '6', '說話之島旅館 -> 旅館房間');
+INSERT INTO `dungeon` VALUES ('32746', '32803', '16384', '32599', '32931', '0', '6', '旅館房間 -> 說話之島旅館');
+INSERT INTO `dungeon` VALUES ('32744', '32808', '16896', '32599', '32931', '0', '1', '會議室 -> 說話之島旅館');
+INSERT INTO `dungeon` VALUES ('32632', '32761', '4', '32743', '32803', '17408', '6', '古魯丁旅館 -> 旅館房間');
+INSERT INTO `dungeon` VALUES ('32744', '32803', '17408', '32631', '32761', '4', '6', '旅館房間 -> 古魯丁旅館');
+INSERT INTO `dungeon` VALUES ('32745', '32807', '17920', '32631', '32761', '4', '6', '會議室 -> 古魯丁旅館');
+INSERT INTO `dungeon` VALUES ('32628', '33167', '4', '32744', '32803', '20480', '6', '風木旅館 -> 旅館房間');
+INSERT INTO `dungeon` VALUES ('32745', '32803', '20480', '32627', '33167', '4', '6', '旅館房間 -> 風木旅館');
+INSERT INTO `dungeon` VALUES ('32745', '32807', '20992', '32627', '33167', '4', '6', '會議室 -> 風木旅館');
+INSERT INTO `dungeon` VALUES ('33116', '33379', '4', '32744', '32803', '21504', '6', '銀騎士旅館 -> 旅館房間');
+INSERT INTO `dungeon` VALUES ('32745', '32803', '21504', '33115', '33379', '4', '6', '旅館房間 -> 銀騎士旅館');
+INSERT INTO `dungeon` VALUES ('32745', '32807', '22016', '33115', '33379', '4', '6', '會議室 -> 銀騎士旅館');
+INSERT INTO `dungeon` VALUES ('33605', '33275', '4', '32744', '32803', '22528', '6', '海音旅館 -> 旅館房間');
+INSERT INTO `dungeon` VALUES ('32745', '32803', '22528', '33604', '33276', '4', '4', '旅館房間 -> 海音旅館');
+INSERT INTO `dungeon` VALUES ('32745', '32807', '23040', '33604', '33276', '4', '4', '會議室 -> 海音旅館');
+INSERT INTO `dungeon` VALUES ('33437', '32789', '4', '32744', '32803', '18432', '6', '奇岩旅館 -> 旅館房間');
+INSERT INTO `dungeon` VALUES ('32745', '32803', '18432', '33437', '32790', '4', '4', '旅館房間 -> 奇岩旅館');
+INSERT INTO `dungeon` VALUES ('32745', '32807', '18944', '33437', '32790', '4', '4', '會議室 -> 奇岩旅館');
+INSERT INTO `dungeon` VALUES ('34068', '32254', '4', '32744', '32803', '19456', '6', '歐瑞旅館 -> 旅館房間');
+INSERT INTO `dungeon` VALUES ('32745', '32803', '19456', '34067', '32254', '4', '4', '旅館房間 -> 歐瑞旅館');
+INSERT INTO `dungeon` VALUES ('32745', '32807', '19968', '34067', '32254', '4', '4', '會議室 -> 歐瑞旅館');
 INSERT INTO `dungeon` VALUES ('32296', '33087', '440', '32735', '32795', '446', '4', '海賊島船着場->隠された船着場行きの船');
 INSERT INTO `dungeon` VALUES ('32297', '33087', '440', '32735', '32795', '446', '4', '海賊島船着場->隠された船着場行きの船');
 INSERT INTO `dungeon` VALUES ('32298', '33087', '440', '32735', '32795', '446', '4', '海賊島船着場->隠された船着場行きの船');
@@ -66,7 +89,6 @@ INSERT INTO `dungeon` VALUES ('32582', '32739', '550', '32781', '32805', '553', 
 INSERT INTO `dungeon` VALUES ('32599', '32873', '252', '32756', '32859', '253', '0', 'ハイネ城ケイブ:ハイネの地下監獄->ハイネ城ケイブ:エヴァの王国');
 INSERT INTO `dungeon` VALUES ('32599', '32874', '252', '32757', '32859', '253', '0', 'ハイネ城ケイブ:ハイネの地下監獄->ハイネ城ケイブ:エヴァの王国');
 INSERT INTO `dungeon` VALUES ('32600', '32845', '172', '32604', '32829', '171', '4', ' TOI 72F -> TOI 71F (A)');
-INSERT INTO `dungeon` VALUES ('32600', '32931', '0', '32745', '32803', '16384', '6', 'Talking Island Hotel -> Hotel Room');
 INSERT INTO `dungeon` VALUES ('32601', '32845', '172', '32604', '32829', '171', '4', ' TOI 72F -> 神幻税転 71F A');
 INSERT INTO `dungeon` VALUES ('32602', '32790', '167', '32609', '32807', '168', '0', ' TOI 67F -> TOI 68F B');
 INSERT INTO `dungeon` VALUES ('32602', '32790', '177', '32620', '32797', '178', '0', ' 神幻税転 77F -> 78F');
@@ -117,11 +139,8 @@ INSERT INTO `dungeon` VALUES ('32622', '32842', '550', '32751', '32871', '553', 
 INSERT INTO `dungeon` VALUES ('32623', '32916', '199', '32632', '32974', '200', '4', 'TOI99F>TOI100F');
 INSERT INTO `dungeon` VALUES ('32624', '32802', '304', '33389', '32273', '4', '2', 'SilentCavern->WorldMap 2');
 INSERT INTO `dungeon` VALUES ('32625', '32802', '304', '33389', '32273', '4', '1', 'SilentCavern->WorldMap 1');
-INSERT INTO `dungeon` VALUES ('32628', '33167', '4', '32744', '32803', '20480', '6', 'Windawood Hotel -> Hotel Room');
 INSERT INTO `dungeon` VALUES ('32630', '32983', '0', '32733', '32797', '5', '4', 'TI->グルーディン行きの船');
 INSERT INTO `dungeon` VALUES ('32631', '32983', '0', '32733', '32797', '5', '4', 'TI->グルーディン行きの船');
-INSERT INTO `dungeon` VALUES ('32632', '32760', '4', '32743', '32803', '17408', '6', 'Gludio Hotel -> Hotel Room');
-INSERT INTO `dungeon` VALUES ('32632', '32761', '4', '32743', '32803', '17408', '6', 'Gludio Hotel -> Hotel Room');
 INSERT INTO `dungeon` VALUES ('32632', '32790', '190', '32656', '32791', '189', '4', 'TOI90F->TOI89F(A)');
 INSERT INTO `dungeon` VALUES ('32632', '32974', '200', '32623', '32916', '199', '4', 'TOI99F>TOI100F');
 INSERT INTO `dungeon` VALUES ('32632', '32983', '0', '32733', '32797', '5', '4', 'TI->グルーディン行きの船');
@@ -731,8 +750,6 @@ INSERT INTO `dungeon` VALUES ('32744', '32731', '132', '32749', '32747', '133', 
 INSERT INTO `dungeon` VALUES ('32744', '32731', '195', '32733', '32787', '196', '0', 'TOI95F->TOI96F');
 INSERT INTO `dungeon` VALUES ('32744', '32778', '47', '32794', '32740', '48', '0', '蟻ケイブB1-5 -> B2-1');
 INSERT INTO `dungeon` VALUES ('32744', '32788', '477', '32756', '32878', '471', '0', 'ラスタバド城:デビルロード傭兵室->デビルロードの祭壇');
-INSERT INTO `dungeon` VALUES ('32744', '32803', '17408', '32631', '32761', '4', '6', 'Hotel Room -> Gludio Hotel');
-INSERT INTO `dungeon` VALUES ('32744', '32808', '16896', '32599', '32931', '0', '1', 'Conference Hall-> Talking Island Hotel');
 INSERT INTO `dungeon` VALUES ('32744', '32815', '16', '33194', '32458', '4', '0', 'horun>world map');
 INSERT INTO `dungeon` VALUES ('32744', '32839', '62', '32746', '32852', '59', '6', 'エブロール>HC1F');
 INSERT INTO `dungeon` VALUES ('32744', '32858', '478', '32832', '32792', '473', '6', 'ラスタバド城:立入禁止エリア->冥法軍の訓練場');
@@ -740,18 +757,7 @@ INSERT INTO `dungeon` VALUES ('32745', '32723', '493', '32727', '32858', '490', 
 INSERT INTO `dungeon` VALUES ('32745', '32758', '50', '32770', '32790', '45', '0', '蟻ケイブB1-6 -> B1-3');
 INSERT INTO `dungeon` VALUES ('32745', '32782', '49', '32791', '32795', '46', '0', '蟻ケイブB2-2 -> B1-4');
 INSERT INTO `dungeon` VALUES ('32745', '32788', '477', '32756', '32878', '471', '0', 'ラスタバド城:デビルロード傭兵室->デビルロードの祭壇');
-INSERT INTO `dungeon` VALUES ('32745', '32803', '18432', '33437', '32790', '4', '4', 'Hotel Room -> Giran Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32803', '19456', '34067', '32254', '4', '4', 'Hotel Room -> Oren Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32803', '20480', '32627', '33167', '4', '6', 'Hotel Room -> Windawood Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32803', '21504', '33115', '33379', '4', '6', 'Hotel Room -> Silver knight Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32803', '22528', '33604', '33276', '4', '5', 'Hotel Room -> Heine Hotel');
 INSERT INTO `dungeon` VALUES ('32745', '32805', '11', '32757', '32804', '11', '2', '沙塘5寵A->沙塘5寵惟戚闘A');
-INSERT INTO `dungeon` VALUES ('32745', '32807', '17920', '32631', '32761', '4', '6', 'Conference Hall -> Gludio Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32807', '18944', '33437', '32790', '4', '4', 'Conference Hall -> Giran Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32807', '19968', '34067', '32254', '4', '4', 'Conference Hall -> Oren Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32807', '20992', '32627', '33167', '4', '6', 'Conference Hall -> Windawood Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32807', '22016', '33115', '33379', '4', '6', 'Conference Hall -> Silver knight Hotel');
-INSERT INTO `dungeon` VALUES ('32745', '32807', '23040', '33604', '33276', '4', '5', 'Conference Hall-> Heine Hotel');
 INSERT INTO `dungeon` VALUES ('32745', '32809', '444', '32752', '32745', '443', '2', 'PIC4F>PIC3F');
 INSERT INTO `dungeon` VALUES ('32745', '32810', '1', '32713', '32850', '1', '0', 'TIC1F->TIC1F');
 INSERT INTO `dungeon` VALUES ('32745', '32840', '159', '32749', '32814', '160', '0', 'TOI59F->TOI60F(B)');
@@ -782,7 +788,6 @@ INSERT INTO `dungeon` VALUES ('32746', '32758', '50', '32770', '32790', '45', '0
 INSERT INTO `dungeon` VALUES ('32746', '32782', '49', '32791', '32795', '46', '0', '蟻ケイブB2-2 -> B1-4');
 INSERT INTO `dungeon` VALUES ('32746', '32785', '536', '32740', '32880', '530', '0', 'ラスタバド城:3階闇の結界->グランカインの神殿');
 INSERT INTO `dungeon` VALUES ('32746', '32788', '477', '32756', '32878', '471', '0', 'ラスタバド城:デビルロード傭兵室->デビルロードの祭壇');
-INSERT INTO `dungeon` VALUES ('32746', '32803', '16384', '32599', '32931', '0', '1', 'Hotel Room -> Talking Island Hotel');
 INSERT INTO `dungeon` VALUES ('32746', '32824', '36', '32667', '32868', '37', '6', 'DVC6F->DVC7F');
 INSERT INTO `dungeon` VALUES ('32746', '32857', '60', '32664', '32867', '59', '2', '呪掻 揮穿2F->呪掻 揮穿1F');
 INSERT INTO `dungeon` VALUES ('32746', '32858', '168', '32744', '32844', '169', '2', 'TOI68F->TOI69F(A)');
@@ -1486,7 +1491,6 @@ INSERT INTO `dungeon` VALUES ('33066', '32894', '320', '32530', '32805', '400', 
 INSERT INTO `dungeon` VALUES ('33066', '32895', '320', '32530', '32805', '400', '2', 'ディアド要塞->地下大洞窟');
 INSERT INTO `dungeon` VALUES ('33066', '32896', '320', '32530', '32805', '400', '2', 'ディアド要塞->地下大洞窟');
 INSERT INTO `dungeon` VALUES ('33066', '32897', '320', '32530', '32805', '400', '2', 'ディアド要塞->地下大洞窟');
-INSERT INTO `dungeon` VALUES ('33116', '33379', '4', '32744', '32803', '21504', '6', 'Silver knight Hotel -> Hotel Room');
 INSERT INTO `dungeon` VALUES ('33120', '33202', '558', '32777', '32876', '557', '0', '船の墓場:深海層H(左)->船の墓場:船内H3f');
 INSERT INTO `dungeon` VALUES ('33121', '33202', '558', '32779', '32876', '557', '0', '船の墓場:深海層H(右)->船の墓場:船内H3f');
 INSERT INTO `dungeon` VALUES ('33138', '33357', '4', '32769', '32767', '22', '5', 'SKT>GerardTestDungeon');
@@ -1509,10 +1513,8 @@ INSERT INTO `dungeon` VALUES ('33423', '33502', '4', '32735', '32795', '83', '4'
 INSERT INTO `dungeon` VALUES ('33424', '33502', '4', '32735', '32795', '83', '4', 'ハイネ船着場->FI行きの船');
 INSERT INTO `dungeon` VALUES ('33425', '33502', '4', '32735', '32795', '83', '4', 'ハイネ船着場->FI行きの船');
 INSERT INTO `dungeon` VALUES ('33426', '33502', '4', '33735', '32795', '83', '4', 'ハイネ船着場->FI行きの船');
-INSERT INTO `dungeon` VALUES ('33437', '32789', '4', '32744', '32803', '18432', '6', 'Giran Hotel -> Hotel Room');
 INSERT INTO `dungeon` VALUES ('33522', '33385', '4', '32571', '32862', '64', '0', 'ハイネフィールド->ハイネ城内');
 INSERT INTO `dungeon` VALUES ('33523', '33385', '4', '32572', '32862', '64', '0', 'ハイネフィールド->ハイネ城内');
-INSERT INTO `dungeon` VALUES ('33605', '33275', '4', '32744', '32803', '22528', '6', 'Heine Hotel -> Hotel Room');
 INSERT INTO `dungeon` VALUES ('33627', '33502', '4', '32708', '32789', '59', '4', '馬戚革 慎走->呪掻 揮穿1F');
 INSERT INTO `dungeon` VALUES ('33631', '32369', '4', '32738', '32868', '66', '2', '鉢逆->走煽失8獣');
 INSERT INTO `dungeon` VALUES ('33631', '32660', '4', '32728', '32828', '52', '0', 'ギランフィールド->ギラン城内');
@@ -1524,7 +1526,6 @@ INSERT INTO `dungeon` VALUES ('33808', '32866', '106', '32671', '32860', '107', 
 INSERT INTO `dungeon` VALUES ('33808', '32867', '106', '32671', '32860', '107', '6', 'TOI6F->TOI7F');
 INSERT INTO `dungeon` VALUES ('34041', '32154', '4', '32764', '32902', '75', '0', '神沓->IT1F');
 INSERT INTO `dungeon` VALUES ('34042', '32154', '4', '32764', '32902', '75', '0', '神沓->IT1F');
-INSERT INTO `dungeon` VALUES ('34068', '32254', '4', '32744', '32803', '19456', '6', 'Oren Hotel -> Hotel Room');
 INSERT INTO `dungeon` VALUES ('34090', '33203', '4', '32891', '32580', '300', '0', 'アデンフィールド->アデン城内');
 INSERT INTO `dungeon` VALUES ('34091', '33203', '4', '32892', '32580', '300', '0', 'アデンフィールド->アデン城内');
 INSERT INTO `dungeon` VALUES ('34151', '33382', '4', '32678', '32790', '301', '2', '焼祈->焼祈走馬呪稽1F');

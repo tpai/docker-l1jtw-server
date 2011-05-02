@@ -20,11 +20,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
+import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.gametime.L1GameTimeClock;
 import l1j.server.server.utils.SQLUtil;
@@ -42,7 +45,8 @@ public class Dungeon {
 	private static Map<String, NewDungeon> _dungeonMap = Maps.newMap();
 
 	private enum DungeonType {
-		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI
+		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI,
+		TALKING_ISLAND_HOTEL, GLUDIO_HOTEL, SILVER_KNIGHT_HOTEL, WINDAWOOD_HOTEL, HEINE_HOTEL, GIRAN_HOTEL, OREN_HOTEL
 	}
 
 	public static Dungeon getInstance() {
@@ -102,9 +106,30 @@ public class Dungeon {
 						|| (((srcX == 32734) || (srcX == 32735) || (srcX == 32736) || (srcX == 32737)) && (srcY == 32794) && (srcMapId == 6))) { // AdenMainlandShiptoTalkingIsland->AdenMainland
 					dungeonType = DungeonType.SHIP_FOR_TI;
 				}
+				else if ((srcX == 32600) && (srcY == 32931) && (srcMapId == 0)) { // 說話之島旅館
+					dungeonType = DungeonType.TALKING_ISLAND_HOTEL;
+				}
+				else if ((srcX == 32632) && (srcY == 32761) && (srcMapId == 4)) { // 古魯丁旅館
+					dungeonType = DungeonType.GLUDIO_HOTEL;
+				}
+				else if ((srcX == 33116) && (srcY == 33379) && (srcMapId == 4)) { // 銀騎士旅館
+					dungeonType = DungeonType.SILVER_KNIGHT_HOTEL;
+				}
+				else if ((srcX == 32628) && (srcY == 33167) && (srcMapId == 4)) { // 風木旅館
+					dungeonType = DungeonType.WINDAWOOD_HOTEL;
+				}
+				else if ((srcX == 33605) && (srcY == 33275) && (srcMapId == 4)) { // 海音旅館
+					dungeonType = DungeonType.HEINE_HOTEL;
+				}
+				else if ((srcX == 33437) && (srcY == 32789) && (srcMapId == 4)) { // 奇岩旅館
+					dungeonType = DungeonType.GIRAN_HOTEL;
+				}
+				else if ((srcX == 34068) && (srcY == 32254) && (srcMapId == 4)) { // 歐瑞旅館
+					dungeonType = DungeonType.OREN_HOTEL;
+				}
 				NewDungeon newDungeon = new NewDungeon(newX, newY, (short) newMapId, heading, dungeonType);
 				if (_dungeonMap.containsKey(key)) {
-					_log.log(Level.WARNING, "同じキーのdungeonデータがあります。key=" + key);
+					_log.log(Level.WARNING, "Navicat dungeon 傳送點重複。key=" + key);
 				}
 				_dungeonMap.put(key, newDungeon);
 			}
@@ -157,7 +182,52 @@ public class Dungeon {
 				teleportable = true;
 			}
 			else {
-				if (((nowtime >= 15 * 360) && (nowtime < 25 * 360 // 1.30~2.30
+				if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL || dungeonType == DungeonType.GLUDIO_HOTEL
+						|| dungeonType == DungeonType.WINDAWOOD_HOTEL || dungeonType == DungeonType.SILVER_KNIGHT_HOTEL
+						|| dungeonType == DungeonType.HEINE_HOTEL || dungeonType == DungeonType.GIRAN_HOTEL
+						|| dungeonType == DungeonType.OREN_HOTEL) {
+					int npcid = 0;
+					int[] data = null;
+					if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL) {
+						npcid = 70012; // 說話之島 - 瑟琳娜
+						data = new int[] {32745, 32803, 16384, 32743, 32808, 16896};
+					} else if (dungeonType == DungeonType.GLUDIO_HOTEL) {
+						npcid = 70019; // 古魯丁 - 羅利雅
+						data = new int[] {32743, 32803, 17408, 32744, 32807, 17920};
+					} else if (dungeonType == DungeonType.GIRAN_HOTEL) {
+						npcid = 70031; // 奇岩 - 瑪理
+						data = new int[] {32744, 32803, 18432, 32744, 32807, 18944};
+					} else if (dungeonType == DungeonType.OREN_HOTEL) {
+						npcid = 70065; // 歐瑞 - 小安安
+						data = new int[] {32744, 32803, 19456, 32744, 32807, 19968};
+					} else if (dungeonType == DungeonType.WINDAWOOD_HOTEL) {
+						npcid = 70070; // 風木 - 維萊莎
+						data = new int[] {32744, 32803, 20480, 32744, 32807, 20992};
+					} else if (dungeonType == DungeonType.SILVER_KNIGHT_HOTEL) {
+						npcid = 70075; // 銀騎士 - 米蘭德
+						data = new int[] {32744, 32803, 21504, 32744, 32807, 22016};
+					} else if (dungeonType == DungeonType.HEINE_HOTEL) {
+						npcid = 70084; // 海音 - 伊莉
+						data = new int[] {32744, 32803, 22528, 32744, 32807, 23040};
+					}
+
+					int type = checkInnKey(pc, npcid);
+
+					if (type == 1) { // 房間
+						newX = data[0];
+						newY = data[1];
+						newMap = (short) data[2];
+						heading = 6;
+						teleportable = true;
+					} else if (type == 2) { // 會議室
+						newX = data[3];
+						newY = data[4];
+						newMap = (short) data[5];
+						heading = 6;
+						teleportable = true;
+					}
+				}
+				else if (((nowtime >= 15 * 360) && (nowtime < 25 * 360 // 1.30~2.30
 						))
 						|| ((nowtime >= 45 * 360) && (nowtime < 55 * 360 // 4.30~5.30
 						))
@@ -197,4 +267,22 @@ public class Dungeon {
 		}
 		return false;
 	}
+
+	// 檢查身上的鑰匙
+	private int checkInnKey(L1PcInstance pc, int npcid) {
+		for (L1ItemInstance item : pc.getInventory().getItems()) {
+			if (item.getInnNpcId() == npcid) { // 鑰匙與旅館NPC相符
+				Timestamp dueTime = item.getDueTime();
+				if (dueTime != null) { // 時間不為空值
+					Calendar cal = Calendar.getInstance();
+					if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用時間未到
+						pc.setInnKeyId(item.getKeyId()); // 登入此鑰匙
+						return item.checkRoomOrHall()? 2 : 1; // 1:房間 2:會議室
+					}
+				}
+			}
+		}
+		return 0;
+	}
+
 }
