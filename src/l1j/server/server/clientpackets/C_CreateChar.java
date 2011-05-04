@@ -213,7 +213,6 @@ public class C_CreateChar extends ClientBasePacket {
 		pc.setExp(0);
 		pc.setHighLevel(0);
 		pc.setStatus(0);
-		pc.setAccessLevel((short) 0);
 		pc.setClanname("");
 		pc.setBonusStats(0);
 		pc.setElixirStats(0);
