@@ -18,10 +18,7 @@ import java.util.Calendar;
 
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1DragonSlayer;
-import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.Instance.L1MonsterInstance;
-import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SendLocation;
 import l1j.server.server.serverpackets.S_ServerMessage;

@@ -66,18 +66,22 @@ public class L1SpawnUtil {
 			if (npc.getNpcId() == 81273) {
 				for (int i = 0; i < 6; i++) {
 					if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
-						npc.setPortalNumber((byte)i);
-						L1DragonSlayer.getInstance().isMob()[i] = npc;
 						L1DragonSlayer.getInstance().setPortalNumber(i, true);
+						// 重置副本
+						L1DragonSlayer.getInstance().resetDragonSlayer(i);
+						npc.setPortalNumber(i);
+						L1DragonSlayer.getInstance().portalPack()[i] = npc;
 						break;
 					}
 				}
 			} else if (npc.getNpcId() == 81274) {
 				for (int i = 6; i < 12; i++) {
 					if (!L1DragonSlayer.getInstance().getPortalNumber()[i]) {
-						npc.setPortalNumber((byte)i);
-						L1DragonSlayer.getInstance().isMob()[i] = npc;
 						L1DragonSlayer.getInstance().setPortalNumber(i, true);
+						// 重置副本
+						L1DragonSlayer.getInstance().resetDragonSlayer(i);
+						npc.setPortalNumber(i);
+						L1DragonSlayer.getInstance().portalPack()[i] = npc;
 						break;
 					}
 				}

@@ -184,7 +184,11 @@ public class Teleportation {
 		if (pc.hasSkillEffect(WIND_SHACKLE)) {
 			pc.sendPackets(new S_SkillIconWindShackle(pc.getId(), pc.getSkillEffectTimeSec(WIND_SHACKLE)));
 		}
-		startSpawnDragon(pc, mapId, x, y);
+
+		if (pc.getPortalNumber() != -1
+				&& !L1DragonSlayer.getInstance().isSpawnDragon()[pc.getPortalNumber()]) {
+			startSpawnDragon(pc, mapId, x, y);
+		}
 
 		// 離開旅館地圖，旅館鑰匙歸零
 		if (pc.getMapId() <= 10000 && pc.getInnKeyId() != 0) {
@@ -207,13 +211,13 @@ public class Teleportation {
 		// 安塔瑞斯棲息地
 		if (mapId == 1005 || mapId == 1006 || mapId == 1007 || mapId == 1008 || mapId == 1009 || mapId == 1010) {
 			if (x > 32794 && x < 32800 && y > 32657 && y < 32666) {
-				L1DragonSlayer.getInstance().spawnDragon(pc);
+				L1DragonSlayer.getInstance().spawnDragon(pc, 1);
 			}
 		}
 		// 法利昂棲息地
 		else if (mapId == 1011 || mapId == 1012 || mapId == 1013 || mapId == 1014 || mapId == 1015 || mapId == 1016) {
 			if (x > 32984 && x < 32994 && y > 32836 && y < 32844) {
-				L1DragonSlayer.getInstance().spawnDragon(pc);
+				L1DragonSlayer.getInstance().spawnDragon(pc, 1);
 			}
 		}
 	}

@@ -30,14 +30,22 @@ public class L1NpcDeleteTimer extends TimerTask {
 	@Override
 	public void run() {
 		// 龍之門扉存在時間到時
-		if (_npc.getNpcId() == 81273 || _npc.getNpcId() == 81274 || _npc.getNpcId() == 81275
-				|| _npc.getNpcId() == 81276 ||_npc.getNpcId() == 81277) {
-			L1DragonSlayer.getInstance().endDragonSlayer(_npc.getPortalNumber());
-			_npc.setStatus(ActionCodes.ACTION_Die);
-			_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(), ActionCodes.ACTION_Die));
+		if (_npc != null) {
+			if (_npc.getNpcId() == 81273 || _npc.getNpcId() == 81274 || _npc.getNpcId() == 81275
+					|| _npc.getNpcId() == 81276 || _npc.getNpcId() == 81277) {
+				if (_npc.getNpcId() == 81277) { // 隱匿的巨龍谷入口關閉
+					L1DragonSlayer.getInstance().setHiddenDragonValley((byte) 0);
+				}
+				// 結束屠龍副本
+				L1DragonSlayer.getInstance().setPortalPack(_npc.getPortalNumber(), null);
+				L1DragonSlayer.getInstance().endDragonPortal(_npc.getPortalNumber());
+				// 門扉消失動作
+				_npc.setStatus(ActionCodes.ACTION_Die);
+				_npc.broadcastPacket(new S_DoActionGFX(_npc.getId(), ActionCodes.ACTION_Die));
+			}
+			_npc.deleteMe();
+			cancel();
 		}
-		_npc.deleteMe();
-		cancel();
 	}
 
 	public void begin() {

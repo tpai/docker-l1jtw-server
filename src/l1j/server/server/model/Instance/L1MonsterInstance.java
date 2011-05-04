@@ -26,8 +26,8 @@ import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.DropTable;
-import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.NPCTalkDataTable;
+import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.SprTable;
 import l1j.server.server.datatables.UBTable;
 import l1j.server.server.model.L1Attack;
@@ -36,7 +36,6 @@ import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.L1Location;
 import l1j.server.server.model.L1NpcTalkData;
 import l1j.server.server.model.L1Object;
-import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1UltimateBattle;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.skill.L1BuffUtil;
@@ -142,7 +141,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 			}
 		}
 		else {
-			perceivedFrom.sendPackets(new S_NPCPack(this));
+			// 水龍 階段一、二 死亡隱形
+			if (getGfxId() != 7864 && getGfxId() != 7869) {
+				perceivedFrom.sendPackets(new S_NPCPack(this));
+			}
 		}
 	}
 
@@ -353,20 +355,6 @@ public class L1MonsterInstance extends L1NpcInstance {
 				serchLink((L1PcInstance) attacker, getNpcTemplate().get_family());
 			}
 
-			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
-				L1PcInstance player = (L1PcInstance) attacker;
-				player.setPetTarget(this);
-
-				if ((getNpcTemplate().get_npcId() == 45681 // リンドビオル
-						)
-						|| (getNpcTemplate().get_npcId() == 45682 // アンタラス
-						) || (getNpcTemplate().get_npcId() == 45683 // パプリオン
-						) || (getNpcTemplate().get_npcId() == 45684)) // ヴァラカス
-				{
-					recall(player);
-				}
-			}
-
 			// 血痕相剋傷害增加 1.5倍
 			if ((getNpcTemplate().get_npcId() == 97044
 					|| getNpcTemplate().get_npcId() == 97045
@@ -374,25 +362,36 @@ public class L1MonsterInstance extends L1NpcInstance {
 					&& (attacker.hasSkillEffect(EFFECT_BLOODSTAIN_OF_ANTHARAS))) { // 有安塔瑞斯的血痕時對法利昂增傷
 				damage *= 1.5;
 			}
+
 			int newHp = getCurrentHp() - damage;
 			if ((newHp <= 0) && !isDead()) {
 				int transformId = getNpcTemplate().getTransformId();
 				// 変身しないモンスター
 				if (transformId == -1) {
-					if (getNpcTemplate().get_npcId() == 97008 || getNpcTemplate().get_npcId() == 97046) {
-						bloodstain();
-						// 結束屠龍副本
-						L1DragonSlayer.getInstance().endDragonSlayer(getPortalNumber());
+					if (getPortalNumber() != -1) {
+						if (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97044) {
+							// 準備階段二
+							L1DragonSlayer.getInstance().spawnDragon(this, 2);
+						} else if (getNpcTemplate().get_npcId() == 97007 || getNpcTemplate().get_npcId() == 97045) {
+							// 準備階段三
+							L1DragonSlayer.getInstance().spawnDragon(this, 3);
+						} else if (getNpcTemplate().get_npcId() == 97008 || getNpcTemplate().get_npcId() == 97046) {
+							bloodstain();
+							// 結束屠龍副本
+							L1DragonSlayer.getInstance().endDragonSlayer(getPortalNumber());
+						}
 					}
 					setCurrentHpDirect(0);
 					setDead(true);
 					setStatus(ActionCodes.ACTION_Die);
 					openDoorWhenNpcDied(this);
+					openDragonDoorWhenNpcDied(this);
 					Death death = new Death(attacker);
 					GeneralThreadPool.getInstance().execute(death);
 					// Death(attacker);
-					if (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007 
-						|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045) {
+					if (getPortalNumber() == -1
+							&& (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007
+								|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045)) {
 						doNextDragonStep(attacker, getNpcTemplate().get_npcId());
 					}
 				}
@@ -412,8 +411,9 @@ public class L1MonsterInstance extends L1NpcInstance {
 			Death death = new Death(attacker);
 			GeneralThreadPool.getInstance().execute(death);
 			// Death(attacker);
-			if (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007 
-				|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045) {
+			if (getPortalNumber() == -1
+					&& (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97007
+						|| getNpcTemplate().get_npcId() == 97044 || getNpcTemplate().get_npcId() == 97045)) {
 				doNextDragonStep(attacker, getNpcTemplate().get_npcId());
 			}
 		}
@@ -428,6 +428,34 @@ public class L1MonsterInstance extends L1NpcInstance {
 		for (int i = 0; i < npcId.length; i++) {
 			if (npc.getNpcTemplate().get_npcId() == npcId[i]) {
 				openDoorInCrystalCave(doorId[i]);
+				break;
+			}
+		}
+	}
+
+	// 屠龍副本中喀瑪族、阿爾波斯守門者守護之門編號
+	private static void openDragonDoorWhenNpcDied(L1NpcInstance npc) {
+		int[] npcId = { 97011, 97012, 97013 };
+		int[][][] doorId = {
+			{ {7001, 7004, 7007, 7010}, {7013, 7016, 7019, 7022}, {7025, 7028, 7031, 7034},
+				{7037, 7040, 7043, 7046}, {7049, 7052, 7055, 7058}, {7061, 7064, 7067, 7070} },
+			{ {7002, 7005, 7008, 7011}, {7014, 7017, 7020, 7023}, {7026, 7029, 7032, 7035},
+				{7038, 7041, 7044, 7047}, {7050, 7053, 7056, 7059}, {7062, 7065, 7068, 7071} },
+			{ {7003, 7006, 7009, 7012}, {7015, 7018, 7021, 7024}, {7027, 7030, 7033, 7036},
+				{7039, 7042, 7045, 7048}, {7051, 7054, 7057, 7060}, {7063, 7066, 7069, 7072} }
+		};
+		for (int i = 0; i < npcId.length; i++) { // 檢查NPCID
+			if (npc.getNpcTemplate().get_npcId() == npcId[i]) {
+				for (int j = 0; j < doorId[i].length; j++) { // 檢查NPC所在地圖編號
+					if (j == (npc.getMapId() - 1005)) {
+						for (int k = 0; k < doorId[i][j].length; k++) { // 檢查守護的門ID
+							if (k == npc.getPortalNumber()) {
+								openDoorInCrystalCave(doorId[i][j][k]);
+								break;
+							}
+						}
+					}
+				}
 			}
 		}
 	}
@@ -448,7 +476,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 	 * 
 	 * @param pc
 	 */
-	private void recall(L1PcInstance pc) {
+	/*private void recall(L1PcInstance pc) {
 		if (getMapId() != pc.getMapId()) {
 			return;
 		}
@@ -461,7 +489,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 				}
 			}
 		}
-	}
+	}*/
 
 	@Override
 	public void setCurrentHp(int i) {
