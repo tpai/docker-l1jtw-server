@@ -4468,186 +4468,130 @@ public class C_NPCAction extends ClientBasePacket {
 			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR);// 任務編號階段
 			int level = pc.getLevel();// 角色等級
 			char s1 = s.charAt(0);
-			if (pc.getLevel() < 13) {
+			if (level < 13) {
 				switch (s1) {
-					// isCrown
-					case 'A':
-					case 'a':
+					case 'A': case 'a':// isCrown
 						if ((level > 1) && (level < 5)) {// lv2 ~ lv4
 							htmlid = "tutorp1";// 指引
-						}
-						else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
+						} else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
 							htmlid = "tutorp2";// 傳送服務
-						}
-						else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
+						} else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
 							htmlid = "tutorp3";// 傳送服務
-						}
-						else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
+						} else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
 							htmlid = "tutorp4";// 傳送服務
-						}
-						else if ((level > 11) && (level < 13)) {// lv12
+						} else if ((level > 11) && (level < 13)) {// lv12
 							htmlid = "tutorp5";// 傳送服務
-						}
-						else if (level > 12) {// lv13
+						} else if (level > 12) {// lv13
 							htmlid = "tutorp6";// 離開隱藏之谷
-						}
-						else {
+						} else {
 							htmlid = "tutorend";
 						}
 						break;
-					// isKnight
-					case 'B':
-					case 'b':
+					case 'B': case 'b':// isKnight
 						if ((level > 1) && (level < 5)) {// lv2 ~ lv4
 							htmlid = "tutork1";// 接受幫助
-						}
-						else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
+						} else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
 							htmlid = "tutork2";// 傳送服務
-						}
-						else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
+						} else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
 							htmlid = "tutork3";// 傳送服務
-						}
-						else if ((level > 9) && (level < 13)) {// lv10 ~ lv12
+						} else if ((level > 9) && (level < 13)) {// lv10 ~ lv12
 							htmlid = "tutork4";// 傳送服務
-						}
-						else if (level > 12) {// lv13
+						} else if (level > 12) {// lv13
 							htmlid = "tutork5";// 離開隱藏之谷
-						}
-						else {
+						} else {
 							htmlid = "tutorend";
 						}
-						break;
-					// isElf
-					case 'C':
-					case 'c':
+						break; 
+					case 'C': case 'c':// isElf
 						if ((level > 1) && (level < 5)) {// lv2 ~ lv4
 							htmlid = "tutore1";// 接受幫助
-						}
-						else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
+						} else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
 							htmlid = "tutore2";// 傳送服務
-						}
-						else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
+						} else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
 							htmlid = "tutore3";// 傳送服務
-						}
-						else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
+						} else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
 							htmlid = "tutore4";// 傳送服務
-						}
-						else if ((level > 11) && (level < 13)) {// lv12
+						} else if ((level > 11) && (level < 13)) {// lv12
 							htmlid = "tutore5";// 傳送服務
-						}
-						else if (level > 12) {// lv13
+						} else if (level > 12) {// lv13
 							htmlid = "tutore6";// 離開隱藏之谷
-						}
-						else {
+						} else {
 							htmlid = "tutorend";
 						}
 						break;
-					// isWizard
-					case 'D':
-					case 'd':
+					case 'D': case 'd':// isWizard
 						if ((level > 1) && (level < 5)) {// lv2 ~ lv4
 							htmlid = "tutorm1";// 接受幫助
-						}
-						else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
+						} else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
 							htmlid = "tutorm2";// 傳送服務
-						}
-						else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
+						} else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
 							htmlid = "tutorm3";// 傳送服務
-						}
-						else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
+						} else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
 							htmlid = "tutorm4";// 傳送服務
-						}
-						else if ((level > 11) && (level < 13)) {// lv12
+						} else if ((level > 11) && (level < 13)) {// lv12
 							htmlid = "tutorm5";// 傳送服務
-						}
-						else if (level > 12) {// lv13
+						} else if (level > 12) {// lv13
 							htmlid = "tutorm6";// 離開隱藏之谷
-						}
-						else {
+						} else {
 							htmlid = "tutorend";
 						}
 						break;
-					// isDarkelf
-					case 'E':
-					case 'e':
+					case 'E': case 'e':// isDarkelf
 						if ((level > 1) && (level < 5)) {// lv2 ~ lv4
 							htmlid = "tutord1";// 接受幫助
-						}
-						else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
+						} else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
 							htmlid = "tutord2";// 傳送服務
-						}
-						else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
+						} else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
 							htmlid = "tutord3";// 傳送服務
-						}
-						else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
+						} else if ((level > 9) && (level < 12)) {// lv10 ~ lv11
 							htmlid = "tutord4";// 傳送服務
-						}
-						else if ((level > 11) && (level < 13)) {// lv12
+						} else if ((level > 11) && (level < 13)) {// lv12
 							htmlid = "tutord5";// 傳送服務
-						}
-						else if (level > 12) {// lv13
+						} else if (level > 12) {// lv13
 							htmlid = "tutord6";// 離開隱藏之谷
-						}
-						else {
+						} else {
 							htmlid = "tutorend";
 						}
 						break;
-					// isDragonKnight
-					case 'F':
-					case 'f':
+					case 'F': case 'f':// isDragonKnight
 						if ((level > 1) && (level < 5)) {// lv2 ~ lv4
 							htmlid = "tutordk1";// 接受幫助
-						}
-						else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
+						} else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
 							htmlid = "tutordk2";// 傳送服務
-						}
-						else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
+						} else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
 							htmlid = "tutordk3";// 傳送服務
-						}
-						else if ((level > 9) && (level < 13)) {// lv10 ~ lv12
+						} else if ((level > 9) && (level < 13)) {// lv10 ~ lv12
 							htmlid = "tutordk4";// 傳送服務
-						}
-						else if (level > 12) {// lv13
+						} else if (level > 12) {// lv13
 							htmlid = "tutordk5";// 離開隱藏之谷
-						}
-						else {
+						} else {
 							htmlid = "tutorend";
 						}
 						break;
-					// isIllusionist
-					case 'G':
-					case 'g':
+					case 'G': case 'g':// isIllusionist
 						if ((level > 1) && (level < 5)) {// lv2 ~ lv4
 							htmlid = "tutori1";// 接受幫助
-						}
-						else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
+						} else if ((level > 4) && (level < 8)) {// lv5 ~ lv7
 							htmlid = "tutori2";// 傳送服務
-						}
-						else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
+						} else if ((level > 7) && (level < 10)) {// lv8 ~ lv9
 							htmlid = "tutori3";// 傳送服務
-						}
-						else if ((level > 9) && (level < 13)) {// lv10 ~ lv12
+						} else if ((level > 9) && (level < 13)) {// lv10 ~ lv12
 							htmlid = "tutori4";// 傳送服務
-						}
-						else if (level > 12) {// lv13
+						} else if (level > 12) {// lv13
 							htmlid = "tutori5";// 離開隱藏之谷
-						}
-						else {
+						} else {
 							htmlid = "tutorend";
 						}
 						break;
-					case 'H':
-					case 'h':
+					case 'H': case 'h':
 						L1Teleport.teleport(pc, 32575, 32945, (short) 0, 5, true); // 說話之島倉庫管理員
 						htmlid = "";
 						break;
-					case 'I':
-					case 'i':
+					case 'I': case 'i':
 						L1Teleport.teleport(pc, 32579, 32923, (short) 0, 5, true); // 血盟執行人
 						htmlid = "";
 						break;
-					case 'J':
-					case 'j':
+					case 'J': case 'j':
 						createitem = new int[]
 						{ 42099 };
 						createcount = new int[]
@@ -4655,73 +4599,59 @@ public class C_NPCAction extends ClientBasePacket {
 						L1Teleport.teleport(pc, 32676, 32813, (short) 2005, 5, true); // 隱藏之谷地下洞穴
 						htmlid = "";
 						break;
-					case 'K':
-					case 'k':
+					case 'K': case 'k':
 						L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); // 魔法師吉倫小屋
 						htmlid = "";
 						break;
-					case 'L':
-					case 'l':
+					case 'L': case 'l':
 						L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); // 象牙塔
 						htmlid = "";
 						break;
-					case 'M':
-					case 'm':
+					case 'M': case 'm':
 						L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); // 黑暗魔法師賽帝亞
 						htmlid = "";
 						break;
-					case 'N':
-					case 'n':
+					case 'N': case 'n':
 						L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); // 幻術士史菲爾
 						htmlid = "";
 						break;
-					case 'O':
-					case 'o':
+					case 'O': case 'o':
 						L1Teleport.teleport(pc, 32605, 32837, (short) 2005, 5, true); // 村莊西郊
 						htmlid = "";
 						break;
-					case 'P':
-					case 'p':
+					case 'P': case 'p':
 						L1Teleport.teleport(pc, 32733, 32902, (short) 2005, 5, true); // 村莊東郊
 						htmlid = "";
 						break;
-					case 'Q':
-					case 'q':
+					case 'Q': case 'q':
 						L1Teleport.teleport(pc, 32559, 32843, (short) 2005, 5, true); // 村莊南部狩獵場
 						htmlid = "";
 						break;
-					case 'R':
-					case 'r':
+					case 'R': case 'r':
 						L1Teleport.teleport(pc, 32677, 32982, (short) 2005, 5, true); // 村莊東南部狩獵場
 						htmlid = "";
 						break;
-					case 'S':
-					case 's':
+					case 'S': case 's':
 						L1Teleport.teleport(pc, 32781, 32854, (short) 2005, 5, true); // 村莊東北部狩獵場
 						htmlid = "";
 						break;
-					case 'T':
-					case 't':
+					case 'T': case 't':
 						L1Teleport.teleport(pc, 32674, 32739, (short) 2005, 5, true); // 村莊西北部狩獵場
 						htmlid = "";
 						break;
-					case 'U':
-					case 'u':
+					case 'U': case 'u':
 						L1Teleport.teleport(pc, 32578, 32737, (short) 2005, 5, true); // 村莊西部狩獵場
 						htmlid = "";
 						break;
-					case 'V':
-					case 'v':
+					case 'V': case 'v':
 						L1Teleport.teleport(pc, 32542, 32996, (short) 2005, 5, true); // 村莊南部狩獵場
 						htmlid = "";
 						break;
-					case 'W':
-					case 'w':
+					case 'W': case 'w':
 						L1Teleport.teleport(pc, 32794, 32973, (short) 2005, 5, true); // 村莊東部狩獵場
 						htmlid = "";
 						break;
-					case 'X':
-					case 'x':
+					case 'X': case 'x':
 						L1Teleport.teleport(pc, 32803, 32789, (short) 2005, 5, true); // 村莊北部狩獵場
 						htmlid = "";
 						break;
@@ -4731,7 +4661,7 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81256) {// 修練場管理員
-			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR);// 任務編號階段
+			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR2);// 任務編號階段
 			int level = pc.getLevel();// 角色等級
 			boolean isOK = false;
 			if (s.equalsIgnoreCase("A")) {
@@ -4740,52 +4670,42 @@ public class C_NPCAction extends ClientBasePacket {
 					{ 20028, 20126, 20173, 20206, 20232, 40029, 40030, 40098, 40099, 42099 }; // 獲得裝備
 					createcount = new int[]
 					{ 1, 1, 1, 1, 1, 50, 5, 20, 30, 5 };
-					questid = L1Quest.QUEST_TUTOR;
+					questid = L1Quest.QUEST_TUTOR2;
 					questvalue = 3;
 				}
 			}
 			htmlid = "";
 		}
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81257) {// 旅人諮詢員
-			int quest_step1 = pc.getQuest().get_step(L1Quest.QUEST_ARMOR1);// 任務編號階段
-			int quest_step2 = pc.getQuest().get_step(L1Quest.QUEST_ARMOR2);// 任務編號階段
-			int quest_step3 = pc.getQuest().get_step(L1Quest.QUEST_ARMOR3);// 任務編號階段
 			int level = pc.getLevel();// 角色等級
 			char s1 = s.charAt(0);
-			if (pc.getLevel() < 46) {
+			if (level < 46) {
 				switch (s1) {
-					case 'A':
-					case 'a':
+					case 'A': case 'a':
 						L1Teleport.teleport(pc, 32562, 33082, (short) 0, 5, true); // 魔法師吉倫小屋
 						htmlid = "";
 						break;
-					case 'B':
-					case 'b':
+					case 'B': case 'b':
 						L1Teleport.teleport(pc, 33119, 32933, (short) 4, 5, true); // 正義神殿
 						htmlid = "";
 						break;
-					case 'C':
-					case 'c':
+					case 'C': case 'c':
 						L1Teleport.teleport(pc, 32887, 32652, (short) 4, 5, true); // 邪惡神殿
 						htmlid = "";
 						break;
-					case 'D':
-					case 'd':
+					case 'D': case 'd':
 						L1Teleport.teleport(pc, 32792, 32820, (short) 75, 5, true); // 販售妖精精靈魔法的琳達
 						htmlid = "";
 						break;
-					case 'E':
-					case 'e':
-						L1Teleport.teleport(pc, 32792, 32845, (short) 76, 5, true); // 象牙塔的精靈魔法修煉室
+					case 'E': case 'e':
+						L1Teleport.teleport(pc, 32789, 32851, (short) 76, 5, true); // 象牙塔的精靈魔法修煉室
 						htmlid = "";
 						break;
-					case 'F':
-					case 'f':
+					case 'F': case 'f':
 						L1Teleport.teleport(pc, 32750, 32847, (short) 76, 5, true); // 象牙塔的艾利溫
 						htmlid = "";
 						break;
-					case 'G':
-					case 'g':
+					case 'G': case 'g':
 						if (pc.isDarkelf()) {
 							L1Teleport.teleport(pc, 32877, 32904, (short) 304, 5, true); // 黑暗魔法師賽帝亞
 							htmlid = "";
@@ -4794,8 +4714,7 @@ public class C_NPCAction extends ClientBasePacket {
 							htmlid = "lowlv40";
 						}
 						break;
-					case 'H':
-					case 'h':
+					case 'H': case 'h':
 						if (pc.isDragonKnight()) {
 							L1Teleport.teleport(pc, 32811, 32873, (short) 1001, 5, true); // 販售龍騎士技能的森帕爾處
 							htmlid = "";
@@ -4804,8 +4723,7 @@ public class C_NPCAction extends ClientBasePacket {
 							htmlid = "lowlv41";
 						}
 						break;
-					case 'I':
-					case 'i':
+					case 'I': case 'i':
 						if (pc.isIllusionist()) {
 							L1Teleport.teleport(pc, 32759, 32884, (short) 1000, 5, true); // 販售幻術士魔法的史菲爾處
 							htmlid = "";
@@ -4814,18 +4732,14 @@ public class C_NPCAction extends ClientBasePacket {
 							htmlid = "lowlv42";
 						}
 						break;
-					case 'J':
-					case 'j':
+					case 'J': case 'j':
 						L1Teleport.teleport(pc, 32509, 32867, (short) 0, 5, true); // 說話之島的甘特處
 						htmlid = "";
 						break;
-					case 'K':
-					case 'k':
-						if ((level > 34) && (quest_step2 < 10)) {
-							createitem = new int[]
-							{ 20282, 21139 }; // 補充象牙塔飾品
-							createcount = new int[]
-							{ 0, 0 };
+					case 'K': case 'k':
+						if ((level > 34)) {
+							createitem = new int[] { 20282, 21139 }; // 補充象牙塔飾品
+							createcount = new int[] { 0, 0 };
 							boolean isOK = false;
 							for (int i = 0; i < createitem.length; i++) {
 								if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
@@ -4834,27 +4748,12 @@ public class C_NPCAction extends ClientBasePacket {
 								}
 							}
 							if (isOK) {
-								quest_step2++;
-								if (quest_step2 >= 9) {
-									questid = L1Quest.QUEST_ARMOR2;
-									questvalue = 255;
-								}
-								else {
-									questid = L1Quest.QUEST_ARMOR2;
-									questvalue = quest_step2;
-								}
-								pc.sendPackets(new S_SystemMessage("還可以補充 " + (10 - quest_step2) + "次。"));
 								success_htmlid = "lowlv43";
-							}
-							else {
+							} else {
 								htmlid = "lowlv45";
 							}
-						}
-						else if (level < 35) {
+						} else {
 							htmlid = "lowlv44";
-						}
-						else if (quest_step2 > 9) {
-							htmlid = "lowlv45";
 						}
 						break;
 					case '0':
@@ -4880,69 +4779,50 @@ public class C_NPCAction extends ClientBasePacket {
 						}
 						break;
 					case '2':
-						if (quest_step1 < 10) {
-							createitem = new int[]
-							{ 20028, 20126, 20173, 20206, 20232, 21138, 49310 }; // 補充象牙塔裝備
-																					// (可補充
-																					// 10
-																					// 次)
-							createcount = new int[]
-							{ 0, 0, 0, 0, 0, 0, 1000 };
-							boolean isOK = false;
-							for (int i = 0; i < createitem.length - 1; i++) {
-								if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
-									createcount[i] = 1;
+						createitem = new int[]
+						{ 20028, 20126, 20173, 20206, 20232, 21138, 49310 }; // 補充象牙塔裝備
+						createcount = new int[]
+						{ 0, 0, 0, 0, 0, 0, 0 };
+						boolean isOK = false;
+						for (int i = 0; i < createitem.length; i++) {
+							if (createitem[i] == 49310) {
+								L1ItemInstance item = pc.getInventory().findItemId(createitem[i]);
+								if (item != null) {
+									if (item.getCount() < 1000) {
+										createcount[i] = 1000 - item.getCount();
+										isOK = true;
+									}
+								} else {
+									createcount[i] = 1000;
 									isOK = true;
 								}
-							}
-							if (isOK) {
-								quest_step1++;
-								if (quest_step2 >= 9) {
-									questid = L1Quest.QUEST_ARMOR1;
-									questvalue = 255;
-								}
-								else {
-									questid = L1Quest.QUEST_ARMOR1;
-									questvalue = quest_step1;
-								}
-								pc.sendPackets(new S_SystemMessage("還可以補充 " + (10 - quest_step1) + "次。"));
-								success_htmlid = "lowlv16";
-							}
-							else {
-								htmlid = "lowlv17";
+							} else if (!pc.getInventory().checkItem(createitem[i], 1)) { // check
+								createcount[i] = 1;
+								isOK = true;
 							}
 						}
-						else if (quest_step1 > 9) {
+						if (isOK) {
+							success_htmlid = "lowlv16";
+						} else {
 							htmlid = "lowlv17";
 						}
 						break;
 					case '6':
-						if ((quest_step3 < 10) && !pc.getInventory().checkItem(49313, 1)) {
+						if (!pc.getInventory().checkItem(49313, 1) && !pc.getInventory().checkItem(49314, 1)) {
 							createitem = new int[]
-							{ 49313 }; // 購買象牙塔魔法袋 (可購買 10 次)
+							{ 49313 }; // 象牙塔魔法袋
 							createcount = new int[]
 							{ 2 };
 							materials = new int[]
 							{ 40308 };
 							counts = new int[]
 							{ 2000 };
-							quest_step3++;
-							if (quest_step3 >= 9) {
-								questid = L1Quest.QUEST_ARMOR3;
-								questvalue = 255;
-							}
-							else {
-								questid = L1Quest.QUEST_ARMOR3;
-								questvalue = quest_step3;
-							}
-							pc.sendPackets(new S_SystemMessage("還可以購買 " + (10 - quest_step3) + "次。"));
 							success_htmlid = "lowlv22";
 							failure_htmlid = "lowlv20";
-						}
-						else if (pc.getInventory().checkItem(49313, 1)) {
+						} else if (pc.getInventory().checkItem(49313, 1) 
+							|| pc.getInventory().checkItem(49314, 1)) {
 							htmlid = "lowlv23";
-						}
-						else {
+						} else {
 							htmlid = "lowlvno";
 						}
 						break;

@@ -1102,3 +1102,5 @@ INSERT INTO `npcaction` VALUES ('81273', '', '', '', '');
 INSERT INTO `npcaction` VALUES ('81274', '', '', '', '');
 INSERT INTO `npcaction` VALUES ('81275', '', '', '', '');
 INSERT INTO `npcaction` VALUES ('81276', '', '', '', '');
+INSERT INTO `npcaction` VALUES ('70649', 'lary1', 'lary1', '', '');
+INSERT INTO `npcaction` VALUES ('70652', 'laryaide1', 'laryaide1', '', '');

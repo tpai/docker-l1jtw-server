@@ -3463,8 +3463,13 @@ public class L1MerchantInstance extends L1NpcInstance {
 				if (playerLv < 13) {
 					newUserHelp(player, 1);// HASTE & Full HP MP
 				}
-				if (playerLv < 13 && quest_step == 0) {
+				if (playerLv < 2 && quest_step == 0) {
 					player.addExp(125);//給予 LV2 EXP
+					L1ItemInstance item = player.getInventory().storeItem(42099, 5); //指定傳送卷軸(隱藏之谷) * 5
+					player.sendPackets(new S_ServerMessage(143, item.getItem().getName()));
+					quest.set_step(L1Quest.QUEST_TUTOR, 1); // 設定任務
+					htmlid = "";
+				} else if (playerLv > 1 && playerLv < 13 && quest_step == 0) {
 					L1ItemInstance item = player.getInventory().storeItem(42099, 5); //指定傳送卷軸(隱藏之谷) * 5
 					player.sendPackets(new S_ServerMessage(143, item.getItem().getName()));
 					quest.set_step(L1Quest.QUEST_TUTOR, 1); // 設定任務
@@ -3487,21 +3492,28 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "tutorend";
 				}
 			} else if (npcid == 81256) { // 修練場管理員
-				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);//任務編號階段
+				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR2);//任務編號階段
 				int playerLv = player.getLevel();//角色等級
-				if (playerLv < 13) {
+				if (playerLv > 4 && playerLv < 13 && quest_step > 2) {
 					newUserHelp(player, 2);// HASTE
-				}
-				if (playerLv > 1 && quest_step == 1) {
-					if (playerLv < 6) {
+				} else if (playerLv > 4 && playerLv < 13 && quest_step < 2) {
+					if (playerLv < 12) {
 						player.addExp(ExpTable.getNeedExpNextLevel(playerLv));//給予 up lv +1
 					}
-					newUserHelp(player, 3);// 神聖
-					quest.set_step(L1Quest.QUEST_TUTOR, 2); // 設定任務
-					htmlid = "";
-				} else if (playerLv > 4 && playerLv < 14 && quest_step == 2) {
+					newUserHelp(player, 2);// HASTE
+					quest.set_step(L1Quest.QUEST_TUTOR2, 2); // 設定任務
 					htmlid = "admin3";//獲得裝備
+				} else if (playerLv > 1 && playerLv < 12 && quest_step == 0) {
+					newUserHelp(player, 2);// HASTE
+					if (playerLv < 6) {
+						player.addExp(ExpTable.getNeedExpNextLevel(playerLv));//給予 up lv +1
+						newUserHelp(player, 3);// 神聖
+					}
+					quest.set_step(L1Quest.QUEST_TUTOR2, 1); // 設定任務
+					htmlid = "admin2";
 				} else if (playerLv < 5) {
+					newUserHelp(player, 2);// HASTE
+					newUserHelp(player, 3);// 神聖
 					htmlid = "admin2";
 				}
 			} else if (npcid == 81257) { // 旅人諮詢員
@@ -3539,36 +3551,6 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "gemout17";
 					}
 				}
-			} else if (npcid >= 81273 && npcid <= 81276) { // 龍之門扉
-				switch (npcid) {
-					case 81273: // 安塔瑞斯 Antharas
-						if (getRBplayerCount((short) 1005) < 32) {
-							L1Teleport.teleport(player, 32599, 32742, (short) 1005, 5, true);
-						} else {
-							player.sendPackets(new S_ServerMessage(1229));
-						}
-						break;
-					case 81274: // 法利昂 Fafurion
-						if (getRBplayerCount((short) 1011) < 32) {
-							L1Teleport.teleport(player, 32927, 32741, (short) 1011, 5, true);
-						} else {
-							player.sendPackets(new S_ServerMessage(1229));
-						}
-						break;
-					case 81275: // 未開放 Lindvior
-						/*if (getRBplayerCount((short) 1005) < 32) {
-							L1Teleport.teleport(player, 32599, 32742, (short) 1005, 5, true);
-						} else {
-							player.sendPackets(new S_ServerMessage(1229));
-						}*/
-						break;
-					case 81276: // 未開放 Valakas
-						/*if (getRBplayerCount((short) 1005) < 32) {
-							L1Teleport.teleport(player, 32599, 32742, (short) 1005, 5, true);
-						} else {
-							player.sendPackets(new S_ServerMessage(1229));
-						}*/
-				}		
 			}
 
 			// html表示パケット送信

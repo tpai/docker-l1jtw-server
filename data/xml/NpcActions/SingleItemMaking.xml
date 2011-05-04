@@ -1299,4 +1299,273 @@
 			<Material Amount="200000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 安塔瑞斯之鱗x1,安塔瑞斯之骨x1-->
+	<Action Name="request druga treasure1 a" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40623"/>
+					<Material Amount="1" ItemId="40341"/>
+					<Material Amount="1" ItemId="40347"/>
+			</MakeItem>
+	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 法利昂之鱗x1,法利昂之骨x1-->
+	<Action Name="request druga treasure1 f" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40623"/>
+					<Material Amount="1" ItemId="40357"/>
+					<Material Amount="1" ItemId="40363"/>
+			</MakeItem>
+	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 林德拜爾之鱗x1,林德拜爾之骨x1-->
+	<Action Name="request druga treasure1 l" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40623"/>
+					<Material Amount="1" ItemId="40365"/>
+					<Material Amount="1" ItemId="40371"/>
+			</MakeItem>
+	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 巴拉卡斯之鱗x1,巴拉卡斯之骨x1-->
+	<Action Name="request druga treasure1 v" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40623"/>
+					<Material Amount="1" ItemId="40349"/>
+					<Material Amount="1" ItemId="40355"/>
+			</MakeItem>
+	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 安塔瑞斯之鱗x1,安塔瑞斯之骨x1,安塔瑞斯之爪x1-->
+	<Action Name="request druga treasure2 a" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40624"/>
+					<Material Amount="1" ItemId="40341"/>
+					<Material Amount="1" ItemId="40347"/>
+					<Material Amount="1" ItemId="40342"/>
+			</MakeItem>
+	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 法利昂之鱗x1,法利昂之骨x1,法利昂之爪x1-->
+	<Action Name="request druga treasure2 f" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40624"/>
+					<Material Amount="1" ItemId="40357"/>
+					<Material Amount="1" ItemId="40363"/>
+					<Material Amount="1" ItemId="40358"/>
+			</MakeItem>
+	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 林德拜爾之鱗x1,林德拜爾之骨x1,林德拜爾之爪x1-->
+	<Action Name="request druga treasure2 l" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40624"/>
+					<Material Amount="1" ItemId="40365"/>
+					<Material Amount="1" ItemId="40371"/>
+					<Material Amount="1" ItemId="40366"/>
+			</MakeItem>
+	</Action>
+	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 巴拉卡斯之鱗x1,巴拉卡斯之骨x1,巴拉卡斯之爪x1-->
+	<Action Name="request druga treasure2 v" NpcId="70652">
+			<MakeItem>
+					<Item Amount="1" ItemId="40624"/>
+					<Material Amount="1" ItemId="40349"/>
+					<Material Amount="1" ItemId="40355"/>
+					<Material Amount="1" ItemId="40350"/>
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure3 a" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
+					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
+					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
+		   </MakeItem>
+	</Action>
+	<Action Name="request druga treasure3 f" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
+					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
+					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
+					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure3 l" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
+					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
+					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
+					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure3 v" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
+					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
+					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure4 a" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
+					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
+					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
+					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure4 f" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
+					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
+					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
+					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
+					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure4 l" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
+					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
+					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
+					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
+					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure4 v" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
+					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
+					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
+					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure5 a" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
+					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
+					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
+					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
+					<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure5 f" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
+					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
+					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
+					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
+					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
+					<Material Amount="1" ItemId="40364" />  <!--法利昂之牙 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure5 l" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
+					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
+					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
+					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
+					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
+					<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure5 v" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
+					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
+					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
+					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
+					<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure6 a" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
+					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
+					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
+					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
+					<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙 * 1-->
+					<Material Amount="1" ItemId="40343" />  <!--安塔瑞斯之眼 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure6 f" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
+					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
+					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
+					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
+					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
+					<Material Amount="1" ItemId="40364" />  <!--法利昂之牙 * 1-->
+					<Material Amount="1" ItemId="40359" />  <!--法利昂之眼 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure6 l" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
+					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
+					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
+					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
+					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
+					<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙 * 1-->
+					<Material Amount="1" ItemId="40367" />  <!--林德拜爾之眼 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure6 v" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
+					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
+					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
+					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
+					<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙 * 1-->
+					<Material Amount="1" ItemId="40351" />  <!--巴拉卡斯之眼 * 1-->
+			</MakeItem>
+	</Action>
+	<Action Name="request druga treasure7" NpcId="70652">  <!--萊利的輔佐官-->
+			<MakeItem>
+					<Item Amount="1" ItemId="40629"/>       <!--多魯嘉7世傳家之寶 * 1-->
+					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
+					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
+					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
+					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
+					<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙 * 1-->
+					<Material Amount="1" ItemId="40343" />  <!--安塔瑞斯之眼 * 1-->
+					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
+					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
+					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
+					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
+					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
+					<Material Amount="1" ItemId="40364" />  <!--法利昂之牙 * 1-->
+					<Material Amount="1" ItemId="40359" />  <!--法利昂之眼 * 1-->
+					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
+					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
+					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
+					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
+					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
+					<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙 * 1-->
+					<Material Amount="1" ItemId="40367" />  <!--林德拜爾之眼 * 1-->
+					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
+					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
+					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
+					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
+					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
+					<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙 * 1-->
+					<Material Amount="1" ItemId="40351" />  <!--巴拉卡斯之眼 * 1-->
+			</MakeItem>
+	</Action>
 </NpcActionList>
