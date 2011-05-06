@@ -19,7 +19,6 @@ import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_FAFUR
 
 import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.L1Teleport;
-import l1j.server.server.model.L1World;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1Npc;
 
@@ -28,7 +27,6 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
 	/**
 	 * @param template
 	 */
@@ -42,12 +40,15 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 		int portalNumber = getPortalNumber(); // 龍門編號
 		int X = 32599;
 		int Y = 32742;
-		short mapId = 0;
-		if ((npcid >= 81273 && npcid <= 81276) && (portalNumber != -1)) {
-			mapId = (short) (1005 + portalNumber); // 地圖判斷 1005 ~ 1016
-			if (getRBplayerCount(mapId) >= 32) {
+		short mapId = 1005;
+		if ((npcid >= 81273 && npcid <= 81276)) { // 龍之門扉
+			if (portalNumber == -1) {
+				return;
+			}
+			mapId = (short) (1005 + portalNumber); // 地圖判斷
+			if (L1DragonSlayer.getInstance().getPlayersCount(portalNumber) >= 32) {
 				player.sendPackets(new S_ServerMessage(1536)); // 參與人員已額滿，目前無法再入場。
-			} else if (L1DragonSlayer.getInstance().isSpawnDragon()[portalNumber]) {
+			} else if (L1DragonSlayer.getInstance().getDragonSlayerStatus()[portalNumber] >= 5) {
 				player.sendPackets(new S_ServerMessage(1537)); // 攻略已經開始，目前無法入場。
 			} else {
 				if (portalNumber >= 0 && portalNumber <= 5) { // 安塔瑞斯副本
@@ -64,23 +65,28 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 					Y = 32741;
 				}
 				player.setPortalNumber(portalNumber);
+				L1DragonSlayer.getInstance().addPlayerList(player, portalNumber);
 				L1Teleport.teleport(player, X, Y, mapId, 2, true);
 			}
 		}
-	}
-
-	// 計算某地圖內玩家數量
-	private int getRBplayerCount(short mapId) {
-		int playerCount = 0;
-		for (Object obj : L1World.getInstance().getVisibleObjects(mapId)
-				.values()) {
-			if (obj instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) obj;
-				if (pc != null) {
-				   playerCount++;
-				}
-			}
+		else if (npcid == 81301) { // 傳送進入安塔瑞斯棲息地
+			L1DragonSlayer.getInstance().startDragonSlayer(player.getPortalNumber());
+			L1Teleport.teleport(player, 32795, 32665, player.getMapId(), 4, true);
 		}
-		return playerCount;
+		else if (npcid == 81302) { // 傳送出去安塔瑞斯棲息地
+			L1Teleport.teleport(player, 32700, 32671, player.getMapId(), 6, true);
+		}
+		else if (npcid == 81303) { // 傳送進入法利昂棲息地
+			L1DragonSlayer.getInstance().startDragonSlayer(player.getPortalNumber());
+			L1Teleport.teleport(player, 32988, 32843, player.getMapId(), 6, true);
+		}
+		else if (npcid == 81304) { // 傳送出去法利昂棲息地
+			L1Teleport.teleport(player, 32937, 32672, player.getMapId(), 6, true);
+		}
+		else if (npcid == 81305) { // 傳送進入安塔瑞斯洞穴
+		}
+		else if (npcid == 81306) { // 傳送到安塔瑞斯 洞穴入口(階段型)
+			L1Teleport.teleport(player, 32677, 32746, player.getMapId(), 6, true);
+		}
 	}
 }

@@ -19,11 +19,7 @@ import static l1j.server.server.model.skill.L1SkillId.ENCHANT_WEAPON;
 import static l1j.server.server.model.skill.L1SkillId.HOLY_WEAPON;
 import static l1j.server.server.model.skill.L1SkillId.SHADOW_FANG;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.LineNumberReader;
 import java.sql.Timestamp;
-import java.util.StringTokenizer;
 import java.util.Timer;
 import java.util.TimerTask;
 

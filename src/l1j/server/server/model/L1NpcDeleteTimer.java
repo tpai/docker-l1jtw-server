@@ -34,7 +34,7 @@ public class L1NpcDeleteTimer extends TimerTask {
 			if (_npc.getNpcId() == 81273 || _npc.getNpcId() == 81274 || _npc.getNpcId() == 81275
 					|| _npc.getNpcId() == 81276 || _npc.getNpcId() == 81277) {
 				if (_npc.getNpcId() == 81277) { // 隱匿的巨龍谷入口關閉
-					L1DragonSlayer.getInstance().setHiddenDragonValley((byte) 0);
+					L1DragonSlayer.getInstance().setHiddenDragonValleyStstus(0);
 				}
 				// 結束屠龍副本
 				L1DragonSlayer.getInstance().setPortalPack(_npc.getPortalNumber(), null);

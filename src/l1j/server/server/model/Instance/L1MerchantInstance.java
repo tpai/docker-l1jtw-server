@@ -29,7 +29,6 @@ import l1j.server.server.model.L1CastleLocation;
 import l1j.server.server.model.L1Clan;
 import l1j.server.server.model.L1NpcTalkData;
 import l1j.server.server.model.L1Quest;
-import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1TownLocation;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.gametime.L1GameTimeClock;
@@ -3890,20 +3889,4 @@ public class L1MerchantInstance extends L1NpcInstance {
 				break;
 		}
 	}
-
-	// 計算某地圖內玩家數量
-	private int getRBplayerCount(short mapId) {
-		int playerCount = 0;
-		for (Object obj : L1World.getInstance().getVisibleObjects(mapId)
-				.values()) {
-			if (obj instanceof L1PcInstance) {
-				L1PcInstance pc = (L1PcInstance) obj;
-				if (pc != null) {
-				   playerCount++;
-				}
-			}
-		}
-		return playerCount;
-	}
-
 }

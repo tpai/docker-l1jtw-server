@@ -33,6 +33,7 @@ import l1j.server.server.datatables.CharBuffTable;
 import l1j.server.server.encryptions.ClientIdExistsException;
 import l1j.server.server.encryptions.LineageEncryption;
 import l1j.server.server.encryptions.LineageKeys;
+import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.Getback;
 import l1j.server.server.model.L1Trade;
 import l1j.server.server.model.L1World;
@@ -559,6 +560,11 @@ public class ClientThread implements Runnable, PacketOutput {
 					follower.getX(), follower.getY(), follower.getHeading(),
 					follower.getMapId());
 			follower.deleteMe();
+		}
+
+		// 刪除屠龍副本此玩家紀錄
+		if (pc.getPortalNumber() != -1) {
+			L1DragonSlayer.getInstance().removePlayer(pc, pc.getPortalNumber());
 		}
 
 		// 儲存魔法狀態

@@ -30,7 +30,6 @@ import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.gametime.L1GameTimeClock;
-import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
@@ -47,8 +46,7 @@ public class Dungeon {
 
 	private enum DungeonType {
 		NONE, SHIP_FOR_FI, SHIP_FOR_HEINE, SHIP_FOR_PI, SHIP_FOR_HIDDENDOCK, SHIP_FOR_GLUDIN, SHIP_FOR_TI,
-		TALKING_ISLAND_HOTEL, GLUDIO_HOTEL, SILVER_KNIGHT_HOTEL, WINDAWOOD_HOTEL, HEINE_HOTEL, GIRAN_HOTEL, OREN_HOTEL,
-		DUNGEON_OF_ANTHARAS, DUNGEON_OF_FAFURION
+		TALKING_ISLAND_HOTEL, GLUDIO_HOTEL, SILVER_KNIGHT_HOTEL, WINDAWOOD_HOTEL, HEINE_HOTEL, GIRAN_HOTEL, OREN_HOTEL
 	}
 
 	public static Dungeon getInstance() {
@@ -78,12 +76,7 @@ public class Dungeon {
 				int newMapId = rs.getInt("new_mapid");
 				int heading = rs.getInt("new_heading");
 				DungeonType dungeonType = DungeonType.NONE;
-				if ((srcX == 32680) && (srcY == 32744 || srcY == 32745) &&
-						(srcMapId == 1005 || srcMapId == 1006 || srcMapId == 1007
-							|| srcMapId == 1008 || srcMapId == 1009 || srcMapId == 1010)) { // 安塔瑞斯洞穴 入口(階段型) - > 安塔瑞斯 洞穴
-					dungeonType = DungeonType.DUNGEON_OF_ANTHARAS;
-				}
-				else if ((((srcX == 33423) || (srcX == 33424) || (srcX == 33425) || (srcX == 33426)) && (srcY == 33502) && (srcMapId == 4 // ハイネ船着場->FI行きの船
+				if ((((srcX == 33423) || (srcX == 33424) || (srcX == 33425) || (srcX == 33426)) && (srcY == 33502) && (srcMapId == 4 // ハイネ船着場->FI行きの船
 						))
 						|| (((srcX == 32733) || (srcX == 32734) || (srcX == 32735) || (srcX == 32736)) && (srcY == 32794) && (srcMapId == 83))) { // FI行きの船->ハイネ船着場
 					dungeonType = DungeonType.SHIP_FOR_FI;
@@ -189,57 +182,7 @@ public class Dungeon {
 				teleportable = true;
 			}
 			else {
-				if (dungeonType == DungeonType.DUNGEON_OF_ANTHARAS) {
-					boolean closure = true;
-					boolean start = true;
-					int portalNum = pc.getPortalNumber();
-					for (int i = 0; i < 4; i++) {
-						if (!L1DragonSlayer.getInstance().checkExtraQuest()[portalNum][i]) { // 有未開啟的喀瑪族任務
-							if (L1DragonSlayer.getInstance().getExtraQuestPlayer()[portalNum][i] < 2) {
-								L1DragonSlayer.getInstance().addExtraQuestPlayer(portalNum, i, 1);
-								teleportable = true;
-								closure = false;
-								start = false;
-								switch (i) {
-									case 1:
-										newX = 32808;
-										if (locY == 32745) {
-											newY = 32802;
-										} else {
-											newY = 32803;
-										}
-										break;
-									case 2:
-										newX = 32936;
-										if (locY == 32745) {
-											newY = 32802;
-										} else {
-											newY = 32803;
-										}
-										break;
-									case 3:
-										newX = 32936;
-										if (locY == 32745) {
-											newY = 32610;
-										} else {
-											newY = 32611;
-										}
-										break;
-									default:
-										break;
-								}
-								break;
-							}
-							start = false;
-						}
-					}
-					if (start) {
-						pc.sendPackets(new S_ServerMessage(1537)); // 攻略已經開始，目前無法入場。
-					} else if (closure) {
-						pc.sendPackets(new S_ServerMessage(1536)); // 參與人員已額滿，目前無法再入場。
-					}
-				}
-				else if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL || dungeonType == DungeonType.GLUDIO_HOTEL
+				if (dungeonType == DungeonType.TALKING_ISLAND_HOTEL || dungeonType == DungeonType.GLUDIO_HOTEL
 						|| dungeonType == DungeonType.WINDAWOOD_HOTEL || dungeonType == DungeonType.SILVER_KNIGHT_HOTEL
 						|| dungeonType == DungeonType.HEINE_HOTEL || dungeonType == DungeonType.GIRAN_HOTEL
 						|| dungeonType == DungeonType.OREN_HOTEL) {

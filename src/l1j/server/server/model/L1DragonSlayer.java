@@ -14,6 +14,8 @@
  */
 package l1j.server.server.model;
 
+import java.util.ArrayList;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Level;
@@ -22,6 +24,11 @@ import java.util.logging.Logger;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.NpcTable;
+import l1j.server.server.model.Getback;
+import l1j.server.server.model.L1Inventory;
+import l1j.server.server.model.L1NpcDeleteTimer;
+import l1j.server.server.model.L1Teleport;
+import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1DoorInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -34,11 +41,45 @@ import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_Weather;
 import l1j.server.server.utils.Random;
+import l1j.server.server.utils.collections.Maps;
 
+/** 安塔瑞斯、法利昂副本 */
 public class L1DragonSlayer {
 	private static Logger _log = Logger.getLogger(L1DragonSlayer.class.getName());
 
 	private static L1DragonSlayer _instance;
+
+	public static final int STATUS_DRAGONSLAYER_NONE = 0;
+	public static final int STATUS_DRAGONSLAYER_READY_1RD = 1;
+	public static final int STATUS_DRAGONSLAYER_READY_2RD = 2;
+	public static final int STATUS_DRAGONSLAYER_READY_3RD = 3;
+	public static final int STATUS_DRAGONSLAYER_READY_4RD = 4;
+	public static final int STATUS_DRAGONSLAYER_START_1RD = 5;
+	public static final int STATUS_DRAGONSLAYER_START_2RD = 6;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_1 = 7;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_2 = 8;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_3 = 9;
+	public static final int STATUS_DRAGONSLAYER_START_2RD_4 = 10;
+	public static final int STATUS_DRAGONSLAYER_START_3RD = 11;
+	public static final int STATUS_DRAGONSLAYER_START_3RD_1 = 12;
+	public static final int STATUS_DRAGONSLAYER_START_3RD_2 = 13;
+	public static final int STATUS_DRAGONSLAYER_START_3RD_3 = 14;
+	public static final int STATUS_DRAGONSLAYER_END_1 = 15;
+	public static final int STATUS_DRAGONSLAYER_END_2 = 16;
+	public static final int STATUS_DRAGONSLAYER_END_3 = 17;
+	public static final int STATUS_DRAGONSLAYER_END_4 = 18;
+	public static final int STATUS_DRAGONSLAYER_END_5 = 19;
+	public static final int STATUS_DRAGONSLAYER_END = 20;
+
+	public static final int STATUS_NONE = 0;
+	public static final int STATUS_READY_SPAWN = 1;
+	public static final int STATUS_SPAWN = 2;
+
+	private static class DragonSlayer {
+		private ArrayList<L1PcInstance> _members = new ArrayList<L1PcInstance>();
+	}
+
+	private static final Map<Integer, DragonSlayer> _dataMap = Maps.newMap();
 
 	public static L1DragonSlayer getInstance() {
 		if (_instance == null) {
@@ -47,89 +88,6 @@ public class L1DragonSlayer {
 		return _instance;
 	}
 
-// 屠龍副本內 8人小副本
-	// 判斷是否已開啟
-	private boolean[][] _extraQuest = new boolean[12][4]; // 12個龍門，1個龍門4個8人小副本
-
-	public boolean[][] checkExtraQuest() {
-		return _extraQuest;
-	}
-
-	public void setExtraQuest(int portalNum, int number, boolean i) {
-		_extraQuest[portalNum][number] = i;
-	}
-
-	// 判斷參加人數
-	private int[][] _extraQuestPlayer =  new int[12][4];
-
-	public int[][] getExtraQuestPlayer() {
-		return _extraQuestPlayer;
-	}
-
-	public void addExtraQuestPlayer(int portalNum, int num, int i) {
-		_extraQuestPlayer[portalNum][num] = _extraQuestPlayer[portalNum][num] + i;
-		if (_extraQuestPlayer[portalNum][num] > 8) {
-			_extraQuestPlayer[portalNum][num] = 8;
-		} else if (_extraQuestPlayer[portalNum][num] < 0) {
-			_extraQuestPlayer[portalNum][num] = 0;
-		}
-		if (!checkExtraQuest()[portalNum][num]) {
-			spawnGuard timer = new spawnGuard(portalNum, num);
-			timer.begin();
-		}
-	}
-
-	// X秒後於守門者出現
-	public class spawnGuard extends TimerTask {
-
-		private final int _portalNum;
-		private final int _num;
-
-		public spawnGuard(int portalNum, int num) {
-			_portalNum = portalNum;
-			_num = num;
-		}
-
-		@Override
-		public void run() {
-			// 準備召喚守門者
-			if (!checkExtraQuest()[_portalNum][_num]) {
-				short mapId = (short) (1005 + _portalNum);
-				int[] data = null;
-				setExtraQuest(_portalNum, _num, true);
-				if (_portalNum >= 0 && _portalNum <= 5) { // 地龍副本
-					switch (_num) {
-						case 0:
-							data = new int[] {97011, 32642, 32799, 97012, 32649, 32850, 97013, 32642, 32922};
-							break;
-						case 1:
-							data = new int[] {97011, 32771, 32799, 97012, 32776, 32850, 97013, 32770, 32922};
-							break;
-						case 2:
-							data = new int[] {97011, 32899, 32799, 97012, 32904, 32850, 97013, 32899, 32922};
-							break;
-						case 3:
-							data = new int[] {97011, 32898, 32607, 97012, 32904, 32658, 97013, 32898, 32730};
-							break;
-					}
-				} else if (_portalNum >= 6 && _portalNum <= 11) { // 水龍副本
-					// 修改中
-				}
-				spawn(data[0], _num, data[1], data[2], mapId, 0, 0); // 守門者1
-				spawn(data[3], _num, data[4], data[5], mapId, 0, 0); // 守門者2
-				spawn(data[6], _num, data[7], data[8], mapId, 0, 0); // 守門者3
-			}
-			cancel();
-		}
-
-		public void begin() {
-			Timer timer = new Timer();
-			timer.schedule(this, 180000); // 延遲時間
-		}
-	}
-// 屠龍副本內 8人小副本 end
-
-// 屠龍副本
 	// 判斷龍之門扉是否開啟 ,最多12個龍門
 	private boolean[] _portalNumber = new boolean[12];
 
@@ -162,50 +120,6 @@ public class L1DragonSlayer {
 		return _checkDragonPortal;
 	}
 
-	// 判斷龍是否準備召喚
-	private boolean[] _readySpawnDragon = new boolean[12];
-
-	public boolean[] isReadySpawnDragon() {
-		return _readySpawnDragon;
-	}
-
-	public void setReadySpawnDragon(int number, boolean i) {
-		_readySpawnDragon[number] = i;
-	}
-
-	// 判斷龍是否已召喚
-	private boolean[] _isSpawnDragon = new boolean[12];
-
-	public boolean[] isSpawnDragon() {
-		return _isSpawnDragon;
-	}
-
-	public void setSpawnDragon(int number, boolean i) {
-		_isSpawnDragon[number] = i;
-	}
-
-	// 判斷是否要進行召喚第二、三階段的龍
-	private boolean[] _nextSpawnDragon = new boolean[12];
-
-	public boolean[] startNextSpawnDragon() {
-		return _nextSpawnDragon;
-	}
-
-	public void setNextSpawnDragon(int number, boolean i) {
-		_nextSpawnDragon[number] = i;
-	}
-
-	// 判斷隱匿的巨龍谷入口是否已出現
-	private byte _hiddenDragonValley = 0;
-
-	public byte checkHiddenDragonValley() {
-		return _hiddenDragonValley;
-	}
-
-	public void setHiddenDragonValley(byte i) {
-		_hiddenDragonValley = i;
-	}
-
 	// 龍之門扉物件
 	private L1NpcInstance[] _portal = new L1NpcInstance[12];
 
@@ -217,165 +131,308 @@ public class L1DragonSlayer {
 		_portal[number] = portal;
 	}
 
-	// 龍門持續時間結束
-	public void endDragonPortal(int portalNumber) {
-		if (portalNumber != -1) {
-			endDragonSlayerTimer timer = new endDragonSlayerTimer(portalNumber);
-			timer.begin();
-		}
+	// 副本目前狀態
+	private int[] _DragonSlayerStatus = new int[12];
+
+	public int[] getDragonSlayerStatus() {
+		return _DragonSlayerStatus;
 	}
 
-	// 屠龍任務完成
-	public void endDragonSlayer(int portalNumber) {
-		if (portalNumber != -1) {
-			if (checkHiddenDragonValley() == 0) { // 判斷隱匿的巨龍谷入口是否已開啟
-				setHiddenDragonValley((byte) 1);
+	public void setDragonSlayerStatus(int portalNum, int i) {
+		_DragonSlayerStatus[portalNum] = i;
+	}
+
+	// 判斷隱匿的巨龍谷入口是否已出現
+	private int _hiddenDragonValleyStstus = 0;
+
+	public int checkHiddenDragonValleyStstus() {
+		return _hiddenDragonValleyStstus;
+	}
+
+	public void setHiddenDragonValleyStstus(int i) {
+		_hiddenDragonValleyStstus = i;
+	}
+
+	// 加入玩家
+	public void addPlayerList(L1PcInstance pc, int portalNum) {
+		if (_dataMap.containsKey(portalNum)) {
+			if (!_dataMap.get(portalNum)._members.contains(pc)) {
+				_dataMap.get(portalNum)._members.add(pc);
 			}
-			endDragonSlayerTimer timer = new endDragonSlayerTimer(portalNumber);
+		}
+	}
+
+	// 移除玩家
+	public void removePlayer(L1PcInstance pc, int portalNum) {
+		if (_dataMap.containsKey(portalNum)) {
+			if (_dataMap.get(portalNum)._members.contains(pc)) {
+				_dataMap.get(portalNum)._members.remove(pc);
+			}
+		}
+	}
+
+	// 清除玩家
+	private void clearPlayerList(int portalNum) {
+		if (_dataMap.containsKey(portalNum)) {
+			_dataMap.get(portalNum)._members.clear();
+		}
+	}
+
+	// 取得參加人數
+	public int getPlayersCount(int num) {
+		DragonSlayer _DragonSlayer = null;
+		if (!_dataMap.containsKey(num)) {
+			_DragonSlayer = new DragonSlayer();
+			_dataMap.put(num, _DragonSlayer);
+		}
+		return _dataMap.get(num)._members.size();
+	}
+
+	private L1PcInstance[] getPlayersArray(int num) {
+		return _dataMap.get(num)._members.toArray(new L1PcInstance[_dataMap.get(num)._members.size()]);
+	}
+
+	// 開始第一階段
+	public void startDragonSlayer(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_NONE) {
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_READY_1RD);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_READY_1RD, 150000);
 			timer.begin();
 		}
 	}
 
-	// 屠龍結束 X秒後傳送玩家出地圖
-	public class endDragonSlayerTimer extends TimerTask {
+	// 開始第二階段
+	public void startDragonSlayer2rd(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_1RD) {
+			if (portalNum >= 6 && portalNum <= 11) {
+				sendMessage(portalNum, 1661, null); // 法利昂：可憐啊！他們就是和你一樣，註定要當我的祭品！
+			} else {
+				sendMessage(portalNum, 1573, null); // 安塔瑞斯：你這頑固的傢伙！你又激起我的憤怒了！
+			}
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_2RD);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_START_2RD, 10000);
+			timer.begin();
+		}
+	}
 
-		private final int _portalNum;
+	// 開始第三階段
+	public void startDragonSlayer3rd(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_2RD_4) {
+			if (portalNum >= 6 && portalNum <= 11) {
+				sendMessage(portalNum, 1665, null); // 巫女莎爾：法利昂的力量好像削弱了不少！ 勇士們啊，再接再厲吧！
+			} else {
+				sendMessage(portalNum, 1577, null); // 卡瑞：嗚啊！你有聽到那些冤魂的慘叫聲嗎！受死吧！！
+			}
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_START_3RD);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_START_3RD, 10000);
+			timer.begin();
+		}
+	}
 
-		public endDragonSlayerTimer (int portalNum) {
-			_portalNum = portalNum;
+	// 副本完成
+	public void endDragonSlayer(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] == STATUS_DRAGONSLAYER_START_3RD_3) {
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_END_1);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_END_1, 10000);
+			timer.begin();
+		}
+	}
+
+	// 門扉存在時間結束
+	public void endDragonPortal(int portalNum) {
+		if (getDragonSlayerStatus()[portalNum] != STATUS_DRAGONSLAYER_END_5) {
+			setDragonSlayerStatus(portalNum, STATUS_DRAGONSLAYER_END_5);
+			DragonSlayerTimer timer = new DragonSlayerTimer(portalNum, STATUS_DRAGONSLAYER_END_5, 5000);
+			timer.begin();
+		}
+	}
+
+	// 計時器
+	public class DragonSlayerTimer extends TimerTask {
+
+		private final int _num;
+		private final int _status;
+		private final int _time;
+
+		public DragonSlayerTimer(int num, int status, int time) {
+			_num = num;
+			_status = status;
+			_time = time;
 		}
 
 		@Override
 		public void run() {
-			// 刪除龍之門扉
-			if (portalPack()[_portalNum] != null) {
-				portalPack()[_portalNum].setStatus(ActionCodes.ACTION_Die);
-				portalPack()[_portalNum].broadcastPacket(new S_DoActionGFX(portalPack()[_portalNum].getId(), ActionCodes.ACTION_Die));
-				portalPack()[_portalNum].deleteMe();
+			short mapId = (short) (1005 + _num);
+			int[] msg = { 1570, 1571, 1572, 1574, 1575, 1576, 1578, 1579, 1581 };
+			if (_num >= 6 && _num <= 11) {
+				msg = new int[] { 1657, 1658, 1659, 1662, 1663, 1664, 1666, 1667, 1669};
 			}
-			// 龍之門扉重置
-			resetDragonSlayer(_portalNum);
-			setPortalPack(_portalNum, null);
-			// 召喚隱匿的巨龍谷入口
-			if (checkHiddenDragonValley() == 1) {
-				setHiddenDragonValley((byte) 2);
-				spawn(81277, -1, 33726, 32506, (short) 4, 0, 86400000); // 24小時
+			switch (_status) {
+				// 階段一
+				case STATUS_DRAGONSLAYER_READY_1RD:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_2RD);
+					sendMessage(_num, msg[0], null); // 安塔瑞斯：到底是誰把我吵醒了？
+					// 法利昂：竟敢闖入我的領域...勇氣可嘉啊...
+					DragonSlayerTimer timer_1rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_2RD, 10000);
+					timer_1rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_READY_2RD:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_3RD);
+					sendMessage(_num, msg[1], null); // 卡瑞：安塔瑞斯！我不停追逐你，結果追到這黑暗的地方來！
+					// 巫女莎爾：你這卑劣的法利昂！你會付出欺騙我的代價！
+					DragonSlayerTimer timer_2rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_3RD, 10000);
+					timer_2rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_READY_3RD:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_READY_4RD);
+					sendMessage(_num, msg[2], null); // 安塔瑞斯：真可憐，就讓我把你解決掉，受死吧！卡瑞！
+					// 法利昂：雖然在解除封印時你幫了很大的忙...但現在我不會再仁慈了！！
+					DragonSlayerTimer timer_3rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_READY_4RD, 10000);
+					timer_3rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_READY_4RD:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_1RD);
+					// 召喚龍
+					if (_num >= 0 && _num <= 5) {
+						spawn(97006, _num, 32783, 32693, mapId, 10, 0); // 地龍 - 階段一
+					} else {
+						spawn(97044, _num, 32955, 32839, mapId, 10, 0); // 水龍 - 階段一
+					}
+					break;
+				// 階段二
+				case STATUS_DRAGONSLAYER_START_2RD:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_1);
+					sendMessage(_num, msg[3], null); // 卡瑞：勇士們！亞丁的命運就掌握在你們的武器上了， 能夠讓安塔瑞斯窒息的人就是你們了！
+					// 巫女莎爾：勇士們！請消滅邪惡的法利昂，解除伊娃王國的血之詛咒吧！
+					DragonSlayerTimer timer_4rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_1, 10000);
+					timer_4rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_START_2RD_1:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_2);
+					sendMessage(_num, msg[4], null); // 安塔瑞斯：像這種蝦兵蟹將也想要贏我！噗哈哈哈…
+					// 法利昂：你們只夠格當我的玩具！！
+					DragonSlayerTimer timer_5rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_2, 30000);
+					timer_5rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_START_2RD_2:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_3);
+					sendMessage(_num, msg[5], null); // 安塔瑞斯：我今天又可以飽餐一頓了？你們的血激起我的鬥志。
+					// 法利昂：刻骨的恐懼到底是什麼，就讓你們嘗一下吧！
+					DragonSlayerTimer timer_6rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_2RD_3, 10000);
+					timer_6rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_START_2RD_3:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_2RD_4);
+					// 召喚龍
+					if (_num >= 0 && _num <= 5) {
+						spawn(97007, _num, 32783, 32693, mapId, 10, 0); // 地龍 - 階段二
+					} else {
+						spawn(97045, _num, 32955, 32839, mapId, 10, 0); // 水龍 - 階段二
+					}
+					break;
+				// 階段三
+				case STATUS_DRAGONSLAYER_START_3RD:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_1);
+					sendMessage(_num, msg[6], null); // 安塔瑞斯：你竟然敢對付我...我看你們是不想活了？
+					// 法利昂：我要讓你們知道你們所謂的希望，只不過是妄想！
+					DragonSlayerTimer timer_7rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_1, 40000);
+					timer_7rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_START_3RD_1:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_2);
+					sendMessage(_num, msg[7], null); // 安塔瑞斯：我的憤怒值已經衝上天了，我的父親格蘭肯將會賜我力量。
+					// 法利昂：你們會後悔跟了莎爾！ 可笑的愚民…
+					DragonSlayerTimer timer_8rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_START_3RD_2, 10000);
+					timer_8rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_START_3RD_2:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_START_3RD_3);
+					// 召喚龍
+					if (_num >= 0 && _num <= 5) {
+						spawn(97008, _num, 32783, 32693, mapId, 10, 0); // 地龍 - 階段三
+					} else {
+						spawn(97046, _num, 32955, 32839, mapId, 10, 0); // 水龍 - 階段三
+					}
+					break;
+				case STATUS_DRAGONSLAYER_END_1:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_2);
+					sendMessage(_num, msg[8], null); // 卡瑞：喔... 頂尖的勇士們！你們經歷了多少的失敗才有今天的成就，你們擊敗了安塔瑞斯！
+													//我終於復仇了嗚哈哈哈！！ 謝謝你們，你們是最頂尖的戰士！
+					if (checkHiddenDragonValleyStstus() == STATUS_NONE) { // 準備開啟隱匿的巨龍谷入口
+						setHiddenDragonValleyStstus(STATUS_READY_SPAWN);
+						DragonSlayerTimer timer_9rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_2, 10000);
+						timer_9rd.begin();
+					} else { // 直接結束
+						if (getDragonSlayerStatus()[_num] != STATUS_DRAGONSLAYER_END_5) {
+							setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_5);
+							DragonSlayerTimer timer = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_5, 5000);
+							timer.begin();
+						}
+					}
+					break;
+				case STATUS_DRAGONSLAYER_END_2:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_3);
+					sendMessage(_num, 1582, null); // 侏儒的呼喚：威頓村莊出現了通往隱匿的巨龍谷入口。
+					if (checkHiddenDragonValleyStstus() == STATUS_READY_SPAWN) { // 開啟隱匿的巨龍谷入口
+						setHiddenDragonValleyStstus(STATUS_SPAWN);
+						spawn(81277, -1, 33726, 32506, (short) 4, 0, 86400000); // 24小時
+					}
+					DragonSlayerTimer timer_10rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_3, 5000);
+					timer_10rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_END_3:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_4);
+					sendMessage(_num, 1583, null); // 侏儒的呼喚：威頓村莊通往隱匿的巨龍谷入口已經開啟了。
+					DragonSlayerTimer timer_11rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_4, 5000);
+					timer_11rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_END_4:
+					setDragonSlayerStatus(_num, STATUS_DRAGONSLAYER_END_5);
+					sendMessage(_num, 1584, null); // 侏儒的呼喚：快離開這裡吧，門就快要關了。
+					DragonSlayerTimer timer_12rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END_5, 5000);
+					timer_12rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_END_5:
+					// 刪除龍之門扉
+					if (portalPack()[_num] != null) {
+						portalPack()[_num].setStatus(ActionCodes.ACTION_Die);
+						portalPack()[_num].broadcastPacket(new S_DoActionGFX(portalPack()[_num].getId(), ActionCodes.ACTION_Die));
+						portalPack()[_num].deleteMe();
+					}
+					// 龍之門扉重置
+					resetDragonSlayer(_num);
+					DragonSlayerTimer timer_13rd = new DragonSlayerTimer(_num, STATUS_DRAGONSLAYER_END, 300000); // 下次可重新開啟同編號龍門的等候時間
+					timer_13rd.begin();
+					break;
+				case STATUS_DRAGONSLAYER_END:
+					setPortalNumber(_num, false);
+					break;
 			}
-			nextCanStartTimer timer = new nextCanStartTimer(_portalNum);
-			timer.begin();
 			cancel();
 		}
 
 		public void begin() {
 			Timer timer = new Timer();
-			timer.schedule(this, 15000); // 15秒後
+			timer.schedule(this, _time); // 延遲時間
 		}
 	}
 
-	// 下次可重新開啟此編號的龍門計時器
-	public class nextCanStartTimer extends TimerTask {
-
-		private final int _portalNum;
-
-		public nextCanStartTimer (int portalNum) {
-			_portalNum = portalNum;
-		}
-
-		@Override
-		public void run() {
-			setPortalNumber(_portalNum, false);
-			cancel();
-		}
-
-		public void begin() {
-			Timer timer = new Timer();
-			timer.schedule(this, 300000); // 5分鐘後
-		}
-	}
-
-	// 召喚龍 - 階段一、二、三
-	public void spawnDragon(L1Character cha, int round) {
-		int portalNumber = cha.getPortalNumber();
-		int readyTime = 60000;
-		int npcId = 97006; // 地龍 - 第一階段
-		int X = 32786;
-		int Y = 32689;
-		if (portalNumber >= 0 && portalNumber <= 5) { // 地龍 - 安塔瑞斯
-			if (round == 1) { // 第一階段
-				readyTime =180000;
-				setNextSpawnDragon(portalNumber, false);
-			} else if (round == 2) { // 第二階段
-				npcId = 97007;
-				setNextSpawnDragon(portalNumber, true);
-			} else { // 最終階段
-				npcId = 97008;
-				setNextSpawnDragon(portalNumber, true);
+	// 訊息發送
+	public void sendMessage(int portalNum, int type, String msg) {
+		short mapId = (short) (1005 + portalNum);
+		L1PcInstance[] temp = getPlayersArray(portalNum);
+		for (L1PcInstance element : temp) {
+			if ((element.getMapId() == mapId)
+					&& (element.getX() >= 32740 && element.getX() <= 32827)
+					&& (element.getY() >= 32652 && element.getY() <= 32727)
+					&& (portalNum >= 0 && portalNum <= 5)) { // 安塔瑞斯棲息地
+				element.sendPackets(new S_ServerMessage(type, msg));
+			} else if ((element.getMapId() == mapId)
+					&& (element.getX() >= 32921 && element.getX() <= 33009)
+					&& (element.getY() >= 32799 && element.getY() <= 32869)
+					&& (portalNum >= 6 && portalNum <= 11)) { // 法利昂棲息地
+				element.sendPackets(new S_ServerMessage(type, msg));
 			}
-		}
-		else if (portalNumber >= 6 && portalNumber <= 11) { // 水龍 - 法利昂
-			if (round == 1) { // 第一階段
-				npcId = 97044;
-				readyTime = 180000;
-				setNextSpawnDragon(portalNumber, false);
-			} else if (round == 2) { // 第二階段
-				npcId = 97045;
-				setNextSpawnDragon(portalNumber, true);
-			} else { // 最終階段
-				npcId = 97046;
-				setNextSpawnDragon(portalNumber, true);
-			}
-			X = 32959;
-			Y = 32836;
-		}
-		short MapId = (short) (1005 + portalNumber);
-
-		// 確定是否未召喚
-		if ((!isReadySpawnDragon()[portalNumber] && !isSpawnDragon()[portalNumber])
-			|| startNextSpawnDragon()[portalNumber]) {
-			setReadySpawnDragon(portalNumber, true); // 準備召喚
-			spawnDragon _spawnDragon = new spawnDragon(npcId, portalNumber, X, Y, MapId, 10, readyTime);
-			_spawnDragon.begin();
-		}
-	}
-
-	// X秒後於龍之棲息地召喚龍
-	public class spawnDragon extends TimerTask {
-
-		private final int _npcid;
-		private final int _portalNumber;
-		private final int _X;
-		private final int _Y;
-		private final short _mapId;
-		private final int _randomRange;
-		private final int _readyTime;
-
-		public spawnDragon(int npcId, int portalNumber, int X, int Y, short mapId, int randomRange, int readyTime) {
-			_npcid = npcId;
-			_portalNumber = portalNumber;
-			_X =X;
-			_Y =Y;
-			_mapId = mapId;
-			_randomRange = randomRange;
-			_readyTime = readyTime;
-		}
-
-		@Override
-		public void run() {
-			// 準備召喚階段一
-			if (isReadySpawnDragon()[_portalNumber] && !isSpawnDragon()[_portalNumber]) {
-				setSpawnDragon(_portalNumber, true);
-				spawn(_npcid, _portalNumber, _X, _Y, _mapId, _randomRange, 0);
-			}
-			// 召喚階段二、三
-			else if (startNextSpawnDragon()[_portalNumber] && isSpawnDragon()[_portalNumber]) {
-				spawn(_npcid, _portalNumber, _X, _Y, _mapId, _randomRange, 0);
-			}
-			cancel();
-		}
-
-		public void begin() {
-			Timer timer = new Timer();
-			timer.schedule(this, _readyTime); // 延遲時間
 		}
 	}
 
@@ -392,6 +449,7 @@ public class L1DragonSlayer {
 						reStartPlayer(pc);
 					} else {
 						// 傳送至威頓村
+						pc.setPortalNumber(-1);
 						L1Teleport.teleport(pc, 33710, 32521, (short) 4, pc.getHeading(), true);
 					}
 				}
@@ -404,9 +462,8 @@ public class L1DragonSlayer {
 			// 刪除副本內的怪物
 			else if (obj instanceof L1NpcInstance) {
 				L1NpcInstance npc = (L1NpcInstance) obj;
-				if (npc.getNpcId() == 97006 || npc.getNpcId() == 97007 || npc.getNpcId() == 97008
-						|| npc.getNpcId() == 97044 || npc.getNpcId() == 97045 || npc.getNpcId() == 97046
-						|| npc.getNpcId() ==  97011 || npc.getNpcId() == 97012 || npc.getNpcId() == 97013) {
+				if ((npc.getMaster() == null)
+						&& (npc.getNpcTemplate().get_npcId() < 81301 && npc.getNpcTemplate().get_npcId() > 81306)) {
 					npc.deleteMe();
 				}
 			}
@@ -416,13 +473,9 @@ public class L1DragonSlayer {
 				inventory.clearItems();
 			}
 		}
-		setSpawnDragon(portalNumber, false);
-		setReadySpawnDragon(portalNumber, false);
-		setNextSpawnDragon(portalNumber, false);
-		// 喀瑪族、阿爾波斯任務
-		for (int i = 0; i < 4; i++) {
-			setExtraQuest(portalNumber, i, false);
-		}
+		setPortalPack(portalNumber, null);
+		setDragonSlayerStatus(portalNumber, STATUS_DRAGONSLAYER_NONE);
+		clearPlayerList(portalNumber);
 	}
 
 	// 副本內死亡的玩家重新開始
@@ -455,7 +508,7 @@ public class L1DragonSlayer {
 	}
 
 	// 召喚用
-	public static void spawn(int npcId, int portalNumber, int X, int Y, short mapId, int randomRange,
+	public void spawn(int npcId, int portalNumber, int X, int Y, short mapId, int randomRange,
 			int timeMillisToDelete) {
 		try {
 			L1NpcInstance npc = NpcTable.getInstance().newNpcInstance(npcId);
@@ -493,22 +546,11 @@ public class L1DragonSlayer {
 			L1World.getInstance().addVisibleObject(npc);
 
 			if (npc.getGfxId() == 7548 || npc.getGfxId() == 7550 || npc.getGfxId() == 7552
-					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585) {
-				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, npc.ATTACK_SPEED);
-				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc)) {
-					npc.onPerceive(pc);
-					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
-					pc.sendPackets(gfx);
-				}
-			} else if (npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
+					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585
+					|| npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
 					|| npc.getGfxId() == 7864 || npc.getGfxId() == 7869 || npc.getGfxId() == 7870) {
 				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, npc.ATTACK_SPEED);
-				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
-					if (npc.getGfxId() == 7539) {
-						pc.sendPackets(new S_ServerMessage(1570));
-					} else if (npc.getGfxId() == 7864) {
-						pc.sendPackets(new S_ServerMessage(1657));
-					}
+				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc)) {
 					npc.onPerceive(pc);
 					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
 					pc.sendPackets(gfx);

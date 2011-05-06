@@ -371,10 +371,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 					if (getPortalNumber() != -1) {
 						if (getNpcTemplate().get_npcId() == 97006 || getNpcTemplate().get_npcId() == 97044) {
 							// 準備階段二
-							L1DragonSlayer.getInstance().spawnDragon(this, 2);
+							L1DragonSlayer.getInstance().startDragonSlayer2rd(getPortalNumber());
 						} else if (getNpcTemplate().get_npcId() == 97007 || getNpcTemplate().get_npcId() == 97045) {
 							// 準備階段三
-							L1DragonSlayer.getInstance().spawnDragon(this, 3);
+							L1DragonSlayer.getInstance().startDragonSlayer3rd(getPortalNumber());
 						} else if (getNpcTemplate().get_npcId() == 97008 || getNpcTemplate().get_npcId() == 97046) {
 							bloodstain();
 							// 結束屠龍副本
