@@ -14,6 +14,7 @@
  */
 package l1j.server.server.clientpackets;
 
+import l1j.server.Config;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1DollInstance;
@@ -21,6 +22,7 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
+import l1j.server.server.utils.LogRecorder;
 
 /**
  * 處理收到由客戶端傳來丟道具到地上的封包
@@ -47,7 +49,8 @@ public class C_DropItem extends ClientBasePacket {
 		if (item != null) {
 			if (!item.getItem().isTradable()) {
 				// \f1%0%d是不可轉移的…
-				pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
+				pc.sendPackets(new S_ServerMessage(210, item.getItem()
+						.getName()));
 				return;
 			}
 
@@ -81,11 +84,16 @@ public class C_DropItem extends ClientBasePacket {
 			}
 			if (item.getBless() >= 128) { // 封印的裝備
 				// \f1%0%d是不可轉移的…
-				pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
+				pc.sendPackets(new S_ServerMessage(210, item.getItem()
+						.getName()));
 				return;
 			}
 
-			pc.getInventory().tradeItem(item, count, L1World.getInstance().getInventory(x, y, pc.getMapId()));
+			// 交易紀錄
+			if (Config.writeDropLog)
+				LogRecorder.writeDropLog(pc, item);
+
+			pc.getInventory().tradeItem(item, count,L1World.getInstance().getInventory(x, y, pc.getMapId()));
 			pc.turnOnOffLight();
 		}
 	}

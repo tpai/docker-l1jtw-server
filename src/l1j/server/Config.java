@@ -409,6 +409,8 @@ public final class Config {
 	
 	public static boolean writeRobotsLog;
 	
+	public static boolean writeDropLog;
+	
 	public static int MysqlAutoBackup;
 	
 	public static boolean CompressGzip;
@@ -715,6 +717,7 @@ public final class Config {
 			LOGGING_CHAT_CHAT_PARTY = Boolean.parseBoolean(recordSettings.getProperty("LoggingChatChatParty", "false"));
 			writeTradeLog = Boolean.parseBoolean(recordSettings.getProperty("writeTradeLog", "false"));
 			writeRobotsLog = Boolean.parseBoolean(recordSettings.getProperty("writeRobotsLog", "false"));
+			writeDropLog = Boolean.parseBoolean(recordSettings.getProperty("writeDropLog", "false"));
 			MysqlAutoBackup = Integer.parseInt(recordSettings.getProperty("MysqlAutoBackup", "false"));
 			CompressGzip = Boolean.parseBoolean(recordSettings.getProperty("CompressGzip", "false"));
 			
