@@ -5061,6 +5061,45 @@ public class C_NPCAction extends ClientBasePacket {
 				htmlid = "veil9"; // 聽取建議
 			}
 		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81277) { // 隱匿的巨龍谷入口
+			int level = pc.getLevel();// 角色等級
+			char s1 = s.charAt(0);
+			if (s.equalsIgnoreCase("0")) {
+				if (level >= 30 && level <= 51) {
+					L1Teleport.teleport(pc, 32820, 32904, (short) 1002, 5, true); // 前往侏儒部落
+					htmlid = "";
+				} else {
+					htmlid = "dsecret3";
+				}
+			} else if (level >= 52) {
+				switch (s1) {
+					case '1':
+						L1Teleport.teleport(pc, 32993, 32716, (short) 1002, 5, true); // 前往造化之地(地)
+						break;
+					case '2':
+						L1Teleport.teleport(pc, 32785, 32631, (short) 1002, 5, true); // 前往造化之地(火)
+						break;
+					case '3':
+						L1Teleport.teleport(pc, 32806, 32790, (short) 1002, 5, true); // 前往造化之地(水)
+						break;
+					case '4':
+						L1Teleport.teleport(pc, 32904, 32627, (short) 1002, 5, true); // 前往造化之地(風)
+						break;
+					case '5':
+						L1Teleport.teleport(pc, 32685, 32631, (short) 1002, 5, true); // 前往龍之墓(北邊)
+						break;
+					case '6':
+						L1Teleport.teleport(pc, 32717, 32756, (short) 1002, 5, true); // 前往龍之墓(南邊)
+						break;
+					case '7':
+						L1Teleport.teleport(pc, 32986, 32630, (short) 1002, 5, true); // 前往蒼空之谷
+						break;
+				}
+				htmlid = "";
+			} else {
+				htmlid = "dsecret3";
+			}
+		}
 
 		// else System.out.println("C_NpcAction: " + s);
 		if ((htmlid != null) && htmlid.equalsIgnoreCase("colos2")) {

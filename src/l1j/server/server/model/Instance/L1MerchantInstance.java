@@ -2887,7 +2887,6 @@ public class L1MerchantInstance extends L1NpcInstance {
 					htmlid = "admin2";
 				}
 			} else if (npcid == 81257) { // 旅人諮詢員
-				int quest_step = quest.get_step(L1Quest.QUEST_TUTOR);// 任務編號階段
 				int playerLv = player.getLevel();// 角色等級
 				if (playerLv < 13) {
 					htmlid = "lowlvS1";

@@ -1080,7 +1080,7 @@ INSERT INTO `npcaction` VALUES ('81271', 'warechar1', 'warechar1', '', '');
 INSERT INTO `npcaction` VALUES ('81272', 'warechar1', 'warechar1', '', '');
 INSERT INTO `npcaction` VALUES ('81258', 'asha2', 'asha2', 'asha3', '');
 INSERT INTO `npcaction` VALUES ('81259', 'feaena2', 'feaena2', 'feaena3', '');
-INSERT INTO `npcaction` VALUES ('81277', 'dsecret1', 'dsecret1', '', '');
+INSERT INTO `npcaction` VALUES ('81277', 'dsecret3', 'dsecret3', '', '');
 INSERT INTO `npcaction` VALUES ('81278', 'veil1', 'veil1', '', '');
 INSERT INTO `npcaction` VALUES ('81279', 'grayknight1', 'grayknight1', '', '');
 INSERT INTO `npcaction` VALUES ('81280', 'familyed', 'familyed', '', '');
