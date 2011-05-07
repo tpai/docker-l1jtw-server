@@ -45,20 +45,20 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 	@Override
 	public void onAction(L1PcInstance pc, int skillId) {
 		L1Attack attack = new L1Attack(pc, this, skillId);
-		if (attack.calcHit()) {
-			attack.calcDamage();
-			attack.calcStaffOfMana();
-			attack.addPcPoisonAttack(pc, this);
-			attack.addChaserAttack();
-		}
+		attack.calcHit();
 		attack.action();
+		attack.addChaserAttack();
+		attack.calcDamage();
+		attack.calcStaffOfMana();
+		attack.addPcPoisonAttack(pc, this);
 		attack.commit();
 	}
 
 	@Override
 	public void onTalkAction(L1PcInstance pc) {
 		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(
+				getNpcTemplate().get_npcId());
 		int npcid = getNpcTemplate().get_npcId();
 		String htmlid = null;
 		String[] htmldata = null;
@@ -70,7 +70,8 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 			if (clan != null) {
 				int houseId = clan.getHouseId();
 				if (houseId != 0) {
-					L1House house = HouseTable.getInstance().getHouseTable(houseId);
+					L1House house = HouseTable.getInstance().getHouseTable(
+							houseId);
 					if (npcid == house.getKeeperId()) {
 						isOwner = true;
 					}
@@ -81,7 +82,8 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 			if (!isOwner) {
 				// Housekeeperが属するアジトを取得する
 				L1House targetHouse = null;
-				for (L1House house : HouseTable.getInstance().getHouseTableList()) {
+				for (L1House house : HouseTable.getInstance()
+						.getHouseTableList()) {
 					if (npcid == house.getKeeperId()) {
 						targetHouse = house;
 						break;
@@ -104,13 +106,11 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 				// 会話内容を設定する
 				if (isOccupy) { // 所有者あり
 					htmlid = "agname";
-					htmldata = new String[]
-					{ clanName, leaderName, targetHouse.getHouseName() };
-				}
-				else { // 所有者なし(競売中)
+					htmldata = new String[] { clanName, leaderName,
+							targetHouse.getHouseName() };
+				} else { // 所有者なし(競売中)
 					htmlid = "agnoname";
-					htmldata = new String[]
-					{ targetHouse.getHouseName() };
+					htmldata = new String[] { targetHouse.getHouseName() };
 				}
 			}
 
@@ -118,16 +118,13 @@ public class L1HousekeeperInstance extends L1NpcInstance {
 			if (htmlid != null) { // htmlidが指定されている場合
 				if (htmldata != null) { // html指定がある場合は表示
 					pc.sendPackets(new S_NPCTalkReturn(objid, htmlid, htmldata));
-				}
-				else {
+				} else {
 					pc.sendPackets(new S_NPCTalkReturn(objid, htmlid));
 				}
-			}
-			else {
+			} else {
 				if (pc.getLawful() < -1000) { // プレイヤーがカオティック
 					pc.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-				}
-				else {
+				} else {
 					pc.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 				}
 			}

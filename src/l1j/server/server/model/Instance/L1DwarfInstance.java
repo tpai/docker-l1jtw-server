@@ -29,7 +29,8 @@ public class L1DwarfInstance extends L1NpcInstance {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static Logger _log = Logger.getLogger(L1DwarfInstance.class.getName());
+	private static Logger _log = Logger.getLogger(L1DwarfInstance.class
+			.getName());
 
 	/**
 	 * @param template
@@ -46,20 +47,20 @@ public class L1DwarfInstance extends L1NpcInstance {
 	@Override
 	public void onAction(L1PcInstance pc, int skillId) {
 		L1Attack attack = new L1Attack(pc, this, skillId);
-		if (attack.calcHit()) {
-			attack.calcDamage();
-			attack.calcStaffOfMana();
-			attack.addPcPoisonAttack(pc, this);
-			attack.addChaserAttack();
-		}
+		attack.calcHit();
 		attack.action();
+		attack.calcDamage();
+		attack.addChaserAttack();
+		attack.calcStaffOfMana();
+		attack.addPcPoisonAttack(pc, this);
 		attack.commit();
 	}
 
 	@Override
 	public void onTalkAction(L1PcInstance pc) {
 		int objid = getId();
-		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(getNpcTemplate().get_npcId());
+		L1NpcTalkData talking = NPCTalkDataTable.getInstance().getTemplate(
+				getNpcTemplate().get_npcId());
 		int npcId = getNpcTemplate().get_npcId();
 		String htmlid = null;
 
@@ -72,12 +73,10 @@ public class L1DwarfInstance extends L1NpcInstance {
 
 			if (htmlid != null) { // htmlidが指定されている場合
 				pc.sendPackets(new S_NPCTalkReturn(objid, htmlid));
-			}
-			else {
+			} else {
 				if (pc.getLevel() < 5) {
 					pc.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-				}
-				else {
+				} else {
 					pc.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 				}
 			}
@@ -88,16 +87,15 @@ public class L1DwarfInstance extends L1NpcInstance {
 	public void onFinalAction(L1PcInstance pc, String Action) {
 		if (Action.equalsIgnoreCase("retrieve")) {
 			_log.finest("Retrive items in storage");
-		}
-		else if (Action.equalsIgnoreCase("retrieve-pledge")) {
+		} else if (Action.equalsIgnoreCase("retrieve-pledge")) {
 			_log.finest("Retrive items in pledge storage");
 
 			if (pc.getClanname().equalsIgnoreCase(" ")) {
 				_log.finest("pc isnt in a pledge");
-				S_ServerMessage talk = new S_ServerMessage((S_ServerMessage.NO_PLEDGE), Action);
+				S_ServerMessage talk = new S_ServerMessage(
+						(S_ServerMessage.NO_PLEDGE), Action);
 				pc.sendPackets(talk);
-			}
-			else {
+			} else {
 				_log.finest("pc is in a pledge");
 			}
 		}

@@ -51,13 +51,12 @@ public class L1TeleporterInstance extends L1NpcInstance {
 	@Override
 	public void onAction(L1PcInstance pc, int skillId) {
 		L1Attack attack = new L1Attack(pc, this, skillId);
-		if (attack.calcHit()) {
-			attack.calcDamage();
-			attack.calcStaffOfMana();
-			attack.addPcPoisonAttack(pc, this);
-			attack.addChaserAttack();
-		}
+		attack.calcHit();
 		attack.action();
+		attack.addChaserAttack();
+		attack.calcDamage();
+		attack.calcStaffOfMana();
+		attack.addPcPoisonAttack(pc, this);
 		attack.commit();
 	}
 
@@ -158,22 +157,19 @@ public class L1TeleporterInstance extends L1NpcInstance {
 				} else if (player.isWizard() || player.isDarkelf()) {
 					htmlid = "barnia1";
 				}
-			}
-			else if (npcid == 81258) {// 幻術士 艾希雅
+			} else if (npcid == 81258) {// 幻術士 艾希雅
 				if (player.isIllusionist()) {
 					htmlid = "asha1";
 				} else {
 					htmlid = "asha2";
 				}
-			}
-			else if (npcid == 81259) {// 龍騎士 費艾娜
+			} else if (npcid == 81259) {// 龍騎士 費艾娜
 				if (player.isDragonKnight()) {
 					htmlid = "feaena1";
 				} else {
 					htmlid = "feaena2";
 				}
-			}
-			else if (npcid == 71013) { // 卡連
+			} else if (npcid == 71013) { // 卡連
 				if (player.isDarkelf()) {
 					if (player.getLevel() < 14) {
 						htmlid = "karen1";
@@ -184,7 +180,6 @@ public class L1TeleporterInstance extends L1NpcInstance {
 					htmlid = "karen2";
 				}
 			}
-
 
 			// html表示
 			if (htmlid != null) { // htmlidが指定されている場合
@@ -253,8 +248,8 @@ public class L1TeleporterInstance extends L1NpcInstance {
 							.getVisiblePlayer(player, 3)) {
 						if (otherPc.getClanid() == player.getClanid()
 								&& otherPc.getId() != player.getId()) {
-							L1Teleport.teleport(otherPc, 32740, 32800, (short) 217, 5,
-									true);
+							L1Teleport.teleport(otherPc, 32740, 32800,
+									(short) 217, 5, true);
 						}
 					}
 					L1Teleport.teleport(player, 32740, 32800, (short) 217, 5,
