@@ -845,7 +845,13 @@ public class L1SkillId {
 	/** 生命之魔眼 */
 	public static final int EFFECT_MAGIC_EYE_OF_LIFE = 4055;
 
-	public static final int EFFECT_END = 4055;
+	/** 卡瑞的祝福 */
+	public static final int EFFECT_BLESS_OF_CRAY = 4056;
+
+	/** 莎爾的祝福 */
+	public static final int EFFECT_BLESS_OF_SAELL = 4057;
+
+	public static final int EFFECT_END = 4057;
 
 	// 特殊狀態
 	public static final int SPECIAL_EFFECT_BEGIN = 5001;

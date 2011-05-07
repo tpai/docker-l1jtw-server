@@ -37,6 +37,7 @@ import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
+import l1j.server.server.serverpackets.S_OwnCharStatus2;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_Poison;
@@ -1341,6 +1342,38 @@ class L1SkillStop {
 				pc.addDodge((byte) -1); // 閃避率 - 10%
 				// 更新閃避率顯示
 				pc.sendPackets(new S_PacketBox(88, pc.getDodge()));
+			}
+		}
+		else if (skillId == EFFECT_BLESS_OF_CRAY) { // 卡瑞的祝福
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addMaxHp(-100);
+				pc.addMaxMp(-50);
+				pc.addHpr(-3);
+				pc.addMpr(-3);
+				pc.addEarth(-30);
+				pc.addDmgup(-1);
+				pc.addHitup(-5);
+				pc.addWeightReduction(-40);
+				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+				if (pc.isInParty()) {
+					pc.getParty().updateMiniHP(pc);
+				}
+				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+			}
+		}
+		else if (skillId == EFFECT_BLESS_OF_SAELL) { // 莎爾的祝福
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addMaxHp(-80);
+				pc.addMaxMp(-10);
+				pc.addWater(-30);
+				pc.addAc(8);
+				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+				if (pc.isInParty()) {
+					pc.getParty().updateMiniHP(pc);
+				}
+				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 			}
 		}
 

@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.item.action.Effect;
+import l1j.server.server.model.skill.L1BuffUtil;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.utils.SQLUtil;
 import static l1j.server.server.model.skill.L1SkillId.*;
@@ -81,7 +82,8 @@ public class CharBuffTable {
 		EFFECT_MAGIC_STONE_D_7, EFFECT_MAGIC_STONE_D_8, EFFECT_MAGIC_STONE_D_9,
 		EFFECT_MAGIC_EYE_OF_AHTHARTS, EFFECT_MAGIC_EYE_OF_FAFURION, EFFECT_MAGIC_EYE_OF_LINDVIOR, // 魔眼
 		EFFECT_MAGIC_EYE_OF_VALAKAS, EFFECT_MAGIC_EYE_OF_BIRTH, EFFECT_MAGIC_EYE_OF_FIGURE,
-		EFFECT_MAGIC_EYE_OF_LIFE
+		EFFECT_MAGIC_EYE_OF_LIFE,
+		EFFECT_BLESS_OF_CRAY, EFFECT_BLESS_OF_SAELL // 卡瑞、莎爾的祝福
 	};
 
 	private static void StoreBuff(int objId, int skillId, int time, int polyId) {
@@ -188,6 +190,11 @@ public class CharBuffTable {
 						// 更新閃避率顯示
 						pc.sendPackets(new S_PacketBox(101, pc.getNdodge()));
 						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
+						break;
+					case EFFECT_BLESS_OF_CRAY: // 卡瑞、莎爾的祝福
+					case EFFECT_BLESS_OF_SAELL:
+						remaining_time = remaining_time / 32;
+						L1BuffUtil.effectBlessOfDragonSlayer(pc, skillid, remaining_time * 32, 0);
 						break;
 					default:
 						if (skillid >= EFFECT_MAGIC_STONE_A_1 && skillid <= EFFECT_MAGIC_STONE_D_9) { // 附魔石

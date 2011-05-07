@@ -18,6 +18,8 @@ import static l1j.server.server.model.skill.L1SkillId.AWAKEN_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_VALAKAS;
 import static l1j.server.server.model.skill.L1SkillId.BLESSED_ARMOR;
 import static l1j.server.server.model.skill.L1SkillId.CANCELLATION;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_CRAY;
+import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_SAELL;
 import static l1j.server.server.model.skill.L1SkillId.ELEMENTAL_PROTECTION;
 import static l1j.server.server.model.skill.L1SkillId.ENCHANT_WEAPON;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
@@ -76,6 +78,7 @@ import l1j.server.server.model.game.L1PolyRace;
 import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.npc.L1NpcHtml;
 import l1j.server.server.model.npc.action.L1NpcAction;
+import l1j.server.server.model.skill.L1BuffUtil;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ApplyAuction;
 import l1j.server.server.serverpackets.S_AuctionBoardRead;
@@ -581,44 +584,49 @@ public class C_NPCAction extends ClientBasePacket {
 
 			for (L1ItemInstance item : pc.getInventory().getItems()) {
 				if (item.getInnNpcId() == npcId) { // 鑰匙與NPC相符
-					Timestamp dueTime = item.getDueTime();
-					if (dueTime != null) { // 時間不為空值
-						Calendar cal = Calendar.getInstance();
-						if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 鑰匙租用時間未到
-							int[] data = null;
-							switch (npcId) {
-								case 70012: // 說話之島 - 瑟琳娜
-									data = new int[] {32745, 32803, 16384, 32743, 32808, 16896};
-									break;
-								case 70019: // 古魯丁 - 羅利雅
-									data = new int[] {32743, 32803, 17408, 32744, 32807, 17920};
-									break;
-								case 70031: // 奇岩 - 瑪理
-									data = new int[] {32744, 32803, 18432, 32744, 32807, 18944};
-									break;
-								case 70065: // 歐瑞 - 小安安
-									data = new int[] {32744, 32803, 19456, 32744, 32807, 19968};
-									break;
-								case 70070: // 風木 - 維萊莎
-									data = new int[] {32744, 32803, 20480, 32744, 32807, 20992};
-									break;
-								case 70075: // 銀騎士 - 米蘭德
-									data = new int[] {32744, 32803, 21504, 32744, 32807, 22016};
-									break;
-								case 70084: // 海音 - 伊莉
-									data = new int[] {32744, 32803, 22528, 32744, 32807, 23040};
-									break;
-								default:
-									break;
-							}
+					for (int i = 0; i < 16; i++) {
+						L1Inn inn = InnTable.getInstance().getTemplate(npcId, i);
+						if (inn.getKeyId() == item.getKeyId()) {
+							Timestamp dueTime = item.getDueTime();
+							if (dueTime != null) { // 時間不為空值
+								Calendar cal = Calendar.getInstance();
+								if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 鑰匙租用時間未到
+									int[] data = null;
+									switch (npcId) {
+										case 70012: // 說話之島 - 瑟琳娜
+											data = new int[] {32745, 32803, 16384, 32743, 32808, 16896};
+											break;
+										case 70019: // 古魯丁 - 羅利雅
+											data = new int[] {32743, 32803, 17408, 32744, 32807, 17920};
+											break;
+										case 70031: // 奇岩 - 瑪理
+											data = new int[] {32744, 32803, 18432, 32744, 32807, 18944};
+											break;
+										case 70065: // 歐瑞 - 小安安
+											data = new int[] {32744, 32803, 19456, 32744, 32807, 19968};
+											break;
+										case 70070: // 風木 - 維萊莎
+											data = new int[] {32744, 32803, 20480, 32744, 32807, 20992};
+											break;
+										case 70075: // 銀騎士 - 米蘭德
+											data = new int[] {32744, 32803, 21504, 32744, 32807, 22016};
+											break;
+										case 70084: // 海音 - 伊莉
+											data = new int[] {32744, 32803, 22528, 32744, 32807, 23040};
+											break;
+										default:
+											break;
+									}
 
-							pc.setInnKeyId(item.getKeyId()); // 登入鑰匙編號
+									pc.setInnKeyId(item.getKeyId()); // 登入鑰匙編號
 
-							if (!item.checkRoomOrHall()) { // 房間
-								L1Teleport.teleport(pc, data[0], data[1], (short) data[2], 6, false);
-							} else { // 會議室
-								L1Teleport.teleport(pc, data[3], data[4], (short) data[5], 6, false);
-								break;
+									if (!item.checkRoomOrHall()) { // 房間
+										L1Teleport.teleport(pc, data[0], data[1], (short) data[2], 6, false);
+									} else { // 會議室
+										L1Teleport.teleport(pc, data[3], data[4], (short) data[5], 6, false);
+										break;
+									}
+								}
 							}
 						}
 					}
@@ -1171,6 +1179,20 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (s.equalsIgnoreCase("troll nbmorph")) {
 			poly(client, 3878);
 			htmlid = ""; // ウィンドウを消す
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81279) { // 卡瑞 - 卡瑞的祝福
+			if (s.equalsIgnoreCase("a")) {
+				// 卡瑞的祝福已經環繞整個身軀
+				L1BuffUtil.effectBlessOfDragonSlayer(pc, EFFECT_BLESS_OF_CRAY, 2400, 7681);
+				htmlid = "grayknight2";
+			}			
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81292) { // 受咀咒的巫女莎爾 - 莎爾的祝福
+			if (s.equalsIgnoreCase("a")) {
+				// 巫女莎爾的祝福纏繞著整個身體。
+				L1BuffUtil.effectBlessOfDragonSlayer(pc, EFFECT_BLESS_OF_SAELL, 2400, 7680);
+				htmlid = "";
+			}			
 		}
 		// 長老 ノナメ
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71038) {

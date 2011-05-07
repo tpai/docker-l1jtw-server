@@ -27,9 +27,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
+import l1j.server.server.datatables.InnTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.gametime.L1GameTimeClock;
+import l1j.server.server.templates.L1Inn;
 import l1j.server.server.utils.SQLUtil;
 import l1j.server.server.utils.collections.Maps;
 
@@ -272,12 +274,17 @@ public class Dungeon {
 	private int checkInnKey(L1PcInstance pc, int npcid) {
 		for (L1ItemInstance item : pc.getInventory().getItems()) {
 			if (item.getInnNpcId() == npcid) { // 鑰匙與旅館NPC相符
-				Timestamp dueTime = item.getDueTime();
-				if (dueTime != null) { // 時間不為空值
-					Calendar cal = Calendar.getInstance();
-					if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用時間未到
-						pc.setInnKeyId(item.getKeyId()); // 登入此鑰匙
-						return item.checkRoomOrHall()? 2 : 1; // 1:房間 2:會議室
+				for (int i = 0; i < 16; i++) {
+					L1Inn inn = InnTable.getInstance().getTemplate(npcid, i);
+					if (inn.getKeyId() == item.getKeyId()) {
+						Timestamp dueTime = item.getDueTime();
+						if (dueTime != null) { // 時間不為空值
+							Calendar cal = Calendar.getInstance();
+							if (((cal.getTimeInMillis() - dueTime.getTime()) / 1000) < 0) { // 租用時間未到
+								pc.setInnKeyId(item.getKeyId()); // 登入此鑰匙
+								return item.checkRoomOrHall()? 2 : 1; // 1:房間 2:會議室
+							}
+						}
 					}
 				}
 			}

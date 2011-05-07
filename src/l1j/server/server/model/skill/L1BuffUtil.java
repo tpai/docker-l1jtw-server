@@ -47,6 +47,7 @@ import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_NpcChatPacket;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
+import l1j.server.server.serverpackets.S_OwnCharStatus2;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_RemoveObject;
@@ -163,21 +164,66 @@ public class L1BuffUtil {
 		}
 
 		int skillId = EFFECT_BLOODSTAIN_OF_ANTHARAS;
+		int iconType = 0;
 		if (type == 0) { // 安塔瑞斯
 			if (!pc.hasSkillEffect(skillId)) {
 				pc.addAc(-2); // 防禦 -2
 				pc.addWater(50); // 水屬性 +50
 			}
-			pc.sendPackets(new S_SkillIconBloodstain(82, time)); // 安塔瑞斯的血痕
+			iconType = 82;
+			 // 安塔瑞斯的血痕
 		} else if (type == 1) { // 法利昂
 			skillId = EFFECT_BLOODSTAIN_OF_FAFURION;
 			if (!pc.hasSkillEffect(skillId)) {
 				pc.addWind(50); // 風屬性 +50
 			}
-			pc.sendPackets(new S_SkillIconBloodstain(85, time)); // 法利昂的血痕
+			iconType = 85;
 		}
 		pc.sendPackets(new S_OwnCharAttrDef(pc));
+		pc.sendPackets(new S_SkillIconBloodstain(iconType, time));
 		pc.setSkillEffect(skillId, (time * 60 * 1000));
+	}
+
+	public static void effectBlessOfDragonSlayer(L1PcInstance pc, int skillId, int time, int showGfx) {
+		if (showGfx != 0) {
+			pc.sendPackets(new S_SkillSound(pc.getId(), showGfx));
+			pc.broadcastPacket(new S_SkillSound(pc.getId(), showGfx));
+		}
+
+		if (!pc.hasSkillEffect(skillId)) {
+			switch (skillId) {
+				case EFFECT_BLESS_OF_CRAY: // 卡瑞的祝福
+					if (pc.hasSkillEffect(EFFECT_BLESS_OF_SAELL)) {
+						pc.removeSkillEffect(EFFECT_BLESS_OF_SAELL);
+					}
+					pc.addMaxHp(100);
+					pc.addMaxMp(50);
+					pc.addHpr(3);
+					pc.addMpr(3);
+					pc.addEarth(30);
+					pc.addDmgup(1);
+					pc.addHitup(5);
+					pc.addWeightReduction(40);
+					break;
+				case EFFECT_BLESS_OF_SAELL: // 莎爾的祝福
+					if (pc.hasSkillEffect(EFFECT_BLESS_OF_CRAY)) {
+						pc.removeSkillEffect(EFFECT_BLESS_OF_CRAY);
+					}
+					pc.addMaxHp(80);
+					pc.addMaxMp(10);
+					pc.addWater(30);
+					pc.addAc(-8);
+					break;
+			}
+			pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
+			if (pc.isInParty()) {
+				pc.getParty().updateMiniHP(pc);
+			}
+			pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
+			pc.sendPackets(new S_OwnCharStatus2(pc));
+			pc.sendPackets(new S_OwnCharAttrDef(pc));
+		}
+		pc.setSkillEffect(skillId, (time * 1000));
 	}
 
 	public static int skillEffect(L1Character _user, L1Character cha, L1Character _target, int skillId, int _getBuffIconDuration, int dmg) {

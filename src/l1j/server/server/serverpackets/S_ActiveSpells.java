@@ -37,7 +37,11 @@ public class S_ActiveSpells extends ServerBasePacket {
 		writeC(0x14);
 
 		for (int i : activeSpells(pc)) {
-			writeC(i);
+			if (i != 72) {
+				writeC(i); 
+	         } else {
+	        	 writeD((int) (System.currentTimeMillis() / 1000)); 
+	         }
 		}
 		writeByte(randBox);
 	}
@@ -111,6 +115,18 @@ public class S_ActiveSpells extends ServerBasePacket {
 				if (data[78] != 0) {
 					data[79] = 46 + i;
 				}
+			}
+		}
+		// 卡瑞、莎爾的祝福
+		if (pc.hasSkillEffect(EFFECT_BLESS_OF_CRAY)) {
+			data[76] = pc.getSkillEffectTimeSec(EFFECT_BLESS_OF_CRAY) / 32;
+			if (data[76] != 0) {
+				data[77] = 45;
+			}
+		} else if (pc.hasSkillEffect(EFFECT_BLESS_OF_SAELL)) {
+			data[76] = pc.getSkillEffectTimeSec(EFFECT_BLESS_OF_SAELL) / 32;
+			if (data[76] != 0) {
+				data[77] = 60;
 			}
 		}
 
