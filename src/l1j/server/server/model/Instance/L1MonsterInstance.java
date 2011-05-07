@@ -363,6 +363,11 @@ public class L1MonsterInstance extends L1NpcInstance {
 				damage *= 1.5;
 			}
 
+			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
+				L1PcInstance player = (L1PcInstance) attacker;
+				player.setPetTarget(this);
+			}
+
 			int newHp = getCurrentHp() - damage;
 			if ((newHp <= 0) && !isDead()) {
 				int transformId = getNpcTemplate().getTransformId();
