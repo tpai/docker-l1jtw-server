@@ -23,12 +23,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 import l1j.server.server.datatables.MapsTable;
-import l1j.server.server.utils.FileUtil;
-import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
 /**
@@ -37,39 +34,11 @@ import l1j.server.server.utils.collections.Maps;
 public class CachedMapReader extends MapReader {
 
 	/** 地圖檔的路徑 */
+	@SuppressWarnings("unused")
 	private static final String MAP_DIR = "./maps/";
 
 	/** cache 後地圖檔的路徑 */
 	private static final String CACHE_DIR = "./data/mapcache/";
-
-	/**
-	 * 傳回所有地圖的編號
-	 * 
-	 * @return ArraryList
-	 */
-	private List<Integer> listMapIds() {
-		List<Integer> ids = Lists.newList();
-
-		File mapDir = new File(MAP_DIR);
-		for (String name : mapDir.list()) {
-			File mapFile = new File(mapDir, name);
-			if (!mapFile.exists()) {
-				continue;
-			}
-			if (!FileUtil.getExtension(mapFile).toLowerCase().equals("txt")) {
-				continue;
-			}
-			int id = 0;
-			try {
-				String idStr = FileUtil.getNameWithoutExtension(mapFile);
-				id = Integer.parseInt(idStr);
-			} catch (NumberFormatException e) {
-				continue;
-			}
-			ids.add(id);
-		}
-		return ids;
-	}
 
 	/**
 	 * 將指定編號的地圖轉成快取的地圖格式
@@ -141,17 +110,18 @@ public class CachedMapReader extends MapReader {
 		}
 
 		in.close();
-		L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, MapsTable
-				.getInstance().isUnderwater(mapId), MapsTable.getInstance()
-				.isMarkable(mapId), MapsTable.getInstance().isTeleportable(
-				mapId), MapsTable.getInstance().isEscapable(mapId), MapsTable
-				.getInstance().isUseResurrection(mapId), MapsTable
-				.getInstance().isUsePainwand(mapId), MapsTable.getInstance()
-				.isEnabledDeathPenalty(mapId), MapsTable.getInstance()
-				.isTakePets(mapId),
-				MapsTable.getInstance().isRecallPets(mapId), MapsTable
-						.getInstance().isUsableItem(mapId), MapsTable
-						.getInstance().isUsableSkill(mapId));
+		L1V1Map map = new L1V1Map(id, tiles, xLoc, yLoc, 
+				MapsTable.getInstance().isUnderwater(mapId), 
+				MapsTable.getInstance().isMarkable(mapId), 
+				MapsTable.getInstance().isTeleportable(mapId), 
+				MapsTable.getInstance().isEscapable(mapId), 
+				MapsTable.getInstance().isUseResurrection(mapId), 
+				MapsTable.getInstance().isUsePainwand(mapId), 
+				MapsTable.getInstance().isEnabledDeathPenalty(mapId), 
+				MapsTable.getInstance().isTakePets(mapId),
+				MapsTable.getInstance().isRecallPets(mapId), 
+				MapsTable.getInstance().isUsableItem(mapId), 
+				MapsTable.getInstance().isUsableSkill(mapId));
 		return map;
 	}
 
@@ -164,7 +134,7 @@ public class CachedMapReader extends MapReader {
 	@Override
 	public Map<Integer, L1Map> read() throws IOException {
 		Map<Integer, L1Map> maps = Maps.newMap();
-		for (int id : listMapIds()) {
+		for (int id : TextMapReader.listMapIds()) {
 			maps.put(id, read(id));
 		}
 		return maps;

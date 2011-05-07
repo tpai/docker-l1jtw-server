@@ -14,6 +14,7 @@
  */
 package l1j.server.server.model.map;
 
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,17 +38,17 @@ public class L1WorldMap {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("loading map...");
 
-		MapReader in = MapReader.getDefaultReader();
-
 		try {
-			_maps = in.read();
+			_maps = MapReader.getDefaultReader().read();
 			if (_maps == null) {
-				throw new RuntimeException("マップの読み込みに失敗");
+				throw new RuntimeException("地圖檔案讀取失敗...");
 			}
+		} catch (FileNotFoundException e) {  
+			System.out.println("提示: 地圖檔案缺失，請檢查330_maps.zip是否尚未解壓縮。"); 
+			System.exit(0);
 		} catch (Exception e) {
 			// 復帰不能
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-
 			System.exit(0);
 		}
 

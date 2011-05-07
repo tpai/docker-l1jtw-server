@@ -19,6 +19,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
@@ -109,18 +111,19 @@ public class TextMapReader extends MapReader {
 			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
 
 			if (mapId == id) {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize),
-						info[MAPINFO_START_X], info[MAPINFO_START_Y],
-						MapsTable.getInstance().isUnderwater(mapId),
-						MapsTable.getInstance().isMarkable(mapId),
-						MapsTable.getInstance().isTeleportable(mapId),
-						MapsTable.getInstance().isEscapable(mapId),
-						MapsTable.getInstance().isUseResurrection(mapId),
-						MapsTable.getInstance().isUsePainwand(mapId),
+				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId,
+						xSize, ySize), info[MAPINFO_START_X],
+						info[MAPINFO_START_Y], 
+						MapsTable.getInstance().isUnderwater(mapId), 
+						MapsTable.getInstance().isMarkable(mapId), 
+						MapsTable.getInstance().isTeleportable(mapId), 
+						MapsTable.getInstance().isEscapable(mapId), 
+						MapsTable.getInstance().isUseResurrection(mapId), 
+						MapsTable.getInstance().isUsePainwand(mapId), 
 						MapsTable.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId),
-						MapsTable.getInstance().isRecallPets(mapId),
-						MapsTable.getInstance().isUsableItem(mapId),
+						MapsTable.getInstance().isTakePets(mapId), 
+						MapsTable.getInstance().isRecallPets(mapId), 
+						MapsTable.getInstance().isUsableItem(mapId), 
 						MapsTable.getInstance().isUsableSkill(mapId));
 				return map;
 			}
@@ -144,18 +147,19 @@ public class TextMapReader extends MapReader {
 			int ySize = info[MAPINFO_END_Y] - info[MAPINFO_START_Y] + 1;
 
 			try {
-				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId, xSize, ySize),
-						info[MAPINFO_START_X], info[MAPINFO_START_Y],
-						MapsTable.getInstance().isUnderwater(mapId),
-						MapsTable.getInstance().isMarkable(mapId),
-						MapsTable.getInstance().isTeleportable(mapId),
-						MapsTable.getInstance().isEscapable(mapId),
-						MapsTable.getInstance().isUseResurrection(mapId),
-						MapsTable.getInstance().isUsePainwand(mapId),
+				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId,
+						xSize, ySize), info[MAPINFO_START_X],
+						info[MAPINFO_START_Y], 
+						MapsTable.getInstance().isUnderwater(mapId), 
+						MapsTable.getInstance().isMarkable(mapId), 
+						MapsTable.getInstance().isTeleportable(mapId), 
+						MapsTable.getInstance().isEscapable(mapId), 
+						MapsTable.getInstance().isUseResurrection(mapId), 
+						MapsTable.getInstance().isUsePainwand(mapId), 
 						MapsTable.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId),
-						MapsTable.getInstance().isRecallPets(mapId),
-						MapsTable.getInstance().isUsableItem(mapId),
+						MapsTable.getInstance().isTakePets(mapId), 
+						MapsTable.getInstance().isRecallPets(mapId), 
+						MapsTable.getInstance().isUsableItem(mapId), 
 						MapsTable.getInstance().isUsableSkill(mapId));
 
 				maps.put(mapId, map);
@@ -165,6 +169,18 @@ public class TextMapReader extends MapReader {
 		}
 
 		return maps;
+	}
+	
+    /**
+     * 傳回所有的map編號
+     * @return 所有的map編號
+     */
+	public static List<Integer> listMapIds() {
+		ArrayList<Integer> ids = new ArrayList<Integer>();
+		for (int[] info : MAP_INFO) {
+			ids.add(info[MAPINFO_MAP_NO]);
+		}
+		return ids;
 	}
 
 	/**
@@ -521,10 +537,10 @@ public class TextMapReader extends MapReader {
 			{ 611, 32704, 32831, 32704, 32831 },
 			{ 612, 32704, 32831, 32768, 32895 },
 			{ 613, 32704, 32831, 32832, 32959 },// 奇怪之村落
-			{ 621, 32704, 32831, 32832, 32895 }, //詭異村落
-			{ 630, 32704, 33023, 32768, 33087 }, //天空之城
-			{ 631, 32704, 33023, 32640, 32959 }, //惡靈棲息地
-			{ 632, 32640, 32959, 32576, 32895 }, //羅馬世界
+			{ 621, 32704, 32831, 32832, 32895 }, // 詭異村落
+			{ 630, 32704, 33023, 32768, 33087 }, // 天空之城
+			{ 631, 32704, 33023, 32640, 32959 }, // 惡靈棲息地
+			{ 632, 32640, 32959, 32576, 32895 }, // 羅馬世界
 			{ 666, 32640, 32831, 32704, 32895 },
 			{ 701, 32640, 32959, 32576, 32895 },
 			{ 777, 32512, 32767, 32832, 33087 },
@@ -539,19 +555,19 @@ public class TextMapReader extends MapReader {
 			{ 998, 32704, 32767, 32768, 32831 },
 			{ 1000, 32704, 32895, 32768, 32959 },
 			{ 1001, 32704, 32895, 32768, 32959 },
-			{ 1002, 32640, 33023, 32576, 32959 }, //被遺忘的龍之谷
-			{ 1005, 32576, 32959, 32576, 32959 }, //安塔瑞斯棲息地
-			{ 1006, 32576, 32959, 32576, 32959 }, //安塔瑞斯棲息地
-			{ 1007, 32576, 32959, 32576, 32959 }, //安塔瑞斯棲息地
-			{ 1008, 32576, 32959, 32576, 32959 }, //安塔瑞斯棲息地
-			{ 1009, 32576, 32959, 32576, 32959 }, //安塔瑞斯棲息地
-			{ 1010, 32576, 32959, 32576, 32959 }, //安塔瑞斯棲息地
-			{ 1011, 32704, 33087, 32512, 32895 }, //法利昂洞穴
-			{ 1012, 32704, 33087, 32512, 32895 }, //法利昂洞穴
-			{ 1013, 32704, 33087, 32512, 32895 }, //法利昂洞穴
-			{ 1014, 32704, 33087, 32512, 32895 }, //法利昂洞穴
-			{ 1015, 32704, 33087, 32512, 32895 }, //法利昂洞穴
-			{ 1016, 32704, 33087, 32512, 32895 }, //法利昂洞穴
+			{ 1002, 32640, 33023, 32576, 32959 }, // 被遺忘的龍之谷
+			{ 1005, 32576, 32959, 32576, 32959 }, // 安塔瑞斯棲息地
+			{ 1006, 32576, 32959, 32576, 32959 }, // 安塔瑞斯棲息地
+			{ 1007, 32576, 32959, 32576, 32959 }, // 安塔瑞斯棲息地
+			{ 1008, 32576, 32959, 32576, 32959 }, // 安塔瑞斯棲息地
+			{ 1009, 32576, 32959, 32576, 32959 }, // 安塔瑞斯棲息地
+			{ 1010, 32576, 32959, 32576, 32959 }, // 安塔瑞斯棲息地
+			{ 1011, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
+			{ 1012, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
+			{ 1013, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
+			{ 1014, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
+			{ 1015, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
+			{ 1016, 32704, 33087, 32512, 32895 }, // 法利昂洞穴
 			{ 2000, 32704, 32959, 32704, 33023 },
 			{ 2001, 32640, 32959, 32704, 32959 },
 			{ 2002, 32704, 32959, 32704, 32959 },
@@ -774,6 +790,5 @@ public class TextMapReader extends MapReader {
 			{ 23552, 32704, 32767, 32768, 32831 },
 			{ 24064, 32704, 32767, 32768, 32831 },
 			{ 24576, 32704, 32767, 32768, 32831 },
-			{ 25088, 32704, 32767, 32768, 32831 },
-			};
+			{ 25088, 32704, 32767, 32768, 32831 }, };
 }
