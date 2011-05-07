@@ -15,7 +15,9 @@
 package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
+import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
+import l1j.server.server.templates.L1Item;
 
 // Referenced classes of package l1j.server.server.serverpackets:
 // ServerBasePacket
@@ -30,8 +32,17 @@ public class S_TradeAddItem extends ServerBasePacket {
 		writeS(item.getNumberedViewName(count));
 		// 0:祝福 1:通常 2:呪い 3:未鑑定
 		// 128:祝福&封印 129:&封印 130:呪い&封印 131:未鑑定&封印
-		writeC(item.getBless());
-		writeC(0x00);
+		if (!item.isIdentified()) {
+			writeC(3);
+			writeC(0);
+		} else {
+			writeC(item.getBless());
+			byte[] status = item.getStatusBytes();
+		      writeC(status.length);
+		      for (byte b : status) {
+		    	  writeC(b);
+		      }
+		}
 	}
 
 	@Override
