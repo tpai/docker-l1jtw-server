@@ -15,6 +15,7 @@
 package l1j.server.server.model.map;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,6 +28,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.server.datatables.MapsTable;
+import l1j.server.server.utils.FileUtil;
+import l1j.server.server.utils.collections.Lists;
 import l1j.server.server.utils.collections.Maps;
 
 /**
@@ -113,18 +116,18 @@ public class TextMapReader extends MapReader {
 			if (mapId == id) {
 				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId,
 						xSize, ySize), info[MAPINFO_START_X],
-						info[MAPINFO_START_Y], 
-						MapsTable.getInstance().isUnderwater(mapId), 
-						MapsTable.getInstance().isMarkable(mapId), 
-						MapsTable.getInstance().isTeleportable(mapId), 
-						MapsTable.getInstance().isEscapable(mapId), 
-						MapsTable.getInstance().isUseResurrection(mapId), 
-						MapsTable.getInstance().isUsePainwand(mapId), 
-						MapsTable.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId), 
-						MapsTable.getInstance().isRecallPets(mapId), 
-						MapsTable.getInstance().isUsableItem(mapId), 
-						MapsTable.getInstance().isUsableSkill(mapId));
+						info[MAPINFO_START_Y], MapsTable.getInstance()
+								.isUnderwater(mapId), MapsTable.getInstance()
+								.isMarkable(mapId), MapsTable.getInstance()
+								.isTeleportable(mapId), MapsTable.getInstance()
+								.isEscapable(mapId), MapsTable.getInstance()
+								.isUseResurrection(mapId), MapsTable
+								.getInstance().isUsePainwand(mapId), MapsTable
+								.getInstance().isEnabledDeathPenalty(mapId),
+						MapsTable.getInstance().isTakePets(mapId), MapsTable
+								.getInstance().isRecallPets(mapId), MapsTable
+								.getInstance().isUsableItem(mapId), MapsTable
+								.getInstance().isUsableSkill(mapId));
 				return map;
 			}
 		}
@@ -149,18 +152,18 @@ public class TextMapReader extends MapReader {
 			try {
 				L1V1Map map = new L1V1Map((short) mapId, this.read(mapId,
 						xSize, ySize), info[MAPINFO_START_X],
-						info[MAPINFO_START_Y], 
-						MapsTable.getInstance().isUnderwater(mapId), 
-						MapsTable.getInstance().isMarkable(mapId), 
-						MapsTable.getInstance().isTeleportable(mapId), 
-						MapsTable.getInstance().isEscapable(mapId), 
-						MapsTable.getInstance().isUseResurrection(mapId), 
-						MapsTable.getInstance().isUsePainwand(mapId), 
-						MapsTable.getInstance().isEnabledDeathPenalty(mapId),
-						MapsTable.getInstance().isTakePets(mapId), 
-						MapsTable.getInstance().isRecallPets(mapId), 
-						MapsTable.getInstance().isUsableItem(mapId), 
-						MapsTable.getInstance().isUsableSkill(mapId));
+						info[MAPINFO_START_Y], MapsTable.getInstance()
+								.isUnderwater(mapId), MapsTable.getInstance()
+								.isMarkable(mapId), MapsTable.getInstance()
+								.isTeleportable(mapId), MapsTable.getInstance()
+								.isEscapable(mapId), MapsTable.getInstance()
+								.isUseResurrection(mapId), MapsTable
+								.getInstance().isUsePainwand(mapId), MapsTable
+								.getInstance().isEnabledDeathPenalty(mapId),
+						MapsTable.getInstance().isTakePets(mapId), MapsTable
+								.getInstance().isRecallPets(mapId), MapsTable
+								.getInstance().isUsableItem(mapId), MapsTable
+								.getInstance().isUsableSkill(mapId));
 
 				maps.put(mapId, map);
 			} catch (IOException e) {
@@ -170,15 +173,32 @@ public class TextMapReader extends MapReader {
 
 		return maps;
 	}
-	
-    /**
-     * 傳回所有的map編號
-     * @return 所有的map編號
-     */
+
+	/**
+	 * 傳回所有地圖的編號
+	 * 
+	 * @return ArraryList
+	 */
 	public static List<Integer> listMapIds() {
-		ArrayList<Integer> ids = new ArrayList<Integer>();
-		for (int[] info : MAP_INFO) {
-			ids.add(info[MAPINFO_MAP_NO]);
+		List<Integer> ids = Lists.newList();
+
+		File mapDir = new File(MAP_DIR);
+		for (String name : mapDir.list()) {
+			File mapFile = new File(mapDir, name);
+			if (!mapFile.exists()) {
+				continue;
+			}
+			if (!FileUtil.getExtension(mapFile).toLowerCase().equals("txt")) {
+				continue;
+			}
+			int id = 0;
+			try {
+				String idStr = FileUtil.getNameWithoutExtension(mapFile);
+				id = Integer.parseInt(idStr);
+			} catch (NumberFormatException e) {
+				continue;
+			}
+			ids.add(id);
 		}
 		return ids;
 	}
@@ -790,5 +810,5 @@ public class TextMapReader extends MapReader {
 			{ 23552, 32704, 32767, 32768, 32831 },
 			{ 24064, 32704, 32767, 32768, 32831 },
 			{ 24576, 32704, 32767, 32768, 32831 },
-			{ 25088, 32704, 32767, 32768, 32831 }, };
+			{ 25088, 32704, 32767, 32768, 32831 } };
 }
