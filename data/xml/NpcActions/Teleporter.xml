@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
 	<!-- 魔法師 梅琳 / 傳送到奇岩地監去 -->
 	<Action Name="teleport giranD" NpcId="81287">
@@ -1549,12 +1549,15 @@
 	<Action Name="teleport guide4_5" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
 		<Teleport X="33662" Y="32333" Map="4" Heading="5" Price="676"/>
 	</Action>
-	
-<Action Name="teleport guide4_6" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
-<Teleport X="32740" Y="32730" Map="55" Heading="5" Price="1066"/>
+	<Action Name="teleport guide4_6" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
+		<Teleport X="32740" Y="32730" Map="55" Heading="5" Price="1066"/>
 	</Action>
 	<Action Name="teleport guide4_7" NpcId="50020,50024,50036,50039,50044,50046,50051,50054,50056,50066,50068,50072,50073,50079">
 		<Teleport X="32745" Y="32857" Map="60" Heading="5" Price="936"/>
+	</Action>
+	<!-- 釣魚小童波爾 / 離開釣魚池 -->
+	<Action Name="teleport fishing-out" NpcId="80083">
+		<Teleport X="32608" Y="32772" Map="4" Heading="5"/>
 	</Action>
 <!-- 村莊金幣顯示 -->
 	<ShowHtml Name="teleportURL" HtmlId="teleisland2" NpcId="50015">
@@ -1901,8 +1904,11 @@
 		<Data Value="0" />
 		<Data Value="0" />
 	</ShowHtml>
-  <!-- 燃柳村的杜發 往隱藏港口-->
-  <ShowHtml Name="teleportURL" HtmlId="duvall3" NpcId="50064">
-      <Data Value="100"/>
-  </ShowHtml>
+	<!-- 釣魚小童波爾 離開釣魚池-->
+	<ShowHtml Name="teleportURLA" HtmlId="fk_out_0" NpcId="80083">
+	</ShowHtml>
+	<!-- 燃柳村的杜發 往隱藏港口-->
+	<ShowHtml Name="teleportURL" HtmlId="duvall3" NpcId="50064">
+		<Data Value="100"/>
+	</ShowHtml>
 </NpcActionList>

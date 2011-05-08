@@ -44,24 +44,37 @@ public class L1ScarecrowInstance extends L1NpcInstance {
 			attack.calcStaffOfMana();
 			attack.addPcPoisonAttack(pc, this);
 			attack.addChaserAttack();
-			if (pc.getLevel() < 5) { // ＬＶ制限もうける場合はここを変更
-				List<L1Character> targetList = Lists.newList();
-
-				targetList.add(pc);
-				List<Integer> hateList = Lists.newList();
-				hateList.add(1);
-				CalcExp.calcExp(pc, getId(), targetList, hateList, getExp());
-			}
-			if (getHeading() < 7) { // 今の向きを取得
-				setHeading(getHeading() + 1); // 今の向きを設定
-			}
-			else {
-				setHeading(0); // 今の向きが7 以上になると今の向きを0に戻す
-			}
-			broadcastPacket(new S_ChangeHeading(this)); // 向きの変更
 		}
 		attack.action();
 		attack.commit();
+	}
+
+	@Override
+	public void receiveDamage(L1Character attacker, int damage) {
+		if ((getCurrentHp() > 0) && !isDead()) {
+			if (damage > 0) {
+				if (getHeading() < 7) {
+					setHeading(getHeading() + 1);
+				}
+				else {
+					setHeading(0);
+				}
+				broadcastPacket(new S_ChangeHeading(this));
+
+				if ((attacker instanceof L1PcInstance)) {
+					L1PcInstance pc = (L1PcInstance) attacker;
+					pc.setPetTarget(this);
+
+					if (pc.getLevel() < 5) {
+						List<L1Character> targetList = Lists.newList();
+						targetList.add(pc);
+						List<Integer> hateList = Lists.newList();
+						hateList.add(1);
+						CalcExp.calcExp(pc, getId(), targetList, hateList, getExp());
+					}
+				}
+			}
+		}
 	}
 
 	@Override

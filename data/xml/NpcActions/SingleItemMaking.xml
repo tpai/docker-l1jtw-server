@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
 	<!--マーブルの遺産1個->魔力の石 / 錬金術師-->
 	<Action Name="a" NpcId="70520">
@@ -1027,7 +1027,7 @@
 			</Succeed>
 		</MakeItem>
 	</Action>
-	<!--修理されたイアリング / 釣りおばさん-->
+	<!--修理破碎的耳環 / 釣魚婆婆 雷蒂亞-->
 	<Action Name="request not_broken earring" NpcId="80081">
 		<MakeItem>
 			<Item Amount="1" ItemId="21049"/>
@@ -1036,7 +1036,7 @@
 			<Material Amount="1000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
-	<!--修理されたリング / 釣りおばさん-->
+	<!--修理破碎的項鍊 / 釣魚婆婆 雷蒂亞-->
 	<Action Name="request not_broken ring left" NpcId="80081">
 		<MakeItem>
 			<Item Amount="1" ItemId="21048"/>
@@ -1045,13 +1045,20 @@
 			<Material Amount="1000" ItemId="40308"/>
 		</MakeItem>
 	</Action>
-	<!--修理されたネックレス / 釣りおばさん-->
+	<!--修理破碎的戒指 / 釣魚婆婆 雷蒂亞-->
 	<Action Name="request not_broken amulet" NpcId="80081">
 		<MakeItem>
 			<Item Amount="1" ItemId="21050"/>
 			<Material Amount="1" ItemId="41307"/>
 			<Material Amount="1" ItemId="41301"/>
 			<Material Amount="1000" ItemId="40308"/>
+		</MakeItem>
+	</Action>
+	<!--用閃爍的鱗片交換對盔甲施法的卷軸 / 釣魚婆婆 雷蒂亞-->
+	<Action Name="request scroll of enchant armor" NpcId="80081">
+		<MakeItem>
+			<Item Amount="1" ItemId="40074"/>
+			<Material Amount="15" ItemId="47104"/>
 		</MakeItem>
 	</Action>
 	<!--新生のベルト(水) / 特典アイテム管理人-->

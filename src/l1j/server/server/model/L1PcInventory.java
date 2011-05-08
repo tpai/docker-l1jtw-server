@@ -692,7 +692,8 @@ public class L1PcInventory extends L1Inventory {
 		for (Object itemObject : _items) // 弾を探す
 		{
 			bullet = (L1ItemInstance) itemObject;
-			if (bullet.getItem().getType() == type) {
+			if (bullet.getItem().getType() == type
+					&& bullet.getItem().getType2() == 0) {
 				if (type == 0) {
 					_arrowId = bullet.getItem().getItemId(); // 優先にしておく
 				}
