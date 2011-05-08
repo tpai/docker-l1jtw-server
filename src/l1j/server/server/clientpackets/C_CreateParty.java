@@ -18,6 +18,7 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.identity.L1SystemMessageId;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_ServerMessage;
 
@@ -43,6 +44,13 @@ public class C_CreateParty extends ClientBasePacket {
 			if (temp instanceof L1PcInstance) {
 				L1PcInstance targetPc = (L1PcInstance) temp;
 				if (pc.getId() == targetPc.getId()) {
+					return;
+				}
+				if ((!pc.getLocation().isInScreen(targetPc.getLocation()) || (pc
+						.getLocation().getTileLineDistance(
+								targetPc.getLocation()) > 7))) {
+					// 邀請組隊時，對象不再螢幕內或是7步內
+					pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$952));
 					return;
 				}
 				if (targetPc.isInParty()) {
@@ -85,6 +93,12 @@ public class C_CreateParty extends ClientBasePacket {
 			if (pc.getId() == targetPc.getId()) {
 				return;
 			}
+			if ((!pc.getLocation().isInScreen(targetPc.getLocation()) || (pc
+					.getLocation().getTileLineDistance(targetPc.getLocation()) > 7))) {
+				// 邀請組隊時，對象不再螢幕內或是7步內
+				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$952));
+				return;
+			}
 			if (targetPc.isInChatParty()) {
 				// 您無法邀請已經參加其他隊伍的人。
 				pc.sendPackets(new S_ServerMessage(415));
@@ -125,6 +139,12 @@ public class C_CreateParty extends ClientBasePacket {
 					|| !(obj instanceof L1PcInstance)) {
 				return;
 			}
+			if ((!pc.getLocation().isInScreen(obj.getLocation()) || (pc
+					.getLocation().getTileLineDistance(obj.getLocation()) > 7))) {
+				// 邀請組隊時，對象不再螢幕內或是7步內
+				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$1695));
+				return;
+			}
 
 			// 轉型為玩家物件
 			L1PcInstance targetPc = (L1PcInstance) obj;
@@ -134,6 +154,8 @@ public class C_CreateParty extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(1696));
 				return;
 			}
+			// 委任給其他玩家?
+			pc.sendPackets(new S_Message_YN(L1SystemMessageId.$1703, ""));
 
 			// 指定隊長給新的目標
 			pc.getParty().passLeader(targetPc);
