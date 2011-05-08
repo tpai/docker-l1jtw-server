@@ -187,8 +187,8 @@ public class LogRecorder {
 	 */
 	public static void writeDropLog(L1PcInstance player, L1ItemInstance item) {
 		try {
-			File RobotsLog = new File("log\\DropLog.log");
-			if (RobotsLog.createNewFile()) {
+			File DropLog = new File("log\\DropLog.log");
+			if (DropLog.createNewFile()) {
 				out = new BufferedWriter(new FileWriter("log\\DropLog.log",
 						false));
 				out.write("※以下是玩家[丟棄物品]的所有紀錄※" + "\r\n");
