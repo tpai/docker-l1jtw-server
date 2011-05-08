@@ -84,6 +84,11 @@ public class ArmorSetTable {
 			as.setWis(rs.getInt("wis"));
 			as.setCha(rs.getInt("cha"));
 			as.setIntl(rs.getInt("intl"));
+			as.setHitModifier(rs.getInt("hit_modifier"));
+			as.setDmgModifier(rs.getInt("dmg_modifier"));
+			as.setBowHitModifier(rs.getInt("bow_hit_modifier"));
+			as.setBowDmgModifier(rs.getInt("bow_dmg_modifier"));
+			as.setSp(rs.getInt("sp"));
 			as.setDefenseWater(rs.getInt("defense_water"));
 			as.setDefenseWind(rs.getInt("defense_wind"));
 			as.setDefenseFire(rs.getInt("defense_fire"));

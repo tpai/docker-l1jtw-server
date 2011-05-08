@@ -69,6 +69,8 @@ public abstract class L1ArmorSet {
 				impl.addEffect(new DefenseBonusEffect(armorSets
 						.getDefenseWater(), armorSets.getDefenseWind(),
 						armorSets.getDefenseFire(), armorSets.getDefenseWind()));
+				impl.addEffect(new HitDmgModifierEffect(armorSets.getHitModifier(), armorSets.getDmgModifier()
+						, armorSets.getBowHitModifier(), armorSets.getBowDmgModifier(), armorSets.getSp()));
 				_allSet.add(impl);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -262,6 +264,7 @@ class StatBonusEffect implements L1ArmorSetEffect {
 	}
 }
 
+// 水、風、火、地屬性
 class DefenseBonusEffect implements L1ArmorSetEffect {
 	private final int _defenseWater;
 
@@ -295,6 +298,48 @@ class DefenseBonusEffect implements L1ArmorSetEffect {
 		pc.addWind(-_defenseWind);
 		pc.addFire(-_defenseFire);
 		pc.addEarth(-_defenseEarth);
+	}
+}
+
+// 命中率、額外攻擊力、魔攻
+class HitDmgModifierEffect implements L1ArmorSetEffect {
+	private final int _hitModifier;
+
+	private final int _dmgModifier;
+
+	private final int _bowHitModifier;
+
+	private final int _bowDmgModifier;
+
+	private final int _sp;
+
+	public HitDmgModifierEffect(int hitModifier, int dmgModifier,
+			int bowHitModifier, int bowDmgModifier, int sp) {
+		_hitModifier = hitModifier;
+		_dmgModifier = dmgModifier;
+		_bowHitModifier = bowHitModifier;
+		_bowDmgModifier = bowDmgModifier;
+		_sp = sp;
+	}
+
+	// @Override
+	@Override
+	public void giveEffect(L1PcInstance pc) {
+		pc.addHitModifierByArmor(_hitModifier);
+		pc.addDmgModifierByArmor(_dmgModifier);
+		pc.addBowHitModifierByArmor(_bowHitModifier);
+		pc.addBowDmgModifierByArmor(_bowDmgModifier);
+		pc.addSp(_sp);
+	}
+
+	// @Override
+	@Override
+	public void cancelEffect(L1PcInstance pc) {
+		pc.addHitModifierByArmor(-_hitModifier);
+		pc.addDmgModifierByArmor(-_dmgModifier);
+		pc.addBowHitModifierByArmor(-_bowHitModifier);
+		pc.addBowDmgModifierByArmor(-_bowDmgModifier);
+		pc.addSp(-_sp);
 	}
 }
 

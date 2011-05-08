@@ -208,4 +208,54 @@ public class L1ArmorSets {
 		_defenseEarth = i;
 	}
 
+	private int _hitModifier;
+
+	public int getHitModifier() {
+		return _hitModifier;
+	}
+
+	public void setHitModifier(int i) {
+		_hitModifier = i;
+	}
+	
+	private int _dmgModifier;
+
+	public int getDmgModifier() {
+		return _dmgModifier;
+	}
+
+	public void setDmgModifier(int i) {
+		_dmgModifier = i;
+	}
+	
+	private int _bowHitModifier;
+
+	public int getBowHitModifier() {
+		return _bowHitModifier;
+	}
+
+	public void setBowHitModifier(int i) {
+		_bowHitModifier = i;
+	}
+	
+	private int _bowDmgModifier;
+
+	public int getBowDmgModifier() {
+		return _bowDmgModifier;
+	}
+
+	public void setBowDmgModifier(int i) {
+		_bowDmgModifier = i;
+	}
+
+	private int _sp;
+
+	public int getSp() {
+		return _sp;
+	}
+
+	public void setSp(int i) {
+		_sp = i;
+	}
+
 }
