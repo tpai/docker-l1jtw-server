@@ -14,6 +14,9 @@
  */
 package l1j.server.server.encryptions;
 
+/**
+ * @deprecated
+ */
 public class ClientIdExistsException extends Exception {
 
 	/**

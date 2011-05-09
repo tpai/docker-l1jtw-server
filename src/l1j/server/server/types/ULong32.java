@@ -16,7 +16,7 @@ package l1j.server.server.types;
 
 /**
  * Handles 32 bit unsigned long conversions, due to the lack in the java core.
- * 
+ * @deprecated
  * @author Storm
  */
 public class ULong32 {

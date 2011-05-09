@@ -14,6 +14,9 @@
  */
 package l1j.server.server.types;
 
+/**
+ * @deprecated
+ */
 public class UChar8 {
 	/**
 	 * Converts a 32 bit unsigned/signed long array to a 8 bit unsigned char

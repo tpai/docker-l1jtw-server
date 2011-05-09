@@ -17,6 +17,9 @@ package l1j.server.server.encryptions;
 import l1j.server.server.types.UChar8;
 import l1j.server.server.types.ULong32;
 
+/**
+ * @deprecated
+ */
 public class LineageBlowfish {
 
 	private static int[] P = { 0x243F6A88, 0x85A308D3, 0x13198A2E, 0x3707344,

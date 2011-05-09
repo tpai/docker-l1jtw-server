@@ -22,7 +22,7 @@ import l1j.server.server.utils.collections.Maps;
 
 /**
  * Handler Encryption/Decryption of lineage packet data
- * 
+ * @deprecated
  * @author Storm Last update: 2005-12-10
  */
 public class LineageEncryption {

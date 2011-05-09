@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,9 +31,6 @@ import java.util.logging.Logger;
 import l1j.server.Config;
 import l1j.server.server.Opcodes;
 import l1j.server.server.datatables.CharBuffTable;
-import l1j.server.server.encryptions.ClientIdExistsException;
-import l1j.server.server.encryptions.LineageEncryption;
-import l1j.server.server.encryptions.LineageKeys;
 import l1j.server.server.model.L1DragonSlayer;
 import l1j.server.server.model.Getback;
 import l1j.server.server.model.L1Trade;
@@ -46,8 +44,6 @@ import l1j.server.server.serverpackets.S_Disconnect;
 import l1j.server.server.serverpackets.S_PacketBox;
 import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.serverpackets.ServerBasePacket;
-import l1j.server.server.types.UByte8;
-import l1j.server.server.types.UChar8;
 import l1j.server.server.utils.StreamUtil;
 import l1j.server.server.utils.SystemUtil;
 
@@ -126,8 +122,6 @@ public class ClientThread implements Runnable, PacketOutput {
 		_charRestart = flag;
 	}
 
-	private LineageKeys _clkey;
-
 	private byte[] readPacket() throws Exception {
 		try {
 			int hiByte = _in.read();
@@ -150,7 +144,7 @@ public class ClientThread implements Runnable, PacketOutput {
 				throw new RuntimeException();
 			}
 
-			return LineageEncryption.decrypt(data, dataLength, _clkey);
+			return _cipher.decrypt(data);
 		} catch (IOException e) {
 			throw e;
 		}
@@ -159,6 +153,8 @@ public class ClientThread implements Runnable, PacketOutput {
 	private long _lastSavedTime = System.currentTimeMillis();
 
 	private long _lastSavedTime_inventory = System.currentTimeMillis();
+
+	private Cipher _cipher;
 
 	private void doAutoSave() throws Exception {
 		if (_activeChar == null || _charRestart) {
@@ -191,7 +187,6 @@ public class ClientThread implements Runnable, PacketOutput {
 		System.out.println("使用了 " + SystemUtil.getUsedMemoryMB() + "MB 的記憶體");
 		System.out.println("等待客戶端連接...");
 
-		Socket socket = _csocket;
 		/*
 		 * TODO: 翻譯 クライアントからのパケットをある程度制限する。 理由：不正の誤検出が多発する恐れがあるため
 		 * ex1.サーバに過負荷が掛かっている場合、負荷が落ちたときにクライアントパケットを一気に処理し、結果的に不正扱いとなる。
@@ -215,24 +210,20 @@ public class ClientThread implements Runnable, PacketOutput {
 
 		try {
 			// long seed = 0x7c98bdfa; // 3.0
-			long seed = 0x1a986541;// 3.3C Taiwan Server
+			int key = 0x1a986541;// 3.3C Taiwan Server
 			byte Bogus = (byte) (FIRST_PACKET.length + 7);
 			_out.write(Bogus & 0xFF);
 			_out.write(Bogus >> 8 & 0xFF);
 			_out.write(Opcodes.S_OPCODE_INITPACKET);// 3.3C Taiwan Server
-			_out.write((byte) (seed & 0xFF));
-			_out.write((byte) (seed >> 8 & 0xFF));
-			_out.write((byte) (seed >> 16 & 0xFF));
-			_out.write((byte) (seed >> 24 & 0xFF));
+			_out.write((byte) (key & 0xFF));
+			_out.write((byte) (key >> 8 & 0xFF));
+			_out.write((byte) (key >> 16 & 0xFF));
+			_out.write((byte) (key >> 24 & 0xFF));
 
 			_out.write(FIRST_PACKET);
 			_out.flush();
-			try {
-				// long seed = 0x2e70db3aL; // for Episode5
-				// long seed = 0x0cf1821dL; // for Episode6
-				_clkey = LineageEncryption.initKeys(socket, seed);
-			} catch (ClientIdExistsException e) {
-			}
+
+			_cipher = new Cipher(key);
 
 			while (true) {
 				doAutoSave();
@@ -441,16 +432,14 @@ public class ClientThread implements Runnable, PacketOutput {
 	public void sendPacket(ServerBasePacket packet) {
 		synchronized (this) {
 			try {
-				byte abyte0[] = packet.getContent();
-				char ac[] = new char[abyte0.length];
-				ac = UChar8.fromArray(abyte0);
-				ac = LineageEncryption.encrypt(ac, _clkey);
-				abyte0 = UByte8.fromArray(ac);
-				int j = abyte0.length + 2;
+				byte content[] = packet.getContent();
+				byte data[] = Arrays.copyOf(content, content.length);
+				_cipher.encrypt(data);
+				int length = data.length + 2;
 
-				_out.write(j & 0xff);
-				_out.write(j >> 8 & 0xff);
-				_out.write(abyte0);
+				_out.write(length & 0xff);
+				_out.write(length >> 8 & 0xff);
+				_out.write(data);
 				_out.flush();
 			} catch (Exception e) {
 			}
