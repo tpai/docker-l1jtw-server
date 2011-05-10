@@ -1020,7 +1020,22 @@ public class L1BuffUtil {
 					L1PcInstance pc = (L1PcInstance) cha;
 					pc.stopHpRegeneration();
 					pc.stopMpRegeneration();
+					pc.stopHpRegenerationByDoll();
 					pc.stopMpRegenerationByDoll();
+				}
+				break;
+			// 冥想術
+			case MEDITATION:
+				if (cha instanceof L1PcInstance) {
+					L1PcInstance pc = (L1PcInstance) cha;
+					pc.addMpr(5);
+				}
+				break;
+			// 專注
+			case CONCENTRATION:
+				if (cha instanceof L1PcInstance) {
+					L1PcInstance pc = (L1PcInstance) cha;
+					pc.addMpr(2);
 				}
 				break;
 

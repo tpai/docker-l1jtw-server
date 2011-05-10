@@ -71,7 +71,9 @@ public class C_MoveChar extends ClientBasePacket {
 			}
 		}
 
-		pc.killSkillEffectTimer(MEDITATION);
+		if (pc.hasSkillEffect(MEDITATION)) { // 取消冥想效果
+			pc.removeSkillEffect(MEDITATION);
+		}
 		pc.setCallClanId(0); // コールクランを唱えた後に移動すると召喚無効
 
 		if (!pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // 絕對屏障

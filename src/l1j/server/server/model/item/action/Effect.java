@@ -146,6 +146,7 @@ public class Effect {
 			case EFFECT_BLESS_OF_MAZU: // 媽祖的祝福
 				pc.addHitup(3); // 攻擊成功 +3
 				pc.addDmgup(3); // 額外攻擊點數 +3
+				pc.addMpr(2);
 				break;
 			case EFFECT_ENCHANTING_BATTLE: // 強化戰鬥卷軸
 				pc.addHitup(3); // 攻擊成功 +3
@@ -157,6 +158,7 @@ public class Effect {
 				break;
 			case EFFECT_STRENGTHENING_HP: // 體力增強卷軸
 				pc.addMaxHp(50);
+				pc.addHpr(4);
 				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
 				if (pc.isInParty()) { // 組隊中
 					pc.getParty().updateMiniHP(pc);
@@ -164,6 +166,7 @@ public class Effect {
 				break;
 			case EFFECT_STRENGTHENING_MP: // 魔力增強卷軸
 				pc.addMaxMp(40);
+				pc.addMpr(4);
 				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 				break;
 			case EFFECT_MAGIC_EYE_OF_AHTHARTS: // 地龍之魔眼

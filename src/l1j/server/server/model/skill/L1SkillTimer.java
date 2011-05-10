@@ -455,12 +455,25 @@ class L1SkillStop {
 				pc.sendPackets(new S_OwnCharStatus(pc));
 			}
 		}
-		else if (skillId == ABSOLUTE_BARRIER) { // アブソルート バリア
+		else if (skillId == ABSOLUTE_BARRIER) { // 絕對屏障
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.startHpRegeneration();
 				pc.startMpRegeneration();
+				pc.startHpRegenerationByDoll();
 				pc.startMpRegenerationByDoll();
+			}
+		}
+		else if (skillId == MEDITATION) { // 冥想術
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addMpr(-5);
+			}
+		}
+		else if (skillId == CONCENTRATION) { // 專注
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addMpr(-2);
 			}
 		}
 		else if (skillId == WIND_SHACKLE) { // 風之枷鎖
@@ -814,18 +827,27 @@ class L1SkillStop {
 				pc.setDessertId(0);
 			}
 		}
+		else if (skillId == COOKING_WONDER_DRUG) { // 象牙塔妙藥
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.addHpr(-10);
+				pc.addMpr(-2);
+			}
+		}
 		// ****** 
 		else if (skillId == EFFECT_BLESS_OF_MAZU) { // 媽祖的祝福
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.addHitup(-3);
 				pc.addDmgup(-3);
+				pc.addMpr(-2);
 			}
 		}
 		else if (skillId == EFFECT_STRENGTHENING_HP) { // 體力增強卷軸
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.addMaxHp(-50);
+				pc.addHpr(-4);
 				pc.sendPackets(new S_HPUpdate(pc.getCurrentHp(), pc.getMaxHp()));
 				if (pc.isInParty()) { // 組隊中
 					pc.getParty().updateMiniHP(pc);
@@ -836,6 +858,7 @@ class L1SkillStop {
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.addMaxMp(-40);
+				pc.addMpr(-4);
 				pc.sendPackets(new S_MPUpdate(pc.getCurrentMp(), pc.getMaxMp()));
 			}
 		}

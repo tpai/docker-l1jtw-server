@@ -154,7 +154,12 @@ public class CharBuffTable {
 				switch (skillid) {
 					case STATUS_RIBRAVE: // 生命之樹果實
 					case DRESS_EVASION: // 迴避提升
+						remaining_time = remaining_time / 4;
+						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
+						break;
 					case COOKING_WONDER_DRUG: // 象牙塔妙藥
+						pc.addHpr(10);
+						pc.addMpr(2);
 						remaining_time = remaining_time / 4;
 						pc.setSkillEffect(skillid, remaining_time * 4 * 1000);
 						break;

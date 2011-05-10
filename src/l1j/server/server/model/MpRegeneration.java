@@ -15,18 +15,13 @@
 package l1j.server.server.model;
 
 import static l1j.server.server.model.skill.L1SkillId.ADDITIONAL_FIRE;
-import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLESS_OF_MAZU;
-import static l1j.server.server.model.skill.L1SkillId.CONCENTRATION;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_1_2_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_1_2_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_2_4_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_2_4_S;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_5_N;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_3_5_S;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_STRENGTHENING_MP;
 import static l1j.server.server.model.skill.L1SkillId.EXOTIC_VITALIZE;
-import static l1j.server.server.model.skill.L1SkillId.MEDITATION;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
 
 import java.util.TimerTask;
@@ -92,21 +87,6 @@ public class MpRegeneration extends TimerTask {
 				wis = 11;
 			}
 			baseMpr += wis - 10;
-		}
-		if (_pc.hasSkillEffect(MEDITATION)) { // メディテーション中
-			baseMpr += 5;
-		}
-		if (_pc.hasSkillEffect(CONCENTRATION)) { // コンセントレーション中
-			baseMpr += 2;
-		}
-		if (_pc.hasSkillEffect(COOKING_WONDER_DRUG)) { // 象牙塔妙藥
-			baseMpr += 2;
- 		}
-		if (_pc.hasSkillEffect(EFFECT_BLESS_OF_MAZU)) { // 媽祖的祝福
-			baseMpr += 2;
-		}
-		if (_pc.hasSkillEffect(EFFECT_STRENGTHENING_MP)) { // 魔力增強卷軸
-			baseMpr += 4;
 		}
 		if (L1HouseLocation.isInHouse(_pc.getX(), _pc.getY(), _pc.getMapId())) {
 			baseMpr += 3;

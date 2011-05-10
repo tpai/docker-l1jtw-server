@@ -465,6 +465,8 @@ public class L1Cooking {
 		}
 		else if (cookingId == COOKING_WONDER_DRUG) { // 象牙塔妙藥
 			cookingType = 54;
+			pc.addHpr(10);
+			pc.addMpr(2);
 		}
 		pc.sendPackets(new S_PacketBox(53, cookingType, time));
 		pc.setSkillEffect(cookingId, time * 1000);

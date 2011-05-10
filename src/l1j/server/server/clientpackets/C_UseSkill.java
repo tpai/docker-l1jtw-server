@@ -109,13 +109,12 @@ public class C_UseSkill extends ClientBasePacket {
 			}
 		}
 
-		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // 解除絕對屏障
-			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
-			pc.startHpRegeneration();
-			pc.startMpRegeneration();
-			pc.startMpRegenerationByDoll();
+		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // 取消絕對屏障
+			pc.removeSkillEffect(ABSOLUTE_BARRIER);
 		}
-		pc.killSkillEffectTimer(MEDITATION);
+		if (pc.hasSkillEffect(MEDITATION)) { // 取消冥想效果
+			pc.removeSkillEffect(MEDITATION);
+		}
 
 		try {
 			if ((skillId == CALL_CLAN) || (skillId == RUN_CLAN)) { // コールクラン、ランクラン

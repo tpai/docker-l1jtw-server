@@ -258,10 +258,11 @@ public class Dungeon {
 			}
 
 			if (teleportable) {
-				// 2秒間は無敵（アブソルートバリア状態）にする。
+				// 2秒無敵狀態。
 				pc.setSkillEffect(ABSOLUTE_BARRIER, 2000);
 				pc.stopHpRegeneration();
 				pc.stopMpRegeneration();
+				pc.stopHpRegenerationByDoll();
 				pc.stopMpRegenerationByDoll();
 				L1Teleport.teleport(pc, newX, newY, newMap, heading, false);
 				return true;

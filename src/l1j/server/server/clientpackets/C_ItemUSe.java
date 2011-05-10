@@ -14,7 +14,6 @@
  */
 package l1j.server.server.clientpackets;
 
-import static l1j.server.server.model.skill.L1SkillId.ABSOLUTE_BARRIER;
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_ANTHARAS;
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_VALAKAS;
@@ -818,7 +817,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(698)); // 魔力によって何も飲むことができません。
 					}
 					else {
-						cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 						pc.sendPackets(new S_SkillSound(pc.getId(), 192));
 						pc.broadcastPacket(new S_SkillSound(pc.getId(), 192));
 						if (itemId == L1ItemId.POTION_OF_CURE_POISON) {
@@ -1479,7 +1477,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						// ターゲットがいない場合にhandleCommandsを送るとぬるぽになるためここでreturn
 						// handleCommandsのほうで判断＆処理すべき部分かもしれない
 					}
-					cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 					int skillid = itemId - 40858;
 					if (itemId == 49281) { // フィジカルエンチャント：STR
 						skillid = 42;
@@ -1809,7 +1806,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						// pc.sendPackets(new
 						// S_CharVisualUpdate(pc));
 					}
-					cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 				}
 				else if (itemId == 40124) { // 血盟帰還スクロール
 					if (pc.getMap().isEscapable() || pc.isGm()) {
@@ -1869,7 +1865,6 @@ public class C_ItemUSe extends ClientBasePacket {
 					else {
 						pc.sendPackets(new S_ServerMessage(647));
 					}
-					cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 				}
 				else if ((itemId == 140100) || (itemId == 40100) || (itemId == 40099 // 祝福されたテレポートスクロール、テレポートスクロール
 						) || (itemId == 40086) || (itemId == 40863)) { // スペルスクロール(テレポート)
@@ -1919,12 +1914,10 @@ public class C_ItemUSe extends ClientBasePacket {
 							pc.sendPackets(new S_ServerMessage(276));
 						}
 					}
-					cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 				}
 				else if (itemId == 240100) { // 呪われたテレポートスクロール(オリジナルアイテム)
 					L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), true);
 					pc.getInventory().removeItem(l1iteminstance, 1);
-					cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 				}
 				else if ((itemId >= 40901) && (itemId <= 40908)) { // 各種エンゲージリング
 					L1PcInstance partner = null;
@@ -2177,7 +2170,6 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				}
 				else if (itemId == 40007) { // 閃電魔杖
-					cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 					int dmg = 0;
 					int[] data = null;
 					L1Object target = L1World.getInstance().findObject(spellsc_objid);
@@ -2211,7 +2203,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						if (target != null) {
 							L1Character cha = (L1Character) target;
 							polyAction(pc, cha);
-							cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 							if ((itemId == 40008) || (itemId == 140008)) {
 								l1iteminstance.setChargeCount(l1iteminstance.getChargeCount() - 1);
 								pc.getInventory().updateItem(l1iteminstance, L1PcInventory.COL_CHARGE_COUNT);
@@ -3343,7 +3334,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						else {
 							pc.sendPackets(new S_ServerMessage(647));
 						}
-						cancelAbsoluteBarrier(pc); // アブソルート バリアの解除
 					}
 					else {
 						if (l1iteminstance.getCount() < 1) { // あり得ない？
@@ -3624,9 +3614,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			return;
 		}
 
-		// アブソルート バリアの解除
-		cancelAbsoluteBarrier(pc);
-
 		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
 		pc.sendPackets(new S_ServerMessage(77)); // \f1気分が良くなりました。
@@ -3642,9 +3629,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
 			return;
 		}
-
-		// アブソルート バリアの解除
-		cancelAbsoluteBarrier(pc);
 
 		int time = 0;
 		if (itemId == L1ItemId.POTION_OF_HASTE_SELF) { // グリーン ポーション
@@ -3733,9 +3717,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			return;
 		}
 
-		// アブソルート バリアの解除
-		cancelAbsoluteBarrier(pc);
-
 		int time = 0;
 		if ((item_id == 40015) || (item_id == 40736)) { // ブルーポーション、知恵のコイン
 			time = 600;
@@ -3762,9 +3743,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			return;
 		}
 
-		// アブソルート バリアの解除
-		cancelAbsoluteBarrier(pc);
-
 		int time = 0; // 時間は4の倍数にすること
 		if (item_id == L1ItemId.POTION_OF_EMOTION_WISDOM) { // ウィズダム ポーション
 			time = 300;
@@ -3790,9 +3768,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
 			return;
 		}
-
-		// アブソルート バリアの解除
-		cancelAbsoluteBarrier(pc);
 
 		int time = 0;
 		if (item_id == 40032) { // エヴァの祝福
@@ -3826,9 +3801,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
 			return;
 		}
-
-		// アブソルート バリアの解除
-		cancelAbsoluteBarrier(pc);
 
 		int time = 16;
 		if (pc.hasSkillEffect(CURSE_BLIND)) {
@@ -4269,8 +4241,6 @@ public class C_ItemUSe extends ClientBasePacket {
 				return;
 			}
 
-			cancelAbsoluteBarrier(activeChar); // アブソルート バリアの解除
-
 			pcInventory.setEquipped(armor, true);
 		}
 		else if (armor.isEquipped()) { // 使用した防具を装備していた場合（脱着を試みる）
@@ -4318,8 +4288,6 @@ public class C_ItemUSe extends ClientBasePacket {
 				return;
 			}
 		}
-
-		cancelAbsoluteBarrier(activeChar); // アブソルート バリアの解除
 
 		if (activeChar.getWeapon() != null) { // 既に何かを装備している場合、前の装備をはずす
 			if (activeChar.getWeapon().getItem().getBless() == 2) { // 呪われていた場合
@@ -5814,15 +5782,6 @@ public class C_ItemUSe extends ClientBasePacket {
 					L1PolyMorph.doPoly(mob, polyId, skillTemp.getBuffDuration(), L1PolyMorph.MORPH_BY_ITEMMAGIC);
 				}
 			}
-		}
-	}
-
-	private void cancelAbsoluteBarrier(L1PcInstance pc) { // アブソルート バリアの解除
-		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) {
-			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
-			pc.startHpRegeneration();
-			pc.startMpRegeneration();
-			pc.startMpRegenerationByDoll();
 		}
 	}
 

@@ -89,14 +89,12 @@ public class C_Attack extends ClientBasePacket {
 			}
 		}
 
-		// 如果在絕對屏障攻擊別人
 		if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // 取消絕對屏障
-			pc.killSkillEffectTimer(ABSOLUTE_BARRIER);
-			pc.startHpRegeneration();
-			pc.startMpRegeneration();
-			pc.startMpRegenerationByDoll();
+			pc.removeSkillEffect(ABSOLUTE_BARRIER);
 		}
-		pc.killSkillEffectTimer(MEDITATION);
+		if (pc.hasSkillEffect(MEDITATION)) { // 取消冥想效果
+			pc.removeSkillEffect(MEDITATION);
+		}
 
 		pc.delInvis(); // 解除隱形狀態
 
