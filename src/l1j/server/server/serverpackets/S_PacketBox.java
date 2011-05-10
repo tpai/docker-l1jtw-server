@@ -279,7 +279,7 @@ public class S_PacketBox extends ServerBasePacket {
 					writeC(type); // 類型
 					writeC(0x2a);
 					writeH(time); // 時間
-					writeC(0x0); // 負重度 值:240，負重度100%
+					writeC(0x0); // 負重度 值:242，負重度100%
 				} else if (type != 7) {
 					writeC(0x12);
 					writeC(0x0b);
@@ -291,7 +291,7 @@ public class S_PacketBox extends ServerBasePacket {
 					writeC(type); // 類型
 					writeC(0x24);
 					writeH(time); // 時間
-					writeC(0x00); // 負重度 值:240，負重度100%
+					writeC(0x00); // 負重度 值:242，負重度100%
 				} else {
 					writeC(0x12);
 					writeC(0x0b);

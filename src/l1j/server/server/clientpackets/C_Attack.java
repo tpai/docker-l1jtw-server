@@ -51,7 +51,7 @@ public class C_Attack extends ClientBasePacket {
 		L1Object target = L1World.getInstance().findObject(targetId);
 
 		// 確認是否可以攻擊
-		if (pc.getInventory().getWeight240() >= 197) { // 是否超重
+		if (pc.getInventory().getWeight242() >= 197) { // 是否超重
 			pc.sendPackets(new S_ServerMessage(110)); // \f1アイテムが重すぎて戦闘することができません。
 			return;
 		}

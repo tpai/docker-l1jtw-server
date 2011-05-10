@@ -58,7 +58,7 @@ public class S_OwnCharStatus extends ServerBasePacket {
 		writeC(pc.getAc());
 		writeD(time);
 		writeC(pc.get_food());
-		writeC(pc.getInventory().getWeight240());
+		writeC(pc.getInventory().getWeight242());
 		writeH(pc.getLawful());
 		writeC(pc.getFire());
 		writeC(pc.getWater());

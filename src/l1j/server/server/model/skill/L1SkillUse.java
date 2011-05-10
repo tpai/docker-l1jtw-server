@@ -348,7 +348,7 @@ public class L1SkillUse {
 			if ((pc.isInvisble() || pc.isInvisDelay()) && !isInvisUsableSkill()) { // インビジ中に使用不可のスキル
 				return false;
 			}
-			if (pc.getInventory().getWeight240() >= 197) { // \f1你攜帶太多物品，因此無法使用法術。
+			if (pc.getInventory().getWeight242() >= 197) { // \f1你攜帶太多物品，因此無法使用法術。
 				pc.sendPackets(new S_ServerMessage(316));
 				return false;
 			}

@@ -36,7 +36,7 @@ public class S_OwnCharStatus2 extends ServerBasePacket {
 		writeC(cha.getDex());
 		writeC(cha.getCon());
 		writeC(cha.getCha());
-		writeC(cha.getInventory().getWeight240());
+		writeC(cha.getInventory().getWeight242());
 	}
 
 	@Override

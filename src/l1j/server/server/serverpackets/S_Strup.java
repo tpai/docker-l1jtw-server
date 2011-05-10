@@ -26,7 +26,7 @@ public class S_Strup extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_STRUP);
 		writeH(time);
 		writeC(pc.getStr());
-		writeC(pc.getInventory().getWeight240());
+		writeC(pc.getInventory().getWeight242());
 		writeC(type);
 		writeD(0);
 	}

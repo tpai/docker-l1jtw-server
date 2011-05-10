@@ -428,15 +428,15 @@ public class L1Attack {
 			_hitRate += _pc.getBowHitModifierByArmor();
 		}
 
-		if ((80 < _pc.getInventory().getWeight240() // 重量による命中補正
+		if ((80 < _pc.getInventory().getWeight242() // 重量による命中補正
 				)
-				&& (120 >= _pc.getInventory().getWeight240())) {
+				&& (121 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 1;
-		} else if ((121 <= _pc.getInventory().getWeight240())
-				&& (160 >= _pc.getInventory().getWeight240())) {
+		} else if ((122 <= _pc.getInventory().getWeight242())
+				&& (160 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 3;
-		} else if ((161 <= _pc.getInventory().getWeight240())
-				&& (200 >= _pc.getInventory().getWeight240())) {
+		} else if ((161 <= _pc.getInventory().getWeight242())
+				&& (200 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 5;
 		}
 
@@ -614,15 +614,15 @@ public class L1Attack {
 			_hitRate += _pc.getBowHitModifierByArmor();
 		}
 
-		if ((80 < _pc.getInventory().getWeight240() // 重量による命中補正
+		if ((80 < _pc.getInventory().getWeight242() // 重量による命中補正
 				)
-				&& (120 >= _pc.getInventory().getWeight240())) {
+				&& (121 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 1;
-		} else if ((121 <= _pc.getInventory().getWeight240())
-				&& (160 >= _pc.getInventory().getWeight240())) {
+		} else if ((122 <= _pc.getInventory().getWeight242())
+				&& (160 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 3;
-		} else if ((161 <= _pc.getInventory().getWeight240())
-				&& (200 >= _pc.getInventory().getWeight240())) {
+		} else if ((161 <= _pc.getInventory().getWeight242())
+				&& (200 >= _pc.getInventory().getWeight242())) {
 			_hitRate -= 5;
 		}
 

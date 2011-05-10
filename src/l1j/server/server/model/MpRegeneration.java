@@ -136,6 +136,6 @@ public class MpRegeneration extends TimerTask {
 			return false;
 		}
 
-		return (120 <= pc.getInventory().getWeight240()) ? true : false;
+		return (120 <= pc.getInventory().getWeight242()) ? true : false;
 	}
 }

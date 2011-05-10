@@ -64,29 +64,29 @@ public class L1PcInventory extends L1Inventory {
 		return _owner;
 	}
 
-	// 240段階のウェイトを返す
-	public int getWeight240() {
-		return calcWeight240(getWeight());
+	// 分為242段的重量數值
+	public int getWeight242() {
+		return calcWeight242(getWeight());
 	}
 
-	// 240段階のウェイトを算出する
-	public int calcWeight240(int weight) {
-		int weight240 = 0;
+	// 242階段的重量數值計算
+	public int calcWeight242(int weight) {
+		int weight242 = 0;
 		if (Config.RATE_WEIGHT_LIMIT != 0) {
 			double maxWeight = _owner.getMaxWeight();
 			if (weight > maxWeight) {
-				weight240 = 240;
+				weight242 = 242;
 			} else {
-				double wpTemp = (weight * 100 / maxWeight) * 240.00 / 100.00;
+				double wpTemp = (weight * 100 / maxWeight) * 242.00 / 100.00;
 				DecimalFormat df = new DecimalFormat("00.##");
 				df.format(wpTemp);
 				wpTemp = Math.round(wpTemp);
-				weight240 = (int) (wpTemp);
+				weight242 = (int) (wpTemp);
 			}
 		} else { // ウェイトレートが０なら重量常に０
-			weight240 = 0;
+			weight242 = 0;
 		}
-		return weight240;
+		return weight242;
 	}
 
 	@Override
@@ -111,13 +111,13 @@ public class L1PcInventory extends L1Inventory {
 				+ 1;
 		if (weight < 0 || (item.getItem().getWeight() * count / 1000) < 0) {
 			if (message) {
-				sendOverMessage(82); // アイテムが重すぎて、これ以上持てません。
+				sendOverMessage(82); // 此物品太重了，所以你無法攜帶。
 			}
 			return WEIGHT_OVER;
 		}
-		if (calcWeight240(weight) >= 240) {
+		if (calcWeight242(weight) >= 242) {
 			if (message) {
-				sendOverMessage(82); // アイテムが重すぎて、これ以上持てません。
+				sendOverMessage(82); // 此物品太重了，所以你無法攜帶。
 			}
 			return WEIGHT_OVER;
 		}
@@ -126,8 +126,8 @@ public class L1PcInventory extends L1Inventory {
 		if (itemExist != null && (itemExist.getCount() + count) > MAX_AMOUNT) {
 			if (message) {
 				getOwner().sendPackets(
-						new S_ServerMessage(166, "所持しているアデナ",
-								"2,000,000,000を超過しています。")); // \f1%0が%4%1%3%2
+						new S_ServerMessage(166, "所持有的金幣",
+								"超過了2,000,000,000上限。")); // \f1%0が%4%1%3%2
 			}
 			return AMOUNT_OVER;
 		}
@@ -139,7 +139,7 @@ public class L1PcInventory extends L1Inventory {
 		_owner.sendPackets(new S_ServerMessage(message_id));
 	}
 
-	// ＤＢのcharacter_itemsの読込
+	// 讀取資料庫中的character_items資料表
 	@Override
 	public void loadItems() {
 		try {
@@ -180,13 +180,13 @@ public class L1PcInventory extends L1Inventory {
 		}
 	}
 
-	// ＤＢのcharacter_itemsへ登録
+	// 對資料庫中的character_items資料表寫入
 	@Override
 	public void insertItem(L1ItemInstance item) {
 		_owner.sendPackets(new S_AddItem(item));
 		if (item.getItem().getWeight() != 0) {
 			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-					getWeight240()));
+					getWeight242()));
 		}
 		try {
 			CharactersItemStorage storage = CharactersItemStorage.create();
@@ -325,7 +325,7 @@ public class L1PcInventory extends L1Inventory {
 			_owner.sendPackets(new S_ItemStatus(item));
 			_owner.sendPackets(new S_ItemColor(item));
 			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-					getWeight240()));
+					getWeight242()));
 			column -= COL_ITEMID;
 		}
 		if (column >= COL_DELAY_EFFECT) { // 効果ディレイ
@@ -342,9 +342,9 @@ public class L1PcInventory extends L1Inventory {
 				_owner.sendPackets(new S_ItemName(item));
 			}
 			if (item.getItem().getWeight() != 0) {
-				// XXX 240段階のウェイトが変化しない場合は送らなくてよい
+				// XXX 242段階のウェイトが変化しない場合は送らなくてよい
 				_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-						getWeight240()));
+						getWeight242()));
 			}
 			column -= COL_COUNT;
 		}
@@ -492,7 +492,7 @@ public class L1PcInventory extends L1Inventory {
 		_items.remove(item);
 		if (item.getItem().getWeight() != 0) {
 			_owner.sendPackets(new S_PacketBox(S_PacketBox.WEIGHT,
-					getWeight240()));
+					getWeight242()));
 		}
 	}
 
