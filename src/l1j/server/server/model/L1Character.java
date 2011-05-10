@@ -1023,7 +1023,7 @@ public class L1Character extends L1Object {
 	private int _trueAc = 0; // ● 本当のＡＣ
 
 	public int getAc() {
-		return _ac;
+		return _ac + L1DollInstance.getAcByDoll(this); // TODO 魔法娃娃效果 - 防禦增加
 	}
 
 	public void setAc(int i) {
@@ -1283,14 +1283,15 @@ public class L1Character extends L1Object {
 		}
 	}
 
-	// 凍結耐性
+	// 寒冰耐性
 	private int _registFreeze = 0;
 
 	private int _trueRegistFreeze = 0;
 
 	public int getRegistFreeze() {
-		return _registFreeze;
-	} // 使用するとき
+		return (_registFreeze
+				+ L1DollInstance.getRegistFreezeByDoll((L1PcInstance) this)); // TODO 魔法娃娃效果 - 寒冰耐性增加
+	}
 
 	public void add_regist_freeze(int i) {
 		_trueRegistFreeze += i;
@@ -1367,8 +1368,9 @@ public class L1Character extends L1Object {
 	private int _trueBowDmgup = 0; // ● 本当の弓ダメージ補正
 
 	public int getBowDmgup() {
-		return _bowDmgup;
-	} // 使用するとき
+		return (_bowDmgup
+				+ L1DollInstance.getBowDamageByDoll((L1PcInstance) this)); // TODO 魔法娃娃效果 - 弓的攻擊力增加
+	}
 
 	public void addBowDmgup(int i) {
 		_trueBowDmgup += i;
@@ -1405,8 +1407,9 @@ public class L1Character extends L1Object {
 	private int _trueBowHitup = 0; // ● 本当の弓命中補正
 
 	public int getBowHitup() {
-		return _bowHitup;
-	} // 使用するとき
+		return (_bowHitup
+				+ L1DollInstance.getBowHitAddByDoll((L1PcInstance) this)); // TODO 魔法娃娃效果 - 弓的命中力增加
+	}
 
 	public void addBowHitup(int i) {
 		_trueBowHitup += i;

@@ -507,6 +507,16 @@ public class L1Attack {
 		} else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			_hitRate = 0;
 		}
+
+		// TODO 魔法娃娃效果 - 迴避
+		Object[] targetDollList = _targetPc.getDollList().values().toArray();
+		for (Object dollObject : targetDollList) {
+			L1DollInstance doll = (L1DollInstance) dollObject;
+			if (doll.getDamageEvasionByDoll() > 0) {
+				_hitRate = 0;
+			}
+		}
+
 		int rnd = Random.nextInt(100) + 1;
 		if ((_weaponType == 20) && (_hitRate > rnd)) { // 弓の場合、ヒットした場合でもERでの回避を再度行う。
 			return calcErEvasion();
@@ -730,6 +740,15 @@ public class L1Attack {
 			// 目標在安區、攻擊者在安區、NOPVP
 			if ((_targetPc.getZoneType() == 1) || (_npc.getZoneType() == 1)
 					|| (_targetPc.checkNonPvP(_targetPc, _npc))) {
+				_hitRate = 0;
+			}
+		}
+
+		// TODO 魔法娃娃效果 - 迴避
+		Object[] targetDollList = _targetPc.getDollList().values().toArray();
+		for (Object dollObject : targetDollList) {
+			L1DollInstance doll = (L1DollInstance) dollObject;
+			if (doll.getDamageEvasionByDoll() > 0) {
 				_hitRate = 0;
 			}
 		}
@@ -1684,6 +1703,17 @@ public class L1Attack {
 				&& (chance <= 10)) {
 			// 通常毒、3秒周期、ダメージHP-5
 			L1DamagePoison.doInfection(attacker, target, 3000, 5);
+		} else {
+			// TODO 魔法娃娃效果 - 中毒
+			Object[] dollList = _pc.getDollList().values().toArray();
+			for (Object dollObject : dollList) {
+				L1DollInstance doll = (L1DollInstance) dollObject;
+				if (doll.getPoisonByDoll() > 0) {
+					// 通常毒、3秒周期、ダメージHP-5
+					L1DamagePoison.doInfection(attacker, target, 3000, 5);
+				}
+			}
+			// TODO マジックドールによる毒付与　end
 		}
 	}
 

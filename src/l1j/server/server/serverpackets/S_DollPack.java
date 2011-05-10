@@ -27,34 +27,32 @@ public class S_DollPack extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_DollPack(L1DollInstance pet, L1PcInstance player) {
+	public S_DollPack(L1DollInstance doll) {
 		/*
 		 * int addbyte = 0; int addbyte1 = 1; int addbyte2 = 13; int setting =
 		 * 4;
 		 */
 		writeC(Opcodes.S_OPCODE_CHARPACK);
-		writeH(pet.getX());
-		writeH(pet.getY());
-		writeD(pet.getId());
-		writeH(pet.getGfxId()); // SpriteID in List.spr
-		writeC(pet.getStatus()); // Modes in List.spr
-		writeC(pet.getHeading());
+		writeH(doll.getX());
+		writeH(doll.getY());
+		writeD(doll.getId());
+		writeH(doll.getGfxId()); // SpriteID in List.spr
+		writeC(doll.getStatus()); // Modes in List.spr
+		writeC(doll.getHeading());
 		writeC(0); // (Bright) - 0~15
-		writeC(pet.getMoveSpeed()); // ・ケ・ヤ。シ・ノ - 0:normal,1:fast,2:slow
+		writeC(doll.getMoveSpeed()); // 1段加速狀態
 		writeD(0);
 		writeH(0);
-		writeS(pet.getNameId());
-		writeS(pet.getTitle());
-		writeC(0); // ステステエマナラ - 0:mob, item(atk pointer) , 1:poisoned() ,
-		// 2:invisable() , 4:pc, 8:cursed() , 16:brave() ,
-		// 32:??, 64:??(??) , 128:invisable but name
+		writeS(doll.getNameId());
+		writeS(doll.getTitle());
+		writeC((doll.getBraveSpeed() * 16)); // 狀態、2段加速狀態
 		writeD(0); // ??
 		writeS(null); // ??
-		writeS(pet.getMaster() != null ? pet.getMaster().getName() : "");
+		writeS(doll.getMaster() != null ? doll.getMaster().getName() : "");
 		writeC(0); // ??
 		writeC(0xFF);
 		writeC(0);
-		writeC(pet.getLevel()); // PC = 0, Mon = Lv
+		writeC(doll.getLevel()); // PC = 0, Mon = Lv
 		writeC(0);
 		writeC(0xFF);
 		writeC(0xFF);

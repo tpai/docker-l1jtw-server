@@ -94,7 +94,7 @@ public class C_SendLocation extends ClientBasePacket {
 							pc.sendPackets(new S_ServerMessage(1567)); // 需要龍之鑰匙。
 							return;
 						}
-						L1SpawnUtil.spawn(pc, dragonGate[gate], 6, 120 * 60 * 1000); // 開啟 2 小時
+						L1SpawnUtil.spawn(pc, dragonGate[gate], 0, 120 * 60 * 1000); // 開啟 2 小時
 					}
 				}
 			}

@@ -81,7 +81,6 @@ import l1j.server.server.model.L1Quest;
 import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1TownLocation;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1EffectInstance;
 import l1j.server.server.model.Instance.L1FurnitureInstance;
 import l1j.server.server.model.Instance.L1GuardianInstance;
@@ -94,6 +93,7 @@ import l1j.server.server.model.Instance.L1TowerInstance;
 import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.item.action.Effect;
+import l1j.server.server.model.item.action.MagicDoll;
 import l1j.server.server.model.item.action.Potion;
 import l1j.server.server.model.poison.L1DamagePoison;
 import l1j.server.server.model.skill.L1SkillUse;
@@ -2830,8 +2830,12 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == 41245) { // 溶解剤
 					useResolvent(pc, l1iteminstance1, l1iteminstance);
 				}
-				else if ((itemId == 41248) || (itemId == 41249) || (itemId == 41250) || (itemId == 49037) || (itemId == 49038) || (itemId == 49039)) { // マジックドール
-					useMagicDoll(pc, itemId, itemObjid);
+				else if ((itemId == 41248) || (itemId == 41249) || (itemId == 41250)
+						|| (itemId == 49037) || (itemId == 49038) || (itemId == 49039)
+						|| (itemId == 47105) || (itemId == 47106) || (itemId == 47107) || (itemId == 47108)
+						|| (itemId == 47109) || (itemId == 47110) || (itemId == 47111) || (itemId == 47112)
+						|| (itemId == 47113)) { // 魔法娃娃類
+					MagicDoll.useMagicDoll(pc, itemId, itemObjid);
 				}
 				else if ((itemId >= 41255) && (itemId <= 41259)) { // 料理の本
 					if (cookStatus == 0) {
@@ -6065,31 +6069,31 @@ public class C_ItemUSe extends ClientBasePacket {
 	}
 
 	private void startFishing(L1PcInstance pc, int itemId, int fishX, int fishY) {
-		if ((pc.getMapId() != 5124) || (fishX <= 32789) || (fishX >= 32813) || (fishY <= 32786) || (fishY >= 32812)) {
-			// ここに釣り竿を投げることはできません。
+		if ((pc.getMapId() != 5300) && (pc.getMapId() != 5301)) {
+			// 無法在這個地區使用釣竿。
 			pc.sendPackets(new S_ServerMessage(1138));
 			return;
 		}
+		if (pc.getTempCharGfx() != pc.getClassId()) {
+			// 這裡不可以變身。
+			pc.sendPackets(new S_ServerMessage(1170));
+			return;
+		}
 
-		int rodLength = 0;
-		if (itemId == 41293) {
-			rodLength = 5;
-		}
-		else if (itemId == 41294) {
-			rodLength = 3;
-		}
+		int rodLength = 5;
+
 		if (pc.getMap().isFishingZone(fishX, fishY)) {
 			if (pc.getMap().isFishingZone(fishX + 1, fishY) && pc.getMap().isFishingZone(fishX - 1, fishY)
 					&& pc.getMap().isFishingZone(fishX, fishY + 1) && pc.getMap().isFishingZone(fishX, fishY - 1)) {
 				if ((fishX > pc.getX() + rodLength) || (fishX < pc.getX() - rodLength)) {
-					// ここに釣り竿を投げることはできません。
 					pc.sendPackets(new S_ServerMessage(1138));
 				}
 				else if ((fishY > pc.getY() + rodLength) || (fishY < pc.getY() - rodLength)) {
-					// ここに釣り竿を投げることはできません。
 					pc.sendPackets(new S_ServerMessage(1138));
 				}
-				else if (pc.getInventory().consumeItem(41295, 1)) { // エサ
+				else if (pc.getInventory().consumeItem(47103, 1)) { // 新鮮的餌
+					pc.setFishX(fishX);
+					pc.setFishY(fishY);
 					pc.sendPackets(new S_Fishing(pc.getId(), ActionCodes.ACTION_Fishing, fishX, fishY));
 					pc.broadcastPacket(new S_Fishing(pc.getId(), ActionCodes.ACTION_Fishing, fishX, fishY));
 					pc.setFishing(true);
@@ -6098,17 +6102,15 @@ public class C_ItemUSe extends ClientBasePacket {
 					FishingTimeController.getInstance().addMember(pc);
 				}
 				else {
-					// 釣りをするためにはエサが必要です。
+					// 釣魚需要有餌。
 					pc.sendPackets(new S_ServerMessage(1137));
 				}
 			}
 			else {
-				// ここに釣り竿を投げることはできません。
 				pc.sendPackets(new S_ServerMessage(1138));
 			}
 		}
 		else {
-			// ここに釣り竿を投げることはできません。
 			pc.sendPackets(new S_ServerMessage(1138));
 		}
 	}
@@ -6159,71 +6161,6 @@ public class C_ItemUSe extends ClientBasePacket {
 		}
 		pc.getInventory().removeItem(item, 1);
 		pc.getInventory().removeItem(resolvent, 1);
-	}
-
-	private void useMagicDoll(L1PcInstance pc, int itemId, int itemObjectId) {
-		boolean isAppear = true;
-		L1DollInstance doll = null;
-		Object[] dollList = pc.getDollList().values().toArray();
-		for (Object dollObject : dollList) {
-			doll = (L1DollInstance) dollObject;
-			if (doll.getItemObjId() == itemObjectId) { // 既に引き出しているマジックドール
-				isAppear = false;
-				break;
-			}
-		}
-
-		if (isAppear) {
-			if (!pc.getInventory().checkItem(41246, 50)) {
-				pc.sendPackets(new S_ServerMessage(337, "$5240")); // \f1%0が不足しています。
-				return;
-			}
-			if (dollList.length >= Config.MAX_DOLL_COUNT) {
-				// \f1これ以上のモンスターを操ることはできません。
-				pc.sendPackets(new S_ServerMessage(319));
-				return;
-			}
-			int npcId = 0;
-			int dollType = 0;
-			if (itemId == 41248) {
-				npcId = 80106;
-				dollType = L1DollInstance.DOLLTYPE_BUGBEAR;
-			}
-			else if (itemId == 41249) {
-				npcId = 80107;
-				dollType = L1DollInstance.DOLLTYPE_SUCCUBUS;
-			}
-			else if (itemId == 41250) {
-				npcId = 80108;
-				dollType = L1DollInstance.DOLLTYPE_WAREWOLF;
-			}
-			else if (itemId == 49037) {
-				npcId = 80129;
-				dollType = L1DollInstance.DOLLTYPE_ELDER;
-			}
-			else if (itemId == 49038) {
-				npcId = 80130;
-				dollType = L1DollInstance.DOLLTYPE_CRUSTANCEAN;
-			}
-			else if (itemId == 49039) {
-				npcId = 80131;
-				dollType = L1DollInstance.DOLLTYPE_GOLEM;
-			}
-			L1Npc template = NpcTable.getInstance().getTemplate(npcId);
-			doll = new L1DollInstance(template, pc, dollType, itemObjectId);
-			pc.sendPackets(new S_SkillSound(doll.getId(), 5935));
-			pc.broadcastPacket(new S_SkillSound(doll.getId(), 5935));
-			pc.sendPackets(new S_SkillIconGFX(56, 1800));
-			pc.sendPackets(new S_OwnCharStatus(pc));
-			pc.getInventory().consumeItem(41246, 50);
-		}
-		else {
-			pc.sendPackets(new S_SkillSound(doll.getId(), 5936));
-			pc.broadcastPacket(new S_SkillSound(doll.getId(), 5936));
-			doll.deleteDoll();
-			pc.sendPackets(new S_SkillIconGFX(56, 0));
-			pc.sendPackets(new S_OwnCharStatus(pc));
-		}
 	}
 
 	private void makeCooking(L1PcInstance pc, int cookNo) {

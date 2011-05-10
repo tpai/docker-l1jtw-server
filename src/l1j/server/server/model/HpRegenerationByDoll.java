@@ -18,17 +18,16 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.serverpackets.S_SkillSound;
+import l1j.server.server.serverpackets.S_SkillSound; //TODO HPR効果
 
-public class MpRegenerationByDoll extends TimerTask {
-	private static Logger _log = Logger.getLogger(MpRegenerationByDoll.class
+public class HpRegenerationByDoll extends TimerTask {
+	private static Logger _log = Logger.getLogger(HpRegenerationByDoll.class
 			.getName());
 
 	private final L1PcInstance _pc;
 
-	public MpRegenerationByDoll(L1PcInstance pc) {
+	public HpRegenerationByDoll(L1PcInstance pc) {
 		_pc = pc;
 	}
 
@@ -38,20 +37,19 @@ public class MpRegenerationByDoll extends TimerTask {
 			if (_pc.isDead()) {
 				return;
 			}
-			regenMp();
+			regenHp();
 		} catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
 
-	public void regenMp() {
-		int newMp = _pc.getCurrentMp() + L1DollInstance.getMpByDoll(_pc);
-		if (newMp < 0) {
-			newMp = 0;
+	public void regenHp() {
+		int newHp = _pc.getCurrentHp() + 40;
+		if (newHp < 0) {
+			newHp = 0;
 		}
 		_pc.sendPackets(new S_SkillSound(_pc.getId(), 6321));
 		_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 6321));
-		_pc.setCurrentMp(newMp);
+		_pc.setCurrentHp(newHp);
 	}
-
 }

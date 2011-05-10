@@ -60,6 +60,7 @@ import l1j.server.server.datatables.ExpTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.model.AcceleratorChecker;
 import l1j.server.server.model.HpRegeneration;
+import l1j.server.server.model.HpRegenerationByDoll;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1CastleLocation;
 import l1j.server.server.model.L1Character;
@@ -175,7 +176,7 @@ public class L1PcInstance extends L1Character {
 	private int _partyType;
 
 	public short getHpr() {
-		return _hpr;
+		return (short) (_hpr + L1DollInstance.getHprByDoll(this));
 	}
 
 	public void addHpr(int i) {
@@ -188,7 +189,7 @@ public class L1PcInstance extends L1Character {
 	private short _trueMpr = 0;
 
 	public short getMpr() {
-		return _mpr;
+		return (short) (_mpr + L1DollInstance.getMprByDoll(this));
 	}
 
 	public void addMpr(int i) {
@@ -235,6 +236,34 @@ public class L1PcInstance extends L1Character {
 			_mpRegen = new MpRegeneration(this);
 			_regenTimer.scheduleAtFixedRate(_mpRegen, INTERVAL, INTERVAL);
 			_mpRegenActive = true;
+		}
+	}
+
+	// TODO マジックドール　HPR開始
+	public void startHpRegenerationByDoll() {
+		final int INTERVAL_BY_DOLL = 64000;
+		boolean isExistHprDoll = false;
+		Object[] dollList = getDollList().values().toArray();
+		for (Object dollObject : dollList) {
+			L1DollInstance doll = (L1DollInstance) dollObject;
+			if (doll.isHpRegeneration()) {
+				isExistHprDoll = true;
+			}
+		}
+		if (!_hpRegenActiveByDoll && isExistHprDoll) {
+			_hpRegenByDoll = new HpRegenerationByDoll(this);
+			_regenTimer.scheduleAtFixedRate(_hpRegenByDoll, INTERVAL_BY_DOLL,
+					INTERVAL_BY_DOLL);
+			_hpRegenActiveByDoll = true;
+		}
+	}
+
+	// TODO マジックドール　HPR停止
+	public void stopHpRegenerationByDoll() {
+		if (_hpRegenActiveByDoll) {
+			_hpRegenByDoll.cancel();
+			_hpRegenByDoll = null;
+			_hpRegenActiveByDoll = false;
 		}
 	}
 
@@ -1857,6 +1886,8 @@ public class L1PcInstance extends L1Character {
 
 	private HpRegeneration _hpRegen;
 
+	private HpRegenerationByDoll _hpRegenByDoll;
+
 	private static Timer _regenTimer = new Timer(true);
 
 	private boolean _mpRegenActive;
@@ -1866,6 +1897,8 @@ public class L1PcInstance extends L1Character {
 	private boolean _mpReductionActiveByAwake;
 
 	private boolean _hpRegenActive;
+
+	private boolean _hpRegenActiveByDoll;
 
 	private L1EquipmentSlot _equipSlot;
 
@@ -2406,11 +2439,7 @@ public class L1PcInstance extends L1Character {
 		weightReductionByArmor /= 100;
 
 		double weightReductionByDoll = 0; // マジックドールによる重量軽減
-		Object[] dollList = getDollList().values().toArray();
-		for (Object dollObject : dollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			weightReductionByDoll += doll.getWeightReductionByDoll();
-		}
+		weightReductionByDoll += L1DollInstance.getWeightReductionByDoll(this);
 		weightReductionByDoll /= 100;
 
 		int weightReductionByMagic = 0;
@@ -2421,7 +2450,8 @@ public class L1PcInstance extends L1Character {
 		double originalWeightReduction = 0; // オリジナルステータスによる重量軽減
 		originalWeightReduction += 0.04 * (getOriginalStrWeightReduction() + getOriginalConWeightReduction());
 
-		double weightReduction = 1 + weightReductionByArmor + weightReductionByDoll + originalWeightReduction;
+		double weightReduction = 1 + weightReductionByArmor
+				+ weightReductionByDoll + originalWeightReduction;
 
 		maxWeight *= weightReduction;
 

@@ -147,7 +147,7 @@ public class Teleportation {
 					final int ny = loc.getY();
 
 					teleport(doll, nx, ny, mapId, head);
-					pc.sendPackets(new S_DollPack(doll, pc));
+					pc.sendPackets(new S_DollPack(doll));
 
 					for (final L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(doll)) {
 						// テレポート元と先に同じPCが居た場合、正しく更新されない為、一度removeする。
@@ -164,7 +164,7 @@ public class Teleportation {
 					final int ny = loc.getY();
 
 					teleport(doll, nx, ny, mapId, head);
-					pc.sendPackets(new S_DollPack(doll, pc));
+					pc.sendPackets(new S_DollPack(doll));
 
 					for (final L1PcInstance visiblePc : L1World.getInstance().getVisiblePlayer(doll)) {
 						// テレポート元と先に同じPCが居た場合、正しく更新されない為、一度removeする。
