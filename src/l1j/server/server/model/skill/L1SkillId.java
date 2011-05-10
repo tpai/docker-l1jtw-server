@@ -584,7 +584,7 @@ public class L1SkillId {
 	public static final int STATUS_BRAVE2 = 1026;
 
 	/** 三段加速 */
-	//public static final int STATUS_THIRD_SPEED = 1027;
+	public static final int STATUS_THIRD_SPEED = 1027;
 
 	public static final int STATUS_END = 1027;
 
