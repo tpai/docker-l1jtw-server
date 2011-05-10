@@ -285,8 +285,10 @@ public class L1PolyMorph {
 			L1PcInstance pc = (L1PcInstance) cha;
 			int classId = pc.getClassId();
 			pc.setTempCharGfx(classId);
-			pc.sendPackets(new S_ChangeShape(pc.getId(), classId));
-			pc.broadcastPacket(new S_ChangeShape(pc.getId(), classId));
+			if (!pc.isDead()) {
+				pc.sendPackets(new S_ChangeShape(pc.getId(), classId));
+				pc.broadcastPacket(new S_ChangeShape(pc.getId(), classId));
+			}
 			L1ItemInstance weapon = pc.getWeapon();
 			if (weapon != null) {
 				S_CharVisualUpdate charVisual = new S_CharVisualUpdate(pc);

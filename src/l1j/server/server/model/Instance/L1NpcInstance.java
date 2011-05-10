@@ -431,18 +431,13 @@ public class L1NpcInstance extends L1Character {
 			if (isAttackPosition(target.getX(), target.getY(), getNpcTemplate()
 					.get_ranged())) { // 攻撃可能位置
 				if (mobSkill.isSkillTrigger(target)) { // トリガの条件に合うスキルがある
-					if (Random.nextInt(2) >= 1) { // 一定の確率で物理攻撃
-						setHeading(targetDirection(target.getX(), target.getY()));
+					if (mobSkill.skillUse(target, true)) { // スキル使用(mobskill.sqlのTriRndに従う)
+						setSleepTime(calcSleepTime(mobSkill.getSleepTime(),
+								MAGIC_SPEED));
+					} else { // スキル使用が失敗したら物理攻撃
+						setHeading(targetDirection(target.getX(),
+								target.getY()));
 						attackTarget(target);
-					} else {
-						if (mobSkill.skillUse(target, true)) { // スキル使用(mobskill.sqlのTriRndに従う)
-							setSleepTime(calcSleepTime(mobSkill.getSleepTime(),
-									MAGIC_SPEED));
-						} else { // スキル使用が失敗したら物理攻撃
-							setHeading(targetDirection(target.getX(),
-									target.getY()));
-							attackTarget(target);
-						}
 					}
 				} else {
 					setHeading(targetDirection(target.getX(), target.getY()));

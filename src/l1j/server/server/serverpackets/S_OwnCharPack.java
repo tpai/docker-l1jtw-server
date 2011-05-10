@@ -14,7 +14,7 @@
  */
 package l1j.server.server.serverpackets;
 
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -91,10 +91,10 @@ public class S_OwnCharPack extends ServerBasePacket {
 		} else {
 			writeC(0xFF);
 		}
-		if (pc.hasSkillEffect(EFFECT_THIRD_SPEED)) {
-			writeC(0x08);
+		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
+			writeC(0x08); // 3段加速
 		} else {
-			writeC(0); // 海底波紋程度
+			writeC(0);
 		}
 		writeC(0); // PC = 0, Mon = Lv
 		writeC(0); // ？

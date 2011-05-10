@@ -33,7 +33,6 @@ import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.model.Instance.L1TowerInstance;
 import l1j.server.server.model.poison.L1DamagePoison;
 import l1j.server.server.serverpackets.S_ChangeName;
-import l1j.server.server.serverpackets.S_ChangeShape;
 import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_ChatPacket;
 import l1j.server.server.serverpackets.S_CurseBlind;
@@ -45,6 +44,7 @@ import l1j.server.server.serverpackets.S_Invis;
 import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_MPUpdate;
 import l1j.server.server.serverpackets.S_Message_YN;
+import l1j.server.server.serverpackets.S_NpcChangeShape;
 import l1j.server.server.serverpackets.S_NpcChatPacket;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharStatus2;
@@ -144,11 +144,11 @@ public class L1BuffUtil {
 	}
 
 	public static void thirdSpeed(L1PcInstance pc) {
-		if (pc.hasSkillEffect(EFFECT_THIRD_SPEED)) {
-			pc.killSkillEffectTimer(EFFECT_THIRD_SPEED);
+		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
+			pc.killSkillEffectTimer(STATUS_THIRD_SPEED);
 		}
 
-		pc.setSkillEffect(EFFECT_THIRD_SPEED, 600 * 1000);
+		pc.setSkillEffect(STATUS_THIRD_SPEED, 600 * 1000);
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), 8031));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), 8031));
@@ -517,7 +517,7 @@ public class L1BuffUtil {
 					if (npcId == 71092) { // 調査員
 						if (npc.getGfxId() == npc.getTempCharGfx()) {
 							npc.setTempCharGfx(1314);
-							npc.broadcastPacket(new S_ChangeShape(npc.getId(), 1314));
+							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 1314, npc.getLawful(), npc.getStatus()));
 							return 0;
 						}
 						else {
@@ -528,7 +528,7 @@ public class L1BuffUtil {
 						if (npc.getGfxId() == npc.getTempCharGfx()) {
 							npc.setCurrentHp(npc.getMaxHp());
 							npc.setTempCharGfx(2332);
-							npc.broadcastPacket(new S_ChangeShape(npc.getId(), 2332));
+							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 2332, npc.getLawful(), npc.getStatus()));
 							npc.setName("$2103");
 							npc.setNameId("$2103");
 							npc.broadcastPacket(new S_ChangeName(npc.getId(), "$2103"));
@@ -536,7 +536,7 @@ public class L1BuffUtil {
 						else if (npc.getTempCharGfx() == 2332) {
 							npc.setCurrentHp(npc.getMaxHp());
 							npc.setTempCharGfx(2755);
-							npc.broadcastPacket(new S_ChangeShape(npc.getId(), 2755));
+							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 2755, npc.getLawful(), npc.getStatus()));
 							npc.setName("$2488");
 							npc.setNameId("$2488");
 							npc.broadcastPacket(new S_ChangeName(npc.getId(), "$2488"));
@@ -545,7 +545,7 @@ public class L1BuffUtil {
 					if (npcId == 81209) { // ロイ
 						if (npc.getGfxId() == npc.getTempCharGfx()) {
 							npc.setTempCharGfx(4310);
-							npc.broadcastPacket(new S_ChangeShape(npc.getId(), 4310));
+							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 4310, npc.getLawful(), npc.getStatus()));
 							return 0;
 						}
 						else {

@@ -21,7 +21,6 @@ import static l1j.server.server.model.skill.L1SkillId.COUNTER_BARRIER;
 import static l1j.server.server.model.skill.L1SkillId.DECREASE_WEIGHT;
 import static l1j.server.server.model.skill.L1SkillId.DRESS_EVASION;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_POTION_OF_BATTLE;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
 import static l1j.server.server.model.skill.L1SkillId.FOG_OF_SLEEPING;
 import static l1j.server.server.model.skill.L1SkillId.GMSTATUS_FINDINVIS;
@@ -38,6 +37,7 @@ import static l1j.server.server.model.skill.L1SkillId.SOLID_CARRIAGE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_CHAT_PROHIBITED;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_RIBRAVE;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.STRIKER_GALE;
 import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
 
@@ -1295,10 +1295,6 @@ public class L1PcInstance extends L1Character {
 			L1SkillUse l1skilluse = new L1SkillUse();
 			l1skilluse.handleCommands(L1PcInstance.this, CANCELLATION, getId(), getX(), getY(), null, 0, L1SkillUse.TYPE_LOGIN);
 
-			// 三段加速
-			if (hasSkillEffect(EFFECT_THIRD_SPEED)) {
-				removeSkillEffect(EFFECT_THIRD_SPEED);
-			}
 			// 戰鬥藥水
 			if (hasSkillEffect(EFFECT_POTION_OF_BATTLE)) {
 				removeSkillEffect(EFFECT_POTION_OF_BATTLE);
@@ -1306,22 +1302,6 @@ public class L1PcInstance extends L1Character {
 			// 象牙塔妙藥
 			if (hasSkillEffect(COOKING_WONDER_DRUG)) {
 				removeSkillEffect(COOKING_WONDER_DRUG);
-			}
-
-			// シャドウ系変身中に死亡するとクライアントが落ちるため暫定対応
-			if ((tempchargfx == 5727) || (tempchargfx == 5730) || (tempchargfx == 5733) || (tempchargfx == 5736)) {
-				tempchargfx = 0;
-			}
-			if (tempchargfx != 0) {
-				sendPackets(new S_ChangeShape(getId(), tempchargfx));
-				broadcastPacket(new S_ChangeShape(getId(), tempchargfx));
-			}
-			else {
-				// シャドウ系変身中に攻撃しながら死亡するとクライアントが落ちるためディレイを入れる
-				try {
-					Thread.sleep(1000);
-				}
-				catch (Exception e) {}
 			}
 
 			sendPackets(new S_DoActionGFX(targetobjid, ActionCodes.ACTION_Die));
@@ -2457,7 +2437,7 @@ public class L1PcInstance extends L1Character {
 	}
 
 	public boolean isThirdSpeed() { // 三段加速 * 1.15
-		return hasSkillEffect(EFFECT_THIRD_SPEED);
+		return hasSkillEffect(STATUS_THIRD_SPEED);
 	}
 
 	public boolean isWindShackle() { // 風之枷鎖  攻速 / 2
@@ -4614,6 +4594,27 @@ public class L1PcInstance extends L1Character {
 
 	public int getPartyType() {
 		return _partyType;
+	}
+
+	// 釣魚點
+	private int _fishX = 0;
+
+	public int getFishX() {
+		return _fishX;
+	}
+
+	public void setFishX(int i) {
+		_fishX = i;
+	}
+
+	private int _fishY = 0;
+
+	public int getFishY() {
+		return _fishY;
+	}
+
+	public void setFishY(int i) {
+		_fishY = i;
 	}
 
 	/****************************** 戰鬥特化系統 ******************************/

@@ -491,7 +491,7 @@ public class L1V1Map extends L1Map {
 
 	@Override
 	public boolean isFishingZone(int x, int y) {
-		return accessOriginalTile(x, y) == 16;
+		return accessOriginalTile(x, y) == 28; // 3.3C 釣魚池可釣魚區域
 	}
 
 	@Override

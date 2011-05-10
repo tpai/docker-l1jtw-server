@@ -181,6 +181,9 @@ public class S_PacketBox extends ServerBasePacket {
 	/** 魚がかかったグラフィックが表示される */
 	public static final int FISHING = 55;
 
+	/** 魔法娃娃狀態圖示*/
+	public static final int ICON_MAGIC_DOLL = 56;
+
 	public S_PacketBox(int subCode) {
 		writeC(Opcodes.S_OPCODE_PACKETBOX);
 		writeC(subCode);
@@ -306,6 +309,17 @@ public class S_PacketBox extends ServerBasePacket {
 			case MSG_DUEL:
 				writeD(type); // 相手のオブジェクトID
 				writeD(time); // 自分のオブジェクトID
+				break;
+			case ICON_MAGIC_DOLL:
+				if (type == 32) { // 愛心圖示
+					writeH(time);
+					writeC(type);
+					writeC(12);
+				} else { // 魔法娃娃圖示
+					writeH(time);
+					writeC(0);
+					writeC(0);
+				}
 				break;
 			default:
 				break;

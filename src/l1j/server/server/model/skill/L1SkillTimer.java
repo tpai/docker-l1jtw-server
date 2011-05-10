@@ -549,7 +549,7 @@ class L1SkillStop {
 				pc.broadcastPacket(new S_SkillBrave(pc.getId(), 0, 0));
 			}
 		}
-		else if (skillId == EFFECT_THIRD_SPEED) { // 三段加速
+		else if (skillId == STATUS_THIRD_SPEED) { // 三段加速
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Liquor(pc.getId(), 0)); // 人物 * 1.15

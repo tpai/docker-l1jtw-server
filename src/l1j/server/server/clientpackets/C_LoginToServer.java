@@ -30,7 +30,7 @@ import static l1j.server.server.model.skill.L1SkillId.EFFECT_BEGIN;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_ANTHARAS;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_BLOODSTAIN_OF_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.EFFECT_END;
-import static l1j.server.server.model.skill.L1SkillId.EFFECT_THIRD_SPEED;
+import static l1j.server.server.model.skill.L1SkillId.STATUS_THIRD_SPEED;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_WONDER_DRUG;
 import static l1j.server.server.model.skill.L1SkillId.MIRROR_IMAGE;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
@@ -590,7 +590,7 @@ public class C_LoginToServer extends ClientBasePacket {
 						pc.sendPackets(new S_SkillIconGFX(36, remaining_time));
 						pc.setSkillEffect(skillid, remaining_time * 1000);
 						break;
-					case EFFECT_THIRD_SPEED: // 三段加速
+					case STATUS_THIRD_SPEED: // 三段加速
 						time = remaining_time / 4;
 						pc.sendPackets(new S_Liquor(pc.getId(), 8)); // 人物 *
 																		// 1.15

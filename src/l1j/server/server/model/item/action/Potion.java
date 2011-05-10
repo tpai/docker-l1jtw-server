@@ -120,11 +120,11 @@ public class Potion {
 			return;
 		}
 
-		if (pc.hasSkillEffect(EFFECT_THIRD_SPEED)) {
-			pc.killSkillEffectTimer(EFFECT_THIRD_SPEED);
+		if (pc.hasSkillEffect(STATUS_THIRD_SPEED)) {
+			pc.killSkillEffectTimer(STATUS_THIRD_SPEED);
 		}
 
-		pc.setSkillEffect(EFFECT_THIRD_SPEED, time * 1000);
+		pc.setSkillEffect(STATUS_THIRD_SPEED, time * 1000);
 
 		pc.sendPackets(new S_SkillSound(pc.getId(), 8031));
 		pc.broadcastPacket(new S_SkillSound(pc.getId(), 8031));

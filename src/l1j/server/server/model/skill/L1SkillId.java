@@ -580,9 +580,13 @@ public class L1SkillId {
 
 	public static final int STATUS_CUBE_BALANCE = 1025;
 
+	/** 超級加速 */
 	public static final int STATUS_BRAVE2 = 1026;
 
-	public static final int STATUS_END = 1026;
+	/** 三段加速 */
+	//public static final int STATUS_THIRD_SPEED = 1027;
+
+	public static final int STATUS_END = 1027;
 
 	public static final int GMSTATUS_BEGIN = 2000;
 
@@ -711,8 +715,6 @@ public class L1SkillId {
 	public static final int STATUS_CURSE_YAHEE = 1014;
 
 	// 相消無法消除的狀態
-	/** 三段加速 */
-	public static final int EFFECT_THIRD_SPEED = 4000;
 
 	public static final int EFFECT_BEGIN = 4001;
 
