@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : localhost
-Source Server Version : 50508
-Source Host           : localhost:3306
-Source Database       : l1jdb
+Source Server         : Taiwan Server
+Source Server Version : 50140
+Source Host           : localhost:3366
+Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50508
+Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-05-11 17:16:19
+Date: 2011-05-11 21:10:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -46,7 +46,7 @@ CREATE TABLE `magic_doll` (
   `make_itemid` int(10) NOT NULL DEFAULT '0',
   `effect` tinyint(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`item_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of magic_doll

@@ -29,7 +29,7 @@ CREATE TABLE `area` (
   `flag` int(1) NOT NULL DEFAULT '0',
   `restart` int(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`areaid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of area

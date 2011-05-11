@@ -74,7 +74,8 @@ public class MysqlAutoBackup extends TimerTask {
 			StringBuilder exeText = new StringBuilder("mysqldump --user=");
 			exeText.append(Username + " --password=");
 			exeText.append(Passwords + " ");
-			exeText.append(Database + GzipCmd + " > ");
+			exeText.append(Database + " --opt --skip-extended-insert --skip-quick");
+			exeText.append(GzipCmd + " > ");
 			exeText.append(dir.getAbsolutePath()
 					+ new SimpleDateFormat("\\yyyy-MM-dd-kkmm")
 							.format(new Date()) + FilenameEx);
