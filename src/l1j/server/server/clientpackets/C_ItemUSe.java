@@ -227,20 +227,24 @@ public class C_ItemUSe extends ClientBasePacket {
 				) || (itemId == 40950) || (itemId == 40951) || (itemId == 40952) || (itemId == 40953 // 加工された風ダイア
 				) || (itemId == 40954) || (itemId == 40955) || (itemId == 40956) || (itemId == 40957 // 加工された火ダイア
 				) || (itemId == 40958) || (itemId == 40964 // ダークマジックパウダー
-				) || (itemId == 49092 // 歪みのコア
-				) || (itemId == 41426 // 封印スクロール
-				) || (itemId == 41427 // 封印解除スクロール
-				) || (itemId == 40075 // 防具破壊スクロール
+				) || (itemId == 49092 // 龜裂之核
+				) || (itemId == 49094 // 歐西里斯初級寶箱碎片(下)
+				) || (itemId == 49098 // 歐西里斯高級寶箱碎片(下)
+				) || (itemId == 49317 // 庫庫爾坎初級寶箱碎片(下)
+				) || (itemId == 49321 // 庫庫爾坎高級寶箱碎片(下)
+				) || (itemId == 41426 // 封印卷軸
+				) || (itemId == 41427 // 解除封印卷軸
+				) || (itemId == 40075 // 毀滅盔甲的卷軸
 				) || (itemId == 49148 // 飾品強化卷軸 Scroll of Enchant Accessory
-				) || (itemId == 41429 // 風の武器強化スクロール
-				) || (itemId == 41430 // 地の武器強化スクロール
-				) || (itemId == 41431 // 水の武器強化スクロール
-				) || (itemId == 41432
-				) || (itemId == 47048
-				) || (itemId == 47049
-				) || (itemId == 47050
-				) || (itemId == 47051
-				) || (itemId == 47052)) { // 火の武器強化スクロール
+				) || (itemId == 41429 // 風之武器強化卷軸
+				) || (itemId == 41430 // 地之武器強化卷軸
+				) || (itemId == 41431 // 水之武器強化卷軸
+				) || (itemId == 41432 // 火之武器強化卷軸
+				) || (itemId == 47048 // 附魔強化卷軸
+				) || (itemId == 47049 // 近戰附魔轉換卷軸
+				) || (itemId == 47050 // 遠攻附魔轉換卷軸
+				) || (itemId == 47051 // 恢復附魔轉換卷軸
+				) || (itemId == 47052)) { // 防禦附魔轉換卷軸
 			l = readD();
 		}
 		else if ((itemId == 140100) || (itemId == 40100) || (itemId == 40099) || (itemId == 40086) || (itemId == 40863)) {
@@ -2905,56 +2909,53 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(1140));
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if (itemId == 49092) { // 歪みのコア
+				else if (itemId == 49092) { // 龜裂之核
 					int targetItemId = l1iteminstance1.getItem().getItemId();
-					if ((targetItemId == 49095) || (targetItemId == 49099)) { // 閉ざされた宝箱
+					// 上鎖的歐西里斯初級寶箱、上鎖的歐西里斯高級寶箱
+					if ((targetItemId == 49095) || (targetItemId == 49099)
+							// 上鎖的庫庫爾坎初級寶箱、上鎖的庫庫爾坎高級寶箱
+							|| (targetItemId == 49318) || (targetItemId == 49322)) {
 						createNewItem(pc, targetItemId + 1, 1);
 						pc.getInventory().consumeItem(targetItemId, 1);
 						pc.getInventory().consumeItem(49092, 1);
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						return;
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
-				else if (itemId == 49093) { // 下級オシリスの宝箱の欠片：上
-					if (pc.getInventory().checkItem(49094, 1)) {
+				else if (itemId == 49094) { // 歐西里斯初級寶箱碎片(下)
+					if (l1iteminstance1.getItem().getItemId() == 49093) {
 						pc.getInventory().consumeItem(49093, 1);
 						pc.getInventory().consumeItem(49094, 1);
 						createNewItem(pc, 49095, 1);
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					}
-				}
-				else if (itemId == 49094) { // 下級オシリスの宝箱の欠片：下
-					if (pc.getInventory().checkItem(49093, 1)) {
-						pc.getInventory().consumeItem(49093, 1);
-						pc.getInventory().consumeItem(49094, 1);
-						createNewItem(pc, 49095, 1);
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
-				else if (itemId == 49097) { // 上級オシリスの宝箱の欠片：上
-					if (pc.getInventory().checkItem(49098, 1)) {
+				else if (itemId == 49098) { // 歐西里斯高級寶箱碎片(下)
+					if (l1iteminstance1.getItem().getItemId() == 49097) {
 						pc.getInventory().consumeItem(49097, 1);
 						pc.getInventory().consumeItem(49098, 1);
 						createNewItem(pc, 49099, 1);
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
-				else if (itemId == 49098) { // 上級オシリスの宝箱の欠片：下
-					if (pc.getInventory().checkItem(49097, 1)) {
-						pc.getInventory().consumeItem(49097, 1);
-						pc.getInventory().consumeItem(49098, 1);
-						createNewItem(pc, 49099, 1);
+				else if (itemId == 49317) { // 庫庫爾坎初級寶箱碎片：下
+					if (l1iteminstance1.getItem().getItemId() == 49316) {
+						pc.getInventory().consumeItem(49316, 1);
+						pc.getInventory().consumeItem(49317, 1);
+						createNewItem(pc, 49318, 1);
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+				}
+				else if (itemId == 49321) { // 庫庫爾坎高級寶箱碎片(下)
+					if (l1iteminstance1.getItem().getItemId() == 49320) {
+						pc.getInventory().consumeItem(49320, 1);
+						pc.getInventory().consumeItem(49321, 1);
+						createNewItem(pc, 49322, 1);
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				/** 飾品強化卷軸 Scroll of Enchant Accessory */
