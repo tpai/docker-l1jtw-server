@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-01 11:28:00
+Date: 2011-05-11 22:19:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -26,7 +26,7 @@ CREATE TABLE `inn_key` (
   `hall` tinyint(2) DEFAULT NULL,
   `due_time` datetime DEFAULT NULL,
   PRIMARY KEY (`item_obj_id`,`key_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of inn_key
