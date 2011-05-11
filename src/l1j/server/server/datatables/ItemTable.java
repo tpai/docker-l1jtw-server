@@ -80,6 +80,7 @@ public class ItemTable {
 		_etcItemTypes.put("event", new Integer(14));
 		_etcItemTypes.put("sting", new Integer(15));
 		_etcItemTypes.put("treasure_box", new Integer(16));
+		_etcItemTypes.put("magic_doll", new Integer(17));
 
 		_useTypes.put("none", new Integer(-1)); // 使用不可能
 		_useTypes.put("normal", new Integer(0));

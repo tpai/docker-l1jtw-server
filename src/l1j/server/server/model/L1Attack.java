@@ -18,7 +18,6 @@ import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.SkillsTable;
-import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -36,6 +35,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_UseArrowSkill;
 import l1j.server.server.serverpackets.S_UseAttackSkill;
+import l1j.server.server.templates.L1MagicDoll;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.types.Point;
 import l1j.server.server.utils.Random;
@@ -493,7 +493,7 @@ public class L1Attack {
 		}
 
 		if (_weaponType2 == 17 || _weaponType2 == 19) {
-			_hitRate = 100; // キーリンクの命中率は100%
+			_hitRate = 100; // 奇古獸命中率100%
 		}
 
 		if (_targetPc.hasSkillEffect(ABSOLUTE_BARRIER)) {
@@ -507,14 +507,9 @@ public class L1Attack {
 		} else if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			_hitRate = 0;
 		}
-
-		// TODO 魔法娃娃效果 - 迴避
-		Object[] targetDollList = _targetPc.getDollList().values().toArray();
-		for (Object dollObject : targetDollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			if (doll.getDamageEvasionByDoll() > 0) {
-				_hitRate = 0;
-			}
+		// TODO 魔法娃娃效果 - 傷害迴避
+		else if (L1MagicDoll.getDamageEvasionByDoll(_targetPc) > 0) {
+			_hitRate = 0;
 		}
 
 		int rnd = Random.nextInt(100) + 1;
@@ -743,14 +738,9 @@ public class L1Attack {
 				_hitRate = 0;
 			}
 		}
-
-		// TODO 魔法娃娃效果 - 迴避
-		Object[] targetDollList = _targetPc.getDollList().values().toArray();
-		for (Object dollObject : targetDollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			if (doll.getDamageEvasionByDoll() > 0) {
-				_hitRate = 0;
-			}
+		// TODO 魔法娃娃效果 - 傷害迴避
+		else if (L1MagicDoll.getDamageEvasionByDoll(_targetPc) > 0) {
+			_hitRate = 0;
 		}
 
 		int rnd = Random.nextInt(100) + 1;
@@ -957,11 +947,7 @@ public class L1Attack {
 		}
 
 		if ((_weaponType != 20) && (_weaponType != 62)) {
-			Object[] dollList = _pc.getDollList().values().toArray(); // マジックドールによる追加ダメージ
-			for (Object dollObject : dollList) {
-				L1DollInstance doll = (L1DollInstance) dollObject;
-				dmg += doll.getDamageByDoll();
-			}
+			L1MagicDoll.getDamageAddByDoll(_pc);
 		}
 
 		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理による追加ダメージ
@@ -983,11 +969,8 @@ public class L1Attack {
 
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
-		Object[] targetDollList = _targetPc.getDollList().values().toArray(); // マジックドールによるダメージ軽減
-		for (Object dollObject : targetDollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			dmg -= doll.getDamageReductionByDoll();
-		}
+		// 魔法娃娃效果 - 傷害減免
+		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
 		if (_targetPc.hasSkillEffect(COOKING_1_0_S) // 料理によるダメージ軽減
 				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
@@ -1224,11 +1207,7 @@ public class L1Attack {
 		}
 
 		if ((_weaponType != 20) && (_weaponType != 62)) {
-			Object[] dollList = _pc.getDollList().values().toArray(); // マジックドールによる追加ダメージ
-			for (Object dollObject : dollList) {
-				L1DollInstance doll = (L1DollInstance) dollObject;
-				dmg += doll.getDamageByDoll();
-			}
+			dmg += L1MagicDoll.getDamageAddByDoll(_pc);
 		}
 
 		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理による追加ダメージ
@@ -1347,11 +1326,8 @@ public class L1Attack {
 
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
-		Object[] targetDollList = _targetPc.getDollList().values().toArray(); // マジックドールによるダメージ軽減
-		for (Object dollObject : targetDollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			dmg -= doll.getDamageReductionByDoll();
-		}
+		// 魔法娃娃效果 - 傷害減免
+		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
 		if (_targetPc.hasSkillEffect(COOKING_1_0_S) // 料理によるダメージ軽減
 				|| _targetPc.hasSkillEffect(COOKING_1_1_S)
@@ -1704,16 +1680,10 @@ public class L1Attack {
 			// 通常毒、3秒周期、ダメージHP-5
 			L1DamagePoison.doInfection(attacker, target, 3000, 5);
 		} else {
-			// TODO 魔法娃娃效果 - 中毒
-			Object[] dollList = _pc.getDollList().values().toArray();
-			for (Object dollObject : dollList) {
-				L1DollInstance doll = (L1DollInstance) dollObject;
-				if (doll.getPoisonByDoll() > 0) {
-					// 通常毒、3秒周期、ダメージHP-5
-					L1DamagePoison.doInfection(attacker, target, 3000, 5);
-				}
+			// 魔法娃娃效果 - 中毒
+			if (L1MagicDoll.getEffectByDoll(attacker, (byte) 1) == 1) {
+				L1DamagePoison.doInfection(attacker, target, 3000, 5);
 			}
-			// TODO マジックドールによる毒付与　end
 		}
 	}
 

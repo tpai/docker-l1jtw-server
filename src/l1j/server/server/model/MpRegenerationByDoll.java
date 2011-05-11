@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_SkillSound;
+import l1j.server.server.templates.L1MagicDoll;
 
 public class MpRegenerationByDoll extends TimerTask {
 	private static Logger _log = Logger.getLogger(MpRegenerationByDoll.class
@@ -45,7 +46,7 @@ public class MpRegenerationByDoll extends TimerTask {
 	}
 
 	public void regenMp() {
-		int newMp = _pc.getCurrentMp() + L1DollInstance.getMpByDoll(_pc);
+		int newMp = _pc.getCurrentMp() + L1MagicDoll.getMpByDoll(_pc);
 		if (newMp < 0) {
 			newMp = 0;
 		}

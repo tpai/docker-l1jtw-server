@@ -61,6 +61,7 @@ import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.model.AcceleratorChecker;
 import l1j.server.server.model.HpRegeneration;
 import l1j.server.server.model.HpRegenerationByDoll;
+import l1j.server.server.model.ItemMakeByDoll;
 import l1j.server.server.model.L1Attack;
 import l1j.server.server.model.L1CastleLocation;
 import l1j.server.server.model.L1Character;
@@ -98,7 +99,6 @@ import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_BlueMessage;
 import l1j.server.server.serverpackets.S_CastleMaster;
-import l1j.server.server.serverpackets.S_ChangeShape;
 import l1j.server.server.serverpackets.S_Disconnect;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_DoActionShop;
@@ -122,6 +122,7 @@ import l1j.server.server.serverpackets.S_bonusstats;
 import l1j.server.server.serverpackets.ServerBasePacket;
 import l1j.server.server.templates.L1BookMark;
 import l1j.server.server.templates.L1Item;
+import l1j.server.server.templates.L1MagicDoll;
 import l1j.server.server.templates.L1PrivateShopBuyList;
 import l1j.server.server.templates.L1PrivateShopSellList;
 import l1j.server.server.utils.CalcStat;
@@ -176,7 +177,7 @@ public class L1PcInstance extends L1Character {
 	private int _partyType;
 
 	public short getHpr() {
-		return (short) (_hpr + L1DollInstance.getHprByDoll(this));
+		return (short) (_hpr + L1MagicDoll.getHprByDoll(this));
 	}
 
 	public void addHpr(int i) {
@@ -189,7 +190,7 @@ public class L1PcInstance extends L1Character {
 	private short _trueMpr = 0;
 
 	public short getMpr() {
-		return (short) (_mpr + L1DollInstance.getMprByDoll(this));
+		return (short) (_mpr + L1MagicDoll.getMprByDoll(this));
 	}
 
 	public void addMpr(int i) {
@@ -239,16 +240,44 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	// TODO マジックドール　HPR開始
+	public void stopMpRegeneration() {
+		if (_mpRegenActive) {
+			_mpRegen.cancel();
+			_mpRegen = null;
+			_mpRegenActive = false;
+		}
+	}
+
+	// 獲得道具
+	public void startItemMakeByDoll() {
+		final int INTERVAL_BY_DOLL = 240000;
+		boolean isExistItemMakeDoll = false;
+		if (L1MagicDoll.isItemMake(this)) {
+			isExistItemMakeDoll = true;
+		}
+		if (!_ItemMakeActiveByDoll && isExistItemMakeDoll) {
+			_itemMakeByDoll = new ItemMakeByDoll(this);
+			_regenTimer.scheduleAtFixedRate(_itemMakeByDoll, INTERVAL_BY_DOLL,
+					INTERVAL_BY_DOLL);
+			_ItemMakeActiveByDoll = true;
+		}
+	}
+
+	// 獲得道具停止
+	public void stopItemMakeByDoll() {
+		if (_ItemMakeActiveByDoll) {
+			_itemMakeByDoll.cancel();
+			_itemMakeByDoll = null;
+			_ItemMakeActiveByDoll = false;
+		}
+	}
+
+	// 回血開始
 	public void startHpRegenerationByDoll() {
 		final int INTERVAL_BY_DOLL = 64000;
 		boolean isExistHprDoll = false;
-		Object[] dollList = getDollList().values().toArray();
-		for (Object dollObject : dollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			if (doll.isHpRegeneration()) {
-				isExistHprDoll = true;
-			}
+		if (L1MagicDoll.isHpRegeneration(this)) {
+			isExistHprDoll = true;
 		}
 		if (!_hpRegenActiveByDoll && isExistHprDoll) {
 			_hpRegenByDoll = new HpRegenerationByDoll(this);
@@ -258,7 +287,7 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
-	// TODO マジックドール　HPR停止
+	// 回血停止
 	public void stopHpRegenerationByDoll() {
 		if (_hpRegenActiveByDoll) {
 			_hpRegenByDoll.cancel();
@@ -267,20 +296,26 @@ public class L1PcInstance extends L1Character {
 		}
 	}
 
+	// 回魔開始
 	public void startMpRegenerationByDoll() {
 		final int INTERVAL_BY_DOLL = 64000;
 		boolean isExistMprDoll = false;
-		Object[] dollList = getDollList().values().toArray();
-		for (Object dollObject : dollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			if (doll.isMpRegeneration()) {
-				isExistMprDoll = true;
-			}
+		if (L1MagicDoll.isMpRegeneration(this)) {
+			isExistMprDoll = true;
 		}
 		if (!_mpRegenActiveByDoll && isExistMprDoll) {
 			_mpRegenByDoll = new MpRegenerationByDoll(this);
 			_regenTimer.scheduleAtFixedRate(_mpRegenByDoll, INTERVAL_BY_DOLL, INTERVAL_BY_DOLL);
 			_mpRegenActiveByDoll = true;
+		}
+	}
+
+	// 回魔停止
+	public void stopMpRegenerationByDoll() {
+		if (_mpRegenActiveByDoll) {
+			_mpRegenByDoll.cancel();
+			_mpRegenByDoll = null;
+			_mpRegenActiveByDoll = false;
 		}
 	}
 
@@ -290,22 +325,6 @@ public class L1PcInstance extends L1Character {
 			_mpReductionByAwake = new MpReductionByAwake(this);
 			_regenTimer.scheduleAtFixedRate(_mpReductionByAwake, INTERVAL_BY_AWAKE, INTERVAL_BY_AWAKE);
 			_mpReductionActiveByAwake = true;
-		}
-	}
-
-	public void stopMpRegeneration() {
-		if (_mpRegenActive) {
-			_mpRegen.cancel();
-			_mpRegen = null;
-			_mpRegenActive = false;
-		}
-	}
-
-	public void stopMpRegenerationByDoll() {
-		if (_mpRegenActiveByDoll) {
-			_mpRegenByDoll.cancel();
-			_mpRegenByDoll = null;
-			_mpRegenActiveByDoll = false;
 		}
 	}
 
@@ -1823,87 +1842,48 @@ public class L1PcInstance extends L1Character {
 	}
 
 	private static Logger _log = Logger.getLogger(L1PcInstance.class.getName());
-
 	private ClientThread _netConnection;
-
 	private int _classId;
-
 	private int _type;
-
 	private int _exp;
-
 	private final L1Karma _karma = new L1Karma();
-
 	private boolean _gm;
-
 	private boolean _monitor;
-
 	private boolean _gmInvis;
-
 	private short _accessLevel;
-
 	private int _currentWeapon;
-
 	private final L1PcInventory _inventory;
-
 	private final L1DwarfInventory _dwarf;
-
 	private final L1DwarfForElfInventory _dwarfForElf;
-
 	private final L1Inventory _tradewindow;
-
 	private L1ItemInstance _weapon;
-
 	private L1Party _party;
-
 	private L1ChatParty _chatParty;
-
 	private int _partyID;
-
 	private int _tradeID;
-
 	private boolean _tradeOk;
-
 	private int _tempID;
-
 	private boolean _isTeleport = false;
-
 	private boolean _isDrink = false;
-
 	private boolean _isGres = false;
-
 	private boolean _isPinkName = false;
-
 	private final List<L1BookMark> _bookmarks;
-
 	private L1Quest _quest;
-
 	private MpRegeneration _mpRegen;
-
 	private MpRegenerationByDoll _mpRegenByDoll;
-
 	private MpReductionByAwake _mpReductionByAwake;
-
 	private HpRegeneration _hpRegen;
-
 	private HpRegenerationByDoll _hpRegenByDoll;
-
+	private ItemMakeByDoll _itemMakeByDoll;
 	private static Timer _regenTimer = new Timer(true);
-
 	private boolean _mpRegenActive;
-
 	private boolean _mpRegenActiveByDoll;
-
 	private boolean _mpReductionActiveByAwake;
-
 	private boolean _hpRegenActive;
-
 	private boolean _hpRegenActiveByDoll;
-
+	private boolean _ItemMakeActiveByDoll;
 	private L1EquipmentSlot _equipSlot;
-
 	private L1PcDeleteTimer _pcDeleteTimer;
-
 	private String _accountName; // ● アカウントネーム
 
 	public String getAccountName() {
@@ -2439,7 +2419,7 @@ public class L1PcInstance extends L1Character {
 		weightReductionByArmor /= 100;
 
 		double weightReductionByDoll = 0; // マジックドールによる重量軽減
-		weightReductionByDoll += L1DollInstance.getWeightReductionByDoll(this);
+		weightReductionByDoll += L1MagicDoll.getWeightReductionByDoll(this);
 		weightReductionByDoll /= 100;
 
 		int weightReductionByMagic = 0;

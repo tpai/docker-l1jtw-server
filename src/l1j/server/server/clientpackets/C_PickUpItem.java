@@ -40,7 +40,7 @@ public class C_PickUpItem extends ClientBasePacket {
 		int pickupCount = readD();
 
 		L1PcInstance pc = client.getActiveChar();
-		if (pc.isDead() || pc.isGhost()) {
+		if (pc.isDead() || pc.isGhost() || objectId == pc.getId()) {
 			return;
 		}
 

@@ -625,6 +625,9 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.sendPackets(new S_ItemName(l1iteminstance));
 				}
+				else if (l1iteminstance.getItem().getType() == 17) { // 魔法娃娃類
+					MagicDoll.useMagicDoll(pc, itemId, itemObjid);
+				}
 				else if (itemId == 40003) { // ランタン オイル
 					for (L1ItemInstance lightItem : pc.getInventory().getItems()) {
 						if (lightItem.getItem().getItemId() == 40002) {
@@ -2820,13 +2823,6 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				else if (itemId == 41245) { // 溶解剤
 					useResolvent(pc, l1iteminstance1, l1iteminstance);
-				}
-				else if ((itemId == 41248) || (itemId == 41249) || (itemId == 41250)
-						|| (itemId == 49037) || (itemId == 49038) || (itemId == 49039)
-						|| (itemId == 47105) || (itemId == 47106) || (itemId == 47107) || (itemId == 47108)
-						|| (itemId == 47109) || (itemId == 47110) || (itemId == 47111) || (itemId == 47112)
-						|| (itemId == 47113)) { // 魔法娃娃類
-					MagicDoll.useMagicDoll(pc, itemId, itemObjid);
 				}
 				else if ((itemId >= 41255) && (itemId <= 41259)) { // 料理の本
 					if (cookStatus == 0) {

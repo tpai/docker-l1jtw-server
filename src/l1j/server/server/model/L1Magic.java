@@ -18,7 +18,6 @@ import l1j.server.Config;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.SkillsTable;
-import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
@@ -27,6 +26,7 @@ import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillSound;
+import l1j.server.server.templates.L1MagicDoll;
 import l1j.server.server.templates.L1Skills;
 import l1j.server.server.utils.Random;
 
@@ -551,11 +551,8 @@ public class L1Magic {
 
 		dmg -= _targetPc.getDamageReductionByArmor(); // 防具によるダメージ軽減
 
-		Object[] targetDollList = _targetPc.getDollList().values().toArray(); // マジックドールによるダメージ軽減
-		for (Object dollObject : targetDollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
-			dmg -= doll.getDamageReductionByDoll();
-		}
+		// 魔法娃娃效果 - 傷害減免
+		dmg -= L1MagicDoll.getDamageReductionByDoll(_targetPc);
 
 		if (_targetPc.hasSkillEffect(COOKING_1_0_S) // 料理によるダメージ軽減
 				|| _targetPc.hasSkillEffect(COOKING_1_1_S) || _targetPc.hasSkillEffect(COOKING_1_2_S)

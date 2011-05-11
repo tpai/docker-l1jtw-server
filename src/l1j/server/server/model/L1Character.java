@@ -43,6 +43,7 @@ import l1j.server.server.serverpackets.S_PetCtrlMenu;
 import l1j.server.server.serverpackets.S_Poison;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.ServerBasePacket;
+import l1j.server.server.templates.L1MagicDoll;
 import l1j.server.server.types.Point;
 import l1j.server.server.utils.IntRange;
 import l1j.server.server.utils.collections.Lists;
@@ -1023,7 +1024,7 @@ public class L1Character extends L1Object {
 	private int _trueAc = 0; // ● 本当のＡＣ
 
 	public int getAc() {
-		return _ac + L1DollInstance.getAcByDoll(this); // TODO 魔法娃娃效果 - 防禦增加
+		return _ac + L1MagicDoll.getAcByDoll(this); // TODO 魔法娃娃效果 - 防禦增加
 	}
 
 	public void setAc(int i) {
@@ -1223,14 +1224,14 @@ public class L1Character extends L1Object {
 		_addAttrKind = i;
 	}
 
-	// スタン耐性
+	// 昏迷耐性
 	private int _registStun = 0;
 
 	private int _trueRegistStun = 0;
 
 	public int getRegistStun() {
-		return _registStun;
-	} // 使用するとき
+		return (_registStun + L1MagicDoll.getRegistStunByDoll(this));
+	}
 
 	public void addRegistStun(int i) {
 		_trueRegistStun += i;
@@ -1249,8 +1250,8 @@ public class L1Character extends L1Object {
 	private int _trueRegistStone = 0;
 
 	public int getRegistStone() {
-		return _registStone;
-	} // 使用するとき
+		return (_registStone + L1MagicDoll.getRegistStoneByDoll(this));
+	}
 
 	public void addRegistStone(int i) {
 		_trueRegistStone += i;
@@ -1269,8 +1270,8 @@ public class L1Character extends L1Object {
 	private int _trueRegistSleep = 0;
 
 	public int getRegistSleep() {
-		return _registSleep;
-	} // 使用するとき
+		return (_registSleep + L1MagicDoll.getRegistSleepByDoll(this));
+	}
 
 	public void addRegistSleep(int i) {
 		_trueRegistSleep += i;
@@ -1290,7 +1291,7 @@ public class L1Character extends L1Object {
 
 	public int getRegistFreeze() {
 		return (_registFreeze
-				+ L1DollInstance.getRegistFreezeByDoll((L1PcInstance) this)); // TODO 魔法娃娃效果 - 寒冰耐性增加
+				+ L1MagicDoll.getRegistFreezeByDoll(this)); // TODO 魔法娃娃效果 - 寒冰耐性增加
 	}
 
 	public void add_regist_freeze(int i) {
@@ -1304,14 +1305,14 @@ public class L1Character extends L1Object {
 		}
 	}
 
-	// ホールド耐性
+	// 支撐耐性
 	private int _registSustain = 0;
 
 	private int _trueRegistSustain = 0;
 
 	public int getRegistSustain() {
-		return _registSustain;
-	} // 使用するとき
+		return (_registSustain + L1MagicDoll.getRegistSustainByDoll(this));
+	}
 
 	public void addRegistSustain(int i) {
 		_trueRegistSustain += i;
@@ -1324,14 +1325,14 @@ public class L1Character extends L1Object {
 		}
 	}
 
-	// 暗闇耐性
+	// 闇黑耐性
 	private int _registBlind = 0;
 
 	private int _trueRegistBlind = 0;
 
 	public int getRegistBlind() {
-		return _registBlind;
-	} // 使用するとき
+		return (_registBlind + L1MagicDoll.getRegistBlindByDoll(this));
+	}
 
 	public void addRegistBlind(int i) {
 		_trueRegistBlind += i;
@@ -1369,7 +1370,7 @@ public class L1Character extends L1Object {
 
 	public int getBowDmgup() {
 		return (_bowDmgup
-				+ L1DollInstance.getBowDamageByDoll((L1PcInstance) this)); // TODO 魔法娃娃效果 - 弓的攻擊力增加
+				+ L1MagicDoll.getBowDamageByDoll(this)); // TODO 魔法娃娃效果 - 弓的攻擊力增加
 	}
 
 	public void addBowDmgup(int i) {
@@ -1388,8 +1389,9 @@ public class L1Character extends L1Object {
 	private int _trueHitup = 0; // ● 本当の命中補正
 
 	public int getHitup() {
-		return _hitup;
-	} // 使用するとき
+		return (_hitup
+				+ L1MagicDoll.getHitAddByDoll(this)); // TODO 魔法娃娃效果 - 近距離的命中力增加
+	}
 
 	public void addHitup(int i) {
 		_trueHitup += i;
@@ -1408,7 +1410,7 @@ public class L1Character extends L1Object {
 
 	public int getBowHitup() {
 		return (_bowHitup
-				+ L1DollInstance.getBowHitAddByDoll((L1PcInstance) this)); // TODO 魔法娃娃效果 - 弓的命中力增加
+				+ L1MagicDoll.getBowHitAddByDoll(this)); // TODO 魔法娃娃效果 - 弓的命中力增加
 	}
 
 	public void addBowHitup(int i) {

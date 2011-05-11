@@ -18,17 +18,19 @@ import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import l1j.server.server.datatables.ItemTable;
+import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
-import l1j.server.server.serverpackets.S_SkillSound; //TODO HPR効果
+import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.templates.L1MagicDoll;
 
-public class HpRegenerationByDoll extends TimerTask {
-	private static Logger _log = Logger.getLogger(HpRegenerationByDoll.class
+public class ItemMakeByDoll extends TimerTask {
+	private static Logger _log = Logger.getLogger(ItemMakeByDoll.class
 			.getName());
 
 	private final L1PcInstance _pc;
 
-	public HpRegenerationByDoll(L1PcInstance pc) {
+	public ItemMakeByDoll(L1PcInstance pc) {
 		_pc = pc;
 	}
 
@@ -38,19 +40,19 @@ public class HpRegenerationByDoll extends TimerTask {
 			if (_pc.isDead()) {
 				return;
 			}
-			regenHp();
+			itemMake();			
 		} catch (Throwable e) {
 			_log.log(Level.WARNING, e.getLocalizedMessage(), e);
 		}
 	}
 
-	public void regenHp() {
-		int newHp = _pc.getCurrentHp() + L1MagicDoll.getHpByDoll(_pc);
-		if (newHp < 0) {
-			newHp = 0;
+	public void itemMake() {
+		L1ItemInstance temp = ItemTable.getInstance().createItem(L1MagicDoll.getMakeItemId(_pc));
+		if (temp!= null) {
+			if (_pc.getInventory().checkAddItem(temp, 1) == L1Inventory.OK) {
+				L1ItemInstance item = _pc.getInventory().storeItem(temp.getItemId(), 1);
+				_pc.sendPackets(new S_ServerMessage(403, item.getItem().getName())); // 獲得%0%o 。
+			}
 		}
-		_pc.sendPackets(new S_SkillSound(_pc.getId(), 744));
-		_pc.broadcastPacket(new S_SkillSound(_pc.getId(), 744));
-		_pc.setCurrentHp(newHp);
 	}
 }

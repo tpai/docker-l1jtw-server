@@ -14,49 +14,27 @@
  */
 package l1j.server.server.model.Instance;
 
-import java.util.Map;
-
 import l1j.server.server.ActionCodes;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.SprTable;
-import l1j.server.server.model.L1Character;
 import l1j.server.server.model.L1World;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_DollPack;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.serverpackets.S_SkillSound;
+import l1j.server.server.templates.L1MagicDoll;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.Random;
 
 public class L1DollInstance extends L1NpcInstance {
 	private static final long serialVersionUID = 1L;
 
-	public static final int DOLLTYPE_BUGBEAR = 0; // 魔法娃娃：肥肥
-	public static final int DOLLTYPE_SUCCUBUS = 1; // 魔法娃娃：小思克巴
-	public static final int DOLLTYPE_WAREWOLF = 2; // 魔法娃娃：野狼寶寶
-	public static final int DOLLTYPE_ELDER = 3; // 魔法娃娃：長老
-	public static final int DOLLTYPE_CRUSTANCEAN = 4; // 魔法娃娃：奎斯坦修
-	public static final int DOLLTYPE_GOLEM = 5; // 魔法娃娃：石頭高崙
-	public static final int DOLLTYPE_SEADANCER = 6; // 魔法娃娃：希爾黛斯
-	public static final int DOLLTYPE_SERPENTWOMAN = 7; // 魔法娃娃：蛇女
-	public static final int DOLLTYPE_SNOWMAN = 8; // 魔法娃娃：雪怪
-	public static final int DOLLTYPE_COCKATRICE = 9; // 魔法娃娃：亞力安
-	public static final int DOLLTYPE_SPARTOI = 10; // 魔法娃娃：史巴托
-	public static final int DOLLTYPE_AZURU_HACHIRIN = 11; // 神秘稜鏡：淘氣幼龍
-	public static final int DOLLTYPE_CRIMSON_HACHIRIN = 12; // 神秘稜鏡：頑皮幼龍
-	public static final int DOLLTYPE_MALE_HI_HACHIRIN = 13; // 神秘稜鏡：高等淘氣幼龍
-	public static final int DOLLTYPE_FEMALE_HI_HACHIRIN = 14; // 神秘稜鏡：高等頑皮幼龍
-
 	public static final int DOLL_TIME = 1800000;
-
-	private int _dollType;
-
+	private int _itemId;
 	private int _itemObjId;
-
 	private int run;
-
 	private boolean _isDelete = false;
 
 	// ターゲットがいない場合の処理
@@ -94,12 +72,11 @@ public class L1DollInstance extends L1NpcInstance {
 		}
 	}
 
-	public L1DollInstance(L1Npc template, L1PcInstance master, int dollType,
-			int itemObjId) {
+	public L1DollInstance(L1Npc template, L1PcInstance master, int itemId, int itemObjId) {
 		super(template);
 		setId(IdFactory.getInstance().nextId());
 
-		setDollType(dollType);
+		setItemId(itemId);
 		setItemObjId(itemObjId);
 		GeneralThreadPool.getInstance().schedule(new DollTimer(), DOLL_TIME);
 
@@ -121,11 +98,14 @@ public class L1DollInstance extends L1NpcInstance {
 		if (!isAiRunning()) {
 			startAI();
 		}
-		if (isMpRegeneration()) {
+		if (L1MagicDoll.isHpRegeneration(_master)) {
+			master.startHpRegenerationByDoll();
+		}
+		if (L1MagicDoll.isMpRegeneration(_master)) {
 			master.startMpRegenerationByDoll();
 		}
-		if (isHpRegeneration()) {
-			master.startHpRegenerationByDoll();
+		if (L1MagicDoll.isItemMake(_master)) {
+			master.startItemMakeByDoll();
 		}
 	}
 
@@ -136,11 +116,14 @@ public class L1DollInstance extends L1NpcInstance {
 			pc.sendPackets(new S_SkillIconGFX(56, 0));
 			pc.sendPackets(new S_OwnCharStatus(pc));
 		}
-		if (isMpRegeneration()) {
+		if (L1MagicDoll.isHpRegeneration(_master)) {
+			((L1PcInstance) _master).stopHpRegenerationByDoll();
+		}
+		if (L1MagicDoll.isMpRegeneration(_master)) {
 			((L1PcInstance) _master).stopMpRegenerationByDoll();
 		}
-		if (isHpRegeneration()) {
-			((L1PcInstance) _master).stopHpRegenerationByDoll();
+		if (L1MagicDoll.isItemMake(_master)) {
+			((L1PcInstance) _master).stopItemMakeByDoll();
 		}
 		_master.getDollList().remove(getId());
 		deleteMe();
@@ -165,14 +148,6 @@ public class L1DollInstance extends L1NpcInstance {
 	public void onGetItem(L1ItemInstance item) {
 	}
 
-	public int getDollType() {
-		return _dollType;
-	}
-
-	public void setDollType(int i) {
-		_dollType = i;
-	}
-
 	public int getItemObjId() {
 		return _itemObjId;
 	}
@@ -181,175 +156,12 @@ public class L1DollInstance extends L1NpcInstance {
 		_itemObjId = i;
 	}
 
-	public int getDamageByDoll() { // TODO 增加傷害
-		int damage = 0;
-		if (getDollType() == DOLLTYPE_WAREWOLF
-				|| getDollType() == DOLLTYPE_CRUSTANCEAN) {
-			int chance = Random.nextInt(100) + 1;
-			if (chance <= 3) {
-				damage = 15;
-				if (_master instanceof L1PcInstance) {
-					L1PcInstance pc = (L1PcInstance) _master;
-					pc.sendPackets(new S_SkillSound(_master.getId(), 6319));
-				}
-				_master.broadcastPacket(new S_SkillSound(_master.getId(), 6319));
-			}
-		}
-		return damage;
+	public int getItemId() {
+		return _itemId;
 	}
 
-	public boolean isMpRegeneration() { // TODO 回魔
-		boolean isMpRegeneration = false;
-		if (getDollType() == DOLLTYPE_SUCCUBUS
-				|| getDollType() == DOLLTYPE_ELDER) {
-			isMpRegeneration = true;
-		}
-		return isMpRegeneration;
-	}
-
-	// 魔力回復量計算
-	public static int getMpByDoll(L1Character _master) {
-		int s = 0;
-		s += getTypeCountByDoll(_master.getDollList(), DOLLTYPE_SUCCUBUS) * 15
-				+ getTypeCountByDoll(_master.getDollList(), DOLLTYPE_ELDER)
-				* 15;
-		return s;
-	}
-
-	public boolean isHpRegeneration() { // TODO 回血
-		boolean isHpRegeneration = false;
-		if (getDollType() == DOLLTYPE_SEADANCER) {
-			isHpRegeneration = true;
-		}
-		return isHpRegeneration;
-	}
-
-	public boolean isItemMake() { // TODO ItemMake_type
-		boolean isItemMake = false;
-		if (getDollType() == DOLLTYPE_AZURU_HACHIRIN
-				|| getDollType() == DOLLTYPE_CRIMSON_HACHIRIN
-				|| getDollType() == DOLLTYPE_MALE_HI_HACHIRIN
-				|| getDollType() == DOLLTYPE_FEMALE_HI_HACHIRIN) {
-			isItemMake = true;
-		}
-		return isItemMake;
-	}
-
-	public int getDamageReductionByDoll() { // TODO 傷害減少
-		int damageReduction = 0;
-		if (getDollType() == DOLLTYPE_GOLEM) {
-			int chance = Random.nextInt(100) + 1;
-			if (chance <= 4) {
-				damageReduction = 15;
-				if (_master instanceof L1PcInstance) {
-					L1PcInstance pc = (L1PcInstance) _master;
-					pc.sendPackets(new S_SkillSound(_master.getId(), 6320));
-				}
-				_master.broadcastPacket(new S_SkillSound(_master.getId(), 6320));
-			}
-		}
-		return damageReduction;
-	}
-
-	public int getDamageEvasionByDoll() { // TODO 攻擊迴避
-		int damageEvasion = 0;
-		if (getDollType() == DOLLTYPE_SPARTOI) {
-			int chance = Random.nextInt(100) + 1;
-			if (chance <= 4) {
-				damageEvasion = 1;
-				if (_master instanceof L1PcInstance) {
-					L1PcInstance pc = (L1PcInstance) _master;
-					pc.sendPackets(new S_SkillSound(_master.getId(), 6320)); // TODO
-				}
-				_master.broadcastPacket(new S_SkillSound(_master.getId(), 6320));
-			}
-		}
-		return damageEvasion;
-	}
-
-	public int getPoisonByDoll() { // TODO 中毒
-		int damagePoison = 0;
-		if (getDollType() == DOLLTYPE_SERPENTWOMAN) {
-			int chance = Random.nextInt(100) + 1;
-			if (chance <= 10) {
-				damagePoison = 1;
-			}
-		}
-		return damagePoison;
-	}
-
-	private static int getTypeCountByDoll(Map<Integer, L1DollInstance> dolls,
-			int type) {
-		int s = 0;
-		for (Object obj : dolls.values().toArray()) {
-			if (((L1DollInstance) obj).getDollType() == type) {
-				s++;
-			}
-		}
-		return s;
-	}
-
-	// 弓的命中增加
-	public static int getBowHitAddByDoll(L1Character _master) {
-		int s = 0;
-		s += getTypeCountByDoll(_master.getDollList(), DOLLTYPE_COCKATRICE);
-		return s;
-	}
-
-	// 弓的攻擊力增加
-	public static int getBowDamageByDoll(L1Character _master) {
-		int s = 0;
-		s += getTypeCountByDoll(_master.getDollList(), DOLLTYPE_COCKATRICE);
-		return s;
-	}
-
-	// 防禦增加
-	public static int getAcByDoll(L1Character _master) {
-		int s = 0;
-		s -= ((getTypeCountByDoll(_master.getDollList(), DOLLTYPE_SNOWMAN)) * 3);
-		return s;
-	}
-
-	// TODO 寒冰耐性增加
-	public static int getRegistFreezeByDoll(L1PcInstance _master) {
-		int s = 0;
-		s += ((getTypeCountByDoll(_master.getDollList(), DOLLTYPE_SNOWMAN)) * 7);
-		return s;
-	}
-
-	// TODO 魔力回復量增加
-	public static int getMprByDoll(L1Character _master) {
-		int s = 0;
-		s += (getTypeCountByDoll(_master.getDollList(),
-				DOLLTYPE_CRIMSON_HACHIRIN)
-				* 10
-				+ (getTypeCountByDoll(_master.getDollList(),
-						DOLLTYPE_MALE_HI_HACHIRIN) + getTypeCountByDoll(
-						_master.getDollList(), DOLLTYPE_FEMALE_HI_HACHIRIN))
-				* 5 + getTypeCountByDoll(_master.getDollList(),
-				DOLLTYPE_SERPENTWOMAN) * 4);
-		return s;
-	}
-
-	// TODO 體力回復量增加
-	public static int getHprByDoll(L1Character _master) {
-		int s = 0;
-		s += getTypeCountByDoll(_master.getDollList(), DOLLTYPE_AZURU_HACHIRIN) * 20;
-		return s;
-	}
-
-	// TODO 負重減輕
-	public static int getWeightReductionByDoll(L1Character _master) {
-		int s = 0;
-		s += (getTypeCountByDoll(_master.getDollList(), DOLLTYPE_BUGBEAR)
-				+ getTypeCountByDoll(_master.getDollList(),
-						DOLLTYPE_MALE_HI_HACHIRIN) + getTypeCountByDoll(
-				_master.getDollList(), DOLLTYPE_FEMALE_HI_HACHIRIN))
-				* 10
-				+ (getTypeCountByDoll(_master.getDollList(),
-						DOLLTYPE_CRIMSON_HACHIRIN) + getTypeCountByDoll(
-						_master.getDollList(), DOLLTYPE_AZURU_HACHIRIN)) * 15;
-		return s;
+	public void setItemId(int i) {
+		_itemId = i;
 	}
 
 	// 表情動作
