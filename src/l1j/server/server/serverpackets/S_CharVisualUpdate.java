@@ -20,14 +20,12 @@ import l1j.server.server.model.Instance.L1PcInstance;
 public class S_CharVisualUpdate extends ServerBasePacket {
 	private static final String _S__0B_S_CharVisualUpdate = "[C] S_CharVisualUpdate";
 
-	private final L1PcInstance _cha;
-
 	public S_CharVisualUpdate(L1PcInstance cha) {
-		_cha = cha;
-
 		writeC(Opcodes.S_OPCODE_CHARVISUALUPDATE);
-		writeD(_cha.getId());
-		writeC(_cha.getCurrentWeapon());
+		writeD(cha.getId());
+		writeC(cha.getCurrentWeapon());
+		writeC(0xff);
+		writeC(0xff);
 	}
 
 	@Override

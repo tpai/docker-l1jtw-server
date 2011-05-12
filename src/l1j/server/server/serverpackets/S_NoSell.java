@@ -30,7 +30,9 @@ public class S_NoSell extends ServerBasePacket {
 		writeC(Opcodes.S_OPCODE_SHOWHTML);
 		writeD(npc.getId());
 		writeS("nosell");
-		writeC(1);
+		writeC(0x00);
+		writeH(0x0001);
+		writeS(npc.getNameId());
 	}
 
 	@Override
