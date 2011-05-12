@@ -226,11 +226,18 @@ public class C_ItemUSe extends ClientBasePacket {
 				) || (itemId == 41430 // 地之武器強化卷軸
 				) || (itemId == 41431 // 水之武器強化卷軸
 				) || (itemId == 41432 // 火之武器強化卷軸
+				) || (itemId == 47041 // 地龍之精緻魔眼
+				) || (itemId == 47042 // 水龍之精緻魔眼
+				) || (itemId == 47043 // 風龍之精緻魔眼
+				) || (itemId == 47044 // 火龍之精緻魔眼
+				) || (itemId == 47045 // 誕生之精緻魔眼
+				) || (itemId == 47046 // 形象之精緻魔眼
 				) || (itemId == 47048 // 附魔強化卷軸
 				) || (itemId == 47049 // 近戰附魔轉換卷軸
 				) || (itemId == 47050 // 遠攻附魔轉換卷軸
 				) || (itemId == 47051 // 恢復附魔轉換卷軸
-				) || (itemId == 47052)) { // 防禦附魔轉換卷軸
+				) || (itemId == 47052 // 防禦附魔轉換卷軸
+				)) {
 			l = readD();
 		}
 		else if ((itemId == 140100) || (itemId == 40100) || (itemId == 40099) || (itemId == 40086) || (itemId == 40863)) {
@@ -736,11 +743,60 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
 				else if (itemId >= 47017 && itemId <= 47023) { // 龍之魔眼
-					if (pc.getInventory().consumeItem(41246, 500)) {
-						Effect.useEffectItem(pc, l1iteminstance);
+					Effect.useEffectItem(pc, l1iteminstance);
+				}
+				else if (itemId == 47041) { // 地龍之精緻魔眼、水龍之精緻魔眼
+					if (l1iteminstance1.getItem().getItemId() == 47042) { // 水龍之精緻魔眼
+						pc.getInventory().consumeItem(47041, 1);
+						pc.getInventory().consumeItem(47042, 1);
+						createNewItem(pc, 47021, 1); // 誕生之魔眼
 					} else {
-						isDelayEffect = false;
-						pc.sendPackets(new S_ServerMessage(337, "$5240"));
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}
+				else if (itemId == 47042) { // 水龍之精緻魔眼
+					if (l1iteminstance1.getItem().getItemId() == 47041) { // 地龍之精緻魔眼、水龍之精緻魔眼
+						pc.getInventory().consumeItem(47041, 1);
+						pc.getInventory().consumeItem(47042, 1);
+						createNewItem(pc, 47021, 1); // 誕生之魔眼
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}
+				else if (itemId == 47043) { // 風龍之精緻魔眼
+					if (l1iteminstance1.getItem().getItemId() == 47045) { // 誕生之精緻魔眼
+						pc.getInventory().consumeItem(47043, 1);
+						pc.getInventory().consumeItem(47045, 1);
+						createNewItem(pc, 47022, 1); // 形象之魔眼
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}
+				else if (itemId == 47045) { // 誕生之精緻魔眼
+					if (l1iteminstance1.getItem().getItemId() == 47043) { // 風龍之精緻魔眼
+						pc.getInventory().consumeItem(47043, 1);
+						pc.getInventory().consumeItem(47045, 1);
+						createNewItem(pc, 47022, 1); // 形象之魔眼
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}
+				else if (itemId == 47044) { // 火龍之精緻魔眼
+					if (l1iteminstance1.getItem().getItemId() == 47046) { // 形象之精緻魔眼
+						pc.getInventory().consumeItem(47044, 1);
+						pc.getInventory().consumeItem(47046, 1);
+						createNewItem(pc, 47023, 1); // 生命之魔眼
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}
+				else if (itemId == 47046) { // 形象之精緻魔眼
+					if (l1iteminstance1.getItem().getItemId() == 47044) { // 火龍之精緻魔眼
+						pc.getInventory().consumeItem(47044, 1);
+						pc.getInventory().consumeItem(47046, 1);
+						createNewItem(pc, 47023, 1); // 生命之魔眼
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId >= 47049 && itemId <= 47052) { // XX附魔轉換卷軸
