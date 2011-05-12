@@ -18,25 +18,13 @@ import static l1j.server.server.model.skill.L1SkillId.AWAKEN_ANTHARAS;
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_FAFURION;
 import static l1j.server.server.model.skill.L1SkillId.AWAKEN_VALAKAS;
 import static l1j.server.server.model.skill.L1SkillId.COOKING_NOW;
-import static l1j.server.server.model.skill.L1SkillId.CURSE_BLIND;
-import static l1j.server.server.model.skill.L1SkillId.DARKNESS;
 import static l1j.server.server.model.skill.L1SkillId.DECAY_POTION;
-import static l1j.server.server.model.skill.L1SkillId.ENTANGLE;
-import static l1j.server.server.model.skill.L1SkillId.GREATER_HASTE;
-import static l1j.server.server.model.skill.L1SkillId.HASTE;
-import static l1j.server.server.model.skill.L1SkillId.MASS_SLOW;
-import static l1j.server.server.model.skill.L1SkillId.POLLUTE_WATER;
 import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
-import static l1j.server.server.model.skill.L1SkillId.SLOW;
 import static l1j.server.server.model.skill.L1SkillId.SOLID_CARRIAGE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_BLUE_POTION;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_FLOATING_EYE;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_HASTE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_MITHRIL_POWDER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_UNDERWATER_BREATH;
-import static l1j.server.server.model.skill.L1SkillId.STATUS_WISDOM_POTION;
 
 import java.lang.reflect.Constructor;
 import java.sql.Timestamp;
@@ -92,13 +80,13 @@ import l1j.server.server.model.Instance.L1TowerInstance;
 import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.item.action.Effect;
+import l1j.server.server.model.item.action.Enchant;
 import l1j.server.server.model.item.action.MagicDoll;
 import l1j.server.server.model.item.action.Potion;
 import l1j.server.server.model.poison.L1DamagePoison;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_AddSkill;
 import l1j.server.server.serverpackets.S_AttackPacket;
-import l1j.server.server.serverpackets.S_CurseBlind;
 import l1j.server.server.serverpackets.S_DragonGate;
 import l1j.server.server.serverpackets.S_Fishing;
 import l1j.server.server.serverpackets.S_IdentifyDesc;
@@ -116,10 +104,6 @@ import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_ShowPolyList;
-import l1j.server.server.serverpackets.S_SkillHaste;
-import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
-import l1j.server.server.serverpackets.S_SkillIconGFX;
-import l1j.server.server.serverpackets.S_SkillIconWisdomPotion;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Sound;
 import l1j.server.server.serverpackets.S_UseAttackSkill;
@@ -202,7 +186,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		int fishY = 0;
 
 		int use_type = l1iteminstance.getItem().getUseType();
-		if ((itemId == 40088) || (itemId == 40096) || (itemId == 140088)) {
+		if ((itemId == 40088) || (itemId == 40096) || (itemId == 49308) || (itemId == 140088)) {
 			s = readS();
 		}
 		else if ((itemId == L1ItemId.SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.SCROLL_OF_ENCHANT_WEAPON)
@@ -235,6 +219,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				) || (itemId == 41426 // 封印卷軸
 				) || (itemId == 41427 // 解除封印卷軸
 				) || (itemId == 40075 // 毀滅盔甲的卷軸
+				) || (itemId == 49311 // 象牙塔對盔甲施法的卷軸
+				) || (itemId == 49312 // 象牙塔對武器施法的卷軸
 				) || (itemId == 49148 // 飾品強化卷軸 Scroll of Enchant Accessory
 				) || (itemId == 41429 // 風之武器強化卷軸
 				) || (itemId == 41430 // 地之武器強化卷軸
@@ -296,7 +282,7 @@ public class C_ItemUSe extends ClientBasePacket {
 
 			// 再使用チェック
 			boolean isDelayEffect = false;
-			if (l1iteminstance.getItem().getType2() == 0) {
+			if (l1iteminstance.getItem().getType2() == 0) { // etcitem
 				int delayEffect = ((L1EtcItem) l1iteminstance.getItem()).get_delayEffect();
 				if (delayEffect > 0) {
 					isDelayEffect = true;
@@ -316,254 +302,23 @@ public class C_ItemUSe extends ClientBasePacket {
 			_log.finest("request item use (obj) = " + itemObjid + " action = " + l + " value = " + s);
 			if ((itemId == 40077) || (itemId == L1ItemId.SCROLL_OF_ENCHANT_WEAPON) || (itemId == L1ItemId.SCROLL_OF_ENCHANT_QUEST_WEAPON)
 					|| (itemId == 40130) || (itemId == 140130) || (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON)
-					|| (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_WEAPON) || (itemId == 40128)) { // 武器強化スクロール
-				if ((l1iteminstance1 == null) || (l1iteminstance1.getItem().getType2() != 1)) {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
-				if (safe_enchant < 0) { // 強化不可
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				if (l1iteminstance1.getBless() >= 128) { // 封印された装備強化不可
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				int quest_weapon = l1iteminstance1.getItem().getItemId();
-				if ((quest_weapon >= 246) && (quest_weapon <= 249)) { // 強化不可
-					if (itemId == L1ItemId.SCROLL_OF_ENCHANT_QUEST_WEAPON) { // 試練のスクロール
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						return;
-					}
-				}
-				if (itemId == L1ItemId.SCROLL_OF_ENCHANT_QUEST_WEAPON) { // 試練のスクロール
-					if ((quest_weapon >= 246) && (quest_weapon <= 249)) { // 強化不可
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						return;
-					}
-				}
-				int weaponId = l1iteminstance1.getItem().getItemId();
-				if ((weaponId == 36) || (weaponId == 183) || ((weaponId >= 250) && (weaponId <= 255))) { // イリュージョン武器
-					if (itemId == 40128) { // イリュージョン武器強化スクロール
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						return;
-					}
-				}
-				if (itemId == 40128) { // イリュージョン武器強化スクロール
-					if ((weaponId == 36) || (weaponId == 183) || ((weaponId >= 250) && (weaponId <= 255))) { // イリュージョン武器
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						return;
-					}
-				}
-
-				int enchant_level = l1iteminstance1.getEnchantLevel();
-
-				if (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_WEAPON) { // c-dai
-					pc.getInventory().removeItem(l1iteminstance, 1);
-					if (enchant_level < -6) {
-						// -7以上はできない。
-						FailureEnchant(pc, l1iteminstance1, client);
-					}
-					else {
-						SuccessEnchant(pc, l1iteminstance1, client, -1);
-					}
-				}
-				else if (enchant_level < safe_enchant) {
-					pc.getInventory().removeItem(l1iteminstance, 1);
-					SuccessEnchant(pc, l1iteminstance1, client, RandomELevel(l1iteminstance1, itemId));
-				}
-				else {
-					pc.getInventory().removeItem(l1iteminstance, 1);
-
-					int rnd = Random.nextInt(100) + 1;
-					int enchant_chance_wepon;
-					if (enchant_level >= 9) {
-						enchant_chance_wepon = (100 + 3 * Config.ENCHANT_CHANCE_WEAPON) / 6;
-					}
-					else {
-						enchant_chance_wepon = (100 + 3 * Config.ENCHANT_CHANCE_WEAPON) / 3;
-					}
-
-					if (rnd < enchant_chance_wepon) {
-						int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
-						SuccessEnchant(pc, l1iteminstance1, client, randomEnchantLevel);
-					}
-					else if ((enchant_level >= 9) && (rnd < (enchant_chance_wepon * 2))) {
-						// \f1%0が%2と強烈に%1光りましたが、幸い無事にすみました。
-						pc.sendPackets(new S_ServerMessage(160, l1iteminstance1.getLogName(), "$245", "$248"));
-					}
-					else {
-						FailureEnchant(pc, l1iteminstance1, client);
-					}
-				}
+					|| (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_WEAPON) || (itemId == 40128)) { // 對武器施法的卷軸
+				Enchant.scrollOfEnchantWeapon(pc, l1iteminstance, l1iteminstance1, client);
 			}
-			else if ((itemId == 41429) || (itemId == 41430) || (itemId == 41431) || (itemId == 41432)) { // 風の武器強化スクロール～火の武器強化スクロール
-				if ((l1iteminstance1 == null) || (l1iteminstance1.getItem().getType2() != 1)) {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-				int safeEnchant = l1iteminstance1.getItem().get_safeenchant();
-				if (safeEnchant < 0) { // 強化不可
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				if (l1iteminstance1.getBless() >= 128) { // 封印された装備強化不可
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				// 0:無属性 1:地 2:火 4:水 8:風
-				int oldAttrEnchantKind = l1iteminstance1.getAttrEnchantKind();
-				int oldAttrEnchantLevel = l1iteminstance1.getAttrEnchantLevel();
-
-				boolean isSameAttr = false; // スクロールと強化済みの属性が同一か
-				if (((itemId == 41429) && (oldAttrEnchantKind == 8)) || ((itemId == 41430) && (oldAttrEnchantKind == 1))
-						|| ((itemId == 41431) && (oldAttrEnchantKind == 4)) || ((itemId == 41432) && (oldAttrEnchantKind == 2))) { // 同じ属性
-					isSameAttr = true;
-				}
-				if (isSameAttr && (oldAttrEnchantLevel >= 3)) {
-					pc.sendPackets(new S_ServerMessage(1453)); // これ以上は強化できません。
-					return;
-				}
-
-				int rnd = Random.nextInt(100) + 1;
-				if (Config.ATTR_ENCHANT_CHANCE >= rnd) {
-					pc.sendPackets(new S_ServerMessage(161, l1iteminstance1.getLogName(), "$245", "$247")); // \f1%0が%2%1光ります。
-					int newAttrEnchantKind = 0;
-					int newAttrEnchantLevel = 0;
-					if (isSameAttr) { // 同じ属性なら+1
-						newAttrEnchantLevel = oldAttrEnchantLevel + 1;
-					}
-					else { // 異なる属性なら1
-						newAttrEnchantLevel = 1;
-					}
-					if (itemId == 41429) { // 風の武器強化スクロール
-						newAttrEnchantKind = 8;
-					}
-					else if (itemId == 41430) { // 地の武器強化スクロール
-						newAttrEnchantKind = 1;
-					}
-					else if (itemId == 41431) { // 水の武器強化スクロール
-						newAttrEnchantKind = 4;
-					}
-					else if (itemId == 41432) { // 火の武器強化スクロール
-						newAttrEnchantKind = 2;
-					}
-					l1iteminstance1.setAttrEnchantKind(newAttrEnchantKind);
-					pc.getInventory().updateItem(l1iteminstance1, L1PcInventory.COL_ATTR_ENCHANT_KIND);
-					pc.getInventory().saveItem(l1iteminstance1, L1PcInventory.COL_ATTR_ENCHANT_KIND);
-					l1iteminstance1.setAttrEnchantLevel(newAttrEnchantLevel);
-					pc.getInventory().updateItem(l1iteminstance1, L1PcInventory.COL_ATTR_ENCHANT_LEVEL);
-					pc.getInventory().saveItem(l1iteminstance1, L1PcInventory.COL_ATTR_ENCHANT_LEVEL);
-				}
-				else {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-				}
-				pc.getInventory().removeItem(l1iteminstance, 1);
+			else if (itemId == 49312) { // 象牙塔對武器施法的卷軸
+				Enchant.scrollOfEnchantWeaponIvoryTower(pc, l1iteminstance, l1iteminstance1, client);
+			}
+			else if ((itemId == 41429) || (itemId == 41430) || (itemId == 41431) || (itemId == 41432)) { // 武器屬性強化卷軸
+				Enchant.scrollOfEnchantWeaponAttr(pc, l1iteminstance, l1iteminstance1, client);
 			}
 			else if ((itemId == 40078) || (itemId == L1ItemId.SCROLL_OF_ENCHANT_ARMOR) || (itemId == 40129) || (itemId == 140129)
-					|| (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR) || (itemId == 40127)) { // 防具強化スクロール
-				if ((l1iteminstance1 == null) || (l1iteminstance1.getItem().getType2() != 2)) {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				int safe_enchant = ((L1Armor) l1iteminstance1.getItem()).get_safeenchant();
-				if (safe_enchant < 0) { // 強化不可
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				if (l1iteminstance1.getBless() >= 128) { // 封印された装備強化不可
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					return;
-				}
-
-				int armorId = l1iteminstance1.getItem().getItemId();
-				if ((armorId == 20161) || ((armorId >= 21035) && (armorId <= 21038))) { // イリュージョン防具
-					if (itemId == 40127) { // イリュージョン防具強化スクロール
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						return;
-					}
-				}
-				if (itemId == 40127) { // イリュージョン防具強化スクロール
-					if ((armorId == 20161) || ((armorId >= 21035) && (armorId <= 21038))) { // イリュージョン防具
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						return;
-					}
-				}
-
-				int enchant_level = l1iteminstance1.getEnchantLevel();
-				if (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR) { // c-zel
-					pc.getInventory().removeItem(l1iteminstance, 1);
-					if (enchant_level < -6) {
-						// -7以上はできない。
-						FailureEnchant(pc, l1iteminstance1, client);
-					}
-					else {
-						SuccessEnchant(pc, l1iteminstance1, client, -1);
-					}
-				}
-				else if (enchant_level < safe_enchant) {
-					pc.getInventory().removeItem(l1iteminstance, 1);
-					SuccessEnchant(pc, l1iteminstance1, client, RandomELevel(l1iteminstance1, itemId));
-				}
-				else {
-					pc.getInventory().removeItem(l1iteminstance, 1);
-					int rnd = Random.nextInt(100) + 1;
-					int enchant_chance_armor;
-					int enchant_level_tmp;
-					if (safe_enchant == 0) { // 骨、ブラックミスリル用補正
-						enchant_level_tmp = enchant_level + 2;
-					}
-					else {
-						enchant_level_tmp = enchant_level;
-					}
-					if (enchant_level >= 9) {
-						enchant_chance_armor = (100 + enchant_level_tmp * Config.ENCHANT_CHANCE_ARMOR) / (enchant_level_tmp * 2);
-					}
-					else {
-						enchant_chance_armor = (100 + enchant_level_tmp * Config.ENCHANT_CHANCE_ARMOR) / enchant_level_tmp;
-					}
-
-					if (rnd < enchant_chance_armor) {
-						int randomEnchantLevel = RandomELevel(l1iteminstance1, itemId);
-						SuccessEnchant(pc, l1iteminstance1, client, randomEnchantLevel);
-					}
-					else if ((enchant_level >= 9) && (rnd < (enchant_chance_armor * 2))) {
-						String item_name_id = l1iteminstance1.getName();
-						String pm = "";
-						String msg = "";
-						if (enchant_level > 0) {
-							pm = "+";
-						}
-						msg = (new StringBuilder()).append(pm + enchant_level).append(" ").append(item_name_id).toString();
-						// \f1%0が%2と強烈に%1光りましたが、幸い無事にすみました。
-						pc.sendPackets(new S_ServerMessage(160, msg, "$252", "$248"));
-					}
-					else {
-						FailureEnchant(pc, l1iteminstance1, client);
-					}
-				}
+					|| (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR) || (itemId == 40127)) { // 對盔甲施法的卷軸
+				Enchant.scrollOfEnchantArmor(pc, l1iteminstance, l1iteminstance1, client);
 			}
-			else if (l1iteminstance.getItem().getType2() == 0) { // 種別：その他のアイテム
+			else if (itemId == 49311) { // 象牙塔對盔甲施法的卷軸
+				Enchant.scrollOfEnchantArmorIvoryTower(pc, l1iteminstance, l1iteminstance1, client);
+			}
+			else if (l1iteminstance.getItem().getType2() == 0) { // 道具類
 				int item_minlvl = ((L1EtcItem) l1iteminstance.getItem()).getMinLevel();
 				int item_maxlvl = ((L1EtcItem) l1iteminstance.getItem()).getMaxLevel();
 				if ((item_minlvl != 0) && (item_minlvl > pc.getLevel()) && !pc.isGm()) {
@@ -731,138 +486,121 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(481)); // \f1一つの能力値の最大値は25です。他の能力値を選択してください。
 					}
 				}
-				// レッドポーション、濃縮体力回復剤、象牙の塔の体力回復剤
+				// 治癒藥水、濃縮體力恢復劑、象牙塔治癒藥水
 				else if ((itemId == L1ItemId.POTION_OF_HEALING) || (itemId == L1ItemId.CONDENSED_POTION_OF_HEALING) || (itemId == 40029)) {
-					UseHeallingPotion(pc, 15, 189);
+					Potion.UseHeallingPotion(pc, l1iteminstance, 15, 189);
+				}
+				else if (itemId == 40022) { // 古代體力恢復劑
+					Potion.UseHeallingPotion(pc, l1iteminstance, 20, 189);
+				}
+				else if ((itemId == L1ItemId.POTION_OF_EXTRA_HEALING) // 強力治癒藥水、濃縮強力體力恢復劑
+						|| (itemId == L1ItemId.CONDENSED_POTION_OF_EXTRA_HEALING)) {
+					Potion.UseHeallingPotion(pc, l1iteminstance, 45, 194);
+				}
+				else if (itemId == 40023) { // 古代強力體力恢復劑
+					Potion.UseHeallingPotion(pc, l1iteminstance, 30, 194);
+				}
+				else if ((itemId == L1ItemId.POTION_OF_GREATER_HEALING) // 終極治癒藥水
+						// 濃縮終極體力恢復劑、凝聚的化合物、鮮奶油蛋糕、神秘的體力藥水
+						|| (itemId == L1ItemId.CONDENSED_POTION_OF_GREATER_HEALING)
+						|| (itemId == 47114) || (itemId == 49137) || (itemId == 41141)) {
+					Potion.UseHeallingPotion(pc, l1iteminstance, 75, 197);
+				}
+				else if (itemId == 40024) { // 古代終極體力恢復劑
+					Potion.UseHeallingPotion(pc, l1iteminstance, 55, 197);
+				}
+				else if (itemId == 40506) { // 安特的水果
+					Potion.UseHeallingPotion(pc, l1iteminstance, 70, 197);
+				}
+				else if ((itemId == 40026) || (itemId == 40027) || (itemId == 40028)) { // 香蕉汁、橘子汁、蘋果汁
+					Potion.UseHeallingPotion(pc, l1iteminstance, 25, 189);
+				}
+				else if (itemId == 40058) { // 煙燻的麵包屑
+					Potion.UseHeallingPotion(pc, l1iteminstance, 30, 189);
+				}
+				else if (itemId == 40071) { // 烤焦的麵包屑
+					Potion.UseHeallingPotion(pc, l1iteminstance, 70, 197);
+				}
+				else if (itemId == 40734) { // 信賴貨幣
+					Potion.UseHeallingPotion(pc, l1iteminstance, 50, 189);
+				}
+				else if (itemId == L1ItemId.B_POTION_OF_HEALING) { // 受祝福的 治癒藥水
+					Potion.UseHeallingPotion(pc, l1iteminstance, 25, 189);
+				}
+				else if (itemId == L1ItemId.C_POTION_OF_HEALING) { // 受咀咒的 治癒藥水
+					Potion.UseHeallingPotion(pc, l1iteminstance, 10, 189);
+				}
+				else if (itemId == L1ItemId.B_POTION_OF_EXTRA_HEALING) { // 受祝福的 強力治癒藥水
+					Potion.UseHeallingPotion(pc, l1iteminstance, 55, 194);
+				}
+				else if (itemId == L1ItemId.B_POTION_OF_GREATER_HEALING) { // 受祝福的 終極治癒藥水
+					Potion.UseHeallingPotion(pc, l1iteminstance, 85, 197);
+				}
+				else if (itemId == 140506) { // 受祝福的 安特的水果
+					Potion.UseHeallingPotion(pc, l1iteminstance, 80, 197);
+				}
+				else if (itemId == 40043) { // 兔子的肝
+					Potion.UseHeallingPotion(pc, l1iteminstance, 600, 189);
+				}
+				else if (itemId == 41403) { // 庫傑的糧食
+					Potion.UseHeallingPotion(pc, l1iteminstance, 300, 189);
+				}
+				else if ((itemId >= 41417) && (itemId <= 41421)) { // 日本「亞丁的夏天」活動道具 - 刨冰
+					Potion.UseHeallingPotion(pc, l1iteminstance, 90, 197);
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if (itemId == 40022) { // 古代の体力回復剤
-					UseHeallingPotion(pc, 20, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if ((itemId == L1ItemId.POTION_OF_EXTRA_HEALING) || (itemId == L1ItemId.CONDENSED_POTION_OF_EXTRA_HEALING)) {
-					UseHeallingPotion(pc, 45, 194);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 40023) { // 古代の高級体力回復剤
-					UseHeallingPotion(pc, 30, 194);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if ((itemId == L1ItemId.POTION_OF_GREATER_HEALING) || (itemId == L1ItemId.CONDENSED_POTION_OF_GREATER_HEALING)) {
-					UseHeallingPotion(pc, 75, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 40024) { // 古代の強力体力回復剤
-					UseHeallingPotion(pc, 55, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 40506) { // エントの実
-					UseHeallingPotion(pc, 70, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if ((itemId == 40026) || (itemId == 40027) || (itemId == 40028)) { // ジュース
-					UseHeallingPotion(pc, 25, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 40058) { // きつね色のパン
-					UseHeallingPotion(pc, 30, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 40071) { // 黒こげのパン
-					UseHeallingPotion(pc, 70, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 40734) { // 信頼のコイン
-					UseHeallingPotion(pc, 50, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == L1ItemId.B_POTION_OF_HEALING) {
-					UseHeallingPotion(pc, 25, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == L1ItemId.C_POTION_OF_HEALING) {
-					UseHeallingPotion(pc, 10, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == L1ItemId.B_POTION_OF_EXTRA_HEALING) { // 祝福されたオレンジ
-					// ポーション
-					UseHeallingPotion(pc, 55, 194);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == L1ItemId.B_POTION_OF_GREATER_HEALING) { // 祝福されたクリアー
-					// ポーション
-					UseHeallingPotion(pc, 85, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 140506) { // 祝福されたエントの実
-					UseHeallingPotion(pc, 80, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 40043) { // 兎の肝
-					UseHeallingPotion(pc, 600, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 41403) { // クジャクの食糧
-					UseHeallingPotion(pc, 300, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if ((itemId >= 41417) && (itemId <= 41421)) { // 「アデンの夏」イベント限定アイテム
-					UseHeallingPotion(pc, 90, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 41337) { // 祝福された麦パン
-					UseHeallingPotion(pc, 85, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 41337) { // 受祝福的五穀麵包
+					Potion.UseHeallingPotion(pc, l1iteminstance, 85, 197);
 				}
 				else if (itemId == 40858) { // liquor（酒）
 					pc.setDrink(true);
 					pc.sendPackets(new S_Liquor(pc.getId(), 1));
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if ((itemId == L1ItemId.POTION_OF_CURE_POISON) || (itemId == 40507)) { // シアンポーション、エントの枝
-					if (pc.hasSkillEffect(71) == true) { // ディケイポーションの状態
-						pc.sendPackets(new S_ServerMessage(698)); // 魔力によって何も飲むことができません。
-					}
-					else {
+				else if ((itemId == L1ItemId.POTION_OF_CURE_POISON) || (itemId == 40507)) { // 翡翠藥水
+					if (pc.hasSkillEffect(DECAY_POTION)) { // 藥水霜化術狀態
+						pc.sendPackets(new S_ServerMessage(698)); // 喉嚨灼熱，無法喝東西。
+						return;
+					} else {
 						pc.sendPackets(new S_SkillSound(pc.getId(), 192));
 						pc.broadcastPacket(new S_SkillSound(pc.getId(), 192));
 						if (itemId == L1ItemId.POTION_OF_CURE_POISON) {
 							pc.getInventory().removeItem(l1iteminstance, 1);
-						}
-						else if (itemId == 40507) {
+						} else if (itemId == 40507) {
 							pc.getInventory().removeItem(l1iteminstance, 1);
 						}
 
 						pc.curePoison();
 					}
 				}
-				else if ((itemId == L1ItemId.POTION_OF_HASTE_SELF) || (itemId == L1ItemId.B_POTION_OF_HASTE_SELF) || (itemId == 40018 // 強化グリーン
-																																		// ポーション
-						) || (itemId == 140018 // 祝福された強化グリーン ポーション
-						) || (itemId == 40039 // ワイン
-						) || (itemId == 40040 // ウイスキー
-						) || (itemId == 40030 // 象牙の塔のヘイスト ポーション
-						) || (itemId == 41338 // 祝福されたワイン
-						) || (itemId == 41261 // おむすび
-						) || (itemId == 41262 // 焼き鳥
-						) || (itemId == 41268 // ピザのピース
-						) || (itemId == 41269 // 焼きもろこし
-						) || (itemId == 41271 // ポップコーン
-						) || (itemId == 41272 // おでん
-						) || (itemId == 41273 // ワッフル
-						) || (itemId == 41342)) { // メデューサの血
-					useGreenPotion(pc, itemId);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if ((itemId == L1ItemId.POTION_OF_HASTE_SELF) || (itemId == L1ItemId.B_POTION_OF_HASTE_SELF
+						// 自我加速藥水、受祝福的 自我加速藥水
+						) || (itemId == 40018 // 強力 自我加速藥水
+						) || (itemId == 140018 // 受祝福的 強力 自我加速藥水
+						) || (itemId == 40039 // 紅酒
+						) || (itemId == 40040 // 威士忌
+						) || (itemId == 40030 // 象牙塔加速藥水
+						) || (itemId == 41338 // 受祝福的葡萄酒
+						) || (itemId == 41261 // 飯團
+						) || (itemId == 41262 // 雞肉串燒
+						) || (itemId == 41268 // 小比薩
+						) || (itemId == 41269 // 烤玉米
+						) || (itemId == 41271 // 爆米花
+						) || (itemId == 41272 // 甜不辣
+						) || (itemId == 41273 // 鬆餅
+						) || (itemId == 41342 // 梅杜莎之血
+						) || (itemId == 49302 // 福利加速藥水
+						) || (itemId == 49140 // 綠茶蛋糕卷
+						)) {
+					Potion.useGreenPotion(pc, l1iteminstance, itemId);
 				}
 				else if ((itemId == L1ItemId.POTION_OF_EMOTION_BRAVERY) // 勇敢藥水
-						|| (itemId == L1ItemId.B_POTION_OF_EMOTION_BRAVERY) // 受祝福的
-																			// 勇敢藥水
+						|| (itemId == L1ItemId.B_POTION_OF_EMOTION_BRAVERY) // 受祝福的 勇敢藥水
 						|| (itemId == L1ItemId.POTION_OF_REINFORCED_CASE) // 強化勇氣的藥水
 						|| (itemId == L1ItemId.W_POTION_OF_EMOTION_BRAVERY)) { // 福利勇敢藥水
 					if (pc.isKnight()) { // 騎士
 						Potion.Brave(pc, l1iteminstance, itemId);
-					}
-					else {
+					} else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
@@ -870,8 +608,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == L1ItemId.FORBIDDEN_FRUIT) { // 生命之樹果實
 					if (pc.isDragonKnight() || pc.isIllusionist()) { // 龍騎士、幻術師
 						Potion.Brave(pc, l1iteminstance, itemId);
-					}
-					else {
+					} else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
@@ -881,8 +618,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						|| (itemId == L1ItemId.W_POTION_OF_FOREST)) { // 福利森林藥水
 					if (pc.isElf()) { // 妖精
 						Potion.Brave(pc, l1iteminstance, itemId);
-					}
-					else {
+					} else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
@@ -890,8 +626,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == L1ItemId.DEVILS_BLOOD) { // 惡魔之血
 					if (pc.isCrown()) { // 王族
 						Potion.Brave(pc, l1iteminstance, itemId);
-					}
-					else {
+					} else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
@@ -899,8 +634,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == L1ItemId.COIN_OF_REPUTATION) { // 名譽貨幣
 					if (!pc.isDragonKnight() && !pc.isIllusionist()) { // 龍騎士與幻術師無法使用
 						Potion.Brave(pc, l1iteminstance, itemId);
-					}
-					else {
+					} else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
@@ -908,102 +642,78 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == L1ItemId.CHOCOLATE_CAKE) { // 巧克力蛋糕
 					Potion.ThirdSpeed(pc, l1iteminstance, 600);
 				}
-				else if ((itemId >= L1ItemId.POTION_OF_EXP_150) && (itemId <= L1ItemId.SCROLL_FOR_ENCHANTING_BATTLE)) { // 150%神力藥水
-																												// ~
-																												// 強化戰鬥卷軸
+				else if ((itemId >= L1ItemId.POTION_OF_EXP_150)
+						&& (itemId <= L1ItemId.SCROLL_FOR_ENCHANTING_BATTLE)) { // 150%神力藥水 ~ 強化戰鬥卷軸
 					Effect.useEffectItem(pc, l1iteminstance);
 				}
-				else if ((itemId == 40066) || (itemId == 41413)) { // お餅、月餅
-					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
-					pc.setCurrentMp(pc.getCurrentMp() + (7 + Random.nextInt(6))); // 7~12
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if ((itemId == 40066) || (itemId == 41413)) { // 年糕、月餅
+					Potion.UseMpPotion(pc, l1iteminstance, 7, 6);
 				}
-				else if ((itemId == 40067) || (itemId == 41414)) { // よもぎ餅、福餅
-					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
-					pc.setCurrentMp(pc.getCurrentMp() + (15 + Random.nextInt(16))); // 15~30
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if ((itemId == 40067) || (itemId == 41414)) { // 艾草年糕、福月餅
+					Potion.UseMpPotion(pc, l1iteminstance, 15, 16);
 				}
-				else if (itemId == 40735) { // 勇気のコイン
-					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
-					pc.setCurrentMp(pc.getCurrentMp() + 60);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 40735) { // 勇氣貨幣
+					Potion.UseMpPotion(pc, l1iteminstance, 60, 0);
 				}
-				else if (itemId == 40042) { // スピリットポーション
-					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
-					pc.setCurrentMp(pc.getCurrentMp() + 50);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if ((itemId == 40042) || (itemId == 41142)) { // 精神藥水、神秘的魔力藥水
+					Potion.UseMpPotion(pc, l1iteminstance, 50, 0);
 				}
-				else if (itemId == 41404) { // クジャクの霊薬
-					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
-					pc.setCurrentMp(pc.getCurrentMp() + (80 + Random.nextInt(21))); // 80~100
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 41404) { // 庫傑的靈藥
+					Potion.UseMpPotion(pc, l1iteminstance, 80, 21);
 				}
-				else if (itemId == 41412) { // 金のチョンズ
-					pc.sendPackets(new S_ServerMessage(338, "$1084")); // あなたの%0が回復していきます。
-					pc.setCurrentMp(pc.getCurrentMp() + (5 + Random.nextInt(16))); // 5~20
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 41412) { // 金粽子
+					Potion.UseMpPotion(pc, l1iteminstance, 5, 16);
 				}
-				else if ((itemId == 40032) || (itemId == 40041) || (itemId == 41344)) { // エヴァの祝福、マーメイドの鱗、水の精粋
-					useBlessOfEva(pc, itemId);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if ((itemId == 40032) || (itemId == 40041) // 伊娃的祝福、人魚之鱗
+						|| (itemId == 41344) || (itemId == 49303)) { // 水中的水、福利呼吸藥水
+					Potion.useBlessOfEva(pc, l1iteminstance, itemId);
 				}
-				else if ((itemId == L1ItemId.POTION_OF_MANA // ブルー ポーション
-						)
-						|| (itemId == L1ItemId.B_POTION_OF_MANA // 祝福されたブルー
-						)
-						// ポーション
-						|| (itemId == 40736)) { // 知恵のコイン
-					useBluePotion(pc, itemId);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if ((itemId == L1ItemId.POTION_OF_MANA) // 藍色藥水
+						|| (itemId == L1ItemId.B_POTION_OF_MANA // 受祝福的 藍色藥水
+						|| (itemId == 40736) || (itemId == 49306))) { // 智慧貨幣、福利藍色藥水
+					Potion.useBluePotion(pc, l1iteminstance, itemId);
 				}
-				else if ((itemId == L1ItemId.POTION_OF_EMOTION_WISDOM // ウィズダム
-						)
-						// ポーション
-						|| (itemId == L1ItemId.B_POTION_OF_EMOTION_WISDOM)) { // 祝福されたウィズダム
-					// ポーション
-					if (pc.isWizard()) {
-						useWisdomPotion(pc, itemId);
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-					}
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == L1ItemId.POTION_OF_BLINDNESS) { // オペイクポーション
-					useBlindPotion(pc);
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if ((itemId == 40088 // 変身スクロール
-						)
-						|| (itemId == 40096 // 象牙の塔の変身スクロール
-						) || (itemId == 140088)) { // 祝福された変身スクロール
-					if (usePolyScroll(pc, itemId, s)) {
+				else if ((itemId == L1ItemId.POTION_OF_EMOTION_WISDOM) // 慎重藥水
+						|| (itemId == L1ItemId.B_POTION_OF_EMOTION_WISDOM) // 受祝福的 慎重藥水
+						|| (itemId == 49307)) { // 福利慎重藥水
+					if (pc.isWizard()) { // 法師
+						Potion.useWisdomPotion(pc, l1iteminstance, itemId);
+					} else {
+						pc.sendPackets(new S_ServerMessage(79));
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
-					else {
-						pc.sendPackets(new S_ServerMessage(181)); // \f1そのようなモンスターには変身できません。
+				}
+				else if (itemId == L1ItemId.POTION_OF_BLINDNESS) { // 黑色藥水
+					Potion.useBlindPotion(pc, l1iteminstance);
+				}
+				else if ((itemId == 40088) || (itemId == 40096)
+						|| (itemId == 49308) || (itemId == 140088)) { // 變形卷軸、福利變形藥水
+					if (usePolyScroll(pc, itemId, s)) {
+						pc.getInventory().removeItem(l1iteminstance, 1);
+					} else {
+						pc.sendPackets(new S_ServerMessage(181)); // \f1無法變成你指定的怪物。
 					}
 				}
-				else if ((itemId == 41154 // 闇の鱗
-						)
-						|| (itemId == 41155 // 烈火の鱗
-						) || (itemId == 41156 // 背徳者の鱗
-						) || (itemId == 41157 // 憎悪の鱗
-						) || (itemId == 49220)) { // オーク密使変身スクロール
+				else if ((itemId == 41154 // 暗之鱗
+						) || (itemId == 41155 // 火之鱗
+						) || (itemId == 41156 // 叛之鱗
+						) || (itemId == 41157 // 恨之鱗
+						) || (itemId == 49220)) { // 妖魔密使變形卷軸
 					usePolyScale(pc, itemId);
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if ((itemId == 41143 // ラバーボーンヘッド変身ポーション
-						)
-						|| (itemId == 41144 // ラバーボーンアーチャー変身ポーション
-						) || (itemId == 41145 // ラバーボーンナイフ変身ポーション
-						) || (itemId == 49149 // シャルナの変身スクロール（レベル30）
-						) || (itemId == 49150 // シャルナの変身スクロール（レベル40）
-						) || (itemId == 49151 // シャルナの変身スクロール（レベル52）
-						) || (itemId == 49152 // シャルナの変身スクロール（レベル55）
-						) || (itemId == 49153 // シャルナの変身スクロール（レベル60）
-						) || (itemId == 49154 // シャルナの変身スクロール（レベル65）
-						) || (itemId == 49155)) { // シャルナの変身スクロール（レベル70）
+				else if ((itemId == 41143 // 海賊骷髏首領變身藥水
+						) || (itemId == 41144 // 海賊骷髏士兵變身藥水
+						) || (itemId == 41145 // 海賊骷髏刀手變身藥水
+						) || (itemId == 49149 // 夏納的變身卷軸(等級30)
+						) || (itemId == 49150 // 夏納的變身卷軸(等級40)
+						) || (itemId == 49151 // 夏納的變身卷軸(等級52)
+						) || (itemId == 49152 // 夏納的變身卷軸(等級55)
+						) || (itemId == 49153 // 夏納的變身卷軸(等級60)
+						) || (itemId == 49154 // 夏納的變身卷軸(等級65)
+						) || (itemId == 49155 // 夏納的變身卷軸(等級70)
+						) || (itemId == 49139 // 起司蛋糕
+						)) {
 					usePolyPotion(pc, itemId);
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
@@ -1029,6 +739,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					if (pc.getInventory().consumeItem(41246, 500)) {
 						Effect.useEffectItem(pc, l1iteminstance);
 					} else {
+						isDelayEffect = false;
 						pc.sendPackets(new S_ServerMessage(337, "$5240"));
 					}
 				}
@@ -1054,16 +765,22 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				}
 				else if (itemId == 47048) { // 附魔強化卷軸
-					if ((l1iteminstance1.getItemId() < 47053) || (l1iteminstance1.getItemId() > 47102)
-							|| (l1iteminstance1.getItemId() == 47062) || (l1iteminstance1.getItemId() == 47072)
-							|| (l1iteminstance1.getItemId() == 47082) || (l1iteminstance1.getItemId() == 47092)
-							|| (l1iteminstance1.getItemId() == 47102)) {
+					int item_id = l1iteminstance1.getItemId();
+					if ((item_id < 47053) || (item_id > 47102)
+							|| (item_id == 47062) || (item_id == 47072)
+							|| (item_id == 47082) || (item_id == 47092)
+							|| (item_id == 47102)) {
 						pc.sendPackets(new S_ServerMessage(79));
 						return;
 					}
 
 					int rnd = Random.nextInt(100) + 1;
-					if (Config.MAGIC_STONE_LEVEL < rnd) {
+					if (Config.MAGIC_STONE_LEVEL < rnd
+							|| (item_id >= 47053 && item_id <= 47056)
+							|| (item_id >= 47063 && item_id <= 47066)
+							|| (item_id >= 47073 && item_id <= 47076)
+							|| (item_id >= 47083 && item_id <= 47086)
+							|| (item_id >= 47093 && item_id <= 47096)) {
 						int newItem = l1iteminstance1.getItemId() + 1; // X 階附魔石 -> X+1 階附魔石
 						L1Item template = ItemTable.getInstance().getTemplate(newItem);
 						if (template == null) {
@@ -1081,9 +798,47 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if ((itemId >= 47064 && itemId <= 47072) || (itemId >= 47074 && itemId <= 47082)
-						|| (itemId >= 47084 && itemId <= 47092) || (itemId >= 47094 && itemId <= 47102)) { // 1 ~ 9 階附魔石(近戰)(遠攻)(恢復)(防禦)
-					Effect.useEffectItem(pc, l1iteminstance);
+				else if ((itemId >= 47064 && itemId <= 47067) || (itemId >= 47074 && itemId <= 47077)
+						|| (itemId >= 47084 && itemId <= 47087) || (itemId >= 47094 && itemId <= 47097)) { // 1 ~ 4 階附魔石(近戰)(遠攻)(恢復)(防禦)
+					if (pc.getInventory().consumeItem(41246, 30)) {
+						Effect.useEffectItem(pc, l1iteminstance);
+					} else {
+						isDelayEffect = false;
+						pc.sendPackets(new S_ServerMessage(337, "$5240"));
+					}
+				}
+				else if ((itemId == 47068) || (itemId == 47069) || (itemId == 47078) || (itemId == 47079)
+						 || (itemId == 47088) || (itemId == 47089) || (itemId == 47098) || (itemId == 47099)) { // 5 ~ 6階附魔石(近戰)(遠攻)(恢復)(防禦)
+					if (pc.getInventory().consumeItem(41246, 60)) {
+						Effect.useEffectItem(pc, l1iteminstance);
+					} else {
+						isDelayEffect = false;
+						pc.sendPackets(new S_ServerMessage(337, "$5240"));
+					}
+				}
+				else if ((itemId == 47070) || (itemId == 47080) || (itemId == 47090) || (itemId == 47100)) { // 7階附魔石(近戰)(遠攻)(恢復)(防禦)
+					if (pc.getInventory().consumeItem(41246, 100)) {
+						Effect.useEffectItem(pc, l1iteminstance);
+					} else {
+						isDelayEffect = false;
+						pc.sendPackets(new S_ServerMessage(337, "$5240"));
+					}
+				}
+				else if ((itemId == 47071) || (itemId == 47081) || (itemId == 47091) || (itemId == 47101)) { // 8階附魔石(近戰)(遠攻)(恢復)(防禦)
+					if (pc.getInventory().consumeItem(41246, 200)) {
+						Effect.useEffectItem(pc, l1iteminstance);
+					} else {
+						isDelayEffect = false;
+						pc.sendPackets(new S_ServerMessage(337, "$5240"));
+					}
+				}
+				else if ((itemId == 47072) || (itemId == 47082) || (itemId == 47092) || (itemId == 47102)) { // 9階附魔石(近戰)(遠攻)(恢復)(防禦)
+					if (pc.getInventory().consumeItem(41246, 300)) {
+						Effect.useEffectItem(pc, l1iteminstance);
+					} else {
+						isDelayEffect = false;
+						pc.sendPackets(new S_ServerMessage(337, "$5240"));
+					}
 				}
 				else if ((itemId == 40097) || (itemId == 40119)
 						|| (itemId == 140119) || (itemId == 140329)) { // 解除咀咒的卷軸、原住民圖騰
@@ -2281,111 +2036,20 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.sendPackets(new S_ServerMessage(76, l1iteminstance.getItem().getIdentifiedNameId()));
 				}
-				else if (itemId == 40070) { // 進化の実
+				else if (itemId == 40070) { // 進化果實
 					pc.sendPackets(new S_ServerMessage(76, l1iteminstance.getLogName()));
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if (itemId == 41298) { // ヤングフィッシュ
-					UseHeallingPotion(pc, 4, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 41298) { // 鱈魚
+					Potion.UseHeallingPotion(pc, l1iteminstance, 4, 189);
 				}
-				else if (itemId == 41299) { // スウィフトフィッシュ
-					UseHeallingPotion(pc, 15, 194);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 41299) { // 虎斑帶魚
+					Potion.UseHeallingPotion(pc, l1iteminstance, 15, 194);
 				}
-				else if (itemId == 41300) { // ストロングフィッシュ
-					UseHeallingPotion(pc, 35, 197);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 41300) { // 鮪魚
+					Potion.UseHeallingPotion(pc, l1iteminstance, 35, 197);
 				}
-				else if (itemId == 41301) { // シャイニングレッドフィッシュ
-					int chance = Random.nextInt(10);
-					if ((chance >= 0) && (chance < 5)) {
-						UseHeallingPotion(pc, 15, 189);
-					}
-					else if ((chance >= 5) && (chance < 9)) {
-						createNewItem(pc, 40019, 1);
-					}
-					else if (chance >= 9) {
-						int gemChance = Random.nextInt(3);
-						if (gemChance == 0) {
-							createNewItem(pc, 40045, 1);
-						}
-						else if (gemChance == 1) {
-							createNewItem(pc, 40049, 1);
-						}
-						else if (gemChance == 2) {
-							createNewItem(pc, 40053, 1);
-						}
-					}
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 41302) { // シャイニンググリーンフィッシュ
-					int chance = Random.nextInt(3);
-					if ((chance >= 0) && (chance < 5)) {
-						UseHeallingPotion(pc, 15, 189);
-					}
-					else if ((chance >= 5) && (chance < 9)) {
-						createNewItem(pc, 40018, 1);
-					}
-					else if (chance >= 9) {
-						int gemChance = Random.nextInt(3);
-						if (gemChance == 0) {
-							createNewItem(pc, 40047, 1);
-						}
-						else if (gemChance == 1) {
-							createNewItem(pc, 40051, 1);
-						}
-						else if (gemChance == 2) {
-							createNewItem(pc, 40055, 1);
-						}
-					}
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 41303) { // シャイニングブルーフィッシュ
-					int chance = Random.nextInt(3);
-					if ((chance >= 0) && (chance < 5)) {
-						UseHeallingPotion(pc, 15, 189);
-					}
-					else if ((chance >= 5) && (chance < 9)) {
-						createNewItem(pc, 40015, 1);
-					}
-					else if (chance >= 9) {
-						int gemChance = Random.nextInt(3);
-						if (gemChance == 0) {
-							createNewItem(pc, 40046, 1);
-						}
-						else if (gemChance == 1) {
-							createNewItem(pc, 40050, 1);
-						}
-						else if (gemChance == 2) {
-							createNewItem(pc, 40054, 1);
-						}
-					}
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if (itemId == 41304) { // シャイニングホワイトフィッシュ
-					int chance = Random.nextInt(3);
-					if ((chance >= 0) && (chance < 5)) {
-						UseHeallingPotion(pc, 15, 189);
-					}
-					else if ((chance >= 5) && (chance < 9)) {
-						createNewItem(pc, 40021, 1);
-					}
-					else if (chance >= 9) {
-						int gemChance = Random.nextInt(3);
-						if (gemChance == 0) {
-							createNewItem(pc, 40044, 1);
-						}
-						else if (gemChance == 1) {
-							createNewItem(pc, 40048, 1);
-						}
-						else if (gemChance == 2) {
-							createNewItem(pc, 40052, 1);
-						}
-					}
-					pc.getInventory().removeItem(l1iteminstance, 1);
-				}
-				else if ((itemId >= 40136) && (itemId <= 40161)) { // 花火
+				else if ((itemId >= 40136) && (itemId <= 40161)) { // 煙火
 					int soundid = 3198;
 					if (itemId == 40154) {
 						soundid = 3198;
@@ -2863,8 +2527,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					useFurnitureRemovalWand(pc, spellsc_objid, l1iteminstance);
 				}
 				else if (itemId == 41411) { // 銀のチョンズ
-					UseHeallingPotion(pc, 10, 189);
-					pc.getInventory().removeItem(l1iteminstance, 1);
+					Potion.UseHeallingPotion(pc, l1iteminstance, 10, 189);
 				}
 				else if (itemId == 41345) { // 酸性の乳液
 					L1DamagePoison.doInfection(pc, pc, 3000, 5);
@@ -3605,230 +3268,21 @@ public class C_ItemUSe extends ClientBasePacket {
 		pc.getInventory().removeItem(item, item.getCount());
 	}
 
-	private void UseHeallingPotion(L1PcInstance pc, int healHp, int gfxid) {
-		if (pc.hasSkillEffect(71) == true) { // ディケイ ポーションの状態
-			pc.sendPackets(new S_ServerMessage(698)); // 魔力によって何も飲むことができません。
-			return;
-		}
-
-		pc.sendPackets(new S_SkillSound(pc.getId(), gfxid));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), gfxid));
-		pc.sendPackets(new S_ServerMessage(77)); // \f1気分が良くなりました。
-		healHp *= ((new java.util.Random()).nextGaussian() / 5.0D) + 1.0D;
-		if (pc.hasSkillEffect(POLLUTE_WATER)) { // ポルートウォーター中は回復量1/2倍
-			healHp /= 2;
-		}
-		pc.setCurrentHp(pc.getCurrentHp() + healHp);
-	}
-
-	private void useGreenPotion(L1PcInstance pc, int itemId) {
-		if (pc.hasSkillEffect(71) == true) { // ディケイポーションの状態
-			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
-			return;
-		}
-
-		int time = 0;
-		if (itemId == L1ItemId.POTION_OF_HASTE_SELF) { // グリーン ポーション
-			time = 300;
-		}
-		else if (itemId == L1ItemId.B_POTION_OF_HASTE_SELF) { // 祝福されたグリーン
-			// ポーション
-			time = 350;
-		}
-		else if ((itemId == 40018) || (itemId == 41338) || (itemId == 41342)) { // 強化グリーンポーション、祝福されたワイン、メデューサの血
-			time = 1800;
-		}
-		else if (itemId == 140018) { // 祝福された強化グリーン ポーション
-			time = 2100;
-		}
-		else if (itemId == 40039) { // ワイン
-			time = 600;
-		}
-		else if (itemId == 40040) { // ウイスキー
-			time = 900;
-		}
-		else if (itemId == 40030) { // 象牙の塔のヘイスト ポーション
-			time = 300;
-		}
-		else if ((itemId == 41261) || (itemId == 41262) || (itemId == 41268) || (itemId == 41269) || (itemId == 41271) || (itemId == 41272)
-				|| (itemId == 41273)) {
-			time = 30;
-		}
-
-		pc.sendPackets(new S_SkillSound(pc.getId(), 191));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 191));
-		// XXX:ヘイストアイテム装備時、酔った状態が解除されるのか不明
-		if (pc.getHasteItemEquipped() > 0) {
-			return;
-		}
-		// 酔った状態を解除
-		pc.setDrink(false);
-
-		// ヘイスト、グレーターヘイストとは重複しない
-		if (pc.hasSkillEffect(HASTE)) {
-			pc.killSkillEffectTimer(HASTE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.setMoveSpeed(0);
-		}
-		else if (pc.hasSkillEffect(GREATER_HASTE)) {
-			pc.killSkillEffectTimer(GREATER_HASTE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.setMoveSpeed(0);
-		}
-		else if (pc.hasSkillEffect(STATUS_HASTE)) {
-			pc.killSkillEffectTimer(STATUS_HASTE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.setMoveSpeed(0);
-		}
-
-		// スロー、マス スロー、エンタングル中はスロー状態を解除するだけ
-		if (pc.hasSkillEffect(SLOW)) { // スロー
-			pc.killSkillEffectTimer(SLOW);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-		}
-		else if (pc.hasSkillEffect(MASS_SLOW)) { // マス スロー
-			pc.killSkillEffectTimer(MASS_SLOW);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-		}
-		else if (pc.hasSkillEffect(ENTANGLE)) { // エンタングル
-			pc.killSkillEffectTimer(ENTANGLE);
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 0, 0));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 0, 0));
-		}
-		else {
-			pc.sendPackets(new S_SkillHaste(pc.getId(), 1, time));
-			pc.broadcastPacket(new S_SkillHaste(pc.getId(), 1, 0));
-			pc.setMoveSpeed(1);
-			pc.setSkillEffect(STATUS_HASTE, time * 1000);
-		}
-	}
-
-	private void useBluePotion(L1PcInstance pc, int item_id) {
-		if (pc.hasSkillEffect(DECAY_POTION)) { // ディケイポーションの状態
-			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
-			return;
-		}
-
-		int time = 0;
-		if ((item_id == 40015) || (item_id == 40736)) { // ブルーポーション、知恵のコイン
-			time = 600;
-		}
-		else if (item_id == 140015) { // 祝福されたブルー ポーション
-			time = 700;
-		}
-		else {
-			return;
-		}
-
-		pc.sendPackets(new S_SkillIconGFX(34, time));
-		pc.sendPackets(new S_SkillSound(pc.getId(), 190));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 190));
-
-		pc.setSkillEffect(STATUS_BLUE_POTION, time * 1000);
-
-		pc.sendPackets(new S_ServerMessage(1007)); // MPの回復速度が速まります。
-	}
-
-	private void useWisdomPotion(L1PcInstance pc, int item_id) {
-		if (pc.hasSkillEffect(71) == true) { // ディケイポーションの状態
-			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
-			return;
-		}
-
-		int time = 0; // 時間は4の倍数にすること
-		if (item_id == L1ItemId.POTION_OF_EMOTION_WISDOM) { // ウィズダム ポーション
-			time = 300;
-		}
-		else if (item_id == L1ItemId.B_POTION_OF_EMOTION_WISDOM) { // 祝福されたウィズダム
-			// ポーション
-			time = 360;
-		}
-
-		if (!pc.hasSkillEffect(STATUS_WISDOM_POTION)) {
-			pc.addSp(2);
-		}
-
-		pc.sendPackets(new S_SkillIconWisdomPotion((time / 4)));
-		pc.sendPackets(new S_SkillSound(pc.getId(), 750));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 750));
-
-		pc.setSkillEffect(STATUS_WISDOM_POTION, time * 1000);
-	}
-
-	private void useBlessOfEva(L1PcInstance pc, int item_id) {
-		if (pc.hasSkillEffect(71) == true) { // ディケイポーションの状態
-			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
-			return;
-		}
-
-		int time = 0;
-		if (item_id == 40032) { // エヴァの祝福
-			time = 1800;
-		}
-		else if (item_id == 40041) { // マーメイドの鱗
-			time = 300;
-		}
-		else if (item_id == 41344) { // 水の精粋
-			time = 2100;
-		}
-		else {
-			return;
-		}
-
-		if (pc.hasSkillEffect(STATUS_UNDERWATER_BREATH)) {
-			int timeSec = pc.getSkillEffectTimeSec(STATUS_UNDERWATER_BREATH);
-			time += timeSec;
-			if (time > 3600) {
-				time = 3600;
-			}
-		}
-		pc.sendPackets(new S_SkillIconBlessOfEva(pc.getId(), time));
-		pc.sendPackets(new S_SkillSound(pc.getId(), 190));
-		pc.broadcastPacket(new S_SkillSound(pc.getId(), 190));
-		pc.setSkillEffect(STATUS_UNDERWATER_BREATH, time * 1000);
-	}
-
-	private void useBlindPotion(L1PcInstance pc) {
-		if (pc.hasSkillEffect(DECAY_POTION)) {
-			pc.sendPackets(new S_ServerMessage(698)); // \f1魔力によって何も飲むことができません。
-			return;
-		}
-
-		int time = 16;
-		if (pc.hasSkillEffect(CURSE_BLIND)) {
-			pc.killSkillEffectTimer(CURSE_BLIND);
-		}
-		else if (pc.hasSkillEffect(DARKNESS)) {
-			pc.killSkillEffectTimer(DARKNESS);
-		}
-
-		if (pc.hasSkillEffect(STATUS_FLOATING_EYE)) {
-			pc.sendPackets(new S_CurseBlind(2));
-		}
-		else {
-			pc.sendPackets(new S_CurseBlind(1));
-		}
-
-		pc.setSkillEffect(CURSE_BLIND, time * 1000);
-	}
-
 	private boolean usePolyScroll(L1PcInstance pc, int item_id, String s) {
 		int awakeSkillId = pc.getAwakeSkillId();
 		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前狀態中無法變身。
 			return false;
 		}
 
 		int time = 0;
-		if ((item_id == 40088) || (item_id == 40096)) { // 変身スクロール、象牙の塔の変身スクロール
+		if ((item_id == 40088) || (item_id == 40096)) { // 變形卷軸、象牙塔變形卷軸
 			time = 1800;
 		}
-		else if (item_id == 140088) { // 祝福された変身スクロール
+		else if (item_id == 49308) { // 福利變形藥水
+			time = Random.nextInt(2401, 4800);
+		}
+		else if (item_id == 140088) { // 受祝福的 變形卷軸
 			time = 2100;
 		}
 
@@ -3837,69 +3291,64 @@ public class C_ItemUSe extends ClientBasePacket {
 			if (s.equals("")) {
 				if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
 					return true;
-				}
-				else {
+				} else {
 					pc.removeSkillEffect(SHAPE_CHANGE);
 					return true;
 				}
-			}
-			else if ((poly.getMinLevel() <= pc.getLevel()) || pc.isGm()) {
+			} else if ((poly.getMinLevel() <= pc.getLevel()) || pc.isGm()) {
 				L1PolyMorph.doPoly(pc, poly.getPolyId(), time, L1PolyMorph.MORPH_BY_ITEMMAGIC);
 				return true;
 			}
-			else {
-				return false;
-			}
 		}
-		else {
-			return false;
-		}
+		return false;
 	}
 
 	private void usePolyScale(L1PcInstance pc, int itemId) {
+		int time = 900;
 		int awakeSkillId = pc.getAwakeSkillId();
 		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前狀態中無法變身。
 			return;
 		}
 
 		int polyId = 0;
-		if (itemId == 41154) { // 闇の鱗
+		if (itemId == 41154) { // 暗之鱗
 			polyId = 3101;
-		}
-		else if (itemId == 41155) { // 烈火の鱗
+		} else if (itemId == 41155) { // 火之鱗
 			polyId = 3126;
-		}
-		else if (itemId == 41156) { // 背徳者の鱗
+		} else if (itemId == 41156) { // 叛之鱗
 			polyId = 3888;
-		}
-		else if (itemId == 41157) { // 憎悪の鱗
+		} else if (itemId == 41157) { // 恨之鱗
 			polyId = 3784;
-		}
-		else if (itemId == 49220) { // オーク密使変身スクロール
+		} else if (itemId == 49220) { // 妖魔密使變形卷軸
 			polyId = 6984;
+			time = 1200;
 		}
-		L1PolyMorph.doPoly(pc, polyId, 600, L1PolyMorph.MORPH_BY_ITEMMAGIC);
+		L1PolyMorph.doPoly(pc, polyId, time, L1PolyMorph.MORPH_BY_ITEMMAGIC);
 	}
 
 	private void usePolyPotion(L1PcInstance pc, int itemId) {
+		int time = 1800;
 		int awakeSkillId = pc.getAwakeSkillId();
 		if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-			pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
+			pc.sendPackets(new S_ServerMessage(1384)); // 目前狀態中無法變身。
 			return;
 		}
 
 		int polyId = 0;
-		if (itemId == 41143) { // ラバーボーンヘッド変身ポーション
+		if (itemId == 41143) { // 海賊骷髏首領變身藥水
 			polyId = 6086;
+			time = 900;
 		}
-		else if (itemId == 41144) { // ラバーボーンアーチャー変身ポーション
+		else if (itemId == 41144) { // 海賊骷髏士兵變身藥水
 			polyId = 6087;
+			time = 900;
 		}
-		else if (itemId == 41145) { // ラバーボーンナイフ変身ポーション
+		else if (itemId == 41145) { // 海賊骷髏刀手變身藥水
 			polyId = 6088;
+			time = 900;
 		}
-		else if ((itemId == 49149) && (pc.get_sex() == 0) && pc.isCrown()) { // シャルナの変身スクロール（レベル30）
+		else if ((itemId == 49149) && (pc.get_sex() == 0) && pc.isCrown()) { // 夏納的變身卷軸(等級30)
 			polyId = 6822;
 		}
 		else if ((itemId == 49149) && (pc.get_sex() == 1) && pc.isCrown()) {
@@ -3941,7 +3390,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		else if ((itemId == 49149) && (pc.get_sex() == 1) && pc.isIllusionist()) {
 			polyId = 7142;
 		}
-		else if ((itemId == 49150) && (pc.get_sex() == 0) && pc.isCrown()) { // シャルナの変身スクロール（レベル40）
+		else if ((itemId == 49150) && (pc.get_sex() == 0) && pc.isCrown()) { // 夏納的變身卷軸(等級40)
 			polyId = 6832;
 		}
 		else if ((itemId == 49150) && (pc.get_sex() == 1) && pc.isCrown()) {
@@ -3983,7 +3432,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		else if ((itemId == 49150) && (pc.get_sex() == 1) && pc.isIllusionist()) {
 			polyId = 7146;
 		}
-		else if ((itemId == 49151) && (pc.get_sex() == 0) && pc.isCrown()) { // シャルナの変身スクロール（レベル52）
+		else if ((itemId == 49151) && (pc.get_sex() == 0) && pc.isCrown()) { // 夏納的變身卷軸(等級52)
 			polyId = 6842;
 		}
 		else if ((itemId == 49151) && (pc.get_sex() == 1) && pc.isCrown()) {
@@ -4025,7 +3474,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		else if ((itemId == 49151) && (pc.get_sex() == 1) && pc.isIllusionist()) {
 			polyId = 7150;
 		}
-		else if ((itemId == 49152) && (pc.get_sex() == 0) && pc.isCrown()) { // シャルナの変身スクロール（レベル55）
+		else if ((itemId == 49152) && (pc.get_sex() == 0) && pc.isCrown()) { // 夏納的變身卷軸(等級55)
 			polyId = 6852;
 		}
 		else if ((itemId == 49152) && (pc.get_sex() == 1) && pc.isCrown()) {
@@ -4067,7 +3516,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		else if ((itemId == 49152) && (pc.get_sex() == 1) && pc.isIllusionist()) {
 			polyId = 7154;
 		}
-		else if ((itemId == 49153) && (pc.get_sex() == 0) && pc.isCrown()) { // シャルナの変身スクロール（レベル60）
+		else if ((itemId == 49153) && (pc.get_sex() == 0) && pc.isCrown()) { // 夏納的變身卷軸(等級60)
 			polyId = 6862;
 		}
 		else if ((itemId == 49153) && (pc.get_sex() == 1) && pc.isCrown()) {
@@ -4109,7 +3558,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		else if ((itemId == 49153) && (pc.get_sex() == 1) && pc.isIllusionist()) {
 			polyId = 7158;
 		}
-		else if ((itemId == 49154) && (pc.get_sex() == 0) && pc.isCrown()) { // シャルナの変身スクロール（レベル65）
+		else if ((itemId == 49154) && (pc.get_sex() == 0) && pc.isCrown()) { // 夏納的變身卷軸(等級65)
 			polyId = 6872;
 		}
 		else if ((itemId == 49154) && (pc.get_sex() == 1) && pc.isCrown()) {
@@ -4151,7 +3600,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		else if ((itemId == 49154) && (pc.get_sex() == 1) && pc.isIllusionist()) {
 			polyId = 7162;
 		}
-		else if ((itemId == 49155) && (pc.get_sex() == 0) && pc.isCrown()) { // シャルナの変身スクロール（レベル70）
+		else if ((itemId == 49155) && (pc.get_sex() == 0) && pc.isCrown()) { // 夏納的變身卷軸(等級70)
 			polyId = 6882;
 		}
 		else if ((itemId == 49155) && (pc.get_sex() == 1) && pc.isCrown()) {
@@ -4193,7 +3642,11 @@ public class C_ItemUSe extends ClientBasePacket {
 		else if ((itemId == 49155) && (pc.get_sex() == 1) && pc.isIllusionist()) {
 			polyId = 7166;
 		}
-		L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_ITEMMAGIC);
+		else if ((itemId == 49139)) { // 起司蛋糕
+			polyId = 6137; // 52級死亡騎士
+			time = 900;
+		}
+		L1PolyMorph.doPoly(pc, polyId, time, L1PolyMorph.MORPH_BY_ITEMMAGIC);
 	}
 
 	private void UseArmor(L1PcInstance activeChar, L1ItemInstance armor) {
@@ -4305,37 +3758,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			activeChar.sendPackets(new S_ServerMessage(149, weapon.getLogName())); // \f1%0が手にくっつきました。
 		}
 		pcInventory.setEquipped(weapon, true, false, false);
-	}
-
-	private int RandomELevel(L1ItemInstance item, int itemId) {
-		if ((itemId == L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON) || (itemId == 140129)
-				|| (itemId == 140130)) {
-			if (item.getEnchantLevel() <= 2) {
-				int j = Random.nextInt(100) + 1;
-				if (j < 32) {
-					return 1;
-				}
-				else if ((j >= 33) && (j <= 76)) {
-					return 2;
-				}
-				else if ((j >= 77) && (j <= 100)) {
-					return 3;
-				}
-			}
-			else if ((item.getEnchantLevel() >= 3) && (item.getEnchantLevel() <= 5)) {
-				int j = Random.nextInt(100) + 1;
-				if (j < 50) {
-					return 2;
-				}
-				else {
-					return 1;
-				}
-			}
-			{
-				return 1;
-			}
-		}
-		return 1;
 	}
 
 	private void useSpellBook(L1PcInstance pc, L1ItemInstance item, int itemId) {

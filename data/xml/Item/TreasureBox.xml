@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TreasureBoxList>
 	<!--Type = SPECIFICの場合アイテムリストのすべてが手に入る。Chanceは指定しなくてよい。-->
 	<!--Type = RANDOMの場合アイテムリストの中からどれか一つが手に入る。Chanceを指定する必要がある。-->
@@ -1175,5 +1175,50 @@
 		<Item ItemId="47030" Count="1" Chance="1" />    <!--火龍之渴望的眼淚 * 1-->
 		<Item ItemId="47031" Count="1" Chance="1" />    <!--水龍之渴望的眼淚 * 1-->
 		<Item ItemId="47032" Count="1" Chance="1" />    <!--風龍之渴望的眼淚 * 1-->
+	</TreasureBox>
+	<!--發紅光的魚-->
+	<TreasureBox Type="RANDOM" ItemId="41301">
+		<Item ItemId="40019" Count="1" Chance="50" />	<!--濃縮體力恢復劑-->
+		<Item ItemId="40045" Count="1" Chance="30" />	<!--紅寶石-->
+		<Item ItemId="40049" Count="1" Chance="20" />	<!--品質紅寶石-->
+	</TreasureBox>
+	<!--發綠光的魚-->
+	<TreasureBox Type="RANDOM" ItemId="41302">
+		<Item ItemId="40018" Count="1" Chance="50" />	<!--強化 自我加速藥水-->
+		<Item ItemId="40047" Count="1" Chance="30" />	<!--綠寶石-->
+		<Item ItemId="40055" Count="1" Chance="20" />	<!--高品質綠寶石-->
+	</TreasureBox>
+	<!--發藍光的魚-->
+	<TreasureBox Type="RANDOM" ItemId="41303">
+		<Item ItemId="40015" Count="1" Chance="50" />	<!--藍色藥水-->
+		<Item ItemId="40046" Count="1" Chance="30" />	<!--藍寶石-->
+		<Item ItemId="40054" Count="1" Chance="20" />	<!--高品質藍寶石-->
+	</TreasureBox>
+	<!--發白光的魚-->
+	<TreasureBox Type="RANDOM" ItemId="41304">
+		<Item ItemId="40021" Count="1" Chance="50" />	<!--濃縮終極體力恢復劑-->
+		<Item ItemId="40044" Count="1" Chance="40" />	<!--鑽石-->
+		<Item ItemId="40052" Count="1" Chance="10" />	<!--高品質鑽石-->
+	</TreasureBox>
+	<!--精緻的附魔寶箱-->
+	<TreasureBox Type="RANDOM" ItemId="47047">
+		<Item ItemId="49144" Count="3" Chance="12" />	<!--風之武器強化卷軸-->
+		<Item ItemId="49145" Count="3" Chance="12" />	<!--地之武器強化卷軸-->
+		<Item ItemId="49146" Count="3" Chance="12" />	<!--水之武器強化卷軸-->
+		<Item ItemId="49147" Count="3" Chance="12" />	<!--火之武器強化卷軸-->
+		<Item ItemId="41247" Count="1" Chance="12" />	<!--魔法娃娃的袋子-->
+		<Item ItemId="47011" Count="1" Chance="10" />	<!--淘氣幼龍蛋-->
+		<Item ItemId="47012" Count="1" Chance="10" />	<!--頑皮幼龍蛋-->
+		<Item ItemId="40219" Count="1" Chance="5" />	<!--魔法書(流星雨)-->
+		<Item ItemId="40222" Count="1" Chance="5" />	<!--魔法書(究極光裂術)-->
+		<Item ItemId="41147" Count="1" Chance="5" />	<!--技術書(堅固防護)-->
+		<Item ItemId="20281" Count="1" Chance="5" />	<!--變形控制戒指-->
+	</TreasureBox>
+	<!--魔法蛋糕盒-->
+	<TreasureBox Type="RANDOM" ItemId="49141">
+		<Item ItemId="49137" Count="10" Chance="25" />	<!--鮮奶油蛋糕-->
+		<Item ItemId="49138" Count="10" Chance="25" />	<!--巧克力蛋糕-->
+		<Item ItemId="49139" Count="10" Chance="25" />	<!--起司蛋糕-->
+		<Item ItemId="49140" Count="10" Chance="25" />	<!--綠茶蛋糕卷-->
 	</TreasureBox>
 </TreasureBoxList>
