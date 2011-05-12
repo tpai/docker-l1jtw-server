@@ -17,10 +17,11 @@ package l1j.server.server.clientpackets;
 import l1j.server.server.Account;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.L1Clan;
+import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
-import l1j.server.server.model.Instance.L1DwarfInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.identity.L1SystemMessageId;
 import l1j.server.server.serverpackets.S_RetrieveElfList;
 import l1j.server.server.serverpackets.S_RetrieveList;
 import l1j.server.server.serverpackets.S_RetrievePledgeList;
@@ -46,26 +47,17 @@ public class C_WarePassword extends ClientBasePacket {
 		L1PcInstance pc = client.getActiveChar();
 		Account account = client.getAccount();
 
-		// 取得對話的npc
-		L1NpcInstance targetNpc = null;
-		int targetObj = pc.getTempID();
-		if (targetObj != 0) {
-			targetNpc = (L1NpcInstance) L1World.getInstance().findObject(
-					targetObj);
-		}
-
 		// 變更密碼
 		if (type == 0) {
 			// 兩次皆直接跳過密碼輸入
 			if ((pass1 < 0) && (pass2 < 0)) {
-				pc.sendPackets(new S_ServerMessage(79));
+				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$79));
 			}
 
 			// 進行新密碼的設定
 			else if ((pass1 < 0) && (account.getWarePassword() == 0)) {
 				// 進行密碼變更
 				account.changeWarePassword(pass2);
-
 				pc.sendPackets(new S_SystemMessage("倉庫密碼設定完成，請牢記您的新密碼。"));
 			}
 
@@ -74,7 +66,8 @@ public class C_WarePassword extends ClientBasePacket {
 				// 進行密碼變更
 				if (pass1 == pass2) {
 					// [342::你不能使用舊的密碼當作新的密碼。請再次輸入密碼。]
-					pc.sendPackets(new S_ServerMessage(342));
+					pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$342));
+					return;
 				} else if (pass2 > 0) {
 					account.changeWarePassword(pass2);
 					pc.sendPackets(new S_SystemMessage("倉庫密碼變更完成，請牢記您的新密碼。"));
@@ -84,7 +77,7 @@ public class C_WarePassword extends ClientBasePacket {
 				}
 			} else {
 				// 送出密碼錯誤的提示訊息[835:密碼錯誤。]
-				pc.sendPackets(new S_ServerMessage(835));
+				pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$835));
 			}
 		}
 
@@ -92,52 +85,54 @@ public class C_WarePassword extends ClientBasePacket {
 		else {
 			if (account.getWarePassword() == pass1) {
 				int objid = pass2;
-
-				if (type == 1) {
-					if (targetNpc != null) {
-						if (targetNpc instanceof L1DwarfInstance) {
-							L1DwarfInstance npc = (L1DwarfInstance) targetNpc;
-							// 判斷npc所屬倉庫類別
-							switch (npc.getNpcId()) {
-
-							case 60028:// 倉庫-艾爾(妖森)
-								// 密碼吻合 輸出倉庫視窗
-								pc.sendPackets(new S_RetrieveElfList(objid, pc));
-								break;
-
-							default:
-								// 密碼吻合 輸出倉庫視窗
-								pc.sendPackets(new S_RetrieveList(objid, pc));
-								break;
+				L1Object obj = L1World.getInstance().findObject(objid);
+				if (pc.getLevel() >= 5) {// 判斷玩家等級
+					if (type == 1) {
+						if (obj != null) {
+							if (obj instanceof L1NpcInstance) {
+								L1NpcInstance npc = (L1NpcInstance) obj;
+								// 判斷npc所屬倉庫類別
+								switch (npc.getNpcId()) {
+								case 60028:// 倉庫-艾爾(妖森)
+									// 密碼吻合 輸出倉庫視窗
+									if (pc.isElf())// 判斷是否為妖精
+										pc.sendPackets(new S_RetrieveElfList(
+												objid, pc));
+									break;
+								default:
+									// 密碼吻合 輸出倉庫視窗
+									pc.sendPackets(new S_RetrieveList(objid, pc));
+									break;
+								}
 							}
 						}
 					} else if (type == 2) {
-						if (pc.getLevel() > 4) {
-							if (pc.getClanid() == 0) {
-								// \f1血盟倉庫を使用するには血盟に加入していなくてはなりません。
-								pc.sendPackets(new S_ServerMessage(208));
-								return;
-							}
-							int rank = pc.getClanRank();
-							if (rank == L1Clan.CLAN_RANK_PROBATION) {
-								// タイトルのない血盟員もしくは、見習い血盟員の場合は、血盟倉庫を利用することはできません。
-								pc.sendPackets(new S_ServerMessage(728));
-								return;
-							}
-							if ((rank != L1Clan.CLAN_RANK_PRINCE)
-									&& pc.getTitle().equalsIgnoreCase("")) {
-								// タイトルのない血盟員もしくは、見習い血盟員の場合は、血盟倉庫を利用することはできません。
-								pc.sendPackets(new S_ServerMessage(728));
-								return;
-							}
-							pc.sendPackets(new S_RetrievePledgeList(objid, pc));
+						if (pc.getClanid() == 0) {
+							// \f1若想使用血盟倉庫，必須加入血盟。
+							pc.sendPackets(new S_ServerMessage(L1SystemMessageId.$208));
+							return;
 						}
-					}
+						int rank = pc.getClanRank();
+						if (rank == L1Clan.CLAN_RANK_PROBATION) {
+							// 只有收到稱謂的人才能使用血盟倉庫。
+							pc.sendPackets(new S_ServerMessage(
+									L1SystemMessageId.$728));
+							return;
+						}
+						if ((rank != L1Clan.CLAN_RANK_PRINCE)
+								&& pc.getTitle().equalsIgnoreCase("")) {
+							// 只有收到稱謂的人才能使用血盟倉庫。
+							pc.sendPackets(new S_ServerMessage(
+									L1SystemMessageId.$728));
+							return;
+						}
+						pc.sendPackets(new S_RetrievePledgeList(objid, pc));
 
-				} else {
-					// 送出密碼錯誤的提示訊息
-					pc.sendPackets(new S_ServerMessage(835));
+					}
 				}
+			} else {
+				// 送出密碼錯誤的提示訊息
+				pc.sendPackets(new S_ServerMessage(835));
 			}
 		}
 	}
