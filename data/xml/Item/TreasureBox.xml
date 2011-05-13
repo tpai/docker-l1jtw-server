@@ -1221,4 +1221,21 @@
 		<Item ItemId="49139" Count="10" Chance="25" />	<!--起司蛋糕-->
 		<Item ItemId="49140" Count="10" Chance="25" />	<!--綠茶蛋糕卷-->
 	</TreasureBox>
+	<!--河豚-->
+	<TreasureBox Type="RANDOM" ItemId="46001">
+		<Item ItemId="21051" Count="1" Chance="3" />	<!--泡水的頭具-->
+		<Item ItemId="21052" Count="1" Chance="3" />	<!--泡水的斗篷-->
+		<Item ItemId="21053" Count="1" Chance="3" />	<!--泡水的盔甲-->
+		<Item ItemId="21054" Count="1" Chance="3" />	<!--泡水的手套-->
+		<Item ItemId="21055" Count="1" Chance="3" />	<!--泡水的靴子-->
+		<Item ItemId="21056" Count="1" Chance="3" />	<!--泡水的盾牌-->
+		<Item ItemId="21140" Count="1" Chance="3" />	<!--泡水的帽子-->
+		<Item ItemId="21141" Count="1" Chance="3" />	<!--泡水的頭巾-->
+		<Item ItemId="41296" Count="1" Chance="23" />	<!--鯛魚-->
+		<Item ItemId="41297" Count="1" Chance="22" />	<!--鮭魚-->
+		<Item ItemId="41298" Count="1" Chance="22" />	<!--鱈魚-->
+		<Item ItemId="41305" Count="1" Chance="3" />	<!--破碎的耳環-->
+		<Item ItemId="41306" Count="1" Chance="3" />	<!--破碎的戒指-->
+		<Item ItemId="41307" Count="1" Chance="3" />	<!--破碎的項練-->
+	</TreasureBox>
 </TreasureBoxList>

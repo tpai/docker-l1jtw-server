@@ -1,22 +1,24 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
 Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-04-06 21:09:00
+Date: 2011-05-13 09:27:10
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for npcaction
 -- ----------------------------
+DROP TABLE IF EXISTS `npcaction`;
 CREATE TABLE `npcaction` (
   `npcid` int(10) unsigned NOT NULL DEFAULT '0',
   `normal_action` varchar(45) NOT NULL DEFAULT '',
@@ -27,7 +29,7 @@ CREATE TABLE `npcaction` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records of npcaction
 -- ----------------------------
 INSERT INTO `npcaction` VALUES ('782', 'fivelviin3', 'fivelviin3', '', '');
 INSERT INTO `npcaction` VALUES ('1621', 'fivelviin2', 'fivelviin2', '', '');
@@ -961,7 +963,7 @@ INSERT INTO `npcaction` VALUES ('80079', 'keplisha1', 'keplisha4', 'keplisha2', 
 INSERT INTO `npcaction` VALUES ('80080', 'f_elder', 'f_elder', '', '');
 INSERT INTO `npcaction` VALUES ('80081', 'f_grandma1', 'f_grandma1', '', '');
 INSERT INTO `npcaction` VALUES ('80082', 'fk_in_1', 'fk_in_1', '', '');
-INSERT INTO `npcaction` VALUES ('80083', 'fk_out_1', 'fk_out_1', '', '');
+INSERT INTO `npcaction` VALUES ('80083', 'fk_out_1', 'fk_out_1', 'fk_out_1', '');
 INSERT INTO `npcaction` VALUES ('80084', 'rparum', 'rparum', '', '');
 INSERT INTO `npcaction` VALUES ('80085', 'duo', 'duo', '', '');
 INSERT INTO `npcaction` VALUES ('80086', 'kusan', 'kusan', '', '');

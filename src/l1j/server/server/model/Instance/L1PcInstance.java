@@ -4606,27 +4606,6 @@ public class L1PcInstance extends L1Character {
 		return _partyType;
 	}
 
-	// 釣魚點
-	private int _fishX = 0;
-
-	public int getFishX() {
-		return _fishX;
-	}
-
-	public void setFishX(int i) {
-		_fishX = i;
-	}
-
-	private int _fishY = 0;
-
-	public int getFishY() {
-		return _fishY;
-	}
-
-	public void setFishY(int i) {
-		_fishY = i;
-	}
-
 	/****************************** 戰鬥特化系統 ******************************/
 	// 改變戰鬥特化狀態
 	public void changeFightType(int oldType, int newType) {

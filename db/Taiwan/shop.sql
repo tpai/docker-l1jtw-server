@@ -1,22 +1,24 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
 Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-04-05 22:15:00
+Date: 2011-05-13 10:18:33
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for shop
 -- ----------------------------
+DROP TABLE IF EXISTS `shop`;
 CREATE TABLE `shop` (
   `npc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `item_id` int(10) unsigned NOT NULL DEFAULT '0',
@@ -28,7 +30,7 @@ CREATE TABLE `shop` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records of shop
 -- ----------------------------
 INSERT INTO `shop` VALUES ('50118', '40331', '0', '-1', '0', '10000');
 INSERT INTO `shop` VALUES ('50118', '40332', '1', '-1', '0', '6000');
@@ -1615,9 +1617,9 @@ INSERT INTO `shop` VALUES ('80075', '40740', '4', '4', '0', '-1');
 INSERT INTO `shop` VALUES ('80075', '40743', '0', '2', '10', '-1');
 INSERT INTO `shop` VALUES ('80075', '40744', '1', '2', '5', '-1');
 INSERT INTO `shop` VALUES ('80075', '41036', '24', '345', '0', '-1');
-INSERT INTO `shop` VALUES ('80080', '41295', '0', '57', '1', '-1');
-INSERT INTO `shop` VALUES ('80080', '41295', '1', '517', '10', '-1');
-INSERT INTO `shop` VALUES ('80080', '41295', '2', '4600', '100', '-1');
+INSERT INTO `shop` VALUES ('80080', '41293', '0', '10000', '1', '-1');
+INSERT INTO `shop` VALUES ('80080', '47103', '1', '23000', '400', '-1');
+INSERT INTO `shop` VALUES ('80080', '41295', '2', '-1', '1', '28');
 INSERT INTO `shop` VALUES ('80090', '40059', '0', '4', '0', '-1');
 INSERT INTO `shop` VALUES ('80090', '40060', '4', '9', '0', '-1');
 INSERT INTO `shop` VALUES ('80090', '40061', '3', '7', '0', '-1');

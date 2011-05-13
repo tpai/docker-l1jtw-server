@@ -136,6 +136,10 @@ public class L1PcInventory extends L1Inventory {
 	}
 
 	public void sendOverMessage(int message_id) {
+		// 釣魚中負重訊息變更
+		if (_owner.isFishing() && message_id == 82) {
+			message_id = 1518; // 負重太高的狀態下無法進行釣魚。
+		}
 		_owner.sendPackets(new S_ServerMessage(message_id));
 	}
 

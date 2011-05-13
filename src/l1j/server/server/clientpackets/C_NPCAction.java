@@ -2692,57 +2692,18 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 		}
-		// 釣りっ子(IN)
+		// 釣魚小童 波爾 (進入釣魚池)
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80082) {
-			// 「長くて重い釣り竿」
-			if (s.equalsIgnoreCase("L")) {
-				if (pc.getInventory().checkItem(L1ItemId.ADENA, 1000)) {
-					materials = new int[]
-					{ L1ItemId.ADENA };
-					counts = new int[]
-					{ 1000 };
-					createitem = new int[]
-					{ 41293 };
-					createcount = new int[]
-					{ 1 };
+			if (s.equalsIgnoreCase("a")) {
+				if (pc.getLevel() < 15) {
+					htmlid = "fk_in_lv"; // 魔法釣魚池只對15等級以上的冒險家開放。
+				}
+				else if (pc.getInventory().consumeItem(L1ItemId.ADENA, 1000)) {
 					L1PolyMorph.undoPoly(pc);
-					L1Teleport.teleport(pc, 32815, 32809, (short) 5124, 6, true);
+					L1Teleport.teleport(pc, 32742, 32799, (short) 5300, 4, true);
 				}
 				else {
 					htmlid = "fk_in_0";
-				}
-				// 「短くて軽い釣り竿」
-			}
-			else if (s.equalsIgnoreCase("S")) {
-				if (pc.getInventory().checkItem(L1ItemId.ADENA, 1000)) {
-					materials = new int[]
-					{ L1ItemId.ADENA };
-					counts = new int[]
-					{ 1000 };
-					createitem = new int[]
-					{ 41294 };
-					createcount = new int[]
-					{ 1 };
-					L1PolyMorph.undoPoly(pc);
-					L1Teleport.teleport(pc, 32815, 32809, (short) 5124, 6, true);
-				}
-				else {
-					htmlid = "fk_in_0";
-				}
-			}
-		}
-		// 釣りっ子(OUT)
-		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80083) {
-			// 「釣りを止めて外に出る」
-			if (s.equalsIgnoreCase("O")) {
-				if (!pc.getInventory().checkItem(41293, 1) && !pc.getInventory().checkItem(41294, 1)) {
-					htmlid = "fk_out_0";
-				}
-				else if (pc.getInventory().consumeItem(41293, 1)) {
-					L1Teleport.teleport(pc, 32613, 32781, (short) 4, 4, true);
-				}
-				else if (pc.getInventory().consumeItem(41294, 1)) {
-					L1Teleport.teleport(pc, 32613, 32781, (short) 4, 4, true);
 				}
 			}
 		}

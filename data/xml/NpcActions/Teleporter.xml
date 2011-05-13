@@ -1557,7 +1557,7 @@
 	</Action>
 	<!-- 釣魚小童波爾 / 離開釣魚池 -->
 	<Action Name="teleport fishing-out" NpcId="80083">
-		<Teleport X="32608" Y="32772" Map="4" Heading="5"/>
+		<Teleport X="32608" Y="32772" Map="4" Heading="4"/>
 	</Action>
 <!-- 村莊金幣顯示 -->
 	<ShowHtml Name="teleportURL" HtmlId="teleisland2" NpcId="50015">
@@ -1905,7 +1905,7 @@
 		<Data Value="0" />
 	</ShowHtml>
 	<!-- 釣魚小童波爾 離開釣魚池-->
-	<ShowHtml Name="teleportURLA" HtmlId="fk_out_0" NpcId="80083">
+	<ShowHtml Name="teleportURL" HtmlId="fk_out_0" NpcId="80083">
 	</ShowHtml>
 	<!-- 燃柳村的杜發 往隱藏港口-->
 	<ShowHtml Name="teleportURL" HtmlId="duvall3" NpcId="50064">

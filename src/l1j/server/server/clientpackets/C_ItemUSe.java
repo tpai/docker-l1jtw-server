@@ -394,6 +394,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (l1iteminstance.getItem().getType() == 17) { // 魔法娃娃類
 					MagicDoll.useMagicDoll(pc, itemId, itemObjid);
 				}
+				else if (itemId == 47103) { // 新鮮的餌
+					pc.sendPackets(new S_ServerMessage(452, l1iteminstance.getLogName()));
+				}
 				else if (itemId == 40003) { // ランタン オイル
 					for (L1ItemInstance lightItem : pc.getInventory().getItems()) {
 						if (lightItem.getItem().getItemId() == 40002) {
@@ -995,26 +998,21 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 					}
 				}
-				else if ((itemId >= 40926) && (40929 >= itemId)) {
-					// ミステリアスポーション（１～４段階）
+				else if ((itemId >= 40926) && (40929 >= itemId)) { // 一～四階神秘藥水
 					int earing2Id = l1iteminstance1.getItem().getItemId();
 					int potion1 = 0;
 					int potion2 = 0;
 					if ((earing2Id >= 41173) && (41184 >= earing2Id)) {
-						// イアリング類
 						if (itemId == 40926) {
 							potion1 = 247;
 							potion2 = 249;
-						}
-						else if (itemId == 40927) {
+						} else if (itemId == 40927) {
 							potion1 = 249;
 							potion2 = 251;
-						}
-						else if (itemId == 40928) {
+						} else if (itemId == 40928) {
 							potion1 = 251;
 							potion2 = 253;
-						}
-						else if (itemId == 40929) {
+						} else if (itemId == 40929) {
 							potion1 = 253;
 							potion2 = 255;
 						}
@@ -1023,84 +1021,45 @@ public class C_ItemUSe extends ClientBasePacket {
 								createNewItem(pc, (earing2Id - 12), 1);
 								pc.getInventory().removeItem(l1iteminstance1, 1);
 								pc.getInventory().removeItem(l1iteminstance, 1);
-							}
-							else {
+							} else {
 								pc.sendPackets(new S_ServerMessage(160, l1iteminstance1.getName()));
-								// \f1%0が%2強烈に%1光りましたが、幸い無事にすみました。
+								// \f1%0%s %2 產生激烈的 %1 光芒，但是沒有任何事情發生。
 								pc.getInventory().removeItem(l1iteminstance, 1);
 							}
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
-						else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						}
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
-				else if ((itemId >= 40931) && (40942 >= itemId)) {
-					// 加工された宝石類（サファイア・ルビー・エメラルド）
+				else if ((itemId >= 40931) && (40942 >= itemId)) { // 精工的藍、綠、紅寶石
 					int earing3Id = l1iteminstance1.getItem().getItemId();
-					int earinglevel = 0;
 					if ((earing3Id >= 41161) && (41172 >= earing3Id)) {
 						// ミステリアスイアリング類
 						if (earing3Id == (itemId + 230)) {
 							if ((Random.nextInt(99) + 1) < Config.CREATE_CHANCE_PROCESSING) {
-								if (earing3Id == 41161) {
-									earinglevel = 21014;
+								int[] earingId = { 41161, 41162, 41163, 41164, 41165, 41166, 41167, 41168, 41169, 41170, 41171, 41172 };
+								int[] earinglevel = { 21014, 21006, 21007, 21015, 21009, 21008, 21016, 21012, 21010, 21017, 21013, 21011 };
+								for (int i = 0; i < earingId.length; i++) {
+									if (earing3Id == earingId[i]) {
+										createNewItem(pc, earinglevel[i], 1);
+										break;
+									}
 								}
-								else if (earing3Id == 41162) {
-									earinglevel = 21006;
-								}
-								else if (earing3Id == 41163) {
-									earinglevel = 21007;
-								}
-								else if (earing3Id == 41164) {
-									earinglevel = 21015;
-								}
-								else if (earing3Id == 41165) {
-									earinglevel = 21009;
-								}
-								else if (earing3Id == 41166) {
-									earinglevel = 21008;
-								}
-								else if (earing3Id == 41167) {
-									earinglevel = 21016;
-								}
-								else if (earing3Id == 41168) {
-									earinglevel = 21012;
-								}
-								else if (earing3Id == 41169) {
-									earinglevel = 21010;
-								}
-								else if (earing3Id == 41170) {
-									earinglevel = 21017;
-								}
-								else if (earing3Id == 41171) {
-									earinglevel = 21013;
-								}
-								else if (earing3Id == 41172) {
-									earinglevel = 21011;
-								}
-								createNewItem(pc, earinglevel, 1);
-							}
-							else {
-								pc.sendPackets(new S_ServerMessage(158, l1iteminstance1.getName()));
-								// \f1%0が蒸発してなくなりました。
+							} else {
+								pc.sendPackets(new S_ServerMessage(158, l1iteminstance1.getName())); // \f1%0%s 消失。
 							}
 							pc.getInventory().removeItem(l1iteminstance1, 1);
 							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
-						else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						}
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
-				else if ((itemId >= 40943) && (40958 >= itemId)) {
-					// 加工されたダイアモンド（ウォータ・アース・ファイアー・ウインド）
+				else if ((itemId >= 40943) && (40958 >= itemId)) { // 精工的土、水、火、風之鑽
 					int ringId = l1iteminstance1.getItem().getItemId();
 					int ringlevel = 0;
 					int gmas = 0;
@@ -1110,85 +1069,32 @@ public class C_ItemUSe extends ClientBasePacket {
 						if ((itemId == 40943) || (itemId == 40947) || (itemId == 40951) || (itemId == 40955)) {
 							gmas = 443;
 							gmam = 447;
-						}
-						else if ((itemId == 40944) || (itemId == 40948) || (itemId == 40952) || (itemId == 40956)) {
+						} else if ((itemId == 40944) || (itemId == 40948) || (itemId == 40952) || (itemId == 40956)) {
 							gmas = 442;
 							gmam = 446;
-						}
-						else if ((itemId == 40945) || (itemId == 40949) || (itemId == 40953) || (itemId == 40957)) {
+						} else if ((itemId == 40945) || (itemId == 40949) || (itemId == 40953) || (itemId == 40957)) {
 							gmas = 441;
 							gmam = 445;
-						}
-						else if ((itemId == 40946) || (itemId == 40950) || (itemId == 40954) || (itemId == 40958)) {
+						} else if ((itemId == 40946) || (itemId == 40950) || (itemId == 40954) || (itemId == 40958)) {
 							gmas = 444;
 							gmam = 448;
 						}
 						if (ringId == (itemId + 242)) {
 							if ((Random.nextInt(99) + 1) < Config.CREATE_CHANCE_PROCESSING_DIAMOND) {
-								if (ringId == 41185) {
-									ringlevel = 20435;
-								}
-								else if (ringId == 41186) {
-									ringlevel = 20436;
-								}
-								else if (ringId == 41187) {
-									ringlevel = 20437;
-								}
-								else if (ringId == 41188) {
-									ringlevel = 20438;
-								}
-								else if (ringId == 41189) {
-									ringlevel = 20439;
-								}
-								else if (ringId == 41190) {
-									ringlevel = 20440;
-								}
-								else if (ringId == 41191) {
-									ringlevel = 20441;
-								}
-								else if (ringId == 41192) {
-									ringlevel = 20442;
-								}
-								else if (ringId == 41193) {
-									ringlevel = 20443;
-								}
-								else if (ringId == 41194) {
-									ringlevel = 20444;
-								}
-								else if (ringId == 41195) {
-									ringlevel = 20445;
-								}
-								else if (ringId == 41196) {
-									ringlevel = 20446;
-								}
-								else if (ringId == 41197) {
-									ringlevel = 20447;
-								}
-								else if (ringId == 41198) {
-									ringlevel = 20448;
-								}
-								else if (ringId == 41199) {
-									ringlevel = 20449;
-								}
-								else if (ringId == 41120) {
-									ringlevel = 20450;
-								}
+								ringlevel = 20435 + (ringId - 41185);
 								pc.sendPackets(new S_ServerMessage(gmas, l1iteminstance1.getName()));
 								createNewItem(pc, ringlevel, 1);
 								pc.getInventory().removeItem(l1iteminstance1, 1);
 								pc.getInventory().removeItem(l1iteminstance, 1);
-							}
-							else {
+							} else {
 								pc.sendPackets(new S_ServerMessage(gmam, l1iteminstance.getName()));
 								pc.getInventory().removeItem(l1iteminstance, 1);
 							}
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
-						else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
-						}
-					}
-					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 41029) { // 召喚球の欠片
@@ -2542,7 +2448,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					// pc.sendPackets(new S_CantMove()); // テレポート後に移動不可能になる場合がある
 					L1Teleport.teleport(pc, spellsc_x, spellsc_y, pc.getMapId(), pc.getHeading(), true, L1Teleport.CHANGE_POSITION);
 				}
-				else if ((itemId == 41293) || (itemId == 41294)) { // 釣り竿
+				else if ((itemId == 41293)) { // 魔法釣竿
 					startFishing(pc, itemId, fishX, fishY);
 				}
 				else if (itemId == 41245) { // 溶解剤
@@ -5514,7 +5420,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			return;
 		}
 
-		int rodLength = 5;
+		int rodLength = 6;
 
 		if (pc.getMap().isFishingZone(fishX, fishY)) {
 			if (pc.getMap().isFishingZone(fishX + 1, fishY) && pc.getMap().isFishingZone(fishX - 1, fishY)
@@ -5526,8 +5432,6 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(1138));
 				}
 				else if (pc.getInventory().consumeItem(47103, 1)) { // 新鮮的餌
-					pc.setFishX(fishX);
-					pc.setFishY(fishY);
 					pc.sendPackets(new S_Fishing(pc.getId(), ActionCodes.ACTION_Fishing, fishX, fishY));
 					pc.broadcastPacket(new S_Fishing(pc.getId(), ActionCodes.ACTION_Fishing, fishX, fishY));
 					pc.setFishing(true);

@@ -1,22 +1,24 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
 Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-04-23 17:40:00
+Date: 2011-05-13 09:31:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for spawnlist_npc
 -- ----------------------------
+DROP TABLE IF EXISTS `spawnlist_npc`;
 CREATE TABLE `spawnlist_npc` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `location` varchar(19) NOT NULL DEFAULT '',
@@ -31,10 +33,10 @@ CREATE TABLE `spawnlist_npc` (
   `mapid` int(10) unsigned NOT NULL DEFAULT '0',
   `movement_distance` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=88018 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=89909 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records of spawnlist_npc
 -- ----------------------------
 INSERT INTO `spawnlist_npc` VALUES ('1', '古代短劍商人', '1', '81003', '33063', '33390', '0', '0', '2', '0', '4', '100');
 INSERT INTO `spawnlist_npc` VALUES ('2', '古代長劍商人', '1', '81004', '33063', '33391', '0', '0', '2', '0', '4', '100');
@@ -1468,17 +1470,17 @@ INSERT INTO `spawnlist_npc` VALUES ('89016', '普若亞', '1', '81298', '32870',
 INSERT INTO `spawnlist_npc` VALUES ('89017', '卡拉', '1', '81299', '32884', '32554', '0', '0', '4', '0', '300', '0');
 INSERT INTO `spawnlist_npc` VALUES ('89018', '提卡爾 庫庫爾坎宙斯之石頭高崙', '1', '95021', '32857', '32721', '0', '0', '4', '0', '783', '0');
 INSERT INTO `spawnlist_npc` VALUES ('89019', '提卡爾 庫庫爾坎祭壇守門人', '1', '95020', '33260', '32743', '0', '0', '6', '0', '783', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89020', '釣魚爺爺', '1', '80080', '32610', '32768', '0', '0', '1', '0', '4', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89021', '釣魚婆婆', '1', '80081', '32606', '32770', '0', '0', '3', '0', '4', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89022', '釣魚小童', '1', '80083', '32727', '32805', '0', '0', '0', '0', '5300', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89023', '釣魚小童', '1', '80083', '32730', '32875', '0', '0', '0', '0', '5300', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89024', '釣魚小童', '1', '80083', '32769', '32829', '0', '0', '0', '0', '5300', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89025', '釣魚小童', '1', '80083', '32789', '32789', '0', '0', '0', '0', '5300', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89026', '釣魚小童', '1', '80083', '32794', '32866', '0', '0', '0', '0', '5300', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89027', '釣魚爺爺', '1', '80080', '32812', '32786', '0', '0', '5', '0', '5124', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89028', '釣魚婆婆', '1', '80081', '32815', '32794', '0', '0', '6', '0', '5124', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89029', '釣魚小童', '1', '80082', '32608', '32769', '0', '0', '5', '0', '4', '0');
-INSERT INTO `spawnlist_npc` VALUES ('89030', '釣魚小童', '1', '80083', '32815', '32808', '0', '0', '6', '0', '5124', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89020', '釣魚爺爺', '1', '80080', '32610', '32768', '0', '0', '2', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89021', '釣魚婆婆', '1', '80081', '32606', '32770', '0', '0', '4', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89022', '釣魚小童', '1', '80083', '32727', '32805', '0', '0', '2', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89023', '釣魚小童', '1', '80083', '32730', '32875', '0', '0', '1', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89024', '釣魚小童', '1', '80083', '32769', '32829', '0', '0', '5', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89025', '釣魚小童', '1', '80083', '32789', '32789', '0', '0', '4', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89026', '釣魚小童', '1', '80083', '32794', '32866', '0', '0', '6', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89027', '釣魚爺爺', '0', '80080', '32812', '32786', '0', '0', '5', '0', '5124', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89028', '釣魚婆婆', '0', '80081', '32815', '32794', '0', '0', '6', '0', '5124', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89029', '釣魚小童', '1', '80082', '32608', '32769', '0', '0', '4', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89030', '釣魚小童', '0', '80083', '32815', '32808', '0', '0', '6', '0', '5124', '0');
 INSERT INTO `spawnlist_npc` VALUES ('89031', '韓特', '1', '70562', '33125', '32799', '0', '0', '5', '0', '4', '100');
 INSERT INTO `spawnlist_npc` VALUES ('89032', '守門人', '1', '70817', '33633', '32662', '0', '0', '4', '0', '4', '100');
 INSERT INTO `spawnlist_npc` VALUES ('89033', '考伯特', '1', '70633', '33669', '32694', '0', '0', '5', '0', '4', '100');

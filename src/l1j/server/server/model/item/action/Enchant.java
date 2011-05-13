@@ -263,6 +263,7 @@ public class Enchant {
 		}
 		int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
 		if (l1iteminstance1.getEnchantLevel() < safe_enchant) {
+			pc.getInventory().removeItem(l1iteminstance, 1);
 			SuccessEnchant(pc, l1iteminstance1, client, 1);
 		} else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
@@ -288,6 +289,7 @@ public class Enchant {
 		}
 		int safe_enchant = l1iteminstance1.getItem().get_safeenchant();
 		if (l1iteminstance1.getEnchantLevel() < safe_enchant) {
+			pc.getInventory().removeItem(l1iteminstance, 1);
 			SuccessEnchant(pc, l1iteminstance1, client, 1);
 		} else {
 			pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
