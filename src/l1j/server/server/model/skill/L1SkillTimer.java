@@ -392,7 +392,9 @@ class L1SkillStop {
 		else if ((skillId == ICE_LANCE // アイスランス
 				)
 				|| (skillId == FREEZING_BLIZZARD // フリージングブリザード
-				) || (skillId == FREEZING_BREATH)) { // フリージングブレス
+				) || (skillId == FREEZING_BREATH) // フリージングブレス
+				|| (skillId == ICE_LANCE_COCKATRICE) // 亞力安冰矛圍籬
+				|| (skillId == ICE_LANCE_BASILISK)) { // 邪惡蜥蜴冰矛圍籬
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
 				pc.sendPackets(new S_Poison(pc.getId(), 0));

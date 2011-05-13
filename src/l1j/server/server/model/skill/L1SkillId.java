@@ -890,4 +890,10 @@ public class L1SkillId {
 
 
 	public static final int MAGIC_STONE_END = 6036;
+
+	// 怪物增加
+	/** 亞力安冰矛圍籬 **/
+	public static final int ICE_LANCE_COCKATRICE = 15003;
+	/** 邪惡蜥蜴冰矛圍籬 **/
+	public static final int ICE_LANCE_BASILISK = 15004;
 }

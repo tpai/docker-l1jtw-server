@@ -43,6 +43,8 @@ public class L1Magic {
 
 	private final int NPC_NPC = 4;
 
+	private L1Character _target = null;
+
 	private L1PcInstance _pc = null;
 
 	private L1PcInstance _targetPc = null;
@@ -62,6 +64,8 @@ public class L1Magic {
 	}
 
 	public L1Magic(L1Character attacker, L1Character target) {
+		_target = target;
+
 		if (attacker instanceof L1PcInstance) {
 			if (target instanceof L1PcInstance) {
 				_calcType = PC_PC;
@@ -274,7 +278,8 @@ public class L1Magic {
 						|| (skillId == ENTANGLE) || (skillId == ERASE_MAGIC) || (skillId == EARTH_BIND) || (skillId == AREA_OF_SILENCE)
 						|| (skillId == WIND_SHACKLE) || (skillId == STRIKER_GALE) || (skillId == SHOCK_STUN) || (skillId == FOG_OF_SLEEPING)
 						|| (skillId == ICE_LANCE) || (skillId == FREEZING_BLIZZARD) || (skillId == FREEZING_BREATH) || (skillId == POLLUTE_WATER)
-						|| (skillId == ELEMENTAL_FALL_DOWN) || (skillId == RETURN_TO_NATURE)) {
+						|| (skillId == ELEMENTAL_FALL_DOWN) || (skillId == RETURN_TO_NATURE) 
+						|| (skillId == ICE_LANCE_COCKATRICE) || (skillId == ICE_LANCE_BASILISK)) {
 					return false;
 				}
 			}
@@ -434,9 +439,17 @@ public class L1Magic {
 				probability -= _targetPc.getRegistSleep();
 			}
 		}
-		else if ((skillId == ICE_LANCE) || (skillId == FREEZING_BLIZZARD) || (skillId == FREEZING_BREATH)) {
+		else if ((skillId == ICE_LANCE) || (skillId == FREEZING_BLIZZARD) || (skillId == FREEZING_BREATH) 
+			|| (skillId == ICE_LANCE_COCKATRICE) || (skillId == ICE_LANCE_BASILISK)) {
 			if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
-				probability -= _targetPc.getRegistFreeze();
+				probability -= _targetPc.getRegistFreeze();	
+				// 檢查無敵狀態
+				for (int skillid : INVINCIBLE) {
+					if (_targetPc.hasSkillEffect(skillid)) {
+						probability = 0;
+						break;
+					}
+				}
 			}
 		}
 		else if ((skillId == CURSE_BLIND) || (skillId == DARKNESS) || (skillId == DARK_BLIND)) {
@@ -448,10 +461,23 @@ public class L1Magic {
 		return probability;
 	}
 
+	// 擁有這些狀態的, 不會受到傷害(無敵)
+	private static final int[] INVINCIBLE = {
+		ABSOLUTE_BARRIER, ICE_LANCE, FREEZING_BLIZZARD, FREEZING_BREATH, EARTH_BIND, ICE_LANCE_COCKATRICE, ICE_LANCE_BASILISK
+	};
+
 	/* ■■■■■■■■■■■■■■ 魔法ダメージ算出 ■■■■■■■■■■■■■■ */
 
 	public int calcMagicDamage(int skillId) {
 		int damage = 0;
+		
+		// 檢查無敵狀態
+		for (int skillid : INVINCIBLE) {
+			if (_target.hasSkillEffect(skillid)) {
+				return damage;
+			}
+		}
+
 		if ((_calcType == PC_PC) || (_calcType == NPC_PC)) {
 			damage = calcPcMagicDamage(skillId);
 		}
@@ -488,6 +514,12 @@ public class L1Magic {
 		if (_targetPc.hasSkillEffect(EARTH_BIND)) {
 			dmg = 0;
 		}
+		if (_targetPc.hasSkillEffect(ICE_LANCE_COCKATRICE)) {
+			dmg = 0;
+		}
+		if (_targetPc.hasSkillEffect(ICE_LANCE_BASILISK)) {
+			dmg = 0;
+		}
 
 		if (dmg < 0) {
 			dmg = 0;
@@ -513,6 +545,12 @@ public class L1Magic {
 			dmg = 0;
 		}
 		if (_targetNpc.hasSkillEffect(EARTH_BIND)) {
+			dmg = 0;
+		}
+		if (_targetNpc.hasSkillEffect(ICE_LANCE_COCKATRICE)) {
+			dmg = 0;
+		}
+		if (_targetNpc.hasSkillEffect(ICE_LANCE_BASILISK)) {
 			dmg = 0;
 		}
 

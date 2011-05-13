@@ -668,6 +668,14 @@ public class L1SkillUse {
 			}
 		}
 
+		if (cha.hasSkillEffect(ICE_LANCE) || cha.hasSkillEffect(FREEZING_BLIZZARD) || cha.hasSkillEffect(FREEZING_BREATH) 
+			|| cha.hasSkillEffect(ICE_LANCE_COCKATRICE) || cha.hasSkillEffect(ICE_LANCE_BASILISK)) {
+			if (_skillId == ICE_LANCE || _skillId == FREEZING_BLIZZARD
+				|| _skillId == FREEZING_BREATH || _skillId == ICE_LANCE_COCKATRICE || _skillId == ICE_LANCE_BASILISK) {
+				return false;
+			}
+		}
+/*
 		if (cha.hasSkillEffect(ICE_LANCE) && ((_skillId == ICE_LANCE) || (_skillId == FREEZING_BLIZZARD) || (_skillId == FREEZING_BREATH))) {
 			return false; // アイスランス中にアイスランス、フリージングブリザード、フリージングブレス
 		}
@@ -679,7 +687,7 @@ public class L1SkillUse {
 		if (cha.hasSkillEffect(FREEZING_BREATH) && ((_skillId == ICE_LANCE) || (_skillId == FREEZING_BLIZZARD) || (_skillId == FREEZING_BREATH))) {
 			return false; // フリージングブレス中にアイスランス、フリージングブリザード、フリージングブレス
 		}
-
+*/
 		if (cha.hasSkillEffect(EARTH_BIND) && (_skillId == EARTH_BIND)) {
 			return false; // アース バインド中にアース バインド
 		}
@@ -1113,7 +1121,8 @@ public class L1SkillUse {
 				) || (_skillId == ENCHANT_WEAPON) || (_skillId == BLESS_WEAPON) || (_skillId == SHADOW_FANG)) {
 			return;
 		}
-		if (((_skillId == ICE_LANCE) || (_skillId == FREEZING_BLIZZARD) || (_skillId == FREEZING_BREATH)) && !_isFreeze) { // 凍結失敗
+		if (((_skillId == ICE_LANCE) || (_skillId == FREEZING_BLIZZARD) || (_skillId == FREEZING_BREATH) 
+			|| (_skillId == ICE_LANCE_COCKATRICE) || (_skillId == ICE_LANCE_BASILISK)) && !_isFreeze) { // 凍結失敗
 			return;
 		}
 		if ((_skillId == AWAKEN_ANTHARAS) || (_skillId == AWAKEN_FAFURION) || (_skillId == AWAKEN_VALAKAS)) { // 覚醒の効果処理はL1Awakeに移譲。
@@ -1801,6 +1810,10 @@ public class L1SkillUse {
 					case VAMPIRIC_TOUCH:
 						heal = dmg;
 						break;
+					// 亞力安冰矛圍籬
+					case ICE_LANCE_COCKATRICE:
+					// 邪惡蜥蜴冰矛圍籬
+					case ICE_LANCE_BASILISK:
 					// 冰毛圍籬、冰雪颶風、寒冰噴吐
 					case ICE_LANCE:
 					case FREEZING_BLIZZARD:

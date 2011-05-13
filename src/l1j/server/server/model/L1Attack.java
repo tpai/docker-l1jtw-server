@@ -357,7 +357,20 @@ public class L1Attack {
 
 	/* ■■■■■■■■■■■■■■■■ 命中判定 ■■■■■■■■■■■■■■■■ */
 
+	// 擁有這些狀態的, 不會受到傷害(無敵)
+	private static final int[] INVINCIBLE = {
+		ABSOLUTE_BARRIER, ICE_LANCE, FREEZING_BLIZZARD, FREEZING_BREATH, EARTH_BIND, ICE_LANCE_COCKATRICE, ICE_LANCE_BASILISK
+	};
+
 	public boolean calcHit() {
+		// 檢查無敵狀態
+		for (int skillId : INVINCIBLE) {
+			if (_target.hasSkillEffect(skillId)) {
+				_isHit = false;
+				return _isHit;
+			}
+		}
+
 		if ((_calcType == PC_PC) || (_calcType == PC_NPC)) {
 			if (_weaponRange != -1) {
 				if (_pc.getLocation()
