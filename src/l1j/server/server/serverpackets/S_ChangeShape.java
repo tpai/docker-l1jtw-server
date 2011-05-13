@@ -24,19 +24,19 @@ public class S_ChangeShape extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_ChangeShape(int objId, int polyId) {
-		buildPacket(objId, polyId, false);
+		buildPacket(objId, polyId, 0x00);
 	}
 
-	public S_ChangeShape(int objId, int polyId, boolean weaponTakeoff) {
-		buildPacket(objId, polyId, weaponTakeoff);
+	// 玩家使用，getCurrentWeapon()
+	public S_ChangeShape(int objId, int polyId, int currentWeapon) {
+		buildPacket(objId, polyId, currentWeapon);
 	}
 
-	private void buildPacket(int objId, int polyId, boolean weaponTakeoff) {
+	private void buildPacket(int objId, int polyId, int currentWeapon) {
 		writeC(Opcodes.S_OPCODE_POLY);
 		writeD(objId);
 		writeH(polyId);
-		/** 武器類型? */
-		writeC(weaponTakeoff ? 0 : 29); // 不明為何29?
+		writeC(currentWeapon);
 		writeC(0xff);
 		writeC(0xff);
 	}

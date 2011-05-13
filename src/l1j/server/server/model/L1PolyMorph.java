@@ -19,7 +19,6 @@ import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import java.util.Map;
 
 import l1j.server.server.datatables.PolyTable;
-import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ChangeShape;
@@ -242,13 +241,7 @@ public class L1PolyMorph {
 			pc.killSkillEffectTimer(SHAPE_CHANGE);
 			pc.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
 			if (pc.getTempCharGfx() != polyId) { // 同じ変身の場合はアイコン送信以外が必要ない
-				L1ItemInstance weapon = pc.getWeapon();
-				// 変身によって武器が外れるか
-				boolean weaponTakeoff = ((weapon != null) && !isEquipableWeapon(
-						polyId, weapon.getItem().getType()));
 				pc.setTempCharGfx(polyId);
-				pc.sendPackets(new S_ChangeShape(pc.getId(), polyId,
-						weaponTakeoff));
 				if (!pc.isGmInvis() && !pc.isInvisble()) {
 					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId));
 				}
@@ -260,6 +253,7 @@ public class L1PolyMorph {
 					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId));
 				}
 				pc.getInventory().takeoffEquip(polyId);
+				pc.sendPackets(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
 			}
 			pc.sendPackets(new S_SkillIconGFX(35, timeSecs));
 		} else if (cha instanceof L1MonsterInstance) {
