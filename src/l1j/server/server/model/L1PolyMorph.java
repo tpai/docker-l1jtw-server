@@ -23,7 +23,6 @@ import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ChangeShape;
-import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_CloseList;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
@@ -261,12 +260,6 @@ public class L1PolyMorph {
 					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId));
 				}
 				pc.getInventory().takeoffEquip(polyId);
-				weapon = pc.getWeapon();
-				if (weapon != null) {
-					S_CharVisualUpdate charVisual = new S_CharVisualUpdate(pc);
-					pc.sendPackets(charVisual);
-					pc.broadcastPacket(charVisual);
-				}
 			}
 			pc.sendPackets(new S_SkillIconGFX(35, timeSecs));
 		} else if (cha instanceof L1MonsterInstance) {
@@ -288,12 +281,6 @@ public class L1PolyMorph {
 			if (!pc.isDead()) {
 				pc.sendPackets(new S_ChangeShape(pc.getId(), classId));
 				pc.broadcastPacket(new S_ChangeShape(pc.getId(), classId));
-			}
-			L1ItemInstance weapon = pc.getWeapon();
-			if (weapon != null) {
-				S_CharVisualUpdate charVisual = new S_CharVisualUpdate(pc);
-				pc.sendPackets(charVisual);
-				pc.broadcastPacket(charVisual);
 			}
 		} else if (cha instanceof L1MonsterInstance) {
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
