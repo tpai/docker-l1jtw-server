@@ -20,10 +20,10 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import l1j.server.Base64;
 import l1j.server.Config;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.base64.Base64;
 
 public class Logins {
 	private static Logger _log = Logger.getLogger(Logins.class.getName());
@@ -50,7 +50,7 @@ public class Logins {
 			pstm.setString(1, account);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
-				abyte2 = Base64.decode(rs.getString(1));
+				abyte2 = Base64.decode(rs.getBytes(1));
 				_log.fine("account exists");
 			}
 			SQLUtil.close(rs);
@@ -63,7 +63,7 @@ public class Logins {
 					pstm = con
 							.prepareStatement("INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?");
 					pstm.setString(1, account);
-					pstm.setString(2, Base64.encodeBytes(abyte1));
+					pstm.setString(2, Base64.encode(abyte1).toString());
 					pstm.setLong(3, 0L);
 					pstm.setInt(4, 0);
 					pstm.setString(5, ip);

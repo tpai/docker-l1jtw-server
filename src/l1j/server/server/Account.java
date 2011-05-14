@@ -25,9 +25,9 @@ import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import l1j.server.Base64;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
+import l1j.server.server.utils.base64.Base64;
 
 /**
  * 帳號相關資訊
@@ -91,7 +91,7 @@ public class Account {
 		byte[] buf = rawPassword.getBytes("UTF-8");
 		buf = MessageDigest.getInstance("SHA").digest(buf);
 
-		return Base64.encodeBytes(buf);
+		return Base64.encode(buf).toString();
 	}
 
 	/**
