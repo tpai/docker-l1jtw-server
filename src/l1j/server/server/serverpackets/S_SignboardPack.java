@@ -41,7 +41,7 @@ public class S_SignboardPack extends ServerBasePacket {
 		writeD(0);
 		writeH(0);
 		writeS(null);
-		writeS(signboard.getName());
+		writeS(signboard.getNameId());
 		int status = 0;
 		if (signboard.getPoison() != null) { // 毒状態
 			if (signboard.getPoison().getEffectId() == 1) {
@@ -56,9 +56,8 @@ public class S_SignboardPack extends ServerBasePacket {
 		writeC(0xFF);
 		writeC(0);
 		writeC(0);
-		writeC(0);
-		writeC(0xFF);
-		writeC(0xFF);
+		writeS(null);
+		writeH(0xFFFF);
 	}
 
 	private int getDirection(int heading) {

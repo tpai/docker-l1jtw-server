@@ -1178,27 +1178,35 @@
 	</TreasureBox>
 	<!--發紅光的魚-->
 	<TreasureBox Type="RANDOM" ItemId="41301">
-		<Item ItemId="40019" Count="1" Chance="50" />	<!--濃縮體力恢復劑-->
-		<Item ItemId="40045" Count="1" Chance="30" />	<!--紅寶石-->
-		<Item ItemId="40049" Count="1" Chance="20" />	<!--品質紅寶石-->
+		<Item ItemId="41296" Count="1" Chance="30" />	<!--鯛魚-->
+		<Item ItemId="40019" Count="1" Chance="30" />	<!--濃縮體力恢復劑-->
+		<Item ItemId="40045" Count="1" Chance="25" />	<!--紅寶石-->
+		<Item ItemId="40049" Count="1" Chance="10" />	<!--品質紅寶石-->
+		<Item ItemId="40053" Count="1" Chance="5" />	<!--高品質紅寶石-->
 	</TreasureBox>
 	<!--發綠光的魚-->
 	<TreasureBox Type="RANDOM" ItemId="41302">
-		<Item ItemId="40018" Count="1" Chance="50" />	<!--強化 自我加速藥水-->
-		<Item ItemId="40047" Count="1" Chance="30" />	<!--綠寶石-->
-		<Item ItemId="40055" Count="1" Chance="20" />	<!--高品質綠寶石-->
+		<Item ItemId="41296" Count="1" Chance="30" />	<!--鯛魚-->
+		<Item ItemId="40018" Count="1" Chance="30" />	<!--強化 自我加速藥水-->
+		<Item ItemId="40047" Count="1" Chance="25" />	<!--綠寶石-->
+		<Item ItemId="40051" Count="1" Chance="10" />	<!--品質綠寶石-->
+		<Item ItemId="40055" Count="1" Chance="5" />	<!--高品質綠寶石-->
 	</TreasureBox>
 	<!--發藍光的魚-->
 	<TreasureBox Type="RANDOM" ItemId="41303">
-		<Item ItemId="40015" Count="1" Chance="50" />	<!--藍色藥水-->
-		<Item ItemId="40046" Count="1" Chance="30" />	<!--藍寶石-->
-		<Item ItemId="40054" Count="1" Chance="20" />	<!--高品質藍寶石-->
+		<Item ItemId="41296" Count="1" Chance="30" />	<!--鯛魚-->
+		<Item ItemId="40015" Count="1" Chance="30" />	<!--藍色藥水-->
+		<Item ItemId="40046" Count="1" Chance="25" />	<!--藍寶石-->
+		<Item ItemId="40050" Count="1" Chance="10" />	<!--品質藍寶石-->
+		<Item ItemId="40054" Count="1" Chance="5" />	<!--高品質藍寶石-->
 	</TreasureBox>
 	<!--發白光的魚-->
 	<TreasureBox Type="RANDOM" ItemId="41304">
-		<Item ItemId="40021" Count="1" Chance="50" />	<!--濃縮終極體力恢復劑-->
-		<Item ItemId="40044" Count="1" Chance="40" />	<!--鑽石-->
-		<Item ItemId="40052" Count="1" Chance="10" />	<!--高品質鑽石-->
+		<Item ItemId="41296" Count="1" Chance="30" />	<!--鯛魚-->
+		<Item ItemId="40021" Count="1" Chance="30" />	<!--濃縮終極體力恢復劑-->
+		<Item ItemId="40044" Count="1" Chance="25" />	<!--鑽石-->
+		<Item ItemId="40048" Count="1" Chance="10" />	<!--品質鑽石-->
+		<Item ItemId="40052" Count="1" Chance="5" />	<!--高品質鑽石-->
 	</TreasureBox>
 	<!--精緻的附魔寶箱-->
 	<TreasureBox Type="RANDOM" ItemId="47047">

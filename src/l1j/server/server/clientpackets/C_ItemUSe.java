@@ -5432,6 +5432,8 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(1138));
 				}
 				else if (pc.getInventory().consumeItem(47103, 1)) { // 新鮮的餌
+					pc.setFishX(fishX);
+					pc.setFishY(fishY);
 					pc.sendPackets(new S_Fishing(pc.getId(), ActionCodes.ACTION_Fishing, fishX, fishY));
 					pc.broadcastPacket(new S_Fishing(pc.getId(), ActionCodes.ACTION_Fishing, fishX, fishY));
 					pc.setFishing(true);

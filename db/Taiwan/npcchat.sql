@@ -1,22 +1,24 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
 Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-02-04 06:56:00
+Date: 2011-05-13 12:37:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for npcchat
 -- ----------------------------
+DROP TABLE IF EXISTS `npcchat`;
 CREATE TABLE `npcchat` (
   `npc_id` int(10) unsigned NOT NULL DEFAULT '0',
   `chat_timing` tinyint(1) unsigned NOT NULL DEFAULT '0',
@@ -37,7 +39,7 @@ CREATE TABLE `npcchat` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records of npcchat
 -- ----------------------------
 INSERT INTO `npcchat` VALUES ('45264', '2', 'ハーピー(空から降りた時)', '0', '$994', '', '', '', '', '0', '0', '0', '0', '0', '0');
 INSERT INTO `npcchat` VALUES ('45458', '1', 'ドレイク(死亡時)', '0', '$3603', '', '', '', '', '0', '0', '0', '0', '0', '0');
@@ -80,3 +82,4 @@ INSERT INTO `npcchat` VALUES ('46158', '1', 'オーク密使(グルーディン)
 INSERT INTO `npcchat` VALUES ('46159', '1', 'オーク密使(ウィンダウッド)(死亡時)', '0', '$6127', '', '', '', '', '0', '0', '0', '0', '0', '0');
 INSERT INTO `npcchat` VALUES ('81175', '0', 'おたずね者クジャク(出現時)', '0', '$5325', '', '', '', '', '0', '1', '0', '1', '15000', '0');
 INSERT INTO `npcchat` VALUES ('81175', '1', 'おたずね者クジャク(死亡時)', '0', '$5327', '', '', '', '', '0', '0', '0', '0', '0', '0');
+INSERT INTO `npcchat` VALUES ('81307', '0', '派報少年', '10000', '$8917', '$8918', '', '', '', '3000', '0', '0', '1', '10000', '0');

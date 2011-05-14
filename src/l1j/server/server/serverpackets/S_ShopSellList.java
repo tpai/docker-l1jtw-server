@@ -25,6 +25,7 @@ import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1TaxCalculator;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1NpcInstance;
+import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.shop.L1Shop;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.templates.L1Item;
@@ -35,7 +36,7 @@ public class S_ShopSellList extends ServerBasePacket {
 	/**
 	 * 店の品物リストを表示する。キャラクターがBUYボタンを押した時に送る。
 	 */
-	public S_ShopSellList(int objId) {
+	public S_ShopSellList(int objId, L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_SHOWSHOPBUYLIST);
 		writeD(objId);
 
@@ -46,6 +47,11 @@ public class S_ShopSellList extends ServerBasePacket {
 		}
 		int npcId = ((L1NpcInstance) npcObj).getNpcTemplate().get_npcId();
 
+		if (npcId == 80080) { // 釣魚爺爺
+			if (pc.getInventory().checkItem(41293)) { // 身上有釣竿時
+				npcId = 800801; // 只販售新鮮的餌
+			}
+		}
 		L1TaxCalculator calc = new L1TaxCalculator(npcId);
 		L1Shop shop = ShopTable.getInstance().get(npcId);
 		List<L1ShopItem> shopItems = shop.getSellingItems();

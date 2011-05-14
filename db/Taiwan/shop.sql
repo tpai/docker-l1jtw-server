@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-13 10:18:33
+Date: 2011-05-14 08:50:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1618,8 +1618,10 @@ INSERT INTO `shop` VALUES ('80075', '40743', '0', '2', '10', '-1');
 INSERT INTO `shop` VALUES ('80075', '40744', '1', '2', '5', '-1');
 INSERT INTO `shop` VALUES ('80075', '41036', '24', '345', '0', '-1');
 INSERT INTO `shop` VALUES ('80080', '41293', '0', '10000', '1', '-1');
-INSERT INTO `shop` VALUES ('80080', '47103', '1', '23000', '400', '-1');
+INSERT INTO `shop` VALUES ('80080', '47103', '1', '20000', '400', '-1');
 INSERT INTO `shop` VALUES ('80080', '41295', '2', '-1', '1', '28');
+INSERT INTO `shop` VALUES ('800801', '47103', '0', '20000', '400', '-1');
+INSERT INTO `shop` VALUES ('800802', '47103', '0', '-1', '0', '-1');
 INSERT INTO `shop` VALUES ('80090', '40059', '0', '4', '0', '-1');
 INSERT INTO `shop` VALUES ('80090', '40060', '4', '9', '0', '-1');
 INSERT INTO `shop` VALUES ('80090', '40061', '3', '7', '0', '-1');

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-13 09:31:42
+Date: 2011-05-14 01:53:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `spawnlist_npc` (
   `mapid` int(10) unsigned NOT NULL DEFAULT '0',
   `movement_distance` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=89909 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=89930 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of spawnlist_npc
@@ -2359,3 +2359,24 @@ INSERT INTO `spawnlist_npc` VALUES ('89905', '安塔瑞斯洞穴', '1', '81306',
 INSERT INTO `spawnlist_npc` VALUES ('89906', '安塔瑞斯洞穴', '1', '81306', '32682', '32802', '0', '0', '0', '0', '1005', '0');
 INSERT INTO `spawnlist_npc` VALUES ('89907', '安塔瑞斯洞穴', '1', '81306', '32810', '32802', '0', '0', '0', '0', '1005', '0');
 INSERT INTO `spawnlist_npc` VALUES ('89908', '安塔瑞斯洞穴', '1', '81306', '32938', '32802', '0', '0', '0', '0', '1005', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89909', '派報少年', '1', '81307', '32611', '32792', '0', '0', '0', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89910', '派報少年', '1', '81307', '33428', '32809', '0', '0', '4', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89911', '派報少年', '1', '81307', '33962', '33246', '0', '0', '7', '0', '4', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89912', '釣魚池的魚兒', '1', '81308', '32752', '32808', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89913', '釣魚池的魚兒', '1', '81309', '32747', '32813', '0', '0', '4', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89914', '釣魚池的魚兒', '1', '81308', '32752', '32816', '0', '0', '4', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89915', '釣魚池的魚兒', '1', '81309', '32743', '32841', '0', '0', '6', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89916', '釣魚池的魚兒', '1', '81309', '32740', '32852', '0', '0', '6', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89917', '釣魚池的魚兒', '1', '81308', '32745', '32859', '0', '0', '3', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89918', '釣魚池的魚兒', '1', '81309', '32751', '32861', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89919', '釣魚池的魚兒', '1', '81309', '32779', '32857', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89920', '釣魚池的魚兒', '1', '81309', '32791', '32846', '0', '0', '5', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89921', '釣魚池的魚兒', '1', '81308', '32787', '32856', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89922', '釣魚池的魚兒', '1', '81308', '32782', '32841', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89923', '釣魚池的魚兒', '1', '81308', '32790', '32821', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89924', '釣魚池的魚兒', '1', '81309', '32781', '32819', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89925', '釣魚池的魚兒', '1', '81309', '32794', '32810', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89926', '釣魚池的魚兒', '1', '81308', '32783', '32809', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89927', '釣魚池的魚兒', '1', '81308', '32773', '32808', '0', '0', '7', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89928', '釣魚池的魚兒', '1', '81309', '32750', '32848', '0', '0', '3', '0', '5300', '0');
+INSERT INTO `spawnlist_npc` VALUES ('89929', '釣魚池的魚兒', '1', '81308', '32775', '32813', '0', '0', '3', '0', '5300', '0');

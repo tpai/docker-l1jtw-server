@@ -23,6 +23,7 @@ import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ChangeShape;
 import l1j.server.server.serverpackets.S_CloseList;
+import l1j.server.server.serverpackets.S_NpcChangeShape;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SkillIconGFX;
 import l1j.server.server.utils.collections.Maps;
@@ -225,8 +226,8 @@ public class L1PolyMorph {
 		}
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) cha;
-			if (pc.getMapId() == 5124) { // 釣り場
-				pc.sendPackets(new S_ServerMessage(1170)); // ここでは変身できません。
+			if (pc.getMapId() == 5124 || pc.getMapId() == 5300 || pc.getMapId() == 5301) { // 釣魚池
+				pc.sendPackets(new S_ServerMessage(1170)); // 這裡不可以變身。
 				return;
 			}
 			if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
@@ -260,9 +261,9 @@ public class L1PolyMorph {
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
 			mob.killSkillEffectTimer(SHAPE_CHANGE);
 			mob.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
-			if (mob.getTempCharGfx() != polyId) { // 同じ変身の場合はアイコン送信以外が必要ない
+			if (mob.getTempCharGfx() != polyId) {
 				mob.setTempCharGfx(polyId);
-				mob.broadcastPacket(new S_ChangeShape(mob.getId(), polyId));
+				mob.broadcastPacket(new S_NpcChangeShape(mob.getId(), polyId, mob.getLawful(), mob.getStatus()));
 			}
 		}
 	}

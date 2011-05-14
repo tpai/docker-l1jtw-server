@@ -104,6 +104,7 @@ import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_DoActionShop;
 import l1j.server.server.serverpackets.S_Exp;
 import l1j.server.server.serverpackets.S_Fight;
+import l1j.server.server.serverpackets.S_Fishing;
 import l1j.server.server.serverpackets.S_HPMeter;
 import l1j.server.server.serverpackets.S_HPUpdate;
 import l1j.server.server.serverpackets.S_Invis;
@@ -412,8 +413,10 @@ public class L1PcInstance extends L1Character {
 			perceivedFrom.sendPackets(new S_HPMeter(this));
 		}
 
-		if (isPrivateShop()) {
+		if (isPrivateShop()) { // 開個人商店中
 			perceivedFrom.sendPackets(new S_DoActionShop(getId(), ActionCodes.ACTION_Shop, getShopChat()));
+		} else if (isFishing()) { // 釣魚中
+			perceivedFrom.sendPackets(new S_Fishing(getId(), ActionCodes.ACTION_Fishing, getFishX(), getFishY()));
 		}
 
 		if (isCrown()) { // 君主
@@ -4487,6 +4490,26 @@ public class L1PcInstance extends L1Character {
 
 	public void setFightId(int i) {
 		_fightId = i;
+	}
+
+	// 釣魚點
+	private int _fishX;
+
+	public int getFishX() {
+		return _fishX;
+	}
+
+	public void setFishX(int i) {
+		_fishX = i;
+	}
+	private int _fishY;
+
+	public int getFishY() {
+		return _fishY;
+	}
+
+	public void setFishY(int i) {
+		_fishY = i;
 	}
 
 	private byte _chatCount = 0;

@@ -78,6 +78,11 @@ public class C_Result extends ClientBasePacket {
 		}
 
 		if ((resultType == 0) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 買道具
+			if (npcId == 80080) { // 釣魚爺爺
+				if (pc.getInventory().checkItem(41293)) { // 身上有釣竿時
+					npcId = 800801; // 只販售新鮮的餌
+				}
+			}
 			L1Shop shop = ShopTable.getInstance().get(npcId);
 			L1ShopBuyOrderList orderList = shop.newBuyOrderList();
 			for (int i = 0; i < size; i++) {

@@ -167,19 +167,14 @@ public class C_NPCAction extends ClientBasePacket {
 		L1PcInstance target;
 		L1Object obj = L1World.getInstance().findObject(objid);
 		if (obj != null) {
-			if (obj instanceof L1PetInstance) { // 寵物不限距離皆可變更狀態
-				L1PetInstance pet = (L1PetInstance) obj;
-				pet.onFinalAction(pc, s);
-			} else if (obj instanceof L1SummonInstance) { // 召喚怪不限距離皆可變更狀態
-				L1SummonInstance summon = (L1SummonInstance) obj;
-				summon.onFinalAction(pc, s);
-			} else if (obj instanceof L1NpcInstance) {
+			if (obj instanceof L1NpcInstance) {
 				L1NpcInstance npc = (L1NpcInstance) obj;
 				int difflocx = Math.abs(pc.getX() - npc.getX());
 				int difflocy = Math.abs(pc.getY() - npc.getY());
-				// 3格以上的距離對話無效
-				if ((difflocx > 3) || (difflocy > 3)) {
-					return;
+				if (!(obj instanceof L1PetInstance) && !(obj instanceof L1SummonInstance)) {
+					if ((difflocx > 3) || (difflocy > 3)) { // 3格以上的距離對話無效
+						return;
+					}
 				}
 				npc.onFinalAction(pc, s);
 			}
@@ -238,7 +233,7 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 
 			// 販賣清單
-			pc.sendPackets(new S_ShopSellList(objid));
+			pc.sendPackets(new S_ShopSellList(objid, pc));
 		}
 		else if (s.equalsIgnoreCase("sell")) {
 			int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();

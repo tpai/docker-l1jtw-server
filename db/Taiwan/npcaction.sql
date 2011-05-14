@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-13 09:27:10
+Date: 2011-05-13 12:36:52
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1102,3 +1102,4 @@ INSERT INTO `npcaction` VALUES ('81293', 'beasamoo', 'beasamool', '', '');
 INSERT INTO `npcaction` VALUES ('81294', 'kymsamoo', 'kymsamoo', '', '');
 INSERT INTO `npcaction` VALUES ('70649', 'lary1', 'lary1', '', '');
 INSERT INTO `npcaction` VALUES ('70652', 'laryaide1', 'laryaide1', '', '');
+INSERT INTO `npcaction` VALUES ('81307', 'newsboy', 'newsboy', '', '');
