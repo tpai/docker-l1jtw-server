@@ -23,16 +23,7 @@ public class S_ChangeShape extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
-	public S_ChangeShape(int objId, int polyId) {
-		buildPacket(objId, polyId, 0x00);
-	}
-
-	// 玩家使用，getCurrentWeapon()
-	public S_ChangeShape(int objId, int polyId, int currentWeapon) {
-		buildPacket(objId, polyId, currentWeapon);
-	}
-
-	private void buildPacket(int objId, int polyId, int currentWeapon) {
+	public  S_ChangeShape(int objId, int polyId, int currentWeapon) {
 		writeC(Opcodes.S_OPCODE_POLY);
 		writeD(objId);
 		writeH(polyId);

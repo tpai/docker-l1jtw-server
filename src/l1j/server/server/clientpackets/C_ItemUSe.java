@@ -1918,11 +1918,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						S_AttackPacket s_attackPacket = new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand);
 						pc.sendPackets(s_attackPacket);
 						pc.broadcastPacket(s_attackPacket);
-						if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
-							// \f1何も起きませんでした。
-							pc.sendPackets(new S_ServerMessage(79));
-							return;
-						}
 						L1Object target = L1World.getInstance().findObject(spellsc_objid);
 						if (target != null) {
 							L1Character cha = (L1Character) target;
@@ -1942,17 +1937,6 @@ public class C_ItemUSe extends ClientBasePacket {
 							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 						}
 					}
-					// if (pc.getId() == target.getId()) { // ターゲットが自分
-					// ;
-					// } else if (target instanceof L1PcInstance) { // ターゲットがPC
-					// L1PcInstance targetpc = (L1PcInstance) target;
-					// if (pc.getClanid() != 0
-					// && pc.getClanid() == targetpc.getClanid()) { //
-					// ターゲットが同じクラン
-					// ;
-					// }
-					// } else { // その他（NPCや他のクランのPC）
-					// }
 				}
 				else if ((itemId >= 40289) && (itemId <= 40297)) { // 傲慢の塔11~91階テレポートアミュレット
 					useToiTeleportAmulet(pc, itemId, l1iteminstance);
@@ -5106,21 +5090,24 @@ public class C_ItemUSe extends ClientBasePacket {
 		boolean isSameClan = false;
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) cha;
-			if ((pc.getClanid() != 0) && (attacker.getClanid() == pc.getClanid())) {
+			if ((pc.getClanid() != 0) && (attacker.getClanid() == pc.getClanid())) { // 目標為盟友
 				isSameClan = true;
 			}
 		}
-		if ((attacker.getId() != cha.getId()) && !isSameClan) { // 自分以外と違うクラン
+		if ((attacker.getId() != cha.getId()) && !isSameClan) { // 非自身及盟友
 			int probability = 3 * (attacker.getLevel() - cha.getLevel()) + 100 - cha.getMr();
 			int rnd = Random.nextInt(100) + 1;
 			if (rnd > probability) {
+				attacker.sendPackets(new S_ServerMessage(79));
 				return;
 			}
 		}
 
-		int[] polyArray =
-		{ 29, 945, 947, 979, 1037, 1039, 3860, 3861, 3862, 3863, 3864, 3865, 3904, 3906, 95, 146, 2374, 2376, 2377, 2378, 3866, 3867, 3868, 3869,
-				3870, 3871, 3872, 3873, 3874, 3875, 3876 };
+		int[] polyArray = {
+				29, 945, 947, 979, 1037, 1039, 3860, 3861, 3862, 3863, 3864,
+				3865, 3904, 3906, 95, 146, 2374, 2376, 2377, 2378, 3866, 3867,
+				3868, 3869, 3870, 3871, 3872, 3873, 3874, 3875, 3876
+		};
 
 		int pid = Random.nextInt(polyArray.length);
 		int polyId = polyArray[pid];
@@ -5129,26 +5116,26 @@ public class C_ItemUSe extends ClientBasePacket {
 			L1PcInstance pc = (L1PcInstance) cha;
 			int awakeSkillId = pc.getAwakeSkillId();
 			if ((awakeSkillId == AWAKEN_ANTHARAS) || (awakeSkillId == AWAKEN_FAFURION) || (awakeSkillId == AWAKEN_VALAKAS)) {
-				pc.sendPackets(new S_ServerMessage(1384)); // 現在の状態では変身できません。
+				if (attacker.getId() == pc.getId()) {
+					attacker.sendPackets(new S_ServerMessage(1384)); // 目前狀態中無法變身。
+				} else {
+					attacker.sendPackets(new S_ServerMessage(79));
+				}
 				return;
 			}
 
-			if (pc.getInventory().checkEquipped(20281)) {
+			if (pc.getInventory().checkEquipped(20281)) { // 裝備變形控制戒指
 				pc.sendPackets(new S_ShowPolyList(pc.getId()));
 				if (!pc.isShapeChange()) {
 					pc.setShapeChange(true);
 				}
-				pc.sendPackets(new S_ServerMessage(966)); // string-j.tbl:968行目
-				// 魔法の力によって保護されます。
-				// 変身の際のメッセージは、他人が自分を変身させた時に出るメッセージと、レベルが足りない時に出るメッセージ以外はありません。
 			}
 			else {
-				L1Skills skillTemp = SkillsTable.getInstance().getTemplate(SHAPE_CHANGE);
-
-				L1PolyMorph.doPoly(pc, polyId, skillTemp.getBuffDuration(), L1PolyMorph.MORPH_BY_ITEMMAGIC);
 				if (attacker.getId() != pc.getId()) {
-					pc.sendPackets(new S_ServerMessage(241, attacker.getName())); // %0があなたを変身させました。
+					pc.sendPackets(new S_ServerMessage(241, attacker.getName())); // %0%s 把你變身。
 				}
+				L1Skills skillTemp = SkillsTable.getInstance().getTemplate(SHAPE_CHANGE);
+				L1PolyMorph.doPoly(pc, polyId, skillTemp.getBuffDuration(), L1PolyMorph.MORPH_BY_ITEMMAGIC, false);
 			}
 		}
 		else if (cha instanceof L1MonsterInstance) {

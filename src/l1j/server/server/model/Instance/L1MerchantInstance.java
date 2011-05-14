@@ -2890,8 +2890,10 @@ public class L1MerchantInstance extends L1NpcInstance {
 				int playerLv = player.getLevel();// 角色等級
 				if (playerLv < 13) {
 					htmlid = "lowlvS1";
-				} else {
+				} else if (playerLv > 12 && playerLv < 47) {
 					htmlid = "lowlvS2";
+				} else {
+					htmlid = "lowlvno";
 				}
 			} else if (npcid == 81260) { // 村莊福利員
 				int townid = player.getHomeTownId();// 角色所屬村莊

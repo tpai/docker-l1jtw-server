@@ -22,21 +22,16 @@ import l1j.server.server.model.Instance.L1PcInstance;
 
 public class S_OwnCharStatus2 extends ServerBasePacket {
 
-	public S_OwnCharStatus2(L1PcInstance l1pcinstance) {
-		if (l1pcinstance == null) {
-			return;
-		}
-
-		cha = l1pcinstance;
-
+	/** 更新六項能力值以及負重 */
+	public S_OwnCharStatus2(L1PcInstance pc) {
 		writeC(Opcodes.S_OPCODE_OWNCHARSTATUS2);
-		writeC(cha.getStr());
-		writeC(cha.getInt());
-		writeC(cha.getWis());
-		writeC(cha.getDex());
-		writeC(cha.getCon());
-		writeC(cha.getCha());
-		writeC(cha.getInventory().getWeight242());
+		writeC(pc.getStr());
+		writeC(pc.getInt());
+		writeC(pc.getWis());
+		writeC(pc.getDex());
+		writeC(pc.getCon());
+		writeC(pc.getCha());
+		writeC(pc.getInventory().getWeight242());
 	}
 
 	@Override
@@ -48,6 +43,4 @@ public class S_OwnCharStatus2 extends ServerBasePacket {
 	public String getType() {
 		return "[C] S_OwnCharStatus2";
 	}
-
-	private L1PcInstance cha = null;
 }

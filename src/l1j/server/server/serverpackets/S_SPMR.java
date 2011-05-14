@@ -24,6 +24,7 @@ public class S_SPMR extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/** 更新魔防以及魔攻 */
 	public S_SPMR(L1PcInstance pc) {
 		buildPacket(pc);
 	}

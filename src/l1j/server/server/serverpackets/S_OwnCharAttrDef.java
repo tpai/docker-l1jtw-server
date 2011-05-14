@@ -26,6 +26,7 @@ public class S_OwnCharAttrDef extends ServerBasePacket {
 
 	private byte[] _byte = null;
 
+	/** 更新防禦以及四種屬性 */
 	public S_OwnCharAttrDef(L1PcInstance pc) {
 		buildPacket(pc);
 	}

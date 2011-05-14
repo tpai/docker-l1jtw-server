@@ -31,12 +31,6 @@ public class S_UseArrowSkill extends ServerBasePacket {
 	private byte[] _byte = null;
 
 	public S_UseArrowSkill(L1Character cha, int targetobj, int x, int y, int[] data) { // data = {actid, dmg, spellgfx}
-
-		// 攻擊動作變更
-		if (cha.getTempCharGfx() == 3860) {
-			data[0] = 21;
-		}
-
 		writeC(Opcodes.S_OPCODE_ATTACKPACKET);
 		writeC(data[0]); // actid
 		writeD(cha.getId());

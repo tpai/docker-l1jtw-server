@@ -19,6 +19,8 @@ import static l1j.server.server.model.skill.L1SkillId.SHAPE_CHANGE;
 import java.util.Map;
 
 import l1j.server.server.datatables.PolyTable;
+import l1j.server.server.datatables.SprTable;
+import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_ChangeShape;
@@ -219,42 +221,53 @@ public class L1PolyMorph {
 		}
 	}
 
+	// 變身
 	public static void doPoly(L1Character cha, int polyId, int timeSecs,
 			int cause) {
+		doPoly(cha, polyId, timeSecs, cause, true);
+	}
+
+	// 變身
+	public static void doPoly(L1Character cha, int polyId, int timeSecs,
+			int cause, boolean cantPolyMessage) {
 		if ((cha == null) || cha.isDead()) {
 			return;
 		}
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) cha;
 			if (pc.getMapId() == 5124 || pc.getMapId() == 5300 || pc.getMapId() == 5301) { // 釣魚池
-				pc.sendPackets(new S_ServerMessage(1170)); // 這裡不可以變身。
+				if (cantPolyMessage) {
+					pc.sendPackets(new S_ServerMessage(1170)); // 這裡不可以變身。
+				} else {
+					pc.sendPackets(new S_ServerMessage(79));
+				}
 				return;
 			}
-			if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035)) {
-				pc.sendPackets(new S_ServerMessage(181)); // \f1そのようなモンスターには変身できません。
+			if ((pc.getTempCharGfx() == 6034) || (pc.getTempCharGfx() == 6035) || !isMatchCause(polyId, cause)) {
+				if (cantPolyMessage) {
+					pc.sendPackets(new S_ServerMessage(181)); // \f1無法變成你指定的怪物。
+				} else {
+					pc.sendPackets(new S_ServerMessage(79));
+				}
 				return;
 			}
-			if (!isMatchCause(polyId, cause)) {
-				pc.sendPackets(new S_ServerMessage(181)); // \f1そのようなモンスターには変身できません。
-				return;
-			}
-
 			pc.killSkillEffectTimer(SHAPE_CHANGE);
 			pc.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
-			if (pc.getTempCharGfx() != polyId) { // 同じ変身の場合はアイコン送信以外が必要ない
+			if (pc.getTempCharGfx() != polyId) {
+				L1ItemInstance weapon = pc.getWeapon();
+				boolean weaponTakeoff = (weapon != null && !isEquipableWeapon(polyId, weapon.getItem().getType()));
+				if (weaponTakeoff) { // 解除武器時
+					pc.setCurrentWeapon(0);
+				}
 				pc.setTempCharGfx(polyId);
-				if (!pc.isGmInvis() && !pc.isInvisble()) {
-					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId));
-				}
-				if (pc.isGmInvis()) {
-				} else if (pc.isInvisble()) {
-					pc.broadcastPacketForFindInvis(new S_ChangeShape(
-							pc.getId(), polyId), true);
-				} else {
-					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId));
-				}
-				pc.getInventory().takeoffEquip(polyId);
 				pc.sendPackets(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
+				if (pc.isGmInvis()) { // GM隱身
+				} else if (pc.isInvisble()) { // 一般隱身
+					pc.broadcastPacketForFindInvis(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()), true);
+				} else {
+					pc.broadcastPacket(new S_ChangeShape(pc.getId(), polyId, pc.getCurrentWeapon()));
+				}
+				pc.getInventory().takeoffEquip(polyId); // 是否將裝備的武器強制解除。
 			}
 			pc.sendPackets(new S_SkillIconGFX(35, timeSecs));
 		} else if (cha instanceof L1MonsterInstance) {
@@ -263,24 +276,45 @@ public class L1PolyMorph {
 			mob.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
 			if (mob.getTempCharGfx() != polyId) {
 				mob.setTempCharGfx(polyId);
-				mob.broadcastPacket(new S_NpcChangeShape(mob.getId(), polyId, mob.getLawful(), mob.getStatus()));
+				int npcStatus = mob.getNpcStstus(polyId);
+				mob.setStatus(npcStatus);
+				if (npcStatus == 20) { // 弓類
+					mob.getNpcTemplate().set_ranged(10);
+					mob.getNpcTemplate().setBowActId(66);
+				} else if (npcStatus == 24) { // 矛類
+					mob.getNpcTemplate().set_ranged(2);
+					mob.getNpcTemplate().setBowActId(0);
+				} else {
+					mob.getNpcTemplate().set_ranged(1);
+					mob.getNpcTemplate().setBowActId(0);
+				}
+				mob.setPassispeed(SprTable.getInstance().getSprSpeed(polyId, mob.getStatus())); // 移動速度
+				mob.setAtkspeed(SprTable.getInstance().getSprSpeed(polyId, mob.getStatus() + 1)); // 攻擊速度
+				mob.broadcastPacket(new S_NpcChangeShape(mob.getId(), polyId, mob.getLawful(), mob.getStatus())); // 更新NPC外觀
 			}
 		}
 	}
 
+	// 解除變身
 	public static void undoPoly(L1Character cha) {
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) cha;
 			int classId = pc.getClassId();
 			pc.setTempCharGfx(classId);
 			if (!pc.isDead()) {
-				pc.sendPackets(new S_ChangeShape(pc.getId(), classId));
-				pc.broadcastPacket(new S_ChangeShape(pc.getId(), classId));
+				pc.sendPackets(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));
+				pc.broadcastPacket(new S_ChangeShape(pc.getId(), classId, pc.getCurrentWeapon()));
 			}
 		} else if (cha instanceof L1MonsterInstance) {
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
+			int gfxId = mob.getGfxId();
 			mob.setTempCharGfx(0);
-			mob.broadcastPacket(new S_ChangeShape(mob.getId(), mob.getGfxId()));
+			mob.setStatus(mob.getNpcStstus(gfxId));
+			mob.getNpcTemplate().set_ranged(mob.getTrueRanged()); // 攻擊距離還原
+			mob.getNpcTemplate().setBowActId(mob.getTrueBowActId()); // 遠程攻擊圖像還原
+			mob.setPassispeed(SprTable.getInstance().getSprSpeed(gfxId, mob.getStatus())); // 移動速度
+			mob.setAtkspeed(SprTable.getInstance().getSprSpeed(gfxId, mob.getStatus() + 1)); // 攻擊速度
+			mob.broadcastPacket(new S_NpcChangeShape(mob.getId(), gfxId, mob.getLawful(), mob.getStatus())); // 更新NPC外觀
 		}
 	}
 

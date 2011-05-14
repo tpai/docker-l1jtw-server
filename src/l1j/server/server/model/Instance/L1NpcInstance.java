@@ -59,10 +59,10 @@ import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_ChangeHeading;
-import l1j.server.server.serverpackets.S_ChangeShape;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_MoveCharPacket;
 import l1j.server.server.serverpackets.S_NPCPack;
+import l1j.server.server.serverpackets.S_NpcChangeShape;
 import l1j.server.server.serverpackets.S_RemoveObject;
 import l1j.server.server.serverpackets.S_SkillHaste;
 import l1j.server.server.serverpackets.S_SkillSound;
@@ -623,7 +623,11 @@ public class L1NpcInstance extends L1Character {
 						setHiddenStatus(HIDDEN_STATUS_NONE);
 						broadcastPacket(new S_DoActionGFX(getId(),
 								ActionCodes.ACTION_Movedown));
-						setStatus(0);
+						if (getTempCharGfx() != 0) {
+							setStatus(getNpcStstus(getTempCharGfx()));
+						} else {
+							setStatus(getNpcStstus(getGfxId()));
+						}
 						broadcastPacket(new S_NPCPack(this));
 						onNpcAI();
 						startChat(CHAT_TIMING_HIDE);
@@ -1106,7 +1110,6 @@ public class L1NpcInstance extends L1Character {
 		setStatus(0);
 		setMoveSpeed(0);
 		setDead(false);
-		setStatus(0);
 		setreSpawn(false);
 
 		if (template != null) {
@@ -1183,11 +1186,17 @@ public class L1NpcInstance extends L1Character {
 		setAgrososc(template.is_agrososc());
 		setTempCharGfx(template.get_gfxid());
 		setGfxId(template.get_gfxid());
+		if (getTempCharGfx() != 0) {
+			setStatus(getNpcStstus(getTempCharGfx()));
+		} else {
+			setStatus(getNpcStstus(getGfxId()));
+		}
+		setTrueRanged(template.get_ranged());
+		setTrueBowActId(template.getBowActId());
 
 		// 移動
 		if (template.get_passispeed() != 0) {
-			setPassispeed(SprTable.getInstance()
-					.getSprSpeed(getTempCharGfx(), getStatus()));
+			setPassispeed(SprTable.getInstance().getSprSpeed(getTempCharGfx(), getStatus()));
 		} else {
 			setPassispeed(0);
 		}
@@ -1202,9 +1211,6 @@ public class L1NpcInstance extends L1Character {
 					break;
 				case 2738: case 4404: case 7886:
 					actid = 19;
-					break;
-				case 57: case 3860:
-					actid = 21;
 					break;
 				case 1780: case 7434:
 					actid = 30;
@@ -1446,7 +1452,11 @@ public class L1NpcInstance extends L1Character {
 			setHiddenStatus(HIDDEN_STATUS_NONE);
 			broadcastPacket(new S_DoActionGFX(getId(),
 					ActionCodes.ACTION_Appear));
-			setStatus(0);
+			if (getTempCharGfx() != 0) {
+				setStatus(getNpcStstus(getTempCharGfx()));
+			} else {
+				setStatus(getNpcStstus(getGfxId()));
+			}
 			broadcastPacket(new S_NPCPack(this));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // インビジビリティ、ブラインドハイディング中以外、GM以外
 					&& !pc.isGm()) {
@@ -1458,7 +1468,11 @@ public class L1NpcInstance extends L1Character {
 			setHiddenStatus(HIDDEN_STATUS_NONE);
 			broadcastPacket(new S_DoActionGFX(getId(),
 					ActionCodes.ACTION_Movedown));
-			setStatus(0);
+			if (getTempCharGfx() != 0) {
+				setStatus(getNpcStstus(getTempCharGfx()));
+			} else {
+				setStatus(getNpcStstus(getGfxId()));
+			}
 			broadcastPacket(new S_NPCPack(this));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // インビジビリティ、ブラインドハイディング中以外、GM以外
 					&& !pc.isGm()) {
@@ -2262,7 +2276,7 @@ public class L1NpcInstance extends L1Character {
 		L1Npc npcTemplate = NpcTable.getInstance().getTemplate(transformId);
 		setting_template(npcTemplate);
 
-		broadcastPacket(new S_ChangeShape(getId(), getTempCharGfx()));
+		broadcastPacket(new S_NpcChangeShape(getId(), getTempCharGfx(), getLawful(), getStatus()));
 		for (L1PcInstance pc : L1World.getInstance().getRecognizePlayer(this)) {
 			onPerceive(pc);
 		}
@@ -2432,4 +2446,77 @@ public class L1NpcInstance extends L1Character {
 		}
 	}
 
+	private int _trueRanged = 0;
+
+	public int getTrueRanged() {
+		return _trueRanged;
+	}
+
+	public void setTrueRanged(int i) {
+		_trueRanged = i;
+	}
+
+	private int _trueBowActId = 0;
+
+	public int getTrueBowActId() {
+		return _trueBowActId;
+	}
+
+	public void setTrueBowActId(int i) {
+		_trueBowActId = i;
+	}
+
+	public int getNpcStstus(int gfxid) {
+		int status = 0;
+		switch (gfxid) {
+			case 57: // 妖魔弓箭手
+			case 816: // 妖魔弓箭手 (妖堡箭塔)
+			case 2284: // 黑暗精靈
+			case 2323: // 妖魔巡守
+			case 2375: // 骷髏弓箭手
+			case 3105: // 黑暗巡守
+			case 3126: // 火焰弓箭手
+			case 3137: // 警衛 (弓)
+			case 3140: // 皇家警衛 (十字弓)
+			case 3142: // 皇家警衛 (弓)
+			case 3145: // 銀光巡守
+			case 3148: // 黃金巡守
+			case 3151: // 白金巡守
+			case 3860: // 妖魔弓箭手
+			case 3871: // 骷髏弓箭手
+			case 3892: // 黑暗巡守
+			case 3895: // 銀光巡守
+			case 3898: // 黃金巡守
+			case 3901: // 白金巡守
+			case 4917: // 黑暗精靈巡守
+			case 4918: // 強盜 (弓)
+			case 4919: // 黑暗妖精警衛 (弓)
+			case 5879: // 白金巡守
+			case 6087: // 海盜骷髏弓箭手
+			case 6140: // 黑暗精靈
+			case 6145: // 黑暗精靈
+			case 6150: // 黑暗精靈
+			case 6155: // 黑暗精靈
+			case 6160: // 黑暗精靈
+			case 6269: // 黑暗巡守
+			case 6272: // 白金精靈
+			case 6275: // 黃金精靈
+			case 6278: // 白金精靈
+			case 6406: // 皇家警衛 (十字弓)
+				status = 20;
+				break;
+			case 51: // 警衛
+			case 110: // 黑騎士
+			case 147: // 警衛
+			case 2337: // 黑騎士
+			case 2377: // 骷髏槍兵
+			case 3869: // 都達瑪拉妖魔
+			case 3870: // 那魯加妖魔
+				status = 24;
+				break;
+			default:
+				break;
+		}
+		return status;
+	}
 }
