@@ -14,22 +14,25 @@
  */
 package l1j.server.server;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
 import l1j.server.Config;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
-import l1j.server.server.utils.base64.Base64;
 
 public class Logins {
 	private static Logger _log = Logger.getLogger(Logins.class.getName());
 
 	public static boolean loginValid(String account, String password,
-			String ip, String host) {
+			String ip, String host) throws IOException {
 		boolean flag1 = false;
 		_log.info("Connect from : " + account);
 
@@ -50,7 +53,7 @@ public class Logins {
 			pstm.setString(1, account);
 			rs = pstm.executeQuery();
 			if (rs.next()) {
-				abyte2 = Base64.decode(rs.getBytes(1));
+				abyte2 = new BASE64Decoder().decodeBuffer(rs.getString(1));
 				_log.fine("account exists");
 			}
 			SQLUtil.close(rs);
@@ -63,7 +66,7 @@ public class Logins {
 					pstm = con
 							.prepareStatement("INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?");
 					pstm.setString(1, account);
-					pstm.setString(2, Base64.encode(abyte1).toString());
+					pstm.setString(2, new BASE64Encoder().encode(abyte1));
 					pstm.setLong(3, 0L);
 					pstm.setInt(4, 0);
 					pstm.setString(5, ip);
