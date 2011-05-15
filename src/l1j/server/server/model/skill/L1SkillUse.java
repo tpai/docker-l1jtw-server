@@ -60,6 +60,7 @@ import l1j.server.server.serverpackets.S_AttackPacket;
 import l1j.server.server.serverpackets.S_ChangeHeading;
 import l1j.server.server.serverpackets.S_Dexup;
 import l1j.server.server.serverpackets.S_DoActionGFX;
+import l1j.server.server.serverpackets.S_EffectLocation;
 import l1j.server.server.serverpackets.S_Message_YN;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_OwnCharStatus;
@@ -1306,6 +1307,12 @@ public class L1SkillUse {
 					if (_user instanceof L1PcInstance) {
 						pc.sendPackets(new S_SkillSound(targetid, castgfx));
 						pc.broadcastPacket(new S_SkillSound(targetid, castgfx));
+					}
+					return;
+				case TAMING_MONSTER: // 迷魅
+					if (_user instanceof L1PcInstance) {
+						pc.sendPackets(new S_EffectLocation(_targetX, _targetY, castgfx));
+						pc.broadcastPacket(new S_EffectLocation(_targetX, _targetY, castgfx));
 					}
 					return;
 				default:

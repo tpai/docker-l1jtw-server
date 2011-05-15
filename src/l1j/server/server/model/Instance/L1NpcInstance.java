@@ -554,15 +554,6 @@ public class L1NpcInstance extends L1Character {
 			if (!isCounterBarrier) {
 				attack.calcDamage();
 			}
-			// 目標為木人
-			if (target instanceof L1ScarecrowInstance) {
-				if (target.getHeading() < 7) {
-					target.setHeading(target.getHeading() + 1);
-				} else {
-					target.setHeading(0);
-				}
-				target.broadcastPacket(new S_ChangeHeading(target));
-			}
 		}
 		if (isCounterBarrier) {
 			attack.actionCounterBarrier();

@@ -273,7 +273,7 @@ public class L1SummonInstance extends L1NpcInstance {
 
 			getMap().setPassable(getLocation(), true);
 
-			// アイテム解放処理
+			// 死亡時物品給予主人或掉落地面
 			L1Inventory targetInventory = _master.getInventory();
 			List<L1ItemInstance> items = _inventory.getItems();
 			for (L1ItemInstance item : items) {
@@ -354,7 +354,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		}
 	}
 
-	// テイミングモンスター、クリエイトゾンビの時の解放処理
+	// 迷魅的怪物解散處理
 	public void liberate() {
 		L1MonsterInstance monster = new L1MonsterInstance(getNpcTemplate());
 		monster.setId(IdFactory.getInstance().nextId());
@@ -365,11 +365,16 @@ public class L1SummonInstance extends L1NpcInstance {
 		monster.setHeading(getHeading());
 		monster.set_storeDroped(true);
 		monster.setInventory(getInventory());
-		setInventory(null);
+		getInventory().clearItems();
 		monster.setCurrentHpDirect(getCurrentHp());
 		monster.setCurrentMpDirect(getCurrentMp());
 		monster.setExp(0);
 
+		if (!isDead()) { // 原迷魅怪解散時死亡
+			setDead(true);
+			setCurrentHp(0);
+			getMap().setPassable(getLocation(), true);
+		}
 		deleteMe();
 		L1World.getInstance().storeObject(monster);
 		L1World.getInstance().addVisibleObject(monster);
