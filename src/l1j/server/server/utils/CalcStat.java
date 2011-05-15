@@ -47,10 +47,11 @@ public class CalcStat {
 	}
 
 	/**
-	 * 引数のWISに対応するMRボーナスを返す
+	 * <b> 傳回精 wis 對應的抗魔值 </b>
 	 * 
-	 * @param wis
-	 * @return mrBonus
+	 * @param wis 精神點數
+	 *            
+	 * @return mrBonus 抗魔值
 	 */
 	public static int calcStatMr(int wis) {
 		int mrBonus = 0;
@@ -72,10 +73,22 @@ public class CalcStat {
 			mrBonus = 37;
 		} else if (wis == 23) {
 			mrBonus = 47;
-		} else if (wis == 24) {
+		} else if (wis >= 24 && wis <= 29) {
 			mrBonus = 50;
+		} else if (wis >= 30 && wis <= 34) {
+			mrBonus = 52;
+		} else if (wis >= 35 && wis <= 39) {
+			mrBonus = 55;
+		} else if (wis >= 40 && wis <= 43) {
+			mrBonus = 59;
+		} else if (wis >= 44 && wis <= 46) {
+			mrBonus = 62;
+		} else if (wis >= 47 && wis <= 49) {
+			mrBonus = 64;
+		} else if (wis == 50) {
+			mrBonus = 65;
 		} else {
-			mrBonus = 50;
+			mrBonus = 65;
 		}
 		return mrBonus;
 	}
@@ -93,7 +106,8 @@ public class CalcStat {
 	 * @param originalHpup
 	 * @return HP上昇値
 	 */
-	public static short calcStatHp(int charType, int baseMaxHp, byte baseCon, int originalHpup) {
+	public static short calcStatHp(int charType, int baseMaxHp, byte baseCon,
+			int originalHpup) {
 		short randomhp = 0;
 		if (baseCon > 15) {
 			randomhp = (short) (baseCon - 15);
@@ -159,7 +173,8 @@ public class CalcStat {
 	 * @param originalMpup
 	 * @return MP上昇値
 	 */
-	public static short calcStatMp(int charType, int baseMaxMp, byte baseWis, int originalMpup) {
+	public static short calcStatMp(int charType, int baseMaxMp, byte baseWis,
+			int originalMpup) {
 		int randommp = 0;
 		int seedY = 0;
 		int seedZ = 0;
@@ -168,13 +183,11 @@ public class CalcStat {
 		} else if (baseWis == 9 || baseWis >= 12 && baseWis <= 17) {
 			seedY = 3;
 		} else if (baseWis >= 18 && baseWis <= 23 || baseWis == 25
-					|| baseWis == 26 || baseWis == 29
-					|| baseWis == 30 || baseWis == 33
-					|| baseWis == 34) {
+				|| baseWis == 26 || baseWis == 29 || baseWis == 30
+				|| baseWis == 33 || baseWis == 34) {
 			seedY = 4;
-		} else if (baseWis == 24 ||baseWis == 27
-				 ||baseWis == 28 ||baseWis == 31
-				 ||baseWis == 32 ||baseWis >= 35) {
+		} else if (baseWis == 24 || baseWis == 27 || baseWis == 28
+				|| baseWis == 31 || baseWis == 32 || baseWis >= 35) {
 			seedY = 5;
 		}
 
