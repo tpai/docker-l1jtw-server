@@ -22,12 +22,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.TimeInform;
 import l1j.server.server.utils.SQLUtil;
 
 public class L1BoardTopic {
-	private static Logger _log = Logger.getLogger("L1BoardTopic");
+	private static Logger _log = Logger.getLogger(L1BoardTopic.class.getName());
 
 	private final int _id;
 	private final String _name;
@@ -57,13 +58,22 @@ public class L1BoardTopic {
 
 	/**
 	 * 取得今日時間
-	 * @return 今日日期 yy/mm/dd
+	 * 
+	 * @return 今日日期 yy/MM/dd
 	 */
 	private String today() {
+		// 年
+		String year = Integer.parseInt(TimeInform.getYear(0, -2000)) < 10 ? "0"
+				+ TimeInform.getYear(0, -2000) : TimeInform.getYear(0, -2000);
+		// 月
+		String month = Integer.parseInt(TimeInform.getMonth()) < 10 ? "0"
+				+ TimeInform.getMonth() : TimeInform.getMonth();
+		// 日
+		String day = Integer.parseInt(TimeInform.getDay()) < 10 ? "0"
+				+ TimeInform.getDay() : TimeInform.getDay();
 		StringBuilder sb = new StringBuilder();
-		sb.append(TimeInform.getYear(0, -2000)).append("/")
-				.append(TimeInform.getMonth()).append("/")
-				.append(TimeInform.getDay());
+		// 輸出 yy/MM/dd
+		sb.append(year).append("/").append(month).append("/").append(day);
 		return sb.toString();
 	}
 
@@ -91,15 +101,13 @@ public class L1BoardTopic {
 		PreparedStatement pstm2 = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm1 = con
-					.prepareStatement("SELECT max(id) + 1 as newid FROM board");
+			pstm1 = con.prepareStatement("SELECT max(id) + 1 as newid FROM board");
 			rs = pstm1.executeQuery();
 			rs.next();
 			int id = rs.getInt("newid");
 			L1BoardTopic topic = new L1BoardTopic(id, name, title, content);
 
-			pstm2 = con
-					.prepareStatement("INSERT INTO board SET id=?, name=?, date=?, title=?, content=?");
+			pstm2 = con.prepareStatement("INSERT INTO board SET id=?, name=?, date=?, title=?, content=?");
 			pstm2.setInt(1, topic.getId());
 			pstm2.setString(2, topic.getName());
 			pstm2.setString(3, topic.getDate());
@@ -161,11 +169,9 @@ public class L1BoardTopic {
 		PreparedStatement result = null;
 		int offset = 1;
 		if (id == 0) {
-			result = con
-					.prepareStatement("SELECT * FROM board ORDER BY id DESC LIMIT ?");
+			result = con.prepareStatement("SELECT * FROM board ORDER BY id DESC LIMIT ?");
 		} else {
-			result = con
-					.prepareStatement("SELECT * FROM board WHERE id < ? ORDER BY id DESC LIMIT ?");
+			result = con.prepareStatement("SELECT * FROM board WHERE id < ? ORDER BY id DESC LIMIT ?");
 			result.setInt(1, id);
 			offset++;
 		}

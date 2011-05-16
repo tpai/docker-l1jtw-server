@@ -35,13 +35,14 @@ public class TimeInform {
 	static Calendar rightNow = Calendar.getInstance(timezone);
 
 	/**
-	 * @return getYear 年 param type 0:原始(可加減) 1:西元 2:民國
-	 * @param i = +|- years
+	 * @return getYear 年
+	 * @param type 0:原始(可加減) 1:西元 2:民國
+	 * @param i = +|- years     
 	 */
 	public static String getYear(int type, int i) {
 		String year = null;
 		if (type == 0)
-			year = String.valueOf(rightNow.get(Calendar.YEAR + i));
+			year = String.valueOf(rightNow.get(Calendar.YEAR) + i);
 		else if (type == 1)// 西元
 			year = "西元 " + String.valueOf(rightNow.get(Calendar.YEAR));
 		else if (type == 2)
