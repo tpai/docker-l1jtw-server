@@ -492,9 +492,9 @@ public class ClientThread implements Runnable, PacketOutput {
 
 		// 終止決鬥
 		if (pc.getFightId() != 0) {
-			pc.setFightId(0);
 			L1PcInstance fightPc = (L1PcInstance) L1World.getInstance()
 					.findObject(pc.getFightId());
+			pc.setFightId(0);
 			if (fightPc != null) {
 				fightPc.setFightId(0);
 				fightPc.sendPackets(new S_PacketBox(S_PacketBox.MSG_DUEL, 0, 0));
