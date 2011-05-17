@@ -1246,4 +1246,42 @@
 		<Item ItemId="41306" Count="1" Chance="3" />	<!--破碎的戒指-->
 		<Item ItemId="41307" Count="1" Chance="3" />	<!--破碎的項練-->
 	</TreasureBox>
+	<!--開鎖的庫庫爾坎初級寶箱-->
+    <TreasureBox Type="RANDOM" ItemId="49319">
+        <Item ItemId="40044" Count="3" Chance="13" />   <!--鑽石-->
+        <Item ItemId="40045" Count="3" Chance="13" />   <!--紅寶石-->
+        <Item ItemId="40046" Count="3" Chance="13" />   <!--藍寶石-->
+        <Item ItemId="40047" Count="3" Chance="13" />   <!--綠寶石-->
+        <Item ItemId="40048" Count="2" Chance="8" />    <!--品質鑽石-->
+        <Item ItemId="40049" Count="2" Chance="8" />    <!--品質紅寶石-->
+        <Item ItemId="40050" Count="2" Chance="8" />    <!--品質藍寶石-->
+        <Item ItemId="40051" Count="2" Chance="8" />    <!--品質綠寶石-->
+        <Item ItemId="40074" Count="1" Chance="5" />    <!--對盔甲施法的卷軸-->
+        <Item ItemId="40087" Count="1" Chance="5" />    <!--對武器施法的卷軸-->
+        <Item ItemId="276" Count="1" Chance="2" />      <!--提卡爾庫庫爾坎之矛-->
+        <Item ItemId="277" Count="1" Chance="2" />      <!--提卡爾庫庫爾坎鐵手甲-->
+        <Item ItemId="21131" Count="1" Chance="2" />    <!--提卡爾庫庫爾坎之盾-->
+   </TreasureBox>
+   <!--開鎖的庫庫爾坎高級寶箱-->
+   <TreasureBox Type="RANDOM" ItemId="49323">
+       <Item ItemId="40044" Count="3" Chance="7" />     <!--鑽石-->
+       <Item ItemId="40045" Count="3" Chance="7" />     <!--紅寶石-->
+       <Item ItemId="40046" Count="3" Chance="7" />     <!--藍寶石-->
+       <Item ItemId="40047" Count="3" Chance="7" />     <!--綠寶石-->
+       <Item ItemId="40048" Count="2" Chance="6" />     <!--品質鑽石-->
+       <Item ItemId="40049" Count="2" Chance="6" />     <!--品質紅寶石-->
+       <Item ItemId="40050" Count="2" Chance="6" />     <!--品質藍寶石-->
+       <Item ItemId="40051" Count="2" Chance="6" />     <!--品質綠寶石-->
+       <Item ItemId="40052" Count="1" Chance="5" />     <!--高品質鑽石-->
+       <Item ItemId="40053" Count="1" Chance="5" />     <!--高品質紅寶石-->
+       <Item ItemId="40054" Count="1" Chance="5" />     <!--高品質藍寶石-->
+       <Item ItemId="40055" Count="1" Chance="5" />     <!--高品質綠寶石-->
+       <Item ItemId="40074" Count="1" Chance="4" />     <!--對盔甲施法的卷軸-->
+       <Item ItemId="40087" Count="1" Chance="4" />     <!--對武器施法的卷軸-->
+       <Item ItemId="140074" Count="1" Chance="4" />    <!--祝福的對盔甲施法的卷軸-->
+       <Item ItemId="140087" Count="1" Chance="4" />    <!--祝福的對盔甲施法的卷軸-->
+       <Item ItemId="276" Count="1" Chance="4" />       <!--提卡爾庫庫爾坎之矛-->
+       <Item ItemId="277" Count="1" Chance="4" />       <!--提卡爾庫庫爾坎鐵手甲-->
+       <Item ItemId="21131" Count="1" Chance="4" />     <!--提卡爾庫庫爾坎之盾-->
+   </TreasureBox>
 </TreasureBoxList>
