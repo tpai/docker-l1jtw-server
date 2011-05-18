@@ -1,22 +1,24 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
 Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-02-04 06:56:00
+Date: 2011-05-19 07:06:29
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
 -- ----------------------------
 -- Table structure for mobskill
 -- ----------------------------
+DROP TABLE IF EXISTS `mobskill`;
 CREATE TABLE `mobskill` (
   `mobid` int(10) unsigned NOT NULL DEFAULT '0',
   `actNo` int(10) unsigned NOT NULL DEFAULT '0',
@@ -43,7 +45,7 @@ CREATE TABLE `mobskill` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records 
+-- Records of mobskill
 -- ----------------------------
 INSERT INTO `mobskill` VALUES ('45049', '0', '暴走兔', '2', '100', '0', '0', '-6', '0', '0', '0', '0', '0', '5', '38', '0', '0', '0', '0', '0', '0');
 INSERT INTO `mobskill` VALUES ('45167', '0', '南瓜怪', '1', '100', '0', '0', '-1', '0', '0', '1', '0', '0', '45', '0', '0', '30', '0', '0', '0', '0');
@@ -160,7 +162,7 @@ INSERT INTO `mobskill` VALUES ('45520', '1', '火焰烈炎獸', '1', '100', '0',
 INSERT INTO `mobskill` VALUES ('45522', '0', '骨龍', '2', '100', '0', '0', '-2', '0', '0', '2', '1', '2', '15', '10009', '2411', '16', '0', '0', '0', '0');
 INSERT INTO `mobskill` VALUES ('45523', '0', '闇黑君王', '2', '70', '0', '0', '-8', '0', '0', '0', '0', '0', '0', '10088', '0', '0', '0', '0', '0', '0');
 INSERT INTO `mobskill` VALUES ('45523', '1', '闇黑君王', '2', '30', '0', '0', '-7', '0', '0', '0', '0', '0', '0', '10089', '0', '0', '0', '0', '0', '0');
-INSERT INTO `mobskill` VALUES ('45526', '0', '深紅飛龍', '1', '100', '0', '0', '5', '0', '0', '5', '0', '0', '30', '0', '4651', '3', '0', '0', '0', '0');
+INSERT INTO `mobskill` VALUES ('45526', '0', '深紅飛龍', '1', '100', '0', '0', '5', '0', '0', '5', '0', '0', '30', '0', '0', '30', '0', '0', '0', '0');
 INSERT INTO `mobskill` VALUES ('45527', '0', '血騎士', '1', '50', '0', '0', '-1', '0', '0', '1', '0', '0', '5', '0', '4631', '30', '0', '0', '0', '0');
 INSERT INTO `mobskill` VALUES ('45528', '0', '冷酷冰原老虎', '1', '100', '0', '0', '-1', '0', '0', '1', '0', '0', '30', '0', '0', '0', '0', '0', '0', '0');
 INSERT INTO `mobskill` VALUES ('45529', '0', '飛龍', '1', '20', '0', '0', '-2', '0', '0', '2', '1', '0', '30', '0', '1064', '30', '0', '0', '0', '0');
