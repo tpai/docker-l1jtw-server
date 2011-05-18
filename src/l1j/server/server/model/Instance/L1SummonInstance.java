@@ -149,7 +149,7 @@ public class L1SummonInstance extends L1NpcInstance {
 		master.addPet(this);
 	}
 
-	// テイミングモンスター、クリエイトゾンビ用
+	// 造屍術處理
 	public L1SummonInstance(L1NpcInstance target, L1Character master,
 			boolean isCreateZombie) {
 		super(null);

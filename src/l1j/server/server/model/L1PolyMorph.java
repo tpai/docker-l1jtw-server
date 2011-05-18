@@ -270,7 +270,7 @@ public class L1PolyMorph {
 				pc.getInventory().takeoffEquip(polyId); // 是否將裝備的武器強制解除。
 			}
 			pc.sendPackets(new S_SkillIconGFX(35, timeSecs));
-		} else if (cha instanceof L1MonsterInstance) {
+		} else if (cha instanceof L1MonsterInstance) { // 怪物變身
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
 			mob.killSkillEffectTimer(SHAPE_CHANGE);
 			mob.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
@@ -279,14 +279,14 @@ public class L1PolyMorph {
 				int npcStatus = mob.getNpcStstus(polyId);
 				mob.setStatus(npcStatus);
 				if (npcStatus == 20) { // 弓類
-					mob.getNpcTemplate().set_ranged(10);
-					mob.getNpcTemplate().setBowActId(66);
-				} else if (npcStatus == 24) { // 矛類
-					mob.getNpcTemplate().set_ranged(2);
-					mob.getNpcTemplate().setBowActId(0);
+					mob.setPolyAtkRanged(10);
+					mob.setPolyArrowGfx(66);
+				} else if (npcStatus == 24 || polyId == 95 || polyId == 146) { // 矛類、夏洛伯、楊果理恩
+					mob.setPolyAtkRanged(2);
+					mob.setPolyArrowGfx(0);
 				} else {
-					mob.getNpcTemplate().set_ranged(1);
-					mob.getNpcTemplate().setBowActId(0);
+					mob.setPolyAtkRanged(1);
+					mob.setPolyArrowGfx(0);
 				}
 				mob.setPassispeed(SprTable.getInstance().getSprSpeed(polyId, mob.getStatus())); // 移動速度
 				mob.setAtkspeed(SprTable.getInstance().getSprSpeed(polyId, mob.getStatus() + 1)); // 攻擊速度
@@ -310,8 +310,8 @@ public class L1PolyMorph {
 			int gfxId = mob.getGfxId();
 			mob.setTempCharGfx(0);
 			mob.setStatus(mob.getNpcStstus(gfxId));
-			mob.getNpcTemplate().set_ranged(mob.getTrueRanged()); // 攻擊距離還原
-			mob.getNpcTemplate().setBowActId(mob.getTrueBowActId()); // 遠程攻擊圖像還原
+			mob.setPolyAtkRanged(-1);
+			mob.setPolyArrowGfx(0);
 			mob.setPassispeed(SprTable.getInstance().getSprSpeed(gfxId, mob.getStatus())); // 移動速度
 			mob.setAtkspeed(SprTable.getInstance().getSprSpeed(gfxId, mob.getStatus() + 1)); // 攻擊速度
 			mob.broadcastPacket(new S_NpcChangeShape(mob.getId(), gfxId, mob.getLawful(), mob.getStatus())); // 更新NPC外觀

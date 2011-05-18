@@ -58,7 +58,6 @@ import l1j.server.server.model.L1World;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
 import l1j.server.server.model.skill.L1SkillUse;
-import l1j.server.server.serverpackets.S_ChangeHeading;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_MoveCharPacket;
 import l1j.server.server.serverpackets.S_NPCPack;
@@ -428,8 +427,7 @@ public class L1NpcInstance extends L1Character {
 				}
 			}
 		} else { // 逃げないキャラ
-			if (isAttackPosition(target.getX(), target.getY(), getNpcTemplate()
-					.get_ranged())) { // 攻撃可能位置
+			if (isAttackPosition(target.getX(), target.getY(), getAtkRanged())) { // 攻撃可能位置
 				if (mobSkill.isSkillTrigger(target)) { // トリガの条件に合うスキルがある
 					if (mobSkill.skillUse(target, true)) { // スキル使用(mobskill.sqlのTriRndに従う)
 						setSleepTime(calcSleepTime(mobSkill.getSleepTime(),
@@ -1182,8 +1180,8 @@ public class L1NpcInstance extends L1Character {
 		} else {
 			setStatus(getNpcStstus(getGfxId()));
 		}
-		setTrueRanged(template.get_ranged());
-		setTrueBowActId(template.getBowActId());
+		setPolyAtkRanged(template.get_ranged());
+		setPolyArrowGfx(template.getBowActId());
 
 		// 移動
 		if (template.get_passispeed() != 0) {
@@ -2437,24 +2435,31 @@ public class L1NpcInstance extends L1Character {
 		}
 	}
 
-	private int _trueRanged = 0;
-
-	public int getTrueRanged() {
-		return _trueRanged;
+	public int getAtkRanged() {
+		if (_polyAtkRanged == -1) {
+			return getNpcTemplate().get_ranged();
+		}
+		return _polyAtkRanged;
 	}
 
-	public void setTrueRanged(int i) {
-		_trueRanged = i;
+	private int _polyAtkRanged = -1;
+
+	public int getPolyAtkRanged() {
+		return _polyAtkRanged;
 	}
 
-	private int _trueBowActId = 0;
-
-	public int getTrueBowActId() {
-		return _trueBowActId;
+	public void setPolyAtkRanged(int i) {
+		_polyAtkRanged = i;
 	}
 
-	public void setTrueBowActId(int i) {
-		_trueBowActId = i;
+	private int _polyArrowGfx = 0;
+
+	public int getPolyArrowGfx() {
+		return _polyArrowGfx;
+	}
+
+	public void setPolyArrowGfx(int i) {
+		_polyArrowGfx = i;
 	}
 
 	public int getNpcStstus(int gfxid) {

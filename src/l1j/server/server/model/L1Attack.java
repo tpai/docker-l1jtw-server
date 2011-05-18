@@ -759,7 +759,7 @@ public class L1Attack {
 		int rnd = Random.nextInt(100) + 1;
 
 		// NPCの攻撃レンジが10以上の場合で、2以上離れている場合弓攻撃とみなす
-		if ((_npc.getNpcTemplate().get_ranged() >= 10)
+		if ((_npc.getAtkRanged() >= 10)
 				&& (_hitRate > rnd)
 				&& (_npc.getLocation().getTileLineDistance(
 						new Point(_targetX, _targetY)) >= 2)) {
@@ -1783,7 +1783,10 @@ public class L1Attack {
 		// 與目標距離2格以上
 		boolean isLongRange = (_npc.getLocation().getTileLineDistance(
 				new Point(_targetX, _targetY)) > 1);
-		bowActId = _npc.getNpcTemplate().getBowActId();
+		bowActId = _npc.getPolyArrowGfx();
+		if (bowActId == 0) {
+			bowActId = _npc.getNpcTemplate().getBowActId();
+		}
 
 		if (getActId() > 0) {
 			actId = getActId();
@@ -1980,7 +1983,10 @@ public class L1Attack {
 		} else if (_calcType == NPC_PC) {
 			boolean isLongRange = (_npc.getLocation().getTileLineDistance(
 					new Point(_targetX, _targetY)) > 1);
-			int bowActId = _npc.getNpcTemplate().getBowActId();
+			int bowActId = _npc.getPolyArrowGfx();
+			if (bowActId == 0) {
+				bowActId = _npc.getNpcTemplate().getBowActId();
+			}
 			// 距離が2以上、攻撃者の弓のアクションIDがある場合は遠攻撃
 			if (isLongRange && (bowActId > 0)) {
 				isShortDistance = false;

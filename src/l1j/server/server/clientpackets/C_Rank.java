@@ -41,13 +41,13 @@ public class C_Rank extends ClientBasePacket {
 		super(abyte0);
 
 		int data = readC(); // ?
-		int rank = readC();
-		String name = readS();
 
 		L1PcInstance pc = clientthread.getActiveChar();
-		L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 
 		if (data == 1) {
+			int rank = readC();
+			String name = readS();
+			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
 			if (pc == null) {
 				return;
 			}
