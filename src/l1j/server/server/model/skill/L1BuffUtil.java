@@ -579,10 +579,7 @@ public class L1BuffUtil {
 				cha.curePoison();
 				cha.cureParalaysis();
 				for (int skillNum = STATUS_BEGIN; skillNum <= STATUS_END; skillNum++) {
-					if ((skillNum == STATUS_CHAT_PROHIBITED // チャット禁止は解除しない
-							)
-							|| (skillNum == STATUS_CURSE_BARLOG // バルログの呪いは解除しない
-							) || (skillNum == STATUS_CURSE_YAHEE)) { // ヤヒの呪いは解除しない
+					if (skillNum == STATUS_CHAT_PROHIBITED) { // 禁言
 						continue;
 					}
 					cha.removeSkillEffect(skillNum);

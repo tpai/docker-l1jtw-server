@@ -105,22 +105,11 @@ public class L1DragonPortalInstance extends L1NpcInstance {
 				htmlid = "dsecret3";
 			}
 		}
-		// html表示パケット送信
-		if (htmlid != null) { // htmlidが指定されている場合
-			if (htmldata != null) { // html指定がある場合は表示
-				player.sendPackets(new S_NPCTalkReturn(objid, htmlid, htmldata));
-			}
-			else {
-				player.sendPackets(new S_NPCTalkReturn(objid, htmlid));
-			}
-		}
-		else {
-			if (player.getLawful() < -1000) { // プレイヤーがカオティック
-				player.sendPackets(new S_NPCTalkReturn(talking, objid, 2));
-			}
-			else {
-				player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
-			}
+
+		if (htmlid != null) {
+			player.sendPackets(new S_NPCTalkReturn(objid, htmlid, htmldata));
+		} else {
+			player.sendPackets(new S_NPCTalkReturn(talking, objid, 1));
 		}
 	}
 }

@@ -106,7 +106,7 @@ import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_ShopBuyList;
 import l1j.server.server.serverpackets.S_ShopSellList;
 import l1j.server.server.serverpackets.S_SkillHaste;
-import l1j.server.server.serverpackets.S_SkillIconBlessOfEva;
+import l1j.server.server.serverpackets.S_SkillIconAura;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_SummonPack;
 import l1j.server.server.serverpackets.S_SystemMessage;
@@ -410,33 +410,22 @@ public class C_NPCAction extends ClientBasePacket {
 					Timestamp dueTime = inn.getDueTime();
 					Calendar cal = Calendar.getInstance();
 					long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
-					if (dueTime != null) { // 時間不為空值
-						if (inn.getLodgerId() == pc.getId()
-								&& checkDueTime < 0) { // 租用者判斷
-							if (inn.isHall()) {
-								isHall = true;
-							}
-							isRent = true; // 已租用，且時間未到
-							break;
+					if (inn.getLodgerId() == pc.getId() && checkDueTime < 0) { // 出租時間未到的房間租用人判斷
+						if (inn.isHall()) { // 租用的是會議室
+							isHall = true;
 						}
-						if ((!findRoom)) { // 尚未找到可租用的房間
-							if (checkDueTime >= 0) { // 租用時間已到
-								canRent = true;
-								findRoom = true;
-								roomNumber = inn.getRoomNumber();
-								break;
-							} else { // 計算出租時間未到的數量
-								if (!inn.isHall()) { // 一般房間
-									roomCount++;
-								}
-							}
-						}
-					} else { // 無出租時間，直接租用
-						if (!findRoom) { // 尚未找到可租用的房間
+						isRent = true; // 已租用
+						break;
+					}
+					else if (!findRoom && !isRent) { // 未租用且尚未找到可租用的房間
+						if (checkDueTime >= 0) { // 租用時間已到
 							canRent = true;
 							findRoom = true;
 							roomNumber = inn.getRoomNumber();
-							break;
+						} else { // 計算出租時間未到的數量
+							if (!inn.isHall()) { // 一般房間
+								roomCount++;
+							}
 						}
 					}
 				}
@@ -474,33 +463,22 @@ public class C_NPCAction extends ClientBasePacket {
 						Timestamp dueTime = inn.getDueTime();
 						Calendar cal = Calendar.getInstance();
 						long checkDueTime = (cal.getTimeInMillis() - dueTime.getTime()) / 1000;
-						if (dueTime != null) { // 時間不為空值
-							if (inn.getLodgerId() == pc.getId()
-									&& checkDueTime < 0) { // 租用者判斷
-								if (inn.isHall()) {
-									isHall = true;
-								}
-								isRent = true; // 已租用，且時間未到
-								break;
+						if (inn.getLodgerId() == pc.getId() && checkDueTime < 0) { // 出租時間未到的房間租用人判斷
+							if (inn.isHall()) { // 租用的是會議室
+								isHall = true;
 							}
-							if ((!findRoom)) { // 尚未找到可租用的會議室
-								if (checkDueTime >= 0) { // 租用時間已到
-									canRent = true;
-									findRoom = true;
-									roomNumber = inn.getRoomNumber();
-									break;
-								} else { // 計算出租時間未到的數量
-									if (inn.isHall()) { // 會議室
-										roomCount++;
-									}
-								}
-							}
-						} else { // 無出租時間，直接租用
-							if (!findRoom) { // 尚未找到可租用的會議室
+							isRent = true; // 已租用
+							break;
+						}
+						else if (!findRoom && !isRent) { // 未租用且尚未找到可租用的房間
+							if (checkDueTime >= 0) { // 租用時間已到
 								canRent = true;
 								findRoom = true;
 								roomNumber = inn.getRoomNumber();
-								break;
+							} else { // 計算出租時間未到的數量
+								if (inn.isHall()) { // 會議室
+									roomCount++;
+								}
 							}
 						}
 					}
@@ -1065,7 +1043,7 @@ public class C_NPCAction extends ClientBasePacket {
 			// 「観覧モードで闘技場に入る」
 			// 「ステータス再分配」
 			int npcId = ((L1NpcInstance) obj).getNpcId();
-			if ((npcId == 80085) || (npcId == 80086) || (npcId == 80087)) {
+			if (npcId == 80085) {
 				htmlid = enterHauntedHouse(pc);
 			}
 			else if (npcId == 80088) {
@@ -1117,11 +1095,7 @@ public class C_NPCAction extends ClientBasePacket {
 			htmlid = enterUb(pc, ((L1NpcInstance) obj).getNpcId());
 		}
 		else if (s.equalsIgnoreCase("info")) { // 「情報を確認する」「競技情報を確認する」
-			int npcId = ((L1NpcInstance) obj).getNpcId();
-			if ((npcId == 80085) || (npcId == 80086) || (npcId == 80087)) {}
-			else {
-				htmlid = "colos2";
-			}
+			htmlid = "colos2";
 		}
 		else if (s.equalsIgnoreCase("sco")) { // UB関連「高得点者一覧を確認する」
 			htmldata = new String[10];
@@ -1399,20 +1373,17 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 		}
-		// ヤヒの軍師
-		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80052) {
-			// 私に力をくださいますよう・・・
-			if (s.equalsIgnoreCase("a")) {
-				if (pc.hasSkillEffect(STATUS_CURSE_YAHEE)) {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80052) { // 火焰之影的軍師
+			if (s.equalsIgnoreCase("a")) { // 請賜給我力量
+				if (pc.hasSkillEffect(STATUS_CURSE_BARLOG)) { // 火焰之影的烙印
+					pc.killSkillEffectTimer(STATUS_CURSE_BARLOG);
 				}
-				else {
-					pc.setSkillEffect(STATUS_CURSE_BARLOG, 1020 * 1000);
-					pc.sendPackets(new S_SkillIconBlessOfEva(pc.getId(), 1020));
-					pc.sendPackets(new S_SkillSound(pc.getId(), 750));
-					pc.broadcastPacket(new S_SkillSound(pc.getId(), 750));
-					pc.sendPackets(new S_ServerMessage(1127));
-				}
+				pc.sendPackets(new S_SkillSound(pc.getId(), 750));
+				pc.broadcastPacket(new S_SkillSound(pc.getId(), 750));
+				pc.sendPackets(new S_SkillIconAura(221, 1020, 2)); // 火焰之影的烙印
+				pc.setSkillEffect(STATUS_CURSE_BARLOG, 1020 * 1000);
+				pc.sendPackets(new S_ServerMessage(1127));
+				htmlid = "";
 			}
 		}
 		// ヤヒの鍛冶屋
@@ -1610,20 +1581,17 @@ public class C_NPCAction extends ClientBasePacket {
 			L1NpcInstance npc = (L1NpcInstance) obj;
 			htmlid = getBarlogEarring(pc, npc, s);
 		}
-		// バルログの軍師
-		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80073) {
-			// 私に力をくださいますよう・・・
-			if (s.equalsIgnoreCase("a")) {
-				if (pc.hasSkillEffect(STATUS_CURSE_BARLOG)) {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80073) { // 炎魔的軍師
+			if (s.equalsIgnoreCase("a")) { // 請給我力量
+				if (pc.hasSkillEffect(STATUS_CURSE_YAHEE)) { // 炎魔的烙印
+					pc.killSkillEffectTimer(STATUS_CURSE_YAHEE);
 				}
-				else {
-					pc.setSkillEffect(STATUS_CURSE_YAHEE, 1020 * 1000);
-					pc.sendPackets(new S_SkillIconBlessOfEva(pc.getId(), 1020));
-					pc.sendPackets(new S_SkillSound(pc.getId(), 750));
-					pc.broadcastPacket(new S_SkillSound(pc.getId(), 750));
-					pc.sendPackets(new S_ServerMessage(1127));
-				}
+				pc.sendPackets(new S_SkillSound(pc.getId(), 750));
+				pc.broadcastPacket(new S_SkillSound(pc.getId(), 750));
+				pc.sendPackets(new S_SkillIconAura(221, 1020, 1)); // 炎魔的烙印
+				pc.setSkillEffect(STATUS_CURSE_YAHEE, 1020 * 1000);
+				pc.sendPackets(new S_ServerMessage(1127));
+				htmlid = "";
 			}
 		}
 		// バルログの鍛冶屋

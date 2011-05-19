@@ -1406,6 +1406,18 @@ class L1SkillStop {
 				pc.sendPackets(new S_SkillIconAura(152, 0));
 			}
 		}
+		else if (skillId == STATUS_CURSE_YAHEE) { // 炎魔的烙印
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.sendPackets(new S_SkillIconAura(221, 0, 1));
+			}
+		}
+		else if (skillId == STATUS_CURSE_BARLOG) { // 火焰之影的烙印
+			if (cha instanceof L1PcInstance) {
+				L1PcInstance pc = (L1PcInstance) cha;
+				pc.sendPackets(new S_SkillIconAura(221, 0, 2));
+			}
+		}
 
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) cha;
