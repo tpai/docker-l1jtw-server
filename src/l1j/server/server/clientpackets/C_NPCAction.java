@@ -4344,6 +4344,7 @@ public class C_NPCAction extends ClientBasePacket {
 			int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
 			int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
 			int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
+			@SuppressWarnings("unused")
 			int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
 			if (pc.isDragonKnight()) {
 				if (s.equalsIgnoreCase("l") && (lv45_step == 1)) {
@@ -4443,6 +4444,7 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81255) {// 新手導師
+			@SuppressWarnings("unused")
 			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR);// 任務編號階段
 			int level = pc.getLevel();// 角色等級
 			char s1 = s.charAt(0);
@@ -4641,6 +4643,7 @@ public class C_NPCAction extends ClientBasePacket {
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81256) {// 修練場管理員
 			int quest_step = pc.getQuest().get_step(L1Quest.QUEST_TUTOR2);// 任務編號階段
 			int level = pc.getLevel();// 角色等級
+			@SuppressWarnings("unused")
 			boolean isOK = false;
 			if (s.equalsIgnoreCase("A")) {
 				if ((level > 4) && (quest_step == 2)) {

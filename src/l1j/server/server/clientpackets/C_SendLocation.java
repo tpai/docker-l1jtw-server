@@ -63,6 +63,7 @@ public class C_SendLocation extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(1783, name));
 			}
 		} else if (type == 0x06) {
+			@SuppressWarnings("unused")
 			int objectId = readD();
 			int gate = readD();
 			int dragonGate[] = { 81273, 81274, 81275, 81276 };

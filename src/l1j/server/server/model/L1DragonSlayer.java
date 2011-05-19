@@ -549,7 +549,7 @@ public class L1DragonSlayer {
 					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585
 					|| npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
 					|| npc.getGfxId() == 7864 || npc.getGfxId() == 7869 || npc.getGfxId() == 7870) {
-				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, npc.ATTACK_SPEED);
+				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
 				for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(npc)) {
 					npc.onPerceive(pc);
 					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
