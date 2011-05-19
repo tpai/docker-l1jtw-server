@@ -42,12 +42,12 @@ public class L1Buff implements L1CommandExecutor {
 			StringTokenizer tok = new StringTokenizer(arg);
 			Collection<L1PcInstance> players = null;
 			String s = tok.nextToken();
-			if (s.equals("me")) {
+			if (s.equalsIgnoreCase("me")) {
 				players = Lists.newList();
 				players.add(pc);
 				s = tok.nextToken();
 			}
-			else if (s.equals("all")) {
+			else if (s.equalsIgnoreCase("all")) {
 				players = L1World.getInstance().getAllPlayers();
 				s = tok.nextToken();
 			}

@@ -51,13 +51,13 @@ public class L1InsertSpawn implements L1CommandExecutor {
 				msg = "找不到符合條件的NPC。";
 				return;
 			}
-			if (type.equals("mob")) {
+			if (type.equalsIgnoreCase("mob")) {
 				if (!template.getImpl().equals("L1Monster")) {
 					msg = "指定的NPC不是L1Monster類型。";
 					return;
 				}
 				SpawnTable.storeSpawn(pc, template);
-			} else if (type.equals("npc")) {
+			} else if (type.equalsIgnoreCase("npc")) {
 				NpcSpawnTable.getInstance().storeSpawn(pc, template);
 			}
 			L1SpawnUtil.spawn(pc, npcId, 0, 0);

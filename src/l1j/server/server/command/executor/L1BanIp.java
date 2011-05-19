@@ -56,12 +56,12 @@ public class L1BanIp implements L1CommandExecutor {
 				}
 			}
 
-			if ("add".equals(s2) && !isBanned) {
+			if ("add".equalsIgnoreCase(s2) && !isBanned) {
 				iptable.banIp(s1); // BANリストへIPを加える
 				String msg = new StringBuilder().append("IP:").append(s1).append(" 被新增到封鎖名單。").toString();
 				pc.sendPackets(new S_SystemMessage(msg));
 			}
-			else if ("del".equals(s2) && isBanned) {
+			else if ("del".equalsIgnoreCase(s2) && isBanned) {
 				if (iptable.liftBanIp(s1)) { // BANリストからIPを削除する
 					String msg = new StringBuilder().append("IP:").append(s1).append(" 已從封鎖名單中刪除。").toString();
 					pc.sendPackets(new S_SystemMessage(msg));
