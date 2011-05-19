@@ -416,6 +416,14 @@ public class L1GuardInstance extends L1NpcInstance {
 	}
 
 	@Override
+	public void setLink(L1Character cha) {
+		if ((cha != null) && _hateList.isEmpty()) {
+			_hateList.add(cha, 0);
+			checkTarget();
+		}
+	}
+
+	@Override
 	public void receiveDamage(L1Character attacker, int damage) { // 攻撃でＨＰを減らすときはここを使用
 		if ((getCurrentHp() > 0) && !isDead()) {
 			if (damage >= 0) {
@@ -432,6 +440,7 @@ public class L1GuardInstance extends L1NpcInstance {
 			if ((attacker instanceof L1PcInstance) && (damage > 0)) {
 				L1PcInstance pc = (L1PcInstance) attacker;
 				pc.setPetTarget(this);
+				serchLink(pc, getNpcTemplate().get_family());
 			}
 
 			int newHp = getCurrentHp() - damage;
