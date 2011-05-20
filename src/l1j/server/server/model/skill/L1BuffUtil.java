@@ -1045,9 +1045,9 @@ public class L1BuffUtil {
 					if ((weakAttr & 1) == 1) { // 地
 						cha.broadcastPacket(new S_SkillSound(cha.getId(), 2169));
 					} else if ((weakAttr & 2) == 2) { // 火
-						cha.broadcastPacket(new S_SkillSound(cha.getId(), 2167));
-					} else if ((weakAttr & 4) == 4) { // 水
 						cha.broadcastPacket(new S_SkillSound(cha.getId(), 2166));
+					} else if ((weakAttr & 4) == 4) { // 水
+						cha.broadcastPacket(new S_SkillSound(cha.getId(), 2167));
 					} else if ((weakAttr & 8) == 8) { // 風
 						cha.broadcastPacket(new S_SkillSound(cha.getId(), 2168));
 					} else {
