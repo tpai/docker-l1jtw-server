@@ -109,6 +109,8 @@ public final class Config {
 	public static boolean SEND_PACKET_BEFORE_TELEPORT;
 
 	public static boolean DETECT_DB_RESOURCE_LEAKS;
+	
+	public static boolean CmdActive;
 
 	/** Rate control */
 	public static double RATE_XP;
@@ -480,6 +482,7 @@ public final class Config {
 			LEVEL_DOWN_RANGE = Integer.parseInt(serverSettings.getProperty("LevelDownRange", "0"));
 			SEND_PACKET_BEFORE_TELEPORT = Boolean.parseBoolean(serverSettings.getProperty("SendPacketBeforeTeleport", "false"));
 			DETECT_DB_RESOURCE_LEAKS = Boolean.parseBoolean(serverSettings.getProperty("EnableDatabaseResourceLeaksDetection", "false"));
+			CmdActive = Boolean.parseBoolean(serverSettings.getProperty("CmdActive", "false"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);

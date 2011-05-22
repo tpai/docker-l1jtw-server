@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
+import l1j.server.ConsoleProcess;
 import l1j.server.L1Message;
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.CharacterTable;
@@ -293,7 +294,10 @@ public class GameServer extends Thread {
 
 		System.out.println(L1Message.initialfinished);
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
-
+		
+		Thread cp = new ConsoleProcess();//cmd互動指令
+		cp.start();
+		
 		this.start();
 	}
 
