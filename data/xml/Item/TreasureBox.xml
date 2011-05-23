@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <TreasureBoxList>
 	<!--Type=SPECIFIC的情況可以得到列表所有項目。Chance不用指定。-->
 	<!--Type=RANDOM的情況可以得到列表其中一項。Chance必須指定。-->
@@ -193,11 +193,11 @@
 	<!--魔法娃娃的袋子-->
 	<TreasureBox Type="RANDOM" ItemId="41247">
 		<Item ItemId="49039" Count="1" Chance="17" />		<!--魔法娃娃：石頭高崙-->
-		<Item ItemId="41248" Count="1" Chance="16.6" />	<!--魔法娃娃：肥肥-->
-		<Item ItemId="41249" Count="1" Chance="16.6" />	<!--魔法娃娃：小思克巴-->
-		<Item ItemId="41250" Count="1" Chance="16.6" />	<!--魔法娃娃：野狼寶寶-->
-		<Item ItemId="49037" Count="1" Chance="16.6" />	<!--魔法娃娃：長老-->
-		<Item ItemId="49038" Count="1" Chance="16.6" />	<!--魔法娃娃：奎斯坦修-->
+		<Item ItemId="41248" Count="1" Chance="16.6" />		<!--魔法娃娃：肥肥-->
+		<Item ItemId="41249" Count="1" Chance="16.6" />		<!--魔法娃娃：小思克巴-->
+		<Item ItemId="41250" Count="1" Chance="16.6" />		<!--魔法娃娃：野狼寶寶-->
+		<Item ItemId="49037" Count="1" Chance="16.6" />		<!--魔法娃娃：長老-->
+		<Item ItemId="49038" Count="1" Chance="16.6" />		<!--魔法娃娃：奎斯坦修-->
 	</TreasureBox>
 
 	<!--勇者的南瓜袋子-->
@@ -248,17 +248,17 @@
 	<!--勇者的南瓜袋子(銅)-->
 	<TreasureBox Type="RANDOM" ItemId="49280">
 		<Item ItemId="40010" Count="15" Chance="17.3" />	<!--治癒藥水-->
-		<Item ItemId="40011" Count="8" Chance="16.3" />	<!--強力治癒藥水-->
+		<Item ItemId="40011" Count="8" Chance="16.3" />		<!--強力治癒藥水-->
 		<Item ItemId="40319" Count="10" Chance="16.3" />	<!--精靈玉-->
-		<Item ItemId="40013" Count="5" Chance="15.2" />	<!--自我加速藥水-->
-		<Item ItemId="40318" Count="5" Chance="8" />	<!--魔法寶石-->
-		<Item ItemId="49143" Count="1" Chance="6" />	<!--勇氣結晶-->
-		<Item ItemId="40088" Count="2" Chance="5.3" />	<!--變形卷軸-->
-		<Item ItemId="40012" Count="4" Chance="5" />	<!--終極治癒藥水-->
-		<Item ItemId="40018" Count="2" Chance="5" />	<!--強化綠色藥水-->
-		<Item ItemId="49143" Count="2" Chance="3.3" />	<!--勇氣結晶-->
-		<Item ItemId="40074" Count="1" Chance="2" />	<!--對盔甲施法的卷軸-->
-		<Item ItemId="41251" Count="1" Chance="0.3" />	<!--骷髏聖盃-->
+		<Item ItemId="40013" Count="5" Chance="15.2" />		<!--自我加速藥水-->
+		<Item ItemId="40318" Count="5" Chance="8" />		<!--魔法寶石-->
+		<Item ItemId="49143" Count="1" Chance="6" />		<!--勇氣結晶-->
+		<Item ItemId="40088" Count="2" Chance="5.3" />		<!--變形卷軸-->
+		<Item ItemId="40012" Count="4" Chance="5" />		<!--終極治癒藥水-->
+		<Item ItemId="40018" Count="2" Chance="5" />		<!--強化綠色藥水-->
+		<Item ItemId="49143" Count="2" Chance="3.3" />		<!--勇氣結晶-->
+		<Item ItemId="40074" Count="1" Chance="2" />		<!--對盔甲施法的卷軸-->
+		<Item ItemId="41251" Count="1" Chance="0.3" />		<!--骷髏聖盃-->
 	</TreasureBox>
 
 	<!--驚喜箱-->
@@ -1116,44 +1116,46 @@
 
 	<!--冰之女王的箱子-->
 	<TreasureBox Type="RANDOM" ItemId="49034">
-		<Item ItemId="40074" Count="1" Chance="5.45" />		<!--對盔甲施法的卷軸-->
-		<Item ItemId="40087" Count="1" Chance="5.45" />		<!--對武器施法的卷軸-->
-		<Item ItemId="20267" Count="1" Chance="4.88" />		<!--精神項鍊-->
-		<Item ItemId="40" Count="1" Chance="3.88" />		<!--血色巨劍-->
-		<Item ItemId="55" Count="1" Chance="3.88" />		<!--黑暗之劍-->
-		<Item ItemId="57" Count="1" Chance="3.88" />		<!--瑟魯基之劍-->
-		<Item ItemId="81" Count="1" Chance="3.88" />		<!--幽暗雙刀-->
-		<Item ItemId="130" Count="1" Chance="3.88" />		<!--紅水晶魔杖-->
-		<Item ItemId="162" Count="1" Chance="3.88" />		<!--幽暗鋼爪-->
-		<Item ItemId="177" Count="1" Chance="3.88" />		<!--幽暗十字弓-->
-		<Item ItemId="20254" Count="1" Chance="3.88" />		<!--魅力項鍊-->
-		<Item ItemId="20256" Count="1" Chance="3.88" />		<!--敏捷項鍊-->
-		<Item ItemId="20264" Count="1" Chance="3.88" />		<!--力量項鍊-->
-		<Item ItemId="20268" Count="1" Chance="3.88" />		<!--體質項鍊-->
-		<Item ItemId="20284" Count="1" Chance="3.88" />		<!--召喚控制戒指-->
-		<Item ItemId="20303" Count="1" Chance="3.88" />		<!--抗魔戒指-->
-		<Item ItemId="20309" Count="1" Chance="3.88" />		<!--光明身體腰帶-->
-		<Item ItemId="20310" Count="1" Chance="3.88" />		<!--光明靈魂腰帶-->
-		<Item ItemId="20311" Count="1" Chance="3.88" />		<!--光明精神腰帶-->
-		<Item ItemId="140074" Count="1" Chance="3.88" />	<!--受祝福的對盔甲施法的卷軸-->
-		<Item ItemId="140087" Count="1" Chance="3.88" />	<!--受祝福的對武器施法的卷軸-->
-		<Item ItemId="20010" Count="1" Chance="0.94" />		<!--死亡騎士頭盔-->
-		<Item ItemId="20042" Count="1" Chance="0.94" />		<!--賽尼斯頭箍-->
-		<Item ItemId="20100" Count="1" Chance="0.94" />		<!--死亡騎士盔甲-->
-		<Item ItemId="20151" Count="1" Chance="0.94" />		<!--賽尼斯斗篷-->
-		<Item ItemId="20166" Count="1" Chance="0.94" />		<!--死亡騎士手套-->
-		<Item ItemId="20185" Count="1" Chance="0.94" />		<!--賽尼斯手套-->
-		<Item ItemId="20198" Count="1" Chance="0.94" />		<!--死亡騎士長靴-->
-		<Item ItemId="20215" Count="1" Chance="0.94" />		<!--賽尼斯長靴-->
-		<Item ItemId="20266" Count="1" Chance="0.94" />		<!--智力項鍊-->
-		<Item ItemId="20280" Count="1" Chance="0.94" />		<!--滅魔戒指-->
-		<Item ItemId="20281" Count="1" Chance="0.94" />		<!--變形控制戒指-->
-		<Item ItemId="20285" Count="1" Chance="0.94" />		<!--水靈戒指-->
-		<Item ItemId="20302" Count="1" Chance="0.94" />		<!--風靈戒指-->
-		<Item ItemId="189" Count="1" Chance="0.54" />		<!--暗黑十字弓-->
-		<Item ItemId="20288" Count="1" Chance="0.54" />		<!--傳送控制戒指-->
-		<Item ItemId="40219" Count="1" Chance="0.54" />		<!--魔法書(流星雨)-->
-		<Item ItemId="40223" Count="1" Chance="0.54" />		<!--魔法書(絕對屏障)-->
+		<Item ItemId="40074" Count="1" Chance="10" />	<!--對盔甲施法的卷軸-->
+		<Item ItemId="40087" Count="1" Chance="10" />	<!--對武器施法的卷軸-->
+		<Item ItemId="140074" Count="1" Chance="5" />	<!--受祝福的 對盔甲施法的卷軸-->
+		<Item ItemId="140087" Count="1" Chance="5" />	<!--受祝福的 對武器施法的卷軸-->
+		<Item ItemId="40219" Count="1" Chance="2" />	<!--魔法書(流星雨)-->
+		<Item ItemId="40223" Count="1" Chance="2" />	<!--魔法書(絕對屏障)-->
+		<Item ItemId="40" Count="1" Chance="4" />	<!--血色巨劍-->
+		<Item ItemId="55" Count="1" Chance="4" />	<!--黑暗之劍-->
+		<Item ItemId="57" Count="1" Chance="4" />	<!--瑟魯基之劍-->
+		<Item ItemId="81" Count="1" Chance="4" />	<!--幽暗雙刀-->
+		<Item ItemId="130" Count="1" Chance="4" />	<!--紅水晶魔杖-->
+		<Item ItemId="162" Count="1" Chance="4" />	<!--幽暗鋼爪-->
+		<Item ItemId="177" Count="1" Chance="4" />	<!--幽暗十字弓-->
+		<Item ItemId="189" Count="1" Chance="4" />	<!--暗黑十字弓-->
+		<Item ItemId="20074" Count="1" Chance="1" />	<!--銀光斗篷-->
+		<Item ItemId="20187" Count="1" Chance="1" />	<!--力量手套-->
+		<Item ItemId="20254" Count="1" Chance="1" />	<!--魅力項鍊-->
+		<Item ItemId="20256" Count="1" Chance="1" />	<!--敏捷項鍊-->
+		<Item ItemId="20264" Count="1" Chance="1" />	<!--力量項鍊-->
+		<Item ItemId="20266" Count="1" Chance="1" />	<!--智力項鍊-->
+		<Item ItemId="20267" Count="1" Chance="1" />	<!--精神項鍊-->
+		<Item ItemId="20268" Count="1" Chance="1" />	<!--體質項鍊-->
+		<Item ItemId="20280" Count="1" Chance="1" />	<!--滅魔戒指-->
+		<Item ItemId="20281" Count="1" Chance="1" />	<!--變形控制戒指-->
+		<Item ItemId="20284" Count="1" Chance="1" />	<!--召喚控制戒指-->
+		<Item ItemId="20285" Count="1" Chance="1" />	<!--水靈戒指-->
+		<Item ItemId="20288" Count="1" Chance="1" />	<!--傳送控制戒指-->
+		<Item ItemId="20302" Count="1" Chance="1" />	<!--風靈戒指-->
+		<Item ItemId="20303" Count="1" Chance="1" />	<!--抗魔戒指-->
+		<Item ItemId="20309" Count="1" Chance="1" />	<!--光明身體腰帶-->
+		<Item ItemId="20310" Count="1" Chance="1" />	<!--光明靈魂腰帶-->
+		<Item ItemId="20311" Count="1" Chance="1" />	<!--光明精神腰帶-->
+		<Item ItemId="20010" Count="1" Chance="2" />	<!--死亡騎士頭盔-->
+		<Item ItemId="20100" Count="1" Chance="2" />	<!--死亡騎士盔甲-->
+		<Item ItemId="20166" Count="1" Chance="2" />	<!--死亡騎士手套-->
+		<Item ItemId="20198" Count="1" Chance="2" />	<!--死亡騎士長靴-->
+		<Item ItemId="20042" Count="1" Chance="2" />	<!--賽尼斯頭箍-->
+		<Item ItemId="20151" Count="1" Chance="2" />	<!--賽尼斯斗篷-->
+		<Item ItemId="20185" Count="1" Chance="2" />	<!--賽尼斯手套-->
+		<Item ItemId="20215" Count="1" Chance="2" />	<!--賽尼斯長靴-->
 	</TreasureBox>
 
 	<!--開鎖的歐西里斯初級寶箱-->
