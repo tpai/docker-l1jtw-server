@@ -86,7 +86,9 @@ public class L1Chaser extends TimerTask {
 		}
 		S_EffectLocation packet = new S_EffectLocation(_cha.getX(),
 				_cha.getY(), _gfxid);
-		if (_pc.getWeapon().getItem().getItemId() == 265
+		if (_pc.getWeapon() == null) { // 修正空手會出錯的問題
+			damage = 0;
+		} else if (_pc.getWeapon().getItem().getItemId() == 265
 				|| _pc.getWeapon().getItem().getItemId() == 266
 				|| _pc.getWeapon().getItem().getItemId() == 267
 				|| _pc.getWeapon().getItem().getItemId() == 268) {
@@ -94,8 +96,8 @@ public class L1Chaser extends TimerTask {
 		} else if (_pc.getWeapon().getItem().getItemId() == 276
 				|| _pc.getWeapon().getItem().getItemId() == 277) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7224);
-		} else {
-			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7025);
+		} else { // 更換為其他武器 附加特效傷害歸零
+			damage = 0;
 		}
 		_pc.sendPackets(packet);
 		_pc.broadcastPacket(packet);
