@@ -1083,7 +1083,7 @@
 	<TreasureBox Type="RANDOM" ItemId="40668">
 		<Item ItemId="40667" Count="1" Chance="80" />		<!--暗殺軍團印記-->
 		<Item ItemId="40675" Count="1" Chance="8" />		<!--黑暗礦石-->
-		<Item ItemId="20020" Count="1" Chance="2" />		<!--武官頭盔--->
+		<Item ItemId="20020" Count="1" Chance="2" />		<!--武官頭盔-->
 		<Item ItemId="20058" Count="1" Chance="2" />		<!--武官斗篷-->
 		<Item ItemId="20168" Count="1" Chance="2" />		<!--武官手套-->
 		<Item ItemId="20201" Count="1" Chance="2" />		<!--武官長靴-->
