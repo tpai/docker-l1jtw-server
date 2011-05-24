@@ -996,7 +996,7 @@ public class L1SkillUse {
 				_mpConsume /= 2;
 			}
 			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用加速術
-				_mpConsume /= 25;
+				_mpConsume = 25;
 			}
 			if ((_skillId == GREATER_HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用強力加速術
 				_mpConsume /= 2;
