@@ -970,32 +970,35 @@ public class L1SkillUse {
 				_mpConsume -= (_player.getInt() - 12);
 			}
 
-			// MPの装備軽減
-			if ((_skillId == PHYSICAL_ENCHANT_DEX) && _player.getInventory().checkEquipped(20013)) { // 迅速ヘルム装備中にPE:DEX
+			// 裝備MP減免
+			if ((_skillId == PHYSICAL_ENCHANT_DEX) && _player.getInventory().checkEquipped(20013)) { // 敏捷魔法頭盔使用通暢氣脈術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20013)) { // 迅速ヘルム装備中にヘイスト
+			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20013)) { // 敏捷魔法頭盔使用加速術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒ヘルム装備中にヒール
+			if ((_skillId == HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒魔法頭盔使用初級治癒術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == EXTRA_HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒ヘルム装備中にエキストラヒール
+			if ((_skillId == EXTRA_HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒魔法頭盔使用中級治癒術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == ENCHANT_WEAPON) && _player.getInventory().checkEquipped(20015)) { // 力ヘルム装備中にエンチャントウエポン
+			if ((_skillId == ENCHANT_WEAPON) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用擬似魔法武器
 				_mpConsume /= 2;
 			}
-			if ((_skillId == DETECTION) && _player.getInventory().checkEquipped(20015)) { // 力ヘルム装備中にディテクション
+			if ((_skillId == DETECTION) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用無所遁形術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == PHYSICAL_ENCHANT_STR) && _player.getInventory().checkEquipped(20015)) { // 力ヘルム装備中にPE:STR
+			if ((_skillId == PHYSICAL_ENCHANT_STR) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用體魄強健術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20008)) { // マイナーウィンドヘルム装備中にヘイスト
+			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20008)) { // 小型風之頭盔使用加速術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == GREATER_HASTE) && _player.getInventory().checkEquipped(20023)) { // ウィンドヘルム装備中にグレーターヘイスト
+			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用加速術
+				_mpConsume /= 25;
+			}
+			if ((_skillId == GREATER_HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用強力加速術
 				_mpConsume /= 2;
 			}
 

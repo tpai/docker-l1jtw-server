@@ -358,8 +358,9 @@ public class L1EquipmentSlot {
 					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			break;
 		case 20023:
+			_owner.setSkillMastery(HASTE);
 			_owner.setSkillMastery(GREATER_HASTE);
-			_owner.sendPackets(new S_AddSkill(0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0,
+			_owner.sendPackets(new S_AddSkill(0, 0, 0, 0, 0, 4, 32, 0, 0, 0, 0,
 					0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			break;
 		}
@@ -367,7 +368,7 @@ public class L1EquipmentSlot {
 
 	public void removeMagicHelm(int objectId, L1ItemInstance item) {
 		switch (item.getItemId()) {
-		case 20013: // 魔法のヘルム：迅速
+		case 20013: // 敏捷魔法頭盔
 			if (!SkillsTable.getInstance().spellCheck(objectId,
 					PHYSICAL_ENCHANT_DEX)) {
 				_owner.removeSkillMastery(PHYSICAL_ENCHANT_DEX);
@@ -380,7 +381,7 @@ public class L1EquipmentSlot {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			}
 			break;
-		case 20014: // 魔法のヘルム：治癒
+		case 20014: // 治癒魔法頭盔
 			if (!SkillsTable.getInstance().spellCheck(objectId, HEAL)) {
 				_owner.removeSkillMastery(HEAL);
 				_owner.sendPackets(new S_DelSkill(1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -392,7 +393,7 @@ public class L1EquipmentSlot {
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			}
 			break;
-		case 20015: // 魔法のヘルム：力
+		case 20015: // 力量魔法頭盔
 			if (!SkillsTable.getInstance().spellCheck(objectId, ENCHANT_WEAPON)) {
 				_owner.removeSkillMastery(ENCHANT_WEAPON);
 				_owner.sendPackets(new S_DelSkill(0, 8, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -403,21 +404,25 @@ public class L1EquipmentSlot {
 				_owner.sendPackets(new S_DelSkill(0, 16, 0, 0, 0, 0, 0, 0, 0,
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			}
-			if (!SkillsTable.getInstance().spellCheck(objectId,
-					PHYSICAL_ENCHANT_STR)) {
+			if (!SkillsTable.getInstance().spellCheck(objectId, PHYSICAL_ENCHANT_STR)) {
 				_owner.removeSkillMastery(PHYSICAL_ENCHANT_STR);
 				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 2, 0, 0, 0, 0,
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			}
 			break;
-		case 20008: // マイナーウィンドヘルム
+		case 20008: // 小型風之頭盔
 			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
 				_owner.removeSkillMastery(HASTE);
 				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0,
 						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
 			}
 			break;
-		case 20023: // ウィンドヘルム
+		case 20023: // 風之頭盔
+			if (!SkillsTable.getInstance().spellCheck(objectId, HASTE)) {
+				_owner.removeSkillMastery(HASTE);
+				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 4, 0, 0, 0, 0,
+						0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0));
+			}
 			if (!SkillsTable.getInstance().spellCheck(objectId, GREATER_HASTE)) {
 				_owner.removeSkillMastery(GREATER_HASTE);
 				_owner.sendPackets(new S_DelSkill(0, 0, 0, 0, 0, 0, 32, 0, 0,
