@@ -1874,29 +1874,21 @@
 	<Action Name="teleport diad-kent" NpcId="50073">
 		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="1800" />
 	</Action>
-	<!--迪雅貝斯 / 奇岩村莊-->
-	<Action Name="teleport diad-giran" NpcId="50073">
-		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="1000" />
-	</Action>
-	<!--迪雅貝斯 / 亞丁城鎮-->
-	<Action Name="teleport diad-aden" NpcId="50073">
-		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="1600" />
-	</Action>
 	<!--迪雅貝斯 / 海音村莊-->
 	<Action Name="teleport diad-heine" NpcId="50073">
 		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="2200" />
+	</Action>
+	<!--迪雅貝斯 / 奇岩村莊-->
+	<Action Name="teleport diad-giran" NpcId="50073">
+		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="1000" />
 	</Action>
 	<!--迪雅貝斯 / 歐瑞村莊-->
 	<Action Name="teleport diad-oren" NpcId="50073">
 		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="1200" />
 	</Action>
-	<!--迪雅貝斯 / 沉默洞穴-->
-	<Action Name="teleport diad-scave" NpcId="50073">
-		<Teleport X="32922" Y="32802" Map="304" Heading="5" Price="1300" />
-	</Action>
-	<!--迪雅貝斯 / 歐姆地監-->
-	<Action Name="teleport diad-oum" NpcId="50073">
-		<Teleport X="32864" Y="32939" Map="310" Heading="5" Price="0" />
+	<!--迪雅貝斯 / 亞丁城鎮-->
+	<Action Name="teleport diad-aden" NpcId="50073">
+		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="1600" />
 	</Action>
 	<!--迪雅貝斯 / 正義神殿-->
 	<Action Name="teleport diad-lowful" NpcId="50073">
@@ -1906,18 +1898,28 @@
 	<Action Name="teleport diad-chaos" NpcId="50073">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="2000" />
 	</Action>
-	<!--顯示金額-->
-	<ShowHtml Name="teleportURL" HtmlId="???" NpcId="50073">
+	<!--迪雅貝斯 / 沉默洞穴-->
+	<Action Name="teleport diad-scave" NpcId="50073">
+		<Teleport X="32922" Y="32802" Map="304" Heading="5" Price="1300" />
+	</Action>
+	<!--迪雅貝斯 / 歐姆地監-->
+	<Action Name="teleport diad-oum" NpcId="50073">
+		<Teleport X="32864" Y="32939" Map="310" Heading="5" Price="0" />
+	</Action>
+	<ShowHtml Name="teleportURL" HtmlId="telediad2" NpcId="50073">
+		<Data Value="0" />
 		<Data Value="2200" /><!--古魯丁村莊-->
+		<Data Value="0" />
 		<Data Value="1800" /><!--肯特村莊-->
-		<Data Value="1000" /><!--奇岩村莊-->
-		<Data Value="1600" /><!--亞丁城鎮-->
+		<Data Value="0" />
 		<Data Value="2200" /><!--海音村莊-->
+		<Data Value="1000" /><!--奇岩村莊-->
+		<Data Value="0" />
 		<Data Value="1200" /><!--歐瑞村莊-->
-		<Data Value="1300" /><!--沉默洞穴-->
-		<Data Value="0" /><!--歐姆地監-->
+		<Data Value="1600" /><!--亞丁城鎮-->
 		<Data Value="2000" /><!--正義神殿-->
 		<Data Value="2000" /><!--邪惡神殿-->
+		<Data Value="0" />
 	</ShowHtml>
 
 	<!--大洞穴空間移動師 / 大洞穴抵抗軍村莊-->
