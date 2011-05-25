@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <TreasureBoxList>
 	<!--Type=SPECIFIC的情況可以得到列表所有項目。Chance不用指定。-->
 	<!--Type=RANDOM的情況可以得到列表其中一項。Chance必須指定。-->
@@ -72,7 +72,7 @@
 <!--騎士-->
 	<!--守護神之袋-->
 	<TreasureBox Type="SPECIFIC" ItemId="40528">
-		<Item ItemId="65" Count="1" />	<!--天空之劍-->
+		<Item ItemId="65" Count="1" />		<!--天空之劍-->
 		<Item ItemId="40597" Count="1" />	<!--破損的調查簿-->
 		<Item ItemId="40537" Count="1" />	<!--古代的遺物-->
 	</TreasureBox>
@@ -87,12 +87,12 @@
 	<!--古代亡靈之袋-->
 	<TreasureBox Type="SPECIFIC" ItemId="40548">
 		<Item ItemId="40533" Count="1" />	<!--古代鑰匙(下半部)-->
-		<Item ItemId="192" Count="1" />	<!--水精靈之弓-->
+		<Item ItemId="192" Count="1" />		<!--水精靈之弓-->
 	</TreasureBox>
 
 	<!--馬沙之袋-->
 	<TreasureBox Type="SPECIFIC" ItemId="40546">
-		<Item ItemId="192" Count="1" />	<!--水精靈之弓-->
+		<Item ItemId="192" Count="1" />		<!--水精靈之弓-->
 		<Item ItemId="20171" Count="1" />	<!--保護者手套-->
 		<Item ItemId="40245" Count="1" />	<!--精靈水晶(召喚強力屬性精靈)-->
 	</TreasureBox>
@@ -100,7 +100,7 @@
 <!--法師-->
 	<!--塔拉斯的魔法袋-->
 	<TreasureBox Type="SPECIFIC" ItemId="40599">
-		<Item ItemId="133" Count="1" />	<!--古代人的智慧-->
+		<Item ItemId="133" Count="1" />		<!--古代人的智慧-->
 		<Item ItemId="20055" Count="1" />	<!--瑪那斗篷-->
 	</TreasureBox>
 
@@ -559,8 +559,8 @@
 	<TreasureBox Type="RANDOM" ItemId="40715">
 		<Item ItemId="69" Count="1" Chance="6" />		<!--青銅雙刀-->
 		<Item ItemId="152" Count="1" Chance="6" />		<!--青銅鋼爪-->
-		<Item ItemId="40738" Count="1000" Chance="6" />	<!--銀飛刀-->
-		<Item ItemId="40739" Count="1000" Chance="6" />	<!--飛刀-->
+		<Item ItemId="40738" Count="1000" Chance="6" />		<!--銀飛刀-->
+		<Item ItemId="40739" Count="1000" Chance="6" />		<!--飛刀-->
 		<Item ItemId="40740" Count="500" Chance="6" />		<!--重飛刀-->
 		<Item ItemId="71" Count="1" Chance="5" />		<!--鋼鐵雙刀-->
 		<Item ItemId="72" Count="1" Chance="5" />		<!--暗影雙刀-->
@@ -922,7 +922,7 @@
 <!--拉斯塔巴德正門-->
 	<!--伊莉絲的袋子-->
 	<TreasureBox Type="RANDOM" ItemId="41008">
-		<Item ItemId="40308" Count="200" Chance="38" />	<!--金幣-->
+		<Item ItemId="40308" Count="200" Chance="38" />		<!--金幣-->
 		<Item ItemId="40100" Count="1" Chance="20" />		<!--瞬間移動卷軸-->
 		<Item ItemId="40044" Count="1" Chance="10" />		<!--鑽石-->
 		<Item ItemId="40045" Count="1" Chance="10" />		<!--紅寶石-->
@@ -979,7 +979,7 @@
 <!--其他-->
 	<!--拉斯塔巴德補給袋-->
 	<TreasureBox Type="RANDOM" ItemId="41243">
-		<Item ItemId="40308" Count="300" Chance="30" />	<!--金幣-->
+		<Item ItemId="40308" Count="300" Chance="30" />		<!--金幣-->
 		<Item ItemId="40308" Count="1000" Chance="10" />	<!--金幣-->
 		<Item ItemId="40429" Count="1" Chance="10" />		<!--大洞穴卷軸碎片-->
 		<Item ItemId="40044" Count="1" Chance="5" />		<!--鑽石-->
@@ -1251,8 +1251,8 @@
 	<TreasureBox Type="RANDOM" ItemId="40330">
 		<Item ItemId="40744" Count="4000" Chance="80" />	<!--銀箭-->
 		<Item ItemId="40746" Count="1000" Chance="10" />	<!--米索莉箭-->
-		<Item ItemId="40747" Count="1000" Chance="5" />	<!--黑色米索莉箭-->
-		<Item ItemId="40748" Count="1000" Chance="5" />	<!--奧里哈魯根箭-->
+		<Item ItemId="40747" Count="1000" Chance="5" />		<!--黑色米索莉箭-->
+		<Item ItemId="40748" Count="1000" Chance="5" />		<!--奧里哈魯根箭-->
 	</TreasureBox>
 
 	<!--鍊金術之石-->
