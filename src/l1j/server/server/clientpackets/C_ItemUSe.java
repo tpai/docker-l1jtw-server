@@ -1519,16 +1519,14 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
-				else if ((itemId == 40079) || (itemId == 40095)) { // 帰還スクロール
+				else if ((itemId == 40079) || (itemId == 40095) || (itemId == 40521)) { // 傳送回家的卷軸、象牙塔傳送回家的卷軸、精靈羽翼
 					if (pc.getMap().isEscapable() || pc.isGm()) {
 						int[] loc = Getback.GetBack_Location(pc, true);
 						L1Teleport.teleport(pc, loc[0], loc[1], (short) loc[2], 5, true);
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(647));
-						// pc.sendPackets(new
-						// S_CharVisualUpdate(pc));
+						pc.sendPackets(new S_ServerMessage(276)); // \f1在此無法使用傳送。
 					}
 				}
 				else if (itemId == 40124) { // 血盟帰還スクロール

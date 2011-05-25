@@ -1070,7 +1070,7 @@ public class L1BuffUtil {
 					if (pc.getMap().isEscapable() || pc.isGm()) {
 						L1Teleport.teleport(pc, 33051, 32337, (short) 4, 5, true);
 					} else {
-						pc.sendPackets(new S_ServerMessage(647));
+						pc.sendPackets(new S_ServerMessage(276)); // \f1在此無法使用傳送。
 						L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), false);
 					}
 				}

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : Taiwan Server
-Source Server Version : 50140
-Source Host           : localhost:3366
+Source Server         : localhost
+Source Server Version : 50508
+Source Host           : localhost:3306
 Source Database       : l1jtw_db
 
 Target Server Type    : MYSQL
-Target Server Version : 50140
+Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-18 20:54:00
+Date: 2011-05-25 22:27:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -575,7 +575,7 @@ INSERT INTO `etcitem` VALUES ('40517', '品質紅水晶', '$3976', '$3976', 'mat
 INSERT INTO `etcitem` VALUES ('40518', '品質藍水晶', '$3974', '$3974', 'material', 'none', 'gemstone', '0', '330', '3963', '1834', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40519', '潘的鬃毛', '$760', '$760', 'material', 'none', 'cloth', '2000', '314', '3963', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40520', '精靈粉末', '$768', '$768', 'material', 'none', 'platinum', '1000', '312', '884', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
-INSERT INTO `etcitem` VALUES ('40521', '精靈羽翼', '$776', '$776', 'material', 'none', 'web', '8000', '313', '885', '261', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
+INSERT INTO `etcitem` VALUES ('40521', '精靈羽翼', '$776', '$776', 'material', 'normal', 'bone', '1000', '313', '885', '261', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40522', '藍水晶', '$3969', '$3969', 'material', 'none', 'gemstone', '0', '1465', '3963', '1829', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40523', '白水晶', '$3971', '$3971', 'material', 'none', 'gemstone', '0', '330', '3963', '1831', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
 INSERT INTO `etcitem` VALUES ('40524', '黑色血痕', '$2592', '$2592', 'material', 'none', 'glass', '10', '1166', '3110', '927', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '1');
