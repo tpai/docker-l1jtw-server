@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
 	<!--顯示金額對照對話檔內容，因此不能更動順序。-->
 <!--L1J-TW-->
@@ -2297,7 +2297,7 @@
 		<Data Value="2000" /><!--邪惡神殿-->
 	</ShowHtml>
 
-<!--龍之谷監3樓-->
+<!--龍之谷地監3樓-->
 	<!--賽菲亞 / 賽菲亞地監-->
 	<Action Name="teleport sepia-dungen" NpcId="50031">
 		<Teleport X="32740" Y="32860" Map="302" Heading="5" Price="0" />
