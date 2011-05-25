@@ -113,19 +113,7 @@ public class L1MobSkillUse {
 			return false;
 		}
 
-		int i = 0;
-		for (i = 0; (i < getMobSkillTemplate().getSkillSize()) && (getMobSkillTemplate().getType(i) != L1MobSkill.TYPE_NONE); i++) {
-
-			// changeTargetが設定されている場合、ターゲットの入れ替え
-			int changeType = getMobSkillTemplate().getChangeTarget(i);
-			if (changeType > 0) {
-				_target = changeTarget(changeType, i);
-			}
-			else {
-				// 設定されてない場合は本来のターゲットにする
-				_target = tg;
-			}
-
+		for (int i = 0; (i < getMobSkillTemplate().getSkillSize()) && (getMobSkillTemplate().getType(i) != L1MobSkill.TYPE_NONE); i++) {
 			if (isSkillUseble(i, false)) {
 				return true;
 			}
@@ -156,19 +144,7 @@ public class L1MobSkillUse {
 			skills = new int[skillSize];
 		}
 
-		int i = 0;
-		for (i = 0; (i < getMobSkillTemplate().getSkillSize()) && (getMobSkillTemplate().getType(i) != L1MobSkill.TYPE_NONE); i++) {
-
-			// changeTargetが設定されている場合、ターゲットの入れ替え
-			int changeType = getMobSkillTemplate().getChangeTarget(i);
-			if (changeType > 0) {
-				_target = changeTarget(changeType, i);
-			}
-			else {
-				// 設定されてない場合は本来のターゲットにする
-				_target = tg;
-			}
-
+		for (int i = 0; (i < getMobSkillTemplate().getSkillSize()) && (getMobSkillTemplate().getType(i) != L1MobSkill.TYPE_NONE); i++) {
 			if (isSkillUseble(i, isTriRnd) == false) {
 				continue;
 			}
@@ -189,6 +165,12 @@ public class L1MobSkillUse {
 	}
 
 	private boolean useSkill(int i) {
+		// 對自身施法判斷
+		int changeType = getMobSkillTemplate().getChangeTarget(i);
+		if (changeType == 2) {
+			_target = changeTarget(changeType, i);
+		}
+
 		boolean isUseSkill = false;
 		int type = getMobSkillTemplate().getType(i);
 		if (type == L1MobSkill.TYPE_PHYSICAL_ATTACK) { // 物理攻撃
@@ -307,11 +289,15 @@ public class L1MobSkillUse {
 	private boolean magicAttack(int idx) {
 		L1SkillUse skillUse = new L1SkillUse();
 		int skillid = getMobSkillTemplate().getSkillId(idx);
+		int actId = getMobSkillTemplate().getActid(idx);
+		int gfxId = getMobSkillTemplate().getGfxid(idx);
+		int hpConsume = getMobSkillTemplate().getHpConsume(idx);
+		int mpConsume = getMobSkillTemplate().getMpConsume(idx);
 		boolean canUseSkill = false;
 
 		if (skillid > 0) {
 			canUseSkill = skillUse.checkUseSkill(null, skillid, _target.getId(), _target.getX(), _target.getY(), null, 0, L1SkillUse.TYPE_NORMAL,
-					_attacker);
+					_attacker, actId, gfxId, hpConsume, mpConsume);
 		}
 
 		if (canUseSkill == true) {
@@ -322,7 +308,10 @@ public class L1MobSkillUse {
 
 			// 延遲時間判斷
 			L1Skills skill = SkillsTable.getInstance().getTemplate(skillid);
-			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), skill.getActionId());
+			if (actId == 0) {
+				actId = skill.getActionId();
+			}
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
 
 			return true;
 		}

@@ -31,6 +31,7 @@ import l1j.server.server.model.L1Cube;
 import l1j.server.server.model.L1Magic;
 import l1j.server.server.model.L1Object;
 import l1j.server.server.model.L1World;
+import l1j.server.server.model.poison.L1DamagePoison;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_RemoveObject;
@@ -49,6 +50,8 @@ public class L1EffectInstance extends L1NpcInstance {
 
 	private static final int CUBE_TIME = 8000; // 効果時間8秒?
 
+	private static final int POISON_INTERVAL = 1000;
+
 	public L1EffectInstance(L1Npc template) {
 		super(template);
 
@@ -62,6 +65,9 @@ public class L1EffectInstance extends L1NpcInstance {
 				) || (npcId == 80151 // キューブ[ショック]
 				) || (npcId == 80152)) { // キューブ[バランス]
 			GeneralThreadPool.getInstance().schedule(new CubeTimer(this), 0);
+		}
+		else if (npcId == 93002) { // 毒霧
+			GeneralThreadPool.getInstance().schedule(new PoisonTimer(this), 0);
 		}
 	}
 
@@ -199,6 +205,32 @@ public class L1EffectInstance extends L1NpcInstance {
 						}
 					}
 					Thread.sleep(CUBE_INTERVAL);
+				}
+				catch (InterruptedException ignore) {
+					// ignore
+				}
+			}
+		}
+	}
+
+	class PoisonTimer implements Runnable {
+		private L1EffectInstance _effect;
+
+		public PoisonTimer(L1EffectInstance effect) {
+			_effect = effect;
+		}
+
+		@Override
+		public void run() {
+			while (!_destroyed) {
+				try {
+					for (L1Object objects : L1World.getInstance().getVisibleObjects(_effect, 0)) {
+						if (!(objects instanceof L1MonsterInstance)) {
+							L1Character cha = (L1Character) objects;
+							L1DamagePoison.doInfection(_effect, cha, 3000, 20);
+						}
+					}
+					Thread.sleep(POISON_INTERVAL);
 				}
 				catch (InterruptedException ignore) {
 					// ignore

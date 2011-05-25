@@ -85,6 +85,8 @@ public class MobSkillTable {
 						actNo = rs2.getInt("actNo");
 						mobskill.setMobName(rs2.getString("mobname"));
 						mobskill.setType(actNo, rs2.getInt("type"));
+						mobskill.setHpConsume(actNo, rs2.getInt("hpConsume"));
+						mobskill.setMpConsume(actNo, rs2.getInt("mpConsume"));
 						mobskill.setTriggerRandom(actNo, rs2.getInt("TriRnd"));
 						mobskill.setTriggerHp(actNo, rs2.getInt("TriHp"));
 						mobskill.setTriggerCompanionHp(actNo, rs2.getInt("TriCompanionHp"));

@@ -52,6 +52,8 @@ public class L1MobSkill implements Cloneable {
 		skillSize = sSize;
 
 		type = new int[skillSize];
+		hpConsume = new int[skillSize];
+		mpConsume = new int[skillSize];
 		triRnd = new int[skillSize];
 		triHp = new int[skillSize];
 		triCompanionHp = new int[skillSize];
@@ -108,6 +110,44 @@ public class L1MobSkill implements Cloneable {
 			return;
 		}
 		type[idx] = i;
+	}
+
+	/*
+	 * 血量消耗判斷
+	 */
+	int hpConsume[];
+
+	public int getHpConsume(int idx) {
+		if (idx < 0 || idx >= getSkillSize()) {
+			return 0;
+		}
+		return hpConsume[idx];
+	}
+
+	public void setHpConsume(int idx, int i) {
+		if (idx < 0 || idx >= getSkillSize()) {
+			return;
+		}
+		hpConsume[idx] = i;
+	}
+
+	/*
+	 * 魔力消耗判斷
+	 */
+	int mpConsume[];
+
+	public int getMpConsume(int idx) {
+		if (idx < 0 || idx >= getSkillSize()) {
+			return 0;
+		}
+		return mpConsume[idx];
+	}
+
+	public void setMpConsume(int idx, int i) {
+		if (idx < 0 || idx >= getSkillSize()) {
+			return;
+		}
+		mpConsume[idx] = i;
 	}
 
 	/*

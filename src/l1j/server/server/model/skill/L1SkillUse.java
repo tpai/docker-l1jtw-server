@@ -161,6 +161,10 @@ public class L1SkillUse {
 
 	private List<TargetStatus> _targetList;
 
+	private int _actid = 0;
+
+	private int _gfxid = 0;
+
 	private static Logger _log = Logger.getLogger(L1SkillUse.class.getName());
 
 	private static final int[] CAST_WITH_INVIS =
@@ -224,6 +228,11 @@ public class L1SkillUse {
 
 	public boolean checkUseSkill(L1PcInstance player, int skillid, int target_id, int x, int y, String message, int time, int type,
 			L1Character attacker) {
+		return checkUseSkill(player, skillid, target_id, x, y, message, time, type, attacker, 0, 0, 0, 0);
+	}
+
+	public boolean checkUseSkill(L1PcInstance player, int skillid, int target_id, int x, int y, String message, int time, int type,
+			L1Character attacker, int actid, int gfxid, int hpConsume, int mpConsume) {
 		// 初期設定ここから
 		setCheckedUseSkill(true);
 		_targetList = Lists.newList(); // ターゲットリストの初期化
@@ -235,6 +244,10 @@ public class L1SkillUse {
 		_message = message;
 		_skillTime = time;
 		_type = type;
+		_actid = actid;
+		_gfxid = gfxid;
+		_hpConsume = hpConsume;
+		_mpConsume = mpConsume;
 		boolean checkedResult = true;
 
 		if (attacker == null) {
@@ -930,8 +943,12 @@ public class L1SkillUse {
 
 	// 必要ＨＰ、ＭＰがあるか？
 	private boolean isHPMPConsume() {
-		_mpConsume = _skill.getMpConsume();
-		_hpConsume = _skill.getHpConsume();
+		if (_hpConsume == 0) {
+			_hpConsume = _skill.getHpConsume();
+		}
+		if (_mpConsume == 0) {
+			_mpConsume = _skill.getMpConsume();
+		}
 		int currentMp = 0;
 		int currentHp = 0;
 
@@ -1245,12 +1262,16 @@ public class L1SkillUse {
 
 	// グラフィックの送信
 	private void sendGrfx(boolean isSkillAction) {
-		int actionId = _skill.getActionId();
-		int castgfx = _skill.getCastGfx();
-		int[] data = null;
-		if (castgfx == 0) {
+		if (_actid == 0) {
+			_actid = _skill.getActionId();
+		}
+		if (_gfxid == 0) {
+			_gfxid = _skill.getCastGfx();
+		}
+		if (_gfxid == 0) {
 			return; // 表示するグラフィックが無い
 		}
+		int[] data = null;
 
 		if (_user instanceof L1PcInstance) {
 
@@ -1269,7 +1290,7 @@ public class L1SkillUse {
 						pc.sendPackets(new S_ChangeHeading(pc));
 						pc.broadcastPacket(new S_ChangeHeading(pc));
 					}
-					S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), actionId);
+					S_DoActionGFX gfx = new S_DoActionGFX(pc.getId(), _actid);
 					pc.sendPackets(gfx);
 					pc.broadcastPacket(gfx);
 					return;
@@ -1291,32 +1312,24 @@ public class L1SkillUse {
 					break;
 				case MIND_BREAK: // 心靈破壞
 				case JOY_OF_PAIN: // 疼痛的歡愉
-					if (_user instanceof L1PcInstance) {
-						data = new int[] {actionId, _dmg, 0}; // data = {actid, dmg, effect}
-						pc.sendPackets(new S_AttackPacket(pc, targetid, data));
-						pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
-						pc.sendPackets(new S_SkillSound(targetid, castgfx));
-						pc.broadcastPacket(new S_SkillSound(targetid, castgfx));
-					}
+					data = new int[] {_actid, _dmg, 0}; // data = {actid, dmg, effect}
+					pc.sendPackets(new S_AttackPacket(pc, targetid, data));
+					pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
+					pc.sendPackets(new S_SkillSound(targetid, _gfxid));
+					pc.broadcastPacket(new S_SkillSound(targetid, _gfxid));
 					return;
 				case CONFUSION: // 混亂
-					if (_user instanceof L1PcInstance) {
-						data = new int[] {actionId, _dmg, 0}; // data = {actid, dmg, effect}
-						pc.sendPackets(new S_AttackPacket(pc, targetid, data));
-						pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
-					}
+					data = new int[] {_actid, _dmg, 0}; // data = {actid, dmg, effect}
+					pc.sendPackets(new S_AttackPacket(pc, targetid, data));
+					pc.broadcastPacket(new S_AttackPacket(pc, targetid, data));
 					return;
 				case SMASH: // 暴擊
-					if (_user instanceof L1PcInstance) {
-						pc.sendPackets(new S_SkillSound(targetid, castgfx));
-						pc.broadcastPacket(new S_SkillSound(targetid, castgfx));
-					}
+					pc.sendPackets(new S_SkillSound(targetid, _gfxid));
+					pc.broadcastPacket(new S_SkillSound(targetid, _gfxid));
 					return;
 				case TAMING_MONSTER: // 迷魅
-					if (_user instanceof L1PcInstance) {
-						pc.sendPackets(new S_EffectLocation(_targetX, _targetY, castgfx));
-						pc.broadcastPacket(new S_EffectLocation(_targetX, _targetY, castgfx));
-					}
+					pc.sendPackets(new S_EffectLocation(_targetX, _targetY, _gfxid));
+					pc.broadcastPacket(new S_EffectLocation(_targetX, _targetY, _gfxid));
 					return;
 				default:
 					break;
@@ -1326,13 +1339,13 @@ public class L1SkillUse {
 				// ターゲット数が０で対象を指定するスキルの場合、魔法使用エフェクトだけ表示して終了
 				int tempchargfx = _player.getTempCharGfx();
 				if ((tempchargfx == 5727) || (tempchargfx == 5730)) { // シャドウ系変身のモーション対応
-					actionId = ActionCodes.ACTION_SkillBuff;
+					_actid = ActionCodes.ACTION_SkillBuff;
 				}
 				else if ((tempchargfx == 5733) || (tempchargfx == 5736)) {
-					actionId = ActionCodes.ACTION_Attack;
+					_actid = ActionCodes.ACTION_Attack;
 				}
 				if (isSkillAction) {
-					S_DoActionGFX gfx = new S_DoActionGFX(_player.getId(), actionId);
+					S_DoActionGFX gfx = new S_DoActionGFX(_player.getId(), _actid);
 					_player.sendPackets(gfx);
 					_player.broadcastPacket(gfx);
 				}
@@ -1343,7 +1356,7 @@ public class L1SkillUse {
 				if (isPcSummonPet(_target)) { // 目標玩家、寵物、召喚獸
 					if ((_player.getZoneType() == 1) || (_target.getZoneType() == 1)
 							|| _player.checkNonPvP(_player, _target)) { // Non-PvP設定
-						data = new int[] {actionId, 0, castgfx, 6};
+						data = new int[] {_actid, 0, _gfxid, 6};
 						_player.sendPackets(new S_UseAttackSkill(_player, _target.getId(), _targetX, _targetY, data));
 						_player.broadcastPacket(new S_UseAttackSkill(_player, _target.getId(), _targetX, _targetY, data));
 						return;
@@ -1351,7 +1364,7 @@ public class L1SkillUse {
 				}
 
 				if (_skill.getArea() == 0) { // 單體攻擊魔法
-					data = new int[] {actionId, _dmg, castgfx, 6};
+					data = new int[] {_actid, _dmg, _gfxid, 6};
 					_player.sendPackets(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
 					_player.broadcastPacket(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
 					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), _player);
@@ -1363,8 +1376,8 @@ public class L1SkillUse {
 						cha[i] = ts.getTarget();
 						i++;
 					}
-					_player.sendPackets(new S_RangeSkill(_player, cha, castgfx, actionId, S_RangeSkill.TYPE_DIR));
-					_player.broadcastPacket(new S_RangeSkill(_player, cha, castgfx, actionId, S_RangeSkill.TYPE_DIR));
+					_player.sendPackets(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_DIR));
+					_player.broadcastPacket(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_DIR));
 				}
 			}
 			else if (_skill.getTarget().equals("none") && (_skill.getType() == L1Skills.TYPE_ATTACK)) { // 無方向範囲攻撃魔法
@@ -1375,8 +1388,8 @@ public class L1SkillUse {
 					cha[i].broadcastPacketExceptTargetSight(new S_DoActionGFX(cha[i].getId(), ActionCodes.ACTION_Damage), _player);
 					i++;
 				}
-				_player.sendPackets(new S_RangeSkill(_player, cha, castgfx, actionId, S_RangeSkill.TYPE_NODIR));
-				_player.broadcastPacket(new S_RangeSkill(_player, cha, castgfx, actionId, S_RangeSkill.TYPE_NODIR));
+				_player.sendPackets(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_NODIR));
+				_player.broadcastPacket(new S_RangeSkill(_player, cha, _gfxid, _actid, S_RangeSkill.TYPE_NODIR));
 			}
 			else { // 補助魔法
 				// 指定傳送、集體傳送術、世界樹的呼喚以外
@@ -1389,23 +1402,23 @@ public class L1SkillUse {
 					}
 					// 魔法屏障、反擊屏障、鏡反射 魔法效果只有自身顯示
 					if ((_skillId == COUNTER_MAGIC) || (_skillId == COUNTER_BARRIER) || (_skillId == COUNTER_MIRROR)) {
-						_player.sendPackets(new S_SkillSound(targetid, castgfx));
+						_player.sendPackets(new S_SkillSound(targetid, _gfxid));
 					}
 					else if ((_skillId == AWAKEN_ANTHARAS // 覚醒：アンタラス
 							)
 							|| (_skillId == AWAKEN_FAFURION // 覚醒：パプリオン
 							) || (_skillId == AWAKEN_VALAKAS)) { // 覚醒：ヴァラカス
 						if (_skillId == _player.getAwakeSkillId()) { // 再詠唱なら解除でエフェクトなし
-							_player.sendPackets(new S_SkillSound(targetid, castgfx));
-							_player.broadcastPacket(new S_SkillSound(targetid, castgfx));
+							_player.sendPackets(new S_SkillSound(targetid, _gfxid));
+							_player.broadcastPacket(new S_SkillSound(targetid, _gfxid));
 						}
 						else {
 							return;
 						}
 					}
 					else {
-						_player.sendPackets(new S_SkillSound(targetid, castgfx));
-						_player.broadcastPacket(new S_SkillSound(targetid, castgfx));
+						_player.sendPackets(new S_SkillSound(targetid, _gfxid));
+						_player.broadcastPacket(new S_SkillSound(targetid, _gfxid));
 					}
 				}
 
@@ -1423,20 +1436,25 @@ public class L1SkillUse {
 			int targetid = _target.getId();
 
 			if (_user instanceof L1MerchantInstance) {
-				_user.broadcastPacket(new S_SkillSound(targetid, castgfx));
+				_user.broadcastPacket(new S_SkillSound(targetid, _gfxid));
 				return;
+			}
+
+			if (_skillId == CURSE_PARALYZE || _skillId == WEAKNESS || _skillId == DISEASE) { // 木乃伊的詛咒、弱化術、疾病術
+				_user.setHeading(_user.targetDirection(_targetX, _targetY)); // 改變面向
+				_user.broadcastPacket(new S_ChangeHeading(_user));
 			}
 
 			if (_targetList.isEmpty() && !(_skill.getTarget().equals("none"))) {
 				// ターゲット数が０で対象を指定するスキルの場合、魔法使用エフェクトだけ表示して終了
-				S_DoActionGFX gfx = new S_DoActionGFX(_user.getId(), _skill.getActionId());
+				S_DoActionGFX gfx = new S_DoActionGFX(_user.getId(), _actid);
 				_user.broadcastPacket(gfx);
 				return;
 			}
 
 			if (_skill.getTarget().equals("attack") && (_skillId != 18)) {
 				if (_skill.getArea() == 0) { // 單體攻擊魔法
-					data = new int[] {actionId, _dmg, castgfx, 6};
+					data = new int[] {_actid, _dmg, _gfxid, 6};
 					_user.broadcastPacket(new S_UseAttackSkill(_user, targetid, _targetX, _targetY, data));
 					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), _user);
 				}
@@ -1448,7 +1466,7 @@ public class L1SkillUse {
 						cha[i].broadcastPacketExceptTargetSight(new S_DoActionGFX(cha[i].getId(), ActionCodes.ACTION_Damage), _user);
 						i++;
 					}
-					_user.broadcastPacket(new S_RangeSkill(_user, cha, castgfx, actionId, S_RangeSkill.TYPE_DIR));
+					_user.broadcastPacket(new S_RangeSkill(_user, cha, _gfxid, _actid, S_RangeSkill.TYPE_DIR));
 				}
 			}
 			else if (_skill.getTarget().equals("none") && (_skill.getType() == L1Skills.TYPE_ATTACK)) { // 無方向範囲攻撃魔法
@@ -1458,15 +1476,15 @@ public class L1SkillUse {
 					cha[i] = ts.getTarget();
 					i++;
 				}
-				_user.broadcastPacket(new S_RangeSkill(_user, cha, castgfx, actionId, S_RangeSkill.TYPE_NODIR));
+				_user.broadcastPacket(new S_RangeSkill(_user, cha, _gfxid, _actid, S_RangeSkill.TYPE_NODIR));
 			}
 			else { // 補助魔法
 					// テレポート、マステレ、テレポートトゥマザー以外
 				if ((_skillId != 5) && (_skillId != 69) && (_skillId != 131)) {
 					// 魔法を使う動作のエフェクトは使用者だけ
-					S_DoActionGFX gfx = new S_DoActionGFX(_user.getId(), _skill.getActionId());
+					S_DoActionGFX gfx = new S_DoActionGFX(_user.getId(), _actid);
 					_user.broadcastPacket(gfx);
-					_user.broadcastPacket(new S_SkillSound(targetid, castgfx));
+					_user.broadcastPacket(new S_SkillSound(targetid, _gfxid));
 				}
 			}
 		}
@@ -1859,6 +1877,50 @@ public class L1SkillUse {
 							npc.broadcastPacket(new S_Poison(npc.getId(), 2));
 							npc.setParalyzed(true);
 							npc.setParalysisTime(_skill.getBuffDuration() * 1000);
+						}
+						break;
+					case 20001: // 毒霧-範圍 3X3
+						_user.setHeading(_user.targetDirection(_targetX, _targetY)); // 改變面向
+						int locX = 0;
+						int locY = 0;
+						for (int i = 0; i < 3; i++) {
+							for (int j = 0; j < 3; j++) {
+								switch (_user.getHeading()) {
+									case 0:
+										locX = (-1 + j);
+										locY = -1 * (-3 + i);
+										break;
+									case 1:
+										locX = -1 * (2 + j - i);
+										locY = -1 * (-4 + j + i);
+										break;
+									case 2:
+										locX = -1 * (3 - i);
+										locY = (-1 + j);
+										break;
+									case 3:
+										locX = -1 * (4 - j - i);
+										locY = -1 * (2 + j - i);
+										break;
+									case 4:
+										locX = (1 - j);
+										locY = -1 * (3 - i);
+										break;
+									case 5:
+										locX = -1 * (-2 - j + i);
+										locY = -1 * (4 - j - i);
+										break;
+									case 6:
+										locX = -1 * (-3 + i);
+										locY = (1 - j);
+										break;
+									case 7:
+										locX = -1 * (-4 + j + i);
+										locY = -1 * (-2 - j + i);
+										break;
+								}
+								L1EffectSpawn.getInstance().spawnEffect(93002, 10000, _user.getX() - locX, _user.getY() - locY, _user.getMapId());
+							}
 						}
 						break;
 					// 衝擊之暈
