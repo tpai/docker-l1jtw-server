@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-17 17:47:54
+Date: 2011-05-25 11:15:57
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for npcaction
+-- Table structure for `npcaction`
 -- ----------------------------
 DROP TABLE IF EXISTS `npcaction`;
 CREATE TABLE `npcaction` (
@@ -26,7 +26,7 @@ CREATE TABLE `npcaction` (
   `teleport_url` varchar(45) NOT NULL DEFAULT '',
   `teleport_urla` varchar(45) NOT NULL DEFAULT '',
   PRIMARY KEY (`npcid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of npcaction
@@ -137,6 +137,7 @@ INSERT INTO `npcaction` VALUES ('50081', 'subinvest1', 'subinvest1', '', '');
 INSERT INTO `npcaction` VALUES ('50082', 'en0221', 'en0221', '', '');
 INSERT INTO `npcaction` VALUES ('50083', 'en0231', 'en0231', '', '');
 INSERT INTO `npcaction` VALUES ('50084', 'exitghost1', 'exitghost1', '', '');
+INSERT INTO `npcaction` VALUES ('50085', 'daniel1', 'daniel1', 'teleorcbdg2', '');
 INSERT INTO `npcaction` VALUES ('50111', 'orenc2', 'orenc2', '', '');
 INSERT INTO `npcaction` VALUES ('50112', 'orenb1', 'orenb1', '', '');
 INSERT INTO `npcaction` VALUES ('50113', 'orena1', 'orena1', '', '');
@@ -472,6 +473,7 @@ INSERT INTO `npcaction` VALUES ('70511', 'evilman', 'evilman', '', '');
 INSERT INTO `npcaction` VALUES ('70512', 'noved', 'noved', '', '');
 INSERT INTO `npcaction` VALUES ('70513', 'peria1', 'peria1', 'peria2', '');
 INSERT INTO `npcaction` VALUES ('70514', 'freehaste', 'freehaste', '', '');
+INSERT INTO `npcaction` VALUES ('70515', 'mubo1', 'mubo1', '', '');
 INSERT INTO `npcaction` VALUES ('70517', 'cuse1', 'cuse1', 'cuse3', '');
 INSERT INTO `npcaction` VALUES ('70518', 'tio', 'tio', '', '');
 INSERT INTO `npcaction` VALUES ('70519', 'peria1', 'peria1', 'peria2', '');
@@ -531,6 +533,8 @@ INSERT INTO `npcaction` VALUES ('70641', 'herbert1', 'herbert1', 'herbert2', '')
 INSERT INTO `npcaction` VALUES ('70642', 'hector1', 'hector1', 'hector2', '');
 INSERT INTO `npcaction` VALUES ('70644', 'bpledge2', 'bpledge2', 'bpledge1', '');
 INSERT INTO `npcaction` VALUES ('70645', 'alchemy1', 'alchemy1', 'alchemy4', '');
+INSERT INTO `npcaction` VALUES ('70649', 'lary1', 'lary1', '', '');
+INSERT INTO `npcaction` VALUES ('70652', 'laryaide1', 'laryaide1', '', '');
 INSERT INTO `npcaction` VALUES ('70653', 'masha', 'masha', '', '');
 INSERT INTO `npcaction` VALUES ('70654', 'othertown', 'othertown', 'othertownh', '');
 INSERT INTO `npcaction` VALUES ('70655', 'encwc', 'encwc', '', '');
@@ -1056,7 +1060,6 @@ INSERT INTO `npcaction` VALUES ('81243', 'pandora', 'pandora', '', '');
 INSERT INTO `npcaction` VALUES ('81244', 'pandora', 'pandora', '', '');
 INSERT INTO `npcaction` VALUES ('81245', '', '', '', '');
 INSERT INTO `npcaction` VALUES ('81246', 'sharna1', 'sharna2', '', '');
-INSERT INTO `npcaction` VALUES ('91002', 'dufo', 'dufo', '', '');
 INSERT INTO `npcaction` VALUES ('81247', 'wcorpse1', 'wcorpse1', '', '');
 INSERT INTO `npcaction` VALUES ('81248', 'wcorpse4', 'wcorpse4', '', '');
 INSERT INTO `npcaction` VALUES ('81249', 'wcorpse7', 'wcorpse7', '', '');
@@ -1066,7 +1069,8 @@ INSERT INTO `npcaction` VALUES ('81252', 'wa_egg1', 'wa_egg1', '', '');
 INSERT INTO `npcaction` VALUES ('81255', 'tutor', 'tutor', '', '');
 INSERT INTO `npcaction` VALUES ('81256', 'admin1', 'admin1', '', '');
 INSERT INTO `npcaction` VALUES ('81257', 'lowlv1', 'lowlv1', '', '');
-INSERT INTO `npcaction` VALUES ('70515', 'mubo1', 'mubo1', '', '');
+INSERT INTO `npcaction` VALUES ('81258', 'asha2', 'asha2', 'asha3', '');
+INSERT INTO `npcaction` VALUES ('81259', 'feaena2', 'feaena2', 'feaena3', '');
 INSERT INTO `npcaction` VALUES ('81260', 'artisan2', 'artisan2', '', '');
 INSERT INTO `npcaction` VALUES ('81261', '8event3', '8event3', '', '');
 INSERT INTO `npcaction` VALUES ('81262', 'warechar1', 'warechar1', '', '');
@@ -1080,8 +1084,6 @@ INSERT INTO `npcaction` VALUES ('81269', 'warechar1', 'warechar1', '', '');
 INSERT INTO `npcaction` VALUES ('81270', 'warechar1', 'warechar1', '', '');
 INSERT INTO `npcaction` VALUES ('81271', 'warechar1', 'warechar1', '', '');
 INSERT INTO `npcaction` VALUES ('81272', 'warechar1', 'warechar1', '', '');
-INSERT INTO `npcaction` VALUES ('81258', 'asha2', 'asha2', 'asha3', '');
-INSERT INTO `npcaction` VALUES ('81259', 'feaena2', 'feaena2', 'feaena3', '');
 INSERT INTO `npcaction` VALUES ('81277', 'dsecret3', 'dsecret3', '', '');
 INSERT INTO `npcaction` VALUES ('81278', 'veil1', 'veil1', '', '');
 INSERT INTO `npcaction` VALUES ('81279', 'grayknight1', 'grayknight1', '', '');
@@ -1100,6 +1102,8 @@ INSERT INTO `npcaction` VALUES ('81291', 'ddummy2', 'ddummy2', '', '');
 INSERT INTO `npcaction` VALUES ('81292', 'shamansael1', 'shamansael1', '', '');
 INSERT INTO `npcaction` VALUES ('81293', 'beasamoo', 'beasamool', '', '');
 INSERT INTO `npcaction` VALUES ('81294', 'kymsamoo', 'kymsamoo', '', '');
-INSERT INTO `npcaction` VALUES ('70649', 'lary1', 'lary1', '', '');
-INSERT INTO `npcaction` VALUES ('70652', 'laryaide1', 'laryaide1', '', '');
+INSERT INTO `npcaction` VALUES ('81297', 'adenshadow1', 'adenshadow1', '', '');
+INSERT INTO `npcaction` VALUES ('81298', 'adenflora1', 'adenflora1', 'adenflora2', '');
+INSERT INTO `npcaction` VALUES ('81300', 'gr_mammon1', 'gr_mammon1', 'gr_mammon1', '');
 INSERT INTO `npcaction` VALUES ('81307', 'newsboy', 'newsboy', '', '');
+INSERT INTO `npcaction` VALUES ('91002', 'dufo', 'dufo', '', '');
