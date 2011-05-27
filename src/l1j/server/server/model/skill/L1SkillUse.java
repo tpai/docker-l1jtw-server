@@ -1434,6 +1434,9 @@ public class L1SkillUse {
 		}
 		else if (_user instanceof L1NpcInstance) { // NPCがスキルを使った場合
 			int targetid = _target.getId();
+			if (_skill.getTargetTo() == L1Skills.TARGET_TO_ME) {//怪物自補時，效果目標 = 自己
+				targetid = _user.getId();
+			}
 
 			if (_user instanceof L1MerchantInstance) {
 				_user.broadcastPacket(new S_SkillSound(targetid, _gfxid));
