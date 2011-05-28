@@ -182,4 +182,37 @@ public class ActionCodes {
 
 	public static final int ACTION_Fishing = 71;
 
+	public static int getDefaultActionId(int gfxid) {
+		switch (gfxid) {
+			case 1603: // 希爾黛斯
+			case 1828: // 爆彈花
+			case 2716: // 古代亡靈
+			case 2738: // 水精靈王
+			case 2747: // 火精靈王
+			case 2757: // 吸血鬼
+			case 4017: // 水靈之主
+			case 4025: // 深淵火靈
+			case 4028: // 深淵水靈
+			case 4104: // 吸血鬼
+			case 4404: // 污濁的水精靈王
+			case 4405: // 污濁的火精靈王
+			case 4667: // 神官長．邦妮
+			case 4854: // 魔獸師長．辛克萊
+			case 4855: // 魔法團長．卡勒米爾
+			case 7880: // 火精靈王
+			case 7886: // 水精靈王
+			case 8331: // 火精靈王
+			case 8679: // 吸血鬼
+				return ACTION_SkillAttack;
+			case 32: // 長者
+			case 1780: // 烈炎獸
+			case 2064: // 雪人
+			case 3582: // 鼴鼠
+			case 4121: // 烈炎獸
+			case 4125: // 深淵弓箭手
+			case 4796: // 海賊骷髏刀手
+				return ACTION_AltAttack;
+		}
+		return ACTION_Attack;
+	}
 }

@@ -1191,28 +1191,11 @@ public class L1NpcInstance extends L1Character {
 		}
 		// 攻擊
 		if (template.get_atkspeed() != 0) {
-			int actid = 0;
-			int atkSpeed = 0;
-			switch (getTempCharGfx()) {
-				case 2747: case 2757: case 4104: case 4405: case 4667:
-				case 4854: case 4855: case 7880: case 8331: case 8679:
-					actid = 18;
-					break;
-				case 2738: case 4404: case 7886:
-					actid = 19;
-					break;
-				case 1780: case 7434:
-					actid = 30;
-					break;
-				default:
-					actid = getStatus() + 1;
-					break;
+			int actid = (getStatus() + 1);
+			if (ActionCodes.getDefaultActionId(getGfxId()) != 1) {
+				actid = ActionCodes.getDefaultActionId(getGfxId());
 			}
-			atkSpeed = SprTable.getInstance().getSprSpeed(getTempCharGfx(), actid);
-			if (atkSpeed == 0) {
-				atkSpeed = template.get_atkspeed();
-			}
-			setAtkspeed(atkSpeed);
+			setAtkspeed(SprTable.getInstance().getSprSpeed(getTempCharGfx(), actid));
 		} else {
 			setAtkspeed(0);
 		}

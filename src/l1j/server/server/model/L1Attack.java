@@ -1775,7 +1775,12 @@ public class L1Attack {
 	// ●●●● ＮＰＣ攻擊動作 ●●●●
 	private void actionNpc() {
 		int bowActId = 0;
-		int actId = 0;
+		int actId = ActionCodes.ACTION_Attack;
+		if (_npc.getTempCharGfx() == 0) {
+			actId = ActionCodes.getDefaultActionId(_npc.getGfxId());
+		} else {
+			actId = ActionCodes.getDefaultActionId(_npc.getTempCharGfx());
+		}
 		int[] data = null;
 
 		_npc.setHeading(_npc.targetDirection(_targetX, _targetY)); // 改變面向
@@ -1790,8 +1795,6 @@ public class L1Attack {
 
 		if (getActId() > 0) {
 			actId = getActId();
-		} else {
-			actId = ActionCodes.ACTION_Attack;
 		}
 
 		if (!_isHit) { // Miss
