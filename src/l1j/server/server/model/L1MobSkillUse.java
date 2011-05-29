@@ -296,8 +296,14 @@ public class L1MobSkillUse {
 		boolean canUseSkill = false;
 
 		if (skillid > 0) {
+			skillUse.setSkillRanged(getMobSkillTemplate().getRange(idx)); // 變更技能施放距離
 			canUseSkill = skillUse.checkUseSkill(null, skillid, _target.getId(), _target.getX(), _target.getY(), null, 0, L1SkillUse.TYPE_NORMAL,
 					_attacker, actId, gfxId, hpConsume, mpConsume);
+		}
+
+		L1Skills skill = SkillsTable.getInstance().getTemplate(skillid);
+		if (skill.getTarget().equals("buff") && _target.hasSkillEffect(skillid)) {
+			return false;
 		}
 
 		if (canUseSkill == true) {
@@ -307,7 +313,6 @@ public class L1MobSkillUse {
 			skillUse.handleCommands(null, skillid, _target.getId(), _target.getX(), _target.getX(), null, 0, L1SkillUse.TYPE_NORMAL, _attacker);
 
 			// 延遲時間判斷
-			L1Skills skill = SkillsTable.getInstance().getTemplate(skillid);
 			if (actId == 0) {
 				actId = skill.getActionId();
 			}

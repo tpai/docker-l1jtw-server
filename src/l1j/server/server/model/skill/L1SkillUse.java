@@ -135,6 +135,8 @@ public class L1SkillUse {
 
 	private int _leverage = 10; // 1/10倍なので10で1倍
 
+	private int _skillRanged = 0;
+
 	private boolean _isFreeze = false;
 
 	private boolean _isCounterMagic = true;
@@ -205,6 +207,20 @@ public class L1SkillUse {
 		public boolean isCalc() {
 			return _isCalc;
 		}
+	}
+
+	/*
+	 * 攻擊距離變更。
+	 */
+	public void setSkillRanged(int i) {
+		_skillRanged = i;
+	}
+
+	public int getSkillRanged() {
+		if (_skillRanged == 0) {
+			return _skill.getRanged();
+		}
+		return _skillRanged;
 	}
 
 	/*
@@ -812,8 +828,8 @@ public class L1SkillUse {
 			}
 
 			// 射程距離-1の場合は画面内のオブジェクトが対象
-			if (_skill.getRanged() != -1) {
-				if (_user.getLocation().getTileLineDistance(_target.getLocation()) > _skill.getRanged()) {
+			if (getSkillRanged() != -1) {
+				if (_user.getLocation().getTileLineDistance(_target.getLocation()) > getSkillRanged()) {
 					return; // 射程範囲外
 				}
 			}
