@@ -282,54 +282,71 @@ public class L1SkillId {
 	/*
 	 * Dark Spirit Magic
 	 */
+	/** 黑暗妖精魔法 (暗隱術) */
 	public static final int BLIND_HIDING = 97;
 
+	/** 黑暗妖精魔法 (附加劇毒) */
 	public static final int ENCHANT_VENOM = 98;
 
+	/** 黑暗妖精魔法 (影之防護) */
 	public static final int SHADOW_ARMOR = 99;
 
+	/** 黑暗妖精魔法 (提煉魔石) */
 	public static final int BRING_STONE = 100;
 
+	/** 黑暗妖精魔法 (行走加速) */
 	public static final int MOVING_ACCELERATION = 101; // E: PURIFY_STONE
 
+	/** 黑暗妖精魔法 (燃燒鬥志) */
 	public static final int BURNING_SPIRIT = 102;
 
+	/** 黑暗妖精魔法 (暗黑盲咒) */
 	public static final int DARK_BLIND = 103;
 
+	/** 黑暗妖精魔法 (毒性抵抗) */
 	public static final int VENOM_RESIST = 104;
 
+	/** 黑暗妖精魔法 (雙重破壞) */
 	public static final int DOUBLE_BRAKE = 105;
 
+	/** 黑暗妖精魔法 (暗影閃避) */
 	public static final int UNCANNY_DODGE = 106;
 
+	/** 黑暗妖精魔法 (暗影之牙) */
 	public static final int SHADOW_FANG = 107;
 
+	/** 黑暗妖精魔法 (會心一擊) */
 	public static final int FINAL_BURN = 108;
 
+	/** 黑暗妖精魔法 (力量提升) */
 	public static final int DRESS_MIGHTY = 109;
 
+	/** 黑暗妖精魔法 (敏捷提升) */
 	public static final int DRESS_DEXTERITY = 110;
 
+	/** 黑暗妖精魔法 (閃避提升) */
 	public static final int DRESS_EVASION = 111;
 
 	// none = 112
 	/*
 	 * Royal Magic
 	 */
-	/** 精準目標 */
+	/** 王族魔法 (精準目標) */
 	public static final int TRUE_TARGET = 113;
 
-	/** 激勵士氣 */
+	/** 王族魔法 (激勵士氣) */
 	public static final int GLOWING_AURA = 114;
 
-	/** 鋼鐵士氣 */
+	/** 王族魔法 (鋼鐵士氣) */
 	public static final int SHINING_AURA = 115;
 
+	/** 王族魔法 (呼喚盟友) */
 	public static final int CALL_CLAN = 116; // E: CALL_PLEDGE_MEMBER
 
-	/** 衝擊士氣 */
+	/** 王族魔法 (衝擊士氣) */
 	public static final int BRAVE_AURA = 117;
 
+	/** 王族魔法 (援護盟友) */
 	public static final int RUN_CLAN = 118;
 
 	// unknown = 119 - 120
@@ -337,13 +354,16 @@ public class L1SkillId {
 	/*
 	 * Spirit Magic
 	 */
+	/** 妖精魔法 (魔法防禦) */
 	public static final int RESIST_MAGIC = 129;
 
+	/** 妖精魔法 (心靈轉換) */
 	public static final int BODY_TO_MIND = 130;
 
 	/** 妖精魔法 (世界樹的呼喚) */
 	public static final int TELEPORT_TO_MATHER = 131;
 
+	/** 妖精魔法 (三重矢) */
 	public static final int TRIPLE_ARROW = 132;
 
 	/** 妖精魔法 (弱化屬性) */
@@ -353,96 +373,129 @@ public class L1SkillId {
 	public static final int COUNTER_MIRROR = 134;
 
 	// none = 135 - 136
+	/** 妖精魔法 (淨化精神) */
 	public static final int CLEAR_MIND = 137;
 
+	/** 妖精魔法 (屬性防禦) */
 	public static final int RESIST_ELEMENTAL = 138;
 
 	// none = 139 - 144
+	/** 妖精魔法 (釋放元素) */
 	public static final int RETURN_TO_NATURE = 145;
 
+	/** 妖精魔法 (魂體轉換) */
 	public static final int BLOODY_SOUL = 146; // E: BLOOD_TO_SOUL
 
+	/** 妖精魔法 (單屬性防禦) */
 	public static final int ELEMENTAL_PROTECTION = 147; // E:PROTECTION_FROM_ELEMENTAL
 
+	/** 妖精魔法 (火焰武器) */
 	public static final int FIRE_WEAPON = 148;
 
+	/** 妖精魔法 (風之神射) */
 	public static final int WIND_SHOT = 149;
 
+	/** 妖精魔法 (風之疾走) */
 	public static final int WIND_WALK = 150;
 
+	/** 妖精魔法 (大地防護) */
 	public static final int EARTH_SKIN = 151;
 
+	/** 妖精魔法 (地面障礙) */
 	public static final int ENTANGLE = 152;
 
+	/** 妖精魔法 (魔法消除) */
 	public static final int ERASE_MAGIC = 153;
 
+	/** 妖精魔法 (召喚屬性精靈) */
 	public static final int LESSER_ELEMENTAL = 154; // E:SUMMON_LESSER_ELEMENTAL
 
-	/** 烈炎氣息 */
+	/** 妖精魔法 (烈炎氣息) */
 	public static final int FIRE_BLESS = 155; // E: BLESS_OF_FIRE
 
-	/** 暴風之眼 */
+	/** 妖精魔法 (暴風之眼) */
 	public static final int STORM_EYE = 156; // E: EYE_OF_STORM
 
+	/** 妖精魔法 (大地屏障) */
 	public static final int EARTH_BIND = 157;
 
+	/** 妖精魔法 (生命之泉) */
 	public static final int NATURES_TOUCH = 158;
 
-	/** 大地的祝福 */
+	/** 妖精魔法 (大地的祝福) */
 	public static final int EARTH_BLESS = 159; // E: BLESS_OF_EARTH
 
+	/** 妖精魔法 (水之防護) */
 	public static final int AQUA_PROTECTER = 160;
 
-	/** 精靈魔法 (封印禁地)*/
+	/** 妖精魔法 (封印禁地) */
 	public static final int AREA_OF_SILENCE = 161;
 
+	/** 妖精魔法 (召喚強力屬性精靈) */
 	public static final int GREATER_ELEMENTAL = 162; // E:SUMMON_GREATER_ELEMENTAL
 
+	/** 妖精魔法 (烈炎武器) */
 	public static final int BURNING_WEAPON = 163;
 
+	/** 妖精魔法 (生命的祝福) */
 	public static final int NATURES_BLESSING = 164;
 
+	/** 妖精魔法 (生命呼喚) */
 	public static final int CALL_OF_NATURE = 165; // E: NATURES_MIRACLE
 
+	/** 妖精魔法 (暴風神射) */
 	public static final int STORM_SHOT = 166;
 
 	/** 妖精魔法 (風之枷鎖) */
 	public static final int WIND_SHACKLE = 167;
 
+	/** 妖精魔法 (鋼鐵防護) */
 	public static final int IRON_SKIN = 168;
 
+	/** 妖精魔法 (體能激發) */
 	public static final int EXOTIC_VITALIZE = 169;
 
-	/** 水之元氣 */
+	/** 妖精魔法 (水之元氣) */
 	public static final int WATER_LIFE = 170;
 
+	/** 妖精魔法 (屬性之火) */
 	public static final int ELEMENTAL_FIRE = 171;
 
+	/** 妖精魔法 (暴風疾走) */
 	public static final int STORM_WALK = 172;
 
+	/** 妖精魔法 (污濁之水) */
 	public static final int POLLUTE_WATER = 173;
 
+	/** 妖精魔法 (精準射擊) */
 	public static final int STRIKER_GALE = 174;
 
+	/** 妖精魔法 (烈焰之魂) */
 	public static final int SOUL_OF_FLAME = 175;
 
+	/** 妖精魔法 (能量激發) */
 	public static final int ADDITIONAL_FIRE = 176;
 
 	// none = 177-180
 	/*
 	 * Dragon Knight skills
 	 */
+	/** 龍騎士魔法 (龍之護鎧) */
 	public static final int DRAGON_SKIN = 181;
 
+	/** 龍騎士魔法 (燃燒擊砍) */
 	public static final int BURNING_SLASH = 182;
 
 	/** 龍騎士魔法 (護衛毀滅) */
 	public static final int GUARD_BRAKE = 183;
 
+	/** 龍騎士魔法 (岩漿噴吐) */
 	public static final int MAGMA_BREATH = 184;
 
+	/** 龍騎士魔法 (覺醒：安塔瑞斯) */
 	public static final int AWAKEN_ANTHARAS = 185;
 
+	/** 龍騎士魔法 (血之渴望) */
 	public static final int BLOODLUST = 186;
 
 	/** 龍騎士魔法 (屠宰者) */
@@ -451,19 +504,25 @@ public class L1SkillId {
 	/** 龍騎士魔法 (恐懼無助) */
 	public static final int RESIST_FEAR = 188;
 
+	/** 龍騎士魔法 (衝擊之膚) */
 	public static final int SHOCK_SKIN = 189;
 
+	/** 龍騎士魔法 (覺醒：法利昂) */
 	public static final int AWAKEN_FAFURION = 190;
 
+	/** 龍騎士魔法 (致命身軀) */
 	public static final int MORTAL_BODY = 191;
 
+	/** 龍騎士魔法 (奪命之雷) */
 	public static final int THUNDER_GRAB = 192;
 
 	/** 龍騎士魔法 (驚悚死神) */
 	public static final int HORROR_OF_DEATH = 193;
 
+	/** 龍騎士魔法 (寒冰噴吐) */
 	public static final int FREEZING_BREATH = 194;
 
+	/** 龍騎士魔法 (覺醒：巴拉卡斯) */
 	public static final int AWAKEN_VALAKAS = 195;
 
 	// none = 196-200
@@ -482,29 +541,37 @@ public class L1SkillId {
 	/** 幻術士魔法 (幻覺：歐吉)*/
 	public static final int ILLUSION_OGRE = 204;
 
+	/** 幻術士魔法 (立方：燃燒) */
 	public static final int CUBE_IGNITION = 205;
 
 	/** 幻術士魔法 (專注) */
 	public static final int CONCENTRATION = 206;
 
+	/** 幻術士魔法 (心靈破壞) */
 	public static final int MIND_BREAK = 207;
 
 	/** 幻術士魔法 (骷髏毀壞) */
 	public static final int BONE_BREAK = 208;
 
+	/** 幻術士魔法 (幻覺：巫妖) */
 	public static final int ILLUSION_LICH = 209;
 
+	/** 幻術士魔法 (立方：地裂) */
 	public static final int CUBE_QUAKE = 210;
 
 	/** 幻術士魔法 (耐力) */
 	public static final int PATIENCE = 211;
 
+	/** 幻術士魔法 (幻想) */
 	public static final int PHANTASM = 212;
 
+	/** 幻術士魔法 (武器破壞者) */
 	public static final int ARM_BREAKER = 213;
 
+	/** 幻術士魔法 (幻覺：鑽石高侖) */
 	public static final int ILLUSION_DIA_GOLEM = 214;
 
+	/** 幻術士魔法 (立方：衝擊) */
 	public static final int CUBE_SHOCK = 215;
 
 	/** 幻術士魔法 (洞察)*/
@@ -519,6 +586,7 @@ public class L1SkillId {
 	/** 幻術士魔法 (幻覺：化身) */
 	public static final int ILLUSION_AVATAR = 219;
 
+	/** 幻術士魔法 (立方：和諧) */
 	public static final int CUBE_BALANCE = 220;
 
 	public static final int SKILLS_END = 220;
@@ -528,8 +596,10 @@ public class L1SkillId {
 	 */
 	public static final int STATUS_BEGIN = 1000;
 
+	/** 二段加速 */
 	public static final int STATUS_BRAVE = 1000;
 
+	/** 一段加速 */
 	public static final int STATUS_HASTE = 1001;
 
 	public static final int STATUS_BLUE_POTION = 1002;
