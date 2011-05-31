@@ -22,8 +22,8 @@ import java.util.Collection;
 import java.util.logging.Logger;
 
 import l1j.server.Config;
-import l1j.server.ConsoleProcess;
 import l1j.server.L1Message;
+import l1j.server.console.ConsoleProcess;
 import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.datatables.ChatLogTable;

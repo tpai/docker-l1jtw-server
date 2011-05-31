@@ -12,10 +12,11 @@
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server;
+package l1j.server.console;
 
 import java.util.Scanner;
 
+import l1j.server.Config;
 import l1j.server.server.GameServer;
 import l1j.server.server.model.L1World;
 import l1j.server.server.serverpackets.S_SystemMessage;
