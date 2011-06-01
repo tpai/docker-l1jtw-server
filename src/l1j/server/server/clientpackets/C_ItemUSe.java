@@ -5843,11 +5843,11 @@ public class C_ItemUSe extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(1102)); // 料理の材料が足りません。
 			}
 		}
-		else if (cookNo == 15) { // クラブスープ
+		else if (cookNo == 15) { // 蟹肉湯
 			if (pc.getInventory().checkItem(49047, 1) && pc.getInventory().checkItem(40499, 1) && pc.getInventory().checkItem(49048, 1)) {
-				pc.getInventory().consumeItem(49047, 1);
-				pc.getInventory().consumeItem(40499, 1);
-				pc.getInventory().consumeItem(49048, 1);
+				pc.getInventory().consumeItem(49047, 1); // 蟹肉
+				pc.getInventory().consumeItem(40499, 1); // 蘑菇汁
+				pc.getInventory().consumeItem(49048, 1); // 綜合烤肉醬
 				if ((chance >= 1) && (chance <= 90)) {
 					createNewItem(pc, 49056, 1);
 					pc.broadcastPacket(new S_SkillSound(pc.getId(), 6392));
@@ -6027,11 +6027,13 @@ public class C_ItemUSe extends ClientBasePacket {
 				pc.sendPackets(new S_ServerMessage(1102)); // 料理の材料が足りません。
 			}
 		}
-		else if (cookNo == 23) { // バシリスクの卵スープ
-			if (pc.getInventory().checkItem(49048, 1) && pc.getInventory().checkItem(49243, 1) && pc.getInventory().checkItem(49267, 1)) {
-				pc.getInventory().consumeItem(49048, 1);
-				pc.getInventory().consumeItem(49243, 1);
-				pc.getInventory().consumeItem(49267, 1);
+		else if (cookNo == 23) { // 邪惡蜥蜴蛋湯
+			if (pc.getInventory().checkItem(49048, 1) && pc.getInventory().checkItem(49243, 1)
+					&& pc.getInventory().checkItem(49267, 1) && pc.getInventory().checkItem(40499, 1)) {
+				pc.getInventory().consumeItem(49048, 1); // 綜合烤肉醬
+				pc.getInventory().consumeItem(49243, 1); // 香菜
+				pc.getInventory().consumeItem(49267, 1); // 邪惡蜥蜴蛋
+				pc.getInventory().consumeItem(40499, 1); // 蘑菇汁
 				if ((chance >= 1) && (chance <= 90)) {
 					createNewItem(pc, 49251, 1);
 					pc.broadcastPacket(new S_SkillSound(pc.getId(), 6392));

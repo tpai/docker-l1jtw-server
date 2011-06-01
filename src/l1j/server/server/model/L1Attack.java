@@ -1776,13 +1776,13 @@ public class L1Attack {
 	private void actionNpc() {
 		int bowActId = 0;
 		int actId = ActionCodes.ACTION_Attack;
-		double dmg = 0;
+		double dmg = _damage;
 		if (_npc.getTempCharGfx() == _npc.getGfxId()) {
 			actId = ActionCodes.getDefaultActionId(_npc.getGfxId());
 			if ((_npc.getNpcTemplate().getSpecialActionId() != 0) && (getActId() == 0)) {
 				if ((Random.nextInt(100) + 1) <= 50) {
 					actId = _npc.getNpcTemplate().getSpecialActionId();
-					dmg = _damage * 1.5;
+					dmg *= 1.5;
 				}
 			}
 		} else { // 被變身
@@ -1790,7 +1790,7 @@ public class L1Attack {
 			if ((ActionCodes.getSpecialActionId(_npc.getTempCharGfx())) != 0 && (getActId() == 0)) {
 				if ((Random.nextInt(100) + 1) <= 50) {
 					actId = ActionCodes.getSpecialActionId(_npc.getTempCharGfx());
-					dmg = _damage * 1.5;
+					dmg *= 1.5;
 				}
 			}
 		}
