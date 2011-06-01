@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
+import l1j.server.server.ActionCodes;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;
@@ -163,6 +164,7 @@ public class NpcTable {
 				npc.setAmountFixed(rs.getBoolean("amount_fixed"));
 				npc.setChangeHead(rs.getBoolean("change_head"));
 				npc.setCantResurrect(rs.getBoolean("cant_resurrect"));
+				npc.setSpecialActionId(ActionCodes.getSpecialActionId(npc.get_gfxid()));
 
 				registerConstructorCache(npc.getImpl());
 				_npcs.put(npcId, npc);
