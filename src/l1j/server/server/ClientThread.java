@@ -476,12 +476,19 @@ public class ClientThread implements Runnable, PacketOutput {
 	public static void quitGame(L1PcInstance pc) {
 		// 如果死掉回到城中，設定飽食度
 		if (pc.isDead()) {
-			int[] loc = Getback.GetBack_Location(pc, true);
-			pc.setX(loc[0]);
-			pc.setY(loc[1]);
-			pc.setMap((short) loc[2]);
-			pc.setCurrentHp(pc.getLevel());
-			pc.set_food(40);
+			try {
+				Thread.sleep(2000);// 暫停該執行續，優先權讓給expmonitor
+				int[] loc = Getback.GetBack_Location(pc, true);
+				pc.setX(loc[0]);
+				pc.setY(loc[1]);
+				pc.setMap((short) loc[2]);
+				pc.setCurrentHp(pc.getLevel());
+				pc.set_food(40);
+			} catch (InterruptedException ie) {
+				ie.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		// 終止交易
