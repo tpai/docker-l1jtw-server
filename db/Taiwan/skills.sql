@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-06-01 21:31:10
+Date: 2011-06-03 18:29:18
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,7 +52,7 @@ CREATE TABLE `skills` (
   `sysmsgID_stop` int(10) unsigned NOT NULL DEFAULT '0',
   `sysmsgID_fail` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`skill_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=20029 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=20031 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of skills
@@ -769,3 +769,5 @@ INSERT INTO `skills` VALUES ('20025', '中距離範圍攻擊(6x2)(風屬)', '0',
 INSERT INTO `skills` VALUES ('20026', '範圍衝暈(2x2)', '0', '0', '0', '0', '0', '0', '0', '0', 'none', '3', '10', '10', '1', '0', '0', '0', '64', '0', '0', '2', '0', '0', '', '19', '2510', '0', '0', '0', '0');
 INSERT INTO `skills` VALUES ('20027', '範圍攻擊(2x2)(水屬)', '0', '0', '0', '0', '0', '0', '0', '0', 'none', '3', '10', '10', '1', '0', '0', '4', '64', '0', '0', '2', '0', '0', '', '19', '2510', '0', '0', '0', '0');
 INSERT INTO `skills` VALUES ('20028', '範圍攻擊(5x5)(水屬)', '0', '0', '0', '0', '0', '0', '0', '0', 'none', '3', '10', '10', '1', '0', '0', '4', '64', '0', '0', '5', '0', '0', '', '19', '2510', '0', '0', '0', '0');
+INSERT INTO `skills` VALUES ('20029', '中距離單體攻擊 (無屬)(中毒)', '0', '0', '0', '0', '0', '0', '0', '0', 'attack', '3', '10', '10', '1', '0', '0', '0', '64', '0', '6', '0', '0', '0', '', '18', '2510', '0', '0', '0', '0');
+INSERT INTO `skills` VALUES ('20030', '範圍攻擊(2x2)(地屬)', '0', '0', '0', '0', '0', '0', '0', '0', 'none', '3', '10', '10', '1', '0', '0', '1', '64', '0', '0', '2', '0', '0', '', '19', '2510', '0', '0', '0', '0');

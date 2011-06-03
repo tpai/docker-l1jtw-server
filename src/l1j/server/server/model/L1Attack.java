@@ -1822,8 +1822,8 @@ public class L1Attack {
 			_npc.broadcastPacket(new S_UseArrowSkill(_npc, _targetId, _targetX, _targetY, data));
 		} else {
 			if (getGfxId() > 0) {
-				data = new int[] {actId, _damage, getGfxId(), 0}; // data = {actid, dmg, spellgfx, use_type}
-				_npc.broadcastPacket(new S_UseAttackSkill(_npc, _target.getId(), _targetX, _targetY, data));
+				data = new int[] {actId, _damage, getGfxId(), 6}; // data = {actid, dmg, spellgfx, use_type}
+				_npc.broadcastPacket(new S_UseAttackSkill(_npc, _targetId, _targetX, _targetY, data));
 			} else {
 				data =  new int[] {actId, _damage, 0}; // data = {actid, dmg, effect}
 				_npc.broadcastPacket(new S_AttackPacket(_npc, _targetId, data));
@@ -1979,7 +1979,7 @@ public class L1Attack {
 				actId = ActionCodes.ACTION_Attack;
 			}
 			if (getGfxId() > 0) {
-				int[] data = {actId, 0, getGfxId(), 0}; // data = {actId, dmg, getGfxId(), use_type}
+				int[] data = {actId, 0, getGfxId(), 6}; // data = {actId, dmg, getGfxId(), use_type}
 				_npc.broadcastPacket(new S_UseAttackSkill(_target,
 						_npc.getId(), _targetX, _targetY, data));
 			} else {
