@@ -1071,7 +1071,7 @@ public class L1BuffUtil {
 						L1Teleport.teleport(pc, 33051, 32337, (short) 4, 5, true);
 					} else {
 						pc.sendPackets(new S_ServerMessage(276)); // \f1在此無法使用傳送。
-						L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), false);
+						pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 					}
 				}
 				break;

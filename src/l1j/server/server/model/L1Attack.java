@@ -850,7 +850,7 @@ public class L1Attack {
 		int weaponMaxDamage = _weaponSmall;
 
 		int weaponDamage = 0;
-		if ((_weaponType == 58)) { // 鋼爪
+		if ((_weaponType == 58) && _pc.isDarkelf()) { // 鋼爪
 			if ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // 額外出現最大值的機率
 				weaponDamage = weaponMaxDamage;
 			} else {

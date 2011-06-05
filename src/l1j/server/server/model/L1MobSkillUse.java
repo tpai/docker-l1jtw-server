@@ -206,25 +206,24 @@ public class L1MobSkillUse {
 		int max = getMobSkillTemplate().getSummonMax(idx);
 		int count = 0;
 		int actId = getMobSkillTemplate().getActid(idx);
+		int gfxId = getMobSkillTemplate().getGfxid(idx);
 
 		if (summonId == 0) {
 			return false;
 		}
 
+		// 施法動作
+		if (actId > 0) {
+			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
+			_attacker.broadcastPacket(gfx);
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
+		}
+		// 魔方陣
+		if (gfxId > 0) {
+			_attacker.broadcastPacket(new S_SkillSound(_attacker.getId(), gfxId));
+		}
 		count = Random.nextInt(max) + min;
 		mobspawn(summonId, count);
-
-		// 魔方陣の表示
-		_attacker.broadcastPacket(new S_SkillSound(_attacker.getId(), 761));
-
-		// 施法動作
-		if (actId == 0) {
-			actId = ActionCodes.ACTION_SkillBuff;
-		}
-		S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
-		_attacker.broadcastPacket(gfx);
-
-		_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
 		return true;
 	}
 
@@ -239,9 +238,15 @@ public class L1MobSkillUse {
 		if (polyId == 0) {
 			return false;
 		}
+		// 施法動作
+		if (actId > 0) {
+			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
+			_attacker.broadcastPacket(gfx);
+			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
+		}
 
 		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(_attacker)) {
-			if (pc.isDead()) { // 死亡している
+			if (pc.isDead()) { // 死亡
 				continue;
 			}
 			if (pc.isGhost()) {
@@ -254,35 +259,17 @@ public class L1MobSkillUse {
 				continue; // 射線が通らない
 			}
 
-			int npcId = _attacker.getNpcTemplate().get_npcId();
-			switch (npcId) {
-				case 81082: // ヤヒの場合
-					pc.getInventory().takeoffEquip(945); // 牛のpolyIdで装備を全部外す。
+			switch (_attacker.getNpcTemplate().get_npcId()) {
+				case 81082: // 火焰之影
+					pc.getInventory().takeoffEquip(945); // 將目標裝備卸下。
 					break;
 				default:
 					break;
 			}
+			_attacker.broadcastPacket(new S_SkillSound(pc.getId(), 230));
 			L1PolyMorph.doPoly(pc, polyId, 1800, L1PolyMorph.MORPH_BY_NPC);
-
 			usePoly = true;
 		}
-		if (usePoly) {
-			// 変身させた場合、オレンジの柱を表示する。
-			for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(_attacker)) {
-				pc.sendPackets(new S_SkillSound(pc.getId(), 230));
-				pc.broadcastPacket(new S_SkillSound(pc.getId(), 230));
-				break;
-			}
-			// 施法動作
-			if (actId == 0) {
-				actId = ActionCodes.ACTION_SkillBuff;
-			}
-			S_DoActionGFX gfx = new S_DoActionGFX(_attacker.getId(), actId);
-			_attacker.broadcastPacket(gfx);
-
-			_sleepTime = SprTable.getInstance().getSprSpeed(_attacker.getTempCharGfx(), actId);
-		}
-
 		return usePoly;
 	}
 

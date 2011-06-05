@@ -194,6 +194,7 @@ public class ActionCodes {
 			case 4028: // 深淵水靈
 			case 4104: // 吸血鬼
 			case 4405: // 污濁的火精靈王
+			case 4612: // 火焰之影(變身後)
 			case 4667: // 神官長．邦妮
 			case 4854: // 魔獸師長．辛克萊
 			case 4855: // 魔法團長．卡勒米爾
@@ -213,7 +214,6 @@ public class ActionCodes {
 			case 3582: // 鼴鼠
 			case 4121: // 烈炎獸
 			case 4125: // 深淵弓箭手
-			case 4612: // 火焰之影(變身後)
 			case 4796: // 海賊骷髏刀手
 			case 5127: // 腐爛的 骷髏弓箭手
 			case 5412: // 船舶之墓殭屍
@@ -228,6 +228,7 @@ public class ActionCodes {
 		switch (gfxid) {
 			case 53: // 巴風特
 			case 96: // 狼
+			case 148: // 警衛
 			case 152: // 食人妖精
 			case 173: // 卡士伯
 			case 183: // 西瑪
@@ -236,6 +237,7 @@ public class ActionCodes {
 			case 240: // 死亡騎士
 			case 255: // 卡司特
 			case 257: // 卡司特王
+			case 864: // 芮克妮
 			case 865: // 污濁 芮克妮
 			case 894: // 食人妖精王
 			case 934: // 柯利
@@ -251,16 +253,17 @@ public class ActionCodes {
 			case 1108: // 萊肯
 			case 1110: // 狼人
 			case 1128: // 阿魯巴
-			case 1130: // 骷髏神射手
 			case 1132: // 骷髏鬥士
 			case 1134: // 骷髏警衛
 			case 1173: // 蜥蜴人
 			case 1202: // 獨眼巨人
 			case 1204: // 格利芬
 			case 1206: // 哈柏哥布林
+			case 1222: // 巡守(劍)
 			case 1318: // 鬼魂(綠)
 			case 1321: // 鬼魂(紅)
 			case 1477: // 冰原狼人
+			case 1517: // 巨斧牛人
 			case 1525: // 冰石高崙
 			case 1542: // 巨人(茶)
 			case 1555: // 巨人(黑)
@@ -277,11 +280,14 @@ public class ActionCodes {
 			case 1632: // 奎斯坦修
 			case 1642: // 熊
 			case 1649: // 龍龜
+			case 1659: // 海音 警衛
 			case 1666: // 火蜥蜴
 			case 1762: // 熔岩高崙
 			case 1770: // 火焰戰士
+			case 1839: // 侏儒警衛
 			case 1841: // 阿西塔基奧
 			case 1844: // 龍蠅
+			case 1997: // 侏儒警衛
 			case 2086: // 冰原老虎
 			case 2112: // 艾爾摩法師
 			case 2134: // 雪怪
@@ -312,6 +318,7 @@ public class ActionCodes {
 			case 2443: // 強盜(鈍器)
 			case 2489: // 強盜(劍)
 			case 2513: // 死亡之劍
+			case 2516: // 強盜(雙斧)
 			case 2524: // 小惡魔
 			case 2538: // 炎魔
 			case 2755: // 獨角獸
@@ -340,6 +347,7 @@ public class ActionCodes {
 			case 3596: // 歐姆裝甲兵
 			case 3644: // 歐姆民兵
 			case 3652: // 犰狳
+			case 3801: // 重裝歐姆NPC
 			case 3864: // 妖魔鬥士
 			case 3916: // 奇岩 魔狼
 			case 3918: // 奇岩 冰原老虎
@@ -420,6 +428,7 @@ public class ActionCodes {
 			case 4930: // 腐爛的 殭屍槍兵
 			case 4935: // 腐爛的 殭屍將軍
 			case 4942: // 瑪依奴
+			case 5007: // 疲憊的蜥蜴人戰士
 			case 5008: // 巴貝多
 			case 5014: // 腐爛的 骷髏斧手
 			case 5033: // 腐爛的 骷髏槍兵
@@ -483,6 +492,28 @@ public class ActionCodes {
 			case 6654: // 底比斯 阿努斯(紅)
 			case 6699: // 底比斯 斯芬克斯(白)
 			case 6704: // 底比斯 斯芬克斯(黑)
+			case 6776: // 艾爾摩大將軍殭屍
+			case 6778: // 艾爾摩索夏依卡將軍的冤魂
+			case 7111: // 提卡爾 艾庫巴拉
+			case 7113: // 提卡爾 艾庫巴拉
+			case 7167: // 提卡爾 艾庫艾托(茂盛)
+			case 7170: // 提卡爾 艾庫艾托
+			case 7173: // 提卡爾 薩德泥偶(藍眼)
+			case 7176: // 提卡爾 薩德泥偶(紅眼)
+			case 7335: // 侏儒族將軍
+			case 7369: // 淘氣幼龍
+			case 7481: // 喀瑪焰
+			case 7489: // 喀瑪南
+			case 7496: // 喀瑪王(黃)
+			case 7503: // 喀瑪王(藍)
+			case 7509: // 喀瑪王(紅)
+			case 7515: // 浮士德
+			case 7587: // 泥龍(火)
+			case 7590: // 泥龍(地)
+			case 7591: // 泥龍(地)
+			case 7593: // 泥龍(風)
+			case 7596: // 泥龍(水)
+			case 7745: // 阿爾波斯 麥嘉
 				return ACTION_AltAttack;
 			case 2402: // 巨大牛人
 				return ACTION_SkillAttack;

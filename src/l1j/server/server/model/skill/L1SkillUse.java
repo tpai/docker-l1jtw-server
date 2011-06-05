@@ -2019,9 +2019,9 @@ public class L1SkillUse {
 									}
 									L1Teleport.teleport(pc, newX, newY, mapId, 5, true);
 								}
-								else { // テレポート不可マップへの移動制限
-									L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), false);
+								else {
 									pc.sendPackets(new S_ServerMessage(79));
+									pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 								}
 							}
 							else { // ブックマークが取得出来なかった、あるいは「任意の場所」を選択した場合の処理
@@ -2044,7 +2044,7 @@ public class L1SkillUse {
 								}
 								else {
 									pc.sendPackets(new S_ServerMessage(276)); // \f1在此無法使用傳送。
-									L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), false);
+									pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 								}
 							}
 						}
@@ -2079,7 +2079,7 @@ public class L1SkillUse {
 								else {
 									// 這附近的能量影響到瞬間移動。在此地無法使用瞬間移動。
 									pc.sendPackets(new S_ServerMessage(647));
-									L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), false);
+									pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 								}
 							}
 						}

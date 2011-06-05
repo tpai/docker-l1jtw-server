@@ -24,11 +24,11 @@ public class S_MapID extends ServerBasePacket {
 	public S_MapID(int mapid, boolean isUnderwater) {
 		writeC(Opcodes.S_OPCODE_MAPID);
 		writeH(mapid);
-		writeC(isUnderwater ? 1 : 0);
+		writeC(isUnderwater ? 1 : 0); // 水底:1
 		writeC(0);
 		writeH(0);
 		writeC(0);
-		writeD(0);
+		writeD(0); // 正服值 2
 	}
 
 	@Override

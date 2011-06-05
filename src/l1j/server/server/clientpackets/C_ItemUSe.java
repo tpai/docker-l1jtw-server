@@ -1609,8 +1609,8 @@ public class C_ItemUSe extends ClientBasePacket {
 							pc.getInventory().removeItem(l1iteminstance, 1);
 						}
 						else {
-							L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), false);
 							pc.sendPackets(new S_ServerMessage(79));
+							pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 						}
 					}
 					else {
@@ -1632,8 +1632,8 @@ public class C_ItemUSe extends ClientBasePacket {
 							pc.getInventory().removeItem(l1iteminstance, 1);
 						}
 						else {
-							L1Teleport.teleport(pc, pc.getX(), pc.getY(), pc.getMapId(), pc.getHeading(), false);
 							pc.sendPackets(new S_ServerMessage(276));
+							pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, true));
 						}
 					}
 				}
