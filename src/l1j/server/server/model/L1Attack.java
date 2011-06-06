@@ -850,7 +850,7 @@ public class L1Attack {
 		int weaponMaxDamage = _weaponSmall;
 
 		int weaponDamage = 0;
-		if ((_weaponType == 58) && _pc.isDarkelf()) { // 鋼爪
+		if ((_weaponType == 58) && (_pc.isDarkelf())) { // 鋼爪
 			if ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // 額外出現最大值的機率
 				weaponDamage = weaponMaxDamage;
 			} else {
@@ -880,7 +880,7 @@ public class L1Attack {
 
 		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
-				&& ((_weaponType == 54) || (_weaponType == 58))) {
+				&& ((_weaponType == 54) || (_weaponType == 58)) && (_pc.isDarkelf())) {
 			if ((Random.nextInt(100) + 1) <= 33) {
 				weaponTotalDamage *= 2;
 			}
@@ -1093,7 +1093,7 @@ public class L1Attack {
 		}
 
 		int weaponDamage = 0;
-		if ((_weaponType == 58)) { // 鋼爪
+		if ((_weaponType == 58) && (_pc.isDarkelf())) { // 鋼爪
 			if (((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)) { // 額外出現最大值的機率
 				weaponDamage = weaponMaxDamage;
 			} else {
@@ -1125,7 +1125,7 @@ public class L1Attack {
 
 		weaponTotalDamage += calcAttrEnchantDmg(); // 属性強化ダメージボーナス
 		if (_pc.hasSkillEffect(DOUBLE_BRAKE)
-				&& ((_weaponType == 54) || (_weaponType == 58))) {
+				&& ((_weaponType == 54) || (_weaponType == 58)) && (_pc.isDarkelf())) {
 			if ((Random.nextInt(100) + 1) <= 33) {
 				weaponTotalDamage *= 2;
 			}

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-14 08:50:45
+Date: 2011-06-06 09:15:55
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -1619,9 +1619,16 @@ INSERT INTO `shop` VALUES ('80075', '40744', '1', '2', '5', '-1');
 INSERT INTO `shop` VALUES ('80075', '41036', '24', '345', '0', '-1');
 INSERT INTO `shop` VALUES ('80080', '41293', '0', '10000', '1', '-1');
 INSERT INTO `shop` VALUES ('80080', '47103', '1', '20000', '400', '-1');
-INSERT INTO `shop` VALUES ('80080', '41295', '2', '-1', '1', '28');
-INSERT INTO `shop` VALUES ('800801', '47103', '0', '20000', '400', '-1');
-INSERT INTO `shop` VALUES ('800802', '47103', '0', '-1', '0', '-1');
+INSERT INTO `shop` VALUES ('80080', '41295', '2', '-1', '1', '25');
+INSERT INTO `shop` VALUES ('80080', '41296', '3', '-1', '0', '5');
+INSERT INTO `shop` VALUES ('80080', '41297', '4', '-1', '0', '5');
+INSERT INTO `shop` VALUES ('80080', '41298', '5', '-1', '0', '20');
+INSERT INTO `shop` VALUES ('80080', '41299', '6', '-1', '0', '30');
+INSERT INTO `shop` VALUES ('80080', '41300', '7', '-1', '0', '40');
+INSERT INTO `shop` VALUES ('80080', '41301', '8', '-1', '0', '50');
+INSERT INTO `shop` VALUES ('80080', '41302', '9', '-1', '0', '50');
+INSERT INTO `shop` VALUES ('80080', '41303', '10', '-1', '0', '50');
+INSERT INTO `shop` VALUES ('80080', '41304', '11', '-1', '0', '50');
 INSERT INTO `shop` VALUES ('80090', '40059', '0', '4', '0', '-1');
 INSERT INTO `shop` VALUES ('80090', '40060', '4', '9', '0', '-1');
 INSERT INTO `shop` VALUES ('80090', '40061', '3', '7', '0', '-1');

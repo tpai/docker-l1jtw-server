@@ -4699,31 +4699,31 @@ public class C_NPCAction extends ClientBasePacket {
 				switch (s1) {
 				case '1':
 					L1Teleport
-							.teleport(pc, 32993, 32716, (short) 1002, 5, true); // 前往造化之地(地)
+							.teleport(pc, 32904, 32627, (short) 1002, 5, true); // 前往造化之地(地)
 					break;
 				case '2':
 					L1Teleport
-							.teleport(pc, 32785, 32631, (short) 1002, 5, true); // 前往造化之地(火)
+							.teleport(pc, 32793, 32593, (short) 1002, 5, true); // 前往造化之地(火)
 					break;
 				case '3':
 					L1Teleport
-							.teleport(pc, 32806, 32790, (short) 1002, 5, true); // 前往造化之地(水)
+							.teleport(pc, 32874, 32785, (short) 1002, 5, true); // 前往造化之地(水)
 					break;
 				case '4':
 					L1Teleport
-							.teleport(pc, 32904, 32627, (short) 1002, 5, true); // 前往造化之地(風)
+							.teleport(pc, 32993, 32716, (short) 1002, 4, true); // 前往造化之地(風)
 					break;
 				case '5':
 					L1Teleport
-							.teleport(pc, 32685, 32631, (short) 1002, 5, true); // 前往龍之墓(北邊)
+							.teleport(pc, 32698, 32664, (short) 1002, 6, true); // 前往龍之墓(北邊)
 					break;
 				case '6':
 					L1Teleport
-							.teleport(pc, 32717, 32756, (short) 1002, 5, true); // 前往龍之墓(南邊)
+							.teleport(pc, 32710, 32759, (short) 1002, 6, true); // 前往龍之墓(南邊)
 					break;
 				case '7':
 					L1Teleport
-							.teleport(pc, 32986, 32630, (short) 1002, 5, true); // 前往蒼空之谷
+							.teleport(pc, 32986, 32630, (short) 1002, 4, true); // 前往蒼空之谷
 					break;
 				}
 				htmlid = "";

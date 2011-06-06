@@ -246,7 +246,6 @@ public class ActionCodes {
 			case 1020: // 歐吉
 			case 1022: // 哥布林
 			case 1047: // 毒蠍
-			case 1096: // 骷髏弓箭手
 			case 1098: // 多羅
 			case 1104: // 骷髏斧手
 			case 1106: // 骷髏槍兵

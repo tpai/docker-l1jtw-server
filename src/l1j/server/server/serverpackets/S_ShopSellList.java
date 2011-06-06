@@ -47,11 +47,6 @@ public class S_ShopSellList extends ServerBasePacket {
 		}
 		int npcId = ((L1NpcInstance) npcObj).getNpcTemplate().get_npcId();
 
-		if (npcId == 80080) { // 釣魚爺爺
-			if (pc.getInventory().checkItem(41293)) { // 身上有釣竿時
-				npcId = 800801; // 只販售新鮮的餌
-			}
-		}
 		L1TaxCalculator calc = new L1TaxCalculator(npcId);
 		L1Shop shop = ShopTable.getInstance().get(npcId);
 		List<L1ShopItem> shopItems = shop.getSellingItems();
