@@ -30,8 +30,8 @@ import l1j.server.server.utils.LogRecorder;
  */
 public class AcceleratorChecker {
 
-	private static final Logger _log =
-			Logger.getLogger(AcceleratorChecker.class.getName());
+	private static final Logger _log = Logger
+			.getLogger(AcceleratorChecker.class.getName());
 
 	private final L1PcInstance _pc;
 
@@ -53,11 +53,11 @@ public class AcceleratorChecker {
 
 	private static final double DOUBLE_HASTE_RATE = 0.375; // 速度 * 2.66
 
-	private final EnumMap<ACT_TYPE, Long> _actTimers =
-			new EnumMap<ACT_TYPE, Long>(ACT_TYPE.class);
+	private final EnumMap<ACT_TYPE, Long> _actTimers = new EnumMap<ACT_TYPE, Long>(
+			ACT_TYPE.class);
 
-	private final EnumMap<ACT_TYPE, Long> _checkTimers =
-			new EnumMap<ACT_TYPE, Long>(ACT_TYPE.class);
+	private final EnumMap<ACT_TYPE, Long> _checkTimers = new EnumMap<ACT_TYPE, Long>(
+			ACT_TYPE.class);
 
 	public static enum ACT_TYPE {
 		MOVE, ATTACK, SPELL_DIR, SPELL_NODIR
@@ -84,8 +84,8 @@ public class AcceleratorChecker {
 	/**
 	 * アクションの間隔が不正でないかチェックし、適宜処理を行う。
 	 * 
-	 * @param type -
-	 *            チェックするアクションのタイプ
+	 * @param type
+	 *            - チェックするアクションのタイプ
 	 * @return 問題がなかった場合は0、不正であった場合は1、不正動作が一定回数に達した ためプレイヤーを切断した場合は2を返す。
 	 */
 	public int checkInterval(ACT_TYPE type) {
@@ -100,7 +100,7 @@ public class AcceleratorChecker {
 			_injusticeCount++;
 			_justiceCount = 0;
 			if (_injusticeCount >= INJUSTICE_COUNT_LIMIT) {
-				doDisconnect();
+				doPunishment(0);
 				return R_DISCONNECTED;
 			}
 			result = R_DETECTED;
@@ -113,37 +113,54 @@ public class AcceleratorChecker {
 		}
 
 		// 検証用
-// double rate = (double) interval / rightInterval;
-// System.out.println(String.format("%s: %d / %d = %.2f (o-%d x-%d)",
-// type.toString(), interval, rightInterval, rate,
-// _justiceCount, _injusticeCount));
+		// double rate = (double) interval / rightInterval;
+		// System.out.println(String.format("%s: %d / %d = %.2f (o-%d x-%d)",
+		// type.toString(), interval, rightInterval, rate,
+		// _justiceCount, _injusticeCount));
 
 		_actTimers.put(type, now);
 		return result;
 	}
 
-	private void doDisconnect() {
-		if (!_pc.isGm()) {
-			_pc.sendPackets(new S_ServerMessage(945)); // 違法プログラムが見つかったので、終了します。
-			_pc.sendPackets(new S_Disconnect());
-			_log.info(String.format("因為檢測使用加速器%s，強制切斷連線。", _pc.getName()));
-			if(Config.writeRobotsLog)
-			LogRecorder.writeRobotsLog(_pc);//加速器紀錄
+	/**
+	 * 加速檢測處罰
+	 */
+	private void doPunishment(int punishmaent) {
+		int _punishment = punishmaent;// 處罰模式
+		if (!_pc.isGm()) {// 如果不是GM才執行處罰
+			switch (_punishment) {
+			case 0:// 剔除
+				_pc.sendPackets(new S_ServerMessage(945));
+				_pc.sendPackets(new S_Disconnect());
+				_log.info(String.format("因為檢測到%s正在使用加速器，強制切斷其連線。",_pc.getName()));
+				break;
+			case 1:// 停止一段時間，傳回村內
+					// TODO
+				break;
+			case 2:// 傳到地域
+					// TODO
+				break;
+			case 3:// 傳到GM房，30秒後傳回
+					// TODO
+				break;
+			}
 		} else {
-			// GMは切断しない
-			_pc.sendPackets(new S_SystemMessage(
-					"遊戲管理員在遊戲中使用加速器檢測中。"));
+			// GM不需要斷線
+			_pc.sendPackets(new S_SystemMessage("遊戲管理員在遊戲中使用加速器檢測中。"));
 			_injusticeCount = 0;
+		}
+		if (Config.writeRobotsLog) {
+			LogRecorder.writeRobotsLog(_pc);// 加速器紀錄
 		}
 	}
 
 	/**
 	 * PCの状態から指定された種類のアクションの正しいインターバル(ms)を計算し、返す。
 	 * 
-	 * @param type -
-	 *            アクションの種類
-	 * @param _pc -
-	 *            調べるPC
+	 * @param type
+	 *            - アクションの種類
+	 * @param _pc
+	 *            - 調べるPC
 	 * @return 正しいインターバル(ms)
 	 */
 	private int getRightInterval(ACT_TYPE type) {
@@ -161,51 +178,51 @@ public class AcceleratorChecker {
 			break;
 		case SPELL_DIR:
 			interval = SprTable.getInstance().getDirSpellSpeed(
-							_pc.getTempCharGfx());
+					_pc.getTempCharGfx());
 			break;
 		case SPELL_NODIR:
 			interval = SprTable.getInstance().getNodirSpellSpeed(
-							_pc.getTempCharGfx());
+					_pc.getTempCharGfx());
 			break;
 		default:
 			return 0;
 		}
 
 		// 一段加速
-		switch(_pc.getMoveSpeed()) {
-			case 1: // 加速術
-				interval *= HASTE_RATE;
-				break;
-			case 2: // 緩速術
-				interval /= HASTE_RATE; 
-				break;
-			default:
-				break;
+		switch (_pc.getMoveSpeed()) {
+		case 1: // 加速術
+			interval *= HASTE_RATE;
+			break;
+		case 2: // 緩速術
+			interval /= HASTE_RATE;
+			break;
+		default:
+			break;
 		}
 
 		// 二段加速
-		switch(_pc.getBraveSpeed()) {
-			case 1: // 勇水
-				interval *= HASTE_RATE; // 攻速、移速 * 1.33倍
-				break;
-			case 3: // 精餅
-				interval *= WAFFLE_RATE; // 攻速、移速 * 1.15倍
-				break;
-			case 4: // 神疾、風走、行走
-				if (type.equals(ACT_TYPE.MOVE)) {
-					interval *= HASTE_RATE; // 移速 * 1.33倍
-				}
-				break;
-			case 5: // 超級加速
-				interval *= DOUBLE_HASTE_RATE; // 攻速、移速 * 2.66倍
-				break;
-			case 6: // 血之渴望
-				if (type.equals(ACT_TYPE.ATTACK)) { 
-					interval *= HASTE_RATE; // 攻速 * 1.33倍
-				}
-				break;
-			default:
-				break;
+		switch (_pc.getBraveSpeed()) {
+		case 1: // 勇水
+			interval *= HASTE_RATE; // 攻速、移速 * 1.33倍
+			break;
+		case 3: // 精餅
+			interval *= WAFFLE_RATE; // 攻速、移速 * 1.15倍
+			break;
+		case 4: // 神疾、風走、行走
+			if (type.equals(ACT_TYPE.MOVE)) {
+				interval *= HASTE_RATE; // 移速 * 1.33倍
+			}
+			break;
+		case 5: // 超級加速
+			interval *= DOUBLE_HASTE_RATE; // 攻速、移速 * 2.66倍
+			break;
+		case 6: // 血之渴望
+			if (type.equals(ACT_TYPE.ATTACK)) {
+				interval *= HASTE_RATE; // 攻速 * 1.33倍
+			}
+			break;
+		default:
+			break;
 		}
 
 		// 生命之樹果實
@@ -220,7 +237,7 @@ public class AcceleratorChecker {
 		if (_pc.isWindShackle()) { // 攻速 / 2倍
 			interval *= 2;
 		}
-		if(_pc.getMapId() == 5143){ // 寵物競速例外
+		if (_pc.getMapId() == 5143) { // 寵物競速例外
 			interval *= 0.1;
 		}
 		return interval;
