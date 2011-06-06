@@ -26,12 +26,11 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.utils.LogRecorder;
 
 /**
- * 加速器の使用をチェックするクラス。
+ * 檢查加速器使用的類別。
  */
 public class AcceleratorChecker {
 
-	private static final Logger _log = Logger
-			.getLogger(AcceleratorChecker.class.getName());
+	private static final Logger _log = Logger.getLogger(AcceleratorChecker.class.getName());
 
 	private final L1PcInstance _pc;
 
@@ -63,7 +62,7 @@ public class AcceleratorChecker {
 		MOVE, ATTACK, SPELL_DIR, SPELL_NODIR
 	}
 
-	// チェックの結果
+	// 檢查結果
 	public static final int R_OK = 0;
 
 	public static final int R_DETECTED = 1;
@@ -124,11 +123,11 @@ public class AcceleratorChecker {
 
 	/**
 	 * 加速檢測處罰
+	 * @param punishmaent 處罰模式
 	 */
 	private void doPunishment(int punishmaent) {
-		int _punishment = punishmaent;// 處罰模式
 		if (!_pc.isGm()) {// 如果不是GM才執行處罰
-			switch (_punishment) {
+			switch (punishmaent) {
 			case 0:// 剔除
 				_pc.sendPackets(new S_ServerMessage(945));
 				_pc.sendPackets(new S_Disconnect());
