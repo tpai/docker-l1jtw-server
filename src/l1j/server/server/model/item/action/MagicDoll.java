@@ -34,9 +34,8 @@ public class MagicDoll {
 			boolean isAppear = true;
 			L1DollInstance doll = null;
 
-			Object[] dollList = pc.getDollList().values().toArray();
-			for (Object dollObject : dollList) {
-				doll = (L1DollInstance) dollObject;
+			for (L1DollInstance curdoll : pc.getDollList().values()) {
+				doll = curdoll;
 				if (doll.getItemObjId() == itemObjectId) {
 					isAppear = false;
 					break;
@@ -48,7 +47,7 @@ public class MagicDoll {
 					pc.sendPackets(new S_ServerMessage(337, "$5240")); // 魔法結晶體不足
 					return;
 				}
-				if (dollList.length >= Config.MAX_DOLL_COUNT) {
+				if (pc.getDollList().size() >= Config.MAX_DOLL_COUNT) {
 					pc.sendPackets(new S_ServerMessage(79)); // 沒有任何事情發生
 					return;
 				}

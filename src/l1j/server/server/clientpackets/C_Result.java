@@ -71,29 +71,29 @@ public class C_Result extends ClientBasePacket {
 				L1NpcInstance targetNpc = (L1NpcInstance) findObject;
 				npcId = targetNpc.getNpcTemplate().get_npcId();
 				npcImpl = targetNpc.getNpcTemplate().getImpl();
-			}
-			else if (findObject instanceof L1PcInstance) {
+			} else if (findObject instanceof L1PcInstance) {
 				isPrivateShop = true;
 			}
 		}
 
-		if ((resultType == 0) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 買道具
+		if ((resultType == 0) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Merchant")) { // 買道具
 			L1Shop shop = ShopTable.getInstance().get(npcId);
 			L1ShopBuyOrderList orderList = shop.newBuyOrderList();
 			for (int i = 0; i < size; i++) {
 				orderList.add(readD(), readD());
 			}
 			shop.sellItems(pc, orderList);
-		}
-		else if ((resultType == 1) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 賣道具
+		} else if ((resultType == 1) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Merchant")) { // 賣道具
 			L1Shop shop = ShopTable.getInstance().get(npcId);
 			L1ShopSellOrderList orderList = shop.newSellOrderList(pc);
 			for (int i = 0; i < size; i++) {
 				orderList.add(readD(), readD());
 			}
 			shop.buyItems(orderList);
-		}
-		else if ((resultType == 2) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 自己的倉庫
+		} else if ((resultType == 2) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 自己的倉庫
 			int objectId, count;
 			for (int i = 0; i < size; i++) {
 				tradable = true;
@@ -103,45 +103,44 @@ public class C_Result extends ClientBasePacket {
 				L1ItemInstance item = (L1ItemInstance) object;
 				if (!item.getItem().isTradable()) {
 					tradable = false;
-					pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
+					pc.sendPackets(new S_ServerMessage(210, item.getItem()
+							.getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
 				}
-				Object[] petlist = pc.getPetList().values().toArray();
-				for (Object petObject : petlist) {
-					if (petObject instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petObject;
+				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+					if (petNpc instanceof L1PetInstance) {
+						L1PetInstance pet = (L1PetInstance) petNpc;
 						if (item.getId() == pet.getItemObjId()) {
 							tradable = false;
 							// \f1%0は捨てたりまたは他人に讓ることができません。
-							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
+							pc.sendPackets(new S_ServerMessage(210, item
+									.getItem().getName()));
 							break;
 						}
 					}
 				}
-				Object[] dolllist = pc.getDollList().values().toArray();
-				for (Object dollObject : dolllist) {
-					if (dollObject instanceof L1DollInstance) {
-						L1DollInstance doll = (L1DollInstance) dollObject;
-						if (item.getId() == doll.getItemObjId()) {
-							tradable = false;
-							pc.sendPackets(new S_ServerMessage(1181)); // 該当のマジックドールは現在使用中です。
-							break;
-						}
+				for (L1DollInstance doll : pc.getDollList().values()) {
+					if (item.getId() == doll.getItemObjId()) {
+						tradable = false;
+						pc.sendPackets(new S_ServerMessage(1181)); // 該当のマジックドールは現在使用中です。
+						break;
 					}
 				}
-				if (pc.getDwarfInventory().checkAddItemToWarehouse(item, count, L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
+				if (pc.getDwarfInventory().checkAddItemToWarehouse(item, count,
+						L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
 					pc.sendPackets(new S_ServerMessage(75)); // \f1これ以上ものを置く場所がありません。
 					break;
 				}
 				if (tradable) {
-					pc.getInventory().tradeItem(objectId, count, pc.getDwarfInventory());
+					pc.getInventory().tradeItem(objectId, count,
+							pc.getDwarfInventory());
 					pc.turnOnOffLight();
 				}
 			}
 
 			// 強制儲存一次身上道具, 避免角色背包內的物品未正常寫入導致物品複製的問題
 			pc.saveInventory();
-		}
-		else if ((resultType == 3) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 從倉庫取出東西
+		} else if ((resultType == 3) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 從倉庫取出東西
 			int objectId, count;
 			L1ItemInstance item;
 			for (int i = 0; i < size; i++) {
@@ -151,67 +150,69 @@ public class C_Result extends ClientBasePacket {
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) // 檢查重量與容量
 				{
 					if (pc.getInventory().consumeItem(L1ItemId.ADENA, 30)) {
-						pc.getDwarfInventory().tradeItem(item, count, pc.getInventory());
-					}
-					else {
+						pc.getDwarfInventory().tradeItem(item, count,
+								pc.getInventory());
+					} else {
 						pc.sendPackets(new S_ServerMessage(189)); // \f1アデナが不足しています。
 						break;
 					}
-				}
-				else {
+				} else {
 					pc.sendPackets(new S_ServerMessage(270)); // \f1持っているものが重くて取引できません。
 					break;
 				}
 			}
-		}
-		else if ((resultType == 4) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 儲存道具到倉庫
+		} else if ((resultType == 4) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 儲存道具到倉庫
 			int objectId, count;
 			if (pc.getClanid() != 0) { // 有血盟
 				for (int i = 0; i < size; i++) {
 					tradable = true;
 					objectId = readD();
 					count = readD();
-					L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
+					L1Clan clan = L1World.getInstance().getClan(
+							pc.getClanname());
 					L1Object object = pc.getInventory().getItem(objectId);
 					L1ItemInstance item = (L1ItemInstance) object;
 					if (clan != null) {
 						if (!item.getItem().isTradable()) {
 							tradable = false;
-							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
+							pc.sendPackets(new S_ServerMessage(210, item
+									.getItem().getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
 						}
 						if (item.getBless() >= 128) { // 被封印的裝備
 							tradable = false;
-							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
+							pc.sendPackets(new S_ServerMessage(210, item
+									.getItem().getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
 						}
-						Object[] petlist = pc.getPetList().values().toArray();
-						for (Object petObject : petlist) {
-							if (petObject instanceof L1PetInstance) {
-								L1PetInstance pet = (L1PetInstance) petObject;
+						for (L1NpcInstance petNpc : pc.getPetList().values()) {
+							if (petNpc instanceof L1PetInstance) {
+								L1PetInstance pet = (L1PetInstance) petNpc;
 								if (item.getId() == pet.getItemObjId()) {
 									tradable = false;
 									// \f1%0は捨てたりまたは他人に讓ることができません。
-									pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
+									pc.sendPackets(new S_ServerMessage(210,
+											item.getItem().getName()));
 									break;
 								}
 							}
 						}
-						Object[] dolllist = pc.getDollList().values().toArray();
-						for (Object dollObject : dolllist) {
-							if (dollObject instanceof L1DollInstance) {
-								L1DollInstance doll = (L1DollInstance) dollObject;
-								if (item.getId() == doll.getItemObjId()) {
-									tradable = false;
-									pc.sendPackets(new S_ServerMessage(1181)); // 該当のマジックドールは現在使用中です。
-									break;
-								}
+						for (L1DollInstance doll : pc.getDollList().values()) {
+							if (item.getId() == doll.getItemObjId()) {
+								tradable = false;
+								pc.sendPackets(new S_ServerMessage(1181)); // 該当のマジックドールは現在使用中です。
+								break;
+
 							}
 						}
-						if (clan.getDwarfForClanInventory().checkAddItemToWarehouse(item, count, L1Inventory.WAREHOUSE_TYPE_CLAN) == L1Inventory.SIZE_OVER) {
+						if (clan.getDwarfForClanInventory()
+								.checkAddItemToWarehouse(item, count,
+										L1Inventory.WAREHOUSE_TYPE_CLAN) == L1Inventory.SIZE_OVER) {
 							pc.sendPackets(new S_ServerMessage(75)); // \f1これ以上ものを置く場所がありません。
 							break;
 						}
 						if (tradable) {
-							pc.getInventory().tradeItem(objectId, count, clan.getDwarfForClanInventory());
+							pc.getInventory().tradeItem(objectId, count,
+									clan.getDwarfForClanInventory());
 							pc.turnOnOffLight();
 						}
 					}
@@ -219,12 +220,11 @@ public class C_Result extends ClientBasePacket {
 
 				// 強制儲存一次身上道具, 避免角色背包內的物品未正常寫入導致物品複製的問題
 				pc.saveInventory();
-			}
-			else {
+			} else {
 				pc.sendPackets(new S_ServerMessage(208)); // \f1血盟倉庫を使用するには血盟に加入していなくてはなりません。
 			}
-		}
-		else if ((resultType == 5) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 從克萊因倉庫中取出道具
+		} else if ((resultType == 5) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)) { // 從克萊因倉庫中取出道具
 			int objectId, count;
 			L1ItemInstance item;
 
@@ -236,28 +236,28 @@ public class C_Result extends ClientBasePacket {
 					item = clan.getDwarfForClanInventory().getItem(objectId);
 					if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量確認及びメッセージ送信
 						if (pc.getInventory().consumeItem(L1ItemId.ADENA, 30)) {
-							clan.getDwarfForClanInventory().tradeItem(item, count, pc.getInventory());
-						}
-						else {
+							clan.getDwarfForClanInventory().tradeItem(item,
+									count, pc.getInventory());
+						} else {
 							pc.sendPackets(new S_ServerMessage(189)); // \f1アデナが不足しています。
 							break;
 						}
-					}
-					else {
+					} else {
 						pc.sendPackets(new S_ServerMessage(270)); // \f1持っているものが重くて取引できません。
 						break;
 					}
 				}
 				clan.setWarehouseUsingChar(0); // クラン倉庫のロックを解除
 			}
-		}
-		else if ((resultType == 5) && (size == 0) && npcImpl.equalsIgnoreCase("L1Dwarf")) { // クラン倉庫から取り出し中にCancel、または、ESCキー
+		} else if ((resultType == 5) && (size == 0)
+				&& npcImpl.equalsIgnoreCase("L1Dwarf")) { // クラン倉庫から取り出し中にCancel、または、ESCキー
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan != null) {
 				clan.setWarehouseUsingChar(0); // クラン倉庫のロックを解除
 			}
-		}
-		else if ((resultType == 8) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5) && pc.isElf()) { // 自分のエルフ倉庫に格納
+		} else if ((resultType == 8) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)
+				&& pc.isElf()) { // 自分のエルフ倉庫に格納
 			int objectId, count;
 			for (int i = 0; i < size; i++) {
 				tradable = true;
@@ -267,45 +267,45 @@ public class C_Result extends ClientBasePacket {
 				L1ItemInstance item = (L1ItemInstance) object;
 				if (!item.getItem().isTradable()) {
 					tradable = false;
-					pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
+					pc.sendPackets(new S_ServerMessage(210, item.getItem()
+							.getName())); // \f1%0は捨てたりまたは他人に讓ることができません。
 				}
-				Object[] petlist = pc.getPetList().values().toArray();
-				for (Object petObject : petlist) {
-					if (petObject instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petObject;
+				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+					if (petNpc instanceof L1PetInstance) {
+						L1PetInstance pet = (L1PetInstance) petNpc;
 						if (item.getId() == pet.getItemObjId()) {
 							tradable = false;
 							// \f1%0は捨てたりまたは他人に讓ることができません。
-							pc.sendPackets(new S_ServerMessage(210, item.getItem().getName()));
+							pc.sendPackets(new S_ServerMessage(210, item
+									.getItem().getName()));
 							break;
 						}
 					}
 				}
-				Object[] dolllist = pc.getDollList().values().toArray();
-				for (Object dollObject : dolllist) {
-					if (dollObject instanceof L1DollInstance) {
-						L1DollInstance doll = (L1DollInstance) dollObject;
-						if (item.getId() == doll.getItemObjId()) {
-							tradable = false;
-							pc.sendPackets(new S_ServerMessage(1181)); // 該当のマジックドールは現在使用中です。
-							break;
-						}
+				for (L1DollInstance doll : pc.getDollList().values()) {
+					if (item.getId() == doll.getItemObjId()) {
+						tradable = false;
+						pc.sendPackets(new S_ServerMessage(1181)); // 該当のマジックドールは現在使用中です。
+						break;
 					}
 				}
-				if (pc.getDwarfForElfInventory().checkAddItemToWarehouse(item, count, L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
+				if (pc.getDwarfForElfInventory().checkAddItemToWarehouse(item,
+						count, L1Inventory.WAREHOUSE_TYPE_PERSONAL) == L1Inventory.SIZE_OVER) {
 					pc.sendPackets(new S_ServerMessage(75)); // \f1これ以上ものを置く場所がありません。
 					break;
 				}
 				if (tradable) {
-					pc.getInventory().tradeItem(objectId, count, pc.getDwarfForElfInventory());
+					pc.getInventory().tradeItem(objectId, count,
+							pc.getDwarfForElfInventory());
 					pc.turnOnOffLight();
 				}
 			}
 
 			// 強制儲存一次身上道具, 避免角色背包內的物品未正常寫入導致物品複製的問題
 			pc.saveInventory();
-		}
-		else if ((resultType == 9) && (size != 0) && npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5) && pc.isElf()) { // 自分のエルフ倉庫から取り出し
+		} else if ((resultType == 9) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Dwarf") && (level >= 5)
+				&& pc.isElf()) { // 自分のエルフ倉庫から取り出し
 			int objectId, count;
 			L1ItemInstance item;
 			for (int i = 0; i < size; i++) {
@@ -314,20 +314,18 @@ public class C_Result extends ClientBasePacket {
 				item = pc.getDwarfForElfInventory().getItem(objectId);
 				if (pc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量確認及びメッセージ送信
 					if (pc.getInventory().consumeItem(40494, 2)) { // ミスリル
-						pc.getDwarfForElfInventory().tradeItem(item, count, pc.getInventory());
-					}
-					else {
+						pc.getDwarfForElfInventory().tradeItem(item, count,
+								pc.getInventory());
+					} else {
 						pc.sendPackets(new S_ServerMessage(337, "$767")); // \f1%0が不足しています。
 						break;
 					}
-				}
-				else {
+				} else {
 					pc.sendPackets(new S_ServerMessage(270)); // \f1持っているものが重くて取引できません。
 					break;
 				}
 			}
-		}
-		else if ((resultType == 0) && (size != 0) && isPrivateShop) { // 個人商店からアイテム購入
+		} else if ((resultType == 0) && (size != 0) && isPrivateShop) { // 個人商店からアイテム購入
 			if (findObject == null) {
 				return;
 			}
@@ -389,30 +387,33 @@ public class C_Result extends ClientBasePacket {
 						}
 						price = count * sellPrice;
 						if (pc.getInventory().checkItem(L1ItemId.ADENA, price)) {
-							L1ItemInstance adena = pc.getInventory().findItemId(L1ItemId.ADENA);
+							L1ItemInstance adena = pc.getInventory()
+									.findItemId(L1ItemId.ADENA);
 							if ((targetPc != null) && (adena != null)) {
-								if (targetPc.getInventory().tradeItem(item, count, pc.getInventory()) == null) {
+								if (targetPc.getInventory().tradeItem(item,
+										count, pc.getInventory()) == null) {
 									targetPc.setTradingInPrivateShop(false);
 									return;
 								}
-								pc.getInventory().tradeItem(adena, price, targetPc.getInventory());
-								String message = item.getItem().getName() + " (" + String.valueOf(count) + ")";
+								pc.getInventory().tradeItem(adena, price,
+										targetPc.getInventory());
+								String message = item.getItem().getName()
+										+ " (" + String.valueOf(count) + ")";
 								targetPc.sendPackets(new S_ServerMessage(877, // %1%o
 										// %0に販売しました。
 										pc.getName(), message));
 								pssl.setSellCount(count + sellCount);
 								sellList.set(order, pssl);
-								if (pssl.getSellCount() == pssl.getSellTotalCount()) { // 売る予定の個数を売った
+								if (pssl.getSellCount() == pssl
+										.getSellTotalCount()) { // 売る予定の個数を売った
 									isRemoveFromList[order] = true;
 								}
 							}
-						}
-						else {
+						} else {
 							pc.sendPackets(new S_ServerMessage(189)); // \f1アデナが不足しています。
 							break;
 						}
-					}
-					else {
+					} else {
 						pc.sendPackets(new S_ServerMessage(270)); // \f1持っているものが重くて取引できません。
 						break;
 					}
@@ -425,8 +426,7 @@ public class C_Result extends ClientBasePacket {
 				}
 				targetPc.setTradingInPrivateShop(false);
 			}
-		}
-		else if ((resultType == 1) && (size != 0) && isPrivateShop) { // 個人商店にアイテム売却
+		} else if ((resultType == 1) && (size != 0) && isPrivateShop) { // 個人商店にアイテム売却
 			int count;
 			int order;
 			List<L1PrivateShopBuyList> buyList;
@@ -476,24 +476,26 @@ public class C_Result extends ClientBasePacket {
 							return;
 						}
 					}
-					if (targetPc.getInventory().checkItem(L1ItemId.ADENA, count * buyPrice)) {
-						L1ItemInstance adena = targetPc.getInventory().findItemId(L1ItemId.ADENA);
+					if (targetPc.getInventory().checkItem(L1ItemId.ADENA,
+							count * buyPrice)) {
+						L1ItemInstance adena = targetPc.getInventory()
+								.findItemId(L1ItemId.ADENA);
 						if (adena != null) {
-							targetPc.getInventory().tradeItem(adena, count * buyPrice, pc.getInventory());
-							pc.getInventory().tradeItem(item, count, targetPc.getInventory());
+							targetPc.getInventory().tradeItem(adena,
+									count * buyPrice, pc.getInventory());
+							pc.getInventory().tradeItem(item, count,
+									targetPc.getInventory());
 							psbl.setBuyCount(count + buyCount);
 							buyList.set(order, psbl);
 							if (psbl.getBuyCount() == psbl.getBuyTotalCount()) { // 買う予定の個数を買った
 								isRemoveFromList[order] = true;
 							}
 						}
-					}
-					else {
+					} else {
 						targetPc.sendPackets(new S_ServerMessage(189)); // \f1アデナが不足しています。
 						break;
 					}
-				}
-				else {
+				} else {
 					pc.sendPackets(new S_ServerMessage(271)); // \f1相手が物を持ちすぎていて取引できません。
 					break;
 				}
@@ -505,8 +507,8 @@ public class C_Result extends ClientBasePacket {
 				}
 			}
 			targetPc.setTradingInPrivateShop(false);
-		}
-		else if ((resultType == 12) && (size != 0) && npcImpl.equalsIgnoreCase("L1Merchant")) { // 領取寵物
+		} else if ((resultType == 12) && (size != 0)
+				&& npcImpl.equalsIgnoreCase("L1Merchant")) { // 領取寵物
 			int petCost, petCount, divisor, itemObjectId, itemCount = 0;
 			boolean chackAdena = true;
 
@@ -520,27 +522,21 @@ public class C_Result extends ClientBasePacket {
 				if (itemCount == 0) {
 					continue;
 				}
-				Object[] petList = pc.getPetList().values().toArray();
-				for (Object pet : petList) {
-					petCost += ((L1NpcInstance) pet).getPetcost();
-				}
+				for (L1NpcInstance petNpc : pc.getPetList().values()) 
+					petCost += petNpc.getPetcost();
+				
 				int charisma = pc.getCha();
 				if (pc.isCrown()) { // 王族
 					charisma += 6;
-				}
-				else if (pc.isElf()) { // 妖精
+				} else if (pc.isElf()) { // 妖精
 					charisma += 12;
-				}
-				else if (pc.isWizard()) { // 法師
+				} else if (pc.isWizard()) { // 法師
 					charisma += 6;
-				}
-				else if (pc.isDarkelf()) { // 黑暗妖精
+				} else if (pc.isDarkelf()) { // 黑暗妖精
 					charisma += 6;
-				}
-				else if (pc.isDragonKnight()) { // 龍騎士
+				} else if (pc.isDragonKnight()) { // 龍騎士
 					charisma += 6;
-				}
-				else if (pc.isIllusionist()) { // 幻術師
+				} else if (pc.isIllusionist()) { // 幻術師
 					charisma += 6;
 				}
 
@@ -554,8 +550,7 @@ public class C_Result extends ClientBasePacket {
 					if ((npcId == 45313) || (npcId == 45710 // タイガー、バトルタイガー
 							) || (npcId == 45711) || (npcId == 45712)) { // 紀州犬の子犬、紀州犬
 						divisor = 12;
-					}
-					else {
+					} else {
 						divisor = 6;
 					}
 					petCount = charisma / divisor;

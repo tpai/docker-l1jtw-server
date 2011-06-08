@@ -87,19 +87,18 @@ public class C_Chat extends ClientBasePacket {
 			}
 			for (L1PcInstance listner : L1World.getInstance()
 					.getRecognizePlayer(pc)) {
-				if (listner.getMapId() > 10000
-						&& listner.getInnKeyId() != pc.getInnKeyId()) { // 旅館內判斷
-					break;
-				} else if (!listner.getExcludingList().contains(pc.getName())) {
-					listner.sendPackets(s_chatpacket);
-				}
+				if (listner.getMapId() < 16384 || listner.getMapId() > 25088
+						|| listner.getInnKeyId() == pc.getInnKeyId()) // 旅館內判斷
+					if (!listner.getExcludingList().contains(pc.getName()))
+						listner.sendPackets(s_chatpacket);
 			}
-			// ドッペル処理
+			// 怪物模仿
 			for (L1Object obj : pc.getKnownObjects()) {
 				if (obj instanceof L1MonsterInstance) {
 					L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob.getNpcTemplate().is_doppel()
-							&& mob.getName().equals(pc.getName()) && !mob.isDead()) {
+							&& mob.getName().equals(pc.getName())
+							&& !mob.isDead()) {
 						mob.broadcastPacket(new S_NpcChatPacket(mob, chatText,
 								0));
 					}
@@ -117,20 +116,19 @@ public class C_Chat extends ClientBasePacket {
 			}
 			for (L1PcInstance listner : L1World.getInstance().getVisiblePlayer(
 					pc, 50)) {
-				if (listner.getMapId() > 10000
-						&& listner.getInnKeyId() != pc.getInnKeyId()) { // 旅館內判斷
-					break;
-				} else if (!listner.getExcludingList().contains(pc.getName())) {
-					listner.sendPackets(s_chatpacket);
-				}
+				if (listner.getMapId() < 16384 || listner.getMapId() > 25088
+						|| listner.getInnKeyId() == pc.getInnKeyId()) // 旅館內判斷
+					if (!listner.getExcludingList().contains(pc.getName()))
+						listner.sendPackets(s_chatpacket);
 			}
 
-			// ドッペル処理
+			// 怪物模仿
 			for (L1Object obj : pc.getKnownObjects()) {
 				if (obj instanceof L1MonsterInstance) {
 					L1MonsterInstance mob = (L1MonsterInstance) obj;
 					if (mob.getNpcTemplate().is_doppel()
-							&& mob.getName().equals(pc.getName()) && !mob.isDead()) {
+							&& mob.getName().equals(pc.getName())
+							&& !mob.isDead()) {
 						for (L1PcInstance listner : L1World.getInstance()
 								.getVisiblePlayer(mob, 50)) {
 							listner.sendPackets(new S_NpcChatPacket(mob,

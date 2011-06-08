@@ -84,9 +84,9 @@ public class C_GiveItem extends ClientBasePacket {
 			return;
 		}
 		// 使用中的寵物項鍊 - 無法給予
-		for (Object petObject : pc.getPetList().values()) {
-			if (petObject instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petObject;
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			if (petNpc instanceof L1PetInstance) {
+				L1PetInstance pet = (L1PetInstance) petNpc;
 				if (item.getId() == pet.getItemObjId()) {
 					pc.sendPackets(new S_ServerMessage(1187)); // 寵物項鍊正在使用中。
 					return;
@@ -94,14 +94,10 @@ public class C_GiveItem extends ClientBasePacket {
 			}
 		}
 		// 使用中的魔法娃娃 - 無法給予
-		Object[] dollList = pc.getDollList().values().toArray();
-		for (Object dollObject : dollList) {
-			if (dollObject instanceof L1DollInstance) {
-				L1DollInstance doll = (L1DollInstance) dollObject;
-				if (doll.getItemObjId() == item.getId()) {
-					pc.sendPackets(new S_ServerMessage(1181)); // 這個魔法娃娃目前正在使用中。
-					return;
-				}
+		for (L1DollInstance doll : pc.getDollList().values()) {
+			if (doll.getItemObjId() == item.getId()) {
+				pc.sendPackets(new S_ServerMessage(1181)); // 這個魔法娃娃目前正在使用中。
+				return;
 			}
 		}
 		if (targetInv.checkAddItem(item, count) != L1Inventory.OK) {
@@ -113,7 +109,8 @@ public class C_GiveItem extends ClientBasePacket {
 		target.turnOnOffLight();
 		pc.turnOnOffLight();
 
-		L1PetType petType = PetTypeTable.getInstance().get(target.getNpcTemplate().get_npcId());
+		L1PetType petType = PetTypeTable.getInstance().get(
+				target.getNpcTemplate().get_npcId());
 		if ((petType == null) || target.isDead()) {
 			return;
 		}
@@ -141,11 +138,12 @@ public class C_GiveItem extends ClientBasePacket {
 
 	}
 
-	private void eatFood(L1PcInstance pc, L1NpcInstance target, L1ItemInstance item, int count) {
+	private void eatFood(L1PcInstance pc, L1NpcInstance target,
+			L1ItemInstance item, int count) {
 		if (!(target instanceof L1PetInstance)) {
 			return;
 		}
-		L1PetInstance pet= (L1PetInstance) target;
+		L1PetInstance pet = (L1PetInstance) target;
 		L1Pet _l1pet = PetTable.getInstance().getTemplate(item.getId());
 		int food = 0;
 		int foodCount = 0;
@@ -187,16 +185,16 @@ public class C_GiveItem extends ClientBasePacket {
 			return;
 		}
 		L1PetInstance pet = (L1PetInstance) target;
-		L1PetItem petItem = PetItemTable.getInstance().getTemplate(item.getItemId());
+		L1PetItem petItem = PetItemTable.getInstance().getTemplate(
+				item.getItemId());
 		if (petItem.getUseType() == 1) { // 牙齒
-			 pet.usePetWeapon(pet, item);
+			pet.usePetWeapon(pet, item);
 		} else if (petItem.getUseType() == 0) { // 盔甲
-			 pet.usePetArmor(pet, item);
+			pet.usePetArmor(pet, item);
 		}
 	}
 
-	private final static String receivableImpls[] = new String[]
-	{ "L1Npc", // NPC
+	private final static String receivableImpls[] = new String[] { "L1Npc", // NPC
 			"L1Monster", // 怪物
 			"L1Guardian", // 妖精森林的守護者
 			"L1Teleporter", // 傳送師
@@ -212,32 +210,27 @@ public class C_GiveItem extends ClientBasePacket {
 	}
 
 	private void tamePet(L1PcInstance pc, L1NpcInstance target) {
-		if ((target instanceof L1PetInstance) || (target instanceof L1SummonInstance)) {
+		if ((target instanceof L1PetInstance)
+				|| (target instanceof L1SummonInstance)) {
 			return;
 		}
 
 		int petcost = 0;
-		Object[] petlist = pc.getPetList().values().toArray();
-		for (Object pet : petlist) {
-			petcost += ((L1NpcInstance) pet).getPetcost();
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			petcost += petNpc.getPetcost();
 		}
 		int charisma = pc.getCha();
 		if (pc.isCrown()) { // 王族
 			charisma += 6;
-		}
-		else if (pc.isElf()) { // 妖精
+		} else if (pc.isElf()) { // 妖精
 			charisma += 12;
-		}
-		else if (pc.isWizard()) { // 法師
+		} else if (pc.isWizard()) { // 法師
 			charisma += 6;
-		}
-		else if (pc.isDarkelf()) { // 黑暗妖精
+		} else if (pc.isDarkelf()) { // 黑暗妖精
 			charisma += 6;
-		}
-		else if (pc.isDragonKnight()) { // 龍騎士
+		} else if (pc.isDragonKnight()) { // 龍騎士
 			charisma += 6;
-		}
-		else if (pc.isIllusionist()) { // 幻術師
+		} else if (pc.isIllusionist()) { // 幻術師
 			charisma += 6;
 		}
 		charisma -= petcost;
@@ -250,8 +243,7 @@ public class C_GiveItem extends ClientBasePacket {
 					new L1PetInstance(target, pc, petamu.getId());
 					pc.sendPackets(new S_ItemName(petamu));
 				}
-			}
-			else {
+			} else {
 				pc.sendPackets(new S_ServerMessage(324)); // 馴養失敗。
 			}
 		}
@@ -286,8 +278,7 @@ public class C_GiveItem extends ClientBasePacket {
 					&& (Random.nextInt(16) == 15)) {
 				isSuccess = true;
 			}
-		}
-		else {
+		} else {
 			if (npc.getMaxHp() / 3 > npc.getCurrentHp()) {
 				isSuccess = true;
 			}

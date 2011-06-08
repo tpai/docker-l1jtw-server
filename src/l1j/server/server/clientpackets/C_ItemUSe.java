@@ -1262,10 +1262,9 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == 40315) { // ペットの笛
 					pc.sendPackets(new S_Sound(437));
 					pc.broadcastPacket(new S_Sound(437));
-					Object[] petList = pc.getPetList().values().toArray();
-					for (Object petObject : petList) {
-						if (petObject instanceof L1PetInstance) { // ペット
-							L1PetInstance pet = (L1PetInstance) petObject;
+					for (L1NpcInstance petNpc : pc.getPetList().values()) {
+						if (petNpc instanceof L1PetInstance) { // ペット
+							L1PetInstance pet = (L1PetInstance) petNpc;
 							pet.call();
 						}
 					}
@@ -5349,14 +5348,13 @@ public class C_ItemUSe extends ClientBasePacket {
 		}
 
 		int petCost = 0;
-		Object[] petList = pc.getPetList().values().toArray();
-		for (Object pet : petList) {
-			if (pet instanceof L1PetInstance) {
-				if (((L1PetInstance) pet).getItemObjId() == itemObjectId) { // 既に引き出しているペット
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			if (petNpc instanceof L1PetInstance) {
+				if (((L1PetInstance) petNpc).getItemObjId() == itemObjectId) { // 既に引き出しているペット
 					return false;
 				}
 			}
-			petCost += ((L1NpcInstance) pet).getPetcost();
+			petCost += petNpc.getPetcost();
 		}
 		int charisma = pc.getCha();
 		if (pc.isCrown()) { // 君主

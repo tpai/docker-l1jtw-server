@@ -1003,35 +1003,35 @@ public class L1SkillUse {
 				_mpConsume -= (_player.getInt() - 12);
 			}
 
-			// 裝備MP減免
+			// 裝備MP減免 一次只需判斷一個 
 			if ((_skillId == PHYSICAL_ENCHANT_DEX) && _player.getInventory().checkEquipped(20013)) { // 敏捷魔法頭盔使用通暢氣脈術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20013)) { // 敏捷魔法頭盔使用加速術
+			else if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20013)) { // 敏捷魔法頭盔使用加速術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒魔法頭盔使用初級治癒術
+			else if ((_skillId == HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒魔法頭盔使用初級治癒術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == EXTRA_HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒魔法頭盔使用中級治癒術
+			else if ((_skillId == EXTRA_HEAL) && _player.getInventory().checkEquipped(20014)) { // 治癒魔法頭盔使用中級治癒術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == ENCHANT_WEAPON) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用擬似魔法武器
+			else if ((_skillId == ENCHANT_WEAPON) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用擬似魔法武器
 				_mpConsume /= 2;
 			}
-			if ((_skillId == DETECTION) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用無所遁形術
+			else if ((_skillId == DETECTION) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用無所遁形術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == PHYSICAL_ENCHANT_STR) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用體魄強健術
+			else if ((_skillId == PHYSICAL_ENCHANT_STR) && _player.getInventory().checkEquipped(20015)) { // 力量魔法頭盔使用體魄強健術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20008)) { // 小型風之頭盔使用加速術
+			else if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20008)) { // 小型風之頭盔使用加速術
 				_mpConsume /= 2;
 			}
-			if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用加速術
+			else if ((_skillId == HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用加速術
 				_mpConsume = 25;
 			}
-			if ((_skillId == GREATER_HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用強力加速術
+			else if ((_skillId == GREATER_HASTE) && _player.getInventory().checkEquipped(20023)) { // 風之頭盔使用強力加速術
 				_mpConsume /= 2;
 			}
 
@@ -1110,7 +1110,7 @@ public class L1SkillUse {
 		if (lawful > 32767) {
 			lawful = 32767;
 		}
-		if (lawful < -32767) {
+		else if (lawful < -32767) {
 			lawful = -32767;
 		}
 		_player.setLawful(lawful);
@@ -1450,9 +1450,6 @@ public class L1SkillUse {
 		}
 		else if (_user instanceof L1NpcInstance) { // NPCがスキルを使った場合
 			int targetid = _target.getId();
-			if (_skill.getTargetTo() == L1Skills.TARGET_TO_ME) {//怪物自補時，效果目標 = 自己
-				targetid = _user.getId();
-			}
 
 			if (_user instanceof L1MerchantInstance) {
 				_user.broadcastPacket(new S_SkillSound(targetid, _gfxid));

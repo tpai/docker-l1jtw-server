@@ -719,10 +719,9 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 			htmlid = ""; // ウィンドウを消す
 		} else if (s.equalsIgnoreCase("depositnpc")) { // 寄託寵物
-			Object[] petList = pc.getPetList().values().toArray();
-			for (Object petObject : petList) {
-				if (petObject instanceof L1PetInstance) { // ペット
-					L1PetInstance pet = (L1PetInstance) petObject;
+			for (L1NpcInstance petNpc : pc.getPetList().values()) {
+				if (petNpc instanceof L1PetInstance) { // ペット
+					L1PetInstance pet = (L1PetInstance) petNpc;
 					// 停止飽食度計時
 					pet.stopFoodTimer(pet);
 					pet.collect(true);
@@ -734,9 +733,9 @@ public class C_NPCAction extends ClientBasePacket {
 				pc.sendPackets(new S_PetCtrlMenu(false));// 關閉寵物控制圖形介面
 			} else {
 				// 更新寵物控制介面
-				for (Object petObject : petList) {
-					if (petObject instanceof L1SummonInstance) {
-						L1SummonInstance summon = (L1SummonInstance) petObject;
+				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+					if (petNpc instanceof L1SummonInstance) {
+						L1SummonInstance summon = (L1SummonInstance) petNpc;
 						pc.sendPackets(new S_SummonPack(summon, pc));
 						pc.sendPackets(new S_ServerMessage(79));
 						break;
@@ -4900,8 +4899,7 @@ public class C_NPCAction extends ClientBasePacket {
 	}
 
 	private String enterPetMatch(L1PcInstance pc, int objid2) {
-		Object[] petlist = pc.getPetList().values().toArray();
-		if (petlist.length > 0) {
+		if (pc.getPetList().values().size() > 0) {
 			pc.sendPackets(new S_ServerMessage(1187)); // ペットのアミュレットが使用中です。
 			return "";
 		}
@@ -4967,10 +4965,9 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 
 		int petcost = 0;
-		Object[] petlist = pc.getPetList().values().toArray();
-		for (Object pet : petlist) {
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
 			// 現在のペットコスト
-			petcost += ((L1NpcInstance) pet).getPetcost();
+			petcost += petNpc.getPetcost();
 		}
 
 		/*

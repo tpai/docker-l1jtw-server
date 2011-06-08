@@ -93,23 +93,12 @@ public class C_Attr extends ClientBasePacket {
 					if (clan != null) {
 						int maxMember = 0;
 						int charisma = pc.getCha();
-						boolean lv45quest = false;
-						if (pc.getQuest().isEnd(L1Quest.QUEST_LEVEL45)) {
-							lv45quest = true;
-						}
-						if (pc.getLevel() >= 50) { // 50級以上
-							if (lv45quest == true) { // 如果通過45級試煉
-								maxMember = charisma * 9;
-							} else {
-								maxMember = charisma * 3;
-							}
-						} else { // 還沒到50級
-							if (lv45quest == true) { // 如果通過45級試煉
-								maxMember = charisma * 6;
-							} else {
-								maxMember = charisma * 2;
-							}
-						}
+						// 公式
+						maxMember = charisma * 3*( 2+ pc.getLevel() / 50 );
+						// 未過45 人數/3
+						if (!pc.getQuest().isEnd(L1Quest.QUEST_LEVEL45)) 
+							maxMember /= 3;						
+						
 						if (Config.MAX_CLAN_MEMBER > 0) { // 設定檔中如果有設定血盟的人數上限
 							maxMember = Config.MAX_CLAN_MEMBER;
 						}
@@ -121,8 +110,7 @@ public class C_Attr extends ClientBasePacket {
 								new S_ServerMessage(188, pc.getName()));
 								return;
 							}
-							for (L1PcInstance clanMembers : clan
-									.getOnlineClanMember()) {
+							for (L1PcInstance clanMembers : clan.getOnlineClanMember()) {
 								clanMembers.sendPackets(new S_ServerMessage(94,
 										joinPc.getName())); // \f1你接受%0當你的血盟成員。
 							}
@@ -218,21 +206,7 @@ public class C_Attr extends ClientBasePacket {
 				if (c == 0) { // No
 
 				} else if (c == 1) { // Yes
-					pc.sendPackets(new S_SkillSound(pc.getId(), '\346'));
-					pc.broadcastPacket(new S_SkillSound(pc.getId(), '\346'));
-					// pc.resurrect(pc.getLevel());
-					// pc.setCurrentHp(pc.getLevel());
-					pc.resurrect(pc.getMaxHp() / 2);
-					pc.setCurrentHp(pc.getMaxHp() / 2);
-					pc.startHpRegeneration();
-					pc.startMpRegeneration();
-					pc.startHpRegenerationByDoll();
-					pc.startMpRegenerationByDoll();
-					pc.stopPcDeleteTimer();
-					pc.sendPackets(new S_Resurrection(pc, resusepc1, 0));
-					pc.broadcastPacket(new S_Resurrection(pc, resusepc1, 0));
-					pc.sendPackets(new S_CharVisualUpdate(pc));
-					pc.broadcastPacket(new S_CharVisualUpdate(pc));
+					resurrection( pc, resusepc1, (short) (pc.getMaxHp() / 2));
 				}
 			}
 			break;
@@ -246,19 +220,7 @@ public class C_Attr extends ClientBasePacket {
 				if (c == 0) { // No
 
 				} else if (c == 1) { // Yes
-					pc.sendPackets(new S_SkillSound(pc.getId(), '\346'));
-					pc.broadcastPacket(new S_SkillSound(pc.getId(), '\346'));
-					pc.resurrect(pc.getMaxHp());
-					pc.setCurrentHp(pc.getMaxHp());
-					pc.startHpRegeneration();
-					pc.startMpRegeneration();
-					pc.startHpRegenerationByDoll();
-					pc.startMpRegenerationByDoll();
-					pc.stopPcDeleteTimer();
-					pc.sendPackets(new S_Resurrection(pc, resusepc2, 0));
-					pc.broadcastPacket(new S_Resurrection(pc, resusepc2, 0));
-					pc.sendPackets(new S_CharVisualUpdate(pc));
-					pc.broadcastPacket(new S_CharVisualUpdate(pc));
+					resurrection( pc, resusepc2, pc.getMaxHp());
 					// EXPロストしている、G-RESを掛けられた、EXPロストした死亡
 					// 全てを満たす場合のみEXP復旧
 					if ((pc.getExpRes() == 1) && pc.isGres()
@@ -549,34 +511,47 @@ public class C_Attr extends ClientBasePacket {
 		}
 	}
 
+	private void resurrection(L1PcInstance pc, L1PcInstance resusepc,
+			short resHp) {
+		// 由其他角色復活
+		pc.sendPackets(new S_SkillSound(pc.getId(), '\346'));
+		pc.broadcastPacket(new S_SkillSound(pc.getId(), '\346'));
+		pc.resurrect(resHp);
+		pc.setCurrentHp(resHp);
+		pc.startHpRegeneration();
+		pc.startMpRegeneration();
+		pc.startHpRegenerationByDoll();
+		pc.startMpRegenerationByDoll();
+		pc.stopPcDeleteTimer();
+		pc.sendPackets(new S_Resurrection(pc, resusepc, 0));
+		pc.broadcastPacket(new S_Resurrection(pc, resusepc, 0));
+		pc.sendPackets(new S_CharVisualUpdate(pc));
+		pc.broadcastPacket(new S_CharVisualUpdate(pc));
+	}
+
 	private void changeClan(ClientThread clientthread, L1PcInstance pc,
 			L1PcInstance joinPc, int maxMember) {
 		int clanId = pc.getClanid();
 		String clanName = pc.getClanname();
 		L1Clan clan = L1World.getInstance().getClan(clanName);
-		String clanMemberName[] = clan.getAllMembers();
-		int clanNum = clanMemberName.length;
 
 		int oldClanId = joinPc.getClanid();
 		String oldClanName = joinPc.getClanname();
 		L1Clan oldClan = L1World.getInstance().getClan(oldClanName);
-		String oldClanMemberName[] = oldClan.getAllMembers();
-		int oldClanNum = oldClanMemberName.length;
+		
 		if ((clan != null) && (oldClan != null) && joinPc.isCrown() && // 自己的王族
 				(joinPc.getId() == oldClan.getLeaderId())) {
-			if (maxMember < clanNum + oldClanNum) { // 沒有空缺
+			if (maxMember < clan.getAllMembers().length + oldClan.getAllMembers().length) { // 沒有空缺
 				joinPc.sendPackets( // %0%s 無法接受你成為該血盟成員。
 				new S_ServerMessage(188, pc.getName()));
 				return;
 			}
-			L1PcInstance clanMember[] = clan.getOnlineClanMember();
-			for (L1PcInstance element : clanMember) {
+			for (L1PcInstance element : clan.getOnlineClanMember()) {
 				element.sendPackets(new S_ServerMessage(94, joinPc.getName())); // \f1你接受%0當你的血盟成員。
 			}
 
-			for (String element : oldClanMemberName) {
-				L1PcInstance oldClanMember = L1World.getInstance().getPlayer(
-						element);
+			for (String element : oldClan.getAllMembers()) {
+				L1PcInstance oldClanMember = L1World.getInstance().getPlayer(element);
 				if (oldClanMember != null) { // 舊血盟成員在線上
 					oldClanMember.setClanid(clanId);
 					oldClanMember.setClanname(clanName);

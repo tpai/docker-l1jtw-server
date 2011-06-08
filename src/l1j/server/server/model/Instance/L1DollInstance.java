@@ -40,11 +40,8 @@ public class L1DollInstance extends L1NpcInstance {
 	// ターゲットがいない場合の処理
 	@Override
 	public boolean noTarget() {
-		if (_master.isDead()) {
-			_isDelete = true;
-			deleteDoll();
-			return true;
-		} else if ((_master != null) && (_master.getMapId() == getMapId())) {
+		if ((_master != null) && !_master.isDead()
+				&& (_master.getMapId() == getMapId())) {
 			if (getLocation().getTileLineDistance(_master.getLocation()) > 2) {
 				int dir = moveDirection(_master.getX(), _master.getY());
 				setDirectionMove(dir);
@@ -72,7 +69,8 @@ public class L1DollInstance extends L1NpcInstance {
 		}
 	}
 
-	public L1DollInstance(L1Npc template, L1PcInstance master, int itemId, int itemObjId) {
+	public L1DollInstance(L1Npc template, L1PcInstance master, int itemId,
+			int itemObjId) {
 		super(template);
 		setId(IdFactory.getInstance().nextId());
 
@@ -132,7 +130,7 @@ public class L1DollInstance extends L1NpcInstance {
 	@Override
 	public void onPerceive(L1PcInstance perceivedFrom) {
 		// 判斷旅館內是否使用相同鑰匙
-		if (perceivedFrom.getMapId() > 10000
+		if (perceivedFrom.getMapId() >= 16384 && perceivedFrom.getMapId() <= 25088 // 旅館內判斷
 				&& perceivedFrom.getInnKeyId() != _master.getInnKeyId()) {
 			return;
 		}
@@ -168,19 +166,13 @@ public class L1DollInstance extends L1NpcInstance {
 	private void dollAction() {
 		run = Random.nextInt(100) + 1;
 		if (run <= 10) {
-			if (run <= 5) {
-				broadcastPacket(new S_DoActionGFX(getId(),
-						ActionCodes.ACTION_Think));
-				setSleepTime(calcSleepTime(
-						SprTable.getInstance().getSprSpeed(getTempCharGfx(),
-								ActionCodes.ACTION_Think), MOVE_SPEED)); // 66
-			} else {
-				broadcastPacket(new S_DoActionGFX(getId(),
-						ActionCodes.ACTION_Aggress));
-				setSleepTime(calcSleepTime(
-						SprTable.getInstance().getSprSpeed(getTempCharGfx(),
-								ActionCodes.ACTION_Aggress), MOVE_SPEED)); // 67
-			}
+			int actionCode = ActionCodes.ACTION_Aggress; // 67
+			if (run <= 5) 
+				actionCode = ActionCodes.ACTION_Think; // 66
+
+			broadcastPacket(new S_DoActionGFX(getId(), actionCode));
+			setSleepTime(calcSleepTime(SprTable.getInstance().getSprSpeed(getTempCharGfx(),
+							actionCode), MOVE_SPEED)); //
 		}
 	}
 }

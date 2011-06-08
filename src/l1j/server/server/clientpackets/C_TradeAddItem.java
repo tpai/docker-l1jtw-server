@@ -20,6 +20,7 @@ import l1j.server.server.model.L1Trade;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
+import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.serverpackets.S_ServerMessage;
@@ -51,10 +52,9 @@ public class C_TradeAddItem extends ClientBasePacket {
 			return;
 		}
 		// 使用中的寵物項鍊 - 無法交易
-		Object[] petlist = pc.getPetList().values().toArray();
-		for (Object petObject : petlist) {
-			if (petObject instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petObject;
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			if (petNpc instanceof L1PetInstance) {
+				L1PetInstance pet = (L1PetInstance) petNpc;
 				if (item.getId() == pet.getItemObjId()) {
 					pc.sendPackets(new S_ServerMessage(1187)); // 寵物項鍊正在使用中。
 					return;
@@ -62,18 +62,15 @@ public class C_TradeAddItem extends ClientBasePacket {
 			}
 		}
 		// 使用中的魔法娃娃 - 無法交易
-		Object[] dollList = pc.getDollList().values().toArray();
-		for (Object dollObject : dollList) {
-			if (dollObject instanceof L1DollInstance) {
-				L1DollInstance doll = (L1DollInstance) dollObject;
-				if (doll.getItemObjId() == item.getId()) {
-					pc.sendPackets(new S_ServerMessage(1181)); // 這個魔法娃娃目前正在使用中。
-					return;
-				}
+		for (L1DollInstance doll : pc.getDollList().values()) {
+			if (doll.getItemObjId() == item.getId()) {
+				pc.sendPackets(new S_ServerMessage(1181)); // 這個魔法娃娃目前正在使用中。
+				return;
 			}
 		}
 
-		L1PcInstance tradingPartner = (L1PcInstance) L1World.getInstance().findObject(pc.getTradeID());
+		L1PcInstance tradingPartner = (L1PcInstance) L1World.getInstance()
+				.findObject(pc.getTradeID());
 		if (tradingPartner == null) {
 			return;
 		}

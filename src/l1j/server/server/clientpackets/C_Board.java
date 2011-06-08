@@ -39,7 +39,7 @@ public class C_Board extends ClientBasePacket {
 		int objectId = readD();
 		L1Object obj = L1World.getInstance().findObject(objectId);
 		if (!isBoardInstance(obj)) {
-			return; // 不可能一個無賴客戶端
+			return; // 對象不是佈告欄停止
 		}
 		obj.onAction(client.getActiveChar());
 	}

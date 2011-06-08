@@ -12,8 +12,8 @@ public class L1MagicDoll {
 
 	public static int getHitAddByDoll(L1Character _master) { // 近距離的命中率增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getHit();
 			}
@@ -25,8 +25,8 @@ public class L1MagicDoll {
 		int s = 0;
 		int chance = Random.nextInt(100) + 1;
 		boolean isAdd = false;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getDmgChance() > 0 && !isAdd) { // 額外傷害發動機率
 					if (doll.getDmgChance() >= chance) {
@@ -52,8 +52,8 @@ public class L1MagicDoll {
 		int s = 0;
 		int chance = Random.nextInt(100) + 1;
 		boolean isReduction = false;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getDmgReductionChance() > 0 && !isReduction) { // 傷害減免發動機率
 					if (doll.getDmgReductionChance() >= chance) {
@@ -77,8 +77,8 @@ public class L1MagicDoll {
 
 	public static int getDamageEvasionByDoll(L1Character _master) { // 傷害迴避
 		int chance = Random.nextInt(100) + 1;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getDmgEvasionChance() >= chance) { // 傷害迴避發動機率
 					if (_master instanceof L1PcInstance) {
@@ -95,8 +95,8 @@ public class L1MagicDoll {
 
 	public static int getBowHitAddByDoll(L1Character _master) { // 弓的命中率增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getBowHit();
 			}
@@ -106,8 +106,8 @@ public class L1MagicDoll {
 
 	public static int getBowDamageByDoll(L1Character _master) { // 弓的攻擊力增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getBowDmg();
 			}
@@ -117,8 +117,8 @@ public class L1MagicDoll {
 
 	public static int getAcByDoll(L1Character _master) { // 防禦力增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getAc();
 			}
@@ -128,8 +128,8 @@ public class L1MagicDoll {
 
 	public static int getRegistStoneByDoll(L1Character _master) { // 石化耐性增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistStone();
 			}
@@ -139,8 +139,8 @@ public class L1MagicDoll {
 
 	public static int getRegistStunByDoll(L1Character _master) { // 昏迷耐性增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistStun();
 			}
@@ -150,8 +150,8 @@ public class L1MagicDoll {
 
 	public static int getRegistSustainByDoll(L1Character _master) { // 支撐耐性增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistSustain();
 			}
@@ -161,8 +161,8 @@ public class L1MagicDoll {
 
 	public static int getRegistBlindByDoll(L1Character _master) { // 闇黑耐性增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistBlind();
 			}
@@ -172,8 +172,8 @@ public class L1MagicDoll {
 
 	public static int getRegistFreezeByDoll(L1Character _master) { // 寒冰耐性增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistFreeze();
 			}
@@ -183,8 +183,8 @@ public class L1MagicDoll {
 
 	public static int getRegistSleepByDoll(L1Character _master) { // 睡眠耐性增加
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getRegistSleep();
 			}
@@ -194,8 +194,8 @@ public class L1MagicDoll {
 
 	public static int getWeightReductionByDoll(L1Character _master) { // 負重減輕
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				s += doll.getWeightReduction();
 			}
@@ -205,8 +205,8 @@ public class L1MagicDoll {
 
 	public static int getHprByDoll(L1Character _master) { // 體力回覆量
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (!doll.getHprTime() && doll.getHpr() != 0) {
 					s += doll.getHpr();
@@ -218,8 +218,8 @@ public class L1MagicDoll {
 
 	public static int getMprByDoll(L1Character _master) { // 魔力回覆量
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (!doll.getMprTime() && doll.getMpr() != 0) {
 					s += doll.getMpr();
@@ -230,8 +230,8 @@ public class L1MagicDoll {
 	}
 
 	public static boolean isItemMake(L1Character _master) {
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
 				if (item != null) {
@@ -243,8 +243,8 @@ public class L1MagicDoll {
 	}
 
 	public static int getMakeItemId(L1Character _master) { // 獲得道具
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				L1Item item = ItemTable.getInstance().getTemplate((doll.getMakeItemId()));
 				if (item != null) {
@@ -256,8 +256,8 @@ public class L1MagicDoll {
 	}
 
 	public static boolean isHpRegeneration(L1Character _master) { // 回血判斷 (時間固定性)
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getHprTime() && doll.getHpr() != 0) {
 					return true;
@@ -269,8 +269,8 @@ public class L1MagicDoll {
 
 	public static int getHpByDoll(L1Character _master) { // 體力回覆量 (時間固定性)
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getHprTime() && doll.getHpr() != 0) {
 					s += doll.getHpr();
@@ -281,8 +281,8 @@ public class L1MagicDoll {
 	}
 
 	public static boolean isMpRegeneration(L1Character _master) { // 回魔判斷 (時間固定性)
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getMprTime() && doll.getMpr() != 0) {
 					return true;
@@ -294,8 +294,9 @@ public class L1MagicDoll {
 
 	public static int getMpByDoll(L1Character _master) { // 魔力回覆量 (時間固定性)
 		int s = 0;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getMprTime() && doll.getMpr() != 0) {
 					s += doll.getMpr();
@@ -307,8 +308,8 @@ public class L1MagicDoll {
 
 	public static int getEffectByDoll(L1Character _master, byte type) { // 效果
 		int chance = Random.nextInt(100) + 1;
-		for (Object obj : _master.getDollList().values().toArray()) {
-			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(((L1DollInstance) obj).getItemId());
+		for ( L1DollInstance dollIns : _master.getDollList().values()) {
+			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
 			if (doll != null) {
 				if (doll.getEffect() == type) {
 					if (chance <= 5) {

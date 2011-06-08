@@ -37,6 +37,7 @@ import l1j.server.server.model.L1Trade;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1FollowerInstance;
+import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
@@ -520,18 +521,17 @@ public class ClientThread implements Runnable, PacketOutput {
 
 		// 移除世界地圖上的寵物
 		// 變更召喚怪物的名稱
-		Object[] petList = pc.getPetList().values().toArray();
-		for (Object petObject : petList) {
-			if (petObject instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petObject;
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			if (petNpc instanceof L1PetInstance) {
+				L1PetInstance pet = (L1PetInstance) petNpc;
 				// 停止飽食度計時
 				pet.stopFoodTimer(pet);
 				pet.dropItem();
 				pc.getPetList().remove(pet.getId());
 				pet.deleteMe();
 			}
-			if (petObject instanceof L1SummonInstance) {
-				L1SummonInstance summon = (L1SummonInstance) petObject;
+			else if (petNpc instanceof L1SummonInstance) {
+				L1SummonInstance summon = (L1SummonInstance) petNpc;
 				for (L1PcInstance visiblePc : L1World.getInstance()
 						.getVisiblePlayer(summon)) {
 					visiblePc.sendPackets(new S_SummonPack(summon, visiblePc,
@@ -541,16 +541,11 @@ public class ClientThread implements Runnable, PacketOutput {
 		}
 
 		// 移除世界地圖上的魔法娃娃
-		Object[] dollList = pc.getDollList().values().toArray();
-		for (Object dollObject : dollList) {
-			L1DollInstance doll = (L1DollInstance) dollObject;
+		for (L1DollInstance doll : pc.getDollList().values()) 
 			doll.deleteDoll();
-		}
 
 		// 重新建立跟隨者
-		Object[] followerList = pc.getFollowerList().values().toArray();
-		for (Object followerObject : followerList) {
-			L1FollowerInstance follower = (L1FollowerInstance) followerObject;
+		for ( L1FollowerInstance follower : pc.getFollowerList().values()) {
 			follower.setParalyzed(true);
 			follower.spawn(follower.getNpcTemplate().get_npcId(),
 					follower.getX(), follower.getY(), follower.getHeading(),

@@ -235,13 +235,9 @@ public class L1Character extends L1Object {
 	 */
 	public void broadcastPacket(ServerBasePacket packet) {
 		for (L1PcInstance pc : L1World.getInstance().getVisiblePlayer(this)) {
-			if (pc.getMapId() <= 10000) {
-				pc.sendPackets(packet);
-			}
 			// 旅館內判斷
-			else if (pc.getInnKeyId() == getInnKeyId()) {
-				pc.sendPackets(packet);
-			}
+			if (pc.getMapId() < 16384 || pc.getMapId() > 25088 || pc.getInnKeyId() == getInnKeyId()) 
+				pc.sendPackets(packet);			
 		}
 	}
 

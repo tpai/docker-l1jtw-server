@@ -396,7 +396,7 @@ public class L1PcInstance extends L1Character {
 	@Override
 	public void onPerceive(L1PcInstance perceivedFrom) {
 		// 判斷旅館內是否使用相同鑰匙
-		if (perceivedFrom.getMapId() > 10000
+		if (perceivedFrom.getMapId() >= 16384 && perceivedFrom.getMapId() <= 25088 // 旅館內判斷
 				&& perceivedFrom.getInnKeyId() != getInnKeyId()) {
 			return;
 		}

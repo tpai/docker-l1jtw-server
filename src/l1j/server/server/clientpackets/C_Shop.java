@@ -20,6 +20,7 @@ import l1j.server.server.ActionCodes;
 import l1j.server.server.ClientThread;
 import l1j.server.server.model.Instance.L1DollInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
+import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.serverpackets.S_DoActionGFX;
@@ -48,7 +49,8 @@ public class C_Shop extends ClientBasePacket {
 		}
 
 		int mapId = pc.getMapId();
-		if ((mapId != 340) && (mapId != 350) && (mapId != 360) && (mapId != 370)) {
+		if ((mapId != 340) && (mapId != 350) && (mapId != 360)
+				&& (mapId != 370)) {
 			pc.sendPackets(new S_ServerMessage(876)); // この場所では個人商店を開けません。
 			return;
 		}
@@ -75,10 +77,9 @@ public class C_Shop extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
 							checkItem.getItem().getName(), "這是不可能處理。"));
 				}
-				Object[] petlist = pc.getPetList().values().toArray();
-				for (Object petObject : petlist) {
-					if (petObject instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petObject;
+				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+					if (petNpc instanceof L1PetInstance) {
+						L1PetInstance pet = (L1PetInstance) petNpc;
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(166, // \f1%0が%4%1%3%2
@@ -110,20 +111,21 @@ public class C_Shop extends ClientBasePacket {
 				}
 				if (checkItem.getBless() >= 128) { // 封印的裝備
 					// \f1%0は捨てたりまたは他人に讓ることができません。
-					pc.sendPackets(new S_ServerMessage(210, checkItem.getItem().getName()));
+					pc.sendPackets(new S_ServerMessage(210, checkItem.getItem()
+							.getName()));
 					return;
 				}
 				// 防止異常堆疊交易
-				if ((checkItem.getCount() > 1) && (checkItem.getItem().isStackable() == false)) {
+				if ((checkItem.getCount() > 1)
+						&& (!checkItem.getItem().isStackable())) {
 					pc.sendPackets(new S_SystemMessage("此物品非堆疊，但異常堆疊無法交易。"));
 					return;
 				}
 
 				// 使用中的寵物項鍊 - 無法販賣
-				Object[] petlist = pc.getPetList().values().toArray();
-				for (Object petObject : petlist) {
-					if (petObject instanceof L1PetInstance) {
-						L1PetInstance pet = (L1PetInstance) petObject;
+				for (L1NpcInstance petNpc : pc.getPetList().values()) {
+					if (petNpc instanceof L1PetInstance) {
+						L1PetInstance pet = (L1PetInstance) petNpc;
 						if (checkItem.getId() == pet.getItemObjId()) {
 							tradable = false;
 							pc.sendPackets(new S_ServerMessage(1187)); // 寵物項鍊正在使用中。
@@ -132,15 +134,11 @@ public class C_Shop extends ClientBasePacket {
 					}
 				}
 				// 使用中的魔法娃娃 - 無法販賣
-				Object[] dollList = pc.getDollList().values().toArray();
-				for (Object dollObject : dollList) {
-					if (dollObject instanceof L1DollInstance) {
-						L1DollInstance doll = (L1DollInstance) dollObject;
-						if (doll.getItemObjId() == checkItem.getId()) {
-							tradable = false;
-							pc.sendPackets(new S_ServerMessage(1181));
-							break;
-						}
+				for (L1DollInstance doll : pc.getDollList().values()) {
+					if (doll.getItemObjId() == checkItem.getId()) {
+						tradable = false;
+						pc.sendPackets(new S_ServerMessage(1181));
+						break;
 					}
 				}
 				L1PrivateShopBuyList psbl = new L1PrivateShopBuyList();
@@ -153,22 +151,27 @@ public class C_Shop extends ClientBasePacket {
 				sellList.clear();
 				buyList.clear();
 				pc.setPrivateShop(false);
-				pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
-				pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+				pc.sendPackets(new S_DoActionGFX(pc.getId(),
+						ActionCodes.ACTION_Idle));
+				pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
+						ActionCodes.ACTION_Idle));
 				return;
 			}
 			byte[] chat = readByte();
 			pc.setShopChat(chat);
 			pc.setPrivateShop(true);
-			pc.sendPackets(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
-			pc.broadcastPacket(new S_DoActionShop(pc.getId(), ActionCodes.ACTION_Shop, chat));
-		}
-		else if (type == 1) { // 終了
+			pc.sendPackets(new S_DoActionShop(pc.getId(),
+					ActionCodes.ACTION_Shop, chat));
+			pc.broadcastPacket(new S_DoActionShop(pc.getId(),
+					ActionCodes.ACTION_Shop, chat));
+		} else if (type == 1) { // 終了
 			sellList.clear();
 			buyList.clear();
 			pc.setPrivateShop(false);
-			pc.sendPackets(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
-			pc.broadcastPacket(new S_DoActionGFX(pc.getId(), ActionCodes.ACTION_Idle));
+			pc.sendPackets(new S_DoActionGFX(pc.getId(),
+					ActionCodes.ACTION_Idle));
+			pc.broadcastPacket(new S_DoActionGFX(pc.getId(),
+					ActionCodes.ACTION_Idle));
 		}
 	}
 

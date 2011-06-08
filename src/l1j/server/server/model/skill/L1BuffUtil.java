@@ -1143,10 +1143,9 @@ public class L1BuffUtil {
 					if (attr != 0) { // 無属性でなければ実行
 						if (pc.getMap().isRecallPets()) {
 							int petcost = 0;
-							Object[] petlist = pc.getPetList().values().toArray();
-							for (Object pet : petlist) {
+							for (L1NpcInstance petNpc : pc.getPetList().values()) {
 								// 現在のペットコスト
-								petcost += ((L1NpcInstance) pet).getPetcost();
+								petcost += petNpc.getPetcost();
 							}
 
 							if (petcost == 0) { // 1匹も所属NPCがいなければ実行

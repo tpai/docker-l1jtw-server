@@ -35,10 +35,9 @@ public class GeneralThreadPool {
 
 	private ScheduledExecutorService _scheduler; // 通用的ScheduledExecutorService
 
-	private ScheduledExecutorService _pcScheduler; // 監測完家專用的ScheduledExecutorService
+	private ScheduledExecutorService _pcScheduler; // 監測玩家專用的ScheduledExecutorService
 
-	// L1J一応在默認狀態，地圖：4什麼也不做，籌委會是一個被佔領的第二次運行時間大約為
-	// 6毫秒(AutoUpdate:約6ms,ExpMonitor:極小)
+	// (AutoUpdate:約6ms,ExpMonitor:極小)
 	private final int _pcSchedulerPoolSize = 1 + Config.MAX_ONLINE_USERS / 20; // 每
 																				// 20
 																				// 人增加一個

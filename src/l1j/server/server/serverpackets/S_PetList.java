@@ -18,6 +18,7 @@ import java.util.List;
 
 import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1ItemInstance;
+import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.utils.collections.Lists;
@@ -38,8 +39,7 @@ public class S_PetList extends ServerBasePacket {
 	private void buildPacket(int npcObjId, L1PcInstance pc) {
 		List<L1ItemInstance> amuletList = Lists.newList();
 		// 判斷身上是否有寵物項圈！
-		for (Object itemObject : pc.getInventory().getItems()) {
-			L1ItemInstance item = (L1ItemInstance) itemObject;
+		for (L1ItemInstance item : pc.getInventory().getItems()) {
 			if ((item.getItem().getItemId() == 40314) || (item.getItem().getItemId() == 40316)) {
 				if (!isWithdraw(pc, item)) {
 					amuletList.add(item);
@@ -66,10 +66,9 @@ public class S_PetList extends ServerBasePacket {
 	}
 
 	private boolean isWithdraw(L1PcInstance pc, L1ItemInstance item) {
-		Object[] petlist = pc.getPetList().values().toArray();
-		for (Object petObject : petlist) {
-			if (petObject instanceof L1PetInstance) {
-				L1PetInstance pet = (L1PetInstance) petObject;
+		for (L1NpcInstance petNpc : pc.getPetList().values()) {
+			if (petNpc instanceof L1PetInstance) {
+				L1PetInstance pet = (L1PetInstance) petNpc;
 				if (item.getId() == pet.getItemObjId()) {
 					return true;
 				}
