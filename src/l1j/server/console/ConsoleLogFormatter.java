@@ -12,7 +12,7 @@
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server;
+package l1j.server.console;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
