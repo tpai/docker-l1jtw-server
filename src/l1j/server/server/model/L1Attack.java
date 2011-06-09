@@ -792,20 +792,23 @@ public class L1Attack {
 		// 判斷魔法輔助
 		if (_pc.hasSkillEffect(SOUL_OF_FLAME))
 			weaponDamage = weaponMaxDamage;
-		
+
 		// 判斷武器類型
 		boolean darkElfWeapon = false ;
-		if (_weaponType == 58) { // 鋼爪
+		if (_pc.isDarkelf() && (_weaponType == 58)) { // 鋼爪 (追加判斷持有者為黑妖，避免與幻術師奇谷獸相衝)
 			darkElfWeapon = true ;
-			if ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance)  // 出現最大值的機率
+			if ((Random.nextInt(100) + 1) <= _weaponDoubleDmgChance) { // 出現最大值的機率
 				weaponDamage = weaponMaxDamage;
-			if (weaponDamage == weaponMaxDamage)  // 出現最大值時 - 爪痕
+			}
+			if (weaponDamage == weaponMaxDamage) { // 出現最大值時 - 爪痕
 				_effectId = 2;
-		} else if (_weaponType == 20 || _weaponType == 62) // 弓、鐵手甲 不算武器傷害
+			}
+		} else if (_weaponType == 20 || _weaponType == 62) {// 弓、鐵手甲 不算武器傷害
 			weaponDamage = 0;
-		
+		}
+
 		weaponDamage +=  _weaponAddDmg + _weaponEnchant ; // 加上武器(額外點數+祝福魔法武器)跟武卷數
-		
+
 		if (_calcType == PC_NPC)
 			weaponDamage += calcMaterialBlessDmg(); // 銀祝福武器加傷害
 		if (_weaponType == 54) {
@@ -816,11 +819,11 @@ public class L1Attack {
 			}
 		}
 		weaponDamage += calcAttrEnchantDmg(); // 属性強化傷害
-		
+
 		if (darkElfWeapon && _pc.hasSkillEffect(DOUBLE_BRAKE)) 
 			if ((Random.nextInt(100) + 1) <= 33) 
 				weaponDamage *= 2;
-			
+
 		return weaponDamage;
 	}
 

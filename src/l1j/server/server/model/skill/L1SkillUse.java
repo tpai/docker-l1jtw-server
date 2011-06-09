@@ -137,6 +137,8 @@ public class L1SkillUse {
 
 	private int _skillRanged = 0;
 
+	private int _skillArea = 0;
+
 	private boolean _isFreeze = false;
 
 	private boolean _isCounterMagic = true;
@@ -224,6 +226,20 @@ public class L1SkillUse {
 	}
 
 	/*
+	 * 攻擊範圍變更。
+	 */
+	public void setSkillArea(int i) {
+		_skillArea = i;
+	}
+
+	public int getSkillArea() {
+		if (_skillArea == 0) {
+			return _skill.getArea();
+		}
+		return _skillArea;
+	}
+
+	/*
 	 * 1/10倍で表現する。
 	 */
 	public void setLeverage(int i) {
@@ -244,11 +260,11 @@ public class L1SkillUse {
 
 	public boolean checkUseSkill(L1PcInstance player, int skillid, int target_id, int x, int y, String message, int time, int type,
 			L1Character attacker) {
-		return checkUseSkill(player, skillid, target_id, x, y, message, time, type, attacker, 0, 0, 0, 0);
+		return checkUseSkill(player, skillid, target_id, x, y, message, time, type, attacker, 0, 0, 0);
 	}
 
 	public boolean checkUseSkill(L1PcInstance player, int skillid, int target_id, int x, int y, String message, int time, int type,
-			L1Character attacker, int actid, int gfxid, int hpConsume, int mpConsume) {
+			L1Character attacker, int actid, int gfxid, int mpConsume) {
 		// 初期設定ここから
 		setCheckedUseSkill(true);
 		_targetList = Lists.newList(); // ターゲットリストの初期化
@@ -262,7 +278,6 @@ public class L1SkillUse {
 		_type = type;
 		_actid = actid;
 		_gfxid = gfxid;
-		_hpConsume = hpConsume;
 		_mpConsume = mpConsume;
 		boolean checkedResult = true;
 
@@ -528,7 +543,7 @@ public class L1SkillUse {
 			}
 
 			if (type == TYPE_NORMAL) { // 魔法詠唱時
-				if (!_isGlanceCheckFail || (_skill.getArea() > 0) || _skill.getTarget().equals("none")) {
+				if (!_isGlanceCheckFail || (getSkillArea() > 0) || _skill.getTarget().equals("none")) {
 					runSkill();
 					useConsume();
 					sendGrfx(true);
@@ -863,7 +878,7 @@ public class L1SkillUse {
 				return;
 			}
 
-			if (_skill.getArea() == 0) { // 単体の場合
+			if (getSkillArea() == 0) { // 単体の場合
 				if (!_user.glanceCheck(_target.getX(), _target.getY())) { // 直線上に障害物があるか
 					if (((_skill.getType() & L1Skills.TYPE_ATTACK) == L1Skills.TYPE_ATTACK) && (_skillId != 10026) && (_skillId != 10027)
 							&& (_skillId != 10028) && (_skillId != 10029)) { // 安息攻撃以外の攻撃スキル
@@ -884,11 +899,11 @@ public class L1SkillUse {
 				}
 
 				List<L1Object> objects;
-				if (_skill.getArea() == -1) {
+				if (getSkillArea() == -1) {
 					objects = L1World.getInstance().getVisibleObjects(_user);
 				}
 				else {
-					objects = L1World.getInstance().getVisibleObjects(_target, _skill.getArea());
+					objects = L1World.getInstance().getVisibleObjects(_target, getSkillArea());
 				}
 				for (L1Object tgobj : objects) {
 					if (tgobj == null) {
@@ -959,12 +974,10 @@ public class L1SkillUse {
 
 	// 必要ＨＰ、ＭＰがあるか？
 	private boolean isHPMPConsume() {
-		if (_hpConsume == 0) {
-			_hpConsume = _skill.getHpConsume();
-		}
 		if (_mpConsume == 0) {
 			_mpConsume = _skill.getMpConsume();
 		}
+		_hpConsume = _skill.getHpConsume();
 		int currentMp = 0;
 		int currentHp = 0;
 
@@ -1379,7 +1392,7 @@ public class L1SkillUse {
 					}
 				}
 
-				if (_skill.getArea() == 0) { // 單體攻擊魔法
+				if (getSkillArea() == 0) { // 單體攻擊魔法
 					data = new int[] {_actid, _dmg, _gfxid, 6};
 					_player.sendPackets(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
 					_player.broadcastPacket(new S_UseAttackSkill(_player, targetid, _targetX, _targetY, data));
@@ -1469,7 +1482,7 @@ public class L1SkillUse {
 			}
 
 			if (_skill.getTarget().equals("attack") && (_skillId != 18)) {
-				if (_skill.getArea() == 0) { // 單體攻擊魔法
+				if (getSkillArea() == 0) { // 單體攻擊魔法
 					data = new int[] {_actid, _dmg, _gfxid, 6};
 					_user.broadcastPacket(new S_UseAttackSkill(_user, targetid, _targetX, _targetY, data));
 					_target.broadcastPacketExceptTargetSight(new S_DoActionGFX(targetid, ActionCodes.ACTION_Damage), _user);
@@ -1895,7 +1908,7 @@ public class L1SkillUse {
 							npc.setParalysisTime(_skill.getBuffDuration() * 1000);
 						}
 						break;
-					case 20001: // 毒霧-範圍 3X3
+					case 20011: // 毒霧-前方 3X3
 						_user.setHeading(_user.targetDirection(_targetX, _targetY)); // 改變面向
 						int locX = 0;
 						int locY = 0;

@@ -85,7 +85,6 @@ public class MobSkillTable {
 						actNo = rs2.getInt("actNo");
 						mobskill.setMobName(rs2.getString("mobname"));
 						mobskill.setType(actNo, rs2.getInt("type"));
-						mobskill.setHpConsume(actNo, rs2.getInt("hpConsume"));
 						mobskill.setMpConsume(actNo, rs2.getInt("mpConsume"));
 						mobskill.setTriggerRandom(actNo, rs2.getInt("TriRnd"));
 						mobskill.setTriggerHp(actNo, rs2.getInt("TriHp"));
@@ -98,6 +97,7 @@ public class MobSkillTable {
 						mobskill.setAreaHeight(actNo, rs2.getInt("AreaHeight"));
 						mobskill.setLeverage(actNo, rs2.getInt("Leverage"));
 						mobskill.setSkillId(actNo, rs2.getInt("SkillId"));
+						mobskill.setSkillArea(actNo, rs2.getInt("SkillArea"));
 						mobskill.setGfxid(actNo, rs2.getInt("Gfxid"));
 						mobskill.setActid(actNo, rs2.getInt("Actid"));
 						mobskill.setSummon(actNo, rs2.getInt("SummonId"));

@@ -52,7 +52,6 @@ public class L1MobSkill implements Cloneable {
 		skillSize = sSize;
 
 		type = new int[skillSize];
-		hpConsume = new int[skillSize];
 		mpConsume = new int[skillSize];
 		triRnd = new int[skillSize];
 		triHp = new int[skillSize];
@@ -65,6 +64,7 @@ public class L1MobSkill implements Cloneable {
 		areaHeight = new int[skillSize];
 		leverage = new int[skillSize];
 		skillId = new int[skillSize];
+		skillArea = new int[skillSize];
 		gfxid = new int[skillSize];
 		actid = new int[skillSize];
 		summon = new int[skillSize];
@@ -113,22 +113,22 @@ public class L1MobSkill implements Cloneable {
 	}
 
 	/*
-	 * 血量消耗判斷
+	 * 技能範圍設定
 	 */
-	int hpConsume[];
+	int skillArea[];
 
-	public int getHpConsume(int idx) {
+	public int getSkillArea(int idx) {
 		if (idx < 0 || idx >= getSkillSize()) {
 			return 0;
 		}
-		return hpConsume[idx];
+		return skillArea[idx];
 	}
 
-	public void setHpConsume(int idx, int i) {
+	public void setSkillArea(int idx, int i) {
 		if (idx < 0 || idx >= getSkillSize()) {
 			return;
 		}
-		hpConsume[idx] = i;
+		skillArea[idx] = i;
 	}
 
 	/*
