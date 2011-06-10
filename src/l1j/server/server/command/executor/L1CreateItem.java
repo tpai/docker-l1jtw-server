@@ -56,6 +56,14 @@ public class L1CreateItem implements L1CommandExecutor {
 			if (st.hasMoreTokens()) {
 				isId = Integer.parseInt(st.nextToken());
 			}
+			String attr = "";
+			if (st.hasMoreTokens()) {
+				attr = st.nextToken();
+			}
+			int attLevel = 0;
+			if (st.hasMoreTokens()) {
+				attLevel = Integer.parseInt(st.nextToken());
+			}
 			int itemid = 0;
 			try {
 				itemid = Integer.parseInt(nameid);
@@ -88,6 +96,74 @@ public class L1CreateItem implements L1CommandExecutor {
 					for (createCount = 0; createCount < count; createCount++) {
 						item = ItemTable.getInstance().createItem(itemid);
 						item.setEnchantLevel(enchant);
+						if ((item.getItem().getType2() == 2)
+								&& (item.getItem().getType() >= 8 && item.getItem().getType() <= 12)) { // 飾品類
+							boolean award = false;
+							for (int i = 0; i < enchant; i++) {
+								if (i == 5) {
+									award = true;
+								} else {
+									award = false;
+								}
+								switch (item.getItem().getGrade()) {
+									case 0: // 上等
+										// 四屬性 +1
+										item.setFireMr(item.getFireMr() + 1);
+										item.setWaterMr(item.getWaterMr() + 1);
+										item.setEarthMr(item.getEarthMr() + 1);
+										item.setWindMr(item.getWindMr() + 1);
+										// LV6 額外獎勵：體力與魔力回復量 +1
+										if (award) {
+											item.setHpr(item.getHpr() + 1);
+											item.setMpr(item.getMpr() + 1);
+										}
+										break;
+									case 1: // 中等
+										// HP +2
+										item.setaddHp(item.getaddHp() + 2);
+										// LV6 額外獎勵：魔防 +1
+										if (award) {
+											item.setM_Def(item.getM_Def() + 1);
+										}
+										break;
+									case 2: // 初等
+										// MP +1
+										item.setaddMp(item.getaddMp() + 1);
+										// LV6 額外獎勵：魔攻 +1
+										if (award) {
+											item.setaddSp(item.getaddSp() + 1);
+										}
+										break;
+									case 3: // 特等
+										// 功能台版未實裝。
+										break;
+									default:
+										break;
+								}
+							}
+						} else if (item.getItem().getType2() == 1) { // 武器類
+							if (attr.equalsIgnoreCase("地") || attr.equalsIgnoreCase("1")) {
+								if (attLevel > 0 && attLevel <= 3) {
+									item.setAttrEnchantKind(1);
+									item.setAttrEnchantLevel(attLevel);
+								}
+							} else if (attr.equalsIgnoreCase("火") || attr.equalsIgnoreCase("2")) {
+								if (attLevel > 0 && attLevel <= 3) {
+									item.setAttrEnchantKind(2);
+									item.setAttrEnchantLevel(attLevel);
+								}
+							} else if (attr.equalsIgnoreCase("水") || attr.equalsIgnoreCase("4")) {
+								if (attLevel > 0 && attLevel <= 3) {
+									item.setAttrEnchantKind(4);
+									item.setAttrEnchantLevel(attLevel);
+								}
+							} else if (attr.equalsIgnoreCase("風") || attr.equalsIgnoreCase("8")) {
+								if (attLevel > 0 && attLevel <= 3) {
+									item.setAttrEnchantKind(8);
+									item.setAttrEnchantLevel(attLevel);
+								}
+							}
+						}
 						if (isId == 1) {
 							item.setIdentified(true);
 						}
@@ -108,7 +184,7 @@ public class L1CreateItem implements L1CommandExecutor {
 		} catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			pc.sendPackets(new S_SystemMessage(
-					"請輸入 .item itemid|name [數目] [強化等級] [鑑定狀態]。"));
+					"請輸入 .item itemid|name [數量] [強化等級] [鑑定狀態] [武器屬性] [屬性等級]。"));
 		}
 	}
 }
