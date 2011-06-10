@@ -464,9 +464,13 @@ public class C_Result extends ClientBasePacket {
 					count = buyTotalCount - buyCount;
 				}
 				if (item.isEquipped()) {
-					pc.sendPackets(new S_ServerMessage(905)); // 装備しているアイテムは販売できません。
+					// pc.sendPackets(new S_ServerMessage(905)); // 無法販賣裝備中的道具。
 					continue;
 				}
+	            if (item.getBless() >= 128) { // 被封印的裝備
+	                // pc.sendPackets(new S_ServerMessage(210, item.getItem().getName())); // \f1%0%d是不可轉移的…
+	                continue;
+	             }
 
 				if (targetPc.getInventory().checkAddItem(item, count) == L1Inventory.OK) { // 容量重量確認及びメッセージ送信
 					for (int j = 0; j < count; j++) { // オーバーフローをチェック
@@ -524,7 +528,7 @@ public class C_Result extends ClientBasePacket {
 				}
 				for (L1NpcInstance petNpc : pc.getPetList().values()) 
 					petCost += petNpc.getPetcost();
-				
+
 				int charisma = pc.getCha();
 				if (pc.isCrown()) { // 王族
 					charisma += 6;
