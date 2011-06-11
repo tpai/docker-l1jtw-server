@@ -49,12 +49,13 @@ public class L1FollowerInstance extends L1NpcInstance {
 					deleteMe();
 					return true;
 				}
-				else if ((npc.getNpcTemplate().get_npcId() == 70811 // ライラ
+				else if ((npc.getNpcTemplate().get_npcId() == 70811 // 萊拉
 						)
-						&& (getNpcTemplate().get_npcId() == 71094)) { // エンディア
+						&& (getNpcTemplate().get_npcId() == 71094)) { // 安迪亞
 					setParalyzed(true);
 					L1PcInstance pc = (L1PcInstance) _master;
-					if (!pc.getInventory().checkItem(40582)) {
+					if (!pc.getInventory().checkItem(40582)
+							&& !pc.getInventory().checkItem(40583)) { // 身上無安迪亞之袋、安迪亞之信
 						createNewItem(pc, 40582, 1);
 					}
 					deleteMe();
@@ -142,6 +143,7 @@ public class L1FollowerInstance extends L1NpcInstance {
 		setLightSize(target.getLightSize());
 
 		target.setParalyzed(true);
+		target.setDead(true);
 		target.deleteMe();
 
 		L1World.getInstance().storeObject(this);

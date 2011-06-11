@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
 	<!--顯示金額對照對話檔內容，因此不能更動順序。-->
 <!--L1J-TW-->
@@ -2805,4 +2805,9 @@
 	<Action Name="teleport town-in" NpcId="71016">
 		<Teleport X="32834" Y="32791" Map="8011" Heading="4" Price="0" />
 	</Action>
+
+<!--墮落的靈魂-->
+	<!--關於邪念地監-->
+	<ShowHtml Name="teleportURL" HtmlId="csoulqs" NpcId="71095">
+	</ShowHtml>
 </NpcActionList>

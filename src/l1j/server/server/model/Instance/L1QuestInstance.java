@@ -110,8 +110,8 @@ public class L1QuestInstance extends L1NpcInstance {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "searcherk4"));
 			}
 		}
-		else if (npcId == 71094) { // エンディア
-			if (pc.isDarkelf() && (pc.getQuest().get_step(4) == 1)) {
+		else if (npcId == 71094) { // 安迪亞
+			if (pc.isDarkelf() && (pc.getQuest().get_step(4) == 2)) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "endiaq1"));
 			}
 			else {
@@ -162,7 +162,7 @@ public class L1QuestInstance extends L1NpcInstance {
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
-			else if ((npcId == 71094) && pc.isDarkelf() && (pc.getQuest().get_step(4) == 1)) {
+			else if ((npcId == 71094) && pc.isDarkelf() && (pc.getQuest().get_step(4) == 2)) {
 				L1Npc l1npc = NpcTable.getInstance().getTemplate(71094);
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));

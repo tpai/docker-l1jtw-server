@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
 	<!--君主Lv15クエスト / ゼロ-->
 	<MakeItem Name="request cloak of red" Class="P" AmountInputable="false" QuestId="Level15" QuestStep="0">
@@ -394,20 +394,38 @@
 		<SetQuest Id="Level45" Step="5"/>
 		<ShowHtml HtmlId="roje14"/>
 	</Action>
-	<!--DELv50クエスト / ブルディカ-->
+	<!--黑暗妖精 50級任務 / 執行任務-->
 	<Action Name="quest 24 bluedikaq7" Class="D">
+		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="bluedikaq7"/>
 	</Action>
-	<MakeItem Name="request finger of death" Class="D" AmountInputable="false" QuestId="Level50" QuestStep="0">
-		<Item Amount="1" ItemId="13"/>
-		<Material Amount="1" ItemId="40603"/>
-		<Material Amount="1" ItemId="40648"/>
+	<!--黑暗妖精 50級任務 / 遞給調查結果物-->
+	<MakeItem Name="request mask of true" Class="D" AmountInputable="false">
+		<Item Amount="1" ItemId="20037"/>	<!--真實的面具-->
+		<Material Amount="1" ItemId="40583"/>	<!--安迪亞之信-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="3"/>
+			<ShowHtml HtmlId="kimaq3"/>
+		</Succeed>
+	</MakeItem>
+	<!--黑暗妖精 50級任務 / 關於靈魂枯竭的土地-->
+	<Action Name="quest 26 kimaq4" Class="D">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="kimaq4"/>
+	</Action>
+	<!--黑暗妖精 50級任務 / 遞給黑暗之星-->
+	<MakeItem Name="request finger of death" Class="D" AmountInputable="false">
+		<Item Amount="1" ItemId="13"/>		<!--死亡之指-->
+		<Material Amount="1" ItemId="20037"/>	<!--真實的面具-->
+		<Material Amount="1" ItemId="40541"/>	<!--黑暗之星-->
+		<Material Amount="1" ItemId="40603"/>	<!--蘑菇毒液-->
+		<Material Amount="1" ItemId="40648"/>	<!--生銹的刺客之劍-->
 		<Succeed>
 			<SetQuest Id="Level50" Step="End"/>
 			<ShowHtml HtmlId="bluedikaq8"/>
 		</Succeed>
 	</MakeItem>
-	
+
 	<!--Lv50合同クエスト / ディガルディン-->
 	<!--君主-->
 	<Action Name="quest 29 dicardingp2" Class="P">

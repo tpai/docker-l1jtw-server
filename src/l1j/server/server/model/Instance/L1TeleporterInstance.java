@@ -179,6 +179,33 @@ public class L1TeleporterInstance extends L1NpcInstance {
 				} else {
 					htmlid = "karen2";
 				}
+			} else if (npcid == 71095) { // 墮落的靈魂
+				if (player.isDarkelf()) { // 黑暗妖精
+					if (player.getLevel() >= 50) {
+						int lv50_step = quest
+						.get_step(L1Quest.QUEST_LEVEL50);
+						if (lv50_step == L1Quest.QUEST_END) {
+							htmlid = "csoulq3";
+						} else if (lv50_step >= 3) {
+							boolean find = false;
+							for (Object objs : L1World.getInstance().getVisibleObjects(306).values()) {
+								if (objs instanceof L1PcInstance) {
+									L1PcInstance _pc = (L1PcInstance) objs;
+									if (_pc != null) {
+										find = true;
+										htmlid = "csoulqn"; // 你的邪念還不夠！
+										break;
+									}
+								}
+							}
+							if (!find) {
+								htmlid = "csoulq1";
+							} else {
+								htmlid = "csoulqn";
+							}
+						}
+					}
+				}
 			}
 
 			// html表示

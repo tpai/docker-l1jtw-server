@@ -592,21 +592,23 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "ronde7";
 					}
 				}
-			} else if (npcid == 70895) { // ブルディカ
-				if (player.isDarkelf()) { // ダークエルフ
+			} else if (npcid == 70895) { // 布魯迪卡
+				if (player.isDarkelf()) { // 黑暗妖精
 					if (player.getLevel() >= 45) {
-						if (quest.isEnd(L1Quest.QUEST_LEVEL30)) {
+						if (quest.isEnd(L1Quest.QUEST_LEVEL30)) { // 30級任務結束
 							int lv45_step = quest
 									.get_step(L1Quest.QUEST_LEVEL45);
-							if (lv45_step == L1Quest.QUEST_END) { // 終了済み
-								if (player.getLevel() < 50) { // Lv50未満
+							if (lv45_step == L1Quest.QUEST_END) { // 45級任務結束
+								if (player.getLevel() < 50) { // 未達到 Lv50
 									htmlid = "bluedikaq3";
 								} else {
 									int lv50_step = quest
 											.get_step(L1Quest.QUEST_LEVEL50);
-									if (lv50_step == L1Quest.QUEST_END) { // 終了済み
+									if (lv50_step == L1Quest.QUEST_END) { // 50級任務結束
 										htmlid = "bluedikaq8";
-									} else {
+									} else if (lv50_step >= 1) { // 同意
+										htmlid = "bluedikaq7";
+									} else { // 未同意
 										htmlid = "bluedikaq6";
 									}
 								}
@@ -622,10 +624,29 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "bluedikaq5";
 					}
 				}
-			} else if (npcid == 70904) { // クプ
+			} else if (npcid == 70904) { // 庫普
 				if (player.isDarkelf()) {
 					if (quest.get_step(L1Quest.QUEST_LEVEL45) == 1) { // ブルディカ同意済み
 						htmlid = "koup12";
+					}
+				}
+			} else if (npcid == 70906) { // 奇馬
+				if (player.isDarkelf()) { // 黑暗妖精
+					if (player.getLevel() >= 50) {
+						int lv50_step = quest
+						.get_step(L1Quest.QUEST_LEVEL50);
+						if ((lv50_step == L1Quest.QUEST_END) || (lv50_step >= 4)) { // 50級任務結束
+							htmlid = "kimaq4";
+						} else if (lv50_step == 3) {
+							htmlid = "kimaq3";
+						} else {
+							if (lv50_step >= 1) { // 需先找布魯迪卡，才能進行後續任務
+								htmlid = "kimaq1";
+								quest.set_step(L1Quest.QUEST_LEVEL50, 2);
+							} else {
+								htmlid = "kima1";
+							}
+						}
 					}
 				}
 			} else if (npcid == 70824) { // アサシンマスターの追従者

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-13 09:27:04
+Date: 2011-06-11 12:25:28
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -245,3 +245,4 @@ INSERT INTO `getback_restart` VALUES ('1016', '法利昂棲息地', '33710', '32
 INSERT INTO `getback_restart` VALUES ('5300', '釣魚池', '32608', '32772', '4');
 INSERT INTO `getback_restart` VALUES ('5301', '釣魚池', '32608', '32772', '4');
 INSERT INTO `getback_restart` VALUES ('5302', '釣魚池', '32608', '32772', '4');
+INSERT INTO `getback_restart` VALUES ('306', '黑暗妖精試煉地監', '32896', '32663', '4');

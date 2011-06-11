@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-25 15:25:57
+Date: 2011-06-11 12:25:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `npcaction`
+-- Table structure for npcaction
 -- ----------------------------
 DROP TABLE IF EXISTS `npcaction`;
 CREATE TABLE `npcaction` (
@@ -668,7 +668,7 @@ INSERT INTO `npcaction` VALUES ('70896', 'bluedum', 'bluedum', '', '');
 INSERT INTO `npcaction` VALUES ('70898', 'inn', 'Inn1', '', '');
 INSERT INTO `npcaction` VALUES ('70903', 'kandum', 'kandum', '', '');
 INSERT INTO `npcaction` VALUES ('70904', 'koup1', 'koup1', 'koupdwaf', '');
-INSERT INTO `npcaction` VALUES ('70906', 'kimaq1', 'kimaq1', 'kimaq2', '');
+INSERT INTO `npcaction` VALUES ('70906', 'kima1', 'kima1', '', '');
 INSERT INTO `npcaction` VALUES ('70908', 'pears1', 'pears1', '', '');
 INSERT INTO `npcaction` VALUES ('70909', 'pierot1', 'pierot1', '', '');
 INSERT INTO `npcaction` VALUES ('70910', 'hadesty1', 'hadesty1', 'hadesty2', '');
@@ -799,6 +799,7 @@ INSERT INTO `npcaction` VALUES ('71088', 'redkey4', 'redkey4', '', '');
 INSERT INTO `npcaction` VALUES ('71089', 'francu1', 'francu001', '', '');
 INSERT INTO `npcaction` VALUES ('71090', 'jcrystal0', 'jcrystal0', '', '');
 INSERT INTO `npcaction` VALUES ('71091', 'jcrystall0', 'jcrystall0', '', '');
+INSERT INTO `npcaction` VALUES ('71095', 'csoulq2', 'csoulq2', '', '');
 INSERT INTO `npcaction` VALUES ('71108', 'chaotictp1', 'chaotictp1', '', '');
 INSERT INTO `npcaction` VALUES ('71109', 'lawfultp1', 'lawfultp1', '', '');
 INSERT INTO `npcaction` VALUES ('71110', 'caexplorer1', 'caexplorer1', '', '');

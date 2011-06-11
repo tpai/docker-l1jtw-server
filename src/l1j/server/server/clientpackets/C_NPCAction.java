@@ -1113,7 +1113,35 @@ public class C_NPCAction extends ClientBasePacket {
 		} else if (s.equalsIgnoreCase("troll nbmorph")) {
 			poly(client, 3878);
 			htmlid = ""; // ウィンドウを消す
-		} else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81279) { // 卡瑞
+		}
+
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 71095) { // 墮落的靈魂
+			if (s.equalsIgnoreCase("teleport evil-dungeon")) { // 往邪念地監
+				boolean find = false;
+				for (Object objs : L1World.getInstance().getVisibleObjects(306).values()) {
+					if (objs instanceof L1PcInstance) {
+						L1PcInstance _pc = (L1PcInstance) objs;
+						if (_pc != null) {
+							find = true;
+							htmlid = "csoulqn"; // 你的邪念還不夠！
+							break;
+						}
+					}
+				}
+				if (!find) {
+					L1Quest quest = pc.getQuest();
+					int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+					if (lv50_step == L1Quest.QUEST_END) {
+						htmlid = "csoulq3";
+					} else if (lv50_step >= 3) {
+						L1Teleport.teleport(pc, 32747, 32799, (short) 306, 6, true);
+					} else {
+						htmlid = "csoulq2";
+					}
+				}
+			}
+		}
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81279) { // 卡瑞
 																					// -
 																					// 卡瑞的祝福
 			if (s.equalsIgnoreCase("a")) {

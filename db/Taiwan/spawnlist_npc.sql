@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50508
 File Encoding         : 65001
 
-Date: 2011-05-14 01:53:52
+Date: 2011-06-11 12:26:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -33,7 +33,7 @@ CREATE TABLE `spawnlist_npc` (
   `mapid` int(10) unsigned NOT NULL DEFAULT '0',
   `movement_distance` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=89930 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=89931 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of spawnlist_npc
@@ -578,8 +578,7 @@ INSERT INTO `spawnlist_npc` VALUES ('87530', '布魯迪卡', '1', '70895', '3274
 INSERT INTO `spawnlist_npc` VALUES ('87531', '羅吉', '1', '70744', '34036', '32259', '0', '0', '4', '0', '4', '100');
 INSERT INTO `spawnlist_npc` VALUES ('87532', '刺客首領護衛', '1', '70824', '32929', '32276', '0', '0', '5', '0', '4', '100');
 INSERT INTO `spawnlist_npc` VALUES ('87533', '奇馬', '1', '70906', '32908', '32947', '0', '0', '5', '0', '304', '0');
-INSERT INTO `spawnlist_npc` VALUES ('87534', '奇馬', '1', '70906', '33158', '32314', '0', '0', '5', '0', '4', '100');
-INSERT INTO `spawnlist_npc` VALUES ('87535', '奇馬', '1', '70906', '32856', '32935', '0', '0', '5', '0', '4', '100');
+INSERT INTO `spawnlist_npc` VALUES ('87534', '墮落的靈魂', '1', '71095', '32858', '32929', '0', '0', '6', '0', '4', '0');
 INSERT INTO `spawnlist_npc` VALUES ('87536', '迪嘉勒廷', '1', '70739', '32765', '32796', '0', '0', '5', '0', '77', '0');
 INSERT INTO `spawnlist_npc` VALUES ('87537', '齊柯', '1', '50114', '32872', '32508', '0', '0', '5', '0', '4', '100');
 INSERT INTO `spawnlist_npc` VALUES ('87538', '波利卡', '1', '50124', '33713', '32491', '0', '0', '6', '0', '4', '100');
