@@ -21,6 +21,7 @@ import l1j.server.Config;
 import l1j.server.server.datatables.SprTable;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.serverpackets.S_Disconnect;
+import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.serverpackets.S_SystemMessage;
 import l1j.server.server.utils.LogRecorder;
@@ -127,20 +128,41 @@ public class AcceleratorChecker {
 	 */
 	private void doPunishment(int punishmaent) {
 		if (!_pc.isGm()) {// 如果不是GM才執行處罰
+			int x = _pc.getX() ,y = _pc.getY() ,mapid = _pc.getMapId();// 紀錄座標
 			switch (punishmaent) {
 			case 0:// 剔除
 				_pc.sendPackets(new S_ServerMessage(945));
 				_pc.sendPackets(new S_Disconnect());
 				_log.info(String.format("因為檢測到%s正在使用加速器，強制切斷其連線。",_pc.getName()));
 				break;
-			case 1:// 停止一段時間，傳回村內
-					// TODO
+			case 1:// 鎖定人物10秒
+				_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, true));
+				try {
+					Thread.sleep(10000);// 暫停十秒
+				} catch (Exception e) {
+					System.out.println(e.getLocalizedMessage());
+				}
+				_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_BIND, false));
 				break;
 			case 2:// 傳到地域
-					// TODO
+				L1Teleport.teleport(_pc, 32737, 32796, (short) 99, 5, false);
+				_pc.sendPackets(new S_SystemMessage("因為你使用加速器，被傳送到了地域，10秒後傳回。"));
+				try {
+					Thread.sleep(10000);// 暫停十秒
+				} catch (Exception e) {
+					System.out.println(e.getLocalizedMessage());
+				}
+				L1Teleport.teleport(_pc, x, y, (short) mapid, 5, false);
 				break;
 			case 3:// 傳到GM房，30秒後傳回
-					// TODO
+				L1Teleport.teleport(_pc, 32737, 32796, (short) 99, 5, false);
+				_pc.sendPackets(new S_SystemMessage("因為你使用加速器，被傳送到了GM房，30秒後傳回。"));
+				try {
+					Thread.sleep(30000);// 暫停30秒
+				} catch (Exception e) {
+					System.out.println(e.getLocalizedMessage());
+				}
+				L1Teleport.teleport(_pc, x, y, (short) mapid, 5, false);
 				break;
 			}
 		} else {

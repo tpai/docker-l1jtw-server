@@ -85,6 +85,8 @@ public final class Config {
 	public static int JUSTICE_COUNT;
 
 	public static int CHECK_STRICTNESS;
+	
+	public static int ILLEGAL_SPEEDUP_PUNISHMENT;
 
 	public static int AUTOSAVE_INTERVAL;
 
@@ -470,6 +472,7 @@ public final class Config {
 			INJUSTICE_COUNT = Short.parseShort(serverSettings.getProperty("InjusticeCount", "10"));
 			JUSTICE_COUNT = Integer.parseInt(serverSettings.getProperty("JusticeCount", "4"));
 			CHECK_STRICTNESS = Integer.parseInt(serverSettings.getProperty("CheckStrictness", "102"));
+			ILLEGAL_SPEEDUP_PUNISHMENT = Integer.parseInt(serverSettings.getProperty("Punishment", "0"));
 			AUTOSAVE_INTERVAL = Integer.parseInt(serverSettings.getProperty("AutosaveInterval", "1200"), 10);
 			AUTOSAVE_INTERVAL_INVENTORY = Integer.parseInt(serverSettings.getProperty("AutosaveIntervalOfInventory", "300"), 10);
 			SKILLTIMER_IMPLTYPE = Integer.parseInt(serverSettings.getProperty("SkillTimerImplType", "1"));
@@ -788,6 +791,9 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("SendPacketBeforeTeleport")) {
 			SEND_PACKET_BEFORE_TELEPORT = Boolean.parseBoolean(pValue);
+		}
+		else if (pName.equalsIgnoreCase("Punishment")) {
+			ILLEGAL_SPEEDUP_PUNISHMENT = Integer.parseInt(pValue);
 		}
 		// rates.properties
 		else if (pName.equalsIgnoreCase("RateXp")) {
