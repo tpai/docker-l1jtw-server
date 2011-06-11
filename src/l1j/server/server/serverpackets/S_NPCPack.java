@@ -31,6 +31,8 @@ public class S_NPCPack extends ServerBasePacket {
 
 	private static final int STATUS_PC = 4;
 
+	private static final int HIDDEN_STATUS_FLY = 2;
+
 	private byte[] _byte = null;
 
 	public S_NPCPack(L1NpcInstance npc) {
@@ -88,7 +90,14 @@ public class S_NPCPack extends ServerBasePacket {
 		writeD(0); // 0以外にするとC_27が飛ぶ
 		writeS(null);
 		writeS(null); // マスター名？
-		writeC(0);
+		if (npc.getTempCharGfx() == 1024 || npc.getTempCharGfx() == 2363
+				|| npc.getTempCharGfx() == 6697 || npc.getTempCharGfx() == 8180
+				 || npc.getTempCharGfx() == 1204 || npc.getTempCharGfx() == 2353
+				 || npc.getTempCharGfx() == 3631 || npc.getTempCharGfx() == 2544) { // 飛行系怪物
+			writeC(npc.getHiddenStatus() == HIDDEN_STATUS_FLY ? 2 : 1); // 判斷是否飛天中
+		} else {
+			writeC(0);
+		}
 		writeC(0xFF); // HP
 		writeC(0);
 		writeC(npc.getLevel());

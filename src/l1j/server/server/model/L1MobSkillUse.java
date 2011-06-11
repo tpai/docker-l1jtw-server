@@ -33,6 +33,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.model.skill.L1SkillUse;
+import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_SkillSound;
@@ -543,18 +544,16 @@ public class L1MobSkillUse {
 					L1World.getInstance().addVisibleObject(mob);
 					L1Object object = L1World.getInstance().findObject(mob.getId());
 					L1MonsterInstance newnpc = (L1MonsterInstance) object;
-					newnpc.set_storeDroped(true); // 召喚されたモンスターはドロップ無し
-					if ((summonId == 45061 // カーズドスパルトイ
-							)
-							|| (summonId == 45161 // スパルトイ
-							) || (summonId == 45181 // スパルトイ
-							) || (summonId == 45455)) { // デッドリースパルトイ
-						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_Hide));
-						newnpc.setStatus(13);
+					newnpc.set_storeDroped(true); // 召喚怪不會掉落道具
+					if (newnpc.getTempCharGfx() == 145) { // 史巴托
+						newnpc.setStatus(11);
 						newnpc.broadcastPacket(new S_NPCPack(newnpc));
 						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_Appear));
 						newnpc.setStatus(0);
+						newnpc.broadcastPacket(new S_CharVisualUpdate(newnpc, newnpc.getStatus()));
+					} else if (newnpc.getTempCharGfx() == 7591) { // 泥龍(地)
 						newnpc.broadcastPacket(new S_NPCPack(newnpc));
+						newnpc.broadcastPacket(new S_DoActionGFX(newnpc.getId(), ActionCodes.ACTION_AxeWalk));
 					}
 					newnpc.onNpcAI();
 					newnpc.turnOnOffLight();

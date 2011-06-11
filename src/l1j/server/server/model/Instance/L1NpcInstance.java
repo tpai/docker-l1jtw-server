@@ -57,7 +57,9 @@ import l1j.server.server.model.L1Spawn;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.map.L1WorldMap;
+import l1j.server.server.model.npc.action.L1NpcDefaultAction;
 import l1j.server.server.model.skill.L1SkillUse;
+import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_MoveCharPacket;
 import l1j.server.server.serverpackets.S_NPCPack;
@@ -587,8 +589,7 @@ public class L1NpcInstance extends L1Character {
 		}
 	}
 
-	// 飛んでいる状態からアイテムを探し、あれば降りて拾う
-	public void searchItemFromAir() {
+	public void searchItemFromAir() { // 怪物飛天中，發現特定道具時解除飛天撿拾道具
 		List<L1GroundInventory> gInventorys = Lists.newList();
 
 		for (L1Object obj : L1World.getInstance().getVisibleObjects(this)) {
@@ -600,24 +601,16 @@ public class L1NpcInstance extends L1Character {
 			return;
 		}
 
-		// 拾うアイテム(のインベントリ)をランダムで選定
 		int pickupIndex = Random.nextInt(gInventorys.size());
 		L1GroundInventory inventory = gInventorys.get(pickupIndex);
 		for (L1ItemInstance item : inventory.getItems()) {
-			if ((item.getItem().getType() == 6 // potion
-					)
+			if ((item.getItem().getType() == 6) // potion
 					|| (item.getItem().getType() == 7)) { // food
 				if (getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
 					if (getHiddenStatus() == HIDDEN_STATUS_FLY) {
 						setHiddenStatus(HIDDEN_STATUS_NONE);
-						broadcastPacket(new S_DoActionGFX(getId(),
-								ActionCodes.ACTION_Movedown));
-						if (getTempCharGfx() != 0) {
-							setStatus(getNpcStstus(getTempCharGfx()));
-						} else {
-							setStatus(getNpcStstus(getGfxId()));
-						}
-						broadcastPacket(new S_NPCPack(this));
+						setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
+						broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Movedown));
 						onNpcAI();
 						startChat(CHAT_TIMING_HIDE);
 						_targetItem = item;
@@ -1175,11 +1168,7 @@ public class L1NpcInstance extends L1Character {
 		setAgrososc(template.is_agrososc());
 		setTempCharGfx(template.get_gfxid());
 		setGfxId(template.get_gfxid());
-		if (getTempCharGfx() != 0) {
-			setStatus(getNpcStstus(getTempCharGfx()));
-		} else {
-			setStatus(getNpcStstus(getGfxId()));
-		}
+		setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
 		setPolyAtkRanged(template.get_ranged());
 		setPolyArrowGfx(template.getBowActId());
 
@@ -1192,8 +1181,8 @@ public class L1NpcInstance extends L1Character {
 		// 攻擊
 		if (template.get_atkspeed() != 0) {
 			int actid = (getStatus() + 1);
-			if (ActionCodes.getDefaultActionId(getGfxId()) != 1) {
-				actid = ActionCodes.getDefaultActionId(getGfxId());
+			if (L1NpcDefaultAction.getInstance().getDefaultAttack(getTempCharGfx()) != actid) {
+				actid = L1NpcDefaultAction.getInstance().getDefaultAttack(getTempCharGfx());
 			}
 			setAtkspeed(SprTable.getInstance().getSprSpeed(getTempCharGfx(), actid));
 		} else {
@@ -1418,34 +1407,35 @@ public class L1NpcInstance extends L1Character {
 		}
 	}
 
-	public void appearOnGround(L1PcInstance pc) {
-		if ((getHiddenStatus() == HIDDEN_STATUS_SINK)
-				|| (getHiddenStatus() == HIDDEN_STATUS_ICE)) {
+	public void appearOnGround(L1PcInstance pc) { // 怪物解除遁地、飛天、冰凍
+		if (getHiddenStatus() == HIDDEN_STATUS_SINK) {
 			setHiddenStatus(HIDDEN_STATUS_NONE);
-			broadcastPacket(new S_DoActionGFX(getId(),
-					ActionCodes.ACTION_Appear));
-			if (getTempCharGfx() != 0) {
-				setStatus(getNpcStstus(getTempCharGfx()));
-			} else {
-				setStatus(getNpcStstus(getGfxId()));
-			}
-			broadcastPacket(new S_NPCPack(this));
+			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
+			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Appear));
+			broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // インビジビリティ、ブラインドハイディング中以外、GM以外
 					&& !pc.isGm()) {
 				_hateList.add(pc, 0);
 				_target = pc;
 			}
 			onNpcAI(); // モンスターのＡＩを開始
+			startChat(CHAT_TIMING_HIDE);
 		} else if (getHiddenStatus() == HIDDEN_STATUS_FLY) {
 			setHiddenStatus(HIDDEN_STATUS_NONE);
-			broadcastPacket(new S_DoActionGFX(getId(),
-					ActionCodes.ACTION_Movedown));
-			if (getTempCharGfx() != 0) {
-				setStatus(getNpcStstus(getTempCharGfx()));
-			} else {
-				setStatus(getNpcStstus(getGfxId()));
+			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
+			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Movedown));
+			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // インビジビリティ、ブラインドハイディング中以外、GM以外
+					&& !pc.isGm()) {
+				_hateList.add(pc, 0);
+				_target = pc;
 			}
-			broadcastPacket(new S_NPCPack(this));
+			onNpcAI(); // モンスターのＡＩを開始
+			startChat(CHAT_TIMING_HIDE);
+		} else if (getHiddenStatus() == HIDDEN_STATUS_ICE) {
+			setHiddenStatus(HIDDEN_STATUS_NONE);
+			setStatus(L1NpcDefaultAction.getInstance().getStatus(getTempCharGfx()));
+			broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_AxeWalk));
+			broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 			if (!pc.hasSkillEffect(60) && !pc.hasSkillEffect(97) // インビジビリティ、ブラインドハイディング中以外、GM以外
 					&& !pc.isGm()) {
 				_hateList.add(pc, 0);
@@ -2443,59 +2433,5 @@ public class L1NpcInstance extends L1Character {
 
 	public void setPolyArrowGfx(int i) {
 		_polyArrowGfx = i;
-	}
-
-	public int getNpcStstus(int gfxid) {
-		int status = 0;
-		switch (gfxid) {
-			case 57: // 妖魔弓箭手
-			case 816: // 妖魔弓箭手 (妖堡箭塔)
-			case 2284: // 黑暗精靈
-			case 2323: // 妖魔巡守
-			case 2375: // 骷髏弓箭手
-			case 3105: // 黑暗巡守
-			case 3126: // 火焰弓箭手
-			case 3137: // 警衛 (弓)
-			case 3140: // 皇家警衛 (十字弓)
-			case 3142: // 皇家警衛 (弓)
-			case 3145: // 銀光巡守
-			case 3148: // 黃金巡守
-			case 3151: // 白金巡守
-			case 3860: // 妖魔弓箭手
-			case 3871: // 骷髏弓箭手
-			case 3892: // 黑暗巡守
-			case 3895: // 銀光巡守
-			case 3898: // 黃金巡守
-			case 3901: // 白金巡守
-			case 4917: // 黑暗精靈巡守
-			case 4918: // 強盜 (弓)
-			case 4919: // 黑暗妖精警衛 (弓)
-			case 5879: // 白金巡守
-			case 6087: // 海盜骷髏弓箭手
-			case 6140: // 黑暗精靈
-			case 6145: // 黑暗精靈
-			case 6150: // 黑暗精靈
-			case 6155: // 黑暗精靈
-			case 6160: // 黑暗精靈
-			case 6269: // 黑暗巡守
-			case 6272: // 白金精靈
-			case 6275: // 黃金精靈
-			case 6278: // 白金精靈
-			case 6406: // 皇家警衛 (十字弓)
-				status = 20;
-				break;
-			case 51: // 警衛
-			case 110: // 黑騎士
-			case 147: // 警衛
-			case 2337: // 黑騎士
-			case 2377: // 骷髏槍兵
-			case 3869: // 都達瑪拉妖魔
-			case 3870: // 那魯加妖魔
-				status = 24;
-				break;
-			default:
-				break;
-		}
-		return status;
 	}
 }

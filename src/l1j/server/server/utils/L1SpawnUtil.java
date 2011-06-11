@@ -25,7 +25,9 @@ import l1j.server.server.model.L1NpcDeleteTimer;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_DoActionGFX;
+import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_ServerMessage;
 
 public class L1SpawnUtil {
@@ -89,27 +91,29 @@ public class L1SpawnUtil {
 			L1World.getInstance().storeObject(npc);
 			L1World.getInstance().addVisibleObject(npc);
 
-			if (npc.getGfxId() == 7548 || npc.getGfxId() == 7550 || npc.getGfxId() == 7552
-					|| npc.getGfxId() == 7554 || npc.getGfxId() == 7585) {
-				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
-				for (L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc)) {
-					npc.onPerceive(_pc);
-					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
-					_pc.sendPackets(gfx);
-				}
-			} else if (npc.getGfxId() == 7539 || npc.getGfxId() == 7557 || npc.getGfxId() == 7558
-					|| npc.getGfxId() == 7864 || npc.getGfxId() == 7869 || npc.getGfxId() == 7870) {
-				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
+			if (npc.getTempCharGfx() == 7548 || npc.getTempCharGfx() == 7550 || npc.getTempCharGfx() == 7552
+					|| npc.getTempCharGfx() == 7554 || npc.getTempCharGfx() == 7585 || npc.getTempCharGfx() == 7591) {
+				npc.broadcastPacket(new S_NPCPack(npc));
+				npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk));
+			} else if (npc.getTempCharGfx() == 7539 || npc.getTempCharGfx() == 7557 || npc.getTempCharGfx() == 7558
+					|| npc.getTempCharGfx() == 7864 || npc.getTempCharGfx() == 7869 || npc.getTempCharGfx() == 7870) {
 				for (L1PcInstance _pc : L1World.getInstance().getVisiblePlayer(npc, 50)) {
-					if (npc.getGfxId() == 7539) {
+					if (npc.getTempCharGfx() == 7539) {
 						_pc.sendPackets(new S_ServerMessage(1570));
-					} else if (npc.getGfxId() == 7864) {
+					} else if (npc.getTempCharGfx() == 7864) {
 						_pc.sendPackets(new S_ServerMessage(1657));
 					}
 					npc.onPerceive(_pc);
 					S_DoActionGFX gfx = new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_AxeWalk);
 					_pc.sendPackets(gfx);
 				}
+				npc.npcSleepTime(ActionCodes.ACTION_AxeWalk, L1NpcInstance.ATTACK_SPEED);
+			} else if (npc.getTempCharGfx() == 145) { // 史巴托
+				npc.setStatus(11);
+				npc.broadcastPacket(new S_NPCPack(npc));
+				npc.broadcastPacket(new S_DoActionGFX(npc.getId(), ActionCodes.ACTION_Appear));
+				npc.setStatus(0);
+				npc.broadcastPacket(new S_CharVisualUpdate(npc, npc.getStatus()));
 			}
 
 			npc.turnOnOffLight();

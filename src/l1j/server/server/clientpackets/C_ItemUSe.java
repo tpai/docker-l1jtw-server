@@ -2566,21 +2566,11 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				/** 飾品強化卷軸 Scroll of Enchant Accessory */
 				else if (itemId == 49148) {
-					if (!pc.getInventory().checkItem(itemId, 1)) { // 身上沒有飾品強化卷軸
-						return;
-					}
-					if (l1iteminstance1 == null) { // 目標飾品為空值
-						pc.sendPackets(new S_ServerMessage(79));
-						return;
-					}
-					if (l1iteminstance1.getBless() >= 128) { // 封印中
-						pc.sendPackets(new S_ServerMessage(79));
-						return;
-					}
-					if (l1iteminstance1.getItem().getType2() != 2
+					if ((l1iteminstance1 == null) || (l1iteminstance1.getBless() >= 128)
+							|| (l1iteminstance1.getItem().getType2() != 2
 							|| l1iteminstance1.getItem().getType() < 8
 							|| l1iteminstance1.getItem().getType() > 12
-							|| l1iteminstance1.getItem().getGrade() == -1) { // 非防具、非飾品類、無飾品等級
+							|| l1iteminstance1.getItem().getGrade() == -1)) { // 封印中
 						pc.sendPackets(new S_ServerMessage(79));
 						return;
 					}
@@ -2596,8 +2586,8 @@ public class C_ItemUSe extends ClientBasePacket {
 					int enchant_level_tmp = enchant_level;
 					// +6 時獎勵效果判斷
 					boolean award = false;
-					// 成功率： +0-70% ~ +9-25%
-					enchant_chance_accessory = (50 + enchant_level_tmp) / (enchant_level_tmp + 1) + 20;
+					// 成功率： +0-85% ~ +9-40%
+					enchant_chance_accessory = (50 + enchant_level_tmp) / (enchant_level_tmp + 1) + 35;
 
 					if (rnd < enchant_chance_accessory) { // 成功
 						if (l1iteminstance1.getEnchantLevel() == 5) {

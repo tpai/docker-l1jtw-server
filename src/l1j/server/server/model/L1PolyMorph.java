@@ -23,6 +23,7 @@ import l1j.server.server.datatables.SprTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1MonsterInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.npc.action.L1NpcDefaultAction;
 import l1j.server.server.serverpackets.S_ChangeShape;
 import l1j.server.server.serverpackets.S_CloseList;
 import l1j.server.server.serverpackets.S_NpcChangeShape;
@@ -276,7 +277,7 @@ public class L1PolyMorph {
 			mob.setSkillEffect(SHAPE_CHANGE, timeSecs * 1000);
 			if (mob.getTempCharGfx() != polyId) {
 				mob.setTempCharGfx(polyId);
-				int npcStatus = mob.getNpcStstus(polyId);
+				int npcStatus = L1NpcDefaultAction.getInstance().getStatus(polyId);
 				mob.setStatus(npcStatus);
 				if (npcStatus == 20) { // 弓類
 					mob.setPolyAtkRanged(10);
@@ -309,7 +310,7 @@ public class L1PolyMorph {
 			L1MonsterInstance mob = (L1MonsterInstance) cha;
 			int gfxId = mob.getGfxId();
 			mob.setTempCharGfx(0);
-			mob.setStatus(mob.getNpcStstus(gfxId));
+			mob.setStatus(L1NpcDefaultAction.getInstance().getStatus(gfxId));
 			mob.setPolyAtkRanged(-1);
 			mob.setPolyArrowGfx(0);
 			mob.setPassispeed(SprTable.getInstance().getSprSpeed(gfxId, mob.getStatus())); // 移動速度

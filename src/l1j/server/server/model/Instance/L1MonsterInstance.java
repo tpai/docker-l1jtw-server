@@ -40,6 +40,7 @@ import l1j.server.server.model.L1UltimateBattle;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.skill.L1BuffUtil;
 import l1j.server.server.serverpackets.S_ChangeName;
+import l1j.server.server.serverpackets.S_CharVisualUpdate;
 import l1j.server.server.serverpackets.S_DoActionGFX;
 import l1j.server.server.serverpackets.S_NPCPack;
 import l1j.server.server.serverpackets.S_NPCTalkReturn;
@@ -127,12 +128,6 @@ public class L1MonsterInstance extends L1NpcInstance {
 	public void onPerceive(L1PcInstance perceivedFrom) {
 		perceivedFrom.addKnownObject(this);
 		if (0 < getCurrentHp()) {
-			if ((getHiddenStatus() == HIDDEN_STATUS_SINK) || (getHiddenStatus() == HIDDEN_STATUS_ICE)) {
-				perceivedFrom.sendPackets(new S_DoActionGFX(getId(), ActionCodes.ACTION_Hide));
-			}
-			else if (getHiddenStatus() == HIDDEN_STATUS_FLY) {
-				perceivedFrom.sendPackets(new S_DoActionGFX(getId(), ActionCodes.ACTION_Moveup));
-			}
 			perceivedFrom.sendPackets(new S_NPCPack(this));
 			onNpcAI(); // モンスターのＡＩを開始
 			if (getBraveSpeed() == 1) { // 二段加速狀態
@@ -390,7 +385,6 @@ public class L1MonsterInstance extends L1NpcInstance {
 					setDead(true);
 					setStatus(ActionCodes.ACTION_Die);
 					openDoorWhenNpcDied(this);
-					openDragonDoorWhenNpcDied(this);
 					Death death = new Death(attacker);
 					GeneralThreadPool.getInstance().execute(death);
 					// Death(attacker);
@@ -434,33 +428,6 @@ public class L1MonsterInstance extends L1NpcInstance {
 			if (npc.getNpcTemplate().get_npcId() == npcId[i]) {
 				openDoorInCrystalCave(doorId[i]);
 				break;
-			}
-		}
-	}
-
-	// 屠龍副本中喀瑪族、阿爾波斯守門者守護之門編號
-	private static void openDragonDoorWhenNpcDied(L1NpcInstance npc) {
-		int[] npcId = { 97011, 97012, 97013 };
-		int[][][] doorId = {
-			{ {7001, 7004, 7007, 7010}, {7013, 7016, 7019, 7022}, {7025, 7028, 7031, 7034},
-				{7037, 7040, 7043, 7046}, {7049, 7052, 7055, 7058}, {7061, 7064, 7067, 7070} },
-			{ {7002, 7005, 7008, 7011}, {7014, 7017, 7020, 7023}, {7026, 7029, 7032, 7035},
-				{7038, 7041, 7044, 7047}, {7050, 7053, 7056, 7059}, {7062, 7065, 7068, 7071} },
-			{ {7003, 7006, 7009, 7012}, {7015, 7018, 7021, 7024}, {7027, 7030, 7033, 7036},
-				{7039, 7042, 7045, 7048}, {7051, 7054, 7057, 7060}, {7063, 7066, 7069, 7072} }
-		};
-		for (int i = 0; i < npcId.length; i++) { // 檢查NPCID
-			if (npc.getNpcTemplate().get_npcId() == npcId[i]) {
-				for (int j = 0; j < doorId[i].length; j++) { // 檢查NPC所在地圖編號
-					if (j == (npc.getMapId() - 1005)) {
-						for (int k = 0; k < doorId[i][j].length; k++) { // 檢查守護的門ID
-							if (k == npc.getPortalNumber()) {
-								openDoorInCrystalCave(doorId[i][j][k]);
-								break;
-							}
-						}
-					}
-				}
 			}
 		}
 	}
@@ -698,12 +665,12 @@ public class L1MonsterInstance extends L1NpcInstance {
 				) || (npcid == 45455)) { // デッドリースパルトイ
 			if (getMaxHp() / 3 > getCurrentHp()) {
 				int rnd = Random.nextInt(10);
-				if (1 > rnd) {
+				if (2 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
 					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Hide));
-					setStatus(13);
-					broadcastPacket(new S_NPCPack(this));
+					setStatus(11);
+					broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 				}
 			}
 		}
@@ -715,7 +682,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 					setHiddenStatus(HIDDEN_STATUS_SINK);
 					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_AntharasHide));
 					setStatus(20);
-					broadcastPacket(new S_NPCPack(this));
+					broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 				}
 			}
 		}
@@ -728,12 +695,10 @@ public class L1MonsterInstance extends L1NpcInstance {
 				) || (npcid == 45445)) { // グリフォン
 			if (getMaxHp() / 3 > getCurrentHp()) {
 				int rnd = Random.nextInt(10);
-				if (1 > rnd) {
+				if (2 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_FLY);
 					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Moveup));
-					setStatus(4);
-					broadcastPacket(new S_NPCPack(this));
 				}
 			}
 		}
@@ -744,8 +709,6 @@ public class L1MonsterInstance extends L1NpcInstance {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_FLY);
 					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Moveup));
-					setStatus(11);
-					broadcastPacket(new S_NPCPack(this));
 				}
 			}
 		}
@@ -754,12 +717,12 @@ public class L1MonsterInstance extends L1NpcInstance {
 				|| (npcid == 46108)) { // テーベ マンドラゴラ(黒)
 			if (getMaxHp() / 4 > getCurrentHp()) {
 				int rnd = Random.nextInt(10);
-				if (1 > rnd) {
+				if (2 > rnd) {
 					allTargetClear();
 					setHiddenStatus(HIDDEN_STATUS_SINK);
 					broadcastPacket(new S_DoActionGFX(getId(), ActionCodes.ACTION_Hide));
-					setStatus(13);
-					broadcastPacket(new S_NPCPack(this));
+					setStatus(11);
+					broadcastPacket(new S_CharVisualUpdate(this, getStatus()));
 				}
 			}
 		}
@@ -778,7 +741,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			int rnd = Random.nextInt(3);
 			if (1 > rnd) {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
-				setStatus(13);
+				setStatus(11);
 			}
 		}
 		else if ((npcid == 45045 // クレイゴーレム
@@ -800,11 +763,9 @@ public class L1MonsterInstance extends L1NpcInstance {
 				) || (npcid == 45321 // グリフォン
 				) || (npcid == 45445)) { // グリフォン
 			setHiddenStatus(HIDDEN_STATUS_FLY);
-			setStatus(4);
 		}
 		else if (npcid == 45681) { // リンドビオル
 			setHiddenStatus(HIDDEN_STATUS_FLY);
-			setStatus(11);
 		}
 		else if ((npcid == 46107 // テーベ マンドラゴラ(白)
 				)
@@ -812,7 +773,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 			int rnd = Random.nextInt(3);
 			if (1 > rnd) {
 				setHiddenStatus(HIDDEN_STATUS_SINK);
-				setStatus(13);
+				setStatus(11);
 			}
 		}
 		else if ((npcid >= 46125) && (npcid <= 46128)) {
@@ -831,7 +792,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 					) || (npcid == 45181 // スパルトイ
 					) || (npcid == 45455)) { // デッドリースパルトイ
 				setHiddenStatus(HIDDEN_STATUS_SINK);
-				setStatus(13);
+				setStatus(11);
 			}
 			else if ((npcid == 45045 // クレイゴーレム
 					)
@@ -845,7 +806,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 					)
 					|| (npcid == 46108)) { // テーベ マンドラゴラ(黒)
 				setHiddenStatus(HIDDEN_STATUS_SINK);
-				setStatus(13);
+				setStatus(11);
 			}
 		}
 		else if (leader.getHiddenStatus() == HIDDEN_STATUS_FLY) {

@@ -668,14 +668,4 @@ public class L1Npc extends L1Object implements Cloneable {
 	public void setCantResurrect(boolean isCantResurrect) {
 		_isCantResurrect = isCantResurrect;
 	}
-
-	private int _specialActionId;
-
-	public int getSpecialActionId() {
-		return _specialActionId;
-	}
-
-	public void setSpecialActionId(int specialActionId) {
-		_specialActionId = specialActionId;
-	}
 }

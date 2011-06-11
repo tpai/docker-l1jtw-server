@@ -24,6 +24,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
 import l1j.server.server.model.gametime.L1GameTimeClock;
+import l1j.server.server.model.npc.action.L1NpcDefaultAction;
 import l1j.server.server.model.poison.L1DamagePoison;
 import l1j.server.server.model.poison.L1ParalysisPoison;
 import l1j.server.server.model.poison.L1SilencePoison;
@@ -1543,45 +1544,44 @@ public class L1Attack {
 	// ●●●● ＮＰＣ攻擊動作 ●●●●
 	private void actionNpc() {
 		int bowActId = 0;
-		int actId = ActionCodes.ACTION_Attack;
+		int npcGfxid = _npc.getTempCharGfx();
+		int actId = L1NpcDefaultAction.getInstance().getSpecialAttack(npcGfxid); // 特殊攻擊動作
 		double dmg = _damage;
-		if (_npc.getTempCharGfx() == _npc.getGfxId()) {
-			actId = ActionCodes.getDefaultActionId(_npc.getGfxId());
-			if ((_npc.getNpcTemplate().getSpecialActionId() != 0)
-					&& (getActId() == 0)) {
-				if ((Random.nextInt(100) + 1) <= 50) {
-					actId = _npc.getNpcTemplate().getSpecialActionId();
-					dmg *= 1.5;
-				}
-			}
-		} else { // 被變身
-			actId = ActionCodes.getDefaultActionId(_npc.getTempCharGfx());
-			if ((ActionCodes.getSpecialActionId(_npc.getTempCharGfx())) != 0
-					&& (getActId() == 0)) {
-				if ((Random.nextInt(100) + 1) <= 50) {
-					actId = ActionCodes.getSpecialActionId(_npc
-							.getTempCharGfx());
-					dmg *= 1.5;
-				}
-			}
-		}
-		_damage = (int) dmg;
-
 		int[] data = null;
 
 		_npc.setHeading(_npc.targetDirection(_targetX, _targetY)); // 改變面向
 
 		// 與目標距離2格以上
-		boolean isLongRange = (_npc.getLocation().getTileLineDistance(
-				new Point(_targetX, _targetY)) > 1);
-		bowActId = _npc.getPolyArrowGfx();
+		boolean isLongRange = false;
+		if (npcGfxid == 4521 || npcGfxid == 4550 || npcGfxid == 5062 || npcGfxid == 5317
+				|| npcGfxid == 5324 || npcGfxid == 5331 || npcGfxid == 5338 || npcGfxid == 5412) {
+			isLongRange = (_npc.getLocation().getTileLineDistance(
+					new Point(_targetX, _targetY)) > 2);
+		} else {
+			isLongRange = (_npc.getLocation().getTileLineDistance(
+					new Point(_targetX, _targetY)) > 1);
+		}
+		bowActId = _npc.getPolyArrowGfx(); // 被變身後的遠距圖像
 		if (bowActId == 0) {
 			bowActId = _npc.getNpcTemplate().getBowActId();
 		}
-
-		if (getActId() > 0) {
-			actId = getActId();
+		if (getActId() == 0) {
+			if ((actId != 0) && ((Random.nextInt(100) + 1) <= 40)) {
+				dmg *= 1.2;
+			} else {
+				if (!isLongRange || bowActId == 0) { // 近距離
+					actId = L1NpcDefaultAction.getInstance().getDefaultAttack(npcGfxid);
+					if (bowActId > 0) { // 遠距離怪物，近距離時攻擊力加成
+						dmg *= 1.2;
+					}
+				} else { // 遠距離
+					actId = L1NpcDefaultAction.getInstance().getRangedAttack(npcGfxid);
+				}
+			}
+		} else {
+			actId = getActId(); // 攻擊動作由 mobskill控制
 		}
+		_damage = (int) dmg;
 
 		if (!_isHit) { // Miss
 			_damage = 0;

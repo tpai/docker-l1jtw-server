@@ -69,6 +69,7 @@ import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.gametime.L1GameTimeClock;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.map.L1WorldMap;
+import l1j.server.server.model.npc.action.L1NpcDefaultAction;
 import l1j.server.server.model.trap.L1WorldTraps;
 import l1j.server.server.storage.mysql.MysqlAutoBackup;
 import l1j.server.server.utils.MysqlAutoBackupTimer;
@@ -250,6 +251,7 @@ public class GameServer extends Thread {
 		if (!NpcTable.getInstance().isInitialized()) {
 			throw new Exception("Could not initialize the npc table");
 		}
+		L1NpcDefaultAction.getInstance();
 		SpawnTable.getInstance();
 		MobGroupTable.getInstance();
 		SkillsTable.getInstance();

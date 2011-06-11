@@ -164,7 +164,6 @@ public class NpcTable {
 				npc.setAmountFixed(rs.getBoolean("amount_fixed"));
 				npc.setChangeHead(rs.getBoolean("change_head"));
 				npc.setCantResurrect(rs.getBoolean("cant_resurrect"));
-				npc.setSpecialActionId(ActionCodes.getSpecialActionId(npc.get_gfxid()));
 
 				registerConstructorCache(npc.getImpl());
 				_npcs.put(npcId, npc);
