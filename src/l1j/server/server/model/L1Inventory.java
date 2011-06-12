@@ -695,4 +695,7 @@ public class L1Inventory extends L1Object {
 	public void updateItem(L1ItemInstance item, int colmn) {
 	}
 
+	public void updateEnchantAccessory(L1ItemInstance item, int colmn) {
+	}
+
 }

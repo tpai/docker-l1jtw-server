@@ -44,7 +44,6 @@ import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.datatables.FurnitureSpawnTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.LetterTable;
-import l1j.server.server.datatables.LogEnchantTable;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.PetTable;
 import l1j.server.server.datatables.PolyTable;
@@ -91,7 +90,6 @@ import l1j.server.server.serverpackets.S_DragonGate;
 import l1j.server.server.serverpackets.S_Fishing;
 import l1j.server.server.serverpackets.S_IdentifyDesc;
 import l1j.server.server.serverpackets.S_ItemName;
-import l1j.server.server.serverpackets.S_ItemStatus;
 import l1j.server.server.serverpackets.S_Letter;
 import l1j.server.server.serverpackets.S_Liquor;
 import l1j.server.server.serverpackets.S_Message_YN;
@@ -186,94 +184,67 @@ public class C_ItemUSe extends ClientBasePacket {
 		int fishY = 0;
 
 		int use_type = l1iteminstance.getItem().getUseType();
-		if ((itemId == 40088) || (itemId == 40096) || (itemId == 49308) || (itemId == 140088)) {
-			s = readS();
-		}
-		else if ((itemId == L1ItemId.SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.SCROLL_OF_ENCHANT_WEAPON)
-				|| (itemId == L1ItemId.SCROLL_OF_ENCHANT_QUEST_WEAPON) || (itemId == 40077) || (itemId == 40078) || (itemId == 40126)
-				|| (itemId == 40098) || (itemId == 40129) || (itemId == 40130) || (itemId == 140129) || (itemId == 140130)
-				|| (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON)
-				|| (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR) || (itemId == L1ItemId.C_SCROLL_OF_ENCHANT_WEAPON)
-				|| (itemId == 41029 // 召喚球の欠片
-				) || (itemId == 40317)
-				|| (itemId == 49188) // 索夏依卡靈魂之石
-				|| (itemId == 41036) || (itemId == 41245) || (itemId == 40127) || (itemId == 40128) || (itemId == 41048) || (itemId == 41049)
-				|| (itemId == 41050 // 糊付けされた航海日誌ページ
-				) || (itemId == 41051) || (itemId == 41052) || (itemId == 41053 // 糊付けされた航海日誌ページ
-				) || (itemId == 41054) || (itemId == 41055) || (itemId == 41056 // 糊付けされた航海日誌ページ
-				) || (itemId == 41057 // 糊付けされた航海日誌ページ
-				) || (itemId == 40925) || (itemId == 40926) || (itemId == 40927 // 浄化・ミステリアスポーション
-				) || (itemId == 40928) || (itemId == 40929) || (itemId == 40931) || (itemId == 40932) || (itemId == 40933 // 加工されたサファイア
-				) || (itemId == 40934) || (itemId == 40935) || (itemId == 40936) || (itemId == 40937 // 加工されたエメラルド
-				) || (itemId == 40938) || (itemId == 40939) || (itemId == 40940) || (itemId == 40941 // 加工されたルビー
-				) || (itemId == 40942) || (itemId == 40943) || (itemId == 40944) || (itemId == 40945 // 加工された地ダイア
-				) || (itemId == 40946) || (itemId == 40947) || (itemId == 40948) || (itemId == 40949 // 加工された水ダイア
-				) || (itemId == 40950) || (itemId == 40951) || (itemId == 40952) || (itemId == 40953 // 加工された風ダイア
-				) || (itemId == 40954) || (itemId == 40955) || (itemId == 40956) || (itemId == 40957 // 加工された火ダイア
-				) || (itemId == 40958) || (itemId == 40964 // ダークマジックパウダー
-				) || (itemId == 49092 // 龜裂之核
-				) || (itemId == 49094 // 歐西里斯初級寶箱碎片(下)
-				) || (itemId == 49098 // 歐西里斯高級寶箱碎片(下)
-				) || (itemId == 49317 // 庫庫爾坎初級寶箱碎片(下)
-				) || (itemId == 49321 // 庫庫爾坎高級寶箱碎片(下)
-				) || (itemId == 41426 // 封印卷軸
-				) || (itemId == 41427 // 解除封印卷軸
-				) || (itemId == 40075 // 毀滅盔甲的卷軸
-				) || (itemId == 49311 // 象牙塔對盔甲施法的卷軸
-				) || (itemId == 49312 // 象牙塔對武器施法的卷軸
-				) || (itemId == 49148 // 飾品強化卷軸 Scroll of Enchant Accessory
-				) || (itemId == 41429 // 風之武器強化卷軸
-				) || (itemId == 41430 // 地之武器強化卷軸
-				) || (itemId == 41431 // 水之武器強化卷軸
-				) || (itemId == 41432 // 火之武器強化卷軸
-				) || (itemId == 47041 // 地龍之精緻魔眼
-				) || (itemId == 47042 // 水龍之精緻魔眼
-				) || (itemId == 47043 // 風龍之精緻魔眼
-				) || (itemId == 47044 // 火龍之精緻魔眼
-				) || (itemId == 47045 // 誕生之精緻魔眼
-				) || (itemId == 47046 // 形象之精緻魔眼
-				) || (itemId == 47048 // 附魔強化卷軸
-				) || (itemId == 47049 // 近戰附魔轉換卷軸
-				) || (itemId == 47050 // 遠攻附魔轉換卷軸
-				) || (itemId == 47051 // 恢復附魔轉換卷軸
-				) || (itemId == 47052 // 防禦附魔轉換卷軸
-				)) {
-			l = readD();
-		}
-		else if ((itemId == 140100) || (itemId == 40100) || (itemId == 40099) || (itemId == 40086) || (itemId == 40863)) {
-			bmapid = readH();
-			btele = readD();
-			pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, false));
-		}
-		else if ((itemId == 40090) || (itemId == 40091) || (itemId == 40092) || (itemId == 40093) || (itemId == 40094)) { // ブランクスクロール(Lv1)～(Lv5)
-			blanksc_skillid = readC();
-		}
-		else if ((use_type == 30) || (itemId == 40870) || (itemId == 40879)) { // spell_buff
-			spellsc_objid = readD();
-		}
-		else if ((use_type == 5) || (use_type == 17)) { // spell_long、spell_short
-			spellsc_objid = readD();
-			spellsc_x = readH();
-			spellsc_y = readH();
-		}
-		else if ((itemId == 40089) || (itemId == 140089)) { // 復活スクロール、祝福された復活スクロール
-			resid = readD();
-		}
-		else if ((itemId == 40310) || (itemId == 40311) || (itemId == 40730) || (itemId == 40731) || (itemId == 40732)) { // 便箋
-			letterCode = readH();
-			letterReceiver = readS();
-			letterText = readByte();
-		}
-		else if ((itemId >= 41255) && (itemId <= 41259)) { // 料理の本
-			cookStatus = readC();
-			cookNo = readC();
-		}
-		else if ((itemId == 41293) || (itemId == 41294)) { // 釣り竿
-			fishX = readH();
-			fishY = readH();
-		}
-		else {
-			l = readC();
+		switch (itemId) {
+			case 40088: case 40096: case 49308: case 140088: // 變形卷軸
+				s = readS();
+				break;
+			case L1ItemId.SCROLL_OF_ENCHANT_ARMOR: case L1ItemId.SCROLL_OF_ENCHANT_WEAPON:
+			case L1ItemId.SCROLL_OF_ENCHANT_QUEST_WEAPON:
+			case 40077: case 40078: case 40126: case 40098: case 40129: case 40130: case 140129: case 140130: 
+			case L1ItemId.B_SCROLL_OF_ENCHANT_ARMOR: case L1ItemId.B_SCROLL_OF_ENCHANT_WEAPON:
+			case L1ItemId.C_SCROLL_OF_ENCHANT_ARMOR: case L1ItemId.C_SCROLL_OF_ENCHANT_WEAPON:
+			case 41029: case 40317: case 49188: case 41036: case 41245: case 40127: case 40128: case 41048:
+			case 41049: case 41050: case 41051: case 41052: case 41053: case 41054: case 41055: case 41056:
+			case 41057: case 40925: case 40926: case 40927: case 40928: case 40929: case 40931: case 40932:
+			case 40933: case 40934: case 40935: case 40936: case 40937: case 40938: case 40939: case 40940:
+			case 40941: case 40942: case 40943: case 40944: case 40945: case 40946: case 40947: case 40948:
+			case 40949: case 40950: case 40951: case 40952: case 40953: case 40954: case 40955: case 40956:
+			case 40957: case 40958: case 40964: case 49092: case 49094: case 49098: case 49317: case 49321:
+			case 41426: case 41427: case 40075: case 49311: case 49312: case 49148: case 41429: case 41430:
+			case 41431: case 41432: case 47041: case 47042: case 47043: case 47044: case 47045: case 47046:
+			case 47048: case 47049: case 47050: case 47051: case 47052:
+				l = readD();
+				break;
+			case 140100: case 40100: case 40099: case 40086: case 40863: // 瞬間移動卷軸
+				bmapid = readH();
+				btele = readD();
+				// pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, false));
+				break;
+			case 40090: case 40091: case 40092: case 40093: case 40094: // 空的魔法卷軸(Lv1)～(Lv5)
+				blanksc_skillid = readC();
+				break;
+			case 40870: case 40879: // spell_buff
+				spellsc_objid = readD();
+				break;
+			case 40089: case 140089: // 復活卷軸
+				resid = readD();
+				break;
+			case 40310: case 40311: case 40730: case 40731: case 40732: // 信紙
+				letterCode = readH();
+				letterReceiver = readS();
+				letterText = readByte();
+				break;
+			case 41293: case 41294: // 釣竿
+				fishX = readH();
+				fishY = readH();
+				break;
+			default:
+				if ((use_type == 30)) { // spell_buff
+					spellsc_objid = readD();
+				}
+				else if ((use_type == 5) || (use_type == 17)) { // spell_long、spell_short
+					spellsc_objid = readD();
+					spellsc_x = readH();
+					spellsc_y = readH();
+				}
+				else if ((itemId >= 41255) && (itemId <= 41259)) { // 料理書
+					cookStatus = readC();
+					cookNo = readC();
+				}
+				else {
+					l = readC();
+				}
+				break;
 		}
 
 		if (pc.getCurrentHp() > 0) {
@@ -2564,116 +2535,8 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
-				/** 飾品強化卷軸 Scroll of Enchant Accessory */
-				else if (itemId == 49148) {
-					if ((l1iteminstance1 == null) || (l1iteminstance1.getBless() >= 128)
-							|| (l1iteminstance1.getItem().getType2() != 2
-							|| l1iteminstance1.getItem().getType() < 8
-							|| l1iteminstance1.getItem().getType() > 12
-							|| l1iteminstance1.getItem().getGrade() == -1)) { // 封印中
-						pc.sendPackets(new S_ServerMessage(79));
-						return;
-					}
-					int enchant_level = l1iteminstance1.getEnchantLevel();
-
-					if (enchant_level < 0 || enchant_level >= 10) { // 強化上限 + 10
-						pc.sendPackets(new S_ServerMessage(79));
-						return;
-					}
-
-					int rnd = Random.nextInt(100) + 1;
-					int enchant_chance_accessory;
-					int enchant_level_tmp = enchant_level;
-					// +6 時獎勵效果判斷
-					boolean award = false;
-					// 成功率： +0-85% ~ +9-40%
-					enchant_chance_accessory = (50 + enchant_level_tmp) / (enchant_level_tmp + 1) + 35;
-
-					if (rnd < enchant_chance_accessory) { // 成功
-						if (l1iteminstance1.getEnchantLevel() == 5) {
-							award = true;
-						}
-						switch (l1iteminstance1.getItem().getGrade()) {
-							case 0: // 上等
-								// 四屬性 +1
-								l1iteminstance1.setFireMr(l1iteminstance1.getFireMr() + 1);
-								l1iteminstance1.setWaterMr(l1iteminstance1.getWaterMr() + 1);
-								l1iteminstance1.setEarthMr(l1iteminstance1.getEarthMr() + 1);
-								l1iteminstance1.setWindMr(l1iteminstance1.getWindMr() + 1);
-								// LV6 額外獎勵：體力與魔力回復量 +1
-								if (award) {
-									l1iteminstance1.setHpr(l1iteminstance1.getHpr() + 1);
-									l1iteminstance1.setMpr(l1iteminstance1.getMpr() + 1);
-								}
-								// 裝備中
-								if (l1iteminstance1.isEquipped()) {
-									pc.addFire(1);
-									pc.addWater(1);
-									pc.addEarth(1);
-									pc.addWind(1);
-								}
-								break;
-							case 1: // 中等
-								// HP +2
-								l1iteminstance1.setaddHp(l1iteminstance1.getaddHp() + 2);
-								// LV6 額外獎勵：魔防 +1
-								if (award) {
-									l1iteminstance1.setM_Def(l1iteminstance1.getM_Def() + 1);
-								}
-								// 裝備中
-								if (l1iteminstance1.isEquipped()) {
-									pc.addMaxHp(2);
-									if (award) {
-										pc.addMr(1);
-										pc.sendPackets(new S_SPMR(pc));
-									}
-								}
-								break;
-							case 2: // 初等
-								// MP +1
-								l1iteminstance1.setaddMp(l1iteminstance1.getaddMp() + 1);
-								// LV6 額外獎勵：魔攻 +1
-								if (award) {
-									l1iteminstance1.setaddSp(l1iteminstance1.getaddSp() + 1);
-								}
-								// 裝備中
-								if (l1iteminstance1.isEquipped()) {
-									pc.addMaxMp(1);
-									if (award) {
-										pc.addSp(1);
-										pc.sendPackets(new S_SPMR(pc));
-									}
-								}
-								break;
-							case 3: // 特等
-								// 功能台版未實裝。
-								break;
-							default:
-								pc.sendPackets(new S_ServerMessage(79));
-								return;
-						}
-					} else { // 飾品強化失敗
-						FailureEnchant(pc, l1iteminstance1, client);
-						pc.getInventory().removeItem(l1iteminstance, 1);
-						return;
-					}
-					SuccessEnchant(pc, l1iteminstance1, client, 1);
-					pc.sendPackets(new S_ItemStatus(l1iteminstance1));
-					// 儲存道具
-					CharactersItemStorage storage = CharactersItemStorage.create();
-					// 更新 character_items
-					storage.updateFireMr(l1iteminstance1);
-					storage.updateWaterMr(l1iteminstance1);
-					storage.updateEarthMr(l1iteminstance1);
-					storage.updateWindMr(l1iteminstance1);
-					storage.updateaddSp(l1iteminstance1);
-					storage.updateaddHp(l1iteminstance1);
-					storage.updateaddMp(l1iteminstance1);
-					storage.updateHpr(l1iteminstance1);
-					storage.updateMpr(l1iteminstance1);
-					storage.updateM_Def(l1iteminstance1);
-					// 刪除
-					pc.getInventory().removeItem(l1iteminstance, 1);
+				else if (itemId == 49148) { // 飾品強化卷軸
+					Enchant.scrollOfEnchantAccessory(pc, l1iteminstance, l1iteminstance1, client);
 				}
 				else if (itemId == 41426) { // 封印スクロール
 					L1ItemInstance lockItem = pc.getInventory().getItem(l);
@@ -2999,206 +2862,6 @@ public class C_ItemUSe extends ClientBasePacket {
 
 			L1ItemDelay.onItemUse(client, l1iteminstance); // アイテムディレイ開始
 		}
-	}
-
-	private void SuccessEnchant(L1PcInstance pc, L1ItemInstance item, ClientThread client, int i) {
-		String s = "";
-		String sa = "";
-		String sb = "";
-		String s1 = item.getName();
-		String pm = "";
-		if (item.getEnchantLevel() > 0) {
-			pm = "+";
-		}
-		if (item.getItem().getType2() == 1) {
-			if (!item.isIdentified() || (item.getEnchantLevel() == 0)) {
-				switch (i) {
-					case -1:
-						s = s1;
-						sa = "$246";
-						sb = "$247";
-						break;
-
-					case 1: // '\001'
-						s = s1;
-						sa = "$245";
-						sb = "$247";
-						break;
-
-					case 2: // '\002'
-						s = s1;
-						sa = "$245";
-						sb = "$248";
-						break;
-
-					case 3: // '\003'
-						s = s1;
-						sa = "$245";
-						sb = "$248";
-						break;
-				}
-			}
-			else {
-				switch (i) {
-					case -1:
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$246";
-						sb = "$247";
-						break;
-
-					case 1: // '\001'
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$245";
-						sb = "$247";
-						break;
-
-					case 2: // '\002'
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$245";
-						sb = "$248";
-						break;
-
-					case 3: // '\003'
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$245";
-						sb = "$248";
-						break;
-				}
-			}
-		}
-		else if (item.getItem().getType2() == 2) {
-			if (!item.isIdentified() || (item.getEnchantLevel() == 0)) {
-				switch (i) {
-					case -1:
-						s = s1;
-						sa = "$246";
-						sb = "$247";
-						break;
-
-					case 1: // '\001'
-						s = s1;
-						sa = "$252";
-						sb = "$247 ";
-						break;
-
-					case 2: // '\002'
-						s = s1;
-						sa = "$252";
-						sb = "$248 ";
-						break;
-
-					case 3: // '\003'
-						s = s1;
-						sa = "$252";
-						sb = "$248 ";
-						break;
-				}
-			}
-			else {
-				switch (i) {
-					case -1:
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$246";
-						sb = "$247";
-						break;
-
-					case 1: // '\001'
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$252";
-						sb = "$247 ";
-						break;
-
-					case 2: // '\002'
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$252";
-						sb = "$248 ";
-						break;
-
-					case 3: // '\003'
-						s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(s1).toString(); // \f1%0が%2%1光ります。
-						sa = "$252";
-						sb = "$248 ";
-						break;
-				}
-			}
-		}
-		pc.sendPackets(new S_ServerMessage(161, s, sa, sb));
-		int oldEnchantLvl = item.getEnchantLevel();
-		int newEnchantLvl = item.getEnchantLevel() + i;
-		int safe_enchant = item.getItem().get_safeenchant();
-		item.setEnchantLevel(newEnchantLvl);
-		client.getActiveChar().getInventory().updateItem(item, L1PcInventory.COL_ENCHANTLVL);
-		if (newEnchantLvl > safe_enchant) {
-			client.getActiveChar().getInventory().saveItem(item, L1PcInventory.COL_ENCHANTLVL);
-		}
-		if ((item.getItem().getType2() == 1) && (Config.LOGGING_WEAPON_ENCHANT != 0)) {
-			if ((safe_enchant == 0) || (newEnchantLvl >= Config.LOGGING_WEAPON_ENCHANT)) {
-				LogEnchantTable logenchant = new LogEnchantTable();
-				logenchant.storeLogEnchant(pc.getId(), item.getId(), oldEnchantLvl, newEnchantLvl);
-			}
-		}
-		if ((item.getItem().getType2() == 2) && (Config.LOGGING_ARMOR_ENCHANT != 0)) {
-			if ((safe_enchant == 0) || (newEnchantLvl >= Config.LOGGING_ARMOR_ENCHANT)) {
-				LogEnchantTable logenchant = new LogEnchantTable();
-				logenchant.storeLogEnchant(pc.getId(), item.getId(), oldEnchantLvl, newEnchantLvl);
-			}
-		}
-
-		if (item.getItem().getType2() == 2) {
-			if (item.isEquipped()) {
-				if ((item.getItem().getType() < 8
-						|| item.getItem().getType() > 12)) {
-					pc.addAc(-i);
-				}
-				int i2 = item.getItem().getItemId();
-				if ((i2 == 20011) || (i2 == 20110) || (i2 == 21108) || (i2 == 120011)) { // マジックヘルム、マジックチェーンメイル、キャラクター名の魔法抵抗のＴシャツ
-					pc.addMr(i);
-					pc.sendPackets(new S_SPMR(pc));
-				}
-				if ((i2 == 20056) || (i2 == 120056) || (i2 == 220056)) { // マジック
-																			// クローク
-					pc.addMr(i * 2);
-					pc.sendPackets(new S_SPMR(pc));
-				}
-			}
-			pc.sendPackets(new S_OwnCharStatus(pc));
-		}
-	}
-
-	private void FailureEnchant(L1PcInstance pc, L1ItemInstance item, ClientThread client) {
-		String s = "";
-		String sa = "";
-		int itemType = item.getItem().getType2();
-		String nameId = item.getName();
-		String pm = "";
-		if (itemType == 1) { // 武器
-			if (!item.isIdentified() || (item.getEnchantLevel() == 0)) {
-				s = nameId; // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
-				sa = "$245";
-			}
-			else {
-				if (item.getEnchantLevel() > 0) {
-					pm = "+";
-				}
-				s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(nameId).toString(); // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
-				sa = "$245";
-			}
-		}
-		else if (itemType == 2) { // 防具
-			if (!item.isIdentified() || (item.getEnchantLevel() == 0)) {
-				s = nameId; // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
-				sa = " $252";
-			}
-			else {
-				if (item.getEnchantLevel() > 0) {
-					pm = "+";
-				}
-				s = (new StringBuilder()).append(pm).append(item.getEnchantLevel()).append(" ").append(nameId).toString(); // \f1%0が強烈に%1光ったあと、蒸発してなくなります。
-				sa = " $252";
-			}
-		}
-		pc.sendPackets(new S_ServerMessage(164, s, sa));
-		pc.getInventory().removeItem(item, item.getCount());
 	}
 
 	private boolean usePolyScroll(L1PcInstance pc, int item_id, String s) {

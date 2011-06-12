@@ -21,6 +21,7 @@ import l1j.server.server.model.L1PcInventory;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.identity.L1ItemId;
+import l1j.server.server.serverpackets.S_ItemStatus;
 import l1j.server.server.serverpackets.S_OwnCharAttrDef;
 import l1j.server.server.serverpackets.S_SPMR;
 import l1j.server.server.serverpackets.S_ServerMessage;
@@ -77,7 +78,7 @@ public class Enchant {
 			pc.getInventory().removeItem(l1iteminstance, 1);
 			if (enchant_level < -6) {
 				// -7以上失敗。
-				FailureEnchant(pc, l1iteminstance1, client);
+				FailureEnchant(pc, l1iteminstance1);
 			} else {
 				SuccessEnchant(pc, l1iteminstance1, client, -1);
 			}
@@ -103,7 +104,7 @@ public class Enchant {
 				// \f1%0%s 持續發出 產生激烈的 藍色的 光芒，但是沒有任何事情發生。
 				pc.sendPackets(new S_ServerMessage(160, l1iteminstance1.getLogName(), "$245", "$248"));
 			} else {
-				FailureEnchant(pc, l1iteminstance1, client);
+				FailureEnchant(pc, l1iteminstance1);
 			}
 		}
 	}
@@ -145,7 +146,7 @@ public class Enchant {
 			pc.getInventory().removeItem(l1iteminstance, 1);
 			if (enchant_level < -6) {
 				// -7以上失敗。
-				FailureEnchant(pc, l1iteminstance1, client);
+				FailureEnchant(pc, l1iteminstance1);
 			} else {
 				SuccessEnchant(pc, l1iteminstance1, client, -1);
 			}
@@ -176,9 +177,122 @@ public class Enchant {
 				// \f1%0%s 持續發出 產生激烈的 銀色的 光芒，但是沒有任何事情發生。
 				pc.sendPackets(new S_ServerMessage(160, l1iteminstance1.getLogName(), "$252", "$248"));
 			} else {
-				FailureEnchant(pc, l1iteminstance1, client);
+				FailureEnchant(pc, l1iteminstance1);
 			}
 		}
+	}
+
+	// 飾品強化卷軸
+	public static void scrollOfEnchantAccessory(L1PcInstance pc, L1ItemInstance l1iteminstance
+			, L1ItemInstance l1iteminstance1, ClientThread client) {
+		if ((l1iteminstance1 == null) || (l1iteminstance1.getBless() >= 128)
+				|| (l1iteminstance1.getItem().getType2() != 2
+				|| l1iteminstance1.getItem().getType() < 8
+				|| l1iteminstance1.getItem().getType() > 12
+				|| l1iteminstance1.getItem().getGrade() == -1)) { // 封印中
+			pc.sendPackets(new S_ServerMessage(79));
+			return;
+		}
+		int enchant_level = l1iteminstance1.getEnchantLevel();
+
+		if (enchant_level < 0 || enchant_level >= 10) { // 強化上限 + 10
+			pc.sendPackets(new S_ServerMessage(79));
+			return;
+		}
+
+		int rnd = Random.nextInt(100) + 1;
+		int enchant_chance_accessory;
+		int enchant_level_tmp = enchant_level;
+		int itemStatus = 0;
+		// +6 時額外獎勵效果判斷
+		boolean award = false;
+		// 成功率： +0-85% ~ +9-40%
+		enchant_chance_accessory = (50 + enchant_level_tmp) / (enchant_level_tmp + 1) + 35;
+
+		if (rnd < enchant_chance_accessory) { // 成功
+			if (l1iteminstance1.getEnchantLevel() == 5) {
+				award = true;
+			}
+			switch (l1iteminstance1.getItem().getGrade()) {
+				case 0: // 上等
+					// 四屬性 +1
+					l1iteminstance1.setEarthMr(l1iteminstance1.getEarthMr() + 1);
+					itemStatus += L1PcInventory.COL_EARTHMR;
+					l1iteminstance1.setFireMr(l1iteminstance1.getFireMr() + 1);
+					itemStatus += L1PcInventory.COL_FIREMR;
+					l1iteminstance1.setWaterMr(l1iteminstance1.getWaterMr() + 1);
+					itemStatus += L1PcInventory.COL_WATERMR;
+					l1iteminstance1.setWindMr(l1iteminstance1.getWindMr() + 1);
+					itemStatus += L1PcInventory.COL_WINDMR;
+					// LV6 額外獎勵：體力與魔力回復量 +1
+					if (award) {
+						l1iteminstance1.setHpr(l1iteminstance1.getHpr() + 1);
+						itemStatus += L1PcInventory.COL_HPR;
+						l1iteminstance1.setMpr(l1iteminstance1.getMpr() + 1);
+						itemStatus += L1PcInventory.COL_MPR;
+					}
+					// 裝備中
+					if (l1iteminstance1.isEquipped()) {
+						pc.addFire(1);
+						pc.addWater(1);
+						pc.addEarth(1);
+						pc.addWind(1);
+					}
+					break;
+				case 1: // 中等
+					// HP +2
+					l1iteminstance1.setaddHp(l1iteminstance1.getaddHp() + 2);
+					itemStatus += L1PcInventory.COL_ADDHP;
+					// LV6 額外獎勵：魔防 +1
+					if (award) {
+						l1iteminstance1.setM_Def(l1iteminstance1.getM_Def() + 1);
+						itemStatus += L1PcInventory.COL_M_DEF;
+					}
+					// 裝備中
+					if (l1iteminstance1.isEquipped()) {
+						pc.addMaxHp(2);
+						if (award) {
+							pc.addMr(1);
+							pc.sendPackets(new S_SPMR(pc));
+						}
+					}
+					break;
+				case 2: // 初等
+					// MP +1
+					l1iteminstance1.setaddMp(l1iteminstance1.getaddMp() + 1);
+					itemStatus += L1PcInventory.COL_ADDMP;
+					// LV6 額外獎勵：魔攻 +1
+					if (award) {
+						l1iteminstance1.setaddSp(l1iteminstance1.getaddSp() + 1);
+						itemStatus += L1PcInventory.COL_ADDSP;
+					}
+					// 裝備中
+					if (l1iteminstance1.isEquipped()) {
+						pc.addMaxMp(1);
+						if (award) {
+							pc.addSp(1);
+							pc.sendPackets(new S_SPMR(pc));
+						}
+					}
+					break;
+				case 3: // 特等
+					// 功能台版未實裝。
+					break;
+				default:
+					pc.sendPackets(new S_ServerMessage(79));
+					return;
+			}
+		} else { // 飾品強化失敗
+			FailureEnchant(pc, l1iteminstance1);
+			pc.getInventory().removeItem(l1iteminstance, 1);
+			return;
+		}
+		SuccessEnchant(pc, l1iteminstance1, client, 1);
+		// 更新
+		pc.sendPackets(new S_ItemStatus(l1iteminstance1));
+		pc.getInventory().saveEnchantAccessory(l1iteminstance1, itemStatus);
+		// 刪除
+		pc.getInventory().removeItem(l1iteminstance, 1);
 	}
 
 	public static void scrollOfEnchantWeaponAttr(L1PcInstance pc, L1ItemInstance l1iteminstance
@@ -364,7 +478,7 @@ public class Enchant {
 	}
 
 	// 強化失敗
-	private static void FailureEnchant(L1PcInstance pc, L1ItemInstance item, ClientThread client) {
+	private static void FailureEnchant(L1PcInstance pc, L1ItemInstance item) {
 		String[] sa = {"", "$245", "$252"}; // ""、藍色的、銀色的
 		int itemType2 = item.getItem().getType2();
 

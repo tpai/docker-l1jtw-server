@@ -499,21 +499,13 @@ public class L1ItemInstance extends L1Object {
 		if (getAttrEnchantLevel() != _lastStatus.attrEnchantLevel) {
 			column += L1PcInventory.COL_ATTR_ENCHANT_LEVEL;
 		}
-		if (getFireMr() != _lastStatus.firemr) {
-			column += L1PcInventory.COL_FIREMR;
-		}
-		if (getWaterMr() != _lastStatus.watermr) {
-			column += L1PcInventory.COL_WATERMR;
-		}
-		if (getEarthMr() != _lastStatus.earthmr) {
-			column += L1PcInventory.COL_EARTHMR;
-		}
-		if (getWindMr() != _lastStatus.windmr) {
-			column += L1PcInventory.COL_WINDMR;
-		}
-		if (getaddSp() != _lastStatus.addsp) {
-			column += L1PcInventory.COL_ADDSP;
-		}
+
+		return column;
+	}
+
+	public int getRecordingColumnsEnchantAccessory() {
+		int column = 0;
+
 		if (getaddHp() != _lastStatus.addhp) {
 			column += L1PcInventory.COL_ADDHP;
 		}
@@ -526,8 +518,23 @@ public class L1ItemInstance extends L1Object {
 		if (getMpr() != _lastStatus.mpr) {
 			column += L1PcInventory.COL_MPR;
 		}
+		if (getaddSp() != _lastStatus.addsp) {
+			column += L1PcInventory.COL_ADDSP;
+		}
 		if (getM_Def() != _lastStatus.m_def) {
 			column += L1PcInventory.COL_M_DEF;
+		}
+		if (getEarthMr() != _lastStatus.earthmr) {
+			column += L1PcInventory.COL_EARTHMR;
+		}
+		if (getFireMr() != _lastStatus.firemr) {
+			column += L1PcInventory.COL_FIREMR;
+		}
+		if (getWaterMr() != _lastStatus.watermr) {
+			column += L1PcInventory.COL_WATERMR;
+		}
+		if (getWindMr() != _lastStatus.windmr) {
+			column += L1PcInventory.COL_WINDMR;
 		}
 
 		return column;

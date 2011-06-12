@@ -2399,6 +2399,7 @@ public class L1PcInstance extends L1Character {
 	public void saveInventory() {
 		for (L1ItemInstance item : getInventory().getItems()) {
 			getInventory().saveItem(item, item.getRecordingColumns());
+			getInventory().saveEnchantAccessory(item, item.getRecordingColumnsEnchantAccessory());
 		}
 	}
 
