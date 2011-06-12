@@ -84,7 +84,7 @@ public class C_Attack extends ClientBasePacket {
 			int result;
 			result = pc.getAcceleratorChecker().checkInterval(
 					AcceleratorChecker.ACT_TYPE.ATTACK);
-			if (result == AcceleratorChecker.R_DISCONNECTED) {
+			if (result == AcceleratorChecker.R_DISPOSED) {
 				return;
 			}
 		}

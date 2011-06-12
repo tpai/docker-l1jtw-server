@@ -24,7 +24,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import l1j.server.L1DatabaseFactory;
-import l1j.server.server.ActionCodes;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.templates.L1Npc;
 import l1j.server.server.utils.SQLUtil;

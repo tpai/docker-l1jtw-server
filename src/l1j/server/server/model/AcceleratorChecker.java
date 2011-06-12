@@ -68,7 +68,7 @@ public class AcceleratorChecker {
 
 	public static final int R_DETECTED = 1;
 
-	public static final int R_DISCONNECTED = 2;
+	public static final int R_DISPOSED = 2;
 
 	public AcceleratorChecker(L1PcInstance pc) {
 		_pc = pc;
@@ -100,8 +100,8 @@ public class AcceleratorChecker {
 			_injusticeCount++;
 			_justiceCount = 0;
 			if (_injusticeCount >= INJUSTICE_COUNT_LIMIT) {
-				doPunishment(0);
-				return R_DISCONNECTED;
+				doPunishment(Config.ILLEGAL_SPEEDUP_PUNISHMENT);
+				return R_DISPOSED;
 			}
 			result = R_DETECTED;
 		} else if (interval >= rightInterval) {
