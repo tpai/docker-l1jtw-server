@@ -16,6 +16,7 @@ package l1j.server.server;
 
 import java.util.List;
 
+import l1j.server.Config;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.model.L1Inventory;
 import l1j.server.server.model.L1World;
@@ -110,7 +111,7 @@ public class FishingTimeController implements Runnable {
 		L1ItemInstance item = ItemTable.getInstance().createItem(itemId);
 		if (item != null) {
 			pc.sendPackets(new S_ServerMessage(403, item.getItem().getName()));
-			pc.addExp(2);
+			pc.addExp((int) (2 * Config.RATE_XP));
 			pc.sendPackets(new S_OwnCharStatus(pc));
 			item.setCount(1);
 			if (pc.getInventory().checkAddItem(item, 1) == L1Inventory.OK) {
