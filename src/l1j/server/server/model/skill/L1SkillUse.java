@@ -485,8 +485,8 @@ public class L1SkillUse {
 			}
 		}
 
-		// PC、NPC共通のチェック
-		if (!isHPMPConsume()) { // 消費HP、MPはあるか
+		// PC、NPC共通檢查HP、MP是否足夠
+		if (!isHPMPConsume()) { // 花費的HP、MP計算 
 			return false;
 		}
 		return true;
@@ -742,22 +742,22 @@ public class L1SkillUse {
 		}
 		if (cha.isDead()
 				&& ((_skillId != CREATE_ZOMBIE) && (_skillId != RESURRECTION) && (_skillId != GREATER_RESURRECTION) && (_skillId != CALL_OF_NATURE))) {
-			return false; // ターゲットが死亡している
+			return false; // 目標已死亡 法術非復活類
 		}
 
 		if ((cha.isDead() == false)
 				&& ((_skillId == CREATE_ZOMBIE) || (_skillId == RESURRECTION) || (_skillId == GREATER_RESURRECTION) || (_skillId == CALL_OF_NATURE))) {
-			return false; // ターゲットが死亡していない
+			return false; // 目標未死亡 法術復活類
 		}
 
 		if (((cha instanceof L1TowerInstance) || (cha instanceof L1DoorInstance))
 				&& ((_skillId == CREATE_ZOMBIE) || (_skillId == RESURRECTION) || (_skillId == GREATER_RESURRECTION) || (_skillId == CALL_OF_NATURE))) {
-			return false; // ターゲットがガーディアンタワー、ドア
+			return false; // 塔跟門不可放復活法術
 		}
 
 		if (cha instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) cha;
-			if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // アブソルートバリア中
+			if (pc.hasSkillEffect(ABSOLUTE_BARRIER)) { // 絕對屏障狀態中
 				if ((_skillId == CURSE_BLIND) || (_skillId == WEAPON_BREAK) || (_skillId == DARKNESS) || (_skillId == WEAKNESS)
 						|| (_skillId == DISEASE) || (_skillId == FOG_OF_SLEEPING) || (_skillId == MASS_SLOW) || (_skillId == SLOW)
 						|| (_skillId == CANCELLATION) || (_skillId == SILENCE) || (_skillId == DECAY_POTION) || (_skillId == MASS_TELEPORT)
@@ -806,7 +806,7 @@ public class L1SkillUse {
 					}
 				}
 			}
-			if (cha instanceof L1PetInstance) {
+			else if (cha instanceof L1PetInstance) {
 				L1PetInstance pet = (L1PetInstance) cha;
 				if (pet.getMaster() != null) {
 					if (_player.getId() == pet.getMaster().getId()) {
@@ -1011,9 +1011,21 @@ public class L1SkillUse {
 			if ((_player.getInt() > 18) && (_skillId > DISEASE) && (_skillId <= FREEZING_BLIZZARD)) { // LV8以上
 				_mpConsume--;
 			}
-
+			
+			// 騎士智力減免
 			if ((_player.getInt() > 12) && (_skillId >= SHOCK_STUN) && (_skillId <= COUNTER_BARRIER)) {
-				_mpConsume -= (_player.getInt() - 12);
+				if ( _player.getInt() <= 17 )
+					_mpConsume -= (_player.getInt() - 12);
+				else {
+					_mpConsume -= 5 ; // int > 18
+					if ( _mpConsume > 1 ) { // 法術還可以減免
+						byte extraInt = (byte) (_player.getInt() - 17) ;
+						// 減免公式
+						for ( int first= 1 ,range = 2 ; first <= extraInt; first += range, range ++  )  
+							_mpConsume -- ;
+					}
+				}
+				
 			}
 
 			// 裝備MP減免 一次只需判斷一個 
@@ -1103,19 +1115,17 @@ public class L1SkillUse {
 			return;
 		}
 
-		// HP・MPをマイナス
-		if (isHPMPConsume()) {
-			if (_skillId == FINAL_BURN) { // ファイナル バーン
+		// HP・MP花費 已經計算使用量
+		if (_skillId == FINAL_BURN) { // 會心一擊
 				_player.setCurrentHp(1);
 				_player.setCurrentMp(0);
-			}
-			else {
-				int current_hp = _player.getCurrentHp() - _hpConsume;
-				_player.setCurrentHp(current_hp);
+		}
+		else {
+			int current_hp = _player.getCurrentHp() - _hpConsume;
+			_player.setCurrentHp(current_hp);
 
-				int current_mp = _player.getCurrentMp() - _mpConsume;
-				_player.setCurrentMp(current_mp);
-			}
+			int current_mp = _player.getCurrentMp() - _mpConsume;
+			_player.setCurrentMp(current_mp);
 		}
 
 		// Lawfulをマイナス
