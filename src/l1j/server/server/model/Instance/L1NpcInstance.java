@@ -472,7 +472,8 @@ public class L1NpcInstance extends L1Character {
 					}
 					int dir = moveDirection(target.getX(), target.getY());
 					if (dir == -1) {
-						tagertClear();
+						// 假如都走不過去  就找附近下一個玩家攻擊
+						searchTarget();
 					} else {
 						setDirectionMove(dir);
 						setSleepTime(calcSleepTime(getPassispeed(), MOVE_SPEED));
@@ -2434,4 +2435,5 @@ public class L1NpcInstance extends L1Character {
 	public void setPolyArrowGfx(int i) {
 		_polyArrowGfx = i;
 	}
+
 }
