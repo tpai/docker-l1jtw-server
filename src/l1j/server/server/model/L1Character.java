@@ -34,7 +34,6 @@ import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.Instance.L1PetInstance;
 import l1j.server.server.model.Instance.L1SummonInstance;
-import l1j.server.server.model.map.L1Map;
 import l1j.server.server.model.poison.L1Poison;
 import l1j.server.server.model.skill.L1SkillTimer;
 import l1j.server.server.model.skill.L1SkillTimerCreator;
@@ -404,81 +403,22 @@ public class L1Character extends L1Object {
 	 * @return 障害物が無ければtrue、あればfalseを返す。
 	 */
 	public boolean glanceCheck(int tx, int ty) {
-		L1Map map = getMap();
 		int chx = getX();
 		int chy = getY();
-		int arw = 0;
 		for (int i = 0; i < 15; i++) {
-			if (((chx == tx) && (chy == ty))
-					|| ((chx + 1 == tx) && (chy - 1 == ty))
-					|| ((chx + 1 == tx) && (chy == ty))
-					|| ((chx + 1 == tx) && (chy + 1 == ty))
-					|| ((chx == tx) && (chy + 1 == ty))
-					|| ((chx - 1 == tx) && (chy + 1 == ty))
-					|| ((chx - 1 == tx) && (chy == ty))
-					|| ((chx - 1 == tx) && (chy - 1 == ty))
-					|| ((chx == tx) && (chy - 1 == ty))) {
+			if (chx == tx && chy == ty) {
 				break;
-
-			} else if ((chx < tx) && (chy == ty)) {
-				// if (!map.isArrowPassable(chx, chy, 2)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chx++;
-			} else if ((chx == tx) && (chy < ty)) {
-				// if (!map.isArrowPassable(chx, chy, 4)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chy++;
-			} else if ((chx > tx) && (chy == ty)) {
-				// if (!map.isArrowPassable(chx, chy, 6)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chx--;
-			} else if ((chx == tx) && (chy > ty)) {
-				// if (!map.isArrowPassable(chx, chy, 0)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chy--;
-			} else if ((chx < tx) && (chy > ty)) {
-				// if (!map.isArrowPassable(chx, chy, 1)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chx++;
-				chy--;
-			} else if ((chx < tx) && (chy < ty)) {
-				// if (!map.isArrowPassable(chx, chy, 3)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chx++;
-				chy++;
-			} else if ((chx > tx) && (chy < ty)) {
-				// if (!map.isArrowPassable(chx, chy, 5)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chx--;
-				chy++;
-			} else if ((chx > tx) && (chy > ty)) {
-				// if (!map.isArrowPassable(chx, chy, 7)) {
-				if (!map.isArrowPassable(chx, chy, targetDirection(tx, ty))) {
-					return false;
-				}
-				chx--;
-				chy--;
 			}
+
+			if (!getMap().isArrowPassable(chx, chy, targetDirection(tx, ty))) {
+				return false;
+			}
+
+			// Targetへ1タイル進める
+			chx += Math.max(-1, Math.min(1, tx - chx));
+			chy += Math.max(-1, Math.min(1, ty - chy));
 		}
-		if (arw == 0) {
-			return true;
-		} else {
-			return false;
-		}
+		return true;
 	}
 
 	/**

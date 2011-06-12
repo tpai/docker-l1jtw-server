@@ -38,7 +38,7 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.HomeTownTimeController;
 import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.CastleTable;
-import l1j.server.server.datatables.DoorSpawnTable;
+import l1j.server.server.datatables.DoorTable;
 import l1j.server.server.datatables.ExpTable;
 import l1j.server.server.datatables.HouseTable;
 import l1j.server.server.datatables.InnKeyTable;
@@ -5117,7 +5117,7 @@ public class C_NPCAction extends ClientBasePacket {
 					L1DoorInstance door2 = null;
 					L1DoorInstance door3 = null;
 					L1DoorInstance door4 = null;
-					for (L1DoorInstance door : DoorSpawnTable.getInstance()
+					for (L1DoorInstance door : DoorTable.getInstance()
 							.getDoorList()) {
 						if (door.getKeeperId() == keeperId) {
 							if (door1 == null) {
@@ -5243,7 +5243,7 @@ public class C_NPCAction extends ClientBasePacket {
 					L1CastleLocation.ADEN_CASTLE_ID);
 		}
 
-		for (L1DoorInstance door : DoorSpawnTable.getInstance().getDoorList()) {
+		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 			if (door.getKeeperId() == keeperId) {
 				if (isNowWar && (door.getMaxHp() > 1)) { // 戦争中は城門開閉不可
 				} else {
@@ -5303,7 +5303,7 @@ public class C_NPCAction extends ClientBasePacket {
 			if (castleId != 0) { // 城主クラン
 				if (!WarTimeController.getInstance().isNowWar(castleId)) {
 					// 城門を元に戻す
-					for (L1DoorInstance door : DoorSpawnTable.getInstance()
+					for (L1DoorInstance door : DoorTable.getInstance()
 							.getDoorList()) {
 						if (L1CastleLocation.checkInWarArea(castleId, door)) {
 							door.repairGate();

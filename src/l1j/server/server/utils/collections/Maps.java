@@ -65,4 +65,8 @@ public class Maps {
 			super(m);
 		}
 	}
+
+	public static <K, V> ConcurrentHashMap<K, V> newConcurrentHashMap() {
+		return new ConcurrentHashMap<K, V>();
+	}
 }

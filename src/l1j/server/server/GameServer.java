@@ -28,7 +28,7 @@ import l1j.server.server.datatables.CastleTable;
 import l1j.server.server.datatables.CharacterTable;
 import l1j.server.server.datatables.ChatLogTable;
 import l1j.server.server.datatables.ClanTable;
-import l1j.server.server.datatables.DoorSpawnTable;
+import l1j.server.server.datatables.DoorTable;
 import l1j.server.server.datatables.DropTable;
 import l1j.server.server.datatables.DropItemTable;
 import l1j.server.server.datatables.FurnitureSpawnTable;
@@ -252,6 +252,7 @@ public class GameServer extends Thread {
 			throw new Exception("Could not initialize the npc table");
 		}
 		L1NpcDefaultAction.getInstance();
+		DoorTable.initialize();
 		SpawnTable.getInstance();
 		MobGroupTable.getInstance();
 		SkillsTable.getInstance();
@@ -273,7 +274,6 @@ public class GameServer extends Thread {
 		CastleTable.getInstance();
 		L1CastleLocation.setCastleTaxRate(); // 必須在 CastleTable 初始化之後
 		GetBackRestartTable.getInstance();
-		DoorSpawnTable.getInstance();
 		GeneralThreadPool.getInstance();
 		L1NpcRegenerationTimer.getInstance();
 		ChatLogTable.getInstance();

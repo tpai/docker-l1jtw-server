@@ -15,6 +15,7 @@
 package l1j.server.server.utils.collections;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -53,6 +54,14 @@ public class Lists {
 
 	public static <E> List<E> newSerializableList(int n) {
 		return new SerializableArrayList<E>(n);
+	}
+
+	public static <E> ArrayList<E> newArrayList() {
+		return new ArrayList<E>();
+	}
+
+	public static <E> ArrayList<E> newArrayList(Collection<? extends E> c) {
+		return new ArrayList<E>(c);
 	}
 
 	public static class SerializableArrayList<E extends Object> extends FastTable<E> implements Serializable {

@@ -15,7 +15,7 @@
 package l1j.server.server.model.map;
 
 import l1j.server.server.ActionCodes;
-import l1j.server.server.datatables.DoorSpawnTable;
+import l1j.server.server.datatables.DoorTable;
 import l1j.server.server.model.Instance.L1DoorInstance;
 import l1j.server.server.types.Point;
 
@@ -350,7 +350,7 @@ public class L1V2Map extends L1Map {
 
 	@Override
 	public boolean isExistDoor(int x, int y) {
-		for (L1DoorInstance door : DoorSpawnTable.getInstance().getDoorList()) {
+		for (L1DoorInstance door : DoorTable.getInstance().getDoorList()) {
 			if (door.getOpenStatus() == ActionCodes.ACTION_Open) {
 				continue;
 			}

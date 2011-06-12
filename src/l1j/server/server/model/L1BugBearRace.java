@@ -19,7 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import l1j.server.server.IdFactory;
-import l1j.server.server.datatables.DoorSpawnTable;
+import l1j.server.server.datatables.DoorTable;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.RaceTicketTable;
 import l1j.server.server.datatables.ShopTable;
@@ -144,8 +144,8 @@ public class L1BugBearRace {
 			setBetCount(i, 0);
 		}
 		setAllBet(0);
-		for (L1DoorInstance door : DoorSpawnTable.getInstance()
-				.getArrayDoorList()) {
+		for (L1DoorInstance door : DoorTable.getInstance()
+				.getDoorList()) {
 			if (door.getDoorId() <= 812 && door.getDoorId() >= 808) {
 				door.close();
 			}
@@ -336,8 +336,8 @@ public class L1BugBearRace {
 				shop2.getSellingItems().clear();
 				shop3.getSellingItems().clear();
 				/**/
-				for (L1DoorInstance door : DoorSpawnTable.getInstance()
-						.getArrayDoorList()) {
+				for (L1DoorInstance door : DoorTable.getInstance()
+						.getDoorList()) {
 					if (door.getDoorId() <= 812 && door.getDoorId() >= 808) {
 						door.open();
 					}
