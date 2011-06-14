@@ -134,13 +134,8 @@ public class WarTimeController implements Runnable {
 					_is_now_war[i] = false;
 					L1World.getInstance().broadcastPacketToAll(
 							new S_PacketBox(S_PacketBox.MSG_WAR_END, i + 1)); // %sの攻城戦が終了しました。
-					_war_start_time[i].add(Config.ALT_WAR_INTERVAL_UNIT,
-							Config.ALT_WAR_INTERVAL);
-					_war_end_time[i].add(Config.ALT_WAR_INTERVAL_UNIT,
-							Config.ALT_WAR_INTERVAL);
-					_l1castle[i].setTaxRate(10); // 稅率10%
-					_l1castle[i].setPublicMoney(0); // 清除 public money
-					CastleTable.getInstance().updateCastle(_l1castle[i]);
+					// 更新攻城時間
+					WarUpdate(i);
 
 					int castle_id = i + 1;
 					for (L1Object l1object : L1World.getInstance().getObject()) {
@@ -180,9 +175,24 @@ public class WarTimeController implements Runnable {
 							door.repairGate();
 						}
 					}
-				}
+				} else { // 更新過期的攻城時間
+					_war_start_time[i] = getRealTime();
+					_war_end_time[i] = (Calendar) _war_start_time[i].clone();
+					WarUpdate(i);
+				} 
 			}
 
 		}
+	}
+
+	private void WarUpdate(int i) {
+		_war_start_time[i].add(Config.ALT_WAR_INTERVAL_UNIT,
+				Config.ALT_WAR_INTERVAL);
+		_war_end_time[i].add(Config.ALT_WAR_INTERVAL_UNIT,
+				Config.ALT_WAR_INTERVAL);
+		_l1castle[i].setWarTime(_war_start_time[i]);
+		_l1castle[i].setTaxRate(10); // 稅率10%
+		_l1castle[i].setPublicMoney(0); // 清除城堡稅收
+		CastleTable.getInstance().updateCastle(_l1castle[i]);
 	}
 }

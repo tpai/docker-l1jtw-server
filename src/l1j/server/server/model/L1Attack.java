@@ -381,8 +381,8 @@ public class L1Attack {
 				_isHit = false; // 沒有箭
 			} else if ((_weaponType == 62) && (_sting == null)) {
 				_isHit = false; // 沒有飛刀
-			} else if (!_pc.glanceCheck(_targetX, _targetY)) {
-				_isHit = false; // 直線距離上有障礙物
+			} else if ( _weaponRange != 1 && !_pc.glanceCheck(_targetX, _targetY)) {
+				_isHit = false; // 兩格以上武器 直線距離上有障礙物
 			} else if ((_weaponId == 247) || (_weaponId == 248)
 					|| (_weaponId == 249)) {
 				_isHit = false; // 試練の剣B～C 攻撃無効
