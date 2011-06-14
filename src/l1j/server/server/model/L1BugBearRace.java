@@ -104,7 +104,7 @@ public class L1BugBearRace {
 	private void setRandomRunner() {
 		for (int i = 0; i < 5; i++) {
 			int npcid = FIRST_NPCID + _random.nextInt(20);
-			while (checkDuplicate(npcid)) {
+			while (checkDuplicate(npcid, i)) {
 				npcid = FIRST_NPCID + _random.nextInt(20);
 			}
 			L1Location loc = new L1Location(33522 - (i * 2), 32861 + (i * 2), 4);
@@ -113,17 +113,12 @@ public class L1BugBearRace {
 		}
 	}
 
-	private boolean checkDuplicate(int npcid) {
-		boolean flag = false;
-		for (int i = 0; i < 5; i++) {
-			if (_runner[i] != null) {
-				if (_runner[i].getNpcId() == npcid) {
-					flag = true;
-					break;
-				}
-			}
-		}
-		return flag;
+	private boolean checkDuplicate(int npcid, int curi) {
+		for (int i = 0; i < curi; i++) 
+			if (_runner[i] != null) 
+				if (_runner[i].getNpcId() == npcid) 
+					return true;
+		return false;
 	}
 
 	private void clearRunner() {
@@ -351,7 +346,7 @@ public class L1BugBearRace {
 				for (int i = 0; i < _runner.length; i++) {
 					if (getBetCount(i) > 0) {
 						_allotment_percentage[i] = (double) (getAllBet()
-								/ (getBetCount(i)) / 500);
+								/ (getBetCount(i)) / 500D);
 					} else {
 						_allotment_percentage[i] = 0.0;
 					}
@@ -519,7 +514,7 @@ public class L1BugBearRace {
 		public void run() {
 			if (getGameStatus() == STATUS_PLAYING) {
 				for (int i = 0; i < _runner.length; i++) {
-					if (((_random.nextInt(10000) + 1) / 100) <= _winning_average[i]
+					if ( getRandomProbability() <= _winning_average[i]
 							* (1 + (0.2 * getCondition(i)))) {
 						_runner[i].setBraveSpeed(1);
 					} else {
@@ -537,31 +532,25 @@ public class L1BugBearRace {
 		}
 	}
 
+	private double getRandomProbability(){
+		return (_random.nextInt(10000) + 1) / 100D;
+	}
 	private void setWinnigAverage() {
-		int max_percentage = 10000;
-		for (int i = 0; i < _winning_average.length - 1; i++) {
-			double winningAverage = (_random.nextInt(max_percentage) + 1) / 100;
-			while (checkDuplicateAverage(winningAverage)) {
-				winningAverage = (_random.nextInt(max_percentage) + 1) / 100;
-			}
-			max_percentage -= winningAverage * 100;
+		for (int i = 0; i < _winning_average.length ; i++) {
+			double winningAverage = getRandomProbability();
+			
+			while (checkDuplicateAverage(winningAverage, i)) 
+				winningAverage = getRandomProbability();
 			_winning_average[i] = winningAverage;
 		}
-		_winning_average[_winning_average.length - 1] = max_percentage / 100;
 	}
 
-	private boolean checkDuplicateAverage(double winning_average) {
-		boolean flag = false;
-		if (winning_average == 0) {
-			return flag;
-		}
-		for (int i = 0; i < 5; i++) {
-			if (_winning_average[i] == winning_average) {
-				flag = true;
-				break;
-			}
-		}
-		return flag;
+	private boolean checkDuplicateAverage(double winning_average, int curi) {
+		// 勝率跟狀態都一樣算重覆
+		for (int i = 0; i < curi; i++) 
+			if (_winning_average[i] == winning_average && _condition[i] == _condition[curi]) 
+				return true ;
+		return false;
 	}
 
 	/*
