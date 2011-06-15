@@ -535,7 +535,7 @@
 		<Item ItemId="40499" Count="20" Chance="8" />		<!--蘑菇汁-->
 		<Item ItemId="41263" Count="20" Chance="6" />		<!--太陽花籽-->
 		<Item ItemId="40506" Count="20" Chance="5" />		<!--安特的水果-->
-		<Item ItemId="49299" Count="1" Chance="5" />		<!--龍之鑰匙-->
+		<Item ItemId="47010" Count="1" Chance="5" />		<!--龍之鑰匙-->
 		<Item ItemId="40524" Count="2" Chance="3" />		<!--黑色血痕-->
 		<Item ItemId="26" Count="1" Chance="2" />		<!--小侏儒短劍-->
 		<Item ItemId="144" Count="1" Chance="2" />		<!--侏儒鐵斧-->
