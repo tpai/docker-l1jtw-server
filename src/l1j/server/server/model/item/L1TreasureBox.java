@@ -44,7 +44,8 @@ import l1j.server.server.utils.collections.Maps;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class L1TreasureBox {
 
-	private static Logger _log = Logger.getLogger(L1TreasureBox.class.getName());
+	private static Logger _log = Logger
+			.getLogger(L1TreasureBox.class.getName());
 
 	@XmlAccessorType(XmlAccessType.FIELD)
 	@XmlRootElement(name = "TreasureBoxList")
@@ -84,6 +85,13 @@ public class L1TreasureBox {
 
 		public double getChance() {
 			return _chance;
+		}
+
+		@XmlAttribute(name = "Enchant")
+		private int _enchant;
+
+		public int getEnchant() {
+			return _enchant;
 		}
 	}
 
@@ -138,11 +146,11 @@ public class L1TreasureBox {
 			_totalChance += each.getChance();
 			if (ItemTable.getInstance().getTemplate(each.getItemId()) == null) {
 				getItems().remove(each);
-				_log.warning("アイテムID " + each.getItemId() + " のテンプレートが見つかりません。");
+				_log.warning("item ID " + each.getItemId() + " is not found。");
 			}
 		}
 		if ((getTotalChance() != 0) && (getTotalChance() != 1000000)) {
-			_log.warning("ID " + getBoxId() + " の確率の合計が100%になりません。");
+			_log.warning("ID " + getBoxId() + " 的總機率不等於100%。");
 		}
 	}
 
@@ -150,7 +158,8 @@ public class L1TreasureBox {
 		PerformanceTimer timer = new PerformanceTimer();
 		System.out.print("loading TreasureBox...");
 		try {
-			JAXBContext context = JAXBContext.newInstance(L1TreasureBox.TreasureBoxList.class);
+			JAXBContext context = JAXBContext
+					.newInstance(L1TreasureBox.TreasureBoxList.class);
 
 			Unmarshaller um = context.createUnmarshaller();
 
@@ -161,9 +170,8 @@ public class L1TreasureBox {
 				each.init();
 				_dataMap.put(each.getBoxId(), each);
 			}
-		}
-		catch (Exception e) {
-			_log.log(Level.SEVERE, PATH + "のロードに失敗。", e);
+		} catch (Exception e) {
+			_log.log(Level.SEVERE, PATH + "載入失敗。", e);
 			System.exit(0);
 		}
 		System.out.println("OK! " + timer.get() + "ms");
@@ -183,14 +191,14 @@ public class L1TreasureBox {
 			// 出るアイテムが決まっているもの
 			for (Item each : getItems()) {
 				item = ItemTable.getInstance().createItem(each.getItemId());
+				item.setEnchantLevel(each.getEnchant()); // Enchant Feature for treasure_box
 				if (item != null) {
 					item.setCount(each.getCount());
 					storeItem(pc, item);
 				}
 			}
 
-		}
-		else if (getType().equals(TYPE.RANDOM)) {
+		} else if (getType().equals(TYPE.RANDOM)) {
 			// 出るアイテムがランダムに決まるもの
 			int chance = 0;
 
@@ -212,12 +220,12 @@ public class L1TreasureBox {
 
 		if (item == null) {
 			return false;
-		}
-		else {
+		} else {
 			int itemId = getBoxId();
 
 			// 魂の結晶の破片、魔族のスクロール、ブラックエントの実
-			if ((itemId == 40576) || (itemId == 40577) || (itemId == 40578) || (itemId == 40411) || (itemId == 49013)) {
+			if ((itemId == 40576) || (itemId == 40577) || (itemId == 40578)
+					|| (itemId == 40411) || (itemId == 49013)) {
 				pc.death(null); // キャラクターを死亡させる
 			}
 
@@ -225,7 +233,8 @@ public class L1TreasureBox {
 			if ((itemId == 46000)) {
 				L1ItemInstance box = pc.getInventory().findItemId(itemId);
 				box.setChargeCount(box.getChargeCount() - 1);
-				pc.getInventory().updateItem(box, L1PcInventory.COL_CHARGE_COUNT);
+				pc.getInventory().updateItem(box,
+						L1PcInventory.COL_CHARGE_COUNT);
 				if (box.getChargeCount() < 1) {
 					pc.getInventory().removeItem(box, 1);
 				}
@@ -240,8 +249,7 @@ public class L1TreasureBox {
 
 		if (pc.getInventory().checkAddItem(item, item.getCount()) == L1Inventory.OK) {
 			inventory = pc.getInventory();
-		}
-		else {
+		} else {
 			// 持てない場合は地面に落とす 処理のキャンセルはしない（不正防止）
 			inventory = L1World.getInstance().getInventory(pc.getLocation());
 		}
