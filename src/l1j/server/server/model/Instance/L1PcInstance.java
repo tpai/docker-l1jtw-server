@@ -178,7 +178,7 @@ public class L1PcInstance extends L1Character {
 	private int _partyType;
 
 	public short getHpr() {
-		return (short) (_hpr + L1MagicDoll.getHprByDoll(this));
+		return (short) _hpr ;
 	}
 
 	public void addHpr(int i) {
@@ -191,7 +191,7 @@ public class L1PcInstance extends L1Character {
 	private short _trueMpr = 0;
 
 	public short getMpr() {
-		return (short) (_mpr + L1MagicDoll.getMprByDoll(this));
+		return (short) _mpr;
 	}
 
 	public void addMpr(int i) {

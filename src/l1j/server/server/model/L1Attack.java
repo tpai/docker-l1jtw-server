@@ -400,7 +400,7 @@ public class L1Attack {
 	}
 
 	private int calShortRageHit(int hitRate) {
-		int shortHit = hitRate + _pc.getBowHitup() + _pc.getOriginalBowHitup();
+		int shortHit = hitRate + _pc.getHitup() + _pc.getOriginalHitup();
 		// 防具增加命中
 		shortHit += _pc.getHitModifierByArmor();
 
@@ -414,7 +414,7 @@ public class L1Attack {
 	}
 
 	private int calLongRageHit(int hitRate) {
-		int longHit = hitRate + _pc.getHitup() + _pc.getOriginalHitup();
+		int longHit = hitRate + _pc.getBowHitup() + _pc.getOriginalBowHitup();
 		// 防具增加命中
 		longHit += _pc.getBowHitModifierByArmor();
 
@@ -447,7 +447,7 @@ public class L1Attack {
 			_hitRate += dexHit[_pc.getDex() - 1];
 		}
 
-		// 命中計算 與魔法、食物、娃娃buff
+		// 命中計算 與魔法、食物buff
 		_hitRate += _weaponAddHit + (_weaponEnchant / 2);
 		if (_weaponType == 20 || _weaponType == 62)
 			_hitRate = calLongRageHit(_hitRate);
@@ -589,7 +589,7 @@ public class L1Attack {
 			_hitRate += dexHit[_pc.getDex() - 1];
 		}
 
-		// 命中計算 與魔法、食物、娃娃buff
+		// 命中計算 與魔法、食物buff
 		_hitRate += _weaponAddHit + (_weaponEnchant / 2);
 		if (_weaponType == 20 || _weaponType == 62)
 			_hitRate = calLongRageHit(_hitRate);
@@ -829,7 +829,7 @@ public class L1Attack {
 	}
 
 	private double calLongRageDamage(double dmg) {
-		double longdmg = dmg + _pc.getDmgup() + _pc.getOriginalDmgup();
+		double longdmg = dmg + _pc.getBowDmgup() + _pc.getOriginalBowDmgup();
 
 		int add_dmg = 1;
 		if (_weaponType == 20) { // 弓
@@ -851,15 +851,14 @@ public class L1Attack {
 						.equalsIgnoreCase("large"))
 					add_dmg = _sting.getItem().getDmgLarge();
 		}
-		add_dmg = add_dmg > 0 ? add_dmg : 1;
-		dmg += Random.nextInt(add_dmg) + 1;
+		
+		if ( add_dmg > 0) 
+			longdmg += Random.nextInt(add_dmg) + 1;
 
 		// 防具增傷
 		longdmg += _pc.getDmgModifierByArmor();
-		// 魔法娃娃增加遠程傷害
-		longdmg += L1MagicDoll.getBowDamageByDoll(_pc);
 
-		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理による追加ダメージ
+		if (_pc.hasSkillEffect(COOKING_2_3_N) // 料理
 				|| _pc.hasSkillEffect(COOKING_2_3_S)
 				|| _pc.hasSkillEffect(COOKING_3_0_N)
 				|| _pc.hasSkillEffect(COOKING_3_0_S))
@@ -869,7 +868,7 @@ public class L1Attack {
 	}
 
 	private double calShortRageDamage(double dmg) {
-		double shortdmg = dmg + _pc.getBowDmgup() + _pc.getOriginalBowDmgup();
+		double shortdmg = dmg + _pc.getDmgup() + _pc.getOriginalDmgup();
 		// 弱點曝光發動判斷
 		WeaknessExposure();
 		// 近戰魔法增傷
@@ -878,14 +877,11 @@ public class L1Attack {
 		shortdmg += _pc.getBowDmgModifierByArmor();
 
 		if (_weaponType == 0) // 空手
-			dmg = (Random.nextInt(5) + 4) / 4;
+			shortdmg = (Random.nextInt(5) + 4) / 4;
 		else if (_weaponType2 == 17 || _weaponType2 == 19) // 奇古獸
 			shortdmg = L1WeaponSkill.getKiringkuDamage(_pc, _target);
 
-		// 魔法娃娃增加近戰傷害
-		shortdmg += L1MagicDoll.getDamageAddByDoll(_pc);
-
-		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理による追加ダメージ
+		if (_pc.hasSkillEffect(COOKING_2_0_N) // 料理
 				|| _pc.hasSkillEffect(COOKING_2_0_S)
 				|| _pc.hasSkillEffect(COOKING_3_2_N)
 				|| _pc.hasSkillEffect(COOKING_3_2_S))
@@ -903,7 +899,7 @@ public class L1Attack {
 			weaponTotalDamage += calcDestruction(weaponTotalDamage);
 		}
 
-		// 計算 遠程 或 近戰武器 傷害 與魔法、食物、娃娃buff
+		// 計算 遠程 或 近戰武器 傷害 與魔法、食物buff
 		double dmg = weaponTotalDamage + _statusDamage;
 		if (_weaponType == 20 || _weaponType == 62)
 			dmg = calLongRageDamage(dmg);
@@ -1469,7 +1465,7 @@ public class L1Attack {
 		}
 	}
 
-	// ■■■■ チェイサーによる攻撃を付加 ■■■■
+	// ■■■■ 底比斯武器攻撃付加 ■■■■
 	public void addChaserAttack() {
 		if (5 > Random.nextInt(100) + 1) {
 			if (_weaponId == 265 || _weaponId == 266 || _weaponId == 267

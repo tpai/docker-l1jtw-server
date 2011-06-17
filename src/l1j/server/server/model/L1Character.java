@@ -1281,12 +1281,12 @@ public class L1Character extends L1Object {
 		}
 	}
 
-	private int _dmgup = 0; // ● ダメージ補正（-128～127）
+	private int _dmgup = 0; // ● 近距離傷害補正（-128～127）
 
 	private int _trueDmgup = 0; // ● 本当のダメージ補正
 
 	public int getDmgup() {
-		return _dmgup;
+		return _dmgup + L1MagicDoll.getDamageAddByDoll(this); // 魔法娃娃效果 - 近距離的攻擊力增加
 	} // 使用するとき
 
 	public void addDmgup(int i) {
@@ -1300,13 +1300,12 @@ public class L1Character extends L1Object {
 		}
 	}
 
-	private int _bowDmgup = 0; // ● 弓ダメージ補正（-128～127）
+	private int _bowDmgup = 0; // ● 弓傷害補正（-128～127）
 
 	private int _trueBowDmgup = 0; // ● 本当の弓ダメージ補正
 
 	public int getBowDmgup() {
-		return (_bowDmgup
-				+ L1MagicDoll.getBowDamageByDoll(this)); // TODO 魔法娃娃效果 - 弓的攻擊力增加
+		return _bowDmgup + L1MagicDoll.getBowDamageByDoll(this); // 魔法娃娃效果 - 遠距離的攻擊力增加
 	}
 
 	public void addBowDmgup(int i) {
@@ -1419,7 +1418,7 @@ public class L1Character extends L1Object {
 		_status = i;
 	}
 
-	private String _title; // ● タイトル
+	private String _title; // ● 頭銜
 
 	public String getTitle() {
 		return _title;
@@ -1429,7 +1428,7 @@ public class L1Character extends L1Object {
 		_title = s;
 	}
 
-	private int _lawful; // ● アライメント
+	private int _lawful; // ● 正義值
 
 	public int getLawful() {
 		return _lawful;
@@ -1448,7 +1447,7 @@ public class L1Character extends L1Object {
 		}
 	}
 
-	private int _heading; // ● 向き 0.左上 1.上 2.右上 3.右 4.右下 5.下 6.左下 7.左
+	private int _heading; // ● 面向 0.左上 1.上 2.右上 3.右 4.右下 5.下 6.左下 7.左
 
 	public int getHeading() {
 		return _heading;
@@ -1458,7 +1457,7 @@ public class L1Character extends L1Object {
 		_heading = i;
 	}
 
-	private int _moveSpeed; // ● スピード 0.通常 1.ヘイスト 2.スロー
+	private int _moveSpeed; // ● 速度 0.通常 1.加速 2.緩速
 
 	public int getMoveSpeed() {
 		return _moveSpeed;
@@ -1468,7 +1467,7 @@ public class L1Character extends L1Object {
 		_moveSpeed = i;
 	}
 
-	private int _braveSpeed; // ● ブレイブ状態 0.通常 1.ブレイブ
+	private int _braveSpeed; // ● 勇敢狀態 0，通常1。勇敢
 
 	public int getBraveSpeed() {
 		return _braveSpeed;
@@ -1478,7 +1477,7 @@ public class L1Character extends L1Object {
 		_braveSpeed = i;
 	}
 
-	private int _tempCharGfx; // ● ベースグラフィックＩＤ
+	private int _tempCharGfx; // ● 暫時變身的ID
 
 	public int getTempCharGfx() {
 		return _tempCharGfx;
@@ -1488,7 +1487,7 @@ public class L1Character extends L1Object {
 		_tempCharGfx = i;
 	}
 
-	private int _gfxid; // ● グラフィックＩＤ
+	private int _gfxid; // ● 原本圖型的ＩＤ
 
 	public int getGfxId() {
 		return _gfxid;
