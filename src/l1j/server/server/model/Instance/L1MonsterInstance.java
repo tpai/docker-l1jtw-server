@@ -158,7 +158,7 @@ public class L1MonsterInstance extends L1NpcInstance {
 		L1PcInstance lastTarget = null;
 		L1PcInstance targetPlayer = null;
 
-		if (_target != null) {
+		if (_target != null && _target instanceof L1PcInstance ) {
 			lastTarget = (L1PcInstance) _target;
 			tagertClear();
 		}

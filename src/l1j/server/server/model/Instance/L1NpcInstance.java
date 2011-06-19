@@ -337,6 +337,7 @@ public class L1NpcInstance extends L1Character {
 
 	// ターゲットを探す（Ｔｙｐｅによって結構違うのでオーバライドで実装）
 	public void searchTarget() {
+		tagertClear();
 	}
 
 	// 有効なターゲットか確認及び次のターゲットを設定
@@ -346,7 +347,9 @@ public class L1NpcInstance extends L1Character {
 				|| (_target.getCurrentHp() <= 0)
 				|| _target.isDead()
 				|| (_target.isInvisble() && !getNpcTemplate().is_agrocoi() && !_hateList
-						.containsKey(_target))) {
+						.containsKey(_target))
+				// 目標距離超過30以上
+				|| _target.getTileLineDistance(this) > 30 ) { 
 			if (_target != null) {
 				tagertClear();
 			}
@@ -472,7 +475,7 @@ public class L1NpcInstance extends L1Character {
 					}
 					int dir = moveDirection(target.getX(), target.getY());
 					if (dir == -1) {
-						// 假如都走不過去  就找附近下一個玩家攻擊
+						// 假如怪物走不過去  就找附近下一個玩家攻擊
 						searchTarget();
 					} else {
 						setDirectionMove(dir);
