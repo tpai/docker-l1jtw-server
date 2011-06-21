@@ -2943,6 +2943,14 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "gemout17";
 					}
 				}
+			} else if (npcid == 71181) { // 愛瑪伊
+				if (player.get_sex() == 0) {
+					htmlid = "my2";
+				}
+			} else if (npcid == 71182) { // 伊森
+				if (player.get_sex() == 1) {
+					htmlid = "sm2";
+				}
 			}
 
 			// html表示パケット送信
