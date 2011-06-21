@@ -1105,6 +1105,7 @@ INSERT INTO `npcaction` VALUES ('81293', 'beasamoo', 'beasamool', '', '');
 INSERT INTO `npcaction` VALUES ('81294', 'kymsamoo', 'kymsamoo', '', '');
 INSERT INTO `npcaction` VALUES ('81297', 'adenshadow1', 'adenshadow1', '', '');
 INSERT INTO `npcaction` VALUES ('81298', 'adenflora1', 'adenflora1', 'adenflora2', '');
+INSERT INTO `npcaction` VALUES ('81299', 'amelia', 'amelia1', '', '');
 INSERT INTO `npcaction` VALUES ('81300', 'gr_mammon1', 'gr_mammon1', 'gr_mammon3', '');
 INSERT INTO `npcaction` VALUES ('81307', 'newsboy', 'newsboy', '', '');
 INSERT INTO `npcaction` VALUES ('91002', 'dufo', 'dufo', '', '');
