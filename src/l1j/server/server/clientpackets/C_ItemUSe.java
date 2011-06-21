@@ -1575,7 +1575,10 @@ public class C_ItemUSe extends ClientBasePacket {
 									}
 								}
 							}
+							
 							L1Teleport.teleport(pc, newX, newY, mapId, 5, true);
+							// 卷軸傳送後 使用物品延遲完才解開停止狀態
+							L1ItemDelay.teleportUnlock(pc, l1iteminstance);
 							pc.getInventory().removeItem(l1iteminstance, 1);
 						}
 						else {
@@ -1599,6 +1602,8 @@ public class C_ItemUSe extends ClientBasePacket {
 								}
 							}
 							L1Teleport.teleport(pc, newX, newY, mapId, 5, true);
+							// 卷軸傳送後 使用物品延遲完才解開停止狀態
+							L1ItemDelay.teleportUnlock(pc, l1iteminstance);
 							pc.getInventory().removeItem(l1iteminstance, 1);
 						}
 						else {

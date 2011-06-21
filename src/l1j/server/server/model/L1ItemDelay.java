@@ -18,6 +18,7 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.GeneralThreadPool;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.templates.L1EtcItem;
 
 // Referenced classes of package l1j.server.server.model:
@@ -33,7 +34,7 @@ public class L1ItemDelay {
 
 		private L1Character _cha;
 
-		public ItemDelayTimer(L1Character cha, int id, int time) {
+		public ItemDelayTimer(L1Character cha, int id) {
 			_cha = cha;
 			_delayId = id;
 		}
@@ -48,6 +49,20 @@ public class L1ItemDelay {
 		}
 	}
 
+	static class TeleportUnlockTimer implements Runnable {
+		private L1PcInstance _pc;
+
+		public TeleportUnlockTimer(L1PcInstance pc) {
+			_pc = pc;
+		}
+
+		@Override
+		public void run() {
+			_pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK,
+					true));
+		}
+	}
+
 	public static void onItemUse(ClientThread client, L1ItemInstance item) {
 		int delayId = 0;
 		int delayTime = 0;
@@ -55,31 +70,36 @@ public class L1ItemDelay {
 		L1PcInstance pc = client.getActiveChar();
 
 		if (item.getItem().getType2() == 0) {
-			// 種別：その他のアイテム
+			// 種別：一般道具
 			delayId = ((L1EtcItem) item.getItem()).get_delayid();
 			delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
-		}
-		else if (item.getItem().getType2() == 1) {
+		} else if (item.getItem().getType2() == 1) {
 			// 種別：武器
 			return;
-		}
-		else if (item.getItem().getType2() == 2) {
+		} else if (item.getItem().getType2() == 2) {
 			// 種別：防具
 
-			if ((item.getItem().getItemId() == 20077) || (item.getItem().getItemId() == 20062) || (item.getItem().getItemId() == 120077)) {
-				// インビジビリティクローク、バルログブラッディクローク
+			if ((item.getItem().getItemId() == 20077)
+					|| (item.getItem().getItemId() == 20062)
+					|| (item.getItem().getItemId() == 120077)) {
+				// 隱身防具
 				if (item.isEquipped() && !pc.isInvisble()) {
 					pc.beginInvisTimer();
 				}
-			}
-			else {
+			} else {
 				return;
 			}
 		}
 
-		ItemDelayTimer timer = new ItemDelayTimer(pc, delayId, delayTime);
-
+		ItemDelayTimer timer = new ItemDelayTimer(pc, delayId);
 		pc.addItemDelay(delayId, timer);
+		GeneralThreadPool.getInstance().schedule(timer, delayTime);
+		
+	}
+
+	public static void teleportUnlock(L1PcInstance pc, L1ItemInstance item) {
+		int delayTime = ((L1EtcItem) item.getItem()).get_delaytime();
+		TeleportUnlockTimer timer = new TeleportUnlockTimer(pc);
 		GeneralThreadPool.getInstance().schedule(timer, delayTime);
 	}
 
