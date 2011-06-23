@@ -24,6 +24,7 @@ import static l1j.server.server.model.skill.L1SkillId.ICE_LANCE;
 import static l1j.server.server.model.skill.L1SkillId.ILLUSION_AVATAR;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_FREEZE;
 import l1j.server.server.ActionCodes;
+import l1j.server.server.WarTimeController;
 import l1j.server.server.datatables.SkillsTable;
 import l1j.server.server.datatables.WeaponSkillTable;
 import l1j.server.server.model.Instance.L1ItemInstance;
@@ -214,6 +215,26 @@ public class L1WeaponSkill {
 					}
 				}
 
+				// 判斷是否在攻城戰中
+				boolean isNowWar = false;
+				int castleId = L1CastleLocation.getCastleIdByArea((L1Character)object);
+				if (castleId > 0) {
+					isNowWar = WarTimeController.getInstance().isNowWar(castleId);
+				}
+				if (!isNowWar) { // 非攻城戰區域
+					// 對象不是怪物 且在安全區 不會打到
+					if ( !(object instanceof L1MonsterInstance) && ((L1Character)object).getZoneType()== 1 ) 
+						continue;
+					// 寵物減傷
+					if (object instanceof L1PetInstance)
+						damage /= 8;
+					else if (object instanceof L1SummonInstance) {
+						L1SummonInstance summon = (L1SummonInstance) object;
+						if (summon.isExsistMaster())
+							damage /= 8;
+					}
+				}
+				
 				damage = calcDamageReduction(pc, (L1Character) object, damage,
 						weaponSkill.getAttr());
 				if (damage <= 0) {
