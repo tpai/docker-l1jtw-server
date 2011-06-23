@@ -209,6 +209,7 @@ public class L1TreasureBox {
 
 				if (r < chance) {
 					item = ItemTable.getInstance().createItem(each.getItemId());
+					item.setEnchantLevel(each.getEnchant()); // Enchant Feature for treasure_box
 					if (item != null) {
 						item.setCount(each.getCount());
 						storeItem(pc, item);

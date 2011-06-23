@@ -634,20 +634,27 @@ public class L1SkillId {
 
 	public static final int STATUS_RIBRAVE = 1017;
 
+	/** 立方：燃燒(友方) */
 	public static final int STATUS_CUBE_IGNITION_TO_ALLY = 1018;
 
+	/** 立方：燃燒(敵方) */
 	public static final int STATUS_CUBE_IGNITION_TO_ENEMY = 1019;
 
+	/** 立方：地裂(友方) */
 	public static final int STATUS_CUBE_QUAKE_TO_ALLY = 1020;
 
+	/** 立方：地裂(敵方) */
 	public static final int STATUS_CUBE_QUAKE_TO_ENEMY = 1021;
 
+	/** 立方：衝擊(友方) */
 	public static final int STATUS_CUBE_SHOCK_TO_ALLY = 1022;
 
+	/** 立方：衝擊(敵方) */
 	public static final int STATUS_CUBE_SHOCK_TO_ENEMY = 1023;
 
 	public static final int STATUS_MR_REDUCTION_BY_CUBE_SHOCK = 1024;
 
+	/** 立方：和諧 */
 	public static final int STATUS_CUBE_BALANCE = 1025;
 
 	/** 超級加速 */
@@ -674,100 +681,148 @@ public class L1SkillId {
 
 	public static final int COOKING_BEGIN = 3000;
 
+	/** 漂浮之眼肉排 */
 	public static final int COOKING_1_0_N = 3000;
 
+	/** 烤熊肉 */
 	public static final int COOKING_1_1_N = 3001;
 
+	/** 煎餅 */
 	public static final int COOKING_1_2_N = 3002;
 
+	/** 烤螞蟻腿起司 */
 	public static final int COOKING_1_3_N = 3003;
 
+	/** 水果沙拉 */
 	public static final int COOKING_1_4_N = 3004;
 
+	/** 水果糖醋肉 */
 	public static final int COOKING_1_5_N = 3005;
 
+	/** 烤山豬肉串 */
 	public static final int COOKING_1_6_N = 3006;
 
+	/** 蘑菇湯 */
 	public static final int COOKING_1_7_N = 3007;
 
+	/** 特別的漂浮之眼肉排 */
 	public static final int COOKING_1_0_S = 3008;
 
+	/** 特別的烤熊肉 */
 	public static final int COOKING_1_1_S = 3009;
 
+	/** 特別的煎餅 */
 	public static final int COOKING_1_2_S = 3010;
 
+	/** 特別的烤螞蟻腿起司 */
 	public static final int COOKING_1_3_S = 3011;
 
+	/** 特別的水果沙拉 */
 	public static final int COOKING_1_4_S = 3012;
 
+	/** 特別的水果糖醋肉 */
 	public static final int COOKING_1_5_S = 3013;
 
+	/** 特別的烤山豬肉串 */
 	public static final int COOKING_1_6_S = 3014;
 
+	/** 特別的蘑菇湯 */
 	public static final int COOKING_1_7_S = 3015;
 
+	/** 魚子醬 */
 	public static final int COOKING_2_0_N = 3016;
 
+	/** 鱷魚肉排 */
 	public static final int COOKING_2_1_N = 3017;
 
+	/** 龍龜蛋餅乾 */
 	public static final int COOKING_2_2_N = 3018;
 
+	/** 烤奇異鸚鵡 */
 	public static final int COOKING_2_3_N = 3019;
 
+	/** 毒蠍串燒 */
 	public static final int COOKING_2_4_N = 3020;
 
+	/** 燉伊萊克頓 */
 	public static final int COOKING_2_5_N = 3021;
 
+	/** 蜘蛛腿串燒 */
 	public static final int COOKING_2_6_N = 3022;
 
+	/** 蟹肉湯 */
 	public static final int COOKING_2_7_N = 3023;
 
+	/** 特別的魚子醬 */
 	public static final int COOKING_2_0_S = 3024;
 
+	/** 特別的鱷魚肉排 */
 	public static final int COOKING_2_1_S = 3025;
 
+	/** 特別的龍龜蛋餅乾 */
 	public static final int COOKING_2_2_S = 3026;
 
+	/** 特別的烤奇異鸚鵡 */
 	public static final int COOKING_2_3_S = 3027;
 
+	/** 特別的毒蠍串燒 */
 	public static final int COOKING_2_4_S = 3028;
 
+	/** 特別的燉伊萊克頓 */
 	public static final int COOKING_2_5_S = 3029;
 
+	/** 特別的蜘蛛腿串燒 */
 	public static final int COOKING_2_6_S = 3030;
 
+	/** 特別的蟹肉湯 */
 	public static final int COOKING_2_7_S = 3031;
 
+	/** 烤奎斯坦修的螯 */
 	public static final int COOKING_3_0_N = 3032;
 
+	/** 烤格利芬肉 */
 	public static final int COOKING_3_1_N = 3033;
 
+	/** 亞力安的尾巴肉排 */
 	public static final int COOKING_3_2_N = 3034;
 
+	/** 烤巨王龜肉 */
 	public static final int COOKING_3_3_N = 3035;
 
+	/** 幼龍翅膀串燒 */
 	public static final int COOKING_3_4_N = 3036;
 
+	/** 烤飛龍肉 */
 	public static final int COOKING_3_5_N = 3037;
 
+	/** 燉深海魚肉 */
 	public static final int COOKING_3_6_N = 3038;
 
+	/** 邪惡蜥蜴蛋湯 */
 	public static final int COOKING_3_7_N = 3039;
 
+	/** 特別的烤奎斯坦修的螯 */
 	public static final int COOKING_3_0_S = 3040;
 
+	/** 特別的烤格利芬肉 */
 	public static final int COOKING_3_1_S = 3041;
 
+	/** 特別的亞力安的尾巴肉排 */
 	public static final int COOKING_3_2_S = 3042;
 
+	/** 特別的烤巨王龜肉 */
 	public static final int COOKING_3_3_S = 3043;
 
+	/** 特別的幼龍翅膀串燒 */
 	public static final int COOKING_3_4_S = 3044;
 
+	/** 特別的烤飛龍肉 */
 	public static final int COOKING_3_5_S = 3045;
 
+	/** 特別的燉深海魚肉 */
 	public static final int COOKING_3_6_S = 3046;
 
+	/** 特別的邪惡蜥蜴蛋湯 */
 	public static final int COOKING_3_7_S = 3047;
 
 	/** 象牙塔妙藥 */
@@ -964,6 +1019,7 @@ public class L1SkillId {
 	// 怪物增加
 	/** 亞力安冰矛圍籬 **/
 	public static final int ICE_LANCE_COCKATRICE = 15003;
+
 	/** 邪惡蜥蜴冰矛圍籬 **/
 	public static final int ICE_LANCE_BASILISK = 15004;
 }
