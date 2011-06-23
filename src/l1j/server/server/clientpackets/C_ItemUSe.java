@@ -496,7 +496,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if ((itemId == 40026) || (itemId == 40027) || (itemId == 40028)) { // 香蕉汁、橘子汁、蘋果汁
 					Potion.UseHeallingPotion(pc, l1iteminstance, 25, 189);
 				}
-				else if (itemId == 40058) { // 煙燻的麵包屑
+				else if ((itemId == 40058) || (itemId == 49268) || (itemId == 49269)) { // 煙燻的麵包屑、愛瑪伊的畫像、伊森之畫像
 					Potion.UseHeallingPotion(pc, l1iteminstance, 30, 189);
 				}
 				else if (itemId == 40071) { // 烤焦的麵包屑
@@ -1173,23 +1173,22 @@ public class C_ItemUSe extends ClientBasePacket {
 						// handleCommandsのほうで判断＆処理すべき部分かもしれない
 					}
 					int skillid = itemId - 40858;
-					if (itemId == 49281) { // フィジカルエンチャント：STR
+					if (itemId == 49281) { // 魔法卷軸 (體魄強健術)
 						skillid = 42;
 					}
-					else if (itemId == 49282) { // ブレスウェポン
+					else if (itemId == 49282) { // 魔法卷軸 (祝福魔法武器)
 						skillid = 48;
 					}
-					else if (itemId == 49283) { // ヒールオール
+					else if (itemId == 49283) { // 魔法卷軸 (體力回復術)
 						skillid = 49;
 					}
-					else if (itemId == 49284) { // ホーリーウォーク(未実装)
+					else if (itemId == 49284) { // 魔法卷軸 (神聖疾走)
 						skillid = 52;
-						return;
 					}
-					else if (itemId == 49285) { // グレーターヘイスト
+					else if (itemId == 49285) { // 魔法卷軸 (強力加速術)
 						skillid = 54;
 					}
-					else if (itemId == 49286) { // フルヒール
+					else if (itemId == 49286) { // 魔法卷軸 (全部治癒術)
 						skillid = 57;
 					}
 					L1SkillUse l1skilluse = new L1SkillUse();
