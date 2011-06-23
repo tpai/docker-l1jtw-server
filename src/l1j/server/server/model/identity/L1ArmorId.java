@@ -36,6 +36,33 @@ public class L1ArmorId {
 	/** 潔尼斯戒指 */
 	public static final int RING_OF_ZENITH = 20298;
 
+	/** 巴風特盔甲 */
+	public static final int Armor_of_Baphomet = 20117;
+
+	/** 安塔瑞斯的力量 */
+	public static final int ELITE_PLATE_MAIL_OF_Antharas = 21115;
+
+	/** 安塔瑞斯的魅惑 */
+	public static final int ELITE_ROBE_OF_Antharas = 21116;
+
+	/** 安塔瑞斯的泉源 */
+	public static final int ELITE_LEATHER_ARMOR_OF_Antharas = 21117;
+
+	/** 安塔瑞斯的霸氣 */
+	public static final int ELITE_SCALE_MAIL_OF_Antharas = 21118;
+
+	/** 法利昂的力量 */
+	public static final int ELITE_PLATE_MAIL_OF_Fafurion = 21119;
+
+	/** 法利昂的魅惑 */
+	public static final int ELITE_ROBE_OF_Fafurion = 21120;
+
+	/** 法利昂的泉源 */
+	public static final int ELITE_LEATHER_ARMOR_OF_Fafurion = 21121;
+
+	/** 法利昂的霸氣 */
+	public static final int ELITE_SCALE_MAIL_OF_Fafurion = 21122;
+
 	/** 林德拜爾的力量 */
 	public static final int ELITE_PLATE_MAIL_OF_LINDVIOR = 21123;
 
@@ -47,6 +74,18 @@ public class L1ArmorId {
 
 	/** 林德拜爾的霸氣 */
 	public static final int ELITE_SCALE_MAIL_OF_LINDVIOR = 21126;
+
+	/** 巴拉卡斯的力量 */
+	public static final int ELITE_PLATE_MAIL_OF_Valakas = 21127;
+
+	/** 巴拉卡斯的魅惑 */
+	public static final int ELITE_ROBE_OF_Valakas = 21128;
+
+	/** 巴拉卡斯的泉源 */
+	public static final int ELITE_LEATHER_ARMOR_OF_Valakas = 21129;
+
+	/** 巴拉卡斯的霸氣 */
+	public static final int ELITE_SCALE_MAIL_OF_Valakas = 21130;
 
 	/** 底比斯歐西里斯腰帶 */
 	public static final int BELT_OF_THEBES_OSIRIS = 21137;

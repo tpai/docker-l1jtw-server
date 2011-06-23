@@ -103,7 +103,7 @@ public class L1ItemId {
 	public static final int B_POTION_OF_MANA = 140015;
 
 	/** 福利藍色藥水 */
-	//public static final int W_POTION_OF_MANA = ;
+	public static final int W_POTION_OF_MANA = 49306;
 
 	/** 慎重藥水 */
 	public static final int POTION_OF_EMOTION_WISDOM = 40016;
@@ -112,7 +112,7 @@ public class L1ItemId {
 	public static final int B_POTION_OF_EMOTION_WISDOM = 140016;
 
 	/** 福利慎重藥水 */
-	//public static final int W_POTION_OF_EMOTION_WISDOM = 140016;
+	public static final int W_POTION_OF_EMOTION_WISDOM = 49307;
 
 	/** 翡翠藥水 */
 	public static final int POTION_OF_CURE_POISON = 40017;

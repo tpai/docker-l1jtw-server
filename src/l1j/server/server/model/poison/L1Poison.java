@@ -34,10 +34,14 @@ public abstract class L1Poison {
 		}
 
 		L1PcInstance player = (L1PcInstance) cha;
-		// ゼニス リング装備中、バフォ メットアーマー装備中 、ベノム レジスト中
-		if (player.getInventory().checkEquipped(20298)
-				|| player.getInventory().checkEquipped(20117)
-				|| player.hasSkillEffect(104)) {
+		if (player.getInventory().checkEquipped(20298) // 潔尼斯戒指
+				|| player.getInventory().checkEquipped(20117) // 巴風特盔甲
+				|| player.getInventory().checkEquipped(21115) // 安塔瑞斯的力量
+				|| player.getInventory().checkEquipped(21116) // 安塔瑞斯的魅惑
+				|| player.getInventory().checkEquipped(21117) // 安塔瑞斯的泉源
+				|| player.getInventory().checkEquipped(21118) // 安塔瑞斯的霸氣
+				|| player.hasSkillEffect(104)) // 黑暗妖精魔法(毒性抵抗)
+			{
 			return false;
 		}
 		return true;
