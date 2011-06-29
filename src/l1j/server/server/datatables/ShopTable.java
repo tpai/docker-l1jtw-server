@@ -121,4 +121,8 @@ public class ShopTable {
 	public L1Shop get(int npcId) {
 		return _allShops.get(npcId);
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

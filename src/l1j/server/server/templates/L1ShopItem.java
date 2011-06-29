@@ -61,4 +61,8 @@ public class L1ShopItem {
 		_item.setUnidentifiedNameId(temp);
 		_item.setIdentifiedNameId(temp);
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

@@ -538,4 +538,8 @@ public class ItemTable {
 		}
 		return itemid;
 	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 }

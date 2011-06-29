@@ -18,7 +18,6 @@ import l1j.server.Config;
 import l1j.server.server.model.Instance.L1NpcInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.map.L1Map;
-import l1j.server.server.serverpackets.S_Paralysis;
 import l1j.server.server.serverpackets.S_SkillSound;
 import l1j.server.server.serverpackets.S_Teleport;
 import l1j.server.server.utils.Teleportation;

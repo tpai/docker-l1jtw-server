@@ -58,6 +58,10 @@ public class CalcExp {
 	private CalcExp() {
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	public static void calcExp(L1PcInstance l1pcinstance, int targetid, List<L1Character> acquisitorList, List<Integer> hateList, int exp) {
 
 		int i = 0;
