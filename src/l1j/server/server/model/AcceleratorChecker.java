@@ -256,7 +256,7 @@ public class AcceleratorChecker {
 		}
 		// 風之枷鎖
 		if (_pc.isWindShackle()) { // 攻速 / 2倍
-			interval *= 2;
+			interval /= 2;
 		}
 		if (_pc.getMapId() == 5143) { // 寵物競速例外
 			interval *= 0.1;
