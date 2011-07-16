@@ -936,11 +936,6 @@ public class L1ItemInstance extends L1Object {
 				os.writeC(32);
 				os.writeC(getItem().get_addmp() + getaddMp());
 			}
-			// MR
-			if (getMr() != 0) {
-				os.writeC(15);
-				os.writeH(getMr());
-			}
 			// SP(魔力)
 			if (getItem().get_addsp() != 0 || getaddSp() != 0) {
 				os.writeC(17);
@@ -1011,6 +1006,11 @@ public class L1ItemInstance extends L1Object {
 				os.writeH(getItem().get_regist_sustain());
 				os.writeC(33);
 				os.writeC(6);
+			}
+			// MR
+			if (getMr() != 0) {
+				os.writeC(15);
+				os.writeH(getMr());
 			}
 			// 體力回復率
 			if (getItem().get_addhpr() != 0 || getHpr() != 0) {
