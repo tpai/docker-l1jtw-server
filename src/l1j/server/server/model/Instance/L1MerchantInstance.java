@@ -2604,7 +2604,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 				} else {
 					htmlid = "kuen1";
 				}
-			} else if (npcid == 80134) { // タリオン
+			} else if (npcid == 80134) { // 塔爾立昂
 				if (player.isDragonKnight()) { // ドラゴンナイト
 					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
 					int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
@@ -2614,7 +2614,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "talrion9";
 					}
 				}
-			} else if (npcid == 80135) { // エルラス
+			} else if (npcid == 80135) { // 愛爾菈絲
 				if (player.isDragonKnight()) { // ドラゴンナイト
 					int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
 					if (lv30_step == L1Quest.QUEST_END) {
@@ -2623,7 +2623,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "elas1";
 					}
 				}
-			} else if (npcid == 80136) { // 長老 プロケル
+			} else if (npcid == 80136) { // 長老 普洛凱爾
 				int lv15_step = quest.get_step(L1Quest.QUEST_LEVEL15);
 				int lv30_step = quest.get_step(L1Quest.QUEST_LEVEL30);
 				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
@@ -2787,8 +2787,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 							&& lv30_step == L1Quest.QUEST_END) {
 						if (lv45_step == 0) {
 							htmlid = "silrein18";
-						} else if (lv45_step > 4) { // 交出時空裂痕邪念碎片 lv45_step >= 5
-													// ~ lv45_step <= 10
+						} else if (lv45_step > 4) { // 交出時空裂痕邪念碎片
 							htmlid = "silrein23";
 						} else if (lv45_step > 0) { // 交出記憶的碎片
 							htmlid = "silrein20";
@@ -2816,7 +2815,7 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "silrein1";
 					}
 				}
-			} else if (npcid == 81245) { // オーク密使(HC3)
+			} else if (npcid == 81245) { // 妖魔密使(海音地監3樓)
 				if (player.isDragonKnight()) {
 					if (player.getTempCharGfx() == 6984) { // オーク密使変身
 						int lv30_step = player.getQuest().get_step(

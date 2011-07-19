@@ -202,7 +202,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			case 40957: case 40958: case 40964: case 49092: case 49094: case 49098: case 49317: case 49321:
 			case 41426: case 41427: case 40075: case 49311: case 49312: case 49148: case 41429: case 41430:
 			case 41431: case 41432: case 47041: case 47042: case 47043: case 47044: case 47045: case 47046:
-			case 47048: case 47049: case 47050: case 47051: case 47052:
+			case 47048: case 47049: case 47050: case 47051: case 47052: case 49198: case 49199:
 				l = readD();
 				break;
 			case 140100: case 40100: case 40099: case 40086: case 40863: // 瞬間移動卷軸
@@ -2535,6 +2535,24 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().consumeItem(49320, 1);
 						pc.getInventory().consumeItem(49321, 1);
 						createNewItem(pc, 49322, 1);
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}
+				else if (itemId == 49198) { // 第二次邪念碎片
+					if (l1iteminstance1.getItem().getItemId() == 49197) {
+						pc.getInventory().consumeItem(49197, 1);
+						pc.getInventory().consumeItem(49198, 1);
+						createNewItem(pc, 49200, 1);
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}
+				else if (itemId == 49199) { // 第三次邪念碎片
+					if (l1iteminstance1.getItem().getItemId() == 49200) {
+						pc.getInventory().consumeItem(49199, 1);
+						pc.getInventory().consumeItem(49200, 1);
+						createNewItem(pc, 49201, 1);
 					} else {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
