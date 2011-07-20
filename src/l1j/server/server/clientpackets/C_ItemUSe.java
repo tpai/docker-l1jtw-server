@@ -1645,7 +1645,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(546)); // \f1あなたのパートナーは今プレイをしていません。
 					}
 				}
-				else if (itemId == 40555) { // 秘密の部屋のキー
+				else if (itemId == 40555) { // 密室鑰匙
 					if (pc.isKnight() && ((pc.getX() >= 32806) && // オリム部屋
 							(pc.getX() <= 32814)) && ((pc.getY() >= 32798) && (pc.getY() <= 32807)) && (pc.getMapId() == 13)) {
 						short mapid = 13;
@@ -1655,7 +1655,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 					}
 				}
-				else if (itemId == 40417) { // ソウルクリスタル
+				else if (itemId == 40417) { // 精靈結晶
 					if (((pc.getX() >= 32665) && // 海賊島
 							(pc.getX() <= 32674))
 							&& ((pc.getY() >= 32976) && (pc.getY() <= 32985)) && (pc.getMapId() == 440)) {
@@ -1666,6 +1666,36 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 					}
 				}
+				else if (itemId == 49202) { // 時空裂痕邪念碎片
+					if ((pc.getMapId() != 2004) && (pc.getQuest().get_step(L1Quest.QUEST_LEVEL50) > 1 )) {
+						short mapid = 2004;
+						L1Teleport.teleport(pc, 32723, 32834, mapid, 5, true);
+						pc.getInventory().removeItem(l1iteminstance, 1);
+					}
+					else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					}
+				}			
+				else if (itemId == 49178) { // 希蓮恩的護身符
+					if ((pc.isIllusionist()) && (pc.getMapId() == 2004) && (pc.getQuest().get_step(L1Quest.QUEST_LEVEL50) > 1 )) {
+						short mapid = 1000;
+						L1Teleport.teleport(pc, 32772, 32812, mapid, 5, true);
+						pc.getInventory().removeItem(l1iteminstance, 1);
+					}
+					else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					}
+				}			
+				else if (itemId == 49216) { // 普洛凱爾的護身符
+					if ((pc.isDragonKnight()) && (pc.getMapId() == 2004) && (pc.getQuest().get_step(L1Quest.QUEST_LEVEL50) > 1 )) {
+						short mapid = 1001;
+						L1Teleport.teleport(pc, 32817, 32832, mapid, 5, true);
+						pc.getInventory().removeItem(l1iteminstance, 1);
+					}
+					else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					}
+				}			
 				else if (itemId == 40566) { // ミステリアス シェル
 					if (pc.isElf()
 							&& ((pc.getX() >= 33971) && // 象牙の塔の村の南にある魔方陣の座標
@@ -1813,7 +1843,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
 					}
 				}
-				else if (itemId == 40572) { // アサシンの印
+				else if (itemId == 40572) { // 刺客之證
 					if ((pc.getX() == 32778) && (pc.getY() == 32738) && (pc.getMapId() == 21)) {
 						L1Teleport.teleport(pc, 32781, 32728, (short) 21, 5, true);
 					}
@@ -2063,7 +2093,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.broadcastPacket(s_skillsound);
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if (itemId == 40615) { // 影の神殿2階の鍵
+				else if (itemId == 40615) { // 暗影神殿2樓鑰匙
 					if (((pc.getX() >= 32701) && (pc.getX() <= 32705)) && ((pc.getY() >= 32894) && (pc.getY() <= 32898)) && (pc.getMapId() == 522)) { // 影の神殿1F
 						L1Teleport.teleport(pc, ((L1EtcItem) l1iteminstance.getItem()).get_locx(), ((L1EtcItem) l1iteminstance.getItem()).get_locy(),
 								((L1EtcItem) l1iteminstance.getItem()).get_mapid(), 5, true);
@@ -2073,7 +2103,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
-				else if ((itemId == 40616) || (itemId == 40782) || (itemId == 40783)) { // 影の神殿3階の鍵
+				else if ((itemId == 40616) || (itemId == 40782) || (itemId == 40783)) { // 暗影神殿3樓鑰匙
 					if (((pc.getX() >= 32698) && (pc.getX() <= 32702)) && ((pc.getY() >= 32894) && (pc.getY() <= 32898)) && (pc.getMapId() == 523)) { // 影の神殿2階
 						L1Teleport.teleport(pc, ((L1EtcItem) l1iteminstance.getItem()).get_locx(), ((L1EtcItem) l1iteminstance.getItem()).get_locy(),
 								((L1EtcItem) l1iteminstance.getItem()).get_mapid(), 5, true);
@@ -2083,7 +2113,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
-				else if (itemId == 40692) { // 完成された宝の地図
+				else if (itemId == 40692) { // 完成的藏寶圖
 					if (pc.getInventory().checkItem(40621)) {
 						// \f1何も起きませんでした。
 						pc.sendPackets(new S_ServerMessage(79));
@@ -2152,6 +2182,45 @@ public class C_ItemUSe extends ClientBasePacket {
 					else {
 						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "tscrollp"));
 					}
+				}
+				else if (itemId == 49172) { // 希蓮恩的第一次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein1lt"));
+				}
+				else if (itemId == 49173) { // 希蓮恩的第二次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein2lt"));
+				}
+				else if (itemId == 49174) { // 希蓮恩的第三次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein3lt"));
+				}
+				else if (itemId == 49175) { // 希蓮恩的第四次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein4lt"));
+				}
+				else if (itemId == 49176) { // 希蓮恩的第五次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein5lt"));
+				}
+				else if (itemId == 49177) { // 希蓮恩的第六次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein6lt"));
+				}
+				else if (itemId == 49206) { // 塞維斯邪念碎片
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "bluesoul_p"));
+				}
+				else if (itemId == 49210) { // 普洛凱爾的第一次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "first_p"));
+				}
+				else if (itemId == 49211) { // 普洛凱爾的第二次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "second_p"));
+				}
+				else if (itemId == 49212) { // 普洛凱爾的第三次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "third_p"));
+				}
+				else if (itemId == 49287) { // 普洛凱爾的第四次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fourth_p"));
+				}
+				else if (itemId == 49288) { // 普洛凱爾的第五次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fifth_p"));
+				}
+				else if (itemId == 49231) { // 路西爾斯邪念碎片
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "redsoul_p"));
 				}
 				else if (itemId == 40383) { // 地図：歌う島
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei035"));
@@ -2347,7 +2416,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == 41026) { // ラスタバド歴史書８章
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory8"));
 				}
-				else if (itemId == 41208) { // 散りゆく魂
+				else if (itemId == 41208) { // 微弱的靈魂
 					if (((pc.getX() >= 32844) && (pc.getX() <= 32845)) && ((pc.getY() >= 32693) && (pc.getY() <= 32694)) && (pc.getMapId() == 550)) { // 船の墓場:地上層
 						L1Teleport.teleport(pc, ((L1EtcItem) l1iteminstance.getItem()).get_locx(), ((L1EtcItem) l1iteminstance.getItem()).get_locy(),
 								((L1EtcItem) l1iteminstance.getItem()).get_mapid(), 5, true);
@@ -2395,7 +2464,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						createNewItem(pc, 41131, 1);
 					}
 				}
-				else if (itemId == 42501) { // ストームウォーク
+				else if (itemId == 42501) { // 暴風疾走
 					if (pc.getCurrentMp() < 10) {
 						pc.sendPackets(new S_ServerMessage(278)); // \f1MPが不足していて魔法を使うことができません。
 						return;
@@ -2730,7 +2799,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().consumeItem(49222, 1);
 					}
 				}
-				// 幻術士試練 增加 start
 				else if (itemId == 49188) { // 索夏依卡靈魂之石
 					if (l1iteminstance1.getItem().getItemId() == 49186) {
 						L1ItemInstance item1 = ItemTable.getInstance().createItem(49189);
@@ -2791,9 +2859,54 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 						pc.getInventory().consumeItem(49201, 1);
 					}
-				// 幻術士試練 增加 end
-
-				} else if (itemId == 47010) { // 龍之鑰匙
+				}
+				else if (itemId == 49208) { // 藍色之火碎片
+					if (pc.isIllusionist() && (pc.getMapId() == 2004)) { // 異界 奎斯特
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 81313) {// 塞維斯
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79));
+						}
+						else {
+							L1SpawnUtil.spawn(pc, 81313, 0, 0);
+						}
+						pc.getInventory().consumeItem(49208, 1);
+					}
+				}
+				else if (itemId == 49227) { // 紅色之火碎片
+					if (pc.isDragonKnight() && (pc.getMapId() == 2004)) { // 異界 奎斯特
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 81312) {// 路西爾斯
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79));
+						}
+						else {
+							L1SpawnUtil.spawn(pc, 81312, 0, 0);
+						}
+						pc.getInventory().consumeItem(49227, 1);
+					}
+				}
+				else if (itemId == 47010) { // 龍之鑰匙
 					if (!L1CastleLocation.checkInAllWarArea(pc.getLocation())) {// 檢查是否在城堡區域內
 						pc.sendPackets(new S_DragonGate(pc ,L1DragonSlayer.getInstance().checkDragonPortal()));
 					} else {

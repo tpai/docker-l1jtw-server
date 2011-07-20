@@ -692,6 +692,72 @@
 		</Fail>
 	</MakeItem>
 
+<!--龍騎士 / 時空彼端的線索（50）-->
+	<!--交出時空裂痕碎片100個 / 長老 普洛凱爾 / 貝希摩斯村莊-->
+	<MakeItem Name="i" Class="R" NpcId="80136" AmountInputable="false" QuestId="Level50" QuestStep="1">
+		<Item Amount="1" ItemId="49202"/>		<!--時空裂痕邪念碎片-->
+		<Item Amount="1" ItemId="49216"/>		<!--普洛凱爾的護身符-->
+		<Item Amount="1" ItemId="49288"/>		<!--普洛凱爾的第五次指令書-->
+		<Material Amount="100" ItemId="49101"/>		<!--時空裂痕碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="2"/>
+			<ShowHtml HtmlId="prokel23"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="prokel31"/>
+		</Fail>
+	</MakeItem>
+
+	<!--奉獻異界邪念粉末 / 紅色靈魂之火 / 異界奎斯特-->
+	<MakeItem Name="a" Class="R" NpcId="81310" AmountInputable="false" QuestId="Level50" QuestStep="2">
+		<Item Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Item Amount="1" ItemId="49227"/>		<!--紅色之火碎片-->
+		<Material Amount="10" ItemId="49229"/>		<!--異界邪念粉末-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="3"/>
+			<ShowHtml HtmlId="redsoul_f2"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="redsoul_f3"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出路西爾斯邪念碎片與靈魂之火灰燼 / 長老 普洛凱爾 / 貝希摩斯村莊-->
+	<MakeItem Name="j" Class="R" NpcId="80136" AmountInputable="false" QuestId="Level50" QuestStep="3">
+		<Item Amount="1" ItemId="49228"/>		<!--發光的銀塊-->
+		<Material Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Material Amount="1" ItemId="49231"/>		<!--路西爾斯邪念碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="4"/>
+			<ShowHtml HtmlId="prokel26"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="prokel22"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出發光的銀塊 / 塔爾立昂 / 貝希摩斯村莊-->
+	<MakeItem Name="c" Class="R" NpcId="80134" AmountInputable="false" QuestId="Level50" QuestStep="4">
+		<Item Amount="1" ItemId="49230"/>		<!--塔爾立昂的武器材料清單-->
+		<Material Amount="1" ItemId="49228"/>		<!--發光的銀塊-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="5"/>
+			<ShowHtml HtmlId="talrion5"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="talrion6"/>
+		</Fail>
+	</MakeItem>
+
+	<!--製作破滅者鎖鏈劍 / 鐵匠 皮爾 / 貝希摩斯村莊-->
+	<MakeItem Name="request chainsword extinctioner" Class="R" NpcId="80133" AmountInputable="false" QuestId="Level50" QuestStep="5">
+		<Item Amount="1" ItemId="272"/>		<!--消滅者鎖鏈劍-->
+		<Material Amount="1" ItemId="49230"/>		<!--塔爾立昂的武器材料清單-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
 <!--幻術士 / 眠龍洞穴污染的來源（15）-->
 	<!--交出分析污染原因的物品 / 長老 希蓮恩 / 希培莉亞村莊-->
 	<MakeItem Name="b" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level15" QuestStep="1">
@@ -768,6 +834,8 @@
 
 	<!--交出記憶的碎片 / 長老 希蓮恩 / 希培莉亞村莊-->
 	<MakeItem Name="f" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="4">
+		<Item Amount="1" ItemId="49175"/>		<!--希蓮恩的第四次信件-->
+		<Item Amount="1" ItemId="49185"/>		<!--威頓村莊瞬間移動卷軸-->
 		<Item Amount="3" ItemId="49193"/>		<!--時空裂痕水晶(藍色)-->
 		<Material Amount="1" ItemId="49194"/>		<!--第一次記憶碎片-->
 		<Material Amount="1" ItemId="49195"/>		<!--第二次記憶碎片-->
@@ -821,7 +889,7 @@
 	</MakeItem>
 
 	<!--交出時空裂痕邪念碎片 / 長老 希蓮恩 / 希培莉亞村莊-->
-	<MakeItem Name="g" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="10">
+	<MakeItem Name="g" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="8">
 		<Item Amount="1" ItemId="21100"/>		<!--幻術士斗篷-->
 		<Material Amount="1" ItemId="49202"/>		<!--時空裂痕邪念碎片-->
 		<Succeed>
@@ -831,6 +899,64 @@
 		<Fail>
 			<ShowHtml HtmlId="silrein24"/>
 		</Fail>
+	</MakeItem>
+
+<!--幻術士 / 時空彼端的線索（50）-->
+	<!--交出時空裂痕碎片100個 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="i" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level50" QuestStep="1">
+		<Item Amount="1" ItemId="49177"/>		<!--希蓮恩的第六次信件-->
+		<Item Amount="1" ItemId="49178"/>		<!--希蓮恩的護身符-->
+		<Item Amount="1" ItemId="49202"/>		<!--時空裂痕邪念碎片-->
+		<Material Amount="100" ItemId="49101"/>		<!--時空裂痕碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="2"/>
+			<ShowHtml HtmlId="silrein31"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein30"/>
+		</Fail>
+	</MakeItem>
+
+	<!--供奉魔族之血 / 藍色靈魂之火 / 異界奎斯特-->
+	<MakeItem Name="a" Class="I" NpcId="81311" AmountInputable="false" QuestId="Level50" QuestStep="2">
+		<Item Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Item Amount="1" ItemId="49208"/>		<!--藍色之火碎片-->
+		<Material Amount="5" ItemId="49203"/>		<!--食腐獸之血-->
+		<Material Amount="5" ItemId="49204"/>		<!--翼龍之血-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="3"/>
+			<ShowHtml HtmlId="bluesoul_f2"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="bluesoul_f3"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出塞維斯邪念碎片 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<Action Name="k" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level50" QuestStep="3">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="silrein35"/>
+	</Action>
+
+	<!--交出塞維斯邪念碎片與靈魂之火灰燼 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="j" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level50" QuestStep="4">
+		<Item Amount="1" ItemId="49171"/>		<!--希蓮恩的指令書-->
+		<Item Amount="1" ItemId="49205"/>		<!--特別的原石-->
+		<Material Amount="1" ItemId="49206"/>		<!--塞維斯邪念碎片-->
+		<Material Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="5"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--提供希蓮恩的推薦書與特別的原石 / 鐵匠 巴特爾 / 希培莉亞村莊-->
+	<MakeItem Name="request sapphire kiringku" Class="I" NpcId="80142" AmountInputable="false" QuestId="Level50" QuestStep="5">
+		<Item Amount="1" ItemId="270"/>		<!--藍寶石奇古獸-->
+		<Material Amount="1" ItemId="49171"/>		<!--希蓮恩的指令書-->
+		<Material Amount="1" ItemId="49205"/>		<!--特別的原石-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+		</Succeed>
 	</MakeItem>
 
 <!--爺爺的寶物（15↑）-->

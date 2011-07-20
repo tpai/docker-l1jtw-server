@@ -3775,24 +3775,25 @@ public class C_NPCAction extends ClientBasePacket {
 			}
 		}
 
-		// 長老 プロケル
+		// 長老 普洛凱爾
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80136) {
 			int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
 			int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
 			int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
+			int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
 			if (pc.isDragonKnight()) {
-				// 「プロケルの課題を遂行する」
+				// 執行普洛凱爾的課題
 				if (s.equalsIgnoreCase("a") && (lv15_step == 0)) {
 					L1NpcInstance npc = (L1NpcInstance) obj;
-					L1ItemInstance item = pc.getInventory().storeItem(49210, 1); // プロケルの1番目の指令書
+					L1ItemInstance item = pc.getInventory().storeItem(49210, 1); // 普洛凱爾的第一次指令書
 					String npcName = npc.getNpcTemplate().get_name();
 					String itemName = item.getItem().getName();
 					pc.sendPackets(new S_ServerMessage(143, npcName, itemName)); // \f1%0が%1をくれました。
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL15, 1);
 					htmlid = "prokel3";
-					// 「プロケルの2番目の課題を遂行する」
+				// 執行普洛凱爾的第二次課題
 				} else if (s.equalsIgnoreCase("c") && (lv30_step == 0)) {
-					final int[] item_ids = { 49211, 49215, }; // プロケルの2番目の指令書,プロケルの鉱物の袋
+					final int[] item_ids = { 49211, 49215, }; // 普洛凱爾的第二次指令書、普洛凱爾的礦物袋
 					final int[] item_amounts = { 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
 						L1ItemInstance item = pc.getInventory().storeItem(
@@ -3803,26 +3804,23 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL30, 1);
 					htmlid = "prokel9";
-					// 「鉱物の袋が必要だ」
+				// 需要普洛凱爾的礦物袋
 				} else if (s.equalsIgnoreCase("e")) {
 					if (pc.getInventory().checkItem(49215, 1)) {
 						htmlid = "prokel35";
 					} else {
 						L1NpcInstance npc = (L1NpcInstance) obj;
 						L1ItemInstance item = pc.getInventory().storeItem(
-								49215, 1); // プロケルの鉱物の袋
+								49215, 1); // 普洛凱爾的礦物袋
 						String npcName = npc.getNpcTemplate().get_name();
 						String itemName = item.getItem().getName();
 						pc.sendPackets(new S_ServerMessage(143, npcName,
 								itemName)); // \f1%0が%1をくれました。
 						htmlid = "prokel13";
 					}
-					// 「プロケルの3番目の課題を遂行する」
+				// 執行普洛凱爾的第三次課題
 				} else if (s.equalsIgnoreCase("f") && (lv45_step == 0)) {
-					final int[] item_ids = { 49209, 49212, 49226, }; // プロケルの手紙,プロケルの3番目の指令書,タワー
-																		// ポータル
-																		// テレポート
-																		// スクロール
+					final int[] item_ids = { 49209, 49212, 49226, }; // 長老普洛凱爾的信件、普洛凱爾的第三次指令書、結盟瞬間移動卷軸
 					final int[] item_amounts = { 1, 1, 1, };
 					for (int i = 0; i < item_ids.length; i++) {
 						L1ItemInstance item = pc.getInventory().storeItem(
@@ -3833,6 +3831,36 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL45, 1);
 					htmlid = "prokel16";
+				// 執行普洛凱爾的第四次課題
+				} else if (s.equalsIgnoreCase("h") && (lv50_step == 0)) {
+					final int[] item_ids = { 49287, }; // 普洛凱爾的第四次指令書
+					final int[] item_amounts = { 1, };
+					for (int i = 0; i < item_ids.length; i++) {
+						L1ItemInstance item = pc.getInventory().storeItem(
+								item_ids[i], item_amounts[i]);
+						pc.sendPackets(new S_ServerMessage(143,
+								((L1NpcInstance) obj).getNpcTemplate()
+										.get_name(), item.getItem().getName()));
+					}
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 1);
+					htmlid = "prokel22";
+				// 重新接收時空裂痕邪念碎片、普洛凱爾的護身符
+				} else if (s.equalsIgnoreCase("k") && (lv50_step >= 2)) {
+					if (pc.getInventory().checkItem(49202, 1)
+							|| pc.getInventory().checkItem(49216, 1)) {
+						htmlid = "prokel29";
+					} else {
+						final int[] item_ids = { 49202, 49216, };
+						final int[] item_amounts = { 1, 1, };
+						for (int i = 0; i < item_ids.length; i++) {
+							L1ItemInstance item = pc.getInventory().storeItem(
+									item_ids[i], item_amounts[i]);
+							pc.sendPackets(new S_ServerMessage(143,
+									((L1NpcInstance) obj).getNpcTemplate()
+									.get_name(), item.getItem().getName()));
+						}
+						htmlid = "prokel28";
+					}
 				}
 			}
 		}
@@ -4039,12 +4067,10 @@ public class C_NPCAction extends ClientBasePacket {
 		}
 
 		// 幻術士 試練任務
-		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80145) {// 長老
-																				// 希蓮恩
+		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80145) {// 長老 希蓮恩
 			int lv15_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL15);
 			int lv30_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL30);
 			int lv45_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL45);
-			@SuppressWarnings("unused")
 			int lv50_step = pc.getQuest().get_step(L1Quest.QUEST_LEVEL50);
 			if (pc.isDragonKnight()) {
 				if (s.equalsIgnoreCase("l") && (lv45_step == 1)) {
@@ -4072,7 +4098,7 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL15, 1);
 					htmlid = "silrein3";
-					// 執行希蓮恩的第二課題
+				// 執行希蓮恩的第二課題
 				} else if (s.equalsIgnoreCase("c") && (lv30_step == 0)) {
 					final int[] item_ids = { 49173, 49179, }; // 希蓮恩的第二次信件、希蓮恩之袋
 																// 獲得【歐瑞村莊瞬間移動卷軸、生鏽的笛子】
@@ -4086,7 +4112,7 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL30, 1);
 					htmlid = "silrein12";
-					// 重新接收生鏽的笛子
+				// 重新接收生鏽的笛子
 				} else if (s.equalsIgnoreCase("o") && (lv30_step == 1)) {
 					if (pc.getInventory().checkItem(49186, 1)
 							|| pc.getInventory().checkItem(49179, 1)) {
@@ -4098,7 +4124,7 @@ public class C_NPCAction extends ClientBasePacket {
 								.getName()));
 						htmlid = "silrein16";
 					}
-					// 執行希蓮恩的第三課題
+				// 執行希蓮恩的第三課題
 				} else if (s.equalsIgnoreCase("e") && (lv45_step == 0)) {
 					final int[] item_ids = { 49174, 49180, }; // 希蓮恩的第三次信件、希蓮恩之袋
 																// 獲得【風木村莊瞬間移動卷軸、時空裂痕水晶(綠色
@@ -4113,6 +4139,36 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 					pc.getQuest().set_step(L1Quest.QUEST_LEVEL45, 1);
 					htmlid = "silrein19";
+				// 執行希蓮恩的第四課題
+				} else if (s.equalsIgnoreCase("h") && (lv50_step == 0)) {
+					final int[] item_ids = { 49176, }; // 希蓮恩的第五次信件
+					final int[] item_amounts = { 1, };
+					for (int i = 0; i < item_ids.length; i++) {
+						L1ItemInstance item = pc.getInventory().storeItem(
+								item_ids[i], item_amounts[i]);
+						pc.sendPackets(new S_ServerMessage(143,
+								((L1NpcInstance) obj).getNpcTemplate()
+										.get_name(), item.getItem().getName()));
+					}
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 1);
+					htmlid = "silrein28";
+				// 重新接收時空裂痕邪念碎片、希蓮恩的護身符
+				} else if (s.equalsIgnoreCase("k") && (lv50_step >= 2)) {
+					if (pc.getInventory().checkItem(49202, 1)
+							|| pc.getInventory().checkItem(49178, 1)) {
+						htmlid = "silrein32";
+					} else {
+						final int[] item_ids = { 49202, 49178, };
+						final int[] item_amounts = { 1, 1, };
+						for (int i = 0; i < item_ids.length; i++) {
+							L1ItemInstance item = pc.getInventory().storeItem(
+									item_ids[i], item_amounts[i]);
+							pc.sendPackets(new S_ServerMessage(143,
+									((L1NpcInstance) obj).getNpcTemplate()
+									.get_name(), item.getItem().getName()));
+						}
+						htmlid = "silrein32";
+					}
 				}
 			}
 		} else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 50016) {// 傑諾
