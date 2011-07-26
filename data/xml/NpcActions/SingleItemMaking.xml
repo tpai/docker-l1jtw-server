@@ -1,1148 +1,296 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
-	<!--マーブルの遺産1個->魔力の石 / 錬金術師-->
+<!--L1J-TW-->
+<!--多重地區-->
+	<!--錬金術師-->
 	<Action Name="a" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40304"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="20" ItemId="40318"/>
+			<Item Amount="20" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="1" ItemId="40304"/>		<!--馬普勒之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産10個->魔力の石 / 錬金術師-->
 	<Action Name="b" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40304"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="200" ItemId="40318"/>
+			<Item Amount="200" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="10" ItemId="40304"/>	<!--馬普勒之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産50個->魔力の石 / 錬金術師-->
 	<Action Name="c" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40304"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="1000" ItemId="40318"/>
+			<Item Amount="1000" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="50" ItemId="40304"/>	<!--馬普勒之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産1個->精霊の玉 / 錬金術師-->
 	<Action Name="d" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40304"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="40" ItemId="40319"/>
+			<Item Amount="40" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="1" ItemId="40304"/>		<!--馬普勒之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産10個->精霊の玉 / 錬金術師-->
 	<Action Name="e" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40304"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="400" ItemId="40319"/>
+			<Item Amount="400" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="10" ItemId="40304"/>	<!--馬普勒之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産50個->精霊の玉 / 錬金術師-->
 	<Action Name="f" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40304"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="2000" ItemId="40319"/>
+			<Item Amount="2000" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="50" ItemId="40304"/>	<!--馬普勒之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産1個->黒魔石 / 錬金術師-->
 	<Action Name="g" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40304"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="10" ItemId="40320"/>
+			<Item Amount="10" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="1" ItemId="40304"/>		<!--馬普勒之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産10個->黒魔石 / 錬金術師-->
 	<Action Name="h" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40304"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="100" ItemId="40320"/>
+			<Item Amount="100" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="10" ItemId="40304"/>	<!--馬普勒之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--マーブルの遺産50個->黒魔石 / 錬金術師-->
 	<Action Name="i" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40304"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="500" ItemId="40320"/>
+			<Item Amount="500" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="50" ItemId="40304"/>	<!--馬普勒之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産1個->魔力の石 / 錬金術師-->
 	<Action Name="j" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40307"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="25" ItemId="40318"/>
+			<Item Amount="25" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="1" ItemId="40307"/>		<!--沙哈之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産10個->魔力の石 / 錬金術師-->
 	<Action Name="k" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40307"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="250" ItemId="40318"/>
+			<Item Amount="250" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="10" ItemId="40307"/>	<!--沙哈之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産50個->魔力の石 / 錬金術師-->
 	<Action Name="l" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40307"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="1250" ItemId="40318"/>
+			<Item Amount="1250" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="50" ItemId="40307"/>	<!--沙哈之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産1個->精霊の玉 / 錬金術師-->
 	<Action Name="m" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40307"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="60" ItemId="40319"/>
+			<Item Amount="60" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="1" ItemId="40307"/>		<!--沙哈之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産10個->精霊の玉 / 錬金術師-->
 	<Action Name="n" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40307"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="600" ItemId="40319"/>
+			<Item Amount="600" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="10" ItemId="40307"/>	<!--沙哈之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産50個->精霊の玉 / 錬金術師-->
 	<Action Name="o" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40307"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="3000" ItemId="40319"/>
+			<Item Amount="3000" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="50" ItemId="40307"/>	<!--沙哈之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産1個->黒魔石 / 錬金術師-->
 	<Action Name="p" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40307"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="20" ItemId="40320"/>
+			<Item Amount="20" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="1" ItemId="40307"/>		<!--沙哈之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産10個->黒魔石 / 錬金術師-->
 	<Action Name="q" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40307"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="200" ItemId="40320"/>
+			<Item Amount="200" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="10" ItemId="40307"/>	<!--沙哈之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--サイハの遺産50個->黒魔石 / 錬金術師-->
 	<Action Name="r" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40307"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="1000" ItemId="40320"/>
+			<Item Amount="1000" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="50" ItemId="40307"/>	<!--沙哈之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産1個->魔力の石 / 錬金術師-->
 	<Action Name="s" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40306"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="30" ItemId="40318"/>
+			<Item Amount="30" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="1" ItemId="40306"/>		<!--伊娃之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産10個->魔力の石 / 錬金術師-->
 	<Action Name="t" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40306"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="300" ItemId="40318"/>
+			<Item Amount="300" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="10" ItemId="40306"/>	<!--伊娃之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産50個->魔力の石 / 錬金術師-->
 	<Action Name="u" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40306"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="1500" ItemId="40318"/>
+			<Item Amount="1500" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="50" ItemId="40306"/>	<!--伊娃之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産1個->精霊の玉 / 錬金術師-->
 	<Action Name="v" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40306"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="50" ItemId="40319"/>
+			<Item Amount="50" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="1" ItemId="40306"/>		<!--伊娃之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産10個->精霊の玉 / 錬金術師-->
 	<Action Name="w" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40306"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="500" ItemId="40319"/>
+			<Item Amount="500" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="10" ItemId="40306"/>	<!--伊娃之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産50個->精霊の玉 / 錬金術師-->
 	<Action Name="x" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40306"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="2500" ItemId="40319"/>
+			<Item Amount="2500" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="50" ItemId="40306"/>	<!--伊娃之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産1個->黒魔石 / 錬金術師-->
 	<Action Name="y" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40306"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="20" ItemId="40320"/>
+			<Item Amount="20" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="1" ItemId="40306"/>		<!--伊娃之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産10個->黒魔石 / 錬金術師-->
 	<Action Name="z" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40306"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="200" ItemId="40320"/>
+			<Item Amount="200" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="10" ItemId="40306"/>	<!--伊娃之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--エヴァの遺産50個->黒魔石 / 錬金術師-->
 	<Action Name="A" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40306"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="1000" ItemId="40320"/>
+			<Item Amount="1000" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="50" ItemId="40306"/>	<!--伊娃之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産1個->魔力の石 / 錬金術師-->
 	<Action Name="B" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40305"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="25" ItemId="40318"/>
+			<Item Amount="25" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="1" ItemId="40305"/>		<!--帕格里奧之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産10個->魔力の石 / 錬金術師-->
 	<Action Name="C" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40305"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="250" ItemId="40318"/>
+			<Item Amount="250" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="10" ItemId="40305"/>	<!--帕格里奧之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産50個->魔力の石 / 錬金術師-->
 	<Action Name="D" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40305"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="1250" ItemId="40318"/>
+			<Item Amount="1250" ItemId="40318"/>		<!--魔法寶石-->
+			<Material Amount="50" ItemId="40305"/>	<!--帕格里奧之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産1個->精霊の玉 / 錬金術師-->
 	<Action Name="E" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40305"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="30" ItemId="40319"/>
+			<Item Amount="30" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="1" ItemId="40305"/>		<!--帕格里奧之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産10個->精霊の玉 / 錬金術師-->
 	<Action Name="F" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40305"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="300" ItemId="40319"/>
+			<Item Amount="300" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="10" ItemId="40305"/>	<!--帕格里奧之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産50個->精霊の玉 / 錬金術師-->
 	<Action Name="G" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40305"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="1500" ItemId="40319"/>
+			<Item Amount="1500" ItemId="40319"/>		<!--精靈玉-->
+			<Material Amount="50" ItemId="40305"/>	<!--帕格里奧之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産1個->黒魔石 / 錬金術師-->
 	<Action Name="H" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40305"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="10" ItemId="40320"/>
+			<Item Amount="10" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="1" ItemId="40305"/>		<!--帕格里奧之石-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産10個->黒魔石 / 錬金術師-->
 	<Action Name="I" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40305"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="100" ItemId="40320"/>
+			<Item Amount="100" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="10" ItemId="40305"/>	<!--帕格里奧之石-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--ファアグリオの遺産50個->黒魔石 / 錬金術師-->
 	<Action Name="J" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40305"/>
-			<Material Amount="50000" ItemId="40308"/>
-			<Item Amount="500" ItemId="40320"/>
+			<Item Amount="500" ItemId="40320"/>		<!--一級黑魔石-->
+			<Material Amount="50" ItemId="40305"/>	<!--帕格里奧之石-->
+			<Material Amount="50000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--黒い血痕1個 / 錬金術師-->
 	<Action Name="K" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40524"/>
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="1" ItemId="40304"/>
-			<Item Amount="1" ItemId="40305"/>
-			<Item Amount="1" ItemId="40306"/>
-			<Item Amount="1" ItemId="40307"/>
+			<Item Amount="1" ItemId="40304"/>		<!--馬普勒之石-->
+			<Item Amount="1" ItemId="40305"/>		<!--帕格里奧之石-->
+			<Item Amount="1" ItemId="40306"/>		<!--伊娃之石-->
+			<Item Amount="1" ItemId="40307"/>		<!--沙哈之石-->
+			<Material Amount="1" ItemId="40524"/>		<!--黑色血痕-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--黒い血痕10個 / 錬金術師-->
 	<Action Name="L" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="40524"/>
-			<Material Amount="100000" ItemId="40308"/>
-			<Item Amount="10" ItemId="40304"/>
-			<Item Amount="10" ItemId="40305"/>
-			<Item Amount="10" ItemId="40306"/>
-			<Item Amount="10" ItemId="40307"/>
+			<Item Amount="10" ItemId="40304"/>		<!--馬普勒之石-->
+			<Item Amount="10" ItemId="40305"/>		<!--帕格里奧之石-->
+			<Item Amount="10" ItemId="40306"/>		<!--伊娃之石-->
+			<Item Amount="10" ItemId="40307"/>		<!--沙哈之石-->
+			<Material Amount="10" ItemId="40524"/>	<!--黑色血痕-->
+			<Material Amount="100000" ItemId="40308"/>	<!--金幣-->
 		</MakeItem>
 	</Action>
-	<!--黒い血痕50個 / 錬金術師-->
 	<Action Name="M" NpcId="70520">
 		<MakeItem AmountInputable="false">
-			<Material Amount="50" ItemId="40524"/>
-			<Material Amount="500000" ItemId="40308"/>
-			<Item Amount="50" ItemId="40304"/>
-			<Item Amount="50" ItemId="40305"/>
-			<Item Amount="50" ItemId="40306"/>
-			<Item Amount="50" ItemId="40307"/>
-		</MakeItem>
-	</Action>
-	<!--電卓 / ブレーズ-->
-	<Action Name="1" NpcId="70605">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40526"/>
-			<Material Amount="5" ItemId="40779"/>
-			<Material Amount="1000" ItemId="40308"/>
-			<Item Amount="1" ItemId="40391"/>
-		</MakeItem>
-	</Action>
-	<!--研磨材 / ティミー-->
-	<Action Name="1" NpcId="71006">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41209"/>
-			<Item Amount="1" ItemId="41210"/>
-			<Succeed>
-				<ShowHtml HtmlId="jpe0055"/>
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<!--ハーブ / 鍛冶屋ロン-->
-	<Action Name="request ei004" NpcId="71003">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41210"/>
-			<Item Amount="1" ItemId="41211"/>
-		</MakeItem>
-	</Action>
-	<!--特製キャンディー/ 薬剤師イクシー-->
-	<Action Name="request ei005" NpcId="71001">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41211"/>
-			<Item Amount="1" ItemId="41212"/>
-		</MakeItem>
-	</Action> 
-	<!--シアンポーション / チコリー-->
-	<Action Name="1" NpcId="71009">
-		<MakeItem AmountInputable="false">
-			<Material Amount="3" ItemId="41222"/>
-			<Item Amount="1" ItemId="40017"/>
-			<Succeed>
-				<ShowHtml HtmlId="jpe0074"/>
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<!--バナナジュース / ブリアナ-->
-	<Action Name="1" NpcId="71011">
-		<MakeItem AmountInputable="false">
-			<Material Amount="3" ItemId="40060"/>
-			<Material Amount="3" ItemId="40061"/>
-			<Material Amount="3" ItemId="40062"/>
-			<Item Amount="1" ItemId="40026"/>
-			<Succeed>
-				<ShowHtml HtmlId="jpe0065"/>
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<!--君主の袋 / 冒険者エータ-->
-	<Action Name="request ei028" NpcId="71032">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41214"/>
-			<Material Amount="5" ItemId="41215"/>
-			<Material Amount="5" ItemId="41216"/>
-			<Item Amount="1" ItemId="41217"/>
-		</MakeItem>
-	</Action>
-	<!--ナイトの袋 / 冒険者エータ-->
-	<Action Name="request ei029" NpcId="71032">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41214"/>
-			<Material Amount="5" ItemId="41215"/>
-			<Material Amount="5" ItemId="41216"/>
-			<Item Amount="1" ItemId="41218"/>
-		</MakeItem>
-	</Action>
-	<!--エルフのの袋 / 冒険者エータ-->
-	<Action Name="request ei030" NpcId="71032">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41214"/>
-			<Material Amount="5" ItemId="41215"/>
-			<Material Amount="5" ItemId="41216"/>
-			<Item Amount="1" ItemId="41219"/>
-		</MakeItem>
-	</Action>
-	<!--ウィザードの袋 / 冒険者エータ-->
-	<Action Name="request ei031" NpcId="71032">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41214"/>
-			<Material Amount="5" ItemId="41215"/>
-			<Material Amount="5" ItemId="41216"/>
-			<Item Amount="1" ItemId="41220"/>
-		</MakeItem>
-	</Action>
-	<!--ダークエルフの袋 / 冒険者エータ-->
-	<Action Name="request ei032" NpcId="71032">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41214"/>
-			<Material Amount="5" ItemId="41215"/>
-			<Material Amount="5" ItemId="41216"/>
-			<Item Amount="1" ItemId="41221"/>
-		</MakeItem>
-	</Action>
-	<!--渓谷の印 / ルバー-->
-	<Action Name="request amulet of valley" NpcId="70506">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40653"/>
-			<Item Amount="1" ItemId="20243"/>
-		</MakeItem>
-	</Action>
-	<!--島の印 / ルバー-->
-	<Action Name="request amulet of island" NpcId="70506">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="40613"/>
-			<Item Amount="1" ItemId="20259"/>
-		</MakeItem>
-	</Action>
-	<!--ラビのお守り / ラビ-->
-	<Action Name="request ei034" NpcId="71034">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41227"/>
-			<Item Amount="1" ItemId="41228"/>
-		</MakeItem>
-	</Action>
-	<!--象牙の塔のリング / ハーミット-->
-	<Action Name="request ring of oren tower" NpcId="71033">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41228"/>
-			<Item Amount="1" ItemId="20282"/>
-		</MakeItem>
-	</Action>
-	<!--ジーナンの手紙 / 骨細工師ジーナン-->
-	<Action Name="0" NpcId="71022">
-		<MakeItem AmountInputable="false">
-			<Material Amount="5" ItemId="41229"/>
-			<Item Amount="1" ItemId="41230"/>
-			<Succeed>
-				<ShowHtml HtmlId="jpe0154"/>
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<!--マッティーの手紙 / 骨細工師マッティー-->
-	<Action Name="request ei021" NpcId="71021">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41230"/>
-			<Item Amount="1" ItemId="41231"/>
-		</MakeItem>
-	</Action>
-	<!--ジョンの届け物 / ジョン-->
-	<Action Name="0" NpcId="71020">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41231"/>
-			<Item Amount="1" ItemId="41232"/>
-		</MakeItem>
-	</Action>
-	<!--材料表 / 骨細工師ケーイ-->
-	<Action Name="0" NpcId="71023">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41233"/>
-			<Material Amount="1" ItemId="41234"/>
-			<Item Amount="1" ItemId="41235"/>
-		<Succeed>
-			<ShowHtml HtmlId="jpe0146"/>
-		</Succeed>
-		</MakeItem>
-	</Action>
-	<!--ケーイの届け物 / 骨細工師ケーイ-->
-	<Action Name="1" NpcId="71023">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41235"/>
-			<Material Amount="3" ItemId="41236"/>
-			<Material Amount="3" ItemId="41237"/>
-			<Item Amount="1" ItemId="41238"/>
-		<Succeed>
-			<ShowHtml HtmlId="jpe0147"/>
-		</Succeed>
-		</MakeItem>
-	</Action>	
-	<!--骨細工師の袋 / 弟子ヴィート-->
-	<Action Name="0" NpcId="71019">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41239"/>
-			<Item Amount="1" ItemId="41241"/>
-		<Succeed>
-			<ShowHtml HtmlId="jpe0116"/>
-		</Succeed>
-		</MakeItem>
-	</Action>
-	<!--ボーンアーマー / フェーダ-->
-	<Action Name="0" NpcId="71018">
-	<MakeItem AmountInputable="false">
-		<Material Amount="1" ItemId="41240"/>
-		<Item Amount="1" ItemId="20124"/>
-		<Succeed>
-			<ShowHtml HtmlId="jpe0135"/>
-		</Succeed>
-		</MakeItem>
-	</Action>
-	<!--パゴの薬 / パゴ-->
-	<Action Name="request ei014" NpcId="70005">
-	<MakeItem AmountInputable="false">
-		<Material Amount="1" ItemId="41225"/>
-		<Item Amount="1" ItemId="41226"/>
-		</MakeItem>
-	</Action>
-	<!--1000アデナ / ケスキン-->
-	<Action Name="1" NpcId="71025">
-	<MakeItem AmountInputable="false">
-		<Material Amount="1" ItemId="41226"/>
-		<Material Amount="1" ItemId="40653"/>
-		<Item Amount="1000" ItemId="40308"/>
-		<Succeed>
-			<ShowHtml HtmlId="jpe0085"/>
-		</Succeed>
-		</MakeItem>
-	</Action>
-	<!--1000アデナ / ケスキン-->
-	<Action Name="2" NpcId="71025">
-	<MakeItem AmountInputable="false">
-		<Material Amount="1" ItemId="41226"/>
-		<Material Amount="1" ItemId="40613"/>
-		<Item Amount="1000" ItemId="40308"/>
-		<Succeed>
-			<ShowHtml HtmlId="jpe0085"/>
-		</Succeed>
-		</MakeItem>
-	</Action>
-	<!--料理の本：ステップ1 / シェフ ラフォンス-->
-	<Action Name="A" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10000" ItemId="40308"/>
-			<Item Amount="1" ItemId="41255"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons1"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons2"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--料理の本：ステップ2 / シェフ ラフォンス-->
-	<Action Name="B" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="3000" ItemId="40308"/>
-			<Material Amount="1" ItemId="41255"/>
-			<Item Amount="1" ItemId="41256"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons4"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons5"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--料理の本：ステップ3 / シェフ ラフォンス-->
-	<Action Name="q" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="5000" ItemId="40308"/>
-			<Material Amount="1" ItemId="41256"/>
-			<Item Amount="1" ItemId="41257"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons10"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons11"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--フローティングアイステーキ1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="a" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41277"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--ベアーステーキ1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="b" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41278"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--ナッツ餅1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="c" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41279"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--蟻脚のチーズ焼き1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="d" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41280"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--フルーツサラダ1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="e" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41281"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--フルーツ甘酢あんかけ1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="f" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41282"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--猪肉の串焼き1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="g" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41283"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--キノコスープ1個->ミックスソース1個 / ラフォンス-->
-	<Action Name="h" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="41284"/>
-			<Item Amount="1" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--フローティングアイステーキ10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="i" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41277"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--ベアーステーキ10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="j" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41278"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--ナッツ餅10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="k" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41279"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--蟻脚のチーズ焼き10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="l" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41280"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--フルーツサラダ10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="m" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41281"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--フルーツ甘酢あんかけ10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="n" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41282"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--猪肉の串焼き10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="o" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41283"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--キノコスープ10個->ミックスソース10個 / ラフォンス-->
-	<Action Name="p" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="41284"/>
-			<Item Amount="10" ItemId="49048"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons7"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons6"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--キャビアカナッペ1個->ハーブ1個 / ラフォンス-->
-	<Action Name="s" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49049"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--アリゲーターステーキ1個->ハーブ1個 / ラフォンス-->
-	<Action Name="t" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49050"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--タートルドラゴンの菓子1個->ハーブ1個 / ラフォンス-->
-	<Action Name="u" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49051"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--キウィパロット焼き1個->ハーブ1個 / ラフォンス-->
-	<Action Name="v" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49052"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--スコーピオン焼き1個->ハーブ1個 / ラフォンス-->
-	<Action Name="w" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49053"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--イレッカドムシチュー1個->ハーブ1個 / ラフォンス-->
-	<Action Name="x" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49054"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--クモ脚の串焼き1個->ハーブ1個 / ラフォンス-->
-	<Action Name="y" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49055"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--クラブスープ1個->ハーブ1個 / ラフォンス-->
-	<Action Name="z" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="1" ItemId="49056"/>
-			<Item Amount="1" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--キャビアカナッペ10個->ハーブ10個 / ラフォンス-->
-	<Action Name="C" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49049"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--アリゲーターステーキ10個->ハーブ10個 / ラフォンス-->
-	<Action Name="D" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49050"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--タートルドラゴンの菓子10個->ハーブ10個 / ラフォンス-->
-	<Action Name="E" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49051"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--キウィパロット焼き10個->ハーブ10個 / ラフォンス-->
-	<Action Name="F" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49052"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--スコーピオン焼き10個->ハーブ10個 / ラフォンス-->
-	<Action Name="G" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49053"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--イレッカドムシチュー10個->ハーブ10個 / ラフォンス-->
-	<Action Name="H" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49054"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--クモ脚の串焼き10個->ハーブ10個 / ラフォンス-->
-	<Action Name="I" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49055"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--クラブスープ10個->ハーブ10個 / ラフォンス-->
-	<Action Name="J" NpcId="80091">
-		<MakeItem AmountInputable="false">
-			<Material Amount="10" ItemId="49056"/>
-			<Item Amount="10" ItemId="49243"/>
-			<Succeed>
-				<ShowHtml HtmlId="rrafons12"/>
-			</Succeed>
-			<Fail>
-				<ShowHtml HtmlId="rrafons14"/>
-			</Fail>
-		</MakeItem>
-	</Action>
-	<!--鉱物の袋 / 坑夫オーム-->
-	<Action Name="request mineral bag">
-		<MakeItem>
-			<Item Amount="1" ItemId="41002"/>
-			<Material Amount="1" ItemId="40614"/>
-		</MakeItem>
-	</Action>
-	<!--ツルハシ / ダルフガーディン-->
-	<Action Name="request hoe" NpcId="71166">
-		<MakeItem>
-			<Item Amount="1" ItemId="40527"/>
-			<Material Amount="5" ItemId="40899"/>
-			<Material Amount="300" ItemId="40308"/>
-		</MakeItem>
-	</Action>
-	<!--オームの袋 / 坑夫オーム-->
-	<Action Name="request oum giftbag" NpcId="71146">
-		<MakeItem>
-			<Item Amount="1" ItemId="40687"/>
-			<Material Amount="1" ItemId="40527"/>
-			<Succeed>
-				<ShowHtml HtmlId="midoum3"/>
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<!--修理破碎的耳環 / 釣魚婆婆 雷蒂亞-->
-	<Action Name="request not_broken earring" NpcId="80081">
-		<MakeItem>
-			<Item Amount="1" ItemId="21049"/>
-			<Material Amount="1" ItemId="41305"/>
-			<Material Amount="1" ItemId="41303"/>
-			<Material Amount="1000" ItemId="40308"/>
-		</MakeItem>
-	</Action>
-	<!--修理破碎的項鍊 / 釣魚婆婆 雷蒂亞-->
-	<Action Name="request not_broken ring left" NpcId="80081">
-		<MakeItem>
-			<Item Amount="1" ItemId="21048"/>
-			<Material Amount="1" ItemId="41306"/>
-			<Material Amount="1" ItemId="41302"/>
-			<Material Amount="1000" ItemId="40308"/>
-		</MakeItem>
-	</Action>
-	<!--修理破碎的戒指 / 釣魚婆婆 雷蒂亞-->
-	<Action Name="request not_broken amulet" NpcId="80081">
-		<MakeItem>
-			<Item Amount="1" ItemId="21050"/>
-			<Material Amount="1" ItemId="41307"/>
-			<Material Amount="1" ItemId="41301"/>
-			<Material Amount="1000" ItemId="40308"/>
-		</MakeItem>
-	</Action>
-	<!--用閃爍的鱗片交換對盔甲施法的卷軸 / 釣魚婆婆 雷蒂亞-->
-	<Action Name="request scroll of enchant armor" NpcId="80081">
-		<MakeItem>
-			<Item Amount="1" ItemId="40074"/>
-			<Material Amount="15" ItemId="47104"/>
-		</MakeItem>
-	</Action>
-	<!--新生のベルト(水) / 特典アイテム管理人-->
-	<Action Name="a" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21070"/>
-			<Material Amount="1" ItemId="21069"/>
-		</MakeItem>
-	</Action>
-	<!--新生のベルト(火) / 特典アイテム管理人-->
-	<Action Name="b" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21072"/>
-			<Material Amount="1" ItemId="21069"/>
-		</MakeItem>
-	</Action>
-	<!--新生のベルト(風) / 特典アイテム管理人-->
-	<Action Name="c" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21071"/>
-			<Material Amount="1" ItemId="21069"/>
-		</MakeItem>
-	</Action>
-	<!--新生のベルト(地) / 特典アイテム管理人-->
-	<Action Name="d" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21073"/>
-			<Material Amount="1" ItemId="21069"/>
-		</MakeItem>
-	</Action>
-	<!--親睦のイアリング(AC1-HP20) / 特典アイテム管理人-->
-	<Action Name="e" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21075"/>
-			<Material Amount="1" ItemId="21074"/>
-		</MakeItem>
-	</Action>
-	<!--親睦のイアリング(AC1-MP10) / 特典アイテム管理人-->
-	<Action Name="f" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21076"/>
-			<Material Amount="1" ItemId="21074"/>
-		</MakeItem>
-	</Action>
-	<!--親睦のイアリング(AC1-HP10-MP5) / 特典アイテム管理人-->
-	<Action Name="g" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21077"/>
-			<Material Amount="1" ItemId="21074"/>
-		</MakeItem>
-	</Action>
-	<!--親睦のイアリング(MR2-HP20) / 特典アイテム管理人-->
-	<Action Name="h" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21078"/>
-			<Material Amount="1" ItemId="21074"/>
-		</MakeItem>
-	</Action>
-	<!--親睦のイアリング(MR2-MP10) / 特典アイテム管理人-->
-	<Action Name="i" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21079"/>
-			<Material Amount="1" ItemId="21074"/>
-		</MakeItem>
-	</Action>
-	<!--親睦のイアリング(MR2-HP10-MP5) / 特典アイテム管理人-->
-	<Action Name="j" NpcId="81200">
-		<MakeItem>
-			<Item Amount="1" ItemId="21080"/>
-			<Material Amount="1" ItemId="21074"/>
-		</MakeItem>
-	</Action>
-	<!--真冥王の防具秘法書 / 副官マールベス-->
-	<Action Name="request dantes manual" NpcId="71169">
-		<MakeItem>
-			<Item Amount="1" ItemId="40966"/>
-			<Material Amount="1" ItemId="41035"/>
-		</MakeItem>
-	</Action>
-	<!--用1000個金幣購買象牙塔對盔甲施法的卷軸 / 旅人諮詢員-->
+			<Item Amount="50" ItemId="40304"/>		<!--馬普勒之石-->
+			<Item Amount="50" ItemId="40305"/>		<!--帕格里奧之石-->
+			<Item Amount="50" ItemId="40306"/>		<!--伊娃之石-->
+			<Item Amount="50" ItemId="40307"/>		<!--沙哈之石-->
+			<Material Amount="50" ItemId="40524"/>	<!--黑色血痕-->
+			<Material Amount="500000" ItemId="40308"/>	<!--金幣-->
+		</MakeItem>
+	</Action>
+
+	<!--旅人諮詢員-->
 	<Action Name="3" NpcId="81257">
 		<MakeItem AmountInputable="false">
-			<Item Amount="1" ItemId="49311"/>
-			<Material Amount="1000" ItemId="40308"/>
+			<Item Amount="1" ItemId="49311"/>	<!--象牙塔對盔甲施法的卷軸-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
 			<Succeed>
 				<ShowHtml HtmlId="lowlv18"/>
 			</Succeed>
@@ -1151,11 +299,10 @@
 			</Fail>
 		</MakeItem>
 	</Action>
-	<!--用1500個金幣購買象牙塔對武器施法的卷軸 / 旅人諮詢員-->
 	<Action Name="4" NpcId="81257">
 		<MakeItem AmountInputable="false">
-			<Item Amount="1" ItemId="49312"/>
-			<Material Amount="1500" ItemId="40308"/>
+			<Item Amount="1" ItemId="49312"/>	<!--象牙塔對武器施法的卷軸-->
+			<Material Amount="1500" ItemId="40308"/>	<!--金幣-->
 			<Succeed>
 				<ShowHtml HtmlId="lowlv19"/>
 			</Succeed>
@@ -1164,11 +311,10 @@
 			</Fail>
 		</MakeItem>
 	</Action>
-	<!--用250個金幣購買象牙塔妙藥 / 旅人諮詢員-->
 	<Action Name="5" NpcId="81257">
 		<MakeItem AmountInputable="false">
-			<Item Amount="1" ItemId="49315"/>
-			<Material Amount="250" ItemId="40308"/>
+			<Item Amount="1" ItemId="49315"/>	<!--象牙塔妙藥-->
+			<Material Amount="250" ItemId="40308"/>	<!--金幣-->
 			<Succeed>
 				<ShowHtml HtmlId="lowlv21"/>
 			</Succeed>
@@ -1177,402 +323,1250 @@
 			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="b" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21082"/>       <!--冰之女王的耳環 Lv.1 * 1-->
-			<Material Amount="1" ItemId="21081" />  <!--冰之女王的耳環 Lv.0 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+
+<!--隱藏之谷-->
+	<!--蘿芭-->
+	<Action Name="request amulet of valley" NpcId="70506">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="20243"/>	<!--隱藏之谷項鍊-->
+			<Material Amount="1" ItemId="40653"/>	<!--紅鑰匙-->
 		</MakeItem>
 	</Action>
-	<Action Name="c" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21083"/>       <!--冰之女王的耳環 Lv.2 * 1-->
-			<Material Amount="1" ItemId="21082" />  <!--冰之女王的耳環 Lv.1 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="request amulet of island" NpcId="70506">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="20259"/>	<!--歌唱之島項鍊-->
+			<Material Amount="1" ItemId="40613"/>	<!--黑鑰匙-->
 		</MakeItem>
 	</Action>
-	<Action Name="d" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21084"/>       <!--冰之女王的耳環 Lv.3 * 1-->
-			<Material Amount="1" ItemId="21083" />  <!--冰之女王的耳環 Lv.2 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+
+
+<!--古魯丁村莊-->
+	<!--拉龐斯-->
+	<Action Name="a" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41277"/>	<!--漂浮之眼肉排-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="e" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21085"/>       <!--冰之女王的耳環 Lv.4 * 1-->
-			<Material Amount="1" ItemId="21084" />  <!--冰之女王的耳環 Lv.3 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="b" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41278"/>	<!--烤熊肉-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="f" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21086"/>       <!--冰之女王的耳環 Lv.5 * 1-->
-			<Material Amount="1" ItemId="21085" />  <!--冰之女王的耳環 Lv.4 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="c" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41279"/>	<!--煎餅-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="g" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21087"/>       <!--冰之女王的耳環 Lv.6 * 1-->
-			<Material Amount="1" ItemId="21086" />  <!--冰之女王的耳環 Lv.5 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="d" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41280"/>	<!--烤螞蟻腿起司-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="h" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21088"/>       <!--冰之女王的耳環 Lv.7 * 1-->
-			<Material Amount="1" ItemId="21087" />  <!--冰之女王的耳環 Lv.6 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="e" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41281"/>	<!--水果沙拉-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="i" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21089"/>       <!--冰之女王的耳環 Lv.8 * 1-->
-			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="f" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41282"/>	<!--水果糖醋肉-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="j" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21090"/>       <!--冰之女王的耳環 Lv.8 * 1-->
-			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="g" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41283"/>	<!--烤山豬肉串-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<Action Name="k" NpcId="81261">  <!--寶石加工師-->
-		<MakeItem>
-			<Item Amount="1" ItemId="21091"/>       <!--冰之女王的耳環 Lv.8 * 1-->
-			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7 * 1-->
-			<Material Amount="1" ItemId="49031" />  <!--冰之結晶 * 1-->
+	<Action Name="h" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="1" ItemId="41284"/>	<!--蘑菇湯-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
 		</MakeItem>
 	</Action>
-	<!--米米 兌換 地龍之魔眼 / 受封印地龍之魔眼x1,金幣x100000-->
+	<Action Name="i" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41277"/>	<!--漂浮之眼肉排-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="j" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41278"/>	<!--烤熊肉-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="k" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41279"/>	<!--煎餅-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="l" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41280"/>	<!--烤螞蟻腿起司-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="m" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41281"/>	<!--水果沙拉-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="n" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41282"/>	<!--水果糖醋肉-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="o" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41283"/>	<!--烤山豬肉串-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="p" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49048"/>	<!--綜合烤肉醬-->
+			<Material Amount="10" ItemId="41284"/>	<!--蘑菇湯-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons7"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons6"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="q" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41257"/>	<!--料理書：3階段-->
+			<Material Amount="5000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="41256"/>	<!--料理書：2階段-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons10"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons11"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="s" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49049"/>	<!--魚子醬-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="t" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49050"/>	<!--鱷魚肉排-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="u" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49051"/>	<!--龍龜蛋餅乾-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="v" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49052"/>	<!--烤奇異鸚鵡-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="w" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49053"/>	<!--毒蠍串燒-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="x" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49054"/>	<!--燉伊萊克頓-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="y" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49055"/>	<!--蜘蛛腿串燒-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="z" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="1" ItemId="49056"/>	<!--蟹肉湯-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="A" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41255"/>	<!--料理書：1階段-->
+			<Material Amount="10000" ItemId="40308"/>	<!--金幣-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons1"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons2"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="B" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41256"/>	<!--料理書：2階段-->
+			<Material Amount="3000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="41255"/>	<!--料理書：1階段-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons4"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons5"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="C" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49049"/>	<!--魚子醬-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="D" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49050"/>	<!--鱷魚肉排-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="E" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49051"/>	<!--龍龜蛋餅乾-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="F" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49052"/>	<!--烤奇異鸚鵡-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="G" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49053"/>	<!--毒蠍串燒-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="H" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49054"/>	<!--燉伊萊克頓-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="I" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49055"/>	<!--蜘蛛腿串燒-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+	<Action Name="J" NpcId="80091">
+		<MakeItem AmountInputable="false">
+			<Item Amount="10" ItemId="49243"/>	<!--香菜-->
+			<Material Amount="10" ItemId="49056"/>	<!--蟹肉湯-->
+			<Succeed>
+				<ShowHtml HtmlId="rrafons12"/>
+			</Succeed>
+			<Fail>
+				<ShowHtml HtmlId="rrafons14"/>
+			</Fail>
+		</MakeItem>
+	</Action>
+
+<!--釣魚池-->
+		<!--釣魚婆婆 雷蒂亞-->
+	<Action Name="request not_broken earring" NpcId="80081">
+		<MakeItem>
+			<Item Amount="1" ItemId="21049"/>	<!--修好的耳環-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="41303"/>	<!--發藍光的魚-->
+			<Material Amount="1" ItemId="41305"/>	<!--破碎的耳環-->
+		</MakeItem>
+	</Action>
+	<Action Name="request not_broken ring left" NpcId="80081">
+		<MakeItem>
+			<Item Amount="1" ItemId="21048"/>	<!--修好的戒指-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="41302"/>	<!--發綠光的魚-->
+			<Material Amount="1" ItemId="41306"/>	<!--破碎的戒指-->
+		</MakeItem>
+	</Action>
+	<Action Name="request not_broken amulet" NpcId="80081">
+		<MakeItem>
+			<Item Amount="1" ItemId="21050"/>	<!--修好的項鍊-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="41301"/>	<!--發紅光的魚-->
+			<Material Amount="1" ItemId="41307"/>	<!--破碎的項練-->
+		</MakeItem>
+	</Action>
+	<Action Name="request scroll of enchant armor" NpcId="80081">
+		<MakeItem>
+			<Item Amount="1" ItemId="40074"/>	<!--對盔甲施法的卷軸-->
+			<Material Amount="15" ItemId="47104"/>	<!--閃爍的鱗片-->
+		</MakeItem>
+	</Action>
+
+<!--食人妖精競技場-->
+	<!--布萊斯-->
+	<Action Name="1" NpcId="70605">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="40391"/>		<!--計算機-->
+			<Material Amount="1000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="40526"/>		<!--薄金屬板-->
+			<Material Amount="5" ItemId="40779"/>		<!--鋼鐵塊-->
+		</MakeItem>
+	</Action>
+
+<!--歐瑞村莊-->
+	<!--寶石加工師-->
+	<Action Name="b" NpcId="81261">  
+		<MakeItem>
+			<Item Amount="1" ItemId="21082"/>       <!--冰之女王的耳環 Lv.1-->
+			<Material Amount="1" ItemId="21081" />  <!--冰之女王的耳環 Lv.0-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="c" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21083"/>       <!--冰之女王的耳環 Lv.2-->
+			<Material Amount="1" ItemId="21082" />  <!--冰之女王的耳環 Lv.1-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="d" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21084"/>       <!--冰之女王的耳環 Lv.3-->
+			<Material Amount="1" ItemId="21083" />  <!--冰之女王的耳環 Lv.2-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="e" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21085"/>       <!--冰之女王的耳環 Lv.4-->
+			<Material Amount="1" ItemId="21084" />  <!--冰之女王的耳環 Lv.3-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="f" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21086"/>       <!--冰之女王的耳環 Lv.5-->
+			<Material Amount="1" ItemId="21085" />  <!--冰之女王的耳環 Lv.4-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="g" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21087"/>       <!--冰之女王的耳環 Lv.6-->
+			<Material Amount="1" ItemId="21086" />  <!--冰之女王的耳環 Lv.5-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="h" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21088"/>       <!--冰之女王的耳環 Lv.7-->
+			<Material Amount="1" ItemId="21087" />  <!--冰之女王的耳環 Lv.6-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="i" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21089"/>       <!--冰之女王的耳環 Lv.8-->
+			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="j" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21090"/>       <!--冰之女王的耳環 Lv.8-->
+			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+	<Action Name="k" NpcId="81261">
+		<MakeItem>
+			<Item Amount="1" ItemId="21091"/>       <!--冰之女王的耳環 Lv.8-->
+			<Material Amount="1" ItemId="21088" />  <!--冰之女王的耳環 Lv.7-->
+			<Material Amount="1" ItemId="49031" />  <!--冰之結晶-->
+		</MakeItem>
+	</Action>
+
+<!--威頓村莊-->
+	<!--米米-->
 	<Action Name="a" NpcId="81286">
 		<MakeItem>
-			<Item Amount="1" ItemId="47017"/>
-			<Material Amount="1" ItemId="47013"/>
-			<Material Amount="100000" ItemId="40308"/>
+			<Item Amount="1" ItemId="47017"/>	<!--地龍之魔眼-->
+			<Material Amount="100000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="47013"/>	<!--受封印地龍之魔眼-->
 			</MakeItem>
 	</Action>
-	<!--米米 兌換 水龍之魔眼 / 受封印水龍之魔眼x1,金幣x100000-->
 	<Action Name="b" NpcId="81286">
 		<MakeItem>
-			<Item Amount="1" ItemId="47018"/>
-			<Material Amount="1" ItemId="47014"/>
-			<Material Amount="100000" ItemId="40308"/>
+			<Item Amount="1" ItemId="47018"/>	<!--水龍之魔眼-->
+			<Material Amount="100000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="47014"/>	<!--受封印水龍之魔眼-->
 		</MakeItem>
 	</Action>
-	<!--米米 兌換 火龍之魔眼 / 受封印火龍之魔眼x1,金幣x100000-->
 	<Action Name="c" NpcId="81286">
 		<MakeItem>
-			<Item Amount="1" ItemId="47020"/>
-			<Material Amount="1" ItemId="47016"/>
-			<Material Amount="100000" ItemId="40308"/>
+			<Item Amount="1" ItemId="47020"/>	<!--火龍之魔眼-->
+			<Material Amount="100000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="47016"/>	<!--受封印火龍之魔眼-->
 		</MakeItem>
 	</Action>
-	<!--米米 兌換 風龍之魔眼 / 受封印風龍之魔眼x1,金幣x100000-->
 	<Action Name="d" NpcId="81286">
 		<MakeItem>
-			<Item Amount="1" ItemId="47019"/>
-			<Material Amount="1" ItemId="47015"/>
-			<Material Amount="100000" ItemId="40308"/>
+			<Item Amount="1" ItemId="47019"/>	<!--風龍之魔眼-->
+			<Material Amount="100000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="47015"/>	<!--受封印風龍之魔眼-->
 		</MakeItem>
 	</Action>
-	<!--米米 兌換 誕生之魔眼 / 地龍之精緻魔眼x1,水龍之精緻魔眼x1,金幣x200000-->
 	<Action Name="e" NpcId="81286">
 		<MakeItem>
-			<Item Amount="1" ItemId="47021"/>
-			<Material Amount="1" ItemId="47041"/>
-			<Material Amount="1" ItemId="47042"/>
-			<Material Amount="200000" ItemId="40308"/>
+			<Item Amount="1" ItemId="47021"/>	<!--誕生之魔眼-->
+			<Material Amount="200000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="47041"/>	<!--地龍之精緻魔眼-->
+			<Material Amount="1" ItemId="47042"/>	<!--水龍之精緻魔眼-->
 		</MakeItem>
 	</Action>
-	<!--米米 兌換 形象之魔眼 / 誕生之精緻魔眼x1,風龍之精緻魔眼x1,金幣x200000-->
 	<Action Name="f" NpcId="81286">
 		<MakeItem>
-			<Item Amount="1" ItemId="47022"/>
-			<Material Amount="1" ItemId="47045"/>
-			<Material Amount="1" ItemId="47043"/>
-			<Material Amount="200000" ItemId="40308"/>
+			<Item Amount="1" ItemId="47022"/>	<!--形象之魔眼-->
+			<Material Amount="200000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="47043"/>	<!--風龍之精緻魔眼-->
+			<Material Amount="1" ItemId="47045"/>	<!--誕生之精緻魔眼-->
 		</MakeItem>
 	</Action>
-	<!--米米 兌換 生命之魔眼 / 形象之精緻魔眼x1,火龍之精緻魔眼x1,金幣x200000-->
 	<Action Name="g" NpcId="81286">
 		<MakeItem>
-			<Item Amount="1" ItemId="47023"/>
-			<Material Amount="1" ItemId="47046"/>
-			<Material Amount="1" ItemId="47044"/>
-			<Material Amount="200000" ItemId="40308"/>
+			<Item Amount="1" ItemId="47023"/>	<!--生命之魔眼-->
+			<Material Amount="200000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="47044"/>	<!--火龍之精緻魔眼-->
+			<Material Amount="1" ItemId="47046"/>	<!--形象之精緻魔眼-->
 		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 安塔瑞斯之鱗x1,安塔瑞斯之骨x1-->
+
+	<!--萊利的輔佐官-->
 	<Action Name="request druga treasure1 a" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40623"/>
-					<Material Amount="1" ItemId="40341"/>
-					<Material Amount="1" ItemId="40347"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40623"/>	<!--多魯嘉1世傳家之寶-->
+			<Material Amount="1" ItemId="40341"/>	<!--安塔瑞斯之鱗-->
+			<Material Amount="1" ItemId="40347"/>	<!--安塔瑞斯之骨-->
+		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 法利昂之鱗x1,法利昂之骨x1-->
 	<Action Name="request druga treasure1 f" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40623"/>
-					<Material Amount="1" ItemId="40357"/>
-					<Material Amount="1" ItemId="40363"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40623"/>	<!--多魯嘉1世傳家之寶-->
+			<Material Amount="1" ItemId="40357"/>	<!--法利昂之鱗-->
+			<Material Amount="1" ItemId="40363"/>	<!--法利昂之骨-->
+		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 林德拜爾之鱗x1,林德拜爾之骨x1-->
 	<Action Name="request druga treasure1 l" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40623"/>
-					<Material Amount="1" ItemId="40365"/>
-					<Material Amount="1" ItemId="40371"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40623"/>	<!--多魯嘉1世傳家之寶-->
+			<Material Amount="1" ItemId="40365"/>	<!--林德拜爾之鱗-->
+			<Material Amount="1" ItemId="40371"/>	<!--林德拜爾之骨-->
+		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉1世傳家之寶 / 巴拉卡斯之鱗x1,巴拉卡斯之骨x1-->
 	<Action Name="request druga treasure1 v" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40623"/>
-					<Material Amount="1" ItemId="40349"/>
-					<Material Amount="1" ItemId="40355"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40623"/>	<!--多魯嘉1世傳家之寶-->
+			<Material Amount="1" ItemId="40349"/>	<!--巴拉卡斯之鱗-->
+			<Material Amount="1" ItemId="40355"/>	<!--巴拉卡斯之骨-->
+		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 安塔瑞斯之鱗x1,安塔瑞斯之骨x1,安塔瑞斯之爪x1-->
 	<Action Name="request druga treasure2 a" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40624"/>
-					<Material Amount="1" ItemId="40341"/>
-					<Material Amount="1" ItemId="40347"/>
-					<Material Amount="1" ItemId="40342"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40624"/>	<!--多魯嘉2世傳家之寶-->
+			<Material Amount="1" ItemId="40341"/>	<!--安塔瑞斯之鱗-->
+			<Material Amount="1" ItemId="40342"/>	<!--安塔瑞斯之爪-->
+			<Material Amount="1" ItemId="40347"/>	<!--安塔瑞斯之骨-->
+		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 法利昂之鱗x1,法利昂之骨x1,法利昂之爪x1-->
 	<Action Name="request druga treasure2 f" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40624"/>
-					<Material Amount="1" ItemId="40357"/>
-					<Material Amount="1" ItemId="40363"/>
-					<Material Amount="1" ItemId="40358"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40624"/>	<!--多魯嘉2世傳家之寶-->
+			<Material Amount="1" ItemId="40357"/>	<!--法利昂之鱗-->
+			<Material Amount="1" ItemId="40358"/>	<!--法利昂之爪-->
+			<Material Amount="1" ItemId="40363"/>	<!--法利昂之骨-->
+		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 林德拜爾之鱗x1,林德拜爾之骨x1,林德拜爾之爪x1-->
 	<Action Name="request druga treasure2 l" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40624"/>
-					<Material Amount="1" ItemId="40365"/>
-					<Material Amount="1" ItemId="40371"/>
-					<Material Amount="1" ItemId="40366"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40624"/>	<!--多魯嘉2世傳家之寶-->
+			<Material Amount="1" ItemId="40365"/>	<!--林德拜爾之鱗-->
+			<Material Amount="1" ItemId="40366"/>	<!--林德拜爾之爪-->
+			<Material Amount="1" ItemId="40371"/>	<!--林德拜爾之骨-->
+		</MakeItem>
 	</Action>
-	<!--萊利的輔佐官 兌換 多魯嘉2世傳家之寶 / 巴拉卡斯之鱗x1,巴拉卡斯之骨x1,巴拉卡斯之爪x1-->
 	<Action Name="request druga treasure2 v" NpcId="70652">
-			<MakeItem>
-					<Item Amount="1" ItemId="40624"/>
-					<Material Amount="1" ItemId="40349"/>
-					<Material Amount="1" ItemId="40355"/>
-					<Material Amount="1" ItemId="40350"/>
-			</MakeItem>
+		<MakeItem>
+			<Item Amount="1" ItemId="40624"/>	<!--多魯嘉2世傳家之寶-->
+			<Material Amount="1" ItemId="40349"/>	<!--巴拉卡斯之鱗-->
+			<Material Amount="1" ItemId="40350"/>	<!--巴拉卡斯之爪-->
+			<Material Amount="1" ItemId="40355"/>	<!--巴拉卡斯之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure3 a" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
-					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
-					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
-		   </MakeItem>
+	<Action Name="request druga treasure3 a" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40625"/>	<!--多魯嘉3世傳家之寶-->
+			<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗-->
+			<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪-->
+			<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血-->
+			<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨-->
+		  </MakeItem>
 	</Action>
-	<Action Name="request druga treasure3 f" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
-					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
-					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
-					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure3 f" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40625"/>	<!--多魯嘉3世傳家之寶-->
+			<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗-->
+			<Material Amount="1" ItemId="40358" />  <!--法利昂之爪-->
+			<Material Amount="1" ItemId="40360" />  <!--法利昂之血-->
+			<Material Amount="1" ItemId="40363" />  <!--法利昂之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure3 l" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
-					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
-					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
-					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure3 l" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40625"/>	<!--多魯嘉3世傳家之寶-->
+			<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗-->
+			<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪-->
+			<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血-->
+			<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure3 v" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40625"/>       <!--多魯嘉3世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
-					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
-					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure3 v" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40625"/>	<!--多魯嘉3世傳家之寶-->
+			<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗-->
+			<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪-->
+			<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血-->
+			<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure4 a" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
-					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
-					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
-					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure4 a" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40626"/>	<!--多魯嘉4世傳家之寶-->
+			<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗-->
+			<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪-->
+			<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血-->
+			<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉-->
+			<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure4 f" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
-					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
-					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
-					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
-					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure4 f" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40626"/>	<!--多魯嘉4世傳家之寶-->
+			<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗-->
+			<Material Amount="1" ItemId="40358" />  <!--法利昂之爪-->
+			<Material Amount="1" ItemId="40360" />  <!--法利昂之血-->
+			<Material Amount="1" ItemId="40361" />  <!--法利昂之肉-->
+			<Material Amount="1" ItemId="40363" />  <!--法利昂之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure4 l" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
-					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
-					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
-					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
-					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure4 l" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40626"/>	<!--多魯嘉4世傳家之寶-->
+			<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗-->
+			<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪-->
+			<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血-->
+			<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉-->
+			<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure4 v" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40626"/>       <!--多魯嘉4世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
-					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
-					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
-					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure4 v" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40626"/>	<!--多魯嘉4世傳家之寶-->
+			<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗-->
+			<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪-->
+			<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血-->
+			<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉-->
+			<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure5 a" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
-					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
-					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
-					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
-					<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure5 a" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40627"/>	<!--多魯嘉5世傳家之寶-->
+			<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗-->
+			<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪-->
+			<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血-->
+			<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉-->
+			<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙-->
+			<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure5 f" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
-					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
-					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
-					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
-					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
-					<Material Amount="1" ItemId="40364" />  <!--法利昂之牙 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure5 f" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40627"/>	<!--多魯嘉5世傳家之寶-->
+			<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗-->
+			<Material Amount="1" ItemId="40358" />  <!--法利昂之爪-->
+			<Material Amount="1" ItemId="40360" />  <!--法利昂之血-->
+			<Material Amount="1" ItemId="40361" />  <!--法利昂之肉-->
+			<Material Amount="1" ItemId="40363" />  <!--法利昂之骨-->
+			<Material Amount="1" ItemId="40364" />  <!--法利昂之牙-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure5 l" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
-					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
-					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
-					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
-					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
-					<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure5 l" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶-->
+			<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗-->
+			<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪-->
+			<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血-->
+			<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉-->
+			<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨-->
+			<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure5 v" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
-					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
-					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
-					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
-					<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure5 v" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40627"/>       <!--多魯嘉5世傳家之寶-->
+			<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗-->
+			<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪-->
+			<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血-->
+			<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉-->
+			<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨-->
+			<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure6 a" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
-					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
-					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
-					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
-					<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙 * 1-->
-					<Material Amount="1" ItemId="40343" />  <!--安塔瑞斯之眼 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure6 a" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶-->
+			<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗-->
+			<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪-->
+			<Material Amount="1" ItemId="40343" />  <!--安塔瑞斯之眼-->
+			<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血-->
+			<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉-->
+			<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨-->
+			<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure6 f" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
-					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
-					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
-					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
-					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
-					<Material Amount="1" ItemId="40364" />  <!--法利昂之牙 * 1-->
-					<Material Amount="1" ItemId="40359" />  <!--法利昂之眼 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure6 f" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶-->
+			<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗-->
+			<Material Amount="1" ItemId="40358" />  <!--法利昂之爪-->
+			<Material Amount="1" ItemId="40359" />  <!--法利昂之眼-->
+			<Material Amount="1" ItemId="40360" />  <!--法利昂之血-->
+			<Material Amount="1" ItemId="40361" />  <!--法利昂之肉-->
+			<Material Amount="1" ItemId="40363" />  <!--法利昂之骨-->
+			<Material Amount="1" ItemId="40364" />  <!--法利昂之牙-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure6 l" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
-					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
-					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
-					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
-					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
-					<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙 * 1-->
-					<Material Amount="1" ItemId="40367" />  <!--林德拜爾之眼 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure6 l" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶-->
+			<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗-->
+			<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪-->
+			<Material Amount="1" ItemId="40367" />  <!--林德拜爾之眼-->
+			<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血-->
+			<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉-->
+			<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨-->
+			<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure6 v" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
-					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
-					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
-					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
-					<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙 * 1-->
-					<Material Amount="1" ItemId="40351" />  <!--巴拉卡斯之眼 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure6 v" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40628"/>       <!--多魯嘉6世傳家之寶-->
+			<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗-->
+			<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪-->
+			<Material Amount="1" ItemId="40351" />  <!--巴拉卡斯之眼-->
+			<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血-->
+			<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉-->
+			<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨-->
+			<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙-->
+		</MakeItem>
 	</Action>
-	<Action Name="request druga treasure7" NpcId="70652">  <!--萊利的輔佐官-->
-			<MakeItem>
-					<Item Amount="1" ItemId="40629"/>       <!--多魯嘉7世傳家之寶 * 1-->
-					<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨 * 1-->
-					<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪 * 1-->
-					<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血 * 1-->
-					<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉 * 1-->
-					<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙 * 1-->
-					<Material Amount="1" ItemId="40343" />  <!--安塔瑞斯之眼 * 1-->
-					<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗 * 1-->
-					<Material Amount="1" ItemId="40363" />  <!--法利昂之骨 * 1-->
-					<Material Amount="1" ItemId="40358" />  <!--法利昂之爪 * 1-->
-					<Material Amount="1" ItemId="40360" />  <!--法利昂之血 * 1-->
-					<Material Amount="1" ItemId="40361" />  <!--法利昂之肉 * 1-->
-					<Material Amount="1" ItemId="40364" />  <!--法利昂之牙 * 1-->
-					<Material Amount="1" ItemId="40359" />  <!--法利昂之眼 * 1-->
-					<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗 * 1-->
-					<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨 * 1-->
-					<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪 * 1-->
-					<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血 * 1-->
-					<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉 * 1-->
-					<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙 * 1-->
-					<Material Amount="1" ItemId="40367" />  <!--林德拜爾之眼 * 1-->
-					<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗 * 1-->
-					<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨 * 1-->
-					<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪 * 1-->
-					<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血 * 1-->
-					<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉 * 1-->
-					<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙 * 1-->
-					<Material Amount="1" ItemId="40351" />  <!--巴拉卡斯之眼 * 1-->
-			</MakeItem>
+	<Action Name="request druga treasure7" NpcId="70652">
+		<MakeItem>
+			<Item Amount="1" ItemId="40629"/>       <!--多魯嘉7世傳家之寶-->
+			<Material Amount="1" ItemId="40341" />  <!--安塔瑞斯之鱗-->
+			<Material Amount="1" ItemId="40342" />  <!--安塔瑞斯之爪-->
+			<Material Amount="1" ItemId="40343" />  <!--安塔瑞斯之眼-->
+			<Material Amount="1" ItemId="40344" />  <!--安塔瑞斯之血-->
+			<Material Amount="1" ItemId="40345" />  <!--安塔瑞斯之肉-->
+			<Material Amount="1" ItemId="40347" />  <!--安塔瑞斯之骨-->
+			<Material Amount="1" ItemId="40348" />  <!--安塔瑞斯之牙-->
+			<Material Amount="1" ItemId="40357" />  <!--法利昂之鱗-->
+			<Material Amount="1" ItemId="40358" />  <!--法利昂之爪-->
+			<Material Amount="1" ItemId="40359" />  <!--法利昂之眼-->
+			<Material Amount="1" ItemId="40360" />  <!--法利昂之血-->
+			<Material Amount="1" ItemId="40361" />  <!--法利昂之肉-->
+			<Material Amount="1" ItemId="40363" />  <!--法利昂之骨-->
+			<Material Amount="1" ItemId="40364" />  <!--法利昂之牙-->
+			<Material Amount="1" ItemId="40365" />  <!--林德拜爾之鱗-->
+			<Material Amount="1" ItemId="40366" />  <!--林德拜爾之爪-->
+			<Material Amount="1" ItemId="40367" />  <!--林德拜爾之眼-->
+			<Material Amount="1" ItemId="40368" />  <!--林德拜爾之血-->
+			<Material Amount="1" ItemId="40369" />  <!--林德拜爾之肉-->
+			<Material Amount="1" ItemId="40371" />  <!--林德拜爾之骨-->
+			<Material Amount="1" ItemId="40372" />  <!--林德拜爾之牙-->
+			<Material Amount="1" ItemId="40349" />  <!--巴拉卡斯之鱗-->
+			<Material Amount="1" ItemId="40350" />  <!--巴拉卡斯之爪-->
+			<Material Amount="1" ItemId="40351" />  <!--巴拉卡斯之眼-->
+			<Material Amount="1" ItemId="40352" />  <!--巴拉卡斯之血-->
+			<Material Amount="1" ItemId="40353" />  <!--巴拉卡斯之肉-->
+			<Material Amount="1" ItemId="40355" />  <!--巴拉卡斯之骨-->
+			<Material Amount="1" ItemId="40356" />  <!--巴拉卡斯之牙-->
+		</MakeItem>
+	</Action>
+
+<!--亞丁城鎮-->
+	<!--雷奧納-->
+	<Action Name="request oum adenabag1" NpcId="70674">
+		<MakeItem>
+			<Item Amount="1" ItemId="40632" />		<!--雷奧納的袋子-->
+			<Material Amount="1" ItemId="40691" />	<!--半成品的雕像-->
+			<Succeed>
+				<ShowHtml HtmlId="reona6" />
+			</Succeed>
+		</MakeItem>
+	</Action>
+	<Action Name="request oum adenabag2" NpcId="70674">
+		<MakeItem>
+			<Item Amount="1" ItemId="41406" />		<!--雷奧納的袋子-->
+			<Material Amount="1" ItemId="40689" />	<!--未精雕的雕像-->
+			<Succeed>
+				<ShowHtml HtmlId="reona7" />
+			</Succeed>
+		</MakeItem>
+	</Action>
+	<Action Name="request oum adenabag3" NpcId="70674">
+		<MakeItem>
+			<Item Amount="1" ItemId="41407" />		<!--雷奧納的袋子-->
+			<Material Amount="1" ItemId="40690" />	<!--未修補的雕像-->
+			<Succeed>
+				<ShowHtml HtmlId="reona8" />
+			</Succeed>
+		</MakeItem>
+	</Action>
+	<Action Name="request oum adenabag4" NpcId="70674">
+		<MakeItem>
+			<Item Amount="1" ItemId="41408" />		<!--雷奧納的袋子-->
+			<Material Amount="1" ItemId="40685" />	<!--未磨光的雕像-->
+			<Succeed>
+				<ShowHtml HtmlId="reona9" />
+			</Succeed>
+		</MakeItem>
+	</Action>
+	<Action Name="request oum adenabag5" NpcId="70674">
+		<MakeItem>
+			<Item Amount="1" ItemId="41409" />		<!--雷奧納的袋子-->
+			<Material Amount="1" ItemId="40688" />	<!--未上漆的雕像-->
+			<Succeed>
+				<ShowHtml HtmlId="reona10" />
+			</Succeed>
+		</MakeItem>
+	</Action>
+	<Action Name="request oum adenabag6" NpcId="70674">
+		<MakeItem>
+			<Item Amount="1" ItemId="41410" />		<!--雷奧納的袋子-->
+			<Material Amount="1" ItemId="40686" />	<!--完成品的雕像-->
+			<Succeed>
+				<ShowHtml HtmlId="reona10" />
+			</Succeed>
+		</MakeItem>
+	</Action>
+
+<!--狄亞得要塞-->
+	<!--達夫哥丁-->
+	<Action Name="request hoe" NpcId="71166">
+		<MakeItem>
+			<Item Amount="1" ItemId="40527"/>	<!--鋤頭-->
+			<Material Amount="5" ItemId="40899"/>	<!--鋼鐵原石-->
+			<Material Amount="300" ItemId="40308"/>	<!--金幣-->
+		</MakeItem>
+	</Action>
+
+<!--礦物洞穴-->
+	<!--歐姆礦工-->
+	<Action Name="request mineral bag" NpcId="71145">
+		<MakeItem>
+			<Item Amount="1" ItemId="41002"/>	<!--礦物袋子-->
+			<Material Amount="1" ItemId="40614"/>	<!--礦物收集文件-->
+		</MakeItem>
+	</Action>
+
+	<!--歐姆礦工-->
+	<Action Name="request oum giftbag" NpcId="71146">
+		<MakeItem>
+			<Item Amount="1" ItemId="40687"/>	<!--歐姆的袋子-->
+			<Material Amount="1" ItemId="40527"/>	<!--鋤頭-->
+			<Succeed>
+				<ShowHtml HtmlId="midoum3"/>
+			</Succeed>
+		</MakeItem>
+	</Action>
+
+<!--真‧冥皇丹特斯之室-->
+	<!--馬魯貝斯-->
+	<Action Name="request dantes manual" NpcId="71169">
+		<MakeItem>
+			<Item Amount="1" ItemId="40966"/>	<!--真．冥皇製作防具秘笈-->
+			<Material Amount="1" ItemId="41035"/>	<!--完整的召喚球-->
+		</MakeItem>
+	</Action>
+
+<!--L1J-JP-->
+	<!--特製キャンディー/ 薬剤師イクシー-->
+	<Action Name="request ei005" NpcId="71001">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41212"/>	<!--[jp]特製糖果-->
+			<Material Amount="1" ItemId="41211"/>	<!--香菜-->
+		</MakeItem>
+	</Action> 
+
+	<!--ハーブ / 鍛冶屋ロン-->
+	<Action Name="request ei004" NpcId="71003">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41211"/>	<!--香菜-->
+			<Material Amount="1" ItemId="41210"/>	<!--[jp]研磨劑-->
+		</MakeItem>
+	</Action>
+
+	<!--帕古-->
+	<Action Name="request ei014" NpcId="70005">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41226"/>	<!--[jp]帕古的藥-->
+			<Material Amount="1" ItemId="41225"/>	<!--遺失鑰匙商人的請求-->
+		</MakeItem>
+	</Action>
+
+	<!--提米-->
+	<Action Name="1" NpcId="71006">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41210"/>	<!--[jp]研磨劑-->
+			<Material Amount="1" ItemId="41209"/>	<!--[jp]ポピレアの依賴書-->
+			<Succeed>
+				<ShowHtml HtmlId="jpe0055"/>
+			</Succeed>
+		</MakeItem>
+	</Action>
+
+	<!--齊柯利-->
+	<Action Name="1" NpcId="71009">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="40017"/>	<!--翡翠藥水-->
+			<Material Amount="3" ItemId="41222"/>	<!--蘑菇汁-->
+			<Succeed>
+				<ShowHtml HtmlId="jpe0074"/>
+			</Succeed>
+		</MakeItem>
+	</Action>
+
+	<!--布里亞那-->
+	<Action Name="1" NpcId="71011">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="40026"/>	<!--香蕉汁-->
+			<Material Amount="3" ItemId="40060"/>	<!--胡蘿蔔-->
+			<Material Amount="3" ItemId="40061"/>	<!--檸檬-->
+			<Material Amount="3" ItemId="40062"/>	<!--香蕉-->
+			<Succeed>
+				<ShowHtml HtmlId="jpe0065"/>
+			</Succeed>
+		</MakeItem>
+	</Action>
+
+	<!--菲達-->
+	<Action Name="0" NpcId="71018">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="20124"/>	<!--骷髏盔甲-->
+			<Material Amount="1" ItemId="41240"/>	<!--[jp]フェ—ダへの手紙-->
+		<Succeed>
+			<ShowHtml HtmlId="jpe0135"/>
+		</Succeed>
+		</MakeItem>
+	</Action>
+
+	<!--徒弟福托-->
+	<Action Name="0" NpcId="71019">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41241"/>	<!--[jp]骨細工師の袋-->
+			<Material Amount="1" ItemId="41239"/>	<!--[jp]ヴ—トへの手紙-->
+		<Succeed>
+			<ShowHtml HtmlId="jpe0116"/>
+		</Succeed>
+		</MakeItem>
+	</Action>
+
+	<!--約翰-->
+	<Action Name="0" NpcId="71020">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41232"/>	<!--[jp]ジョンの屆け物-->
+			<Material Amount="1" ItemId="41231"/>	<!--[jp]マッティの手紙-->
+		</MakeItem>
+	</Action>
+
+	<!--骨頭加工師麥提-->
+	<Action Name="request ei021" NpcId="71021">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41231"/>	<!--[jp]マッティの手紙-->
+			<Material Amount="1" ItemId="41230"/>	<!--[jp]ジ—ナンの手紙-->
+		</MakeItem>
+	</Action>
+
+	<!--骨頭加工師志男-->
+	<Action Name="0" NpcId="71022">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41230"/>	<!--[jp]ジ—ナンの手紙-->
+			<Material Amount="5" ItemId="41229"/>	<!--[jp]骷髏頭-->
+			<Succeed>
+				<ShowHtml HtmlId="jpe0154"/>
+			</Succeed>
+		</MakeItem>
+	</Action>
+
+	<!--骨頭加工師凱-->
+	<Action Name="0" NpcId="71023">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41235"/>	<!--[jp]材料表-->
+			<Material Amount="1" ItemId="41233"/>	<!--[jp]ケ—イへの手紙-->
+			<Material Amount="1" ItemId="41234"/>	<!--[jp]骨の入った袋-->
+		<Succeed>
+			<ShowHtml HtmlId="jpe0146"/>
+		</Succeed>
+		</MakeItem>
+	</Action>
+	<Action Name="1" NpcId="71023">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41238"/>	<!--[jp]ケ—イの屆け物-->
+			<Material Amount="1" ItemId="41235"/>	<!--[jp]材料表-->
+			<Material Amount="3" ItemId="41236"/>	<!--[jp]骷髏弓箭手的骨頭-->
+			<Material Amount="3" ItemId="41237"/>	<!--[jp]骷髏槍兵的骨頭-->
+		<Succeed>
+			<ShowHtml HtmlId="jpe0147"/>
+		</Succeed>
+		</MakeItem>
+	</Action>	
+
+	<!--卡斯金-->
+	<Action Name="1" NpcId="71025">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="40653"/>	<!--紅鑰匙-->
+			<Material Amount="1" ItemId="41226"/>	<!--[jp]帕古的藥-->
+		<Succeed>
+			<ShowHtml HtmlId="jpe0085"/>
+		</Succeed>
+		</MakeItem>
+	</Action>
+	<Action Name="2" NpcId="71025">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1000" ItemId="40308"/>	<!--金幣-->
+			<Material Amount="1" ItemId="40613"/>	<!--黑鑰匙-->
+			<Material Amount="1" ItemId="41226"/>	<!--[jp]帕古的藥-->
+		<Succeed>
+			<ShowHtml HtmlId="jpe0085"/>
+		</Succeed>
+		</MakeItem>
+	</Action>
+
+	<!--冒險者艾塔-->
+	<Action Name="request ei028" NpcId="71032">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41217"/>	<!--[jp]王族袋子-->
+			<Material Amount="1" ItemId="41214"/>	<!--[jp]運の證-->
+			<Material Amount="5" ItemId="41215"/>	<!--[jp]知の證-->
+			<Material Amount="5" ItemId="41216"/>	<!--[jp]力の證-->
+		</MakeItem>
+	</Action>
+	<Action Name="request ei029" NpcId="71032">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41218"/>	<!--[jp]騎士袋子-->
+			<Material Amount="1" ItemId="41214"/>	<!--[jp]運の證-->
+			<Material Amount="5" ItemId="41215"/>	<!--[jp]知の證-->
+			<Material Amount="5" ItemId="41216"/>	<!--[jp]力の證-->
+		</MakeItem>
+	</Action>
+	<Action Name="request ei030" NpcId="71032">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41219"/>	<!--[jp]妖精袋子-->
+			<Material Amount="1" ItemId="41214"/>	<!--[jp]運の證-->
+			<Material Amount="5" ItemId="41215"/>	<!--[jp]知の證-->
+			<Material Amount="5" ItemId="41216"/>	<!--[jp]力の證-->
+		</MakeItem>
+	</Action>
+	<Action Name="request ei031" NpcId="71032">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41220"/>	<!--[jp]法師袋子-->
+			<Material Amount="1" ItemId="41214"/>	<!--[jp]運の證-->
+			<Material Amount="5" ItemId="41215"/>	<!--[jp]知の證-->
+			<Material Amount="5" ItemId="41216"/>	<!--[jp]力の證-->
+		</MakeItem>
+	</Action>
+	<Action Name="request ei032" NpcId="71032">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41221"/>	<!--黑暗妖精袋子-->
+			<Material Amount="1" ItemId="41214"/>	<!--[jp]運の證-->
+			<Material Amount="5" ItemId="41215"/>	<!--[jp]知の證-->
+			<Material Amount="5" ItemId="41216"/>	<!--[jp]力の證-->
+		</MakeItem>
+	</Action>
+
+	<!--哈米特-->
+	<Action Name="request ring of oren tower" NpcId="71033">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="20282"/>	<!--象牙塔戒指-->
+			<Material Amount="1" ItemId="41228"/>	<!--[jp]ラビのお守り-->
+		</MakeItem>
+	</Action>
+
+	<!--拉比-->
+	<Action Name="request ei034" NpcId="71034">
+		<MakeItem AmountInputable="false">
+			<Item Amount="1" ItemId="41228"/>	<!--[jp]ラビのお守り-->
+			<Material Amount="1" ItemId="41227"/>	<!--[jp]亞歷斯的介紹書-->
+		</MakeItem>
+	</Action>
+
+	<!--慶典道具管理人-->
+	<Action Name="a" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21070"/>	<!--新生皮帶-->
+			<Material Amount="1" ItemId="21069"/>	<!--新生皮帶-->
+		</MakeItem>
+	</Action>
+	<Action Name="b" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21072"/>	<!--新生皮帶-->
+			<Material Amount="1" ItemId="21069"/>	<!--新生皮帶-->
+		</MakeItem>
+	</Action>
+	<Action Name="c" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21071"/>	<!--新生皮帶-->
+			<Material Amount="1" ItemId="21069"/>	<!--新生皮帶-->
+		</MakeItem>
+	</Action>
+	<Action Name="d" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21073"/>	<!--新生皮帶-->
+			<Material Amount="1" ItemId="21069"/>	<!--新生皮帶-->
+		</MakeItem>
+	</Action>
+	<Action Name="e" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21075"/>	<!--新生耳環-->
+			<Material Amount="1" ItemId="21074"/>	<!--新生耳環-->
+		</MakeItem>
+	</Action>
+	<Action Name="f" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21076"/>	<!--新生耳環-->
+			<Material Amount="1" ItemId="21074"/>	<!--新生耳環-->
+		</MakeItem>
+	</Action>
+	<Action Name="g" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21077"/>	<!--新生耳環-->
+			<Material Amount="1" ItemId="21074"/>	<!--新生耳環-->
+		</MakeItem>
+	</Action>
+	<Action Name="h" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21078"/>	<!--新生耳環-->
+			<Material Amount="1" ItemId="21074"/>	<!--新生耳環-->
+		</MakeItem>
+	</Action>
+	<Action Name="i" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21079"/>	<!--新生耳環-->
+			<Material Amount="1" ItemId="21074"/>	<!--新生耳環-->
+		</MakeItem>
+	</Action>
+	<Action Name="j" NpcId="81200">
+		<MakeItem>
+			<Item Amount="1" ItemId="21080"/>	<!--新生耳環-->
+			<Material Amount="1" ItemId="21074"/>	<!--新生耳環-->
+		</MakeItem>
 	</Action>
 </NpcActionList>

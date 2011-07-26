@@ -1,27 +1,174 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <NpcActionList>
-
-<!--有問題-->
-	<!--娜魯帕 / 霸王頭盔->木製的夾克-->
-	<Action Name="request wooden jacket" NpcId="70838">
-		<MakeItem>
-			<Item Amount="1" ItemId="21107" />		<!--霸王頭盔-->
-			<Material Amount="6" ItemId="40502" />	<!--線-->
-			<Material Amount="10" ItemId="40507" />	<!--安特之樹枝-->
-		</MakeItem>
-	</Action>
-
-	<!--羅賓孫 / 霸王頭盔->木製的夾克-->
-	<Action Name="request silver arrow" NpcId="70840">
-		<MakeItem>
-			<Item Amount="200" ItemId="40744" />		<!--銀箭-->
-			<Material Amount="1" ItemId="173" />		<!--短弓-->
-			<Material Amount="1" ItemId="21107" />	<!--霸王頭盔-->
-			<Material Amount="1" ItemId="40507" />	<!--安特之樹枝-->
-		</MakeItem>
-	</Action>
-
 <!--L1J-TW-->
+<!--多重地區-->
+	<Action Name="request adena2">
+		<MakeItem>
+			<Item Amount="2" ItemId="40308" />		<!--金幣-->
+			<Material Amount="1" ItemId="40405" />	<!--皮革-->
+		</MakeItem>
+	</Action>
+	<Action Name="request adena30">
+		<MakeItem>
+			<Item Amount="30" ItemId="40308" />		<!--金幣-->
+			<Material Amount="1" ItemId="40406" />	<!--高級皮革-->
+		</MakeItem>
+	</Action>
+	<Action Name="request adena5">
+		<MakeItem>
+			<Item Amount="5" ItemId="40308" />		<!--金幣-->
+			<Material Amount="1" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request adena10">
+		<MakeItem>
+			<Item Amount="10" ItemId="40308" />		<!--金幣-->
+			<Material Amount="1" ItemId="40407" />	<!--骨頭碎片-->
+		</MakeItem>
+	</Action>
+	<Action Name="request hard leather">
+		<MakeItem>
+			<Item Amount="1" ItemId="40406" />		<!--高級皮革-->
+			<Material Amount="20" ItemId="40405" />	<!--皮革-->
+		</MakeItem>
+	</Action>
+	<Action Name="request leather cap">
+		<MakeItem>
+			<Item Amount="1" ItemId="20001" />		<!--皮帽子-->
+			<Material Amount="5" ItemId="40405" />	<!--皮革-->
+			<Material Amount="1" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request leather sandal">
+		<MakeItem>
+			<Item Amount="1" ItemId="20193" />		<!--皮涼鞋-->
+			<Material Amount="6" ItemId="40405" />	<!--皮革-->
+			<Material Amount="2" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request leather vest">
+		<MakeItem>
+			<Item Amount="1" ItemId="20090" />		<!--皮背心-->
+			<Material Amount="10" ItemId="40405" />	<!--皮革-->
+		</MakeItem>
+	</Action>
+	<Action Name="request leather shield">
+		<MakeItem>
+			<Item Amount="1" ItemId="20219" />		<!--皮盾牌-->
+			<Material Amount="7" ItemId="40405" />	<!--皮革-->
+		</MakeItem>
+	</Action>
+	<Action Name="request leather boots">
+		<MakeItem>
+			<Item Amount="1" ItemId="20192" />		<!--皮長靴-->
+			<Material Amount="1" ItemId="20212" />	<!--銀釘皮涼鞋-->
+			<Material Amount="300" ItemId="40308" />	<!--金幣-->
+			<Material Amount="10" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="10" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request leather helmet">
+		<MakeItem>
+			<Item Amount="1" ItemId="20002" />		<!--皮頭盔-->
+			<Material Amount="1" ItemId="20001" />	<!--皮帽子-->
+			<Material Amount="1" ItemId="20043" />	<!--鋼盔-->
+			<Material Amount="5" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="5" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request hard leather vest">
+		<MakeItem>
+			<Item Amount="1" ItemId="20145" />		<!--硬皮背心-->
+			<Material Amount="1" ItemId="20148" />	<!--銀釘皮背心-->
+			<Material Amount="15" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="15" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request leather vest with belt">
+		<MakeItem>
+			<Item Amount="1" ItemId="20120" />		<!--皮盔甲-->
+			<Material Amount="1" ItemId="20090" />	<!--皮背心-->
+			<Material Amount="1" ItemId="40778" />	<!--皮帶-->
+		</MakeItem>
+	</Action>
+	<Action Name="request belt">
+		<MakeItem>
+			<Item Amount="1" ItemId="40778" />		<!--皮帶-->
+			<Material Amount="5" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="2" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request studded leather cap">
+		<MakeItem>
+			<Item Amount="1" ItemId="20038" />		<!--銀釘皮帽-->
+			<Material Amount="1" ItemId="20001" />	<!--皮帽子-->
+			<Material Amount="2" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="10" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request studded leather sandal">
+		<MakeItem>
+			<Item Amount="1" ItemId="20212" />		<!--銀釘皮涼鞋-->
+			<Material Amount="1" ItemId="20193" />	<!--皮涼鞋-->
+			<Material Amount="3" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="12" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request studded leather vest">
+		<MakeItem>
+			<Item Amount="1" ItemId="20148" />		<!--銀釘皮背心-->
+			<Material Amount="1" ItemId="20090" />	<!--皮背心-->
+			<Material Amount="2" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="10" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request studded leather shield">
+		<MakeItem>
+			<Item Amount="1" ItemId="20241" />		<!--銀釘皮盾-->
+			<Material Amount="1" ItemId="20219" />	<!--皮盾牌-->
+			<Material Amount="5" ItemId="40406" />	<!--高級皮革-->
+			<Material Amount="20" ItemId="40408" />	<!--金屬塊-->
+		</MakeItem>
+	</Action>
+	<Action Name="request skull helmet">
+		<MakeItem>
+			<Item Amount="1" ItemId="20045" />		<!--骷髏頭盔-->
+			<Material Amount="1" ItemId="20002" />	<!--皮頭盔-->
+			<Material Amount="800" ItemId="40308" />	<!--金幣-->
+			<Material Amount="10" ItemId="40407" />	<!--骨頭碎片-->
+		</MakeItem>
+	</Action>
+	<Action Name="request bone armor">
+		<MakeItem>
+			<Item Amount="1" ItemId="20124" />		<!--骷髏盔甲-->
+			<Material Amount="1" ItemId="20145" />	<!--硬皮背心-->
+			<Material Amount="500" ItemId="40308" />	<!--金幣-->
+			<Material Amount="20" ItemId="40407" />	<!--骨頭碎片-->
+		</MakeItem>
+	</Action>
+	<Action Name="request bone shield">
+		<MakeItem>
+			<Item Amount="1" ItemId="20221" />		<!--骷髏盾牌-->
+			<Material Amount="1" ItemId="20241" />	<!--銀釘皮盾-->
+			<Material Amount="800" ItemId="40308" />	<!--金幣-->
+			<Material Amount="15" ItemId="40407" />	<!--骨頭碎片-->
+		</MakeItem>
+	</Action>
+
+	<!--徽章販賣員-->
+	<Action Name="request new surprise bag" NpcId="80128">
+		<MakeItem>
+			<Item Amount="1" ItemId="41311" />		<!--驚喜箱-->
+			<Material Amount="50" ItemId="41402" />	<!--勇者的勳章-->
+		</MakeItem>
+	</Action>
+	<Action Name="request pet match coin">
+		<MakeItem>
+			<Material Amount="500" ItemId="41402" />	<!--勇者的勳章 -->
+			<Item Amount="1" ItemId="41254" />		<!--勝利的徽章-->
+		</MakeItem>
+	</Action>
+
 <!--說話之島-->
 	<!--雷德斯-->
 	<Action Name="request petfood" NpcId="70526">
@@ -1652,72 +1799,6 @@
 		</MakeItem>
 	</Action>
 
-<!--火龍窟-->
-	<!--萊利的輔佐官-->
-	<Action Name="request druga family first generation treasure">
-		<MakeItem>
-			<Item Amount="1" ItemId="40623" />		<!--多魯嘉1世傳家之寶-->
-			<Material Amount="1" ItemId="40342" />	<!--安塔瑞斯之爪-->
-			<Material Amount="1" ItemId="40350" />	<!--巴拉卡斯之爪-->
-			<Material Amount="1" ItemId="40358" />	<!--法利昂之爪-->
-			<Material Amount="1" ItemId="40366" />	<!--林德拜爾之爪-->
-		</MakeItem>
-	</Action>
-	<Action Name="request druga family second generation treasure">
-		<MakeItem>
-			<Item Amount="1" ItemId="40624" />		<!--多魯嘉2世傳家之寶-->
-			<Material Amount="1" ItemId="40343" />	<!--安塔瑞斯之眼-->
-			<Material Amount="1" ItemId="40351" />	<!--巴拉卡斯之眼-->
-			<Material Amount="1" ItemId="40359" />	<!--法利昂之眼-->
-			<Material Amount="1" ItemId="40367" />	<!--林德拜爾之眼-->
-		</MakeItem>
-	</Action>
-	<Action Name="request druga family third generation treasure">
-		<MakeItem>
-			<Item Amount="1" ItemId="40625" />		<!--多魯嘉3世傳家之寶-->
-			<Material Amount="1" ItemId="40344" />	<!--安塔瑞斯之血-->
-			<Material Amount="1" ItemId="40352" />	<!--巴拉卡斯之血-->
-			<Material Amount="1" ItemId="40360" />	<!--法利昂之血-->
-			<Material Amount="1" ItemId="40368" />	<!--林德拜爾之血-->
-		</MakeItem>
-	</Action>
-	<Action Name="request druga family fourth generation treasure">
-		<MakeItem>
-			<Item Amount="1" ItemId="40626" />		<!--多魯嘉4世傳家之寶-->
-			<Material Amount="1" ItemId="40345" />	<!--安塔瑞斯之肉-->
-			<Material Amount="1" ItemId="40353" />	<!--巴拉卡斯之肉-->
-			<Material Amount="1" ItemId="40361" />	<!--法利昂之肉-->
-			<Material Amount="1" ItemId="40369" />	<!--林德拜爾之肉-->
-		</MakeItem>
-	</Action>
-	<Action Name="request druga family fifth generation treasure">
-		<MakeItem>
-			<Item Amount="1" ItemId="40627" />		<!--多魯嘉5世傳家之寶-->
-			<Material Amount="1" ItemId="40346" />	<!--安塔瑞斯之心-->
-			<Material Amount="1" ItemId="40354" />	<!--巴拉卡斯之心-->
-			<Material Amount="1" ItemId="40362" />	<!--法利昂之心-->
-			<Material Amount="1" ItemId="40370" />	<!--林德拜爾之心-->
-		</MakeItem>
-	</Action>
-	<Action Name="request druga family sixth generation treasure">
-		<MakeItem>
-			<Item Amount="1" ItemId="40628" />		<!--多魯嘉6世傳家之寶-->
-			<Material Amount="1" ItemId="40347" />	<!--安塔瑞斯之骨-->
-			<Material Amount="1" ItemId="40355" />	<!--巴拉卡斯之骨-->
-			<Material Amount="1" ItemId="40363" />	<!--法利昂之骨-->
-			<Material Amount="1" ItemId="40371" />	<!--林德拜爾之骨-->
-		</MakeItem>
-	</Action>
-	<Action Name="request druga family seventh generation treasure">
-		<MakeItem>
-			<Item Amount="1" ItemId="40629" />		<!--多魯嘉7世傳家之寶-->
-			<Material Amount="1" ItemId="40348" />	<!--安塔瑞斯之牙-->
-			<Material Amount="1" ItemId="40356" />	<!--巴拉卡斯之牙-->
-			<Material Amount="1" ItemId="40364" />	<!--法利昂之牙-->
-			<Material Amount="1" ItemId="40372" />	<!--林德拜爾之牙-->
-		</MakeItem>
-	</Action>
-
 <!--沉默洞穴-->
 	<!--皮爾斯-->
 	<Action Name="request silver sting knife">
@@ -2401,6 +2482,13 @@
 			<Material Amount="10" ItemId="40507" />	<!--安特之樹枝-->
 		</MakeItem>
 	</Action>
+	<Action Name="request wooden jacket">
+		<MakeItem>
+			<Item Amount="1" ItemId="20461" />		<!--木製的夾克-->
+			<Material Amount="6" ItemId="40502" />	<!--線-->
+			<Material Amount="10" ItemId="40507" />	<!--安特之樹枝-->
+		</MakeItem>
+	</Action>
 	<Action Name="request wooden armor">
 		<MakeItem>
 			<Item Amount="1" ItemId="20097" />		<!--木甲-->
@@ -2601,6 +2689,16 @@
 	<Action Name="request elvenforest map" NpcId="70847">
 		<MakeItem>
 			<Item Amount="1" ItemId="40378" />		<!--地圖:妖精森林-->
+			<Material Amount="1" ItemId="40507" />	<!--安特之樹枝-->
+		</MakeItem>
+	</Action>
+
+	<!--羅賓孫-->
+	<Action Name="request silver arrow" NpcId="70840">
+		<MakeItem>
+			<Item Amount="200" ItemId="40744" />		<!--銀箭-->
+			<Material Amount="1" ItemId="173" />		<!--短弓-->
+			<Material Amount="1" ItemId="20461" />	<!--木製的夾克-->
 			<Material Amount="1" ItemId="40507" />	<!--安特之樹枝-->
 		</MakeItem>
 	</Action>
@@ -3333,174 +3431,6 @@
 		</MakeItem>
 	</Action>
 
-<!--多重地區-->
-	<!--徽章販賣員-->
-	<Action Name="request new surprise bag" NpcId="80128">
-		<MakeItem>
-			<Item Amount="1" ItemId="41311" />		<!--驚喜箱-->
-			<Material Amount="50" ItemId="41402" />	<!--勇者的勳章-->
-		</MakeItem>
-	</Action>
-	<Action Name="request pet match coin">
-		<MakeItem>
-			<Material Amount="500" ItemId="41402" />	<!--勇者的勳章 -->
-			<Item Amount="1" ItemId="41254" />		<!--勝利的徽章-->
-		</MakeItem>
-	</Action>
-
-	<Action Name="request adena2">
-		<MakeItem>
-			<Item Amount="2" ItemId="40308" />		<!--金幣-->
-			<Material Amount="1" ItemId="40405" />	<!--皮革-->
-		</MakeItem>
-	</Action>
-	<Action Name="request adena30">
-		<MakeItem>
-			<Item Amount="30" ItemId="40308" />		<!--金幣-->
-			<Material Amount="1" ItemId="40406" />	<!--高級皮革-->
-		</MakeItem>
-	</Action>
-	<Action Name="request adena5">
-		<MakeItem>
-			<Item Amount="5" ItemId="40308" />		<!--金幣-->
-			<Material Amount="1" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request adena10">
-		<MakeItem>
-			<Item Amount="10" ItemId="40308" />		<!--金幣-->
-			<Material Amount="1" ItemId="40407" />	<!--骨頭碎片-->
-		</MakeItem>
-	</Action>
-	<Action Name="request hard leather">
-		<MakeItem>
-			<Item Amount="1" ItemId="40406" />		<!--高級皮革-->
-			<Material Amount="20" ItemId="40405" />	<!--皮革-->
-		</MakeItem>
-	</Action>
-	<Action Name="request leather cap">
-		<MakeItem>
-			<Item Amount="1" ItemId="20001" />		<!--皮帽子-->
-			<Material Amount="5" ItemId="40405" />	<!--皮革-->
-			<Material Amount="1" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request leather sandal">
-		<MakeItem>
-			<Item Amount="1" ItemId="20193" />		<!--皮涼鞋-->
-			<Material Amount="6" ItemId="40405" />	<!--皮革-->
-			<Material Amount="2" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request leather vest">
-		<MakeItem>
-			<Item Amount="1" ItemId="20090" />		<!--皮背心-->
-			<Material Amount="10" ItemId="40405" />	<!--皮革-->
-		</MakeItem>
-	</Action>
-	<Action Name="request leather shield">
-		<MakeItem>
-			<Item Amount="1" ItemId="20219" />		<!--皮盾牌-->
-			<Material Amount="7" ItemId="40405" />	<!--皮革-->
-		</MakeItem>
-	</Action>
-	<Action Name="request leather boots">
-		<MakeItem>
-			<Item Amount="1" ItemId="20192" />		<!--皮長靴-->
-			<Material Amount="1" ItemId="20212" />	<!--銀釘皮涼鞋-->
-			<Material Amount="300" ItemId="40308" />	<!--金幣-->
-			<Material Amount="10" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="10" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request leather helmet">
-		<MakeItem>
-			<Item Amount="1" ItemId="20002" />		<!--皮頭盔-->
-			<Material Amount="1" ItemId="20001" />	<!--皮帽子-->
-			<Material Amount="1" ItemId="20043" />	<!--鋼盔-->
-			<Material Amount="5" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="5" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request hard leather vest">
-		<MakeItem>
-			<Item Amount="1" ItemId="20145" />		<!--硬皮背心-->
-			<Material Amount="1" ItemId="20148" />	<!--銀釘皮背心-->
-			<Material Amount="15" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="15" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request leather vest with belt">
-		<MakeItem>
-			<Item Amount="1" ItemId="20120" />		<!--皮盔甲-->
-			<Material Amount="1" ItemId="20090" />	<!--皮背心-->
-			<Material Amount="1" ItemId="40778" />	<!--皮帶-->
-		</MakeItem>
-	</Action>
-	<Action Name="request belt">
-		<MakeItem>
-			<Item Amount="1" ItemId="40778" />		<!--皮帶-->
-			<Material Amount="5" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="2" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request studded leather cap">
-		<MakeItem>
-			<Item Amount="1" ItemId="20038" />		<!--銀釘皮帽-->
-			<Material Amount="1" ItemId="20001" />	<!--皮帽子-->
-			<Material Amount="2" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="10" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request studded leather sandal">
-		<MakeItem>
-			<Item Amount="1" ItemId="20212" />		<!--銀釘皮涼鞋-->
-			<Material Amount="1" ItemId="20193" />	<!--皮涼鞋-->
-			<Material Amount="3" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="12" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request studded leather vest">
-		<MakeItem>
-			<Item Amount="1" ItemId="20148" />		<!--銀釘皮背心-->
-			<Material Amount="1" ItemId="20090" />	<!--皮背心-->
-			<Material Amount="2" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="10" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request studded leather shield">
-		<MakeItem>
-			<Item Amount="1" ItemId="20241" />		<!--銀釘皮盾-->
-			<Material Amount="1" ItemId="20219" />	<!--皮盾牌-->
-			<Material Amount="5" ItemId="40406" />	<!--高級皮革-->
-			<Material Amount="20" ItemId="40408" />	<!--金屬塊-->
-		</MakeItem>
-	</Action>
-	<Action Name="request skull helmet">
-		<MakeItem>
-			<Item Amount="1" ItemId="20045" />		<!--骷髏頭盔-->
-			<Material Amount="1" ItemId="20002" />	<!--皮頭盔-->
-			<Material Amount="800" ItemId="40308" />	<!--金幣-->
-			<Material Amount="10" ItemId="40407" />	<!--骨頭碎片-->
-		</MakeItem>
-	</Action>
-	<Action Name="request bone armor">
-		<MakeItem>
-			<Item Amount="1" ItemId="20124" />		<!--骷髏盔甲-->
-			<Material Amount="1" ItemId="20145" />	<!--硬皮背心-->
-			<Material Amount="500" ItemId="40308" />	<!--金幣-->
-			<Material Amount="20" ItemId="40407" />	<!--骨頭碎片-->
-		</MakeItem>
-	</Action>
-	<Action Name="request bone shield">
-		<MakeItem>
-			<Item Amount="1" ItemId="20221" />		<!--骷髏盾牌-->
-			<Material Amount="1" ItemId="20241" />	<!--銀釘皮盾-->
-			<Material Amount="800" ItemId="40308" />	<!--金幣-->
-			<Material Amount="15" ItemId="40407" />	<!--骨頭碎片-->
-		</MakeItem>
-	</Action>
-
 <!--活動-->
 	<Action Name="request pumpkin hat">
 		<MakeItem>
@@ -3576,61 +3506,6 @@
 		<MakeItem>
 			<Item Amount="30" ItemId="40308" />		<!--金幣-->
 			<Material Amount="1" ItemId="41224" />	<!--徽章-->
-		</MakeItem>
-	</Action>
-
-	<Action Name="request oum adenabag1" NpcId="70674">
-		<MakeItem>
-			<Item Amount="1" ItemId="40632" />		<!--雷奧納的袋子-->
-			<Material Amount="1" ItemId="40691" />	<!--半成品的雕像-->
-			<Succeed>
-				<ShowHtml HtmlId="reona6" />
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<Action Name="request oum adenabag2" NpcId="70674">
-		<MakeItem>
-			<Item Amount="1" ItemId="41406" />		<!--雷奧納的袋子-->
-			<Material Amount="1" ItemId="40689" />	<!--未精雕的雕像-->
-			<Succeed>
-				<ShowHtml HtmlId="reona7" />
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<Action Name="request oum adenabag3" NpcId="70674">
-		<MakeItem>
-			<Item Amount="1" ItemId="41407" />		<!--雷奧納的袋子-->
-			<Material Amount="1" ItemId="40690" />	<!--未修補的雕像-->
-			<Succeed>
-				<ShowHtml HtmlId="reona8" />
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<Action Name="request oum adenabag4" NpcId="70674">
-		<MakeItem>
-			<Item Amount="1" ItemId="41408" />		<!--雷奧納的袋子-->
-			<Material Amount="1" ItemId="40685" />	<!--未磨光的雕像-->
-			<Succeed>
-				<ShowHtml HtmlId="reona9" />
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<Action Name="request oum adenabag5" NpcId="70674">
-		<MakeItem>
-			<Item Amount="1" ItemId="41409" />		<!--雷奧納的袋子-->
-			<Material Amount="1" ItemId="40688" />	<!--未上漆的雕像-->
-			<Succeed>
-				<ShowHtml HtmlId="reona10" />
-			</Succeed>
-		</MakeItem>
-	</Action>
-	<Action Name="request oum adenabag6" NpcId="70674">
-		<MakeItem>
-			<Item Amount="1" ItemId="41410" />		<!--雷奧納的袋子-->
-			<Material Amount="1" ItemId="40686" />	<!--完成品的雕像-->
-			<Succeed>
-				<ShowHtml HtmlId="reona10" />
-			</Succeed>
 		</MakeItem>
 	</Action>
 </NpcActionList>
