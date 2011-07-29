@@ -1110,4 +1110,5 @@ INSERT INTO `npcaction` VALUES ('81300', 'gr_mammon1', 'gr_mammon1', 'gr_mammon3
 INSERT INTO `npcaction` VALUES ('81307', 'newsboy', 'newsboy', '', '');
 INSERT INTO `npcaction` VALUES ('81310', 'redsoul_f4', 'redsoul_f4', '', '');
 INSERT INTO `npcaction` VALUES ('81311', 'bluesoul_f4', 'bluesoul_f4', '', '');
+INSERT INTO `npcaction` VALUES ('81321', 'adjutant9', 'adjutant9', '', '');
 INSERT INTO `npcaction` VALUES ('91002', 'dufo', 'dufo', '', '');
