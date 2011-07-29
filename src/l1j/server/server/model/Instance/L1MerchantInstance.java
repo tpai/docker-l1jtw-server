@@ -3011,6 +3011,12 @@ public class L1MerchantInstance extends L1NpcInstance {
 				if (player.get_sex() == 1) {
 					htmlid = "sm2";
 				}
+			} else if (npcid == 81322) { // 黑騎士副隊長
+				if (player.getLevel() < 52) {
+					htmlid = "adjutant2";
+					if (player.isKnight())
+						htmlid = "adjutant4";
+				}
 			}
 
 			// html表示パケット送信

@@ -368,11 +368,14 @@ public class L1Spawn extends L1GameTimeAdapter {
 			}
 
 			int npcId = mob.getNpcTemplate().get_npcId();
-			if ((npcId == 45488) && (getMapId() == 9)) { // カスパー
+			if ((npcId == 45488) && (getMapId() == 9)) { // 卡士伯
 				mob.setMap((short) (getMapId() + Random.nextInt(2)));
 			}
-			else if ((npcId == 45601) && (getMapId() == 11)) { // デスナイト
+			else if ((npcId == 45601) && (getMapId() == 11)) { // 死亡騎士
 				mob.setMap((short) (getMapId() + Random.nextInt(3)));
+			}
+			else if ((npcId == 81322) && (getMapId() == 25)) { // 黑騎士副隊長
+				mob.setMap((short) (getMapId() + Random.nextInt(2)));
 			}
 			else {
 				mob.setMap(getMapId());

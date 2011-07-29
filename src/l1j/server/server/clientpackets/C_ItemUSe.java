@@ -268,7 +268,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					if (lastUsed != null) {
 						Calendar cal = Calendar.getInstance();
 						if ((cal.getTimeInMillis() - lastUsed.getTime()) / 1000 <= delayEffect) {
-							// \f1何も起きませんでした。
+							// \f1沒有任何事情發生。
 							pc.sendPackets(new S_ServerMessage(79));
 							return;
 						}
@@ -311,17 +311,17 @@ public class C_ItemUSe extends ClientBasePacket {
 				if (((itemId == 40576) && !pc.isElf()) // 魂の結晶の破片（白）
 						|| ((itemId == 40577) && !pc.isWizard()) // 魂の結晶の破片（黒）
 						|| ((itemId == 40578) && !pc.isKnight())) { // 魂の結晶の破片（赤）
-					pc.sendPackets(new S_ServerMessage(264)); // \f1あなたのクラスではこのアイテムは使用できません。
+					pc.sendPackets(new S_ServerMessage(264)); // \f1你的職業無法使用此道具。
 					return;
 				}
 
 				if (l1iteminstance.getItem().getType() == 0) { // アロー
 					pc.getInventory().setArrow(l1iteminstance.getItem().getItemId());
-					pc.sendPackets(new S_ServerMessage(452, l1iteminstance.getLogName())); // %0が選択されました。
+					pc.sendPackets(new S_ServerMessage(452, l1iteminstance.getLogName())); // %0%s 被選擇了。
 				}
 				else if (l1iteminstance.getItem().getType() == 15) { // スティング
 					pc.getInventory().setSting(l1iteminstance.getItem().getItemId());
-					pc.sendPackets(new S_ServerMessage(452, // %0が選択されました。
+					pc.sendPackets(new S_ServerMessage(452, // %0%s 被選擇了。
 							l1iteminstance.getLogName()));
 				}
 				else if (l1iteminstance.getItem().getType() == 16) { // treasure_box
@@ -712,7 +712,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
@@ -926,7 +926,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if ((itemId >= 41048) && (41055 >= itemId)) {
@@ -938,7 +938,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if ((itemId == 41056) || (itemId == 41057)) {
@@ -950,7 +950,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40925) { // 浄化のポーション
@@ -966,7 +966,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if ((itemId >= 40926) && (40929 >= itemId)) { // 一～四階神秘藥水
@@ -1081,7 +1081,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40964) { // ダークマジックパウダー
@@ -1097,7 +1097,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if ((itemId == 40090) || (itemId == 40091) || (itemId == 40092) || (itemId == 40093) || (itemId == 40094)) { // ブランク
@@ -1155,7 +1155,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(264)); // \f1あなたのクラスではこのアイテムは使用できません。
+						pc.sendPackets(new S_ServerMessage(264)); // \f1你的職業無法使用此道具。
 					}
 
 					// スペルスクロール
@@ -1226,7 +1226,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40315) { // ペットの笛
@@ -1261,7 +1261,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().consumeItem(40318, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40326) { // 3方向ルーレット
@@ -1272,7 +1272,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().consumeItem(40318, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40327) { // 4方向ルーレット
@@ -1283,7 +1283,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().consumeItem(40318, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40328) { // 6面ダイス
@@ -1294,7 +1294,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().consumeItem(40318, 1);
 					}
 					else {
-						// \f1何も起きませんでした。
+						// \f1沒有任何事情發生。
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
@@ -1652,7 +1652,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1Teleport.teleport(pc, 32815, 32810, mapid, 5, false);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40417) { // 精靈結晶
@@ -1663,7 +1663,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1Teleport.teleport(pc, 32922, 32812, mapid, 5, true);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 49202) { // 時空裂痕邪念碎片
@@ -1673,7 +1673,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}			
 				else if (itemId == 49178) { // 希蓮恩的護身符
@@ -1683,7 +1683,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}			
 				else if (itemId == 49216) { // 普洛凱爾的護身符
@@ -1693,7 +1693,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.getInventory().removeItem(l1iteminstance, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}			
 				else if (itemId == 40566) { // ミステリアス シェル
@@ -1714,14 +1714,14 @@ public class C_ItemUSe extends ClientBasePacket {
 							}
 						}
 						if (found) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
 						else {
 							L1SpawnUtil.spawn(pc, 45300, 0, 0); // 古代人の亡霊
 						}
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40557) { // 暗殺リスト(グルーディン)
@@ -1738,7 +1738,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1SpawnUtil.spawn(pc, 45883, 0, 300000);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40563) { // 暗殺リスト(火田村)
@@ -1755,7 +1755,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1SpawnUtil.spawn(pc, 45884, 0, 300000);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40561) { // 暗殺リスト(ケント)
@@ -1772,7 +1772,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1SpawnUtil.spawn(pc, 45885, 0, 300000);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40560) { // 暗殺リスト(ウッドベック)
@@ -1789,7 +1789,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1SpawnUtil.spawn(pc, 45886, 0, 300000);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40562) { // 暗殺リスト(ハイネ)
@@ -1806,7 +1806,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1SpawnUtil.spawn(pc, 45887, 0, 300000);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40559) { // 暗殺リスト(アデン)
@@ -1823,7 +1823,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1SpawnUtil.spawn(pc, 45888, 0, 300000);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40558) { // 暗殺リスト(ギラン)
@@ -1840,7 +1840,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						L1SpawnUtil.spawn(pc, 45889, 0, 300000);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 40572) { // 刺客之證
@@ -1891,7 +1891,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 					}
 					else {
-						// \f1何も起きませんでした。
+						// \f1沒有任何事情發生。
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
@@ -1936,7 +1936,7 @@ public class C_ItemUSe extends ClientBasePacket {
 							}
 						}
 						else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
 					}
 				}
@@ -2099,7 +2099,7 @@ public class C_ItemUSe extends ClientBasePacket {
 								((L1EtcItem) l1iteminstance.getItem()).get_mapid(), 5, true);
 					}
 					else {
-						// \f1何も起きませんでした。
+						// \f1沒有任何事情發生。
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
@@ -2109,13 +2109,13 @@ public class C_ItemUSe extends ClientBasePacket {
 								((L1EtcItem) l1iteminstance.getItem()).get_mapid(), 5, true);
 					}
 					else {
-						// \f1何も起きませんでした。
+						// \f1沒有任何事情發生。
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
 				else if (itemId == 40692) { // 完成的藏寶圖
 					if (pc.getInventory().checkItem(40621)) {
-						// \f1何も起きませんでした。
+						// \f1沒有任何事情發生。
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 					else if (((pc.getX() >= 32856) && (pc.getX() <= 32858)) && ((pc.getY() >= 32857) && (pc.getY() <= 32858))
@@ -2124,14 +2124,23 @@ public class C_ItemUSe extends ClientBasePacket {
 								((L1EtcItem) l1iteminstance.getItem()).get_mapid(), 5, true);
 					}
 					else {
-						// \f1何も起きませんでした。
+						// \f1沒有任何事情發生。
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
-				else if (itemId == 41146) { // ドロモンドの招待状
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei001"));
+				else if (itemId == 40101) { // 指定傳送卷軸(隱藏之谷)
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei037"));
 				}
-				else if (itemId == 40641) { // トーキングスクロール
+				else if (itemId == 40383) { // 地圖:歌唱之島
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei035"));
+				}
+				else if (itemId == 40384) { // 地圖:隱藏之谷
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei036"));
+				}
+				else if (itemId == 40630) { // 迪哥的舊日記
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "diegodiary"));
+				}
+				else if (itemId == 40641) { // 說話卷軸
 					if (Config.ALT_TALKINGSCROLLQUEST == true) {
 						if (pc.getQuest().get_step(L1Quest.QUEST_TOSCROLL) == 0) {
 							pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "tscrolla"));
@@ -2183,53 +2192,91 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "tscrollp"));
 					}
 				}
-				else if (itemId == 49172) { // 希蓮恩的第一次信件
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein1lt"));
+				else if (itemId == 40663) { // 兒子的信
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "sonsletter"));
 				}
-				else if (itemId == 49173) { // 希蓮恩的第二次信件
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein2lt"));
+				else if (itemId == 40701) { // 小藏寶圖
+					if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 1) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "firsttmap"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 2) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapa"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 3) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapb"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 4) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapc"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 5) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapd"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 6) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmape"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 7) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapf"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 8) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapg"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 9) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmaph"));
+					}
+					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 10) {
+						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapi"));
+					}
 				}
-				else if (itemId == 49174) { // 希蓮恩的第三次信件
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein3lt"));
+				else if (itemId == 41007) { // 伊莉絲的命令書：靈魂之安息
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "erisscroll"));
 				}
-				else if (itemId == 49175) { // 希蓮恩的第四次信件
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein4lt"));
+				else if (itemId == 41009) { // 伊莉絲的命令書：同盟之意志
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "erisscroll2"));
 				}
-				else if (itemId == 49176) { // 希蓮恩的第五次信件
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein5lt"));
+				else if (itemId == 41019) { // 拉斯塔巴德歷史書第1頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory1"));
 				}
-				else if (itemId == 49177) { // 希蓮恩的第六次信件
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein6lt"));
+				else if (itemId == 41020) { // 拉斯塔巴德歷史書第2頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory2"));
 				}
-				else if (itemId == 49206) { // 塞維斯邪念碎片
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "bluesoul_p"));
+				else if (itemId == 41021) { // 拉斯塔巴德歷史書第3頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory3"));
 				}
-				else if (itemId == 49210) { // 普洛凱爾的第一次指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "first_p"));
+				else if (itemId == 41022) { // 拉斯塔巴德歷史書第4頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory4"));
 				}
-				else if (itemId == 49211) { // 普洛凱爾的第二次指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "second_p"));
+				else if (itemId == 41023) { // 拉斯塔巴德歷史書第5頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory5"));
 				}
-				else if (itemId == 49212) { // 普洛凱爾的第三次指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "third_p"));
+				else if (itemId == 41024) { // 拉斯塔巴德歷史書第6頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory6"));
 				}
-				else if (itemId == 49287) { // 普洛凱爾的第四次指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fourth_p"));
+				else if (itemId == 41025) { // 拉斯塔巴德歷史書第7頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory7"));
 				}
-				else if (itemId == 49288) { // 普洛凱爾的第五次指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fifth_p"));
+				else if (itemId == 41026) { // 拉斯塔巴德歷史書第8頁
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory8"));
 				}
-				else if (itemId == 49231) { // 路西爾斯邪念碎片
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "redsoul_p"));
+				else if (itemId == 41060) { // 諾曼阿吐巴的信
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "nonames"));
 				}
-				else if (itemId == 40383) { // 地図：歌う島
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei035"));
+				else if (itemId == 41061) { // 妖精調查書：卡麥都達瑪拉
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "kames"));
 				}
-				else if (itemId == 40384) { // 地図：隠された渓谷
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei036"));
+				else if (itemId == 41062) { // 人類調查書：巴庫摩那魯加
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "bakumos"));
 				}
-				else if (itemId == 40101) { // 隠された渓谷帰還スクロール
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei037"));
+				else if (itemId == 41063) { // 精靈調查書：可普都達瑪拉
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "bukas"));
+				}
+				else if (itemId == 41064) { // 妖魔調查書：弧鄔牟那魯加
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "huwoomos"));
+				}
+				else if (itemId == 41065) { // 死亡之樹調查書：諾亞阿吐巴
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "noas"));
+				}
+				else if (itemId == 41146) { // ドロモンドの招待状
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei001"));
 				}
 				else if (itemId == 41209) { // ポピレアの依頼書
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei002"));
@@ -2306,115 +2353,74 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == 41240) { // フェーダへの手紙
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "ei022"));
 				}
-				else if (itemId == 41060) { // ノナメの推薦書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "nonames"));
-				}
-				else if (itemId == 41061) { // 調査団の証書：エルフ地域ドゥダ-マラカメ
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "kames"));
-				}
-				else if (itemId == 41062) { // 調査団の証書：人間地域ネルガバクモ
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "bakumos"));
-				}
-				else if (itemId == 41063) { // 調査団の証書：精霊地域ドゥダ-マラブカ
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "bukas"));
-				}
-				else if (itemId == 41064) { // 調査団の証書：オーク地域ネルガフウモ
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "huwoomos"));
-				}
-				else if (itemId == 41065) { // 調査団の証書：調査団長アトゥバノア
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "noas"));
-				}
-				else if (itemId == 41356) { // パルームの資源リスト
+				else if (itemId == 41356) { // 波倫的資源清單
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "rparum3"));
 				}
-				else if (itemId == 40701) { // 小さな宝の地図
-					if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 1) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "firsttmap"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 2) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapa"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 3) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapb"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 4) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "secondtmapc"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 5) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapd"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 6) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmape"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 7) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapf"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 8) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapg"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 9) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmaph"));
-					}
-					else if (pc.getQuest().get_step(L1Quest.QUEST_LUKEIN1) == 10) {
-						pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "thirdtmapi"));
-					}
-				}
-				else if (itemId == 40663) { // 息子の手紙
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "sonsletter"));
-				}
-				else if (itemId == 40630) { // ディエゴの古い日記
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "diegodiary"));
-				}
-				else if (itemId == 41340) { // 傭兵団長 ティオンの紹介状
+				else if (itemId == 41340) { // 傭兵團長多文的推薦書
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "tion"));
 				}
-				else if (itemId == 41317) { // ラルソンの推薦状
+				else if (itemId == 41317) { // 拉羅森的推薦書
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "rarson"));
 				}
-				else if (itemId == 41318) { // クエンのメモ
+				else if (itemId == 41318) { // 可恩的便條紙
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "kuen"));
 				}
-				else if (itemId == 41329) { // 剥製の製作依頼書
+				else if (itemId == 41329) { // 標本製作委託書
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "anirequest"));
 				}
-				else if (itemId == 41346) { // ロビンフッドのメモ1
+				else if (itemId == 41346) { // 羅賓孫的便條紙1
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "robinscroll"));
 				}
-				else if (itemId == 41347) { // ロビンフッドのメモ2
+				else if (itemId == 41347) { // 羅賓孫的便條紙2
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "robinscroll2"));
 				}
-				else if (itemId == 41348) { // ロビンフッドの紹介状
+				else if (itemId == 41348) { // 羅賓孫的推薦書
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "robinhood"));
 				}
-				else if (itemId == 41007) { // イリスの命令書：霊魂の安息
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "erisscroll"));
+				else if (itemId == 49172) { // 希蓮恩的第一次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein1lt"));
 				}
-				else if (itemId == 41009) { // イリスの命令書：同盟の意志
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "erisscroll2"));
+				else if (itemId == 49173) { // 希蓮恩的第二次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein2lt"));
 				}
-				else if (itemId == 41019) { // ラスタバド歴史書１章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory1"));
+				else if (itemId == 49174) { // 希蓮恩的第三次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein3lt"));
 				}
-				else if (itemId == 41020) { // ラスタバド歴史書２章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory2"));
+				else if (itemId == 49175) { // 希蓮恩的第四次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein4lt"));
 				}
-				else if (itemId == 41021) { // ラスタバド歴史書３章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory3"));
+				else if (itemId == 49176) { // 希蓮恩的第五次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein5lt"));
 				}
-				else if (itemId == 41022) { // ラスタバド歴史書４章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory4"));
+				else if (itemId == 49177) { // 希蓮恩的第六次信件
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "silrein6lt"));
 				}
-				else if (itemId == 41023) { // ラスタバド歴史書５章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory5"));
+				else if (itemId == 49202) { // 時空裂痕邪念碎片
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "cot_ep1st"));
 				}
-				else if (itemId == 41024) { // ラスタバド歴史書６章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory6"));
+				else if (itemId == 49206) { // 塞維斯邪念碎片
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "bluesoul_p"));
 				}
-				else if (itemId == 41025) { // ラスタバド歴史書７章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory7"));
+				else if (itemId == 49210) { // 普洛凱爾的第一次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "first_p"));
 				}
-				else if (itemId == 41026) { // ラスタバド歴史書８章
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "lashistory8"));
+				else if (itemId == 49211) { // 普洛凱爾的第二次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "second_p"));
+				}
+				else if (itemId == 49212) { // 普洛凱爾的第三次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "third_p"));
+				}
+				else if (itemId == 49221) { // 妖魔密使首領間諜書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "spy_letter"));
+				}
+				else if (itemId == 49231) { // 路西爾斯邪念碎片
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "redsoul_p"));
+				}
+				else if (itemId == 49287) { // 普洛凱爾的第四次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fourth_p"));
+				}
+				else if (itemId == 49288) { // 普洛凱爾的第五次指令書
+					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fifth_p"));
 				}
 				else if (itemId == 41208) { // 微弱的靈魂
 					if (((pc.getX() >= 32844) && (pc.getX() <= 32845)) && ((pc.getY() >= 32693) && (pc.getY() <= 32694)) && (pc.getMapId() == 550)) { // 船の墓場:地上層
@@ -2422,7 +2428,7 @@ public class C_ItemUSe extends ClientBasePacket {
 								((L1EtcItem) l1iteminstance.getItem()).get_mapid(), 5, true);
 					}
 					else {
-						// \f1何も起きませんでした。
+						// \f1沒有任何事情發生。
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
@@ -2450,7 +2456,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				else if (itemId == 41121) { // カヘルの契約書
 					if ((pc.getQuest().get_step(L1Quest.QUEST_SHADOWS) == L1Quest.QUEST_END) || pc.getInventory().checkItem(41122, 1)) {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 					else {
 						createNewItem(pc, 41122, 1);
@@ -2458,7 +2464,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				else if (itemId == 41130) { // 血痕の契約書
 					if ((pc.getQuest().get_step(L1Quest.QUEST_DESIRE) == L1Quest.QUEST_END) || pc.getInventory().checkItem(41131, 1)) {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 					else {
 						createNewItem(pc, 41131, 1);
@@ -2522,7 +2528,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				else if (itemId == 41315) { // 聖水
 					if (pc.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						return;
 					}
 					if (pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
@@ -2536,7 +2542,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				else if (itemId == 41316) { // 神聖なミスリル パウダー
 					if (pc.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						return;
 					}
 					if (pc.hasSkillEffect(STATUS_HOLY_WATER)) {
@@ -2550,7 +2556,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				else if (itemId == 41354) { // 神聖なエヴァの水
 					if (pc.hasSkillEffect(STATUS_HOLY_WATER) || pc.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						return;
 					}
 					pc.setSkillEffect(STATUS_HOLY_WATER_OF_EVA, 900 * 1000);
@@ -2655,11 +2661,11 @@ public class C_ItemUSe extends ClientBasePacket {
 							pc.getInventory().removeItem(l1iteminstance, 1);
 						}
 						else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 41427) { // 封印解除スクロール
@@ -2689,24 +2695,24 @@ public class C_ItemUSe extends ClientBasePacket {
 							pc.getInventory().removeItem(l1iteminstance, 1);
 						}
 						else {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 41428) { // 太古の玉爾
 					if ((pc != null) && (l1iteminstance != null)) {
 						Account account = Account.load(pc.getAccountName());
 						if (account == null) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 							return;
 						}
 						int characterSlot = account.getCharacterSlot();
 						int maxAmount = Config.DEFAULT_CHARACTER_SLOT + characterSlot;
 						if (maxAmount >= 8) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 							return;
 						}
 						if (characterSlot < 0) {
@@ -2723,40 +2729,40 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79));
 					}
 				}
-				else if (itemId == 40075) { // 防具破壊スクロール
+				else if (itemId == 40075) { // 毀滅盔甲的卷軸
 					if (l1iteminstance1.getItem().getType2() == 2) {
 						int msg = 0;
 						switch (l1iteminstance1.getItem().getType()) {
 							case 1: // helm
-								msg = 171; // \f1ヘルムが塵になり、風に飛んでいきます。
+								msg = 171; // \f1你的鋼盔如爆炸般地破碎了。
 								break;
 							case 2: // armor
-								msg = 169; // \f1アーマーが壊れ、下に落ちました。
+								msg = 169; // \f1你的盔甲變成塵埃落地。
 								break;
 							case 3: // T
-								msg = 170; // \f1シャツが細かい糸になり、破けて落ちました。
+								msg = 170; // \f1你的T恤破碎成線四散。
 								break;
 							case 4: // cloak
-								msg = 168; // \f1マントが破れ、塵になりました。
+								msg = 168; // \f1你的斗蓬破碎化為塵埃。
 								break;
 							case 5: // glove
-								msg = 172; // \f1グローブが消えました。
+								msg = 172; // \f1你的手套消失。
 								break;
 							case 6: // boots
-								msg = 173; // \f1靴がバラバラになりました。
+								msg = 173; // \f1你的長靴分解。
 								break;
 							case 7: // shield
-								msg = 174; // \f1シールドが壊れました。
+								msg = 174; // \f1你的盾崩潰分散。
 								break;
 							default:
-								msg = 167; // \f1肌がムズムズします。
+								msg = 167; // \f1你的皮膚癢。
 								break;
 						}
 						pc.sendPackets(new S_ServerMessage(msg));
 						pc.getInventory().removeItem(l1iteminstance1, 1);
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(154)); // \f1スクロールが散らばります。
+						pc.sendPackets(new S_ServerMessage(154)); // \f1這個卷軸散開了。
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
@@ -2775,8 +2781,8 @@ public class C_ItemUSe extends ClientBasePacket {
 				else if (itemId == 49288) { // プロケルの5番目の指令書
 					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fifth_p"));
 				}
-				else if (itemId == 49222) { // オーク密使の笛
-					if (pc.isDragonKnight() && (pc.getMapId() == 61)) { // HC3F
+				else if (itemId == 49222) { // 妖魔密使之笛子
+					if (pc.isDragonKnight() && (pc.getMapId() == 61)) { 
 						boolean found = false;
 						for (L1Object obj : L1World.getInstance().getObject()) {
 							if (obj instanceof L1MonsterInstance) {
@@ -2790,7 +2796,7 @@ public class C_ItemUSe extends ClientBasePacket {
 							}
 						}
 						if (found) {
-							pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 						}
 						else {
 							L1SpawnUtil.spawn(pc, 46161, 0, 0); // オーク
@@ -2811,7 +2817,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 					}
 					else {
-						pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}
 				else if (itemId == 49189) { // 索夏依卡靈魂之笛
@@ -2956,7 +2962,7 @@ public class C_ItemUSe extends ClientBasePacket {
 						UseWeapon(pc, l1iteminstance);
 					}
 					else {
-						// \f1あなたのクラスではこのアイテムは使用できません。
+						// \f1你的職業無法使用此道具。
 						pc.sendPackets(new S_ServerMessage(264));
 					}
 				}
@@ -2982,7 +2988,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 				}
 				else {
-					// \f1あなたのクラスではこのアイテムは使用できません。
+					// \f1你的職業無法使用此道具。
 					pc.sendPackets(new S_ServerMessage(264));
 				}
 			}
@@ -3399,7 +3405,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			}
 
 			if (((type == 13) && (pcInventory.getTypeEquipped(2, 7) >= 1)) || ((type == 7) && (pcInventory.getTypeEquipped(2, 13) >= 1))) { // シールド、ガーダー同時裝備不可
-				activeChar.sendPackets(new S_ServerMessage(124)); // \f1すでに何かを装備しています。
+				activeChar.sendPackets(new S_ServerMessage(124)); // \f1已經裝備其他東西。
 				return;
 			}
 			if ((type == 7) && (activeChar.getWeapon() != null)) { // シールドの場合、武器を装備していたら両手武器チェック
@@ -3445,7 +3451,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			pcInventory.setEquipped(armor, false);
 		}
 		else {
-			activeChar.sendPackets(new S_ServerMessage(124)); // \f1すでに何かを装備しています。
+			activeChar.sendPackets(new S_ServerMessage(124)); // \f1已經裝備其他東西。
 		}
 		// セット装備用HP、MP、MR更新
 		activeChar.setCurrentHp(activeChar.getCurrentHp());
@@ -3465,7 +3471,7 @@ public class C_ItemUSe extends ClientBasePacket {
 				return;
 			}
 			if (weapon.getItem().isTwohandedWeapon() && (pcInventory.getTypeEquipped(2, 7) >= 1)) { // 両手武器の場合、シールド装備の確認
-				activeChar.sendPackets(new S_ServerMessage(128)); // \f1シールドを装備している時は両手で持つ武器を使うことはできません。
+				activeChar.sendPackets(new S_ServerMessage(128)); // \f1當你拿著一個盾時，你無法使用雙手武器。
 				return;
 			}
 		}
@@ -3548,7 +3554,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(312)); // レベルが低くてその魔法を覚えることができません。
 				}
 				else {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 				}
 			}
 			else if (pc.isElf()) {
@@ -3574,7 +3580,7 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(312)); // レベルが低くてその魔法を覚えることができません。
 				}
 				else {
-					pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+					pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 				}
 			}
 			else if (pc.isWizard()) {
@@ -3615,7 +3621,7 @@ public class C_ItemUSe extends ClientBasePacket {
 		}
 		else if ((itemAttr != locAttr) && (itemAttr != 0) && (locAttr != 0)) {
 			// 間違ったテンプルで読んだ場合雷が落ちる
-			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 			S_SkillSound effect = new S_SkillSound(pc.getId(), 10);
 			pc.sendPackets(effect);
 			pc.broadcastPacket(effect);
@@ -3627,7 +3633,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			pc.getInventory().removeItem(item, 1);
 		}
 		else {
-			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 		}
 	}
 
@@ -4988,7 +4994,7 @@ public class C_ItemUSe extends ClientBasePacket {
 			L1Teleport.teleport(pc, item.getItem().get_locx(), item.getItem().get_locy(), item.getItem().get_mapid(), 5, true);
 		}
 		else {
-			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 		}
 	}
 
@@ -5228,7 +5234,7 @@ public class C_ItemUSe extends ClientBasePacket {
 
 	private void useResolvent(L1PcInstance pc, L1ItemInstance item, L1ItemInstance resolvent) {
 		if ((item == null) || (resolvent == null)) {
-			pc.sendPackets(new S_ServerMessage(79)); // \f1何も起きませんでした。
+			pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 			return;
 		}
 		if ((item.getItem().getType2() == 1) || (item.getItem().getType2() == 2)) { // 武器・防具
