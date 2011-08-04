@@ -66,6 +66,7 @@ public class MagicDollTable {
 				doll.setRegistBlind(rs.getInt("regist_blind"));
 				doll.setMakeItemId(rs.getInt("make_itemid"));
 				doll.setEffect(rs.getByte("effect"));
+				doll.setEffectChance(rs.getInt("effect_chance"));
 
 				_dolls.put(new Integer(itemId), doll);
 			}

@@ -111,6 +111,20 @@ public class L1FollowerInstance extends L1NpcInstance {
 						}
 					}
 				}
+				else if ((npc.getNpcTemplate().get_npcId() == 71114)
+					&& (getNpcTemplate().get_npcId() == 81350)) { // 迪嘉勒廷的女間諜
+					if (getLocation().getTileLineDistance(_master.getLocation()) < 15) {
+						L1PcInstance pc = (L1PcInstance) _master;
+						if (((pc.getX() >= 32542) && (pc.getX() <= 32585))
+						&& ((pc.getY() >= 32656) && (pc.getY() <= 32698)) && (pc.getMapId() == 400)) {
+							setParalyzed(true);
+							createNewItem(pc, 49163, 1);
+							pc.getQuest().set_step(4, 4);
+							deleteMe();
+							return true;
+						}
+					}
+				}
 			}
 		}
 
@@ -226,6 +240,15 @@ public class L1FollowerInstance extends L1NpcInstance {
 				player.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
 			}
 		}
+		else if (getNpcTemplate().get_npcId() == 81350) {
+			if (_master.equals(player)) {
+				player.sendPackets(new S_NPCTalkReturn(getId(), "dspy3"));
+			}
+			else {
+				player.sendPackets(new S_NPCTalkReturn(getId(), "dspy3"));
+			}
+		}
+
 	}
 
 	@Override

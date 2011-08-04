@@ -78,25 +78,35 @@
 		</Succeed>
 	</MakeItem>
 
-<!--王族 / 3.2C組隊任務（50）-->
-	<Action Name="quest 29 dicardingp2" Class="P">
-		<SetQuest Id="Level50" Step="1"/>
-		<ShowHtml HtmlId="dicardingp2"/>
-	</Action>
-	<MakeItem Name="request gold stick" Class="P" AmountInputable="false" QuestId="Level50" QuestStep="1">
-		<Item Amount="1" ItemId="51"/>		<!--黃金權杖-->
-		<Material Amount="1" ItemId="40552"/>		<!--炎魔之心-->
-		<Succeed>
-			<SetQuest Id="Level50" Step="End"/>
-		</Succeed>
-	</MakeItem>
-
 <!--王族 / 小惡魔的可疑行動（50）-->
 	<!--接受請求 / 迪嘉勒廷 / 象牙塔3樓-->
 	<Action Name="f" Class="P">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardingp3"/>
 	</Action>
+
+	<!--詢問自己能做些什麼 / 行政官奇浩 / 魔族神殿-->
+	<Action Name="a" Class="P" NpcId="81349">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="kiholl2"/>
+	</Action>
+
+<!--王族 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸再進場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="P" NpcId="81345">
+		<Teleport X="32804" Y="32861" Map="2000" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="5"/>
+	</Action>
+
+	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="a" Class="P" AmountInputable="false">
+		<Item Amount="1" ItemId="51"/>		<!--黃金權杖-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardingp14"/>
+		</Succeed>
+	</MakeItem>
 
 <!--騎士 / 瑞奇的抵抗（15）-->
 	<!--交給黑騎士的誓約 / 瑞奇 / 銀騎士村莊-->
@@ -224,26 +234,36 @@
 		</Succeed>
 	</MakeItem>
 
-<!--騎士 / 3.2C組隊任務（50）-->
-	<Action Name="quest 29 dicardingk2" Class="K">
-		<SetQuest Id="Level50" Step="1"/>
-		<ShowHtml HtmlId="dicardingk2"/>
-	</Action>
-	<MakeItem Name="request death blade" Class="K" AmountInputable="false" QuestId="Level50" QuestStep="1">
-		<Item Amount="1" ItemId="56"/>		<!--黑焰之劍-->
-		<Material Amount="1" ItemId="65"/>		<!--天空之劍-->
-		<Material Amount="1" ItemId="40549"/>		<!--炎魔之劍-->
-		<Succeed>
-			<SetQuest Id="Level50" Step="End"/>
-		</Succeed>
-	</MakeItem>
-
-<!--騎士 / 小惡魔的可疑行動（50）-->
+<!--騎士 / 精靈們的騷動（50）-->
 	<!--我願意幫忙 / 迪嘉勒廷 / 象牙塔3樓-->
 	<Action Name="g" Class="K">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardingk3"/>
 	</Action>
+
+	<!--繼續聽他述說 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="i" Class="K">
+		<SetQuest Id="Level50" Step="3"/>
+		<ShowHtml HtmlId="dicardingk7"/>
+	</Action>
+
+<!--騎士 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸再進場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="K" NpcId="81346">
+		<Teleport X="32804" Y="32861" Map="2001" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="5"/>
+	</Action>
+
+	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="l" Class="K" AmountInputable="false">
+		<Item Amount="1" ItemId="56"/>		<!--黑焰之劍-->
+		<Material Amount="1" ItemId="65"/>		<!--天空之劍-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardingk15"/>
+		</Succeed>
+	</MakeItem>
 
 <!--妖精 / 歐斯的先見之明（15）-->
 	<!--選擇精靈敏捷頭盔 / 歐斯 / 燃柳村莊-->
@@ -325,35 +345,47 @@
 		</Succeed>
 	</MakeItem>
 
-<!--妖精 / 3.2C組隊任務（50）-->
-	<Action Name="quest 29 dicardinge2" Class="E">
-		<SetQuest Id="Level50" Step="1"/>
-		<ShowHtml HtmlId="dicardinge2"/>
-	</Action>
-	<MakeItem Name="request flame bow" Class="E" AmountInputable="false" QuestId="Level50" QuestStep="1">
-		<Item Amount="1" ItemId="184"/>		<!--赤焰之弓-->
-		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
-		<Material Amount="1" ItemId="40551"/>		<!--炎魔之爪-->
-		<Succeed>
-			<SetQuest Id="Level50" Step="End"/>
-		</Succeed>
-	</MakeItem>
-
-	<MakeItem Name="request flame sword" Class="E" AmountInputable="false" QuestId="Level50" QuestStep="1">
-		<Item Amount="1" ItemId="50"/>		<!--赤焰之劍-->
-		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
-		<Material Amount="1" ItemId="40551"/>		<!--炎魔之爪-->
-		<Succeed>
-			<SetQuest Id="Level50" Step="End"/>
-		</Succeed>
-	</MakeItem>
-
-<!--妖精 / 小惡魔的可疑行動（50）-->
+<!--妖精 / 協助間諜大逃亡（50）-->
 	<!--詢問詳細事項 / 迪嘉勒廷 / 象牙塔3樓-->
 	<Action Name="m" Class="E">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardinge3"/>
 	</Action>
+
+	<!--現在立即去調查 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="o" Class="E">
+		<SetQuest Id="Level50" Step="3"/>
+		<ShowHtml HtmlId="dicardinge7"/>
+	</Action>
+
+<!--妖精 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸後入場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="E" NpcId="81347">
+		<Teleport X="32804" Y="32861" Map="2002" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="6"/>
+	</Action>
+
+	<!--拿出破壞祭壇證明後接收赤焰之弓 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="y" Class="E" AmountInputable="false">
+		<Item Amount="1" ItemId="184"/>		<!--赤焰之弓-->
+		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardinge16"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--拿出破壞祭壇證明後接收赤焰之劍 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="s" Class="E" AmountInputable="false">
+		<Item Amount="1" ItemId="50"/>		<!--赤焰之劍-->
+		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardinge16"/>
+		</Succeed>
+	</MakeItem>
 
 <!--法師 / 詹姆的請求（15）-->
 	<!--交給食屍鬼的牙齒與指甲 / 詹姆 / 說話之島村莊-->
@@ -454,26 +486,42 @@
 		</Succeed>
 	</MakeItem>
 
-<!--法師 / 3.2C組隊任務（50）-->
-	<Action Name="quest 29 dicardingw2" Class="W">
-		<SetQuest Id="Level50" Step="1"/>
-		<ShowHtml HtmlId="dicardingw2"/>
-	</Action>
-	<MakeItem Name="request mana crystal" Class="W" AmountInputable="false" QuestId="Level50" QuestStep="1">
-		<Item Amount="1" ItemId="20225"/>		<!--瑪那水晶球-->
-		<Material Amount="1" ItemId="133"/>		<!--古代人的智慧-->
-		<Material Amount="1" ItemId="40550"/>		<!--炎魔之眼-->
-		<Succeed>
-			<SetQuest Id="Level50" Step="End"/>
-		</Succeed>
-	</MakeItem>
-
-<!--法師 / 小惡魔的可疑行動（50）-->
+<!--法師 / 取回間諜的報告書（50）-->
 	<!--接受迪嘉勒廷公爵的請求 / 迪嘉勒廷 / 象牙塔3樓-->
 	<Action Name="t" Class="W">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardingw3"/>
 	</Action>
+
+	<!--詢問可以幫忙什麼 / 公爵之間諜 / 魔族神殿-->
+	<Action Name="quest 27 dspym2" Class="W">
+		<SetQuest Id="Level50" Step="2"/>
+		<ShowHtml HtmlId="dspym2"/>
+	</Action>
+
+	<!--我去破壞再生聖殿 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="v" Class="W">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="dicardingw9"/>
+	</Action>
+
+<!--法師 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸再進場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="W" NpcId="81348">
+		<Teleport X="32804" Y="32861" Map="2003" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="5"/>
+	</Action>
+
+	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="x" Class="W" AmountInputable="false">
+		<Item Amount="1" ItemId="20225"/>		<!--瑪那水晶球-->
+		<Material Amount="1" ItemId="133"/>		<!--古代人的智慧-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardingw14"/>
+		</Succeed>
+	</MakeItem>
 
 <!--黑暗妖精 / 妖魔的侵入（15）-->
 	<!--接受簡單的任務 / 康 / 沉默洞穴-->

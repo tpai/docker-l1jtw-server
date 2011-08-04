@@ -23,6 +23,7 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_CURSE_YAHEE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_MITHRIL_POWDER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
+import static l1j.server.server.model.skill.L1SkillId.SECRET_MEDICINE_OF_DESTRUCTION;
 
 import java.util.List;
 import java.util.Map;
@@ -1721,65 +1722,69 @@ public class L1Character extends L1Object {
 	// 判斷特定狀態下才可攻擊 NPC
 	public boolean isAttackMiss(L1Character cha , int npcId) {
 		switch (npcId) {
-			case 45912:
-			case 45913:
-			case 45914:
-			case 45915:
+			case 45912: // 士兵的怨靈
+			case 45913: // 士兵的怨靈
+			case 45914: // 怨靈
+			case 45915: // 怨靈
 				if (!cha.hasSkillEffect(STATUS_HOLY_WATER)) {
 					return true;
 				}
 				return false;
-			case 45916:
+			case 45916: // 哈蒙將軍的怨靈
 				if (!cha.hasSkillEffect(STATUS_HOLY_MITHRIL_POWDER)) {
 					return true;
 				}
 				return false;
-			case 45941:
+			case 45941: // 受詛咒的巫女莎爾
 				if (!cha.hasSkillEffect(STATUS_HOLY_WATER_OF_EVA)) {
 					return true;
 				}
 				return false;
-			case 45752:
+			case 45752: // 炎魔(變身前)
 				if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
 					return true;
 				}
 				return false;
-			case 45753:
+			case 45753: // 炎魔(變身後)
 				if (!cha.hasSkillEffect(STATUS_CURSE_BARLOG)) {
 					return true;
 				}
 				return false;
-			case 45675:
+			case 45675: // 火焰之影(變身前)
 				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 					return true;
 				}
 				return false;
-			case 81082:
+			case 81082: // 火焰之影(變身後)
 				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 					return true;
 				}
 				return false;
-			case 45625:
+			case 45625: // 混沌
 				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 					return true;
 				}
 				return false;
-			case 45674:
+			case 45674: // 死亡
 				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 					return true;
 				}
 				return false;
-			case 45685:
+			case 45685: // 墮落
 				if (!cha.hasSkillEffect(STATUS_CURSE_YAHEE)) {
 					return true;
 				}
 				return false;
+			case 81341: // 再生之祭壇
+				if (!cha.hasSkillEffect(SECRET_MEDICINE_OF_DESTRUCTION)) {
+					return true;
+				}
 			default:
-				if ((npcId >= 46068) && (npcId <= 46091)
+				if ((npcId >= 46068) && (npcId <= 46091) // 原生魔族
 						&& (cha.getTempCharGfx() == 6035)) {
 					return true;
 				}
-				else if ((npcId >= 46092) && (npcId <= 46106)
+				else if ((npcId >= 46092) && (npcId <= 46106) // 不死魔族
 						&& (cha.getTempCharGfx() == 6034)) {
 					return true;
 				}

@@ -510,50 +510,173 @@ public class L1MerchantInstance extends L1NpcInstance {
 						htmlid = "stoenm1";
 					}
 				}
-			} else if (npcid == 70739) { // ディガルディン
-				if (player.getLevel() >= 50) {
-					int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
-					if (lv50_step == L1Quest.QUEST_END) {
-						if (player.isCrown()) { // 君主
-							htmlid = "dicardingp3";
-						} else if (player.isKnight()) { // ナイト
-							htmlid = "dicardingk3";
-						} else if (player.isElf()) { // エルフ
-							htmlid = "dicardinge3";
-						} else if (player.isWizard()) { // ウィザード
-							htmlid = "dicardingw3";
-						} else if (player.isDarkelf()) { // ダークエルフ
-							htmlid = "dicarding";
-						}
-					} else if (lv50_step >= 1) { // ディガルディン 同意済み
-						if (player.isCrown()) { // 君主
-							htmlid = "dicardingp2";
-						} else if (player.isKnight()) { // ナイト
-							htmlid = "dicardingk2";
-						} else if (player.isElf()) { // エルフ
-							htmlid = "dicardinge2";
-						} else if (player.isWizard()) { // ウィザード
-							htmlid = "dicardingw2";
-						} else if (player.isDarkelf()) { // ダークエルフ
-							htmlid = "dicarding";
-						}
-					} else if (lv50_step >= 0) {
-						if (player.isCrown()) { // 君主
+			} else if (npcid == 70739) { // 迪嘉勒廷
+				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if ((player.getLevel() >= 50) && (lv45_step == L1Quest.QUEST_END)) {
+					if (player.isCrown()) {
+						if (lv50_step == 0) {
 							htmlid = "dicardingp1";
-						} else if (player.isKnight()) { // ナイト
-							htmlid = "dicardingk1";
-						} else if (player.isElf()) { // エルフ
-							htmlid = "dicardinge1";
-						} else if (player.isWizard()) { // ウィザード
-							htmlid = "dicardingw1";
-						} else if (player.isDarkelf()) { // ダークエルフ
-							htmlid = "dicarding";
+						} else if (lv50_step == L1Quest.QUEST_END) {
+							htmlid = "dicardingp15";
+						} else if (lv50_step >= 5) {
+							if (player.getInventory().checkItem(49241, 1)) {
+								htmlid = "dicardingp13";
+							} else {
+								htmlid = "dicardingp11";
+							}
+						} else if (lv50_step >= 4) {
+							htmlid = "dicardingp10";
+						} else if (lv50_step >= 3) {
+							htmlid = "dicardingp8";
+						} else if (lv50_step >= 2) {
+							htmlid = "dicardingp5";
+						} else if (lv50_step >= 1) {
+							htmlid = "dicardingp4";
 						}
-					} else {
-						htmlid = "dicarding";
+					} else if (player.isKnight()) {
+						if (lv50_step == 0) {
+							htmlid = "dicardingk1";
+						} else if (lv50_step == L1Quest.QUEST_END) {
+							htmlid = "dicardingk16";
+						} else if (lv50_step >= 5) {
+							if (player.getInventory().checkItem(49241, 1)) {
+								htmlid = "dicardingk14";
+							} else {
+								htmlid = "dicardingk12";
+							}
+						} else if (lv50_step >= 4) {
+							htmlid = "dicardingk11";
+						} else if (lv50_step >= 3) {
+							if (player.getInventory().checkItem(49161, 10)) {
+								htmlid = "dicardingk9";
+							} else {
+								htmlid = "dicardingk8";
+							}
+						} else if (lv50_step >= 2) {
+							htmlid = "dicardingk5";
+						} else if (lv50_step >= 1) {
+							htmlid = "dicardingk4";
+						}
+					} else if (player.isElf()) {
+						if (lv50_step == 0) {
+							htmlid = "dicardinge1";
+						} else if (lv50_step == L1Quest.QUEST_END) {
+							htmlid = "dicardinge17";
+						} else if (lv50_step >= 6) {
+							if (player.getInventory().checkItem(49241, 1)) {
+								htmlid = "dicardinge15";
+							} else {
+								htmlid = "dicardinge13";
+							}
+						} else if (lv50_step >= 5) {
+							htmlid = "dicardinge12";
+						} else if (lv50_step >= 4) {
+							htmlid = "dicardinge9";
+						} else if (lv50_step >= 3) {
+							htmlid = "dicardinge8";
+						} else if (lv50_step >= 2) {
+							htmlid = "dicardinge5";
+						} else if (lv50_step >= 1) {
+							htmlid = "dicardinge4";
+						}
+					} else if (player.isWizard()) {
+						if (lv50_step == 0) {
+							htmlid = "dicardingw1";
+						} else if (lv50_step == L1Quest.QUEST_END) {
+							htmlid = "dicardingw15";
+						} else if (lv50_step >= 5) {
+							if (player.getInventory().checkItem(49241, 1)) {
+								htmlid = "dicardingw13";
+							} else {
+								htmlid = "dicardingw11";
+							}
+						} else if (lv50_step >= 4) {
+							htmlid = "dicardingw10";
+						} else if (lv50_step >= 3) {
+							htmlid = "dicardingw6";
+						} else if (lv50_step >= 2) {
+							if (player.getInventory().checkItem(49164, 1)) {
+								htmlid = "dicardingw5";
+							}
+						} else if (lv50_step >= 1) {
+							htmlid = "dicardingw4";
+						}
+					} 
+				}
+			} else if (npcid == 81334) { // 被遺棄的肉身
+				if (player.isCrown()) {
+					htmlid = "rtf01";
+				} else if (player.isKnight()) {
+					htmlid = "rtf02";
+				} else if (player.isElf()) {
+					htmlid = "rtf03";
+				} else if (player.isWizard()) {
+					htmlid = "rtf04";
+				}
+			} else if (npcid == 81335) { // 被遺棄的肉身
+				if (player.getInventory().checkItem(49241, 1)) {
+					htmlid ="50q_pout1";
+				} else {
+					htmlid = "50q_pout";
+				}
+			} else if (npcid == 81345) { // 往聖殿的入口
+				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if ((player.getLevel() >= 50) && (lv45_step == L1Quest.QUEST_END)) {
+					if (player.isCrown() && (lv50_step == 4)) {
+						htmlid = "50quest_p";
 					}
-				} else { // Lv50未満
-					htmlid = "dicarding";
+				}
+			} else if (npcid == 81346) { // 往聖殿的入口
+				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if ((player.getLevel() >= 50) && (lv45_step == L1Quest.QUEST_END)) {
+					 if (player.isKnight() && (lv50_step == 4)) {
+						htmlid = "50quest_k";
+					 }
+				}
+			} else if (npcid == 81347) { // 往聖殿的入口
+				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if ((player.getLevel() >= 50) && (lv45_step == L1Quest.QUEST_END)) {
+					if (player.isElf() && (lv50_step == 5)) {
+						htmlid = "50quest_e";
+					}
+				}
+			} else if (npcid == 81348) { // 往聖殿的入口
+				int lv45_step = quest.get_step(L1Quest.QUEST_LEVEL45);
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if ((player.getLevel() >= 50) && (lv45_step == L1Quest.QUEST_END)) {
+					if (player.isWizard() && (lv50_step == 4)) {
+						htmlid = "50quest_w";
+					}
+				}
+			} else if (npcid == 81349) { // 行政官奇浩
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if (player.isCrown()) {
+					if (lv50_step == 3) {
+						htmlid = "kiholl1";
+					} else {
+						htmlid = "kiholl0";
+					}
+				} else {
+					htmlid = "kiholl0";
+				}
+			} else if (npcid == 81351) { // 公爵之間諜
+				int lv50_step = quest.get_step(L1Quest.QUEST_LEVEL50);
+				if (player.isWizard()) {
+					if (lv50_step == L1Quest.QUEST_END) {
+						htmlid = "dspym5";
+					} else if (lv50_step >= 3) {
+						htmlid = "dspym4";
+					} else if (lv50_step >= 2) {
+						htmlid = "dspym3";
+					} else if (lv50_step == 1) {
+						htmlid = "dspym1";
+					}
+				} else {
+					htmlid = "dspym5";
 				}
 			} else if (npcid == 70885) { // カーン
 				if (player.isDarkelf()) { // ダークエルフ

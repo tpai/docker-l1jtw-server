@@ -4171,6 +4171,149 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 				}
 			}
+		} else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 70739) { // 迪嘉勒廷
+			if (pc.isCrown()) {
+				if (s.equalsIgnoreCase("e")) {
+					if (pc.getInventory().checkItem(49159, 1)) {
+						htmlid = "dicardingp5";
+						pc.getInventory().consumeItem(49159, 1);
+						pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 2);
+					} else {
+						htmlid = "dicardingp4a";
+					}
+				} else if (s.equalsIgnoreCase("d")) {
+					htmlid = "dicardingp7";
+					L1PolyMorph.doPoly(pc, 6035, 900, 1, true);
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 3);
+				} else if (s.equalsIgnoreCase("c")) {
+					htmlid = "dicardingp9";
+					L1PolyMorph.undoPoly(pc);
+					L1PolyMorph.doPoly(pc, 6035, 900, 1, true);
+				} else if (s.equalsIgnoreCase("b")) {
+					htmlid = "dicardingp12";
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 4);
+					if (pc.getInventory().checkItem(49165)) {
+						pc.getInventory().consumeItem(49165, pc.getInventory().countItems(49165));
+					} 
+					if (pc.getInventory().checkItem(49166)) {
+						pc.getInventory().consumeItem(49166, pc.getInventory().countItems(49166));
+					} 
+					if (pc.getInventory().checkItem(49167)) {
+						pc.getInventory().consumeItem(49167, pc.getInventory().countItems(49167));
+					} 
+					if (pc.getInventory().checkItem(49168)) {
+						pc.getInventory().consumeItem(49168, pc.getInventory().countItems(49168));
+					} 
+					if (pc.getInventory().checkItem(49239)) {
+						pc.getInventory().consumeItem(49239, pc.getInventory().countItems(49239));
+					}
+				}
+			}
+			if (pc.isKnight()) {
+				if (s.equalsIgnoreCase("h")) {
+					if (pc.getInventory().checkItem(49160, 1)) {
+						htmlid = "dicardingk5";
+						pc.getInventory().consumeItem(49160, 1);
+						pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 2);
+					}
+				} else if (s.equalsIgnoreCase("j")) {
+					htmlid = "dicardingk10";
+					pc.getInventory().consumeItem(49161, 10);
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 4);
+				} else if (s.equalsIgnoreCase("k")) {
+					htmlid = "dicardingk13";
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 4);
+					if (pc.getInventory().checkItem(49165)) {
+						pc.getInventory().consumeItem(49165, pc.getInventory().countItems(49165));
+					} 
+					if (pc.getInventory().checkItem(49166)) {
+						pc.getInventory().consumeItem(49166, pc.getInventory().countItems(49166));
+					} 
+					if (pc.getInventory().checkItem(49167)) {
+						pc.getInventory().consumeItem(49167, pc.getInventory().countItems(49167));
+					} 
+					if (pc.getInventory().checkItem(49168)) {
+						pc.getInventory().consumeItem(49168, pc.getInventory().countItems(49168));
+					} 
+					if (pc.getInventory().checkItem(49239)) {
+						pc.getInventory().consumeItem(49239, pc.getInventory().countItems(49239));
+					}
+				}
+			}
+			if (pc.isElf()) {
+				if (s.equalsIgnoreCase("n")) {
+					if (pc.getInventory().checkItem(49162, 1)) {
+						htmlid = "dicardinge5";
+						pc.getInventory().consumeItem(49162, 1);
+						pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 2);
+					}
+				} else if (s.equalsIgnoreCase("p")) {
+					htmlid = "dicardinge10";
+					pc.getInventory().consumeItem(49163, 1);
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 5);
+				} else if (s.equalsIgnoreCase("q")) {
+					htmlid = "dicardinge14";
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 5);
+					if (pc.getInventory().checkItem(49165)) {
+						pc.getInventory().consumeItem(49165, pc.getInventory().countItems(49165));
+					} 
+					if (pc.getInventory().checkItem(49166)) {
+						pc.getInventory().consumeItem(49166, pc.getInventory().countItems(49166));
+					} 
+					if (pc.getInventory().checkItem(49167)) {
+						pc.getInventory().consumeItem(49167, pc.getInventory().countItems(49167));
+					} 
+					if (pc.getInventory().checkItem(49168)) {
+						pc.getInventory().consumeItem(49168, pc.getInventory().countItems(49168));
+					} 
+					if (pc.getInventory().checkItem(49239)) {
+						pc.getInventory().consumeItem(49239, pc.getInventory().countItems(49239));
+					}
+				}
+			}
+			if (pc.isWizard()) {
+				if (s.equalsIgnoreCase("u")) {
+					if (pc.getInventory().checkItem(49164, 1)) {
+						htmlid = "dicardingw6";
+						pc.getInventory().consumeItem(49164, 1);
+						pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 3);
+					}
+				} else if (s.equalsIgnoreCase("w")) {
+					htmlid = "dicardingw12";
+					pc.getQuest().set_step(L1Quest.QUEST_LEVEL50, 4);
+					if (pc.getInventory().checkItem(49165)) {
+						pc.getInventory().consumeItem(49165, pc.getInventory().countItems(49165));
+					} 
+					if (pc.getInventory().checkItem(49166)) {
+						pc.getInventory().consumeItem(49166, pc.getInventory().countItems(49166));
+					} 
+					if (pc.getInventory().checkItem(49167)) {
+						pc.getInventory().consumeItem(49167, pc.getInventory().countItems(49167));
+					} 
+					if (pc.getInventory().checkItem(49168)) {
+						pc.getInventory().consumeItem(49168, pc.getInventory().countItems(49168));
+					} 
+					if (pc.getInventory().checkItem(49239)) {
+						pc.getInventory().consumeItem(49239, pc.getInventory().countItems(49239));
+					}
+				}
+			}
+		} else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81334) { // 被遺棄的肉身
+			if (s.equalsIgnoreCase("a")) {
+				if (pc.getInventory().checkItem(49239, 1)) {
+					htmlid = "rtf06";
+				} else {
+					final int[] item_ids = { 49239, };
+					final int[] item_amounts = { 1, };
+					for (int i = 0; i < item_ids.length; i++) {
+						L1ItemInstance item = pc.getInventory().storeItem(
+								item_ids[i], item_amounts[i]);
+						pc.sendPackets(new S_ServerMessage(143,
+								((L1NpcInstance) obj).getNpcTemplate()
+										.get_name(), item.getItem().getName()));
+					}
+				}
+			}
 		} else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 50016) {// 傑諾
 			if (s.equalsIgnoreCase("0")) {
 				if (pc.getLevel() < 13) {// lv < 13 傳送隱藏之谷

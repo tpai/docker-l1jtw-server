@@ -118,7 +118,7 @@ public class L1QuestInstance extends L1NpcInstance {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "endiaq4"));
 			}
 		}
-		else if (npcId == 71062) { // カミット
+		else if (npcId == 71062) { // 卡米特
 			if (pc.getQuest().get_step(L1Quest.QUEST_CADMUS) == 2) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "kamit1b"));
 			}
@@ -126,7 +126,7 @@ public class L1QuestInstance extends L1NpcInstance {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "kamit1"));
 			}
 		}
-		else if (npcId == 71075) { // 疲れ果てたリザードマンファイター
+		else if (npcId == 71075) { // 疲憊的蜥蜴人戰士
 			if (pc.getQuest().get_step(L1Quest.QUEST_LIZARD) == 1) {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "llizard1b"));
 			}
@@ -140,6 +140,14 @@ public class L1QuestInstance extends L1NpcInstance {
 			}
 			else {
 				pc.sendPackets(new S_NPCTalkReturn(getId(), "roi2"));
+			}
+		}
+		else if (npcId == 81350) { // 迪嘉勒廷的女間諜
+			if (pc.isElf() && (pc.getQuest().get_step(4) == 3)) {
+				pc.sendPackets(new S_NPCTalkReturn(getId(), "dspy2"));
+			}
+			else {
+				pc.sendPackets(new S_NPCTalkReturn(getId(), "dspy1"));
 			}
 		}
 
@@ -182,6 +190,12 @@ public class L1QuestInstance extends L1NpcInstance {
 				new L1FollowerInstance(l1npc, this, pc);
 				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
 			}
+			else if ((npcId == 81350) && (pc.getQuest().get_step(4) == 3)) {
+				L1Npc l1npc = NpcTable.getInstance().getTemplate(81350);
+				new L1FollowerInstance(l1npc, this, pc);
+				pc.sendPackets(new S_NPCTalkReturn(getId(), ""));
+			}
+
 		}
 	}
 

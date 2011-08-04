@@ -310,10 +310,10 @@ public class L1MagicDoll {
 		int chance = Random.nextInt(100) + 1;
 		for ( L1DollInstance dollIns : _master.getDollList().values()) {
 			L1MagicDoll doll = MagicDollTable.getInstance().getTemplate(dollIns.getItemId());
-			if (doll != null) {
-				if (doll.getEffect() == type) {
-					if (chance <= 5) {
-						return type;
+			if (doll.getEffectChance() > chance) {
+				if (doll != null) {
+					if (doll.getEffect() == type) {
+					return type;
 					}
 				}
 			}
@@ -345,6 +345,7 @@ public class L1MagicDoll {
 	private int _registBlind;
 	private int _makeItemId;
 	private byte _effect;
+	private int _EffectChance;
 	
 	public int getItemId() {
 		return _itemId;
@@ -537,4 +538,12 @@ public class L1MagicDoll {
 	public void setEffect(byte i) {
 		_effect = i;
 	}
+	public int getEffectChance() {
+		return _EffectChance;
+	}
+
+	public void setEffectChance(int i) {
+		_EffectChance = i;
+	}
+
 }

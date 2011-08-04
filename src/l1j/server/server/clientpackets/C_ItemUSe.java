@@ -25,6 +25,7 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_FLOATING_EYE;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_MITHRIL_POWDER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
+import static l1j.server.server.model.skill.L1SkillId.SECRET_MEDICINE_OF_DESTRUCTION;
 
 import java.lang.reflect.Constructor;
 import java.sql.Timestamp;
@@ -1696,6 +1697,81 @@ public class C_ItemUSe extends ClientBasePacket {
 						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
 					}
 				}			
+				else if (itemId == 49165) { // 聖殿2樓鑰匙
+					if (pc.getQuest().get_step(L1Quest.QUEST_LEVEL50) > 0) {
+						if (pc.isCrown() && (pc.getMapId() == 2000)) {
+							short mapid = 2000;
+							L1Teleport.teleport(pc, 32860, 32739, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isKnight() && (pc.getMapId() == 2001)) {
+							short mapid = 2001;
+							L1Teleport.teleport(pc, 32860, 32739, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isElf() && (pc.getMapId() == 2002)) {
+							short mapid = 2002;
+							L1Teleport.teleport(pc, 32860, 32739, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isWizard() && (pc.getMapId() == 2003)) {
+							short mapid = 2003;
+							L1Teleport.teleport(pc, 32860, 32739, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+						}
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}			
+				else if (itemId == 49166) { // 聖殿3樓鑰匙
+					if (pc.getQuest().get_step(L1Quest.QUEST_LEVEL50) > 0) {
+						if (pc.isCrown() && (pc.getMapId() == 2000)) {
+							short mapid = 2000;
+							L1Teleport.teleport(pc, 32735, 32748, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isKnight() && (pc.getMapId() == 2001)) {
+							short mapid = 2001;
+							L1Teleport.teleport(pc, 32735, 32748, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isElf() && (pc.getMapId() == 2002)) {
+							short mapid = 2002;
+							L1Teleport.teleport(pc, 32735, 32748, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isWizard() && (pc.getMapId() == 2003)) {
+							short mapid = 2003;
+							L1Teleport.teleport(pc, 32735, 32748, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+						} 
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}			
+				else if (itemId == 49239) { // 消滅之意志
+					if (pc.getQuest().get_step(L1Quest.QUEST_LEVEL50) > 0 ) {
+						if (pc.isCrown() && (pc.getMapId() == 2000)) {
+							short mapid = 2000;
+							L1Teleport.teleport(pc, 32793, 32757, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isKnight() && (pc.getMapId() == 2001)) {
+							short mapid = 2001;
+							L1Teleport.teleport(pc, 32793, 32757, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isElf() && (pc.getMapId() == 2002)) {
+							short mapid = 2002;
+							L1Teleport.teleport(pc, 32793, 32757, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else if (pc.isWizard() && (pc.getMapId() == 2003)) {
+							short mapid = 2003;
+							L1Teleport.teleport(pc, 32793, 32757, mapid, 5, true);
+							pc.getInventory().removeItem(l1iteminstance, 1);
+						} else {
+							pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+						}
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					}
+				}			
 				else if (itemId == 40566) { // ミステリアス シェル
 					if (pc.isElf()
 							&& ((pc.getX() >= 33971) && // 象牙の塔の村の南にある魔方陣の座標
@@ -2565,6 +2641,12 @@ public class C_ItemUSe extends ClientBasePacket {
 					pc.sendPackets(new S_ServerMessage(1140));
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
+				else if (itemId == 49168) { // 破壞之密藥
+					pc.setSkillEffect(SECRET_MEDICINE_OF_DESTRUCTION, 900 * 1000);
+					pc.sendPackets(new S_SkillSound(pc.getId(), 190));
+					pc.broadcastPacket(new S_SkillSound(pc.getId(), 190));
+					pc.getInventory().removeItem(l1iteminstance, 1);
+				}
 				else if (itemId == 49092) { // 龜裂之核
 					int targetItemId = l1iteminstance1.getItem().getItemId();
 					// 上鎖的歐西里斯初級寶箱、上鎖的歐西里斯高級寶箱
@@ -2766,21 +2848,6 @@ public class C_ItemUSe extends ClientBasePacket {
 					}
 					pc.getInventory().removeItem(l1iteminstance, 1);
 				}
-				else if (itemId == 49210) { // プロケルの1番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "first_p"));
-				}
-				else if (itemId == 49211) { // プロケルの2番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "second_p"));
-				}
-				else if (itemId == 49212) { // プロケルの3番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "third_p"));
-				}
-				else if (itemId == 49287) { // プロケルの4番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fourth_p"));
-				}
-				else if (itemId == 49288) { // プロケルの5番目の指令書
-					pc.sendPackets(new S_NPCTalkReturn(pc.getId(), "fifth_p"));
-				}
 				else if (itemId == 49222) { // 妖魔密使之笛子
 					if (pc.isDragonKnight() && (pc.getMapId() == 61)) { 
 						boolean found = false;
@@ -2911,6 +2978,84 @@ public class C_ItemUSe extends ClientBasePacket {
 						}
 						pc.getInventory().consumeItem(49227, 1);
 					}
+				}
+				else if (itemId == 49167) { // 魔之角笛
+					if (pc.isCrown() && (pc.getMapId() == 2000) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 81323) {
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79));
+						} else {
+							L1SpawnUtil.spawn(pc, 81323, 0, 0);
+						}
+					} else if (pc.isKnight() && (pc.getMapId() == 2001) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 81324) {
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79));
+						} else {
+							L1SpawnUtil.spawn(pc, 81324, 0, 0);
+						}
+					} else if (pc.isElf() && (pc.getMapId() == 2002) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 81325) {
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79));
+						} else {
+							L1SpawnUtil.spawn(pc, 81325, 0, 0);
+						}
+					} else if (pc.isWizard() && (pc.getMapId() == 2003) && (pc.getX() == 32807) && (pc.getY() == 32773)) {
+						boolean found = false;
+						for (L1Object obj : L1World.getInstance().getObject()) {
+							if (obj instanceof L1MonsterInstance) {
+								L1MonsterInstance mob = (L1MonsterInstance) obj;
+								if (mob != null) {
+									if (mob.getNpcTemplate().get_npcId() == 81326) {
+										found = true;
+										break;
+									}
+								}
+							}
+						}
+						if (found) {
+							pc.sendPackets(new S_ServerMessage(79));
+						} else {
+							L1SpawnUtil.spawn(pc, 81326, 0, 0);
+						}
+					} else {
+						pc.sendPackets(new S_ServerMessage(79)); // \f1沒有任何事情發生。
+					} 
+					pc.getInventory().consumeItem(49167, 1);
 				}
 				else if (itemId == 47010) { // 龍之鑰匙
 					if (!L1CastleLocation.checkInAllWarArea(pc.getLocation())) {// 檢查是否在城堡區域內

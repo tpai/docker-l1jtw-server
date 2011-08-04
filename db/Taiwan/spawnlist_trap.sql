@@ -359,3 +359,11 @@ INSERT INTO `spawnlist_trap` VALUES ('322', 'お化け屋敷', '49', '5140', '32
 INSERT INTO `spawnlist_trap` VALUES ('323', 'お化け屋敷', '50', '5140', '32818', '32821', '76', '53', '10', '0');
 INSERT INTO `spawnlist_trap` VALUES ('324', 'お化け屋敷', '51', '5140', '32818', '32821', '76', '53', '10', '0');
 INSERT INTO `spawnlist_trap` VALUES ('325', 'お化け屋敷', '52', '5140', '32818', '32821', '76', '53', '10', '0');
+INSERT INTO `spawnlist_trap` VALUES ('326', '再生聖殿2F', '4', '2000', '32882', '32910', '19', '19', '5', '10000');
+INSERT INTO `spawnlist_trap` VALUES ('327', '再生聖殿2F', '5', '2000', '32882', '32910', '19', '19', '5', '10000');
+INSERT INTO `spawnlist_trap` VALUES ('328', '再生聖殿2F', '4', '2001', '32882', '32910', '19', '19', '5', '10000');
+INSERT INTO `spawnlist_trap` VALUES ('329', '再生聖殿2F', '5', '2001', '32882', '32910', '19', '19', '5', '10000');
+INSERT INTO `spawnlist_trap` VALUES ('330', '再生聖殿2F', '4', '2002', '32882', '32910', '19', '19', '5', '10000');
+INSERT INTO `spawnlist_trap` VALUES ('331', '再生聖殿2F', '5', '2002', '32882', '32910', '19', '19', '5', '10000');
+INSERT INTO `spawnlist_trap` VALUES ('332', '再生聖殿2F', '4', '2003', '32882', '32910', '19', '19', '5', '10000');
+INSERT INTO `spawnlist_trap` VALUES ('333', '再生聖殿2F', '5', '2003', '32882', '32910', '19', '19', '5', '10000');

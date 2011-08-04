@@ -63,10 +63,10 @@ public class L1SkillId {
 	/** 法師魔法 (負重強化) */
 	public static final int DECREASE_WEIGHT = 14;
 
-	/** 法師魔法 (地獄之牙) */
+	/** 法師魔法 (火箭) */
 	public static final int FIRE_ARROW = 15;
 
-	/** 法師魔法 (火箭) */
+	/** 法師魔法 (地獄之牙) */
 	public static final int STALAC = 16;
 
 	/** 法師魔法 (極光雷電) */
@@ -1003,8 +1003,11 @@ public class L1SkillId {
 
 	/** 奪命之雷 (發動)*/
 	public static final int THUNDER_GRAB_START = 5007;
+	
+	/** 破壞之密藥 */
+	public static final int SECRET_MEDICINE_OF_DESTRUCTION = 5008;
 
-	public static final int SPECIAL_EFFECT_END = 5007;
+	public static final int SPECIAL_EFFECT_END = 5008;
 
 	// 戰鬥特化狀態
 	/** 新手保護(遭遇的守護) **/

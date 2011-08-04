@@ -483,6 +483,14 @@ public class L1Spawn extends L1GameTimeAdapter {
 					}
 				}
 			}
+			if ((npcId == 81341) && ((mob.getMapId() == 2000) || (mob.getMapId() == 2001) || (mob.getMapId() == 2002) || (mob.getMapId() == 2003))) { // 再生之祭壇
+				for (L1PcInstance pc : L1World.getInstance().getAllPlayers()) {
+					if ((pc.getMapId() >= 2000) && (pc.getMapId() <= 2003)) {
+						L1Teleport.teleport(pc, 32933, 32988, (short) 410, 5, true);
+					}
+				}
+			}
+
 			doCrystalCave(npcId);
 
 			L1World.getInstance().storeObject(mob);

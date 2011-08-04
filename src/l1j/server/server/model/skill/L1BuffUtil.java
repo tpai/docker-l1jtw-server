@@ -524,7 +524,7 @@ public class L1BuffUtil {
 							return 0;
 						}
 					}
-					if (npcId == 45640) { // ユニコーン
+					if (npcId == 45640) { // 獨角獸
 						if (npc.getGfxId() == npc.getTempCharGfx()) {
 							npc.setCurrentHp(npc.getMaxHp());
 							npc.setTempCharGfx(2332);
@@ -542,7 +542,7 @@ public class L1BuffUtil {
 							npc.broadcastPacket(new S_ChangeName(npc.getId(), "$2488"));
 						}
 					}
-					if (npcId == 81209) { // ロイ
+					if (npcId == 81209) { // 羅伊
 						if (npc.getGfxId() == npc.getTempCharGfx()) {
 							npc.setTempCharGfx(4310);
 							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 4310, npc.getLawful(), npc.getStatus()));
@@ -550,6 +550,15 @@ public class L1BuffUtil {
 						}
 						else {
 							return 0;
+						}
+					}
+					if (npcId == 81352) { // 歐姆民兵
+						if (npc.getGfxId() == npc.getTempCharGfx()) {
+							npc.setTempCharGfx(148);
+							npc.broadcastPacket(new S_NpcChangeShape(npc.getId(), 148, npc.getLawful(), npc.getStatus()));
+							npc.setName("$6068");
+							npc.setNameId("$6068");
+							npc.broadcastPacket(new S_ChangeName(npc.getId(), "$6068"));
 						}
 					}
 				}
