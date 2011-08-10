@@ -12,7 +12,7 @@
  * HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND CONDITIONS.
  * 
  */
-package l1j.server.server.model;
+package l1j.server.server.model.game;
 
 import java.util.Random;
 import java.util.Timer;
@@ -23,6 +23,9 @@ import l1j.server.server.datatables.DoorTable;
 import l1j.server.server.datatables.NpcTable;
 import l1j.server.server.datatables.RaceTicketTable;
 import l1j.server.server.datatables.ShopTable;
+import l1j.server.server.model.L1Location;
+import l1j.server.server.model.L1Object;
+import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1DoorInstance;
 import l1j.server.server.model.Instance.L1MerchantInstance;
 import l1j.server.server.model.Instance.L1NpcInstance;

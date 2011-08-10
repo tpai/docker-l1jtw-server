@@ -3958,14 +3958,14 @@ public class C_NPCAction extends ClientBasePacket {
 				htmldata = new String[15];
 				for (int i = 0; i < 5; i++) {
 					htmldata[i * 3] = (NpcTable.getInstance().getTemplate(
-							l1j.server.server.model.L1BugBearRace.getInstance()
+							l1j.server.server.model.game.L1BugBearRace.getInstance()
 									.getRunner(i).getNpcId()).get_nameid());
 					String condition;// 610 普通
-					if (l1j.server.server.model.L1BugBearRace.getInstance()
+					if (l1j.server.server.model.game.L1BugBearRace.getInstance()
 							.getCondition(i) == 0) {
 						condition = "$610";
 					} else {
-						if (l1j.server.server.model.L1BugBearRace.getInstance()
+						if (l1j.server.server.model.game.L1BugBearRace.getInstance()
 								.getCondition(i) > 0) {// 368
 														// 良い
 							condition = "$368";
@@ -3975,7 +3975,7 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 					htmldata[i * 3 + 1] = condition;
 					htmldata[i * 3 + 2] = String
-							.valueOf(l1j.server.server.model.L1BugBearRace
+							.valueOf(l1j.server.server.model.game.L1BugBearRace
 									.getInstance().getWinningAverage(i));
 				}
 				htmlid = "maeno4";
