@@ -80,7 +80,7 @@
 
 <!--王族 / 小惡魔的可疑行動（50）-->
 	<!--接受請求 / 迪嘉勒廷 / 象牙塔3樓-->
-	<Action Name="f" Class="P">
+	<Action Name="f" Class="P" NpcId="70739">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardingp3"/>
 	</Action>
@@ -99,7 +99,7 @@
 	</Action>
 
 	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
-	<MakeItem Name="a" Class="P" AmountInputable="false">
+	<MakeItem Name="a" Class="P" AmountInputable="false" NpcId="70739">
 		<Item Amount="1" ItemId="51"/>		<!--黃金權杖-->
 		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
 		<Succeed>
@@ -236,7 +236,7 @@
 
 <!--騎士 / 精靈們的騷動（50）-->
 	<!--我願意幫忙 / 迪嘉勒廷 / 象牙塔3樓-->
-	<Action Name="g" Class="K">
+	<Action Name="g" Class="K" NpcId="70739">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardingk3"/>
 	</Action>
@@ -255,7 +255,7 @@
 	</Action>
 
 	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
-	<MakeItem Name="l" Class="K" AmountInputable="false">
+	<MakeItem Name="l" Class="K" AmountInputable="false" NpcId="70739">
 		<Item Amount="1" ItemId="56"/>		<!--黑焰之劍-->
 		<Material Amount="1" ItemId="65"/>		<!--天空之劍-->
 		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
@@ -347,13 +347,13 @@
 
 <!--妖精 / 協助間諜大逃亡（50）-->
 	<!--詢問詳細事項 / 迪嘉勒廷 / 象牙塔3樓-->
-	<Action Name="m" Class="E">
+	<Action Name="m" Class="E" NpcId="70739">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardinge3"/>
 	</Action>
 
 	<!--現在立即去調查 / 迪嘉勒廷 / 象牙塔3樓-->
-	<Action Name="o" Class="E">
+	<Action Name="o" Class="E" NpcId="70739">
 		<SetQuest Id="Level50" Step="3"/>
 		<ShowHtml HtmlId="dicardinge7"/>
 	</Action>
@@ -366,7 +366,7 @@
 	</Action>
 
 	<!--拿出破壞祭壇證明後接收赤焰之弓 / 迪嘉勒廷 / 象牙塔3樓-->
-	<MakeItem Name="y" Class="E" AmountInputable="false">
+	<MakeItem Name="y" Class="E" AmountInputable="false" NpcId="70739">
 		<Item Amount="1" ItemId="184"/>		<!--赤焰之弓-->
 		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
 		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
@@ -377,7 +377,7 @@
 	</MakeItem>
 
 	<!--拿出破壞祭壇證明後接收赤焰之劍 / 迪嘉勒廷 / 象牙塔3樓-->
-	<MakeItem Name="s" Class="E" AmountInputable="false">
+	<MakeItem Name="s" Class="E" AmountInputable="false" NpcId="70739">
 		<Item Amount="1" ItemId="50"/>		<!--赤焰之劍-->
 		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
 		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
@@ -488,7 +488,7 @@
 
 <!--法師 / 取回間諜的報告書（50）-->
 	<!--接受迪嘉勒廷公爵的請求 / 迪嘉勒廷 / 象牙塔3樓-->
-	<Action Name="t" Class="W">
+	<Action Name="t" Class="W" NpcId="70739">
 		<SetQuest Id="Level50" Step="1"/>
 		<ShowHtml HtmlId="dicardingw3"/>
 	</Action>
@@ -500,7 +500,7 @@
 	</Action>
 
 	<!--我去破壞再生聖殿 / 迪嘉勒廷 / 象牙塔3樓-->
-	<Action Name="v" Class="W">
+	<Action Name="v" Class="W" NpcId="70739">
 		<SetQuest Id="Level50" Step="4"/>
 		<ShowHtml HtmlId="dicardingw9"/>
 	</Action>
@@ -513,7 +513,7 @@
 	</Action>
 
 	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
-	<MakeItem Name="x" Class="W" AmountInputable="false">
+	<MakeItem Name="x" Class="W" AmountInputable="false" NpcId="70739">
 		<Item Amount="1" ItemId="20225"/>		<!--瑪那水晶球-->
 		<Material Amount="1" ItemId="133"/>		<!--古代人的智慧-->
 		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
