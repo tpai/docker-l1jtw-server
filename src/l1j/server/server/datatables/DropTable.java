@@ -215,6 +215,7 @@ public class DropTable {
 			item = inventory.getItems().get(0);
 			itemId = item.getItemId();
 			boolean isGround = false;
+			boolean isPartyShare = false; //組隊自動分配
 			if ((item.getItem().getType2() == 0) && (item.getItem().getType() == 2)) { // light系アイテム
 				item.setNowLighting(false);
 			}
@@ -250,8 +251,46 @@ public class DropTable {
 								else {
 									if (player.isInParty()) { // パーティの場合
 										partyMember = player.getParty().getMembers();
-										for (L1PcInstance element : partyMember) {
-											element.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), player.getName()));
+										//組隊自動分配 (item.getCount() > 現場隊員人數才分配，分配後剩餘數量 otherCount 歸第一順位隊員所有(應該是殺死怪的人))
+										if (player.getPartyType() == 1) {
+											int partySize = 0;
+											int memberItemCount = 0;
+											for (L1PcInstance member : partyMember) {
+												if (member !=null && member.getMapId() == npc.getMapId() 
+													&& member.getCurrentHp() > 0 && !member.isDead()) {
+													partySize++;
+												}
+											}
+											if (partySize > 1 && item.getCount() >= partySize) {
+												memberItemCount = item.getCount() / partySize;
+												int otherCount = item.getCount() - memberItemCount * partySize;
+												if (otherCount > 0) {
+													item.setCount(memberItemCount + otherCount);
+												}
+												for (L1PcInstance member : partyMember) {
+													if (member !=null && member.getMapId() == npc.getMapId() 
+														&& member.getCurrentHp() > 0 && !member.isDead()) {
+														member.getInventory().storeItem(itemId, memberItemCount);
+														for (L1PcInstance pc : player.getParty().getMembers()) {
+															pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), member.getName()));
+														}
+														if (otherCount > 0) {
+															item.setCount(memberItemCount);
+															otherCount = 0;
+														}
+													}
+												}
+												inventory.removeItem(item, item.getCount());
+												isPartyShare = true;
+											} else {
+												for (L1PcInstance pc : player.getParty().getMembers()) {
+													pc.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), player.getName()));
+												}
+											}
+										} else {
+											for (L1PcInstance element : partyMember) {
+												element.sendPackets(new S_ServerMessage(813, npc.getName(), item.getLogName(), player.getName()));
+											}
 										}
 									}
 									else {
