@@ -137,7 +137,7 @@ public class Account {
 			pstm.setInt(7, 0);
 			pstm.setInt(8, account._banned ? 1 : 0);
 			pstm.setInt(9, account._online ? 1 : 0);
-			pstm.setInt(9, account._onlineStatus ? 1 : 0);
+			pstm.setInt(10, account._onlineStatus ? 1 : 0);
 			pstm.execute();
 			_log.info("created new account for " + name);
 

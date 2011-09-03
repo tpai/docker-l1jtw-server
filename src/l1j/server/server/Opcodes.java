@@ -136,13 +136,13 @@ public class Opcodes {
 	public static final int S_OPCODE_SERVERVERSION = 17; // 伺服器版本
 	public static final int S_OPCODE_CHARVISUALUPDATE = 18; // 切換物件外觀動作
 	public static final int S_OPCODE_PARALYSIS = 19; // 魔法效果 : 麻痺類
-	public static final int S_OPCODE_TELEPORT = 26; // 傳送術或瞬間移動卷軸-傳送鎖定
+	public static final int S_OPCODE_MOVELOCK = 20; // 移動鎖定封包(疑似開加速器則會用這個封包將玩家鎖定)
 	public static final int S_OPCODE_DELETEINVENTORYITEM = 21; // 刪除物品
 	public static final int S_OPCODE_NEW1 = 22; // 不明封包 (會變更頭銜)
 	// 23 彷彿是伺服器選單
 	public static final int S_OPCODE_HIRESOLDIER = 24; // 僱用傭兵
 	public static final int S_OPCODE_PINKNAME = 25; // 角色名稱變紫色
-	public static final int S_OPCODE_MOVELOCK = 20; // 移動鎖定封包(疑似開加速器則會用這個封包將玩家鎖定)
+	public static final int S_OPCODE_TELEPORT = 26; // 傳送術或瞬間移動卷軸-傳送鎖定
 	public static final int S_OPCODE_INITPACKET = 27; // 初始化演算法
 	public static final int S_OPCODE_CHANGENAME = 28; // 改變物件名稱
 	public static final int S_OPCODE_NEWCHARWRONG = 29; // 角色創造例外
