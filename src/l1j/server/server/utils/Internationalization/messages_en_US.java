@@ -29,7 +29,7 @@ public class messages_en_US extends ListResourceBundle {
 		{ "l1j.server.server.model.onGroundItem", "items on the ground" },
 		{ "l1j.server.server.model.seconds","will be delete after 10 seconds" },
 		{ "l1j.server.server.model.deleted", "was deleted" }, 
-		{ "l1j.server.server.GameServer.ver","Version: Lineage 3.3C  Dev. By L1J-TW For All User" },
+		{ "l1j.server.server.GameServer.ver","Version: Lineage 3.5C  Dev. By L1J-TW For All User" },
 		{ "l1j.server.server.GameServer.settingslist","●●●●〈Server Config List〉●●●●"},
 		{ "l1j.server.server.GameServer.exp","「exp」"},
 		{ "l1j.server.server.GameServer.x","【times】"},

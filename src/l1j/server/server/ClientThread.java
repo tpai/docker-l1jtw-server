@@ -74,15 +74,11 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	private int _loginStatus = 0;
 
-	/*
-	 * private static final byte[] FIRST_PACKET = { // 3.0 (byte) 0xec, (byte)
-	 * 0x64, (byte) 0x3e, (byte) 0x0d, (byte) 0xc0, (byte) 0x82, (byte) 0x00,
-	 * (byte) 0x00, (byte) 0x02, (byte) 0x08, (byte) 0x00 };
-	 */
-	private static final byte[] FIRST_PACKET = { // 3.3C Taiwan Server
-	(byte) 0x65, (byte) 0xb6, (byte) 0xbd, (byte) 0x65, (byte) 0xcc,
-			(byte) 0xd0, (byte) 0x7e, (byte) 0x53, (byte) 0x2e, (byte) 0xfa,
-			(byte) 0xc1 };
+	private static final byte[] FIRST_PACKET = { // 3.5C Taiwan Server 
+		    (byte) 0xf4, (byte) 0x0a, (byte) 0x8d, (byte) 0x23, (byte) 0x6f, 
+		    (byte) 0x7f, (byte) 0x04, (byte) 0x00, (byte) 0x05, (byte) 0x08, 
+		    (byte) 0x00 
+    };
 
 	/**
 	 * for Test
@@ -210,12 +206,14 @@ public class ClientThread implements Runnable, PacketOutput {
 		}
 
 		try {
-			// long seed = 0x7c98bdfa; // 3.0
-			int key = 0x1a986541;// 3.3C Taiwan Server
+			/** 採取亂數取seed */
+			String keyHax = Integer.toHexString((int) (Math.random() * 2147483647) + 1);
+			int key = Integer.parseInt(keyHax, 16);
+
 			byte Bogus = (byte) (FIRST_PACKET.length + 7);
 			_out.write(Bogus & 0xFF);
 			_out.write(Bogus >> 8 & 0xFF);
-			_out.write(Opcodes.S_OPCODE_INITPACKET);// 3.3C Taiwan Server
+			_out.write(Opcodes.S_OPCODE_INITPACKET);// 3.5C Taiwan Server
 			_out.write((byte) (key & 0xFF));
 			_out.write((byte) (key >> 8 & 0xFF));
 			_out.write((byte) (key >> 16 & 0xFF));
@@ -529,8 +527,7 @@ public class ClientThread implements Runnable, PacketOutput {
 				pet.dropItem();
 				pc.getPetList().remove(pet.getId());
 				pet.deleteMe();
-			}
-			else if (petNpc instanceof L1SummonInstance) {
+			} else if (petNpc instanceof L1SummonInstance) {
 				L1SummonInstance summon = (L1SummonInstance) petNpc;
 				for (L1PcInstance visiblePc : L1World.getInstance()
 						.getVisiblePlayer(summon)) {
@@ -541,11 +538,11 @@ public class ClientThread implements Runnable, PacketOutput {
 		}
 
 		// 移除世界地圖上的魔法娃娃
-		for (L1DollInstance doll : pc.getDollList().values()) 
+		for (L1DollInstance doll : pc.getDollList().values())
 			doll.deleteDoll();
 
 		// 重新建立跟隨者
-		for ( L1FollowerInstance follower : pc.getFollowerList().values()) {
+		for (L1FollowerInstance follower : pc.getFollowerList().values()) {
 			follower.setParalyzed(true);
 			follower.spawn(follower.getNpcTemplate().get_npcId(),
 					follower.getX(), follower.getY(), follower.getHeading(),

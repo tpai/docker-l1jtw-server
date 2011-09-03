@@ -22,8 +22,9 @@ import l1j.server.server.Opcodes;
 public class S_CharPacks extends ServerBasePacket {
 	private static final String S_CHAR_PACKS = "[S] S_CharPacks";
 
-	public S_CharPacks(String name, String clanName, int type, int sex, int lawful, int hp, int mp, int ac, int lv, int str, int dex, int con,
-			int wis, int cha, int intel, int accessLevel) {
+	public S_CharPacks(String name, String clanName, int type, int sex,
+			int lawful, int hp, int mp, int ac, int lv, int str, int dex,
+			int con, int wis, int cha, int intel, int accessLevel) {
 		writeC(Opcodes.S_OPCODE_CHARLIST);
 		writeS(name);
 		writeS(clanName);
@@ -40,17 +41,8 @@ public class S_CharPacks extends ServerBasePacket {
 		writeC(wis);
 		writeC(cha);
 		writeC(intel);
-
-		// is Administrator
-		// 0 = false
-		// 1 = true , can't attack
-		// > 1 true , can't attack
-		// can use Public GameMaster Command
-		// if (accessLevel == 200) {
-		// writeC(1);
-		// } else {
-		writeC(0);
-		// }
+		writeC(0);// is Administrator
+		// writeD(birthday);
 	}
 
 	@Override

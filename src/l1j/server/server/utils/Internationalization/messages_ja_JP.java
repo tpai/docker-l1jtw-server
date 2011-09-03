@@ -28,7 +28,7 @@ public class messages_ja_JP extends ListResourceBundle {
 		{ "l1j.server.server.model.onGroundItem", "ワールドマップ上のアイテム" },
 		{ "l1j.server.server.model.seconds", "10秒後に削除されます" },
 		{ "l1j.server.server.model.deleted", "削除されました" },
-		{ "l1j.server.server.GameServer.ver","バージョン: Lineage 3.3C 開発  By L1J For All User" },
+		{ "l1j.server.server.GameServer.ver","バージョン: Lineage 3.5C 開発  By L1J For All User" },
 		{ "l1j.server.server.GameServer.settingslist","●●●●〈サーバー設定〉●●●●"},
 		{ "l1j.server.server.GameServer.exp","「経験値」"},
 		{ "l1j.server.server.GameServer.x","【倍】"},

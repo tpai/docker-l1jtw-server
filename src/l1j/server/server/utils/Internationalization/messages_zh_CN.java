@@ -28,7 +28,7 @@ public class messages_zh_CN extends ListResourceBundle {
 		{ "l1j.server.server.model.onGroundItem", "地上的物品" },
 		{ "l1j.server.server.model.seconds", "10秒后将被清除" },
 		{ "l1j.server.server.model.deleted", "已经被清除了" },
-		{ "l1j.server.server.GameServer.ver","版本: Lineage 3.3C  开发 By L1J-TW For All User" },
+		{ "l1j.server.server.GameServer.ver","版本: Lineage 3.5C  开发 By L1J-TW For All User" },
 		{ "l1j.server.server.GameServer.settingslist","●●●●〈伺服器设置清单〉●●●●"},
 		{ "l1j.server.server.GameServer.exp","「经验值」"},
 		{ "l1j.server.server.GameServer.x","【倍】"},

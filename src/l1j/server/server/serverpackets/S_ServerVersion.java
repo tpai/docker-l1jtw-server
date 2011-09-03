@@ -18,65 +18,33 @@ import l1j.server.Config;
 import l1j.server.server.Opcodes;
 
 public class S_ServerVersion extends ServerBasePacket {
-	private static final String S_SERVER_VERSION = "[S] ServerVersion";
-
 	private static final int CLIENT_LANGUAGE = Config.CLIENT_LANGUAGE;
+	private static final int uptime = (int) (System.currentTimeMillis() / 1000);
 
 	/*
-	 * [Server] opcode = 89 0000: 59 00 02/ c9 60 01 00/ 6a 60 01 00/ 01 ee 00
-	 * 00/ db Y...`..j`....... 0010: 3c 01 00/ ec 66 c4 49/ 00 00 03 58 0d 00 00
-	 * 10 5f <...f.I...X...._
+	 * [來源:Server]<位址:17>{長度:32}(時間:1314150068749) 0000: 11 00 38 32 c7 a8 00 a7
+	 * c6 a8 00 ba 6e cf 77 ad ..82........n.w. 0010: cd a8 00 71 23 53 4e 00 00
+	 * 03 00 00 00 00 08 00 ...q#SN.........
 	 */
 	public S_ServerVersion() {
 		writeC(Opcodes.S_OPCODE_SERVERVERSION);
-		// Auth Check client Version
-		// 1 = Check
-		// 0 = no check
-		// > 1 no check
-		// type : boolean
 		writeC(0x00);
-
-		// your server id, first id = 2
-		// id = 0, ????
-		// id = 1, ????
 		writeC(0x02);
-
-		// all version
-		// If the user level is a administrator,
-		// inputs /ver to be able to print out all version in game
-		// If the user level isn't a administrator
-		// inputs /ver to be able to print out client version in game
-		/*
-		 * writeD(0x000160c9); // server verion writeD(0x0001606a); // cache
-		 * verion writeD(0x0000ee01); // auth verion writeD(0x00013cdb); // npc
-		 * verion
-		 */
-		writeD(0x0099fb8a); // server verion 3.3C Taiwan Server
-		writeD(0x00018972); // cache verion 3.3C Taiwan Server
-		writeD(0x77cf6eb9); // auth verion 3.3C Taiwan Server
-		writeD(0x00018978); // npc verion 3.3C Taiwan Server
-		// ↓ unknown
-		// ↓ Old 270Lin.bin
-		// ↓ New 270Lin.bin
-		// ↓ isn't game time
-		// writeD(0x49c466ec);//3.0C
-		writeD(0x4cb3dc88); //3.3C Taiwan Server
-
+		writeD(0x00a8c732); // server verion 3.5C Taiwan Server
+		writeD(0x00a8c6a7); // cache verion 3.5C Taiwan Server
+		writeD(0x77cf6eba); // auth verion 3.5C Taiwan Server
+		writeD(0x00a8cdad); // npc verion 3.5C Taiwan Server
+		writeD(uptime);
 		writeC(0x00); // unknown
 		writeC(0x00); // unknown
-
-		// Country
-		// 0.US 3.Taiwan 4.Janpan 5.China
-		writeC(CLIENT_LANGUAGE);
+		writeC(CLIENT_LANGUAGE); // Country: 0.US 3.Taiwan 4.Janpan 5.China
+		writeD(0x00000000);
+		writeC(0xae); // unknown
+		writeC(0xb2); // unknown
 	}
 
 	@Override
 	public byte[] getContent() {
 		return getBytes();
-	}
-
-	@Override
-	public String getType() {
-		return S_SERVER_VERSION;
 	}
 }
