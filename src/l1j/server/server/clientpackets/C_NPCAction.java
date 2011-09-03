@@ -163,7 +163,7 @@ public class C_NPCAction extends ClientBasePacket {
 		int contribution = 0;
 
 		L1PcInstance pc = client.getActiveChar();
-		L1PcInstance target;
+		L1PcInstance target = null;
 		L1Object obj = L1World.getInstance().findObject(objid);
 		if (obj != null) {
 			if (obj instanceof L1NpcInstance) {
@@ -730,7 +730,7 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 			if (pc.getPetList().isEmpty()) {
-				pc.sendPackets(new S_PetCtrlMenu(false));// 關閉寵物控制圖形介面
+				pc.sendPackets(new S_PetCtrlMenu(target, null, false));// 關閉寵物控制圖形介面
 			} else {
 				// 更新寵物控制介面
 				for (L1NpcInstance petNpc : pc.getPetList().values()) {

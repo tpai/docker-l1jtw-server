@@ -371,7 +371,7 @@ public class L1PetInstance extends L1NpcInstance {
 
 		_petMaster.getPetList().remove(getId());
 		if (_petMaster.getPetList().isEmpty()) {
-			_petMaster.sendPackets(new S_PetCtrlMenu(false));// 關閉寵物控制圖形介面
+			_petMaster.sendPackets(new S_PetCtrlMenu(_master, monster, false));// 關閉寵物控制圖形介面
 		}
 
 		deleteMe();

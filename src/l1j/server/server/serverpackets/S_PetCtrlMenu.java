@@ -15,25 +15,39 @@
 package l1j.server.server.serverpackets;
 
 import l1j.server.server.Opcodes;
+import l1j.server.server.model.L1Character;
+import l1j.server.server.model.Instance.L1NpcInstance;
 
 public class S_PetCtrlMenu extends ServerBasePacket {
-
-	private byte[] _byte = null;
-
-	public S_PetCtrlMenu(boolean open) {
+	public S_PetCtrlMenu(L1Character cha, L1NpcInstance npc, boolean open) {
+		int index = open ? 1 : cha.getPetList().size() - 1;
 		writeC(Opcodes.S_OPCODE_PETCTRL);
 		writeC(0x0c);
-		writeH(open ? 0x0003 : 0x0000);
-		writeD(0x00000000);
-		writeD(0x00000000);
+
+		for (L1NpcInstance temp : cha.getPetList().values()) {
+			if (npc.equals(temp)) {
+				writeH(index * 3);
+				writeD(!open ? 0x00000001 : 0x00000000);
+				writeD(npc.getId());
+
+				if (open) {
+					writeD(0x00000000);
+					writeH(npc.getX());
+					writeH(npc.getY());
+					writeS(npc.getName());
+				} else {
+					writeS(null);
+				}
+
+				break;
+			}
+
+			index = open ? ++index : --index;
+		}
 	}
 
 	@Override
 	public byte[] getContent() {
-		if (_byte == null) {
-			_byte = _bao.toByteArray();
-		}
-
-		return _byte;
+		return getBytes();
 	}
 }

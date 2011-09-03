@@ -669,7 +669,7 @@ public class L1Character extends L1Object {
 			L1Character cha = pet.getMaster();
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				pc.sendPackets(new S_PetCtrlMenu(type));
+				pc.sendPackets(new S_PetCtrlMenu(cha, npc, type));
 				// 處理寵物控制圖形介面
 			}
 		} else if (npc instanceof L1SummonInstance) {
@@ -677,7 +677,7 @@ public class L1Character extends L1Object {
 			L1Character cha = summon.getMaster();
 			if (cha instanceof L1PcInstance) {
 				L1PcInstance pc = (L1PcInstance) cha;
-				pc.sendPackets(new S_PetCtrlMenu(type));
+				pc.sendPackets(new S_PetCtrlMenu(cha, npc, type));
 			}
 		}
 	}
