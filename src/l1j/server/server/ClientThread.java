@@ -567,8 +567,11 @@ public class ClientThread implements Runnable, PacketOutput {
 		// 設定線上狀態為下線
 		pc.setOnlineStatus(0);
 		// 設定帳號為下線
+		//Account account = Account.load(pc.getAccountName());
+		//Account.online(account, false);
+		// 設定帳號的角色為下線
 		Account account = Account.load(pc.getAccountName());
-		Account.online(account, false);
+		Account.OnlineStatus(account, false);
 
 		try {
 			pc.save();

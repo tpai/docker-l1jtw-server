@@ -128,6 +128,12 @@ public class C_LoginToServer extends ClientBasePacket {
 		}
 
 		L1PcInstance pc = L1PcInstance.load(charName);
+		Account account = Account.load(pc.getAccountName());
+		if (account.isOnlineStatus()) {
+			_log.info("同一個帳號雙重角色登入，強制切斷 " + client.getHostname() + ") 的連結");
+			client.close();
+			return;
+		}
 		if ((pc == null) || !login.equals(pc.getAccountName())) {
 			_log.info("無效的角色名稱: char=" + charName + " account=" + login
 					+ " host=" + client.getHostname());
@@ -169,8 +175,11 @@ public class C_LoginToServer extends ClientBasePacket {
 		bookmarks(pc);
 
 		// Online = 1
-		Account account = Account.load(pc.getAccountName());
-		Account.online(account, true);
+		//Account account = Account.load(pc.getAccountName());
+		//Account.online(account, true);
+
+		// OnlineStatus = 1
+		Account.OnlineStatus(account, true);
 
 		// 如果設定檔中設定自動回村的話
 		GetBackRestartTable gbrTable = GetBackRestartTable.getInstance();

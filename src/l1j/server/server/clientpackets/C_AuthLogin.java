@@ -73,7 +73,7 @@ public class C_AuthLogin extends ClientBasePacket {
 			return;
 		}
 		if (account.isOnlined()) {
-			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_ACCOUNT_IN_USE));
+			client.sendPacket(new S_LoginResult(S_LoginResult.REASON_ACCOUNT_ALREADY_EXISTS));//原碼 REASON_ACCOUNT_IN_USE
 			return;
 		}
 		if (account.isBanned()) { // BANアカウント

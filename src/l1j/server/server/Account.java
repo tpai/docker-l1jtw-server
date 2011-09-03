@@ -64,8 +64,11 @@ public class Account {
 	/** 倉庫密碼 */
 	private int _WarePassword = 0;
 
-	/** 是否在線上 */
+	/** 帳號是否在線上 */
 	private boolean _online = false;
+
+	/** 是否有角色在線上 */
+	private boolean _onlineStatus = false;
 
 	/** 紀錄用 */
 	private static Logger _log = Logger.getLogger(Account.class.getName());
@@ -123,7 +126,7 @@ public class Account {
 			account._lastActive = new Timestamp(System.currentTimeMillis());
 
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,online=?,banned=?,character_slot=?";
+			String sqlstr = "INSERT INTO accounts SET login=?,password=?,lastactive=?,access_level=?,ip=?,host=?,online=?,banned=?,character_slot=?,OnlineStatus=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, account._name);
 			pstm.setString(2, account._password);
@@ -134,6 +137,7 @@ public class Account {
 			pstm.setInt(7, 0);
 			pstm.setInt(8, account._banned ? 1 : 0);
 			pstm.setInt(9, account._online ? 1 : 0);
+			pstm.setInt(9, account._onlineStatus ? 1 : 0);
 			pstm.execute();
 			_log.info("created new account for " + name);
 
@@ -184,6 +188,7 @@ public class Account {
 			account._online = rs.getInt("online") == 0 ? false : true;
 			account._characterSlot = rs.getInt("character_slot");
 			account._WarePassword = rs.getInt("warepassword");
+			account._onlineStatus = rs.getInt("OnlineStatus") == 0 ? false : true;
 
 			_log.fine("account exists");
 		} catch (SQLException e) {
@@ -283,7 +288,7 @@ public class Account {
 	}
 
 	/**
-	 * @category 寫入是否在線上
+	 * @category 寫入帳號是否在線上
 	 * @param account 玩家帳號
 	 * @param i isOnline?
 	 */
@@ -304,16 +309,39 @@ public class Account {
 			SQLUtil.close(con);
 		}
 	}
+
+	/**
+	 * @category 寫入是否有角色在線上
+	 * @param account 玩家帳號
+	 * @param i isOnline?
+	 */
+	public synchronized static void OnlineStatus(Account account, boolean i) {
+		Connection con = null;
+		PreparedStatement pstm = null;
+		try {
+			con = L1DatabaseFactory.getInstance().getConnection();
+			String sqlstr = "UPDATE accounts SET OnlineStatus=? WHERE login=?";
+			pstm = con.prepareStatement(sqlstr);
+			pstm.setInt(1, i ? 1 : 0);
+			pstm.setString(2, account.getName());
+			pstm.execute();
+			account.setOnlineStatus(i);
+		} catch (SQLException e) {
+		} finally {
+			SQLUtil.close(pstm);
+			SQLUtil.close(con);
+		}
+	}
 	
 	/**
-	 * 歸零所有帳號online=0
+	 * 歸零所有帳號online=0, OnlineStatus=0
 	 */
 	public static void InitialOnlineStatus() {
 		Connection con = null;
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET online=0 WHERE online=1";
+			String sqlstr = "UPDATE accounts SET online=0, OnlineStatus=0 WHERE online=1 OR OnlineStatus=1";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.execute();
 		} catch (Exception e) {
@@ -335,7 +363,7 @@ public class Account {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			String sqlstr = "UPDATE accounts SET banned=1, online=0 WHERE login=?";
+			String sqlstr = "UPDATE accounts SET banned=1, online=0, OnlineStatus=0 WHERE login=?";
 			pstm = con.prepareStatement(sqlstr);
 			pstm.setString(1, login);
 			pstm.execute();
@@ -459,7 +487,7 @@ public class Account {
 	}
 
 	/**
-	 * 設定是否在線上
+	 * 設定帳號是否在線上
 	 * @param i
 	 */
 	public synchronized void setOnline(boolean i) {
@@ -467,11 +495,27 @@ public class Account {
 	}
 
 	/**
-	 * 取得是否在線上
+	 * 取得帳號是否在線上
 	 * @return
 	 */
 	public synchronized boolean isOnlined() {
 		return _online;
+	}
+
+	/**
+	 * 設定是否有角色在線上
+	 * @param i
+	 */
+	public synchronized void setOnlineStatus(boolean i) {
+		_onlineStatus = i;
+	}
+
+	/**
+	 * 取得是否有角色在線上
+	 * @return
+	 */
+	public synchronized boolean isOnlineStatus() {
+		return _onlineStatus;
 	}
 	
 	/**
