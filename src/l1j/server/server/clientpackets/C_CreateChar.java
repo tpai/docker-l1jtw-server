@@ -183,6 +183,7 @@ public class C_CreateChar extends ClientBasePacket {
 	private static void initNewChar(ClientThread client, L1PcInstance pc) throws IOException, Exception {
 
 		pc.setId(IdFactory.getInstance().nextId());
+		pc.setBirthday();
 		if (pc.get_sex() == 0) {
 			pc.setClassId(MALE_LIST[pc.getType()]);
 		}

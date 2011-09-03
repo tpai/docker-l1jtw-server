@@ -21,6 +21,7 @@ CREATE TABLE `characters` (
   `account_name` varchar(13) NOT NULL DEFAULT '0',
   `objid` int(11) unsigned NOT NULL DEFAULT '0',
   `char_name` varchar(45) NOT NULL DEFAULT '',
+  `birthday` datetime DEFAULT NULL,
   `level` int(11) unsigned NOT NULL DEFAULT '0',
   `HighLevel` int(11) unsigned NOT NULL DEFAULT '0',
   `Exp` int(10) unsigned NOT NULL DEFAULT '0',

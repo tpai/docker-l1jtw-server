@@ -42,6 +42,7 @@ import static l1j.server.server.model.skill.L1SkillId.STRIKER_GALE;
 import static l1j.server.server.model.skill.L1SkillId.WIND_SHACKLE;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Timer;
 import java.util.concurrent.ScheduledFuture;
@@ -759,6 +760,32 @@ public class L1PcInstance extends L1Character {
 
 	public void setClanRank(int i) {
 		_clanRank = i;
+	}
+
+	// 角色生日
+	private Timestamp _birthday;
+
+	public Timestamp getBirthday() {	
+		return _birthday;
+	}
+
+	public int getSimpleBirthday(){
+		if (_birthday !=null){
+			SimpleDateFormat SimpleDate = new SimpleDateFormat("yyyyMMdd");
+			int BornTime = Integer.parseInt(SimpleDate.format(_birthday.getTime()));
+			return BornTime;
+		}
+		else {
+			return 0;
+		}
+	}	
+
+	public void setBirthday(Timestamp time) {
+		_birthday = time;
+	}
+
+	public void setBirthday(){	
+		_birthday = new Timestamp(System.currentTimeMillis());	
 	}
 
 	private byte _sex; // ● 性別

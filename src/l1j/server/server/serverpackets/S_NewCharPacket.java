@@ -48,6 +48,7 @@ public class S_NewCharPacket extends ServerBasePacket {
 		writeC(0);// is Administrator
 		/* 生日待後續的實作 */
 		// writeD(Integer.parseInt(new SimpleDateFormat("yyyyMMdd").format(pc.getBirthday())));
+		writeD(pc.getSimpleBirthday());
 	}
 
 	@Override
