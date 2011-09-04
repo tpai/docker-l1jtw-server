@@ -339,13 +339,13 @@ public class L1SummonInstance extends L1NpcInstance {
 		if (!_tamed && !_isReturnToNature) {
 			broadcastPacket(new S_SkillSound(getId(), 169));
 		}
-		_master.getPetList().remove(getId());
-		if (_master.getPetList().isEmpty()) {
+		//if (_master.getPetList().isEmpty()) {
 			L1PcInstance pc = (L1PcInstance) _master;
 			if (pc instanceof L1PcInstance) {
-				pc.sendPackets(new S_PetCtrlMenu(_master, null, false));// 關閉寵物控制圖形介面
+				pc.sendPackets(new S_PetCtrlMenu(_master, this, false));// 關閉寵物控制圖形介面
 			}
-		}
+		//}
+		_master.getPetList().remove(getId());
 		super.deleteMe();
 
 		if (_summonFuture != null) {

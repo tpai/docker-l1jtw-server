@@ -722,6 +722,7 @@ public class C_NPCAction extends ClientBasePacket {
 			for (L1NpcInstance petNpc : pc.getPetList().values()) {
 				if (petNpc instanceof L1PetInstance) { // ペット
 					L1PetInstance pet = (L1PetInstance) petNpc;
+					pc.sendPackets(new S_PetCtrlMenu(pc, petNpc, false));// 關閉寵物控制圖形介面
 					// 停止飽食度計時
 					pet.stopFoodTimer(pet);
 					pet.collect(true);
@@ -729,7 +730,7 @@ public class C_NPCAction extends ClientBasePacket {
 					pet.deleteMe();
 				}
 			}
-			if (pc.getPetList().isEmpty()) {
+			/*if (pc.getPetList().isEmpty()) {
 				pc.sendPackets(new S_PetCtrlMenu(pc, null, false));// 關閉寵物控制圖形介面
 			} else {
 				// 更新寵物控制介面
@@ -741,7 +742,7 @@ public class C_NPCAction extends ClientBasePacket {
 						break;
 					}
 				}
-			}
+			}*/
 			htmlid = ""; // ウィンドウを消す
 		} else if (s.equalsIgnoreCase("withdrawnpc")) { // 領取寵物
 			pc.sendPackets(new S_PetList(objid, pc));

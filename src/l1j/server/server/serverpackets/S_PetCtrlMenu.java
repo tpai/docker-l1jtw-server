@@ -20,11 +20,26 @@ import l1j.server.server.model.Instance.L1NpcInstance;
 
 public class S_PetCtrlMenu extends ServerBasePacket {
 	public S_PetCtrlMenu(L1Character cha, L1NpcInstance npc, boolean open) {
-		int index = open ? 1 : cha.getPetList().size() - 1;
+		//int index = open ? 1 : cha.getPetList().size() - 1;
 		writeC(Opcodes.S_OPCODE_PETCTRL);
 		writeC(0x0c);
 
-		for (L1NpcInstance temp : cha.getPetList().values()) {
+		if (open) {
+			writeH(cha.getPetList().size() * 3);
+			writeD(0x00000000);
+			writeD(npc.getId());
+			writeH(npc.getMapId());
+			writeH(0x0000);
+			writeH(npc.getX());
+			writeH(npc.getY());
+			writeS(npc.getName());
+		} else {
+			writeH(cha.getPetList().size() * 3 - 3);
+			writeD(0x00000001);
+			writeD(npc.getId());
+		}
+
+		/*for (L1NpcInstance temp : cha.getPetList().values()) {
 			if (npc.equals(temp)) {
 				writeH(index * 3);
 				writeD(!open ? 0x00000001 : 0x00000000);
@@ -43,7 +58,7 @@ public class S_PetCtrlMenu extends ServerBasePacket {
 			}
 
 			index = open ? ++index : --index;
-		}
+		}*/
 	}
 
 	@Override

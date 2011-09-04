@@ -637,9 +637,9 @@ public class L1Character extends L1Object {
 	 */
 	public void addPet(L1NpcInstance npc) {
 		_petlist.put(npc.getId(), npc);
-		if (_petlist.size() < 2) {
+		//if (_petlist.size() < 2) {
 			sendPetCtrlMenu(npc, true);// 顯示寵物控制圖形介面
-		}
+		//}
 
 	}
 
@@ -651,9 +651,9 @@ public class L1Character extends L1Object {
 	 */
 	public void removePet(L1NpcInstance npc) {
 		_petlist.remove(npc.getId());
-		if (_petlist.isEmpty()) {
+		//if (_petlist.isEmpty()) {
 			sendPetCtrlMenu(npc, false);// 關閉寵物控制圖形介面
-		}
+		//}
 	}
 
 	/**
