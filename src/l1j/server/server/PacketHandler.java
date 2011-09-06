@@ -172,6 +172,7 @@ import l1j.server.server.clientpackets.C_Rank;
 import l1j.server.server.clientpackets.C_Restart;
 import l1j.server.server.clientpackets.C_Result;
 import l1j.server.server.clientpackets.C_ReturnToLogin;
+import l1j.server.server.clientpackets.C_SelectList;
 import l1j.server.server.clientpackets.C_SelectTarget;
 import l1j.server.server.clientpackets.C_SendLocation;
 import l1j.server.server.clientpackets.C_ServerVersion;
@@ -499,13 +500,10 @@ public class PacketHandler {
 			case C_OPCODE_FIX_WEAPON_LIST:
 				new C_FixWeaponList(abyte0, _client);
 				break;
-		    /*
-		     *  TODO C_OPCODE_FIX_WEAPON_LIST & C_OPCODE_SELECTLIST 
-		     *       兩個OP相同功能，必須合併。
-		     */
-			/*case C_OPCODE_SELECTLIST:
+		    
+			case C_OPCODE_SELECTLIST:
 				new C_SelectList(abyte0, _client);
-				break;*/
+				break;
 
 			case C_OPCODE_EXIT_GHOST:
 				new C_ExitGhost(abyte0, _client);

@@ -44,6 +44,7 @@ public class Opcodes {
 	public static final int C_OPCODE_BOARDDELETE = 26; // 請求刪除公佈欄內容
 	public static final int C_OPCODE_CHANGEHEADING = 27; // 請求改變角色面向
 	public static final int C_OPCODE_BOOKMARKDELETE = 28; // 請求刪除記憶座標
+	public static final int C_OPCODE_SELECTLIST = 29; // 請求修理道具
 	public static final int C_OPCODE_SELECTTARGET = 32; // 請求攻擊指定物件(寵物&召喚)
 	public static final int C_OPCODE_DELEXCLUDE = 33; // 請求使用開啟名單(拒絕指定人物訊息)
 	public static final int C_OPCODE_BUDDYLIST = 34; // 請求查詢好友名單
@@ -82,7 +83,6 @@ public class Opcodes {
 	public static final int C_OPCODE_USEPETITEM = 78; // 請求使用寵物裝備
 	public static final int C_OPCODE_EXCLUDE = 79; // 請求使用拒絕名單(開啟指定人物訊息)
 	public static final int C_OPCODE_FIX_WEAPON_LIST = 80; // 請求查詢損壞的道具
-	public static final int C_OPCODE_SELECTLIST = 80; // 請求修理道具
 	public static final int C_OPCODE_PLEDGE = 84; // 請求查詢血盟成員
 	public static final int C_OPCODE_NPCACTION = 87; // 請求執行對話視窗的動作
 	public static final int C_OPCODE_EXIT_GHOST = 90; // 請求退出觀看模式

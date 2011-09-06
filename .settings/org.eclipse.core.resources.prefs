@@ -1,6 +1,7 @@
-#Fri Sep 02 21:46:18 CST 2011
+#Tue Sep 06 20:59:50 CST 2011
 eclipse.preferences.version=1
 encoding//config/altsettings.properties=UTF-8
+encoding//config/fights.properties=UTF-8
 encoding//config/log.properties=UTF-8
 encoding//config/record.properties=UTF-8
 encoding//config/server.properties=UTF-8
