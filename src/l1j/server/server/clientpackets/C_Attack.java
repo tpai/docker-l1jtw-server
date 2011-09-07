@@ -44,7 +44,7 @@ public class C_Attack extends ClientBasePacket {
 
 		L1PcInstance pc = client.getActiveChar();
 
-		if (pc.isGhost() || pc.isDead() || pc.isTeleport()) {
+		if (pc.isGhost() || pc.isDead() || pc.isTeleport()|| pc.isParalyzed() || pc.isSleeped()) {
 			return;
 		}
 
