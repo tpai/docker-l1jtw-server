@@ -39,8 +39,10 @@ public class S_RetrieveList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
+				writeH(0x001e); // 金幣30
+			} else {
+				pc.sendPackets(new S_ServerMessage(1625));
 			}
-			writeD(0x0000001e); // 金幣30
 			// クライアントに適当なメッセージ見つからなかったので非表示
 			/*
 			 * else { l1pcinstance.sendPackets(new

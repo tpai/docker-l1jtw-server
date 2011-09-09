@@ -55,7 +55,9 @@ public class S_RetrievePledgeList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
-				writeD(0x0000001e); // 金幣30
+				writeH(0x001e); // 金幣30
+			} else {
+				pc.sendPackets(new S_ServerMessage(1625));
 			}
 		} else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。

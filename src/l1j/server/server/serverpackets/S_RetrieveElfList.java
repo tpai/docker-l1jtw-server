@@ -40,6 +40,8 @@ public class S_RetrieveElfList extends ServerBasePacket {
 					writeC(item.isIdentified() ? 1 : 0);
 					writeS(item.getViewName());
 				}
+			} else {
+				pc.sendPackets(new S_ServerMessage(1625));
 			}
 		} else {
 			pc.sendPackets(new S_ServerMessage(263)); // \f1一人のキャラクターが持って歩けるアイテムは最大180個までです。
