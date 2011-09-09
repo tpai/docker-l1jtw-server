@@ -26,6 +26,7 @@ public class Opcodes {
 	/** 3.5C Client Packet */
 	public static final int C_OPCODE_BANPARTY = 0; // 請求驅逐隊伍
 	public static final int C_OPCODE_SHIP = 1; // 請求下船
+	public static final int C_OPCODE_TELEPORTLOCK = 2; // 玩家傳送鎖定(回溯檢測用)
 	public static final int C_OPCODE_SKILLBUYOK = 4; // 請求學習魔法
 	public static final int C_OPCODE_ADDBUDDY = 5; // 請求新增好友
 	public static final int C_OPCODE_WAREHOUSELOCK = 8; // 請求變更倉庫密碼 && 送出倉庫密碼
@@ -77,6 +78,7 @@ public class Opcodes {
 	public static final int C_OPCODE_RESTART = 70; // 請求重新開始
 	public static final int C_OPCODE_ENTERPORTAL = 71; // 請求傳送 (進入地監)
 	public static final int C_OPCODE_SKILLBUY = 72; // 請求查詢可以學習的魔法清單
+	public static final int C_OPCODE_TELEPORT = 73; // 請求解除傳送鎖定
 	public static final int C_OPCODE_DELETEINVENTORYITEM = 74; // 請求刪除物品
 	public static final int C_OPCODE_CHAT = 75; // 請求使用一般聊天頻道
 	public static final int C_OPCODE_ARROWATTACK = 77; // 請求使用遠距攻擊
@@ -253,7 +255,6 @@ public class Opcodes {
 	public static final int C_OPCODE_RETURNTOLOGIN = 140;//要求回到選人畫面
 	public static final int C_OPCODE_HIRESOLDIER = 141;//要求僱傭傭兵列表(購買)
 	public static final int C_OPCODE_CLAN = 142;// //要求血盟數據(例如盟標)**[未抓取]
-	public static final int C_OPCODE_TELEPORT = 143; // 請求解除傳送鎖定
 	public static final int C_OPCODE_CHANGEWARTIME = 144;//修正城堡總管全部功能
 	public static final int C_OPCODE_PUTSOLDIER = 145;//要求配置已僱用士兵
 	public static final int C_OPCODE_SELECTWARTIME = 146;//要求選擇 變更攻城時間(but3.3C無使用)

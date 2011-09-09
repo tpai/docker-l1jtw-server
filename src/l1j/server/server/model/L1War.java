@@ -180,7 +180,7 @@ public class L1War {
 			}
 		}
 
-		if (((type == 2) || (type == 3)) && (attack_clan_num == 1)) { // 降伏、終結で攻撃側クランが一つ
+		if (((type == 2) || (type == 3)) && (attack_clan_num >= 1)) { // 投降、終止後攻擊方大於或等於一
 			_isWarTimerDelete = true;
 			delete();
 		}

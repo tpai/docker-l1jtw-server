@@ -14,6 +14,7 @@
  */
 package l1j.server.server.serverpackets;
 
+import l1j.server.server.Opcodes;
 import l1j.server.server.model.Instance.L1PcInstance;
 
 /**
@@ -127,7 +128,7 @@ public class S_InitialAbilityGrowth extends ServerBasePacket {
 		int write1 = (Int * 16) + Str;
 		int write2 = (Dex * 16) + Wis;
 		int write3 = (Cha * 16) + Con;
-		writeC(121);
+		writeC(Opcodes.S_OPCODE_CHARRESET);
 		writeC(0x04);
 		writeC(write1);// 智力&力量
 		writeC(write2);// 敏捷&精神
