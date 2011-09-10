@@ -14,7 +14,6 @@
  */
 package l1j.server.server.types;
 
-
 public class Point {
 
 	protected int _x = 0;
@@ -60,11 +59,9 @@ public class Point {
 		_y = y;
 	}
 
-	private static final int HEADING_TABLE_X[] =
-	{ 0, 1, 1, 1, 0, -1, -1, -1 };
+	private static final int HEADING_TABLE_X[] = { 0, 1, 1, 1, 0, -1, -1, -1 };
 
-	private static final int HEADING_TABLE_Y[] =
-	{ -1, -1, 0, 1, 1, 1, 0, -1 };
+	private static final int HEADING_TABLE_Y[] = { -1, -1, 0, 1, 1, 1, 0, -1 };
 
 	/**
 	 * 指定された向きにこの座標をひとつ進める。
@@ -109,7 +106,8 @@ public class Point {
 	 * @return 指定された座標までの直線タイル数。
 	 */
 	public int getTileLineDistance(Point pt) {
-		return Math.max(Math.abs(pt.getX() - getX()), Math.abs(pt.getY() - getY()));
+		return Math.max(Math.abs(pt.getX() - getX()),
+				Math.abs(pt.getY() - getY()));
 	}
 
 	/**
@@ -134,19 +132,19 @@ public class Point {
 	public boolean isInScreen(Point pt) {
 		int dist = getTileDistance(pt);
 
-		if (dist > 17) {
+		if (dist > 19) { // 當tile距離 > 19 的時候，判定為不在畫面內(false)
 			return false;
-		}
-		else if (dist <= 13) {
+		} else if (dist <= 18) { // 當tile距離 <= 18 的時候，判定為位於同一個畫面內(true)
 			return true;
-		}
-		else {
+		} else {
 			// 左右の画面外部分を除外
-			// プレイヤーの座標を(15, 15)とした場合に(0, 0)にあたる座標からの距離で判断
-			// Point pointZero = new Point(this.getX() - 15, this.getY() - 15);
+			// プレイヤーの座標を(18, 18)とした場合に(0, 0)にあたる座標からの距離で判断
+			// Point pointZero = new Point(this.getX() - 18, this.getY() - 18);
 			// int dist2 = pointZero.getTileDistance(pt);
-			int dist2 = Math.abs(pt.getX() - (getX() - 15)) + Math.abs(pt.getY() - (getY() - 15));
-			if ((17 <= dist2) && (dist2 <= 43)) {
+			// 顯示區的座標系統 (18, 18)
+			int dist2 = Math.abs(pt.getX() - (getX() - 18))
+					+ Math.abs(pt.getY() - (getY() - 18));
+			if ((19 <= dist2) && (dist2 <= 52)) {
 				return true;
 			}
 			return false;
