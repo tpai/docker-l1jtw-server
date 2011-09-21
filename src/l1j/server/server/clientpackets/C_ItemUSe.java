@@ -1356,6 +1356,9 @@ public class C_ItemUSe extends ClientBasePacket {
 										L1PetInstance pet = (L1PetInstance) npc;
 										// 開始飽食度計時
 										pet.startFoodTimer(pet);
+										// 開始回血回魔
+										pet.startHpRegeneration();
+										pet.startMpRegeneration();
 									}
 								}
 							}
