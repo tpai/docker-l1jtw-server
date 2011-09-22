@@ -49,8 +49,7 @@ public class L1DwarfInventory extends L1Inventory {
 		ResultSet rs = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("SELECT * FROM character_warehouse WHERE account_name = ?");
+			pstm = con.prepareStatement("SELECT * FROM character_warehouse WHERE account_name = ?");
 			pstm.setString(1, _owner.getAccountName());
 
 			rs = pstm.executeQuery();
@@ -107,8 +106,7 @@ public class L1DwarfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("INSERT INTO character_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?, firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
+			pstm = con.prepareStatement("INSERT INTO character_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?, last_used = ?, bless = ?, attr_enchant_kind = ?, attr_enchant_level = ?, firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?,m_def = ?");
 			pstm.setInt(1, item.getId());
 			pstm.setString(2, _owner.getAccountName());
 			pstm.setInt(3, item.getItemId());
@@ -150,8 +148,7 @@ public class L1DwarfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("UPDATE character_warehouse SET count = ? WHERE id = ?");
+			pstm = con.prepareStatement("UPDATE character_warehouse SET count = ? WHERE id = ?");
 			pstm.setInt(1, item.getCount());
 			pstm.setInt(2, item.getId());
 			pstm.execute();
@@ -170,8 +167,7 @@ public class L1DwarfInventory extends L1Inventory {
 		PreparedStatement pstm = null;
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
-			pstm = con
-					.prepareStatement("DELETE FROM character_warehouse WHERE id = ?");
+			pstm = con.prepareStatement("DELETE FROM character_warehouse WHERE id = ?");
 			pstm.setInt(1, item.getId());
 			pstm.execute();
 		} catch (SQLException e) {
@@ -201,8 +197,7 @@ public class L1DwarfInventory extends L1Inventory {
 			if (account.compareToIgnoreCase("*") == 0) {
 				pstm = con.prepareStatement("SELECT * FROM accounts");
 			} else {
-				pstm = con
-						.prepareStatement("SELECT * FROM accounts WHERE login=?");
+				pstm = con.prepareStatement("SELECT * FROM accounts WHERE login=?");
 				pstm.setString(1, account);
 			}
 			rs = pstm.executeQuery();
@@ -239,8 +234,7 @@ public class L1DwarfInventory extends L1Inventory {
 		try {
 			con = L1DatabaseFactory.getInstance().getConnection();
 
-			pstm = con
-					.prepareStatement("SELECT distinct(account_name) as account_name FROM characters WHERE level between ? and ?");
+			pstm = con.prepareStatement("SELECT distinct(account_name) as account_name FROM characters WHERE level between ? and ?");
 			pstm.setInt(1, minlvl);
 			pstm.setInt(2, maxlvl);
 			rs = pstm.executeQuery();
@@ -265,106 +259,157 @@ public class L1DwarfInventory extends L1Inventory {
 
 	private static void present(List<String> accountList, int itemid,
 			int enchant, int count) throws Exception {
+		L1Item itemtemp = ItemTable.getInstance().getTemplate(itemid);
 
-		L1Item temp = ItemTable.getInstance().getTemplate(itemid);
-		if (temp == null) {
-			throw new Exception("存在しないアイテムID");
-		}
-		Connection con = null;
-		PreparedStatement pstm = null;
-		try {
-			con = L1DatabaseFactory.getInstance().getConnection();
-			con.setAutoCommit(false);
+		if (ItemTable.getInstance().getTemplate(itemid) == null) {
+			throw new Exception("道具編號不存在。");
+		} else {
+			Connection con = null;
+			PreparedStatement ps = null;
 
-			for (String account : accountList) {
+			try {
+				con = L1DatabaseFactory.getInstance().getConnection();
+				con.setAutoCommit(false);
 
-				if (temp.isStackable()) {
-					L1ItemInstance item = ItemTable.getInstance().createItem(
-							itemid);
-					item.setEnchantLevel(enchant);
-					item.setCount(count);
-
-					pstm = con
-							.prepareStatement("INSERT INTO character_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?");
-					pstm.setInt(1, item.getId());
-					pstm.setString(2, account);
-					pstm.setInt(3, item.getItemId());
-					pstm.setString(4, item.getName());
-					pstm.setInt(5, item.getCount());
-					pstm.setInt(6, item.getEnchantLevel());
-					pstm.setInt(7, item.isIdentified() ? 1 : 0);
-					pstm.setInt(8, item.get_durability());
-					pstm.setInt(9, item.getChargeCount());
-					pstm.setInt(10, 0);
-					pstm.setInt(11, 0);
-					pstm.setInt(12, 0);
-					pstm.setInt(13, 0);
-					pstm.setInt(14, 0);
-					pstm.setInt(15, item.getFireMr());
-					pstm.setInt(16, item.getWaterMr());
-					pstm.setInt(17, item.getEarthMr());
-					pstm.setInt(18, item.getWindMr());
-					pstm.setInt(19, item.getaddSp());
-					pstm.setInt(20, item.getaddHp());
-					pstm.setInt(21, item.getaddMp());
-					pstm.setInt(22, item.getHpr());
-					pstm.setInt(23, item.getMpr());
-					pstm.execute();
-				} else {
-					L1ItemInstance item = null;
-					int createCount;
-					for (createCount = 0; createCount < count; createCount++) {
-						item = ItemTable.getInstance().createItem(itemid);
+				for (String account : accountList) {
+					if (itemtemp.isStackable()) {
+						L1ItemInstance item = ItemTable.getInstance().createItem(itemid);
 						item.setEnchantLevel(enchant);
+						item.setCount(count);
 
-						pstm = con
-								.prepareStatement("INSERT INTO character_warehouse SET id = ?, account_name = ?, item_id = ?, item_name = ?, count = ?, is_equipped=0, enchantlvl = ?, is_id = ?, durability = ?, charge_count = ?, remaining_time = ?,firemr = ?,watermr = ?,earthmr = ?,windmr = ?,addsp = ?,addhp = ?,addmp = ?,hpr = ?,mpr = ?");
-						pstm.setInt(1, item.getId());
-						pstm.setString(2, account);
-						pstm.setInt(3, item.getItemId());
-						pstm.setString(4, item.getName());
-						pstm.setInt(5, item.getCount());
-						pstm.setInt(6, item.getEnchantLevel());
-						pstm.setInt(7, item.isIdentified() ? 1 : 0);
-						pstm.setInt(8, item.get_durability());
-						pstm.setInt(9, item.getChargeCount());
-						pstm.setInt(10, item.getRemainingTime());
-						pstm.setInt(11, 0);
-						pstm.setInt(12, 0);
-						pstm.setInt(13, 0);
-						pstm.setInt(14, 0);
-						pstm.setInt(15, item.getFireMr());
-						pstm.setInt(16, item.getWaterMr());
-						pstm.setInt(17, item.getEarthMr());
-						pstm.setInt(18, item.getWindMr());
-						pstm.setInt(19, item.getaddSp());
-						pstm.setInt(20, item.getaddHp());
-						pstm.setInt(21, item.getaddMp());
-						pstm.setInt(22, item.getHpr());
-						pstm.setInt(23, item.getMpr());
-						pstm.execute();
+						ps = con.prepareStatement("INSERT INTO character_warehouse SET "
+										+ "id = ?,"
+										+ "account_name = ?,"
+										+ "item_id = ?,"
+										+ "item_name = ?,"
+										+ "count = ?,"
+										+ "is_equipped=0,"
+										+ "enchantlvl = ?,"
+										+ "is_id = ?,"
+										+ "durability = ?,"
+										+ "charge_count = ?,"
+										+ "remaining_time = ?,"
+										+ "last_used = ?,"
+										+ "bless = ?,"
+										+ "attr_enchant_kind = ?,"
+										+ "attr_enchant_level = ?,"
+										+ "firemr = ?,"
+										+ "watermr = ?,"
+										+ "earthmr = ?,"
+										+ "windmr = ?,"
+										+ "addsp = ?,"
+										+ "addhp = ?,"
+										+ "addmp = ?,"
+										+ "hpr = ?,"
+										+ "mpr = ?," + "m_def = ?");
+
+						ps.setInt(1, item.getId());
+						ps.setString(2, account);
+						ps.setInt(3, item.getItemId());
+						ps.setString(4, item.getName());
+						ps.setInt(5, item.getCount());
+						ps.setInt(6, item.getEnchantLevel());
+						ps.setInt(7, item.isIdentified() ? 1 : 0);
+						ps.setInt(8, item.get_durability());
+						ps.setInt(9, item.getChargeCount());
+						ps.setInt(10, item.getRemainingTime());
+						ps.setTimestamp(11, item.getLastUsed());
+						ps.setInt(12, item.getBless());
+						ps.setInt(13, item.getAttrEnchantKind());
+						ps.setInt(14, item.getAttrEnchantLevel());
+						ps.setInt(15, item.getFireMr());
+						ps.setInt(16, item.getWaterMr());
+						ps.setInt(17, item.getEarthMr());
+						ps.setInt(18, item.getWindMr());
+						ps.setInt(19, item.getaddSp());
+						ps.setInt(20, item.getaddHp());
+						ps.setInt(21, item.getaddMp());
+						ps.setInt(22, item.getHpr());
+						ps.setInt(23, item.getMpr());
+						ps.setInt(24, item.getM_Def());
+						ps.execute();
+					} else {
+						L1ItemInstance item = null;
+						int createCount;
+
+						for (createCount = 0; createCount < count; createCount++) {
+							item = ItemTable.getInstance().createItem(itemid);
+							item.setEnchantLevel(enchant);
+
+							ps = con.prepareStatement("INSERT INTO character_warehouse SET "
+											+ "id = ?,"
+											+ "account_name = ?,"
+											+ "item_id = ?,"
+											+ "item_name = ?,"
+											+ "count = ?,"
+											+ "is_equipped=0,"
+											+ "enchantlvl = ?,"
+											+ "is_id = ?,"
+											+ "durability = ?,"
+											+ "charge_count = ?,"
+											+ "remaining_time = ?,"
+											+ "last_used = ?,"
+											+ "bless = ?,"
+											+ "attr_enchant_kind = ?,"
+											+ "attr_enchant_level = ?,"
+											+ "firemr = ?,"
+											+ "watermr = ?,"
+											+ "earthmr = ?,"
+											+ "windmr = ?,"
+											+ "addsp = ?,"
+											+ "addhp = ?,"
+											+ "addmp = ?,"
+											+ "hpr = ?,"
+											+ "mpr = ?," 
+											+ "m_def = ?");
+
+							ps.setInt(1, item.getId());
+							ps.setString(2, account);
+							ps.setInt(3, item.getItemId());
+							ps.setString(4, item.getName());
+							ps.setInt(5, item.getCount());
+							ps.setInt(6, item.getEnchantLevel());
+							ps.setInt(7, item.isIdentified() ? 1 : 0);
+							ps.setInt(8, item.get_durability());
+							ps.setInt(9, item.getChargeCount());
+							ps.setInt(10, item.getRemainingTime());
+							ps.setTimestamp(11, item.getLastUsed());
+							ps.setInt(12, item.getBless());
+							ps.setInt(13, item.getAttrEnchantKind());
+							ps.setInt(14, item.getAttrEnchantLevel());
+							ps.setInt(15, item.getFireMr());
+							ps.setInt(16, item.getWaterMr());
+							ps.setInt(17, item.getEarthMr());
+							ps.setInt(18, item.getWindMr());
+							ps.setInt(19, item.getaddSp());
+							ps.setInt(20, item.getaddHp());
+							ps.setInt(21, item.getaddMp());
+							ps.setInt(22, item.getHpr());
+							ps.setInt(23, item.getMpr());
+							ps.setInt(24, item.getM_Def());
+							ps.execute();
+						}
 					}
 				}
-			}
 
-			con.commit();
-			con.setAutoCommit(true);
-		} catch (SQLException e) {
-			try {
-				con.rollback();
-			} catch (SQLException ignore) {
-				// ignore
+				con.commit();
+				con.setAutoCommit(true);
+			} catch (SQLException e) {
+				try {
+					con.rollback();
+				} catch (SQLException ignore) {
+				}
+
+				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
+				throw new Exception(".present 處理時發生了例外的錯誤。");
+			} finally {
+				SQLUtil.close(ps);
+				SQLUtil.close(con);
 			}
-			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-			throw new Exception(".present処理中にエラーが発生しました。");
-		} finally {
-			SQLUtil.close(pstm);
-			SQLUtil.close(con);
 		}
 	}
 
-	private static Logger _log = Logger.getLogger(L1DwarfInventory.class
-			.getName());
+	private static Logger _log = Logger.getLogger(L1DwarfInventory.class.getName());
 
 	private final L1PcInstance _owner;
 }
