@@ -58,7 +58,7 @@ public class C_MoveChar extends ClientBasePacket {
 
 		L1PcInstance pc = client.getActiveChar();
 
-		if (pc.isTeleport()) { // 傳送中
+		if (pc == null || pc.isTeleport()) { // 傳送中
 			return;
 		}
 
