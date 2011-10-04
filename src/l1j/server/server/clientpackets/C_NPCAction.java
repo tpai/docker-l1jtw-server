@@ -4314,6 +4314,33 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 				}
 			}
+		} else if ((((L1NpcInstance) obj).getNpcTemplate().get_npcId() >= 81353)
+				&& (((L1NpcInstance) obj).getNpcTemplate().get_npcId() <= 81363)) { // 魔法商人- 仿正設定   
+			int[] skills = new int[10];
+			char s1 = s.charAt(0);
+			switch(s1){
+			case 'b':
+				skills = new int[] {43, 79, 151, 158, 160, 206, 211, 216, 115, 149};                     
+				break;
+			case 'a':
+				skills = new int[] {43, 79, 151, 158, 160, 206, 211, 216, 115, 148};
+				break;
+			}
+			if (s.equalsIgnoreCase("a") || s.equalsIgnoreCase("b")){
+				if(pc.getInventory().consumeItem(40308,3000)){
+					L1SkillUse l1skilluse = new L1SkillUse();
+					for (int i = 0; i < skills.length; i++) {
+						l1skilluse.handleCommands(pc, 
+								skills[i], pc.getId(), pc.getX(), pc.getY(), null, 0, L1SkillUse.TYPE_GMBUFF);
+					}
+					htmlid = "bs_done";           
+				} else {
+					htmlid = "bs_adena";
+				}
+			}
+			if (s.equalsIgnoreCase("0")) {
+				htmlid = "bs_01";                 
+			}
 		} else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 50016) {// 傑諾
 			if (s.equalsIgnoreCase("0")) {
 				if (pc.getLevel() < 13) {// lv < 13 傳送隱藏之谷
