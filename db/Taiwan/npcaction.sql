@@ -262,7 +262,7 @@ INSERT INTO `npcaction` VALUES ('50604', 'agit', 'agit', 'agtel0', '');
 INSERT INTO `npcaction` VALUES ('50605', 'agit', 'agit', 'agtel0', '');
 INSERT INTO `npcaction` VALUES ('50606', 'agit', 'agit', 'agtel0', '');
 INSERT INTO `npcaction` VALUES ('50607', 'agit', 'agit', 'agtel0', '');
-INSERT INTO `npcaction` VALUES ('50608', 'kinin2', 'kinin2', '', '');
+INSERT INTO `npcaction` VALUES ('50608', 'kinin1', 'kinin1', 'kinin2', '');
 INSERT INTO `npcaction` VALUES ('50609', 'agit', 'agit', 'agtel0', '');
 INSERT INTO `npcaction` VALUES ('50610', 'agit', 'agit', 'agtel0', '');
 INSERT INTO `npcaction` VALUES ('50611', 'agit', 'agit', 'agtel0', '');

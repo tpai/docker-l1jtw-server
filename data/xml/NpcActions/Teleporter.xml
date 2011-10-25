@@ -43,81 +43,86 @@
 <!--古魯丁村莊-->
 	<!--史提夫 / 肯特村莊-->
 	<Action Name="teleport gludin-kent" NpcId="50024">
-		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="55" />
+		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="50" />
 	</Action>
 	<!--史提夫 / 風木村莊-->
 	<Action Name="teleport gludin-woods" NpcId="50024">
-		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="55" />
+		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="50" />
 	</Action>
-	<!--史提夫 / 燃柳村莊-->
+	<!--史提夫 / 妖魔森林-->
 	<Action Name="teleport gludin-willow" NpcId="50024">
-		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="55" />
+		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="50" />
 	</Action>
 	<!--史提夫 / 奇岩村莊-->
 	<Action Name="teleport gludin-giran" NpcId="50024">
-		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="132" />
+		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="120" />
 	</Action>
 	<!--史提夫 / 銀騎士村莊-->
 	<Action Name="teleport gludin-silver" NpcId="50024">
-		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="132" />
+		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="120" />
 	</Action>
 	<!--史提夫 / 海音村莊-->
 	<Action Name="teleport gludin-heine" NpcId="50024">
-		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="198" />
+		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--史提夫 / 威頓村莊-->
 	<Action Name="teleport gludin-werldern" NpcId="50024">
-		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="198" />
+		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--史提夫 / 貝希摩斯村莊-->
 	<Action Name="teleport gludin-behemoth" NpcId="50024">
-		<Teleport X="32779" Y="32887" Map="1001" Heading="5" Price="1000" />
+		<Teleport X="32779" Y="32887" Map="1001" Heading="5" Price="180" />
 	</Action>
 	<!--史提夫 / 希培利亞村莊-->
 	<Action Name="teleport gludin-silveria" NpcId="50024">
-		<Teleport X="32841" Y="32856" Map="1000" Heading="2" Price="1000" />
+		<Teleport X="32841" Y="32856" Map="1000" Heading="2" Price="240" />
 	</Action>
 	<!--史提夫 / 歐瑞村莊-->
 	<Action Name="teleport gludin-oren" NpcId="50024">
-		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="264" />
+		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="240" />
 	</Action>
 	<!--史提夫 / 亞丁城鎮-->
 	<Action Name="teleport gludin-aden" NpcId="50024">
-		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="264" />
+		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="240" />
 	</Action>
 	<!--史提夫 / 正義神殿-->
 	<Action Name="teleport gludin-lowful" NpcId="50024">
-		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="220" />
+		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="200" />
 	</Action>
 	<!--史提夫 / 邪惡神殿-->
 	<Action Name="teleport gludin-chaos" NpcId="50024">
-		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="220" />
+		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="200" />
 	</Action>
-	<!--史提夫 / 說話之島-->
+	<!--史提夫 / 肯特葡萄園-->
+	<Action Name="teleport gludin-grape" NpcId="50024">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="300" />
+	</Action>
+	<!--史提夫 / 說話之島村莊-->
 	<Action Name="teleport gludin-island" NpcId="50024">
-		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="550" />
+		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="500" />
 	</Action>
 	<!--史提夫 / 狄亞得要塞-->
 	<Action Name="teleport gludin-diad" NpcId="50024">
-		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="7480" />
+		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="6800" />
 	</Action>
 	<!--顯示金額-->
 	<ShowHtml Name="teleportURL" HtmlId="telegludin2" NpcId="50024">
-		<Data Value="55" /><!--肯特村莊-->
-		<Data Value="55" /><!--風木村莊-->
-		<Data Value="55" /><!--燃柳村莊-->
-		<Data Value="132" /><!--奇岩村莊-->
-		<Data Value="132" /><!--銀騎士村莊-->
-		<Data Value="198" /><!--海音村莊-->
-		<Data Value="198" /><!--威頓村莊-->
-		<Data Value="1000" /><!--貝希摩斯村莊-->
-		<Data Value="1000" /><!--希培利亞村莊-->
-		<Data Value="264" /><!--歐瑞村莊-->
-		<Data Value="264" /><!--亞丁城鎮-->
-		<Data Value="220" /><!--正義神殿-->
-		<Data Value="220" /><!--邪惡神殿-->
-		<Data Value="550" /><!--說話之島-->
-		<Data Value="7480" /><!--狄亞得要塞-->
+		<Data Value="50" /><!--肯特村莊-->
+		<Data Value="50" /><!--風木村莊-->
+		<Data Value="50" /><!--妖魔森林-->
+		<Data Value="120" /><!--奇岩村莊-->
+		<Data Value="120" /><!--銀騎士村莊-->
+		<Data Value="180" /><!--海音村莊-->
+		<Data Value="180" /><!--威頓村莊-->
+		<Data Value="180" /><!--貝希摩斯村莊-->
+		<Data Value="240" /><!--希培利亞村莊-->
+		<Data Value="240" /><!--歐瑞村莊-->
+		<Data Value="240" /><!--亞丁城鎮-->
+		<Data Value="200" /><!--正義神殿-->
+		<Data Value="200" /><!--邪惡神殿-->
+		<Data Value="300" /><!--肯特葡萄園-->
+		<Data Value="500" /><!--說話之島村莊-->
+		<Data Value="6800" /><!--狄亞得要塞-->
 	</ShowHtml>
 
 	<!--史提夫 / 古魯丁地監-->
@@ -205,7 +210,7 @@
 
 	<!--商店村警衛 / 古魯丁村莊-->
 	<Action Name="teleport gludin-trade-zone-gludio" NpcId="50025">
-		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="0" />
+		<Teleport X="32746" Y="32799" Map="306" Heading="5" Price="0" />
 	</Action>
 
 <!--釣魚池-->
@@ -217,6 +222,13 @@
 	<ShowHtml Name="teleportURL" HtmlId="fk_out_0" NpcId="80083">
 		<Data Value="0" />
 	</ShowHtml>
+
+<!--食屍地-->	
+	<!--墮落的靈魂 / 往邪念地監-->
+	<Action Name="teleport evil-dungeon" NpcId="71095">
+		<Teleport X="32608" Y="32772" Map="4" Heading="4" Price="0" />
+	</Action>
+	
 
 <!--肯特村莊-->
 	<!--史坦利 / 古魯丁村莊-->
@@ -235,7 +247,7 @@
 	<Action Name="teleport kent-woods" NpcId="50020">
 		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="120" />
 	</Action>
-	<!--史坦利 / 燃柳村莊-->
+	<!--史坦利 / 妖魔森林-->
 	<Action Name="teleport kent-willow" NpcId="50020">
 		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="120" />
 	</Action>
@@ -263,7 +275,11 @@
 	<Action Name="teleport kent-chaos" NpcId="50020">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="200" />
 	</Action>
-	<!--史坦利 / 說話之島-->
+	<!--史坦利 / 肯特葡萄園-->
+	<Action Name="teleport kent-grape" NpcId="50020">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="300" />
+	</Action>
+	<!--史坦利 / 說話之島村莊-->
 	<Action Name="teleport kent-island" NpcId="50020">
 		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="600" />
 	</Action>
@@ -277,14 +293,15 @@
 		<Data Value="50" /><!--奇岩村莊-->
 		<Data Value="50" /><!--銀騎士村莊-->
 		<Data Value="120" /><!--風木村莊-->
-		<Data Value="120" /><!--燃柳村莊-->
+		<Data Value="120" /><!--妖魔森林-->
 		<Data Value="120" /><!--海音村莊-->
 		<Data Value="120" /><!--威頓村莊-->
 		<Data Value="180" /><!--歐瑞村莊-->
 		<Data Value="180" /><!--亞丁城鎮-->
 		<Data Value="200" /><!--正義神殿-->
 		<Data Value="200" /><!--邪惡神殿-->
-		<Data Value="600" /><!--說話之島-->
+		<Data Value="300" /><!--肯特葡萄園-->
+		<Data Value="600" /><!--說話之島村莊-->
 		<Data Value="7100" /><!--狄亞得要塞-->
 	</ShowHtml>
 
@@ -388,7 +405,7 @@
 	<Action Name="teleport woods-kent" NpcId="50054">
 		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="120" />
 	</Action>
-	<!--特萊 / 燃柳村莊-->
+	<!--特萊 / 妖魔森林-->
 	<Action Name="teleport woods-willow" NpcId="50054">
 		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="240" />
 	</Action>
@@ -420,7 +437,11 @@
 	<Action Name="teleport woods-chaos" NpcId="50054">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="200" />
 	</Action>
-	<!--特萊 / 說話之島-->
+	<!--特萊 / 肯特葡萄園-->
+	<Action Name="teleport woods-grape" NpcId="50054">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="300" />
+	</Action>
+	<!--特萊 / 說話之島村莊-->
 	<Action Name="teleport woods-island" NpcId="50054">
 		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="500" />
 	</Action>
@@ -433,7 +454,7 @@
 		<Data Value="50" /><!--古魯丁村莊-->
 		<Data Value="50" /><!--銀騎士村莊-->
 		<Data Value="120" /><!--肯特村莊-->
-		<Data Value="240" /><!--燃柳村莊-->
+		<Data Value="240" /><!--妖魔森林-->
 		<Data Value="120" /><!--海音村莊-->
 		<Data Value="180" /><!--奇岩村莊-->
 		<Data Value="180" /><!--亞丁城鎮-->
@@ -441,7 +462,8 @@
 		<Data Value="300" /><!--歐瑞村莊-->
 		<Data Value="200" /><!--正義神殿-->
 		<Data Value="200" /><!--邪惡神殿-->
-		<Data Value="500" /><!--說話之島-->
+		<Data Value="300" /><!--肯特葡萄園-->
+		<Data Value="500" /><!--說話之島村莊-->
 		<Data Value="6500" /><!--狄亞得要塞-->
 	</ShowHtml>
 
@@ -646,11 +668,11 @@
 	</Action>
 	<!--麥特 / 貝希摩斯村莊-->
 	<Action Name="teleport silver-behemoth" NpcId="50056">
-		<Teleport X="32779" Y="32887" Map="1001" Heading="5" Price="1000" />
+		<Teleport X="32779" Y="32887" Map="1001" Heading="5" Price="198" />
 	</Action>
 	<!--麥特 / 希培利亞村莊-->
 	<Action Name="teleport silver-silveria" NpcId="50056">
-		<Teleport X="32841" Y="32856" Map="1000" Heading="2" Price="1000" />
+		<Teleport X="32841" Y="32856" Map="1000" Heading="2" Price="246" />
 	</Action>
 	<!--麥特 / 歐瑞村莊-->
 	<Action Name="teleport silver-oren" NpcId="50056">
@@ -663,6 +685,10 @@
 	<!--麥特 / 邪惡神殿-->
 	<Action Name="teleport silver-chaos" NpcId="50056">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="330" />
+	</Action>
+	<!--麥特 / 肯特葡萄園-->
+	<Action Name="teleport silver-grape" NpcId="50056">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="330" />
 	</Action>
 	<!--麥特 / 說話之島-->
 	<Action Name="teleport silver-island" NpcId="50056">
@@ -682,11 +708,12 @@
 		<Data Value="132" /><!--亞丁城鎮-->
 		<Data Value="198" /><!--燃柳村莊-->
 		<Data Value="198" /><!--威頓村莊-->
-		<Data Value="1000" /><!--貝希摩斯村莊-->
-		<Data Value="1000" /><!--希培利亞村莊-->
+		<Data Value="198" /><!--貝希摩斯村莊-->
+		<Data Value="246" /><!--希培利亞村莊-->
 		<Data Value="246" /><!--歐瑞村莊-->
 		<Data Value="330" /><!--正義神殿-->
 		<Data Value="330" /><!--邪惡神殿-->
+		<Data Value="330" /><!--肯特葡萄園-->
 		<Data Value="770" /><!--說話之島-->
 		<Data Value="7480" /><!--狄亞得要塞-->
 	</ShowHtml>
@@ -812,9 +839,13 @@
 	<Action Name="teleport heine-gludin" NpcId="50066">
 		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="180" />
 	</Action>
-	<!--里歐 / 燃柳村莊-->
+	<!--里歐 / 妖魔森林-->
 	<Action Name="teleport heine-willow" NpcId="50066">
 		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="240" />
+	</Action>
+	<!--里歐 / 肯特葡萄園-->
+	<Action Name="teleport heine-grape" NpcId="50066">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="300" />
 	</Action>
 	<!--里歐 / 正義神殿-->
 	<Action Name="teleport heine-lowful" NpcId="50066">
@@ -824,7 +855,7 @@
 	<Action Name="teleport heine-chaos" NpcId="50066">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="400" />
 	</Action>
-	<!--里歐 / 說話之島-->
+	<!--里歐 / 說話之島村莊-->
 	<Action Name="teleport heine-island" NpcId="50066">
 		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="800" />
 	</Action>
@@ -842,10 +873,11 @@
 		<Data Value="120" /><!--威頓村莊-->
 		<Data Value="180" /><!--歐瑞村莊-->
 		<Data Value="180" /><!--古魯丁村莊-->
-		<Data Value="240" /><!--燃柳村莊-->
+		<Data Value="240" /><!--妖魔森林-->
+		<Data Value="300" /><!--肯特葡萄園-->
 		<Data Value="400" /><!--正義神殿-->
 		<Data Value="400" /><!--邪惡神殿-->
-		<Data Value="800" /><!--說話之島-->
+		<Data Value="800" /><!--說話之島村莊-->
 		<Data Value="7100" /><!--狄亞得要塞-->
 	</ShowHtml>
 
@@ -969,7 +1001,7 @@
 	<Action Name="teleport giran-woods" NpcId="50036">
 		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="189" />
 	</Action>
-	<!--爾瑪 / 燃柳村莊-->
+	<!--爾瑪 / 妖魔森林-->
 	<Action Name="teleport giran-willow" NpcId="50036">
 		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="189" />
 	</Action>
@@ -981,7 +1013,11 @@
 	<Action Name="teleport giran-chaos" NpcId="50036">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="315" />
 	</Action>
-	<!--爾瑪 / 說話之島-->
+	<!--爾瑪 / 肯特葡萄園-->
+	<Action Name="teleport giran-grape" NpcId="50036">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="315" />
+	</Action>
+	<!--爾瑪 / 說話之島村莊-->
 	<Action Name="teleport giran-island" NpcId="50036">
 		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="735" />
 	</Action>
@@ -999,10 +1035,11 @@
 		<Data Value="126" /><!--歐瑞村莊-->
 		<Data Value="126" /><!--亞丁城鎮-->
 		<Data Value="189" /><!--風木村莊-->
-		<Data Value="189" /><!--燃柳村莊-->
+		<Data Value="189" /><!--妖魔森林-->
 		<Data Value="315" /><!--正義神殿-->
 		<Data Value="315" /><!--邪惡神殿-->
-		<Data Value="735" /><!--說話之島-->
+		<Data Value="315" /><!--肯特葡萄園-->
+		<Data Value="735" /><!--說話之島村莊-->
 		<Data Value="7770" /><!--狄亞得要塞-->
 	</ShowHtml>
 
@@ -1136,94 +1173,100 @@
 <!--亞丁城鎮-->
 	<!--西里烏斯 艾勒里斯 / 海音村莊-->
 	<Action Name="teleport aden-heine" NpcId="50044,50046">
-		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="54" />
+		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="50" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 奇岩村莊-->
 	<Action Name="teleport aden-giran" NpcId="50044,50046">
-		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="129" />
+		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="120" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 銀騎士村莊-->
 	<Action Name="teleport aden-silver" NpcId="50044,50046">
-		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="129" />
+		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="120" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 肯特村莊-->
 	<Action Name="teleport aden-kent" NpcId="50044,50046">
-		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="194" />
+		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 風木村莊-->
 	<Action Name="teleport aden-woods" NpcId="50044,50046">
-		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="194" />
+		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 威頓村莊-->
 	<Action Name="teleport aden-werldern" NpcId="50044,50046">
-		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="194" />
+		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 古魯丁村莊-->
 	<Action Name="teleport aden-gludin" NpcId="50044,50046">
-		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="259" />
+		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="240" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 歐瑞村莊-->
 	<Action Name="teleport aden-oren" NpcId="50044,50046">
-		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="259" />
+		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="240" />
 	</Action>
-	<!--西里烏斯 艾勒里斯 奇寧 / 燃柳村莊-->
+	<!--西里烏斯 艾勒里斯 奇寧 / 妖魔森林-->
 	<Action Name="teleport aden-willow" NpcId="50044,50046,50608">
-		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="324" />
+		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="300" />
+	</Action>
+	<!--西里烏斯 艾勒里斯 / 肯特葡萄園-->
+	<Action Name="teleport aden-grape" NpcId="50044,50046">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="300" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 奇寧 / 正義神殿-->
 	<Action Name="teleport aden-lowful" NpcId="50044,50046,50608">
-		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="540" />
+		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="500" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 奇寧 / 邪惡神殿-->
 	<Action Name="teleport aden-chaos" NpcId="50044,50046,50608">
-		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="540" />
+		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="500" />
 	</Action>
-	<!--西里烏斯 艾勒里斯 奇寧 / 說話之島-->
+	<!--西里烏斯 艾勒里斯 奇寧 / 說話之島村莊-->
 	<Action Name="teleport aden-island" NpcId="50044,50046,50608">
-		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="972" />
+		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="900" />
 	</Action>
 	<!--西里烏斯 艾勒里斯 / 狄亞得要塞-->
 	<Action Name="teleport aden-diad" NpcId="50044,50046">
-		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="7992" />
+		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="7400" />
 	</Action>
 	<!--顯示金額 / 西里烏斯-->
 	<ShowHtml Name="teleportURL" HtmlId="sirius2" NpcId="50044">
-		<Data Value="54" /><!--海音村莊-->
-		<Data Value="129" /><!--奇岩村莊-->
-		<Data Value="129" /><!--銀騎士村莊-->
-		<Data Value="194" /><!--肯特村莊-->
-		<Data Value="194" /><!--風木村莊-->
-		<Data Value="194" /><!--威頓村莊-->
-		<Data Value="259" /><!--古魯丁村莊-->
-		<Data Value="259" /><!--歐瑞村莊-->
-		<Data Value="324" /><!--燃柳村莊-->
-		<Data Value="540" /><!--正義神殿-->
-		<Data Value="540" /><!--邪惡神殿-->
-		<Data Value="972" /><!--說話之島-->
-		<Data Value="7992" /><!--狄亞得要塞-->
+		<Data Value="50" /><!--海音村莊-->
+		<Data Value="120" /><!--奇岩村莊-->
+		<Data Value="120" /><!--銀騎士村莊-->
+		<Data Value="150" /><!--肯特村莊-->
+		<Data Value="150" /><!--風木村莊-->
+		<Data Value="150" /><!--威頓村莊-->
+		<Data Value="240" /><!--古魯丁村莊-->
+		<Data Value="240" /><!--歐瑞村莊-->
+		<Data Value="300" /><!--妖魔森林-->
+		<Data Value="300" /><!--肯特葡萄園-->
+		<Data Value="500" /><!--正義神殿-->
+		<Data Value="500" /><!--邪惡神殿-->
+		<Data Value="900" /><!--說話之島村莊-->
+		<Data Value="7400" /><!--狄亞得要塞-->
 	</ShowHtml>
 	<!--顯示金額 / 艾勒里斯-->
 	<ShowHtml Name="teleportURL" HtmlId="elleris2" NpcId="50046">
-		<Data Value="54" /><!--海音村莊-->
-		<Data Value="129" /><!--奇岩村莊-->
-		<Data Value="129" /><!--銀騎士村莊-->
-		<Data Value="194" /><!--肯特村莊-->
-		<Data Value="194" /><!--風木村莊-->
-		<Data Value="194" /><!--威頓村莊-->
-		<Data Value="259" /><!--古魯丁村莊-->
-		<Data Value="259" /><!--歐瑞村莊-->
-		<Data Value="324" /><!--燃柳村莊-->
-		<Data Value="540" /><!--正義神殿-->
-		<Data Value="540" /><!--邪惡神殿-->
-		<Data Value="972" /><!--說話之島-->
-		<Data Value="7992" /><!--狄亞得要塞-->
+		<Data Value="50" /><!--海音村莊-->
+		<Data Value="120" /><!--奇岩村莊-->
+		<Data Value="120" /><!--銀騎士村莊-->
+		<Data Value="180" /><!--肯特村莊-->
+		<Data Value="180" /><!--風木村莊-->
+		<Data Value="180" /><!--威頓村莊-->
+		<Data Value="240" /><!--古魯丁村莊-->
+		<Data Value="240" /><!--歐瑞村莊-->
+		<Data Value="300" /><!--妖魔森林-->
+		<Data Value="300" /><!--肯特葡萄園-->
+		<Data Value="500" /><!--正義神殿-->
+		<Data Value="500" /><!--邪惡神殿-->
+		<Data Value="900" /><!--說話之島村莊-->
+		<Data Value="7400" /><!--狄亞得要塞-->
 	</ShowHtml>
 	<!--顯示金額 / 奇寧-->
 	<ShowHtml Name="teleportURL" HtmlId="kinin2" NpcId="50608">
-		<Data Value="324" /><!--燃柳村莊-->
-		<Data Value="540" /><!--正義神殿-->
-		<Data Value="540" /><!--邪惡神殿-->
-		<Data Value="972" /><!--說話之島-->
+		<Data Value="300" /><!--妖魔森林-->
+		<Data Value="500" /><!--正義神殿-->
+		<Data Value="500" /><!--邪惡神殿-->
+		<Data Value="900" /><!--說話之島村莊-->
 	</ShowHtml>
 
 	<!--西里烏斯 艾勒里斯 / 吉普賽村-->
@@ -1475,9 +1518,13 @@
 	<Action Name="teleport oren-woods" NpcId="50051">
 		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="300" />
 	</Action>
-	<!--吉利烏斯 / 燃柳村莊-->
+	<!--吉利烏斯 / 妖魔森林-->
 	<Action Name="teleport oren-willow" NpcId="50051">
 		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="300" />
+	</Action>
+	<!--吉利烏斯 / 肯特葡萄園-->
+	<Action Name="teleport oren-grape" NpcId="50051">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="300" />
 	</Action>
 	<!--吉利烏斯 / 正義神殿-->
 	<Action Name="teleport oren-lowful" NpcId="50051">
@@ -1487,7 +1534,7 @@
 	<Action Name="teleport oren-chaos" NpcId="50051">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="500" />
 	</Action>
-	<!--吉利烏斯 / 說話之島-->
+	<!--吉利烏斯 / 說話之島村莊-->
 	<Action Name="teleport oren-island" NpcId="50051">
 		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="900" />
 	</Action>
@@ -1505,10 +1552,11 @@
 		<Data Value="240" /><!--銀騎士村莊-->
 		<Data Value="240" /><!--亞丁城鎮-->
 		<Data Value="300" /><!--風木村莊-->
-		<Data Value="300" /><!--燃柳村莊-->
+		<Data Value="300" /><!--妖魔森林-->
+		<Data Value="1000" /><!--肯特葡萄園-->
 		<Data Value="500" /><!--正義神殿-->
 		<Data Value="500" /><!--邪惡神殿-->
-		<Data Value="900" /><!--說話之島-->
+		<Data Value="900" /><!--說話之島村莊-->
 		<Data Value="8000" /><!--狄亞得要塞-->
 	</ShowHtml>
 
@@ -1648,9 +1696,13 @@
 	<Action Name="teleport dwarf-woods" NpcId="50039">
 		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="247" />
 	</Action>
-	<!--萊思利 / 燃柳村莊-->
+	<!--萊思利 / 妖魔森林-->
 	<Action Name="teleport dwarf-willow" NpcId="50039">
 		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="247" />
+	</Action>
+	<!--萊思利 / 肯特葡萄園-->
+	<Action Name="teleport dwarf-grape" NpcId="50039">
+		<Teleport X="32871" Y="32805" Map="4" Heading="5" Price="306" />
 	</Action>
 	<!--萊思利 / 正義神殿-->
 	<Action Name="teleport dwarf-lowful" NpcId="50039">
@@ -1660,7 +1712,7 @@
 	<Action Name="teleport dwarf-chaos" NpcId="50039">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="412" />
 	</Action>
-	<!--萊思利 / 說話之島-->
+	<!--萊思利 / 說話之島村莊-->
 	<Action Name="teleport dwarf-island" NpcId="50039">
 		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="824" />
 	</Action>
@@ -1678,10 +1730,11 @@
 		<Data Value="185" /><!--銀騎士村莊-->
 		<Data Value="185" /><!--亞丁城鎮-->
 		<Data Value="247" /><!--風木村莊-->
-		<Data Value="247" /><!--燃柳村莊-->
+		<Data Value="247" /><!--妖魔森林-->
+		<Data Value="306" /><!--肯特葡萄園-->
 		<Data Value="412" /><!--正義神殿-->
 		<Data Value="412" /><!--邪惡神殿-->
-		<Data Value="824" /><!--說話之島-->
+		<Data Value="824" /><!--說話之島村莊-->
 		<Data Value="7931" /><!--狄亞得要塞-->
 	</ShowHtml>
 
@@ -1789,7 +1842,7 @@
 	<Action Name="teleport diad-kent" NpcId="50079">
 		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="600" />
 	</Action>
-	<!--丹尼爾 / 燃柳村莊-->
+	<!--丹尼爾 / 妖魔森林-->
 	<Action Name="teleport diad-willow" NpcId="50079">
 		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="600" />
 	</Action>
@@ -1821,7 +1874,7 @@
 	<Action Name="teleport diad-chaos" NpcId="50079">
 		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="500" />
 	</Action>
-	<!--丹尼爾 / 說話之島-->
+	<!--丹尼爾 / 說話之島村莊-->
 	<Action Name="teleport diad-island" NpcId="50079">
 		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="700" />
 	</Action>
@@ -1831,7 +1884,7 @@
 		<Data Value="550" /><!--古魯丁村莊-->
 		<Data Value="550" /><!--銀騎士村莊-->
 		<Data Value="600" /><!--肯特村莊-->
-		<Data Value="600" /><!--燃柳村莊-->
+		<Data Value="600" /><!--妖魔森林-->
 		<Data Value="600" /><!--海音村莊-->
 		<Data Value="650" /><!--奇岩村莊-->
 		<Data Value="700" /><!--威頓村莊-->
@@ -1839,7 +1892,7 @@
 		<Data Value="750" /><!--亞丁城鎮-->
 		<Data Value="500" /><!--正義神殿-->
 		<Data Value="500" /><!--邪惡神殿-->
-		<Data Value="700" /><!--說話之島-->
+		<Data Value="700" /><!--說話之島村莊-->
 	</ShowHtml>
 
 	<!--丹尼爾 / 拉斯塔巴德地下洞穴-->
@@ -1949,81 +2002,81 @@
 <!--貝希摩斯村莊-->
 	<!--蒂卡菲兒 / 威頓村莊-->
 	<Action Name="teleport behemoth-werldern" NpcId="80132">
-		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="198" />
+		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="50" />
 	</Action>
 	<!--蒂卡菲兒 / 奇岩村莊-->
 	<Action Name="teleport behemoth-giran" NpcId="80132">
-		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="132" />
+		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="50" />
 	</Action>
 	<!--蒂卡菲兒 / 歐瑞村莊-->
 	<Action Name="teleport behemoth-oren" NpcId="80132">
-		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="246" />
+		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="50" />
 	</Action>
 	<!--蒂卡菲兒 / 希培利亞村莊-->
 	<Action Name="teleport behemoth-silveria" NpcId="80132">
-		<Teleport X="32841" Y="32856" Map="1000" Heading="5" Price="220" />
+		<Teleport X="32841" Y="32856" Map="1000" Heading="5" Price="50" />
 	</Action>
 	<!--蒂卡菲兒 / 肯特村莊-->
 	<Action Name="teleport behemoth-kent" NpcId="80132">
-		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="55" />
+		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="120" />
 	</Action>
 	<!--蒂卡菲兒 / 海音村莊-->
 	<Action Name="teleport behemoth-heine" NpcId="80132">
-		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="55" />
+		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="120" />
 	</Action>
 	<!--蒂卡菲兒 / 古魯丁村莊-->
 	<Action Name="teleport behemoth-gludin" NpcId="80132">
-		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="132" />
+		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--蒂卡菲兒 / 銀騎士村莊-->
 	<Action Name="teleport behemoth-silver" NpcId="80132">
-		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="132" />
+		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--蒂卡菲兒 / 亞丁城鎮-->
 	<Action Name="teleport behemoth-aden" NpcId="80132">
-		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="132" />
+		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="180" />
 	</Action>
 	<!--蒂卡菲兒 / 風木村莊-->
 	<Action Name="teleport behemoth-woods" NpcId="80132">
-		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="55" />
+		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="240" />
 	</Action>
-	<!--蒂卡菲兒 / 燃柳村莊-->
+	<!--蒂卡菲兒 / 妖精森林-->
 	<Action Name="teleport behemoth-willow" NpcId="80132">
-		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="198" />
+		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="240" />
 	</Action>
 	<!--蒂卡菲兒 / 正義神殿-->
 	<Action Name="teleport behemoth-lowful" NpcId="80132">
-		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="330" />
+		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="400" />
 	</Action>
 	<!--蒂卡菲兒 / 邪惡神殿-->
 	<Action Name="teleport behemoth-chaos" NpcId="80132">
-		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="330" />
+		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="400" />
 	</Action>
 	<!--蒂卡菲兒 / 說話之島-->
 	<Action Name="teleport behemoth-island" NpcId="80132">
-		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="770" />
+		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="800" />
 	</Action>
 	<!--蒂卡菲兒 / 狄亞得要塞-->
 	<Action Name="teleport behemoth-diad" NpcId="80132">
-		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="7480" />
+		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="7700" />
 	</Action>
 	<!--顯示金額-->
 	<ShowHtml Name="teleportURL" HtmlId="dekabia2" NpcId="80132">
-		<Data Value="198" /><!--威頓村莊-->
-		<Data Value="132" /><!--奇岩村莊-->
-		<Data Value="246" /><!--歐瑞村莊-->
-		<Data Value="220" /><!--希培利亞村莊-->
-		<Data Value="55" /><!--肯特村莊-->
-		<Data Value="55" /><!--海音村莊-->
-		<Data Value="132" /><!--古魯丁村莊-->
-		<Data Value="132" /><!--銀騎士村莊-->
-		<Data Value="132" /><!--亞丁城鎮-->
-		<Data Value="55" /><!--風木村莊-->
-		<Data Value="198" /><!--燃柳村莊-->
-		<Data Value="330" /><!--正義神殿-->
-		<Data Value="330" /><!--邪惡神殿-->
-		<Data Value="770" /><!--說話之島-->
-		<Data Value="7480" /><!--狄亞得要塞-->
+		<Data Value="50" /><!--威頓村莊-->
+		<Data Value="50" /><!--奇岩村莊-->
+		<Data Value="50" /><!--歐瑞村莊-->
+		<Data Value="50" /><!--希培利亞村莊-->
+		<Data Value="120" /><!--肯特村莊-->
+		<Data Value="120" /><!--海音村莊-->
+		<Data Value="180" /><!--古魯丁村莊-->
+		<Data Value="180" /><!--銀騎士村莊-->
+		<Data Value="180" /><!--亞丁城鎮-->
+		<Data Value="240" /><!--風木村莊-->
+		<Data Value="240" /><!--妖精森林-->
+		<Data Value="400" /><!--正義神殿-->
+		<Data Value="400" /><!--邪惡神殿-->
+		<Data Value="800" /><!--說話之島-->
+		<Data Value="7700" /><!--狄亞得要塞-->
 	</ShowHtml>
 
 	<!--蒂卡菲兒 / 龍之谷吊橋-->
@@ -2076,83 +2129,83 @@
 	</ShowHtml>
 
 <!--希培利亞村莊-->
-	<!--賽莉恩 / 歐瑞村莊-->
+	<!--賽莉恩 / 歐瑞-->
 	<Action Name="teleport silveria-oren" NpcId="80146">
-		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="246" />
+		<Teleport X="34062" Y="32278" Map="4" Heading="5" Price="50" />
 	</Action>
-	<!--賽莉恩 / 威頓村莊-->
+	<!--賽莉恩 / 巴拉卡斯棲息地-->
 	<Action Name="teleport silveria-werldern" NpcId="80146">
-		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="198" />
+		<Teleport X="33709" Y="32500" Map="4" Heading="5" Price="50" />
 	</Action>
-	<!--賽莉恩 / 貝希摩斯村莊-->
+	<!--賽莉恩 / 貝希摩斯-->
 	<Action Name="teleport silveria-behemoth" NpcId="80146">
-		<Teleport X="32779" Y="32887" Map="1001" Heading="5" Price="220" />
+		<Teleport X="32779" Y="32887" Map="1001" Heading="5" Price="50" />
 	</Action>
-	<!--賽莉恩 / 奇岩村莊-->
+	<!--賽莉恩 / 奇岩-->
 	<Action Name="teleport silveria-giran" NpcId="80146">
-		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="132" />
+		<Teleport X="33438" Y="32796" Map="4" Heading="5" Price="120" />
 	</Action>
-	<!--賽莉恩 / 海音村莊-->
+	<!--賽莉恩 / 海音-->
 	<Action Name="teleport silveria-heine" NpcId="80146">
-		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="55" />
+		<Teleport X="33612" Y="33257" Map="4" Heading="5" Price="180" />
 	</Action>
-	<!--賽莉恩 / 肯特村莊-->
+	<!--賽莉恩 / 肯特-->
 	<Action Name="teleport silveria-kent" NpcId="80146">
-		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="55" />
+		<Teleport X="33050" Y="32782" Map="4" Heading="5" Price="180" />
 	</Action>
-	<!--賽莉恩 / 古魯丁村莊-->
+	<!--賽莉恩 / 古魯丁-->
 	<Action Name="teleport silveria-gludin" NpcId="80146">
-		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="132" />
+		<Teleport X="32608" Y="32734" Map="4" Heading="5" Price="240" />
 	</Action>
 	<!--賽莉恩 / 銀騎士村莊-->
 	<Action Name="teleport silveria-silver" NpcId="80146">
-		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="132" />
+		<Teleport X="33080" Y="33386" Map="4" Heading="5" Price="240" />
 	</Action>
-	<!--賽莉恩 / 亞丁城鎮-->
+	<!--賽莉恩 / 亞丁-->
 	<Action Name="teleport silveria-aden" NpcId="80146">
-		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="132" />
+		<Teleport X="33965" Y="33253" Map="4" Heading="5" Price="240" />
 	</Action>
-	<!--賽莉恩 / 風木村莊-->
+	<!--賽莉恩 / 風木-->
 	<Action Name="teleport silveria-woods" NpcId="80146">
-		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="55" />
+		<Teleport X="32640" Y="33203" Map="4" Heading="5" Price="300" />
 	</Action>
-	<!--賽莉恩 / 燃柳村莊-->
+	<!--賽莉恩 / 妖魔森林-->
 	<Action Name="teleport silveria-willow" NpcId="80146">
-		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="198" />
+		<Teleport X="32715" Y="32448" Map="4" Heading="5" Price="300" />
 	</Action>
 	<!--賽莉恩 / 正義神殿-->
 	<Action Name="teleport silveria-lowful" NpcId="80146">
-		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="330" />
+		<Teleport X="33118" Y="32933" Map="4" Heading="5" Price="500" />
 	</Action>
 	<!--賽莉恩 / 邪惡神殿-->
 	<Action Name="teleport silveria-chaos" NpcId="80146">
-		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="330" />
+		<Teleport X="32885" Y="32652" Map="4" Heading="5" Price="500" />
 	</Action>
 	<!--賽莉恩 / 說話之島-->
 	<Action Name="teleport silveria-island" NpcId="80146">
-		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="770" />
+		<Teleport X="32583" Y="32924" Map="0" Heading="5" Price="900" />
 	</Action>
 	<!--賽莉恩 / 狄亞得要塞-->
 	<Action Name="teleport silveria-diad" NpcId="80146">
-		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="7480" />
+		<Teleport X="32828" Y="32900" Map="320" Heading="5" Price="8000" />
 	</Action>
 	<!--顯示金額-->
 	<ShowHtml Name="teleportURL" HtmlId="sharial2" NpcId="80146">
-		<Data Value="246" /><!--歐瑞村莊-->
-		<Data Value="198" /><!--威頓村莊-->
-		<Data Value="220" /><!--貝希摩斯村莊-->
-		<Data Value="132" /><!--奇岩村莊-->
-		<Data Value="55" /><!--海音村莊-->
-		<Data Value="55" /><!--肯特村莊-->
-		<Data Value="132" /><!--古魯丁村莊-->
-		<Data Value="132" /><!--銀騎士村莊-->
-		<Data Value="132" /><!--亞丁城鎮-->
-		<Data Value="55" /><!--風木村莊-->
-		<Data Value="198" /><!--燃柳村莊-->
-		<Data Value="330" /><!--正義神殿-->
-		<Data Value="330" /><!--邪惡神殿-->
-		<Data Value="770" /><!--說話之島-->
-		<Data Value="7480" /><!--狄亞得要塞-->
+		<Data Value="50" /><!--歐瑞-->
+		<Data Value="50" /><!--巴拉卡斯棲息地-->
+		<Data Value="50" /><!--貝希摩斯-->
+		<Data Value="120" /><!--奇岩-->
+		<Data Value="180" /><!--海音-->
+		<Data Value="180" /><!--肯特-->
+		<Data Value="240" /><!--古魯丁-->
+		<Data Value="240" /><!--銀騎士村莊-->
+		<Data Value="240" /><!--亞丁-->
+		<Data Value="300" /><!--風木-->
+		<Data Value="300" /><!--妖魔森林-->
+		<Data Value="500" /><!--正義神殿-->
+		<Data Value="500" /><!--邪惡神殿-->
+		<Data Value="900" /><!--說話之島-->
+		<Data Value="8000" /><!--狄亞得要塞-->
 	</ShowHtml>
 
 	<!--賽莉恩 / 吉普賽村莊-->
@@ -2805,9 +2858,4 @@
 	<Action Name="teleport town-in" NpcId="71016">
 		<Teleport X="32834" Y="32791" Map="8011" Heading="4" Price="0" />
 	</Action>
-
-<!--墮落的靈魂-->
-	<!--關於邪念地監-->
-	<ShowHtml Name="teleportURL" HtmlId="csoulqs" NpcId="71095">
-	</ShowHtml>
 </NpcActionList>

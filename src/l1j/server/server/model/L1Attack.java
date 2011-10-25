@@ -906,12 +906,12 @@ public class L1Attack {
 		else
 			dmg = calShortRageDamage(dmg);
 
-		if (_weaponId == 124 || _weaponId == 301 || _weaponId == 302
-				|| _weaponId == 303 || _weaponId == 304 || _weaponId == 305
-				|| _weaponId == 306 || _weaponId == 307 || _weaponId == 308
-				|| _weaponId == 309 || _weaponId == 310 || _weaponId == 311
-				|| _weaponId == 312 || _weaponId == 313 || _weaponId == 314
-				|| _weaponId == 315) { // バフォメットスタッフ
+		if (_weaponId == 124 || _weaponId == 289 || _weaponId == 290
+				|| _weaponId == 291 || _weaponId == 292 || _weaponId == 293
+				|| _weaponId == 294 || _weaponId == 295 || _weaponId == 296
+				|| _weaponId == 297 || _weaponId == 298 || _weaponId == 299
+				|| _weaponId == 300 || _weaponId == 301 || _weaponId == 302
+				|| _weaponId == 303) { // バフォメットスタッフ
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if (_weaponId == 2 || _weaponId == 200002) { // ダイスダガー
 			dmg += L1WeaponSkill.getDiceDaggerDamage(_pc, _targetPc, weapon);
@@ -1036,12 +1036,12 @@ public class L1Attack {
 		else
 			dmg = calShortRageDamage(dmg);
 
-		if (_weaponId == 124 || _weaponId == 292 || _weaponId == 293
+		if (_weaponId == 124 || _weaponId == 289 || _weaponId == 290
+				|| _weaponId == 291 || _weaponId == 292 || _weaponId == 293
 				|| _weaponId == 294 || _weaponId == 295 || _weaponId == 296
 				|| _weaponId == 297 || _weaponId == 298 || _weaponId == 299
 				|| _weaponId == 300 || _weaponId == 301 || _weaponId == 302
-				|| _weaponId == 303 || _weaponId == 304 || _weaponId == 305
-				|| _weaponId == 306) { // バフォメットスタッフ
+				|| _weaponId == 303) {
 			dmg += L1WeaponSkill.getBaphometStaffDamage(_pc, _target);
 		} else if ((_weaponId == 2) || (_weaponId == 200002)) { // ダイスダガー
 			dmg += L1WeaponSkill.getDiceDaggerDamage(_pc, _targetNpc, weapon);
@@ -1476,6 +1476,14 @@ public class L1Attack {
 			} else if (_weaponId == 276 || _weaponId == 277) { 
 				L1Chaser chaser = new L1Chaser(_pc, _target,
 						L1Skills.ATTR_WATER, 7179);
+				chaser.begin();
+			} else if (_weaponId == 304 || _weaponId == 307 || _weaponId == 308) { 
+				L1Chaser chaser = new L1Chaser(_pc, _target,
+						L1Skills.ATTR_WATER, 8150);
+				chaser.begin();
+			} else if (_weaponId == 305 || _weaponId == 306 || _weaponId == 309) { 
+				L1Chaser chaser = new L1Chaser(_pc, _target,
+						L1Skills.ATTR_WATER, 8152);
 				chaser.begin();
 			}
 		}

@@ -96,6 +96,14 @@ public class L1Chaser extends TimerTask {
 		} else if (_pc.getWeapon().getItem().getItemId() == 276
 				|| _pc.getWeapon().getItem().getItemId() == 277) {
 			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 7224);
+		} else if (_pc.getWeapon().getItem().getItemId() == 304
+				|| _pc.getWeapon().getItem().getItemId() == 307
+				|| _pc.getWeapon().getItem().getItemId() == 308) {
+			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 8150);
+		} else if (_pc.getWeapon().getItem().getItemId() == 305
+				|| _pc.getWeapon().getItem().getItemId() == 306
+				|| _pc.getWeapon().getItem().getItemId() == 309) {
+			packet = new S_EffectLocation(_cha.getX(), _cha.getY(), 8152);
 		} else { // 更換為其他武器 附加特效傷害歸零
 			damage = 0;
 		}
