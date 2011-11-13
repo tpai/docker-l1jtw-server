@@ -387,10 +387,13 @@ public class L1SkillUse {
 		if (_user instanceof L1PcInstance) {
 			L1PcInstance pc = (L1PcInstance) _user;
 
+			if (pc.isTeleport()) { // 傳送中
+				return false;
+			}
 			if (pc.isParalyzed()) { // 麻痺・凍結状態か
 				return false;
 			}
-			if ((pc.isInvisble() || pc.isInvisDelay()) && !isInvisUsableSkill()) { // インビジ中に使用不可のスキル
+			if ((pc.isInvisble() || pc.isInvisDelay()) && !isInvisUsableSkill()) { // 隱身中無法使用技能
 				return false;
 			}
 			if (pc.getInventory().getWeight242() >= 197) { // \f1你攜帶太多物品，因此無法使用法術。
@@ -501,6 +504,10 @@ public class L1SkillUse {
 		// スペルスクロールを使用するのはPCのみ
 		L1PcInstance pc = (L1PcInstance) _user;
 
+		if (pc.isTeleport()) { // 傳送中
+			return false;
+		}
+		
 		if (pc.isParalyzed()) { // 麻痺・凍結状態か
 			return false;
 		}
