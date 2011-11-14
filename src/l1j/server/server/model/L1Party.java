@@ -145,24 +145,19 @@ public class L1Party {
 	}
 
 	public void leaveMember(L1PcInstance pc) {
-		if (isLeader(pc) || (getNumOfMembers() == 2)) {
-			// パーティーリーダーの場合
+		if (getNumOfMembers() == 2) {
+			// 人數不足
 			breakup();
 		} else {
-			removeMember(pc);
+			if (isLeader(pc)) { // 隊長離隊自動分配下一個隊長
+				removeMember(pc);
+				L1PcInstance[] member = getMembers();// 下一個隊員
+				passLeader(member[0]);
+			}
 			for (L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
 			}
 			sendLeftMessage(pc, pc);
-			// パーティーリーダーでない場合
-			/*
-			 * if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ
-			 * removeMember(pc); L1PcInstance leader = getLeader();
-			 * removeMember(leader); sendLeftMessage(pc, pc);
-			 * sendLeftMessage(leader, pc); } else { // 残りのパーティーメンバーが２人以上いる
-			 * removeMember(pc); for (L1PcInstance member : members) {
-			 * sendLeftMessage(member, pc); } sendLeftMessage(pc, pc); }
-			 */
 		}
 	}
 
