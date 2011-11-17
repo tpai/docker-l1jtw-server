@@ -765,7 +765,7 @@ public class L1PetInstance extends L1NpcInstance {
 	public void startFoodTimer(L1PetInstance pet) {
 		_petFood = new L1PetFood(pet, _itemObjId);
 		Timer timer = new Timer(true);
-		timer.scheduleAtFixedRate(_petFood, 1000, 20000); // 每 X秒減少
+		timer.scheduleAtFixedRate(_petFood, 1000, 200000); // 每 X秒減少
 	}
 
 	public void stopFoodTimer(L1PetInstance pet) {
