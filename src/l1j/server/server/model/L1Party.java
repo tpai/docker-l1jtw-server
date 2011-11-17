@@ -151,7 +151,7 @@ public class L1Party {
 		} else {
 			if (isLeader(pc)) { // 隊長離隊自動分配下一個隊長
 				L1PcInstance[] member = getMembers();// 下一個隊員
-				passLeader(member[0]);
+				passLeader(member[1]);
 				removeMember(pc);
 			}
 			for (L1PcInstance member : getMembers()) {
