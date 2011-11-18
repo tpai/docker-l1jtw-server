@@ -210,7 +210,7 @@
 
 	<!--商店村警衛 / 古魯丁村莊-->
 	<Action Name="teleport gludin-trade-zone-gludio" NpcId="50025">
-		<Teleport X="32746" Y="32799" Map="306" Heading="5" Price="0" />
+		<Teleport X="32619" Y="32795" Map="4" Heading="5" Price="0" />
 	</Action>
 
 <!--釣魚池-->
