@@ -39,7 +39,7 @@ public class C_Drawal extends ClientBasePacket {
 	public C_Drawal(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
 		readD();
-		int j = readD();
+		int j = Math.abs(readD());
 
 		L1PcInstance pc = clientthread.getActiveChar();
 		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());

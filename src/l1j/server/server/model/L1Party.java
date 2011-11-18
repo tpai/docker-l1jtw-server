@@ -60,9 +60,7 @@ public class L1Party {
 		pc.stopRefreshParty();
 		_membersList.remove(pc);
 		pc.setParty(null);
-		if (!_membersList.isEmpty()) {
-			deleteMiniHp(pc);
-		}
+		deleteMiniHp(pc);
 	}
 
 	public boolean isVacancy() {
@@ -102,10 +100,8 @@ public class L1Party {
 		L1PcInstance[] members = getMembers();
 
 		for (L1PcInstance member : members) {
-			member.sendPackets(new S_HPMeter(pc.getId(), 100
-					* pc.getCurrentHp() / pc.getMaxHp()));
-			pc.sendPackets(new S_HPMeter(member.getId(), 100
-					* member.getCurrentHp() / member.getMaxHp()));
+			member.sendPackets(new S_HPMeter(pc.getId(), 100* pc.getCurrentHp() / pc.getMaxHp()));
+			pc.sendPackets(new S_HPMeter(member.getId(), 100* member.getCurrentHp() / member.getMaxHp()));
 		}
 	}
 

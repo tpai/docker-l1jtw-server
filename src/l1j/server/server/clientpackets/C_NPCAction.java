@@ -665,8 +665,7 @@ public class C_NPCAction extends ClientBasePacket {
 					L1Castle l1castle = CastleTable.getInstance()
 							.getCastleTable(castle_id);
 					pc.sendPackets(new S_ServerMessage(309, // %0の精算総額は%1アデナです。
-							l1castle.getName(), String.valueOf(l1castle
-									.getPublicMoney())));
+							l1castle.getName(), String.valueOf(l1castle.getPublicMoney())));
 					htmlid = ""; // ウィンドウを消す
 				}
 			}
@@ -677,10 +676,8 @@ public class C_NPCAction extends ClientBasePacket {
 			if (clan != null) {
 				int castle_id = clan.getCastleId();
 				if (castle_id != 0) { // 城主クラン
-					L1Castle l1castle = CastleTable.getInstance()
-							.getCastleTable(castle_id);
-					pc.sendPackets(new S_Drawal(pc.getId(), l1castle
-							.getPublicMoney()));
+					L1Castle l1castle = CastleTable.getInstance().getCastleTable(castle_id);
+					pc.sendPackets(new S_Drawal(pc.getId(), l1castle.getPublicMoney()));
 				}
 			}
 		} else if (s.equalsIgnoreCase("cdeposit")) { // 資金を入金する
