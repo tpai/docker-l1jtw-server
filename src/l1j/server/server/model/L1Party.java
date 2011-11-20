@@ -60,7 +60,9 @@ public class L1Party {
 		pc.stopRefreshParty();
 		_membersList.remove(pc);
 		pc.setParty(null);
-		deleteMiniHp(pc);
+		if (!_membersList.isEmpty()) {
+			deleteMiniHp(pc);
+		}
 	}
 
 	public boolean isVacancy() {
@@ -100,8 +102,10 @@ public class L1Party {
 		L1PcInstance[] members = getMembers();
 
 		for (L1PcInstance member : members) {
-			member.sendPackets(new S_HPMeter(pc.getId(), 100* pc.getCurrentHp() / pc.getMaxHp()));
-			pc.sendPackets(new S_HPMeter(member.getId(), 100* member.getCurrentHp() / member.getMaxHp()));
+			member.sendPackets(new S_HPMeter(pc.getId(), 100
+					* pc.getCurrentHp() / pc.getMaxHp()));
+			pc.sendPackets(new S_HPMeter(member.getId(), 100
+					* member.getCurrentHp() / member.getMaxHp()));
 		}
 	}
 
@@ -141,19 +145,24 @@ public class L1Party {
 	}
 
 	public void leaveMember(L1PcInstance pc) {
-		if (getNumOfMembers() == 2) {
-			// 人數不足
+		if (isLeader(pc) || (getNumOfMembers() == 2)) {
+			// パーティーリーダーの場合
 			breakup();
 		} else {
-			if (isLeader(pc)) { // 隊長離隊自動分配下一個隊長
-				L1PcInstance[] member = getMembers();// 下一個隊員
-				passLeader(member[1]);
-				removeMember(pc);
-			}
+			removeMember(pc);
 			for (L1PcInstance member : getMembers()) {
 				sendLeftMessage(member, pc);
 			}
 			sendLeftMessage(pc, pc);
+			// パーティーリーダーでない場合
+			/*
+			 * if (getNumOfMembers() == 2) { // パーティーメンバーが自分とリーダーのみ
+			 * removeMember(pc); L1PcInstance leader = getLeader();
+			 * removeMember(leader); sendLeftMessage(pc, pc);
+			 * sendLeftMessage(leader, pc); } else { // 残りのパーティーメンバーが２人以上いる
+			 * removeMember(pc); for (L1PcInstance member : members) {
+			 * sendLeftMessage(member, pc); } sendLeftMessage(pc, pc); }
+			 */
 		}
 	}
 
