@@ -114,6 +114,10 @@ public final class Config {
 	public static boolean DETECT_DB_RESOURCE_LEAKS;
 	
 	public static boolean CmdActive;
+	
+	public static int Announcements_Cycle_Time;
+	
+	public static boolean Announcements_Cycle_Modify_Time;
 
 	/** Rate control */
 	public static double RATE_XP;
@@ -487,6 +491,8 @@ public final class Config {
 			SEND_PACKET_BEFORE_TELEPORT = Boolean.parseBoolean(serverSettings.getProperty("SendPacketBeforeTeleport", "false"));
 			DETECT_DB_RESOURCE_LEAKS = Boolean.parseBoolean(serverSettings.getProperty("EnableDatabaseResourceLeaksDetection", "false"));
 			CmdActive = Boolean.parseBoolean(serverSettings.getProperty("CmdActive", "false"));
+			Announcements_Cycle_Time = Integer.parseInt(serverSettings.getProperty("AnnouncementsCycleTime", "10"));
+			Announcements_Cycle_Modify_Time = Boolean.parseBoolean(serverSettings.getProperty("AnnounceTimeDisplay", "True"));
 		}
 		catch (Exception e) {
 			_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
@@ -795,6 +801,9 @@ public final class Config {
 		}
 		else if (pName.equalsIgnoreCase("Punishment")) {
 			ILLEGAL_SPEEDUP_PUNISHMENT = Integer.parseInt(pValue);
+		}
+		else if (pName.equalsIgnoreCase("AnnounceTimeDisplay")) {
+		    Announcements_Cycle_Modify_Time = Boolean.parseBoolean(pValue);
 		}
 		// rates.properties
 		else if (pName.equalsIgnoreCase("RateXp")) {
