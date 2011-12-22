@@ -98,8 +98,7 @@ public class GameServer extends Thread {
 		while (true) {
 			try {
 				Socket socket = _serverSocket.accept();
-				System.out.println(L1Message.from + socket.getInetAddress()
-						+ L1Message.attempt);
+				System.out.println(L1Message.from + socket.getInetAddress()+ L1Message.attempt);
 				String host = socket.getInetAddress().getHostAddress();
 				if (IpTable.getInstance().isBannedIp(host)) {
 					_log.info("banned IP(" + host + ")");
@@ -160,8 +159,7 @@ public class GameServer extends Thread {
 				+ "\n\r├" + L1Message.dropadena + ": "+ (rateDropAdena) + L1Message.x 
 				+ "\n\r├"+ L1Message.enchantweapon + ": "+ (Config.ENCHANT_CHANCE_WEAPON) + "%" 
 				+ "\n\r├"+ L1Message.enchantarmor + ": " + (Config.ENCHANT_CHANCE_ARMOR)+ "%");
-		System.out.println("├" + L1Message.chatlevel + ": " + (chatlvl)
-				+ L1Message.level);
+		System.out.println("├" + L1Message.chatlevel + ": " + (chatlvl)+ L1Message.level);
 
 		if (Config.ALT_NONPVP) { // Non-PvP設定
 			System.out.println("└" + L1Message.nonpvpNo + "\n");
@@ -213,27 +211,26 @@ public class GameServer extends Thread {
 		GeneralThreadPool.getInstance().execute(auctionTimeController);
 
 		// 初始化盟屋的稅金
-		HouseTaxTimeController houseTaxTimeController = HouseTaxTimeController
-				.getInstance();
+		HouseTaxTimeController houseTaxTimeController = HouseTaxTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(houseTaxTimeController);
 
 		// 初始化釣魚
-		FishingTimeController fishingTimeController = FishingTimeController
-				.getInstance();
+		FishingTimeController fishingTimeController = FishingTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(fishingTimeController);
 
 		// 初始化 NPC 聊天
-		NpcChatTimeController npcChatTimeController = NpcChatTimeController
-				.getInstance();
+		NpcChatTimeController npcChatTimeController = NpcChatTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(npcChatTimeController);
 
 		// 初始化 Light
-		LightTimeController lightTimeController = LightTimeController
-				.getInstance();
+		LightTimeController lightTimeController = LightTimeController.getInstance();
 		GeneralThreadPool.getInstance().execute(lightTimeController);
 
 		// 初始化遊戲公告
 		Announcements.getInstance();
+		
+		// 初始化遊戲循環公告
+	    AnnouncementsCycle.getInstance();
 
 		// 初始化MySQL自動備份程序
 		MysqlAutoBackup.getInstance();
@@ -297,7 +294,8 @@ public class GameServer extends Thread {
 		System.out.println(L1Message.initialfinished);
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 		
-		Thread cp = new ConsoleProcess();//cmd互動指令
+		// cmd互動指令
+		Thread cp = new ConsoleProcess();
 		cp.start();
 		
 		this.start();
