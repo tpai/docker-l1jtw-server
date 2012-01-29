@@ -40,6 +40,7 @@ public class MysqlAutoBackup extends TimerTask {
 	private static String Database = null;
 	private static File dir = new File(".\\DbBackup\\");
 	private static boolean GzipUse = Config.CompressGzip;
+	private static boolean done = false;
 	private static String os = SystemUtil.gerOs();
 	private static String osArch = SystemUtil.getOsArchitecture();
 
@@ -52,28 +53,21 @@ public class MysqlAutoBackup extends TimerTask {
 
 	public MysqlAutoBackup() {
 		L1Message.getInstance();
-		/** 資料庫名 */
-		StringTokenizer sk = new StringTokenizer(Config.DB_URL, "/");
-		sk.nextToken();
-		sk.nextToken();
-		sk = new StringTokenizer(sk.nextToken(), "?");
-		Database = sk.nextToken();
-		/** 資料夾相關 */
-		if (!dir.isDirectory()) {
-			dir.mkdir();
-		}
+		Database = DatabaseName();
+		if (!dir.isDirectory()) dir.mkdir();
+
 		// 壓縮是否開啟
 		GzipCmd = GzipUse ? " | gzip" : "";
 		FilenameEx = GzipUse ? ".sql.gz" : ".sql";
 
 		// 檢查gzip.exe是否安裝 for Windows
-		if (GzipUse && os == "Windows") {
-			System.out.println("MySQL自動備份啟用Gzip壓縮。");
+		if (GzipUse && os == "Windows" && !done) {
 			if (osArch == "x86") {
 				checkGzip("C:\\Windows\\System32");
 			} else if (osArch == "x64") {
 				checkGzip("C:\\Windows\\SysWOW64");
 			}
+			done = true;
 		}
 	}
 
@@ -140,14 +134,26 @@ public class MysqlAutoBackup extends TimerTask {
 	 * 負責檢查Gzip.exe是否安裝
 	 */
 	private static void checkGzip(String SystemRoot){
-		System.out.println("開始檢查gzip.exe是否安裝...");
+		System.out.println("[MySQL]checking gzip.exe is installed or not...");
 		File gzip = new File(SystemRoot+"\\gzip.exe");
 		if (gzip.exists()) {
-			System.out.println("MySQL自動備份Gzip.exe存在，順利執行。");
+			System.out.println("mysql auto backup is running...ok!");
 		} else {
-			System.err.println("MySQL自動備份Gzip.exe不存在，系統正在處理中...");
+			System.err.println("[MySQL]Gzip.exe不存在，系統正在處理中...");
 			gzip = new File(".\\docs\\gzip124xN.zip");
 			UnZipUtil.unZip(gzip.getAbsolutePath(), SystemRoot);
 		}
+	}
+	
+	/**
+	 * @return database name
+	 */
+	private static String DatabaseName(){
+		StringTokenizer sk = new StringTokenizer(Config.DB_URL, "/");
+		sk.nextToken();
+		sk.nextToken();
+		sk = new StringTokenizer(sk.nextToken(), "?");
+		Database = sk.nextToken();
+		return Database;
 	}
 }

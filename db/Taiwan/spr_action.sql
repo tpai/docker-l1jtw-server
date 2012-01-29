@@ -1,3 +1,33 @@
+/*
+Navicat MySQL Data Transfer
+
+Source Server         : Taiwan Server
+Source Server Version : 50140
+Source Host           : localhost:3366
+Source Database       : l1jtw_db
+
+Target Server Type    : MYSQL
+Target Server Version : 50140
+File Encoding         : 65001
+
+Date: 2012-01-29 19:30:00
+*/
+
+SET FOREIGN_KEY_CHECKS=0;
+-- ----------------------------
+-- Table structure for spr_action
+-- ----------------------------
+CREATE TABLE `spr_action` (
+  `spr_id` int(4) unsigned NOT NULL,
+  `act_id` int(4) unsigned NOT NULL,
+  `framecount` int(4) unsigned NOT NULL DEFAULT '0',
+  `framerate` int(4) unsigned NOT NULL DEFAULT '24',
+  PRIMARY KEY (`spr_id`,`act_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records 
+-- ----------------------------
 INSERT INTO `spr_action` VALUES ('0', '0', '16', '24');
 INSERT INTO `spr_action` VALUES ('0', '1', '20', '24');
 INSERT INTO `spr_action` VALUES ('0', '4', '16', '24');
