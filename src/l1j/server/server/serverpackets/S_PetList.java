@@ -61,6 +61,8 @@ public class S_PetList extends ServerBasePacket {
 				writeC(item.isIdentified() ? 1 : 0);
 				writeS(item.getViewName());
 			}
+		} else {
+			return;
 		}
 		writeD(0x00000073); // Price
 	}

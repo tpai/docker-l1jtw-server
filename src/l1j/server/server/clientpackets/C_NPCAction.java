@@ -373,8 +373,7 @@ public class C_NPCAction extends ClientBasePacket {
 					}
 					if ((item != null)
 							&& (item.getCount() + pay * payBonus > 2000000000)) {
-						pc.sendPackets(new S_ServerMessage(166,
-								"所持有的金幣超過2,000,000,000。"));
+						pc.sendPackets(new S_ServerMessage(166,"所持有的金幣超過2,000,000,000。"));
 						htmlid = "";
 					} else if ((item != null)
 							&& (item.getCount() + pay * payBonus < 2000000001)) {
@@ -742,6 +741,36 @@ public class C_NPCAction extends ClientBasePacket {
 			htmlid = ""; // ウィンドウを消す
 		} else if (s.equalsIgnoreCase("withdrawnpc")) { // 領取寵物
 			pc.sendPackets(new S_PetList(objid, pc));
+		} else if (s.equalsIgnoreCase("aggressive")) { // 攻撃態勢
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(1);
+			}
+		} else if (s.equalsIgnoreCase("defensive")) { // 防禦型態
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(2);
+			}
+		} else if (s.equalsIgnoreCase("stay")) { // 休憩
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(3);
+			}
+		} else if (s.equalsIgnoreCase("extend")) { // 配備
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(4);
+			}
+		} else if (s.equalsIgnoreCase("alert")) { // 警戒
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(5);
+			}
+		} else if (s.equalsIgnoreCase("dismiss")) { // 解散
+			if (obj instanceof L1PetInstance) {
+				L1PetInstance l1pet = (L1PetInstance) obj;
+				l1pet.setCurrentPetStatus(6);
+			}
 		} else if (s.equalsIgnoreCase("changename")) { // 「名前を決める」
 			pc.setTempID(objid); // ペットのオブジェクトIDを保存しておく
 			pc.sendPackets(new S_Message_YN(325, "")); // 動物の名前を決めてください：
@@ -1735,11 +1764,35 @@ public class C_NPCAction extends ClientBasePacket {
 				}
 			}
 		}
-		// 最近の物価について
-		// パンドラ、コルド、バルシム、メリン、グレン
-		else if (s.equalsIgnoreCase("pandora6") || s.equalsIgnoreCase("cold6")
-				|| s.equalsIgnoreCase("balsim3")
-				|| s.equalsIgnoreCase("mellin3") || s.equalsIgnoreCase("glen3")) {
+		// 最近物價倍率
+		else if (s.equalsIgnoreCase("pandora6")     // 潘朵拉(說話之島 雜貨商)
+				|| s.equalsIgnoreCase("cold6")      // 庫德(說話之島 煙火商)
+				|| s.equalsIgnoreCase("balsim3")    // 巴辛(說話之島 妖魔商)
+				|| s.equalsIgnoreCase("arieh6")     // 70015: 艾莉雅(肯特 煙火商)
+				|| s.equalsIgnoreCase("andyn3")     // 70016: 安迪(肯特 武器商)
+				|| s.equalsIgnoreCase("ysorya3")    // 70018: 索拉雅(肯特 雜貨商)
+				|| s.equalsIgnoreCase("luth3")      // 70021: 露西(古魯丁 雜貨商)
+				|| s.equalsIgnoreCase("catty3")     // 70024: 凱蒂(古魯丁 武器商)
+				|| s.equalsIgnoreCase("mayer3")     // 70030: 邁爾(奇岩 雜貨商)
+				|| s.equalsIgnoreCase("vergil3")    // 70032: 范吉爾(奇岩 防具商)
+				|| s.equalsIgnoreCase("stella6")    // 70036: 史堤拉(奇岩 煙火商)
+				|| s.equalsIgnoreCase("ralf6")      // 70044: 瑞福(威頓 武器商)
+				|| s.equalsIgnoreCase("berry6")     // 70045: 蓓莉(威頓 雜貨商)
+				|| s.equalsIgnoreCase("jin6")       // 70046: 珍(威頓 煙火商)
+				|| s.equalsIgnoreCase("defman3")    // 70047: 戴夫曼(亞丁 武器商)
+				|| s.equalsIgnoreCase("mellisa3")   // 70052: 馬夏(亞丁 雜貨商)
+				|| s.equalsIgnoreCase("mandra3")    // 70061: 曼德拉(歐瑞 武器商)
+				|| s.equalsIgnoreCase("bius3")      // 70063: 畢伍斯(歐瑞 雜貨商)
+				|| s.equalsIgnoreCase("momo6")      // 70069: 摩摩(風木 煙火商)
+				|| s.equalsIgnoreCase("ashurEv7")   // 70071: 亞修(綠洲 雜貨商)
+				|| s.equalsIgnoreCase("elmina3")    // 70072: 艾米娜(風木 雜貨商)
+				|| s.equalsIgnoreCase("glen3")      // 70073: 格林(銀騎士 武器商)
+				|| s.equalsIgnoreCase("mellin3")    // 70074: 梅林(銀騎士 雜貨商)
+				|| s.equalsIgnoreCase("orcm6")      // 70078: 歐肯(燃柳 煙火商)
+				|| s.equalsIgnoreCase("jackson3")   // 70079: 傑克森(燃柳 雜貨商)
+				|| s.equalsIgnoreCase("britt3")     // 70082: 比特(海音 雜貨商)
+				|| s.equalsIgnoreCase("old6")       // 70085: 歐得(海音 煙火商)
+				|| s.equalsIgnoreCase("shivan3")) { // 70083: 須凡(海音 武器商)
 			htmlid = s;
 			int npcid = ((L1NpcInstance) obj).getNpcTemplate().get_npcId();
 			int taxRatesCastle = L1CastleLocation
@@ -5876,7 +5929,7 @@ public class C_NPCAction extends ClientBasePacket {
 			pc.sendPackets(new S_ServerMessage(1080));
 		}
 	}
-
+	
 	private boolean usePolyScroll(L1PcInstance pc, int itemId, String s) {
 		int time = 0;
 		if ((itemId == 40088) || (itemId == 40096)) { // 変身スクロール、象牙の塔の変身スクロール
