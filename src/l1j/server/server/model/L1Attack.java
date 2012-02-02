@@ -1514,6 +1514,12 @@ public class L1Attack {
 			if (_pc.getTempCharGfx() == 8719)  // 柑橘
 				_attckGrfxId = 8721; // 橘子籽
 			
+			if (_pc.getTempCharGfx() == 8900)  // 海露拜
+				_attckGrfxId = 8904; // 魔法箭
+
+			if (_pc.getTempCharGfx() == 8913)  // 朱里安
+				_attckGrfxId = 8916; // 魔法箭
+			
 			isFly = true;
 		} else if ((_weaponType == 62) && (_sting != null)) { // 鐵手甲 - 有飛刀
 			_pc.getInventory().removeItem(_sting, 1);
