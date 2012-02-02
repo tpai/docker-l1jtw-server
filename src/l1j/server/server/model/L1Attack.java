@@ -1047,7 +1047,8 @@ public class L1Attack {
 			dmg += L1WeaponSkill.getDiceDaggerDamage(_pc, _targetNpc, weapon);
 		} else if ((_weaponId == 204) || (_weaponId == 100204)) { // 真紅のクロスボウ
 			L1WeaponSkill.giveFettersEffect(_pc, _targetNpc);
-		} else if (_weaponId == 264 || _weaponId == 291) { // ライトニングエッジ
+		//} else if (_weaponId == 264 || _weaponId == 291) { // ライトニングエッジ
+		} else if (_weaponId == 264 || _weaponId == 288) { // ライトニングエッジ, 天雷劍能發動的修正
 			dmg += L1WeaponSkill.getLightningEdgeDamage(_pc, _target);
 		} else if ((_weaponId == 260) || (_weaponId == 263 || _weaponId == 287)) { // レイジングウィンド、フリージングランサー
 			dmg += L1WeaponSkill.getAreaSkillWeaponDamage(_pc, _target,
