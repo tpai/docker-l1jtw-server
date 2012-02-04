@@ -85,6 +85,7 @@ import l1j.server.server.utils.SystemUtil;
 public class GameServer extends Thread {
 	private ServerSocket _serverSocket;
 	private static Logger _log = Logger.getLogger(GameServer.class.getName());
+	private static int YesNoCount = 0;
 	private int _port;
 	// private Logins _logins;
 	private LoginController _loginController;
@@ -381,5 +382,14 @@ public class GameServer extends Thread {
 
 		_shutdownThread.interrupt();
 		_shutdownThread = null;
+	}
+
+	/**
+	 * 取得世界中發送YesNo總次數
+	 * @return YesNo總次數
+	 */
+	public static int getYesNoCount() {
+		YesNoCount += 1;
+		return YesNoCount;
 	}
 }

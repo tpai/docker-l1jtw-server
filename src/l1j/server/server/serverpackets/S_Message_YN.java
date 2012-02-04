@@ -14,6 +14,7 @@
  */
 package l1j.server.server.serverpackets;
 
+import l1j.server.server.GameServer;
 import l1j.server.server.Opcodes;
 
 public class S_Message_YN extends ServerBasePacket {
@@ -35,7 +36,9 @@ public class S_Message_YN extends ServerBasePacket {
 	private void buildPacket(int type, String msg1, String msg2, String msg3,
 			int check) {
 		writeC(Opcodes.S_OPCODE_YES_NO);
-		writeH(type);
+	    writeH(0x0000); // 3.51未知封包
+	    writeD(GameServer.getYesNoCount());
+	    writeH(type);
 		if (check == 1) {
 			writeS(msg1);
 		} else if (check == 2) {
