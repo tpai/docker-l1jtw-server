@@ -445,7 +445,7 @@ public class C_Attr extends ClientBasePacket {
 				break;
 
 		case 479: // 提昇能力值？（str、dex、int、con、wis、cha）
-			if (readH() == 1) {
+			if (readC() == 1) {
 				String s = readS();
 				if (!(pc.getLevel() - 50 > pc.getBonusStats())) {
 					return;
