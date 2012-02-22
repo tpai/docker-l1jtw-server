@@ -70,16 +70,23 @@ public class C_Attr extends ClientBasePacket {
 	@SuppressWarnings("static-access")
 	public C_Attr(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
-		readH(); // 3.51C未知的功能
-	    @SuppressWarnings("unused")
-		int count = readD(); // 紀錄世界中發送YesNo的次數
-	    int i = readH();
+		int i = readH(); // 3.51C未知的功能
+		int attrcode;
+
+		if (i == 479) {
+		   attrcode = i;
+		} else {
+		   @SuppressWarnings("unused")
+		   int count = readD(); // 紀錄世界中發送YesNo的次數
+		   attrcode = readH();
+		}
+
 		String name ;
 		int c;
-
+		
 		L1PcInstance pc = clientthread.getActiveChar();
 
-		switch (i) {
+		switch (attrcode) {
 		case 97: // \f3%0%s 想加入你的血盟。你接受嗎。(Y/N)
 			c = readH();
 			L1PcInstance joinPc = (L1PcInstance) L1World.getInstance().findObject(pc.getTempID());
