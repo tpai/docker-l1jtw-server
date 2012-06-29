@@ -1911,12 +1911,17 @@
 	<Action Name="teleport diad-cavern" NpcId="50079">
 		<Teleport X="32571" Y="32676" Map="400" Heading="5" Price="1000" />
 	</Action>
+	<!--丹尼爾 / 拉斯塔巴德正門-->
+	<Action Name="teleport diad-las" NpcId="50079">
+		<Teleport X="32683" Y="32804" Map="450" Heading="5" Price="10000" />
+	</Action>
 	<!--顯示金額-->
 	<ShowHtml Name="teleportURLA" HtmlId="telediad3" NpcId="50079">
 		<Data Value="700" /><!--拉斯塔巴德地下洞穴-->
 		<Data Value="800" /><!--歐姆地監-->
 		<Data Value="800" /><!--礦物地監-->
 		<Data Value="1000" /><!--地下大洞穴-->
+		<Data Value="10000" /><!--拉斯塔巴德正門-->
 	</ShowHtml>
 
 	<!--迪雅貝斯 / 古魯丁村莊-->
@@ -2351,6 +2356,12 @@
 		<Data Value="2000" /><!--正義神殿-->
 		<Data Value="2000" /><!--邪惡神殿-->
 	</ShowHtml>
+
+<!--拉斯塔巴德正門-->
+	<!--伊莉絲 / 混沌之塔：1樓 集會場-->
+	<Action Name="0" NpcId="71126">
+		<Teleport X="32726" Y="32848" Map="451" Heading="5" Price="0" />
+	</Action>
 
 <!--龍之谷地監3樓-->
 	<!--賽菲亞 / 賽菲亞地監-->
