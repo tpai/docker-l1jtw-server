@@ -27,7 +27,6 @@ import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER;
 import static l1j.server.server.model.skill.L1SkillId.STATUS_HOLY_WATER_OF_EVA;
 import static l1j.server.server.model.skill.L1SkillId.SECRET_MEDICINE_OF_DESTRUCTION;
 
-import java.lang.reflect.Constructor;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -40,9 +39,7 @@ import l1j.server.server.Account;
 import l1j.server.server.ActionCodes;
 import l1j.server.server.ClientThread;
 import l1j.server.server.FishingTimeController;
-import l1j.server.server.IdFactory;
 import l1j.server.server.datatables.CharacterTable;
-import l1j.server.server.datatables.FurnitureSpawnTable;
 import l1j.server.server.datatables.ItemTable;
 import l1j.server.server.datatables.LetterTable;
 import l1j.server.server.datatables.NpcTable;
@@ -69,7 +66,6 @@ import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1TownLocation;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.Instance.L1EffectInstance;
-import l1j.server.server.model.Instance.L1FurnitureInstance;
 import l1j.server.server.model.Instance.L1GuardianInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1MonsterInstance;
@@ -81,6 +77,7 @@ import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.item.L1TreasureBox;
 import l1j.server.server.model.item.action.Effect;
 import l1j.server.server.model.item.action.Enchant;
+import l1j.server.server.model.item.action.FurnitureItem;
 import l1j.server.server.model.item.action.MagicDoll;
 import l1j.server.server.model.item.action.Potion;
 import l1j.server.server.model.poison.L1DamagePoison;
@@ -365,6 +362,14 @@ public class C_ItemUSe extends ClientBasePacket {
 				}
 				else if (l1iteminstance.getItem().getType() == 17) { // 魔法娃娃類
 					MagicDoll.useMagicDoll(pc, itemId, itemObjid);
+				}
+				else if (l1iteminstance.getItem().getType() == 18) { // 家具類
+					if (itemId == 41401) { // 移除家俱魔杖
+						FurnitureItem.useFurnitureRemovalWand(pc,
+							spellsc_objid, l1iteminstance);
+					} else {
+						FurnitureItem.useFurnitureItem(pc, itemId, itemObjid);
+					}
 				}
 				else if (itemId == 47103) { // 新鮮的餌
 					pc.sendPackets(new S_ServerMessage(452, l1iteminstance.getLogName()));
@@ -2591,12 +2596,6 @@ public class C_ItemUSe extends ClientBasePacket {
 						|| ((itemId >= 49244) && (itemId <= 49259))
 						|| itemId == L1ItemId.POTION_OF_WONDER_DRUG) { // 魔法料理、象牙塔妙藥
 					L1Cooking.useCookingItem(pc, l1iteminstance);
-				}
-				else if ((itemId >= 41383) && (itemId <= 41400)) { // 家具
-					useFurnitureItem(pc, itemId, itemObjid);
-				}
-				else if (itemId == 41401) { // 家具除去ワンド
-					useFurnitureRemovalWand(pc, spellsc_objid, l1iteminstance);
 				}
 				else if (itemId == 41411) { // 銀のチョンズ
 					Potion.UseHeallingPotion(pc, l1iteminstance, 10, 189);
@@ -5991,145 +5990,6 @@ public class C_ItemUSe extends ClientBasePacket {
 			else {
 				pc.sendPackets(new S_ServerMessage(1102)); // 料理の材料が足りません。
 			}
-		}
-	}
-
-	private void useFurnitureItem(L1PcInstance pc, int itemId, int itemObjectId) {
-		if (!L1HouseLocation.isInHouse(pc.getX(), pc.getY(), pc.getMapId())) {
-			pc.sendPackets(new S_ServerMessage(563)); // \f1ここでは使えません。
-			return;
-		}
-
-		boolean isAppear = true;
-		L1FurnitureInstance furniture = null;
-		for (L1Object l1object : L1World.getInstance().getObject()) {
-			if (l1object instanceof L1FurnitureInstance) {
-				furniture = (L1FurnitureInstance) l1object;
-				if (furniture.getItemObjId() == itemObjectId) { // 既に引き出している家具
-					isAppear = false;
-					break;
-				}
-			}
-		}
-
-		if (isAppear) {
-			if ((pc.getHeading() != 0) && (pc.getHeading() != 2)) {
-				return;
-			}
-			int npcId = 0;
-			if (itemId == 41383) { // ジャイアントアントソルジャーの剥製
-				npcId = 80109;
-			}
-			else if (itemId == 41384) { // ベアーの剥製
-				npcId = 80110;
-			}
-			else if (itemId == 41385) { // ラミアの剥製
-				npcId = 80113;
-			}
-			else if (itemId == 41386) { // ブラックタイガーの剥製
-				npcId = 80114;
-			}
-			else if (itemId == 41387) { // 鹿の剥製
-				npcId = 80115;
-			}
-			else if (itemId == 41388) { // ハーピーの剥製
-				npcId = 80124;
-			}
-			else if (itemId == 41389) { // ブロンズナイト
-				npcId = 80118;
-			}
-			else if (itemId == 41390) { // ブロンズホース
-				npcId = 80119;
-			}
-			else if (itemId == 41391) { // 燭台
-				npcId = 80120;
-			}
-			else if (itemId == 41392) { // ティーテーブル
-				npcId = 80121;
-			}
-			else if (itemId == 41393) { // 火鉢
-				npcId = 80126;
-			}
-			else if (itemId == 41394) { // たいまつ
-				npcId = 80125;
-			}
-			else if (itemId == 41395) { // 君主用のお立ち台
-				npcId = 80111;
-			}
-			else if (itemId == 41396) { // 旗
-				npcId = 80112;
-			}
-			else if (itemId == 41397) { // ティーテーブル用の椅子(右)
-				npcId = 80116;
-			}
-			else if (itemId == 41398) { // ティーテーブル用の椅子(左)
-				npcId = 80117;
-			}
-			else if (itemId == 41399) { // パーティション(右)
-				npcId = 80122;
-			}
-			else if (itemId == 41400) { // パーティション(左)
-				npcId = 80123;
-			}
-
-			try {
-				L1Npc l1npc = NpcTable.getInstance().getTemplate(npcId);
-				if (l1npc != null) {
-					try {
-						String s = l1npc.getImpl();
-						Constructor<?> constructor = Class.forName("l1j.server.server.model.Instance." + s + "Instance").getConstructors()[0];
-						Object aobj[] =
-						{ l1npc };
-						furniture = (L1FurnitureInstance) constructor.newInstance(aobj);
-						furniture.setId(IdFactory.getInstance().nextId());
-						furniture.setMap(pc.getMapId());
-						if (pc.getHeading() == 0) {
-							furniture.setX(pc.getX());
-							furniture.setY(pc.getY() - 1);
-						}
-						else if (pc.getHeading() == 2) {
-							furniture.setX(pc.getX() + 1);
-							furniture.setY(pc.getY());
-						}
-						furniture.setHomeX(furniture.getX());
-						furniture.setHomeY(furniture.getY());
-						furniture.setHeading(0);
-						furniture.setItemObjId(itemObjectId);
-
-						L1World.getInstance().storeObject(furniture);
-						L1World.getInstance().addVisibleObject(furniture);
-						FurnitureSpawnTable.getInstance().insertFurniture(furniture);
-					}
-					catch (Exception e) {
-						_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
-					}
-				}
-			}
-			catch (Exception exception) {}
-		}
-		else {
-			furniture.deleteMe();
-			FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
-		}
-	}
-
-	// 傢俱移除魔杖
-	private void useFurnitureRemovalWand(L1PcInstance pc, int targetId, L1ItemInstance item) {
-		S_AttackPacket s_attackPacket = new S_AttackPacket(pc, 0, ActionCodes.ACTION_Wand);
-		pc.sendPackets(s_attackPacket);
-		pc.broadcastPacket(s_attackPacket);
-		int chargeCount = item.getChargeCount();
-		if (chargeCount <= 0) {
-			return;
-		}
-
-		L1Object target = L1World.getInstance().findObject(targetId);
-		if ((target != null) && (target instanceof L1FurnitureInstance)) {
-			L1FurnitureInstance furniture = (L1FurnitureInstance) target;
-			furniture.deleteMe();
-			FurnitureSpawnTable.getInstance().deleteFurniture(furniture);
-			item.setChargeCount(item.getChargeCount() - 1);
-			pc.getInventory().updateItem(item, L1PcInventory.COL_CHARGE_COUNT);
 		}
 	}
 

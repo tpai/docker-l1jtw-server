@@ -26,6 +26,7 @@ import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.Instance.L1DoorInstance;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.model.skill.L1SkillId;
 import l1j.server.server.model.skill.L1SkillUse;
 import l1j.server.server.serverpackets.S_EffectLocation;
@@ -89,7 +90,7 @@ public class L1PolyRace {
 			pc.sendPackets(new S_ServerMessage(1273,"30","99"));
 			return;
 		}
-		if (!pc.getInventory().consumeItem(40308, 1000)) {
+		if (!pc.getInventory().consumeItem(L1ItemId.ADENA, 1000)) {
 			pc.sendPackets(new S_ServerMessage(189));//金錢不足
 			return;
 		}
@@ -187,7 +188,7 @@ public class L1PolyRace {
 				for (L1PcInstance pc : playerList) {
 					//未達到比賽最低人數(2人)，因此強制關閉比賽並退還1000個金幣。
 					pc.sendPackets(new S_ServerMessage(1264));
-					pc.getInventory().storeItem(40308, 1000);
+					pc.getInventory().storeItem(L1ItemId.ADENA, 1000);
 				}
 			break;
 		}

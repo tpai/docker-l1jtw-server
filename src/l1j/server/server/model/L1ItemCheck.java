@@ -21,6 +21,7 @@ import java.sql.ResultSet;
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.model.Instance.L1ItemInstance;
 import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.identity.L1ItemId;
 import l1j.server.server.utils.SQLUtil;
 
 /**
@@ -42,11 +43,11 @@ public class L1ItemCheck {
 			if (!isStackable && itemCount != 1) {
 				isCheat = true;
 				// 金幣大於20億以及金幣負值則為作弊
-			} else if (itemId == 40308
+			} else if (itemId == L1ItemId.ADENA
 					&& (itemCount > 2000000000 || itemCount < 0)) {
 				isCheat = true;
 				// 可堆疊道具(金幣除外)堆疊超過十萬個以及堆疊負值設定為作弊
-			} else if (isStackable && itemId != 40308
+			} else if (isStackable && itemId != L1ItemId.ADENA
 					&& (itemCount > 100000 || itemCount < 0)) {
 				isCheat = true;
 			}

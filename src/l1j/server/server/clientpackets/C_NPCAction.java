@@ -2482,7 +2482,7 @@ public class C_NPCAction extends ClientBasePacket {
 						|| pc.getInventory().checkItem(21059, 1)) {
 					return;
 				}
-				if (pc.getInventory().consumeItem(40308, 1000000)) {
+				if (pc.getInventory().consumeItem(L1ItemId.ADENA, 1000000)) {
 					L1ItemInstance item = ItemTable.getInstance().createItem(
 							41341); // ジェロンの教本
 					if (item != null) {
@@ -3730,13 +3730,13 @@ public class C_NPCAction extends ClientBasePacket {
 		// 治安団長ラルソン
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 80099) {
 			if (s.equalsIgnoreCase("A")) {
-				if (pc.getInventory().checkItem(40308, 300)) {
-					pc.getInventory().consumeItem(40308, 300);
+				if (pc.getInventory().checkItem(L1ItemId.ADENA, 300)) {
+					pc.getInventory().consumeItem(L1ItemId.ADENA, 300);
 					pc.getInventory().storeItem(41315, 1);
 					pc.getQuest().set_step(
 							L1Quest.QUEST_GENERALHAMELOFRESENTMENT, 1);
 					htmlid = "rarson16";
-				} else if (!pc.getInventory().checkItem(40308, 300)) {
+				} else if (!pc.getInventory().checkItem(L1ItemId.ADENA, 300)) {
 					htmlid = "rarson7";
 				}
 			} else if (s.equalsIgnoreCase("B")) {
@@ -3744,7 +3744,7 @@ public class C_NPCAction extends ClientBasePacket {
 						L1Quest.QUEST_GENERALHAMELOFRESENTMENT) == 1)
 						&& (pc.getInventory().checkItem(41325, 1))) {
 					pc.getInventory().consumeItem(41325, 1);
-					pc.getInventory().storeItem(40308, 2000);
+					pc.getInventory().storeItem(L1ItemId.ADENA, 2000);
 					pc.getInventory().storeItem(41317, 1);
 					pc.getQuest().set_step(
 							L1Quest.QUEST_GENERALHAMELOFRESENTMENT, 2);
@@ -3756,7 +3756,7 @@ public class C_NPCAction extends ClientBasePacket {
 				if ((pc.getQuest().get_step(
 						L1Quest.QUEST_GENERALHAMELOFRESENTMENT) == 4)
 						&& (pc.getInventory().checkItem(41326, 1))) {
-					pc.getInventory().storeItem(40308, 30000);
+					pc.getInventory().storeItem(L1ItemId.ADENA, 30000);
 					pc.getInventory().consumeItem(41326, 1);
 					htmlid = "rarson12";
 					pc.getQuest().set_step(
@@ -3769,24 +3769,24 @@ public class C_NPCAction extends ClientBasePacket {
 						L1Quest.QUEST_GENERALHAMELOFRESENTMENT) <= 1)
 						|| (pc.getQuest().get_step(
 								L1Quest.QUEST_GENERALHAMELOFRESENTMENT) == 5)) {
-					if (pc.getInventory().checkItem(40308, 300)) {
-						pc.getInventory().consumeItem(40308, 300);
+					if (pc.getInventory().checkItem(L1ItemId.ADENA, 300)) {
+						pc.getInventory().consumeItem(L1ItemId.ADENA, 300);
 						pc.getInventory().storeItem(41315, 1);
 						pc.getQuest().set_step(
 								L1Quest.QUEST_GENERALHAMELOFRESENTMENT, 1);
 						htmlid = "rarson16";
-					} else if (!pc.getInventory().checkItem(40308, 300)) {
+					} else if (!pc.getInventory().checkItem(L1ItemId.ADENA, 300)) {
 						htmlid = "rarson7";
 					}
 				} else if ((pc.getQuest().get_step(
 						L1Quest.QUEST_GENERALHAMELOFRESENTMENT) >= 2)
 						&& (pc.getQuest().get_step(
 								L1Quest.QUEST_GENERALHAMELOFRESENTMENT) <= 4)) {
-					if (pc.getInventory().checkItem(40308, 300)) {
-						pc.getInventory().consumeItem(40308, 300);
+					if (pc.getInventory().checkItem(L1ItemId.ADENA, 300)) {
+						pc.getInventory().consumeItem(L1ItemId.ADENA, 300);
 						pc.getInventory().storeItem(41315, 1);
 						htmlid = "rarson16";
-					} else if (!pc.getInventory().checkItem(40308, 300)) {
+					} else if (!pc.getInventory().checkItem(L1ItemId.ADENA, 300)) {
 						htmlid = "rarson7";
 					}
 				}
@@ -3972,7 +3972,7 @@ public class C_NPCAction extends ClientBasePacket {
 
 		else if (((L1NpcInstance) obj).getNpcTemplate().get_npcId() == 81246) { // シャルナ
 			if (s.equalsIgnoreCase("0")) {
-				materials = new int[] { 40308 };
+				materials = new int[] { L1ItemId.ADENA };
 				counts = new int[] { 2500 };
 				if (pc.getLevel() < 30) {
 					htmlid = "sharna4";
@@ -4043,7 +4043,7 @@ public class C_NPCAction extends ClientBasePacket {
 			String msg = "";
 			if (s.equalsIgnoreCase("buy 1")) {
 				petNpcId = 45042;// 杜賓狗
-				consumeItem = 40308;
+				consumeItem = L1ItemId.ADENA;
 				consumeItemCount = 50000;
 				petItemId = 40314;
 				upLv = 5;
@@ -4051,7 +4051,7 @@ public class C_NPCAction extends ClientBasePacket {
 				msg = "金幣";
 			} else if (s.equalsIgnoreCase("buy 2")) {
 				petNpcId = 45034;// 牧羊犬
-				consumeItem = 40308;
+				consumeItem = L1ItemId.ADENA;
 				consumeItemCount = 50000;
 				petItemId = 40314;
 				upLv = 5;
@@ -4059,7 +4059,7 @@ public class C_NPCAction extends ClientBasePacket {
 				msg = "金幣";
 			} else if (s.equalsIgnoreCase("buy 3")) {
 				petNpcId = 45046;// 小獵犬
-				consumeItem = 40308;
+				consumeItem = L1ItemId.ADENA;
 				consumeItemCount = 50000;
 				petItemId = 40314;
 				upLv = 5;
@@ -4067,7 +4067,7 @@ public class C_NPCAction extends ClientBasePacket {
 				msg = "金幣";
 			} else if (s.equalsIgnoreCase("buy 4")) {
 				petNpcId = 45047;// 聖伯納犬
-				consumeItem = 40308;
+				consumeItem = L1ItemId.ADENA;
 				consumeItemCount = 50000;
 				petItemId = 40314;
 				upLv = 5;
@@ -4377,7 +4377,7 @@ public class C_NPCAction extends ClientBasePacket {
 				break;
 			}
 			if (s.equalsIgnoreCase("a") || s.equalsIgnoreCase("b")){
-				if(pc.getInventory().consumeItem(40308,3000)){
+				if(pc.getInventory().consumeItem(L1ItemId.ADENA,3000)){
 					L1SkillUse l1skilluse = new L1SkillUse();
 					for (int i = 0; i < skills.length; i++) {
 						l1skilluse.handleCommands(pc, 
@@ -4807,7 +4807,7 @@ public class C_NPCAction extends ClientBasePacket {
 							&& !pc.getInventory().checkItem(49314, 1)) {
 						createitem = new int[] { 49313 }; // 象牙塔魔法袋
 						createcount = new int[] { 2 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 2000 };
 						success_htmlid = "lowlv22";
 						failure_htmlid = "lowlv20";
@@ -4831,7 +4831,7 @@ public class C_NPCAction extends ClientBasePacket {
 					createitem = new int[] { 49305 }; // 製作 福利勇敢藥水
 														// addContribution + 2
 					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40014 };
+					materials = new int[] { L1ItemId.ADENA, 40014 };
 					counts = new int[] { 1000, 3 };
 					contribution = 2;
 					htmlid = "";
@@ -4840,7 +4840,7 @@ public class C_NPCAction extends ClientBasePacket {
 					createitem = new int[] { 49304 }; // 製作 福利森林藥水
 														// addContribution + 4
 					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40068 };
+					materials = new int[] { L1ItemId.ADENA, 40068 };
 					counts = new int[] { 1000, 3 };
 					contribution = 4;
 					htmlid = "";
@@ -4849,7 +4849,7 @@ public class C_NPCAction extends ClientBasePacket {
 					createitem = new int[] { 49307 }; // 製作 福利慎重藥水
 														// addContribution + 2
 					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40016 };
+					materials = new int[] { L1ItemId.ADENA, 40016 };
 					counts = new int[] { 500, 3 };
 					contribution = 2;
 					htmlid = "";
@@ -4858,7 +4858,7 @@ public class C_NPCAction extends ClientBasePacket {
 					createitem = new int[] { 49306 }; // 製作 福利藍色藥水
 														// addContribution + 2
 					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40015 };
+					materials = new int[] { L1ItemId.ADENA, 40015 };
 					counts = new int[] { 1000, 3 };
 					contribution = 2;
 					htmlid = "";
@@ -4867,7 +4867,7 @@ public class C_NPCAction extends ClientBasePacket {
 					createitem = new int[] { 49302 }; // 製作 福利加速藥水
 														// addContribution + 1
 					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40013 };
+					materials = new int[] { L1ItemId.ADENA, 40013 };
 					counts = new int[] { 500, 3 };
 					contribution = 1;
 					htmlid = "";
@@ -4876,7 +4876,7 @@ public class C_NPCAction extends ClientBasePacket {
 					createitem = new int[] { 49303 }; // 製作 福利呼吸藥水
 														// addContribution + 1
 					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40032 };
+					materials = new int[] { L1ItemId.ADENA, 40032 };
 					counts = new int[] { 500, 3 };
 					contribution = 1;
 					htmlid = "";
@@ -4885,7 +4885,7 @@ public class C_NPCAction extends ClientBasePacket {
 					createitem = new int[] { 49308 }; // 製作 福利變形藥水
 														// addContribution + 3
 					createcount = new int[] { 1 };
-					materials = new int[] { 40308, 40088 };
+					materials = new int[] { L1ItemId.ADENA, 40088 };
 					counts = new int[] { 1000, 3 };
 					contribution = 3;
 					htmlid = "";
@@ -4896,70 +4896,70 @@ public class C_NPCAction extends ClientBasePacket {
 					case 1:
 						createitem = new int[] { 49292 }; // 購買 福利傳送卷軸：說話之島
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 2:
 						createitem = new int[] { 49297 }; // 購買 福利傳送卷軸：銀騎士
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 3:
 						createitem = new int[] { 49293 }; // 購買 福利傳送卷軸：古魯丁
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 4:
 						createitem = new int[] { 49296 }; // 購買 福利傳送卷軸：燃柳
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 5:
 						createitem = new int[] { 49295 }; // 購買 福利傳送卷軸：風木
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 6:
 						createitem = new int[] { 49294 }; // 購買 福利傳送卷軸：肯特
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 7:
 						createitem = new int[] { 49298 }; // 購買 福利傳送卷軸：奇岩
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 8:
 						createitem = new int[] { 49299 }; // 購買 福利傳送卷軸：海音
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 9:
 						createitem = new int[] { 49301 }; // 購買 福利傳送卷軸：威頓
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
 					case 10:
 						createitem = new int[] { 49300 }; // 購買 福利傳送卷軸：歐瑞
 						createcount = new int[] { 1 };
-						materials = new int[] { 40308 };
+						materials = new int[] { L1ItemId.ADENA };
 						counts = new int[] { 400 };
 						htmlid = "";
 						break;
@@ -4977,11 +4977,11 @@ public class C_NPCAction extends ClientBasePacket {
 			if (s.equalsIgnoreCase("0")) {
 				if (pc.getInventory().checkItem(46000, 1)) { // 檢查身上是否有多魯嘉之袋
 					htmlid = "veil3"; // 已經有袋子了
-				} else if (pc.getInventory().checkItem(40308, 1000000)) { // 檢查身上金幣是否足夠
-					pc.getInventory().consumeItem(40308, 1000000);
+				} else if (pc.getInventory().checkItem(L1ItemId.ADENA, 1000000)) { // 檢查身上金幣是否足夠
+					pc.getInventory().consumeItem(L1ItemId.ADENA, 1000000);
 					pc.getInventory().storeItem(46000, 1);
 					htmlid = "veil7"; // 購買成功顯示
-				} else if (!pc.getInventory().checkItem(40308, 1000000)) { // 檢查身上金幣是否足夠
+				} else if (!pc.getInventory().checkItem(L1ItemId.ADENA, 1000000)) { // 檢查身上金幣是否足夠
 					htmlid = "veil4"; // 錢不夠顯示 我們還是不要約定了
 				}
 			} else if (s.equalsIgnoreCase("1")) {
@@ -5846,7 +5846,7 @@ public class C_NPCAction extends ClientBasePacket {
 		String npcName = npc.getNpcTemplate().get_name();
 		if ((npcId == 70027 // ディオ
 				)
-				|| "アデン商団".equals(npcName)) {
+				|| "亞丁商團".equals(npcName)) {
 			return true;
 		}
 		return false;
