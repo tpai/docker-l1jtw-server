@@ -32,6 +32,9 @@ public class C_TradeCancel extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance player = clientthread.getActiveChar();
+		if (player == null) {
+			return;
+		}
 		L1Trade trade = new L1Trade();
 		trade.TradeCancel(player);
 	}

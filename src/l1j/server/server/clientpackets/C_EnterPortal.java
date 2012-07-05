@@ -30,9 +30,15 @@ public class C_EnterPortal extends ClientBasePacket {
 
 	public C_EnterPortal(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int locx = readH();
 		int locy = readH();
-		L1PcInstance pc = client.getActiveChar();
+		
 		if (pc.isTeleport()) { // 傳送中
 			return;
 		}

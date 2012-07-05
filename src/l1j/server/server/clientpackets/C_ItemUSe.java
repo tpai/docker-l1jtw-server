@@ -131,15 +131,17 @@ public class C_ItemUSe extends ClientBasePacket {
 
 	public C_ItemUSe(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
-		int itemObjid = readD();
-
+		
 		L1PcInstance pc = client.getActiveChar();
-		if (pc.isGhost()) {
+		if ((pc == null) || pc.isGhost() || pc.isDead()) {
 			return;
 		}
+		
+		int itemObjid = readD();
+		
 		L1ItemInstance l1iteminstance = pc.getInventory().getItem(itemObjid);
 
-		if ((l1iteminstance == null) || (pc.isDead())) {
+		if (l1iteminstance == null) {
 			return;
 		}
 

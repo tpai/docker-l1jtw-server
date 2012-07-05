@@ -33,12 +33,13 @@ public class C_AddBookmark extends ClientBasePacket {
 
 	public C_AddBookmark(byte[] decrypt, ClientThread client) {
 		super(decrypt);
-		String s = readS();
-
+		
 		L1PcInstance pc = client.getActiveChar();
-		if (pc.isGhost()) {
+		if ((pc == null) || pc.isGhost()) {
 			return;
 		}
+
+		String s = readS();
 
 		if (pc.getMap().isMarkable() || pc.isGm()) {
 			if ((L1CastleLocation.checkInAllWarArea(pc.getX(), pc.getY(),

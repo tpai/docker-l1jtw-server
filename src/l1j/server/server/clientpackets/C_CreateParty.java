@@ -34,8 +34,11 @@ public class C_CreateParty extends ClientBasePacket {
 
 	public C_CreateParty(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
-
+		
 		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
 
 		int type = readC();
 		if ((type == 0) || (type == 1)) { // 自動接受組隊 on 與 off 的同

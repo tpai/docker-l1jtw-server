@@ -38,7 +38,12 @@ public class C_Title extends ClientBasePacket {
 
 	public C_Title(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		String charName = readS();
 		String title = readS();
 

@@ -30,10 +30,13 @@ public class C_ChangeHeading extends ClientBasePacket {
 
 	public C_ChangeHeading(byte[] decrypt, ClientThread client) {
 		super(decrypt);
-		int heading = readC();
-
+		
 		L1PcInstance pc = client.getActiveChar();
-
+		if (pc == null) {
+			return;
+		}
+		
+		int heading = readC();
 		pc.setHeading(heading);
 
 		_log.finest("Change Heading : " + pc.getHeading());

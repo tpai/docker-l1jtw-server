@@ -38,10 +38,15 @@ public class C_War extends ClientBasePacket {
 
 	public C_War(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance player = clientthread.getActiveChar();
+		if (player == null) {
+			return;
+		}
+		
 		int type = readC();
 		String s = readS();
-
-		L1PcInstance player = clientthread.getActiveChar();
+		
 		String playerName = player.getName();
 		String clanName = player.getClanname();
 		int clanId = player.getClanid();

@@ -35,9 +35,15 @@ public class C_ChatWhisper extends ClientBasePacket {
 
 	public C_ChatWhisper(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance whisperFrom = client.getActiveChar();
+		if (whisperFrom == null) {
+			return;
+		}
+		
 		String targetName = readS();
 		String text = readS();
-		L1PcInstance whisperFrom = client.getActiveChar();
+		
 		// 被魔封
 		if (whisperFrom.hasSkillEffect(1005)) {
 			whisperFrom.sendPackets(new S_ServerMessage(242)); // 你從現在被禁止閒談。

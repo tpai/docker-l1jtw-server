@@ -33,9 +33,15 @@ public class C_Who extends ClientBasePacket {
 
 	public C_Who(byte[] decrypt, ClientThread client) {
 		super(decrypt);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		String s = readS();
 		L1PcInstance find = L1World.getInstance().getPlayer(s);
-		L1PcInstance pc = client.getActiveChar();
+		
 
 		if (find != null) {
 			S_WhoCharinfo s_whocharinfo = new S_WhoCharinfo(find);

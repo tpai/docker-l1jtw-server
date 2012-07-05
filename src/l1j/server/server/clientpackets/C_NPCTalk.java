@@ -39,10 +39,16 @@ public class C_NPCTalk extends ClientBasePacket {
 	public C_NPCTalk(byte abyte0[], ClientThread client)
 			throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int objid = readD();
 		L1Object obj = L1World.getInstance().findObject(objid);
-		L1PcInstance pc = client.getActiveChar();
-		if (obj != null && pc != null) {
+		
+		if (obj != null) {
 			L1NpcAction action = NpcActionTable.getInstance().get(pc, obj);
 			if (action != null) {
 				L1NpcHtml html = action.execute("", pc, obj, new byte[0]);

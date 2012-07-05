@@ -32,6 +32,9 @@ public class C_CheckPK extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance player = clientthread.getActiveChar();
+		if (player == null) {
+			return;
+		}
 		player.sendPackets(new S_ServerMessage(562, String.valueOf(player.get_PKcount()))); // 你的PK次數為%0次。
 	}
 

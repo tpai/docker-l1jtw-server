@@ -44,8 +44,12 @@ public class C_Chat extends ClientBasePacket {
 
 	public C_Chat(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
-
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int chatType = readC();
 		String chatText = readS();
 		if (pc.hasSkillEffect(SILENCE) || pc.hasSkillEffect(AREA_OF_SILENCE)

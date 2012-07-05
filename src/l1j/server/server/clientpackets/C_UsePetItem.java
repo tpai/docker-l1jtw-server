@@ -46,15 +46,18 @@ public class C_UsePetItem extends ClientBasePacket {
 
 	public C_UsePetItem(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
 
 		int data = readC();
 		int petId = readD();
 		int listNo = readC();
 
 		L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
-		L1PcInstance pc = clientthread.getActiveChar();
-
-		if ((pet == null) && (pc == null)) {
+		if (pet == null)  {
 			return;
 		}
 		L1ItemInstance item = pet.getInventory().getItems().get(listNo);

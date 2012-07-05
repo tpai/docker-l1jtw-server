@@ -34,9 +34,13 @@ public class C_CreateClan extends ClientBasePacket {
 
 	public C_CreateClan(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
-		String s = readS();
-
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
+		String s = readS();
 		if (pc.isCrown()) { // 是王族
 			if (pc.getClanid() == 0) {
 				for (L1Clan clan : L1World.getInstance().getAllClans()) { // 檢查是否有同名的血盟

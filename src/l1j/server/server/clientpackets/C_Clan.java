@@ -32,9 +32,13 @@ public class C_Clan extends ClientBasePacket {
 
 	public C_Clan(byte abyte0[], ClientThread client) {
 		super(abyte0);
-		int clanId = readD();
-
+		
 		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
+		int clanId = readD();
 		L1Clan clan = ClanTable.getInstance().getTemplate(clanId);
 		pc.sendPackets(new S_Emblem(clan.getClanId()));
 	}

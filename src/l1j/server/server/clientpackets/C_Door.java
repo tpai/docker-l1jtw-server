@@ -38,11 +38,16 @@ public class C_Door extends ClientBasePacket {
 
 	public C_Door(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		readH();
 		readH();
 		int objectId = readD();
-
-		L1PcInstance pc = client.getActiveChar();
+		
 		L1DoorInstance door = (L1DoorInstance) L1World.getInstance().findObject(objectId);
 		if (door == null) {
 			return;

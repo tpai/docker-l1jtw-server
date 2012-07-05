@@ -38,9 +38,14 @@ public class C_BanClan extends ClientBasePacket {
 	public C_BanClan(byte abyte0[], ClientThread clientthread)
 			throws Exception {
 		super(abyte0);
-		String s = readS();
-
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
+		String s = readS();
+		
 		L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 		if (clan != null) {
 			String clanMemberName[] = clan.getAllMembers();

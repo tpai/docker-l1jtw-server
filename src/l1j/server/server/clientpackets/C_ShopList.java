@@ -31,13 +31,13 @@ public class C_ShopList extends ClientBasePacket {
 	public C_ShopList(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
 
-		int type = readC();
-		int objectId = readD();
-
 		L1PcInstance pc = clientthread.getActiveChar();
-		if (pc.isGhost()) {
+		if ((pc == null) || pc.isGhost()) {
 			return;
 		}
+
+		int type = readC();
+		int objectId = readD();
 
 		pc.sendPackets(new S_PrivateShop(pc, objectId, type));
 	}

@@ -33,7 +33,7 @@ public class C_Trade extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance player = clientthread.getActiveChar();
-		if (player.isGhost()) {
+		if ((player == null) || player.isGhost()) {
 			return;
 		}
 		L1PcInstance target = FaceToFace.faceToFace(player);

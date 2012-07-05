@@ -30,9 +30,14 @@ public class C_BanParty extends ClientBasePacket {
 
 	public C_BanParty(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
-		String s = readS();
-
+		
 		L1PcInstance player = client.getActiveChar();
+		if (player == null) {
+			return;
+		}
+		
+		String s = readS();
+		
 		if (!player.getParty().isLeader(player)) {
 			// 是組對對長
 			player.sendPackets(new S_ServerMessage(427)); // 只有領導者才有驅逐隊伍成員的權力。

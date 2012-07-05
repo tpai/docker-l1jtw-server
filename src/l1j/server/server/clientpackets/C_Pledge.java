@@ -33,7 +33,11 @@ public class C_Pledge extends ClientBasePacket {
 
 	public C_Pledge(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
 
 		if (pc.getClanid() > 0) {
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());

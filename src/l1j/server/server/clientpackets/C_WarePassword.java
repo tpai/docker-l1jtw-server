@@ -31,6 +31,12 @@ import l1j.server.server.serverpackets.S_SystemMessage;
 public class C_WarePassword extends ClientBasePacket {
 	public C_WarePassword(byte abyte0[], ClientThread client) {
 		super(abyte0);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		// 類型(0: 密碼變更, 1: 一般倉庫, 2: 血盟倉庫)
 		int type = readC();
 
@@ -44,7 +50,6 @@ public class C_WarePassword extends ClientBasePacket {
 		readH();
 
 		// 取得角色物件
-		L1PcInstance pc = client.getActiveChar();
 		Account account = client.getAccount();
 
 		// 變更密碼

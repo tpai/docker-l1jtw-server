@@ -36,7 +36,7 @@ public class C_JoinClan extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance pc = clientthread.getActiveChar();
-		if (pc.isGhost()) {
+		if ((pc == null) || pc.isGhost()) {
 			return;
 		}
 

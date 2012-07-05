@@ -32,6 +32,9 @@ public class C_Teleport extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
 		Teleportation.actionTeleportation(pc);
 	}
 

@@ -32,9 +32,14 @@ public class C_Propose extends ClientBasePacket {
 
 	public C_Propose(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
-		int c = readC();
-
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
+		int c = readC();
+		
 		if (c == 0) { // /propose（/結婚）
 			if (pc.isGhost()) {
 				return;

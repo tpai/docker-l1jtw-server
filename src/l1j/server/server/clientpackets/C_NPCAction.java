@@ -130,6 +130,12 @@ public class C_NPCAction extends ClientBasePacket {
 
 	public C_NPCAction(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int objid = readD();
 		String s = readS();
 
@@ -160,8 +166,7 @@ public class C_NPCAction extends ClientBasePacket {
 		int questid = 0;
 		int questvalue = 0;
 		int contribution = 0;
-
-		L1PcInstance pc = client.getActiveChar();
+		
 		L1PcInstance target;
 		L1Object obj = L1World.getInstance().findObject(objid);
 		if (obj != null) {

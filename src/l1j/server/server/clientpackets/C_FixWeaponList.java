@@ -31,6 +31,9 @@ public class C_FixWeaponList extends ClientBasePacket {
 	public C_FixWeaponList(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
 		pc.sendPackets(new S_FixWeaponList(pc));
 	}
 

@@ -35,6 +35,11 @@ public class C_SkillBuyOK extends ClientBasePacket {
 
 	public C_SkillBuyOK(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = clientthread.getActiveChar();
+		if ((pc == null) || pc.isGhost()) {
+			return;
+		}
 
 		int count = readH();
 		int sid[] = new int[count];
@@ -47,11 +52,7 @@ public class C_SkillBuyOK extends ClientBasePacket {
 		int level3_cost = 0;
 		String skill_name = null;
 		int skill_id = 0;
-
-		L1PcInstance pc = clientthread.getActiveChar();
-		if (pc.isGhost()) {
-			return;
-		}
+		
 		for (int i = 0; i < count; i++) {
 			sid[i] = readD();
 			switch (sid[i]) {

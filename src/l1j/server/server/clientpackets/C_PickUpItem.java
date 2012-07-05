@@ -34,13 +34,18 @@ public class C_PickUpItem extends ClientBasePacket {
 
 	public C_PickUpItem(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if ((pc == null) || pc.isDead() || pc.isGhost()) {
+			return;
+		}
+		
 		int x = readH();
 		int y = readH();
 		int objectId = readD();
 		int pickupCount = readD();
-
-		L1PcInstance pc = client.getActiveChar();
-		if (pc.isDead() || pc.isGhost() || objectId == pc.getId()) {
+		
+		if (objectId == pc.getId()) {
 			return;
 		}
 

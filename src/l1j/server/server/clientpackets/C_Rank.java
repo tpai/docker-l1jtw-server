@@ -39,18 +39,18 @@ public class C_Rank extends ClientBasePacket {
 	public C_Rank(byte abyte0[], ClientThread clientthread)
 			throws Exception {
 		super(abyte0);
-
-		int data = readC(); // ?
-
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
+		int data = readC(); // ?
 
 		if (data == 1) {
 			int rank = readC();
 			String name = readS();
 			L1PcInstance targetPc = L1World.getInstance().getPlayer(name);
-			if (pc == null) {
-				return;
-			}
 
 			L1Clan clan = L1World.getInstance().getClan(pc.getClanname());
 			if (clan == null) {

@@ -48,11 +48,15 @@ public class C_Result extends ClientBasePacket {
 
 	public C_Result(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int npcObjectId = readD();
 		int resultType = readC();
 		int size = readH();
-
-		L1PcInstance pc = clientthread.getActiveChar();
 		int level = pc.getLevel();
 
 		int npcId = 0;

@@ -32,8 +32,9 @@ public class C_Party extends ClientBasePacket {
 
 	public C_Party(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
+		
 		L1PcInstance pc = clientthread.getActiveChar();
-		if (pc.isGhost()) {
+		if ((pc == null) || pc.isGhost()) {
 			return;
 		}
 		L1Party party = pc.getParty();

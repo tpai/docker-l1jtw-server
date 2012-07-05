@@ -31,12 +31,12 @@ public class C_SkillBuy extends ClientBasePacket {
 	public C_SkillBuy(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		int i = readD();
-
 		L1PcInstance pc = clientthread.getActiveChar();
-		if (pc.isGhost()) {
+		if ((pc == null) || pc.isGhost()) {
 			return;
 		}
+		
+		int i = readD();
 		pc.sendPackets(new S_SkillBuy(i, pc));
 		/*
 		 * int type = player.get_type(); int lvl = player.get_level();

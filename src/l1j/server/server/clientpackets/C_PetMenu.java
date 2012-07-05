@@ -33,10 +33,13 @@ public class C_PetMenu extends ClientBasePacket {
 	public C_PetMenu(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
 
-		int petId = readD();
-
-		L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
+		int petId = readD();
+		L1PetInstance pet = (L1PetInstance) L1World.getInstance().findObject(petId);
 
 		if ((pet != null) && (pc != null)) {
 			pc.sendPackets(new S_PetInventory(pet));

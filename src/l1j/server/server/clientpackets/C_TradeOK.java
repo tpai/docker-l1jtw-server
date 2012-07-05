@@ -34,6 +34,10 @@ public class C_TradeOK extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance player = clientthread.getActiveChar();
+		if (player == null) {
+			return;
+		}
+		
 		L1PcInstance trading_partner = (L1PcInstance) L1World.getInstance().findObject(player.getTradeID());
 		if (trading_partner != null) {
 			player.setTradeOk(true);

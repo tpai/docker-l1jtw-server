@@ -30,10 +30,13 @@ public class C_LoginToServerOK extends ClientBasePacket {
 	public C_LoginToServerOK(byte[] decrypt, ClientThread client) {
 		super(decrypt);
 
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int type = readC();
 		int button = readC();
-
-		L1PcInstance pc = client.getActiveChar();
 
 		if (type == 255) { // 全體聊天 && 密語
 			if ((button == 95) || (button == 127)) {

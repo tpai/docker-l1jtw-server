@@ -39,11 +39,17 @@ public class C_Exclude extends ClientBasePacket {
 	 */
 	public C_Exclude(byte[] decrypt, ClientThread client) {
 		super(decrypt);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		String name = readS();
 		if (name.isEmpty()) {
 			return;
 		}
-		L1PcInstance pc = client.getActiveChar();
+		
 		try {
 			L1ExcludingList exList = pc.getExcludingList();
 			if (exList.isFull()) {

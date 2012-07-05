@@ -32,8 +32,7 @@ public class C_ExitGhost extends ClientBasePacket {
 		super(decrypt);
 
 		L1PcInstance pc = client.getActiveChar();
-
-		if (!pc.isGhost()) {
+		if ((pc == null) ||(!pc.isGhost())) {
 			return;
 		}
 

@@ -35,10 +35,16 @@ public class C_SelectList extends ClientBasePacket {
 
 	public C_SelectList(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
+		
+		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		// アイテム毎にリクエストが来る。
 		int itemObjectId = readD();
 		int npcObjectId = readD();
-		L1PcInstance pc = clientthread.getActiveChar();
+		
 
 		if (npcObjectId != 0) { // 武器的修理
 			L1Object obj = L1World.getInstance().findObject(npcObjectId);

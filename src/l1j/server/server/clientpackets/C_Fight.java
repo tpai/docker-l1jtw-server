@@ -34,7 +34,7 @@ public class C_Fight extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance pc = client.getActiveChar();
-		if (pc.isGhost()) {
+		if ((pc == null) || pc.isGhost()) {
 			return;
 		}
 		L1PcInstance target = FaceToFace.faceToFace(pc);

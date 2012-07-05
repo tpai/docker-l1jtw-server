@@ -26,8 +26,12 @@ public class C_DeleteBookmark extends ClientBasePacket {
 
 	public C_DeleteBookmark(byte[] decrypt, ClientThread client) {
 		super(decrypt);
-		String bookmarkname = readS();
+		
 		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		String bookmarkname = readS();
 		L1BookMark.deleteBookmark(pc, bookmarkname);
 	}
 

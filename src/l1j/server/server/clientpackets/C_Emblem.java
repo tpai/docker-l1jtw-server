@@ -38,6 +38,10 @@ public class C_Emblem extends ClientBasePacket {
 		super(abyte0);
 
 		L1PcInstance player = clientthread.getActiveChar();
+		if (player == null) {
+			return;
+		}
+		
 		if (player.getClanid() != 0) {
 			String emblem_file = String.valueOf(player.getClanid());
 

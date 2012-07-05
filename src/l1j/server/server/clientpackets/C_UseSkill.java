@@ -43,6 +43,12 @@ public class C_UseSkill extends ClientBasePacket {
 
 	public C_UseSkill(byte abyte0[], ClientThread client) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if ((pc == null) || pc.isTeleport() || pc.isDead()) {
+			return;
+		}
+		
 		int row = readC();
 		int column = readC();
 		int skillId = (row * 8) + column + 1;
@@ -51,11 +57,7 @@ public class C_UseSkill extends ClientBasePacket {
 		int targetId = 0;
 		int targetX = 0;
 		int targetY = 0;
-		L1PcInstance pc = client.getActiveChar();
-
-		if (pc.isTeleport() || pc.isDead()) {
-			return;
-		}
+		
 		if (!pc.getMap().isUsableSkill()) {
 			pc.sendPackets(new S_ServerMessage(563)); // \f1ここでは使えません。
 			return;

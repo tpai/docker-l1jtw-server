@@ -52,15 +52,15 @@ public class C_MoveChar extends ClientBasePacket {
 	// 移動
 	public C_MoveChar(byte decrypt[], ClientThread client) throws Exception {
 		super(decrypt);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if ((pc == null) || pc.isTeleport()) { // 傳送中
+			return;
+		}
+		
 		int locx = readH();
 		int locy = readH();
 		int heading = readC();
-
-		L1PcInstance pc = client.getActiveChar();
-
-		if (pc == null || pc.isTeleport()) { // 傳送中
-			return;
-		}
 
 		// 檢查移動的時間間隔
 		if (Config.CHECK_MOVE_INTERVAL) {

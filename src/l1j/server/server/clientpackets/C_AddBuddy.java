@@ -34,7 +34,12 @@ public class C_AddBuddy extends ClientBasePacket {
 
 	public C_AddBuddy(byte[] decrypt, ClientThread client) {
 		super(decrypt);
+		
 		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		BuddyTable buddyTable = BuddyTable.getInstance();
 		L1Buddy buddyList = buddyTable.getBuddyTable(pc.getId());
 		String charName = readS();

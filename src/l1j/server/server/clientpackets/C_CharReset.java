@@ -54,7 +54,12 @@ public class C_CharReset extends ClientBasePacket {
 
 	public C_CharReset(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int stage = readC();
 
 		if (stage == 0x01) { // 0x01:キャラクター初期化

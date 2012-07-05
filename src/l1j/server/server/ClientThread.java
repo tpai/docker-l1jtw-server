@@ -119,15 +119,20 @@ public class ClientThread implements Runnable, PacketOutput {
 		_charRestart = flag;
 	}
 
+	
 	private byte[] readPacket() throws Exception {
 		try {
 			int hiByte = _in.read();
 			int loByte = _in.read();
-			if (loByte < 0) {
+			if ((loByte < 0) || (hiByte < 0)) { 
 				throw new RuntimeException();
 			}
-			int dataLength = (loByte * 256 + hiByte) - 2;
 
+			final int dataLength = ((loByte << 8) + hiByte) - 2;
+			if ((dataLength <= 0) || (dataLength > 65533)) {
+				throw new RuntimeException();
+			}
+			
 			byte data[] = new byte[dataLength];
 
 			int readSize = 0;
@@ -142,7 +147,7 @@ public class ClientThread implements Runnable, PacketOutput {
 			}
 
 			return _cipher.decrypt(data);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			throw e;
 		}
 	}
@@ -180,9 +185,7 @@ public class ClientThread implements Runnable, PacketOutput {
 
 	@Override
 	public void run() {
-		_log.info("(" + _hostname + ") 連結到伺服器。");
-		System.out.println("使用了 " + SystemUtil.getUsedMemoryMB() + "MB 的記憶體");
-		System.out.println("等待客戶端連接...");
+		
 
 		/*
 		 * TODO: 翻譯 クライアントからのパケットをある程度制限する。 理由：不正の誤検出が多発する恐れがあるため
@@ -196,21 +199,17 @@ public class ClientThread implements Runnable, PacketOutput {
 		HcPacket hcPacket = new HcPacket(H_CAPACITY);
 		GeneralThreadPool.getInstance().execute(movePacket);
 		GeneralThreadPool.getInstance().execute(hcPacket);
-
-		ClientThreadObserver observer = new ClientThreadObserver(
-				Config.AUTOMATIC_KICK * 60 * 1000); // 自動斷線的時間（單位:毫秒）
-
-		// 是否啟用自動踢人
-		if (Config.AUTOMATIC_KICK > 0) {
-			observer.start();
-		}
-
+		
+		String keyHax ="";
+		int key = 0;
+		byte Bogus = 0;
+		
 		try {
 			/** 採取亂數取seed */
-			String keyHax = Integer.toHexString((int) (Math.random() * 2147483647) + 1);
-			int key = Integer.parseInt(keyHax, 16);
+			keyHax = Integer.toHexString((int) (Math.random() * 2147483647) + 1);
+			key = Integer.parseInt(keyHax, 16);
 
-			byte Bogus = (byte) (FIRST_PACKET.length + 7);
+			Bogus = (byte) (FIRST_PACKET.length + 7);
 			_out.write(Bogus & 0xFF);
 			_out.write(Bogus >> 8 & 0xFF);
 			_out.write(Opcodes.S_OPCODE_INITPACKET);// 3.5C Taiwan Server
@@ -222,6 +221,39 @@ public class ClientThread implements Runnable, PacketOutput {
 			_out.write(FIRST_PACKET);
 			_out.flush();
 
+		}
+		catch (Throwable e) {
+			try {
+				_log.info("異常用戶端(" + _hostname + ") 連結到伺服器, 已中斷該連線。");
+				StreamUtil.close(_out, _in);
+				if (_csocket != null) {
+					_csocket.close();
+					_csocket = null;
+				}
+				return;
+			} catch (Throwable ex) {
+				return;
+			}
+		}
+		finally {
+		
+		}
+
+
+
+		try {
+			_log.info("(" + _hostname + ") 連結到伺服器。");
+			System.out.println("使用了 " + SystemUtil.getUsedMemoryMB() + "MB 的記憶體");
+			System.out.println("等待客戶端連接...");
+			
+			ClientThreadObserver observer = new ClientThreadObserver(
+					Config.AUTOMATIC_KICK * 60 * 1000); // 自動斷線的時間（單位:毫秒）
+
+			// 是否啟用自動踢人
+			if (Config.AUTOMATIC_KICK > 0) {
+				observer.start();
+			}
+			
 			_cipher = new Cipher(key);
 
 			while (true) {
@@ -304,6 +336,10 @@ public class ClientThread implements Runnable, PacketOutput {
 				sendPacket(new S_Disconnect());
 
 				StreamUtil.close(_out, _in);
+				if (_csocket != null) {
+					_csocket.close();
+					_csocket = null;
+				}
 			} catch (Exception e) {
 				_log.log(Level.SEVERE, e.getLocalizedMessage(), e);
 			} finally {
@@ -327,10 +363,19 @@ public class ClientThread implements Runnable, PacketOutput {
 	private int _kick = 0;
 
 	public void kick() {
-		Account.online(getAccount(), false);
-		sendPacket(new S_Disconnect());
-		_kick = 1;
-		StreamUtil.close(_out, _in);
+		try {
+			Account.online(getAccount(), false);
+			sendPacket(new S_Disconnect());
+			_kick = 1;
+			StreamUtil.close(_out, _in);
+			if (_csocket != null) {
+				_csocket.close();
+				_csocket = null;
+			}
+		}
+		catch (Throwable ex) {
+			
+		}
 	}
 
 	private static final int M_CAPACITY = 3; // 一邊移動的最大封包量
@@ -446,7 +491,10 @@ public class ClientThread implements Runnable, PacketOutput {
 	}
 
 	public void close() throws IOException {
-		_csocket.close();
+		if (_csocket != null) {
+			_csocket.close();
+			_csocket = null;
+		}
 	}
 
 	public void setActiveChar(L1PcInstance pc) {

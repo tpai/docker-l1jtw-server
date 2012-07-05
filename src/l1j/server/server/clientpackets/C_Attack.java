@@ -38,15 +38,15 @@ public class C_Attack extends ClientBasePacket {
 
 	public C_Attack(byte[] decrypt, ClientThread client) {
 		super(decrypt);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if ((pc == null) || pc.isGhost() || pc.isDead() || pc.isTeleport()|| pc.isParalyzed() || pc.isSleeped()) {
+			return;
+		}
+		
 		int targetId = readD();
 		int x = readH();
 		int y = readH();
-
-		L1PcInstance pc = client.getActiveChar();
-
-		if (pc.isGhost() || pc.isDead() || pc.isTeleport()|| pc.isParalyzed() || pc.isSleeped()) {
-			return;
-		}
 
 		L1Object target = L1World.getInstance().findObject(targetId);
 

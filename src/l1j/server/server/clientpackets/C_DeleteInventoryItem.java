@@ -34,8 +34,13 @@ public class C_DeleteInventoryItem extends ClientBasePacket {
 
 	public C_DeleteInventoryItem(byte[] decrypt, ClientThread client) {
 		super(decrypt);
-		int itemObjectId = readD();
+		
 		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+
+		int itemObjectId = readD();
 		L1ItemInstance item = pc.getInventory().getItem(itemObjectId);
 
 		// 沒有要刪除的道具

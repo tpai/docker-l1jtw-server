@@ -32,9 +32,9 @@ public class C_CallPlayer extends ClientBasePacket {
 
 	public C_CallPlayer(byte[] decrypt, ClientThread client) {
 		super(decrypt);
+		
 		L1PcInstance pc = client.getActiveChar();
-
-		if (!pc.isGm()) {
+		if ((pc == null) || (!pc.isGm())) {
 			return;
 		}
 

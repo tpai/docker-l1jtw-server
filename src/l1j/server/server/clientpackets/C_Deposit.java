@@ -34,10 +34,15 @@ public class C_Deposit extends ClientBasePacket {
 
 	public C_Deposit(byte abyte0[], ClientThread clientthread) throws Exception {
 		super(abyte0);
+		
+		L1PcInstance player = clientthread.getActiveChar();
+		if (player == null) {
+			return;
+		}
+		
 		int i = readD();
 		int j = readD();
-
-		L1PcInstance player = clientthread.getActiveChar();
+	
 		if (i == player.getId()) {
 			L1Clan clan = L1World.getInstance().getClan(player.getClanname());
 			if (clan != null) {

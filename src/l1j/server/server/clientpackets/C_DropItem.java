@@ -34,6 +34,12 @@ public class C_DropItem extends ClientBasePacket {
 
 	public C_DropItem(byte[] decrypt, ClientThread client) throws Exception {
 		super(decrypt);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int x = readH();
 		int y = readH();
 		int objectId = readD();
@@ -42,8 +48,7 @@ public class C_DropItem extends ClientBasePacket {
 		if (count > 0x77359400 || count < 0) { // 確保數量不會溢位
 			count = 0;
 		}
-
-		L1PcInstance pc = client.getActiveChar();
+		
 		if (pc.isGhost()) {
 			return;
 		} else if (pc.getMapId() >= 16384 && pc.getMapId() <= 25088) { // 旅館內判斷

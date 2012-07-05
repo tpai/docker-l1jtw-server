@@ -32,11 +32,14 @@ public class C_Ship extends ClientBasePacket {
 	public C_Ship(byte abyte0[], ClientThread client) {
 		super(abyte0);
 
+		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
 		int shipMapId = readH();
 		int locX = readH();
 		int locY = readH();
-
-		L1PcInstance pc = client.getActiveChar();
 		int mapId = pc.getMapId();
 
 		if (mapId == 5) { // Talking Island Ship to Aden Mainland

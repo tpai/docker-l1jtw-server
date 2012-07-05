@@ -32,7 +32,11 @@ public class C_Buddy extends ClientBasePacket {
 
 	public C_Buddy(byte abyte0[], ClientThread clientthread) {
 		super(abyte0);
+		
 		L1PcInstance pc = clientthread.getActiveChar();
+		if (pc == null) {
+			return;
+		}
 		L1Buddy buddy = BuddyTable.getInstance().getBuddyTable(pc.getId());
 		pc.sendPackets(new S_Buddy(pc.getId(), buddy));
 	}

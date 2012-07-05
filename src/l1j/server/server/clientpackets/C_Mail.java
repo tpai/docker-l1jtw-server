@@ -49,8 +49,13 @@ public class C_Mail extends ClientBasePacket {
 
 	public C_Mail(byte abyte0[], ClientThread client) {
 		super(abyte0);
-		int type = readC();
+		
 		L1PcInstance pc = client.getActiveChar();
+		if (pc == null) {
+			return;
+		}
+		
+		int type = readC();
 
 		if ((type == 0x00) || (type == 0x01) || (type == 0x02)) { // 開啟
 			pc.sendPackets(new S_Mail(pc.getName(), type));

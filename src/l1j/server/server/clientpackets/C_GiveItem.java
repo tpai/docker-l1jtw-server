@@ -44,17 +44,18 @@ public class C_GiveItem extends ClientBasePacket {
 
 	public C_GiveItem(byte decrypt[], ClientThread client) {
 		super(decrypt);
+		
+		L1PcInstance pc = client.getActiveChar();
+		if ((pc == null) || pc.isGhost()) {
+			return;
+		}
+		
 		int targetId = readD();
 		readH();
 		readH();
 		int itemId = readD();
 		int count = readD();
-
-		L1PcInstance pc = client.getActiveChar();
-		if (pc.isGhost()) {
-			return;
-		}
-
+		
 		L1Object object = L1World.getInstance().findObject(targetId);
 		if ((object == null) || !(object instanceof L1NpcInstance)) {
 			return;
