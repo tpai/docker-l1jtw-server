@@ -46,6 +46,7 @@ public class Opcodes {
 	public static final int C_OPCODE_CHANGEHEADING = 27; // 請求改變角色面向
 	public static final int C_OPCODE_BOOKMARKDELETE = 28; // 請求刪除記憶座標
 	public static final int C_OPCODE_SELECTLIST = 29; // 請求修理道具
+	public static final int C_OPCODE_RETURNTOLOGIN = 30;//要求回到選人畫面
 	public static final int C_OPCODE_SELECTTARGET = 32; // 請求攻擊指定物件(寵物&召喚)
 	public static final int C_OPCODE_DELEXCLUDE = 33; // 請求使用開啟名單(拒絕指定人物訊息)
 	public static final int C_OPCODE_BUDDYLIST = 34; // 請求查詢好友名單
@@ -252,7 +253,6 @@ public class Opcodes {
 	public static final int S_LETTER = 131;
 
 	/** 3.3C Client Packet (3.5C 未抓取) id非正確 */
-	public static final int C_OPCODE_RETURNTOLOGIN = 140;//要求回到選人畫面
 	public static final int C_OPCODE_HIRESOLDIER = 141;//要求僱傭傭兵列表(購買)
 	public static final int C_OPCODE_CLAN = 142;// //要求血盟數據(例如盟標)**[未抓取]
 	public static final int C_OPCODE_CHANGEWARTIME = 144;//修正城堡總管全部功能
