@@ -16,8 +16,11 @@ package l1j.server.server;
 
 import java.util.Map;
 
+import l1j.server.server.model.Instance.L1PcInstance;
+import l1j.server.server.model.L1Trade;
 import l1j.server.server.serverpackets.S_ServerMessage;
 import l1j.server.server.utils.collections.Maps;
+
 
 public class LoginController {
 	private static LoginController _instance;
@@ -97,6 +100,16 @@ public class LoginController {
 		if (client.getAccountName() == null) {
 			return false;
 		}
+		
+		//重登, 取消交易
+		L1PcInstance player = client.getActiveChar();
+		if (player != null) {
+			if (player.getTradeID() != 0) {
+				final L1Trade trade = new L1Trade();
+				trade.TradeCancel(player);
+			}
+		}
+		
 		return _accounts.remove(client.getAccountName()) != null;
 	}
 }

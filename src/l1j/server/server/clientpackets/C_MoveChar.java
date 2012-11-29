@@ -22,6 +22,7 @@ import l1j.server.server.ClientThread;
 import l1j.server.server.model.AcceleratorChecker;
 import l1j.server.server.model.Dungeon;
 import l1j.server.server.model.DungeonRandom;
+import l1j.server.server.model.L1Trade;
 import l1j.server.server.model.Instance.L1PcInstance;
 import l1j.server.server.model.trap.L1WorldTraps;
 import l1j.server.server.serverpackets.S_MoveCharPacket;
@@ -70,6 +71,12 @@ public class C_MoveChar extends ClientBasePacket {
 				return;
 			}
 		}
+		
+		// 移動中, 取消交易
+	    if (pc.getTradeID() != 0) {
+	    	L1Trade trade = new L1Trade();
+	        trade.TradeCancel(pc);
+	    }
 
 		if (pc.hasSkillEffect(MEDITATION)) { // 取消冥想效果
 			pc.removeSkillEffect(MEDITATION);

@@ -84,6 +84,7 @@ import l1j.server.server.model.L1PinkName;
 import l1j.server.server.model.L1Quest;
 import l1j.server.server.model.L1Teleport;
 import l1j.server.server.model.L1TownLocation;
+import l1j.server.server.model.L1Trade;
 import l1j.server.server.model.L1War;
 import l1j.server.server.model.L1World;
 import l1j.server.server.model.MpReductionByAwake;
@@ -1327,8 +1328,14 @@ public class L1PcInstance extends L1Character {
 			setDead(true);
 			setStatus(ActionCodes.ACTION_Die);
 		}
+		
+		//死亡, 取消交易
+		if (getTradeID() != 0) {
+	         final L1Trade trade = new L1Trade();
+	         trade.TradeCancel(this);
+	    }
+	      
 		GeneralThreadPool.getInstance().execute(new Death(lastAttacker));
-
 	}
 
 	private class Death implements Runnable {

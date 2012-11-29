@@ -56,7 +56,12 @@ public class L1Teleport {
 	}
 
 	public static void teleport(L1PcInstance pc, int x, int y, short mapId, int head, boolean effectable, int skillType) {
-
+		// 瞬移, 取消交易
+		if (pc.getTradeID() != 0) {
+			L1Trade trade = new L1Trade();
+	        trade.TradeCancel(pc);
+		}
+		
 		//pc.sendPackets(new S_Paralysis(S_Paralysis.TYPE_TELEPORT_UNLOCK, false));
 
 		// エフェクトの表示
