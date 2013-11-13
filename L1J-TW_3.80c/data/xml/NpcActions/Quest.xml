@@ -1,0 +1,1480 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<NpcActionList>
+<!--王族 / 王族的自知（15）-->
+	<!--給予搜索狀 / 傑羅 / 肯特村莊-->
+	<MakeItem Name="request cloak of red" Class="P" AmountInputable="false" QuestId="Level15" QuestStep="0">
+		<Item Amount="1" ItemId="20065"/>		<!--紅色斗篷-->
+		<Material Amount="1" ItemId="40565"/>		<!--搜索狀-->
+		<Succeed>
+			<!--甘特的試煉未完成-->
+			<SetQuest Id="Level15" Step="1" QuestId="Level15" QuestStep="0"/>
+			<!--甘特的試煉完成-->
+			<SetQuest Id="Level15" Step="End" QuestId="Level15" QuestStep="2"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--學習精準目標魔法 / 甘特 / 甘特洞穴-->
+	<MakeItem Name="request spellbook112" Class="P" AmountInputable="false" QuestId="Level15" QuestStep="1">
+		<Item Amount="1" ItemId="40226"/>		<!--魔法書(精準目標)-->
+		<Material Amount="1" ItemId="40564"/>		<!--生命的卷軸-->
+		<Succeed>
+			<!--傑羅的試煉未完成-->
+			<SetQuest Id="Level15" Step="2" QuestId="Level15" QuestStep="0"/>
+			<!--傑羅的試煉完成-->
+			<SetQuest Id="Level15" Step="End" QuestId="Level15" QuestStep="1"/>
+		</Succeed>
+	</MakeItem>
+
+<!--王族 / 艾莉亞的請求（30）-->
+	<!--願意協助村民 / 艾莉亞 / 風木村莊-->
+	<Action Name="quest 13 aria2" Class="P">
+		<SetQuest Id="Level30" Step="1"/>
+		<ShowHtml HtmlId="aria2"/>
+	</Action>
+
+	<!--交出村莊居民的遺物 / 艾莉亞 / 風木村莊-->
+	<MakeItem Name="request questitem" Class="P" AmountInputable="false" QuestId="Level30" QuestStep="1">
+		<Item Amount="1" ItemId="40570"/>		<!--艾莉亞的回報-->
+		<Material Amount="1" ItemId="40547"/>		<!--村民的遺物-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+			<ShowHtml HtmlId="aria3"/>
+		</Succeed>
+	</MakeItem>
+
+<!--王族 / 王族的信念（45）-->
+	<!--接受馬沙的試練 / 馬沙 / 威頓村莊-->
+	<Action Name="quest 15 masha2" Class="P">
+		<SetQuest Id="Level45" Step="1"/>
+		<ShowHtml HtmlId="masha3"/>
+	</Action>
+
+	<!--被奪的靈魂 / 麥 / 風木村莊-->
+	<Action Name="quest 17 meg2" Class="P">
+		<SetQuest Id="Level45" Step="2"/>
+		<ShowHtml HtmlId="meg2"/>
+	</Action>
+
+	<!--遞給靈魂之證 / 麥 / 風木村莊-->
+	<MakeItem Name="request royal family piece b" Class="P" AmountInputable="false">
+		<Item Amount="1" ItemId="40587"/>		<!--王族徽章的碎片-->
+		<Material Amount="1" ItemId="40573"/>		<!--靈魂之證-->
+		<Material Amount="1" ItemId="40574"/>		<!--靈魂之證-->
+		<Material Amount="1" ItemId="40575"/>		<!--靈魂之證-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="3"/>
+			<ShowHtml HtmlId="meg3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--遞給王族徽章片塊 / 馬沙 / 威頓村莊-->
+	<MakeItem Name="request ring of guardian" Class="P" AmountInputable="false" QuestId="Level45" QuestStep="3">
+		<Item Amount="1" ItemId="20287"/>		<!--守護者的戒指-->
+		<Material Amount="1" ItemId="40586"/>		<!--王族徽章的碎片-->
+		<Material Amount="1" ItemId="40587"/>		<!--王族徽章的碎片-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+			<ShowHtml HtmlId="masha4"/>
+		</Succeed>
+	</MakeItem>
+
+<!--王族 / 小惡魔的可疑行動（50）-->
+	<!--接受請求 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="f" Class="P" NpcId="70739">
+		<SetQuest Id="Level50" Step="1"/>
+		<ShowHtml HtmlId="dicardingp3"/>
+	</Action>
+
+	<!--詢問自己能做些什麼 / 行政官奇浩 / 魔族神殿-->
+	<Action Name="a" Class="P" NpcId="81349">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="kiholl2"/>
+	</Action>
+
+<!--王族 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸再進場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="P" NpcId="81345">
+		<Teleport X="32804" Y="32861" Map="2000" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="5"/>
+	</Action>
+
+	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="a" Class="P" AmountInputable="false" NpcId="70739">
+		<Item Amount="1" ItemId="51"/>		<!--黃金權杖-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardingp14"/>
+		</Succeed>
+	</MakeItem>
+
+<!--騎士 / 瑞奇的抵抗（15）-->
+	<!--交給黑騎士的誓約 / 瑞奇 / 銀騎士村莊-->
+	<MakeItem Name="request hood of knight" Class="K" AmountInputable="false">
+		<Item Amount="1" ItemId="20005"/>		<!--騎士頭巾-->
+		<Material Amount="1" ItemId="40608"/>		<!--黑騎士的誓約-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="1"/>
+			<ShowHtml HtmlId="riky5"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--交換紅騎士頭巾 / 亞南 / 銀騎士之村-->
+	<MakeItem Name="request hood of red knight" Class="K" AmountInputable="false" QuestId="Level15" QuestStep="1">
+		<Item Amount="1" ItemId="20027"/>		<!--紅騎士頭巾-->
+		<Material Amount="1" ItemId="20005"/>		<!--騎士頭巾-->
+		<Material Amount="1" ItemId="40540"/>		<!--古老的交易文件-->
+		<Material Amount="1" ItemId="40601"/>		<!--龍龜甲-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+			<ShowHtml HtmlId="aanon7"/>
+		</Succeed>
+	</MakeItem>
+
+<!--騎士 / 拯救被幽禁的吉姆（30）-->
+	<!--關於吉姆 / 馬克 / 沙漠-->
+	<Action Name="quest 13 mark2" Class="K">
+		<SetQuest Id="Level30" Step="1"/>
+		<ShowHtml HtmlId="mark2"/>
+	</Action>
+
+	<!--接受甘特的試練 / 甘特 / 甘特洞穴-->
+	<Action Name="quest 14 gunterkE2" Class="K">
+		<SetQuest Id="Level30" Step="2"/>
+		<ShowHtml HtmlId="gunterkE2"/>
+	</Action>
+
+	<!--遞給楊果里恩的爪子 / 甘特 / 甘特洞穴-->
+	<MakeItem Name="request sword of red knights" Class="K" AmountInputable="false" QuestId="Level30" QuestStep="2">
+		<Item Amount="1" ItemId="30"/>		<!--紅騎士之劍-->
+		<Material Amount="1" ItemId="40590"/>		<!--楊果里恩之爪-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="3"/>
+			<ShowHtml HtmlId="gunterkE3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--接受傑瑞德的試鍊 / 傑瑞德 / 銀騎士之村-->
+	<Action Name="quest 16 gerardkE2" Class="K">
+		<SetQuest Id="Level30" Step="4"/>
+		<ShowHtml HtmlId="gerardkE2"/>
+	</Action>
+
+	<!--交給蛇女之鱗 / 傑瑞德 / 銀騎士之村-->
+	<MakeItem Name="request potion of rebirth" Class="K">
+		<Item Amount="1" ItemId="40607"/>		<!--返生藥水-->
+		<Material Amount="1" ItemId="40544"/>		<!--蛇女之鱗-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="5"/>
+			<ShowHtml HtmlId="gerardkE3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--遞給返生藥水 / 吉姆 / 地下監獄密室-->
+	<MakeItem Name="request letter of gratitude" Class="K" AmountInputable="false">
+		<Item Amount="1" ItemId="40529"/>		<!--感謝信-->
+		<Material Amount="1" ItemId="40607"/>		<!--返生藥水-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="7"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--返生藥水的真實 / 傑瑞德 / 銀騎士之村-->
+	<Action Name="quest 18 gerardkE4" Class="K">
+		<SetQuest Id="Level30" Step="6"/>
+		<ShowHtml HtmlId="gerardkE4"/>
+	</Action>
+	<MakeItem Name="request shield of red knights" Class="K" AmountInputable="false" QuestId="Level30" QuestStep="7">
+		<Item Amount="1" ItemId="20230"/>		<!--紅騎士盾牌-->
+		<Material Amount="1" ItemId="40529"/>		<!--感謝信-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+			<ShowHtml HtmlId="gerardkE5"/>
+		</Succeed>
+	</MakeItem>
+
+<!--騎士 / 騎士的證明（45）-->
+	<!--關於邪惡勢力 / 馬沙 / 威頓村莊-->
+	<Action Name="quest 20 mashak2" Class="K">
+		<SetQuest Id="Level45" Step="1"/>
+		<ShowHtml HtmlId="mashak2"/>
+	</Action>
+
+	<!--看到巨人守護神的方法 / 志武 / 黃昏山脈-->
+	<Action Name="quest 21 jimuk2" Class="K">
+		<SetQuest Id="Level45" Step="2"/>
+		<ShowHtml HtmlId="jimuk2"/>
+	</Action>
+
+	<!--尋找調查員 / 巨人長老 / 黃昏山脈-->
+	<Action Name="quest 23 giantk2" Class="K">
+		<SetQuest Id="Level45" Step="3"/>
+		<ShowHtml HtmlId="giantk2"/>
+	</Action>
+
+	<!--遞給古代的遺物 / 巨人長老 / 黃昏山脈-->
+	<MakeItem Name="request head part of ancient key" Class="K" AmountInputable="false">
+		<Item Amount="1" ItemId="40534"/>		<!--古代鑰匙(上半部)-->
+		<Material Amount="1" ItemId="40537"/>		<!--古代的遺物-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="4"/>
+			<ShowHtml HtmlId="giantk3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--給予尋找調查員的結果 / 馬沙 / 威頓村莊-->
+	<MakeItem Name="request belt of bravery" Class="K" AmountInputable="false" QuestId="Level45" QuestStep="4">
+		<Item Amount="1" ItemId="20318"/>		<!--勇敢皮帶-->
+		<Material Amount="1" ItemId="20026"/>		<!--夜之視野-->
+		<Material Amount="1" ItemId="40593"/>		<!--調查簿的缺頁-->
+		<Material Amount="1" ItemId="40597"/>		<!--破損的調查簿-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+			<ShowHtml HtmlId="mashak3"/>
+		</Succeed>
+	</MakeItem>
+
+<!--騎士 / 精靈們的騷動（50）-->
+	<!--我願意幫忙 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="g" Class="K" NpcId="70739">
+		<SetQuest Id="Level50" Step="1"/>
+		<ShowHtml HtmlId="dicardingk3"/>
+	</Action>
+
+	<!--繼續聽他述說 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="i" Class="K">
+		<SetQuest Id="Level50" Step="3"/>
+		<ShowHtml HtmlId="dicardingk7"/>
+	</Action>
+
+<!--騎士 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸再進場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="K" NpcId="81346">
+		<Teleport X="32804" Y="32861" Map="2001" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="5"/>
+	</Action>
+
+	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="l" Class="K" AmountInputable="false" NpcId="70739">
+		<Item Amount="1" ItemId="56"/>		<!--黑焰之劍-->
+		<Material Amount="1" ItemId="65"/>		<!--天空之劍-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardingk15"/>
+		</Succeed>
+	</MakeItem>
+
+<!--妖精 / 歐斯的先見之明（15）-->
+	<!--選擇精靈敏捷頭盔 / 歐斯 / 燃柳村莊-->
+	<MakeItem Name="request dex helmet of elven" Class="E" AmountInputable="false" QuestId="Level15" QuestStep="0">
+		<Item Amount="1" ItemId="20021"/>		<!--精靈敏捷頭盔-->
+		<Material Amount="1" ItemId="40609"/>		<!--甘地妖魔魔法書-->
+		<Material Amount="1" ItemId="40610"/>		<!--那魯加妖魔魔法書-->
+		<Material Amount="1" ItemId="40611"/>		<!--都達瑪拉妖魔魔法書-->
+		<Material Amount="1" ItemId="40612"/>		<!--阿吐巴妖魔魔法書-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--選擇精靈體質頭盔 / 歐斯 / 燃柳村莊-->
+	<MakeItem Name="request con helmet of elven" Class="E" AmountInputable="false" QuestId="Level15" QuestStep="0">
+		<Item Amount="1" ItemId="20039"/>		<!--精靈體質頭盔-->
+		<Material Amount="1" ItemId="40609"/>		<!--甘地妖魔魔法書-->
+		<Material Amount="1" ItemId="40610"/>		<!--那魯加妖魔魔法書-->
+		<Material Amount="1" ItemId="40611"/>		<!--都達瑪拉妖魔魔法書-->
+		<Material Amount="1" ItemId="40612"/>		<!--阿吐巴妖魔魔法書-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--妖精 / 達克馬勒的威脅（30）-->
+	<!--進行成人儀式 / 迷幻森林之母 / 妖精森林-->
+	<Action Name="quest 12 motherEE2" Class="E">
+		<SetQuest Id="Level30" Step="1"/>
+		<ShowHtml HtmlId="motherEE2"/>
+	</Action>
+
+	<!--遞給受詛咒的精靈書 / 迷幻森林之母 / 妖精森林-->
+	<MakeItem Name="request questitem2" Class="E" AmountInputable="false" QuestId="Level30" QuestStep="1">
+		<Item Amount="1" ItemId="40588"/>		<!--妖精族寶物-->
+		<Material Amount="1" ItemId="40592"/>		<!--受詛咒的精靈書-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--妖精 / 妖精的任務（45）-->
+	<!--關於邪惡勢力 / 馬沙 / 威頓村莊-->
+	<Action Name="quest 14 mashae2" Class="E">
+		<SetQuest Id="Level45" Step="1"/>
+		<ShowHtml HtmlId="mashae2"/>
+	</Action>
+
+	<!--詢問需要幫助的事情 / 希托 / 吉普賽村-->
+	<Action Name="quest 15 heit2" Class="E">
+		<SetQuest Id="Level45" Step="2"/>
+		<ShowHtml HtmlId="heit2"/>
+	</Action>
+
+	<!--遞給藍色長笛 / 希托 / 吉普賽村-->
+	<MakeItem Name="request mystery shell" Class="E" AmountInputable="false">
+		<Item Amount="1" ItemId="40566"/>		<!--神秘貝殼-->
+		<Material Amount="1" ItemId="40602"/>		<!--藍色長笛-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="3"/>
+			<ShowHtml HtmlId="heit3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--關於水之豎琴 / 希托 / 吉普賽村-->
+	<Action Name="quest 17 heit5" Class="E">
+		<SetQuest Id="Level45" Step="4"/>
+		<ShowHtml HtmlId="heit5"/>
+	</Action>
+
+	<!--給予調查的結果 / 馬沙 / 威頓村莊-->
+	<MakeItem Name="request bag of masha" Class="E" AmountInputable="false" QuestId="Level45" QuestStep="4">
+		<Item Amount="1" ItemId="40546"/>		<!--馬沙之袋-->
+		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+			<ShowHtml HtmlId="mashae3"/>
+		</Succeed>
+	</MakeItem>
+
+<!--妖精 / 協助間諜大逃亡（50）-->
+	<!--詢問詳細事項 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="m" Class="E" NpcId="70739">
+		<SetQuest Id="Level50" Step="1"/>
+		<ShowHtml HtmlId="dicardinge3"/>
+	</Action>
+
+	<!--現在立即去調查 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="o" Class="E" NpcId="70739">
+		<SetQuest Id="Level50" Step="3"/>
+		<ShowHtml HtmlId="dicardinge7"/>
+	</Action>
+
+<!--妖精 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸後入場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="E" NpcId="81347">
+		<Teleport X="32804" Y="32861" Map="2002" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="6"/>
+	</Action>
+
+	<!--拿出破壞祭壇證明後接收赤焰之弓 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="y" Class="E" AmountInputable="false" NpcId="70739">
+		<Item Amount="1" ItemId="184"/>		<!--赤焰之弓-->
+		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardinge16"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--拿出破壞祭壇證明後接收赤焰之劍 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="s" Class="E" AmountInputable="false" NpcId="70739">
+		<Item Amount="1" ItemId="50"/>		<!--赤焰之劍-->
+		<Material Amount="1" ItemId="192"/>		<!--水精靈之弓-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardinge16"/>
+		</Succeed>
+	</MakeItem>
+
+<!--法師 / 詹姆的請求（15）-->
+	<!--交給食屍鬼的牙齒與指甲 / 詹姆 / 說話之島村莊-->
+	<MakeItem Name="request cursed spellbook" Class="W" AmountInputable="false">
+		<Item Amount="1" ItemId="40591"/>		<!--受詛咒的魔法書-->
+		<Material Amount="1" ItemId="40538"/>		<!--食屍鬼的指甲-->
+		<Material Amount="1" ItemId="40539"/>		<!--食屍鬼的牙齒-->
+	</MakeItem>
+
+	<!--交給骷髏頭及受詛咒的魔法書 / 詹姆 / 說話之島村莊-->
+	<MakeItem Name="request book of magical powers" Class="W" AmountInputable="false" QuestId="Level15" QuestStep="0">
+		<Item Amount="1" ItemId="20226"/>		<!--魔法能量之書-->
+		<Material Amount="1" ItemId="40591"/>		<!--受詛咒的魔法書-->
+		<Material Amount="1" ItemId="40605"/>		<!--骷髏頭-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--法師 / 不死族的叛徒（30）-->
+	<!--接受吉倫的建議 / 吉倫 / 說話之島-->
+	<Action Name="quest 12 gerengT2" Class="W">
+		<SetQuest Id="Level30" Step="1"/>
+		<ShowHtml HtmlId="gerengT2"/>
+	</Action>
+
+	<!--交出不死族的骨頭 / 吉倫 / 說話之島-->
+	<MakeItem Name="request bone piece of undead" Class="W" AmountInputable="false">
+		<Item Amount="1" ItemId="40580"/>		<!--不死族的骨頭碎片-->
+		<Material Amount="1" ItemId="40579"/>		<!--不死族的骨頭-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="2"/>
+			<ShowHtml HtmlId="gerengT3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--取得魔法師必須的物品 / 吉倫 / 說話之島-->
+	<Action Name="quest 14 gerengT4" Class="W">
+		<SetQuest Id="Level30" Step="3"/>
+		<ShowHtml HtmlId="gerengT4"/>
+	</Action>
+
+	<!--交給神秘水晶球 / 吉倫 / 說話之島-->
+	<MakeItem Name="request mystery staff" Class="W" AmountInputable="false">
+		<Item Amount="1" ItemId="40569"/>		<!--神秘魔杖-->
+		<Material Amount="1" ItemId="40567"/>		<!--神秘水晶球-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="4"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--關於不死族的骨頭碎片 / 塔拉斯 / 象牙塔3樓-->
+	<Action Name="quest 16 talassE2" Class="W">
+		<SetQuest Id="Level30" Step="5"/>
+		<ShowHtml HtmlId="talassE2"/>
+	</Action>
+
+	<!--遞給不死族的骨頭碎片 / 塔拉斯 / 象牙塔3樓-->
+	<MakeItem Name="request crystal staff" Class="W" AmountInputable="false" QuestId="Level30" QuestStep="5">
+		<Item Amount="1" ItemId="115"/>		<!--水晶魔杖-->
+		<Material Amount="1" ItemId="40569"/>		<!--神秘魔杖-->
+		<Material Amount="1" ItemId="40580"/>		<!--不死族的骨頭碎片-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--法師 / 法師的考驗（45）-->
+	<!--關於神奇的生命體 / 塔拉斯 / 象牙塔3樓-->
+	<Action Name="quest 18 talassmq2" Class="W">
+		<SetQuest Id="Level45" Step="1"/>
+		<ShowHtml HtmlId="talassmq2"/>
+	</Action>
+
+	<!--神秘岩石的要求 / 神秘的岩石 / 鏡子森林-->
+	<Action Name="quest 19 stoenm2" Class="W">
+		<SetQuest Id="Level45" Step="2"/>
+		<ShowHtml HtmlId="stoenm2"/>
+	</Action>
+
+	<!--遞給所要求的物品 / 神秘的岩石 / 鏡子森林-->
+	<MakeItem Name="request scroll about ancient evil" Class="W" AmountInputable="false">
+		<Item Amount="1" ItemId="40536"/>		<!--古代惡魔的記載-->
+		<Material Amount="1" ItemId="40189"/>		<!--魔法書(魔法相消術)-->
+		<Material Amount="1" ItemId="40542"/>		<!--變形怪的血-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="3"/>
+			<ShowHtml HtmlId="stoenm3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--給予調查的結果 / 塔拉斯 / 象牙塔3樓-->
+	<MakeItem Name="request magic bag of talass" Class="W" AmountInputable="false" QuestId="Level45" QuestStep="3">
+		<Item Amount="1" ItemId="40599"/>		<!--塔拉斯的魔法袋-->
+		<Material Amount="1" ItemId="40536"/>		<!--古代惡魔的記載-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--法師 / 取回間諜的報告書（50）-->
+	<!--接受迪嘉勒廷公爵的請求 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="t" Class="W" NpcId="70739">
+		<SetQuest Id="Level50" Step="1"/>
+		<ShowHtml HtmlId="dicardingw3"/>
+	</Action>
+
+	<!--詢問可以幫忙什麼 / 公爵之間諜 / 魔族神殿-->
+	<Action Name="quest 27 dspym2" Class="W">
+		<SetQuest Id="Level50" Step="2"/>
+		<ShowHtml HtmlId="dspym2"/>
+	</Action>
+
+	<!--我去破壞再生聖殿 / 迪嘉勒廷 / 象牙塔3樓-->
+	<Action Name="v" Class="W" NpcId="70739">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="dicardingw9"/>
+	</Action>
+
+<!--法師 / 不死魔族再生的秘密（50）-->
+	<!--手去觸摸再進場 / 往聖殿的入口 / 魔族神殿-->
+	<Action Name="ent" Class="W" NpcId="81348">
+		<Teleport X="32804" Y="32861" Map="2003" Heading="5" Price="0"/>
+		<SetQuest Id="Level50" Step="5"/>
+	</Action>
+
+	<!--提供祭壇的碎片，並告知已破壞祭壇的事情 / 迪嘉勒廷 / 象牙塔3樓-->
+	<MakeItem Name="x" Class="W" AmountInputable="false" NpcId="70739">
+		<Item Amount="1" ItemId="20225"/>		<!--瑪那水晶球-->
+		<Material Amount="1" ItemId="133"/>		<!--古代人的智慧-->
+		<Material Amount="1" ItemId="49241"/>		<!--祭壇的碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="dicardingw14"/>
+		</Succeed>
+	</MakeItem>
+
+<!--黑暗妖精 / 妖魔的侵入（15）-->
+	<!--接受簡單的任務 / 康 / 沉默洞穴-->
+	<Action Name="quest 11 kanguard2" Class="D">
+		<SetQuest Id="Level15" Step="1"/>
+		<ShowHtml HtmlId="kanguard2"/>
+	</Action>
+
+	<!--遞給妖魔長老首級 / 康 / 沉默洞穴-->
+	<MakeItem Name="request kanbag" Class="D" AmountInputable="false" QuestId="Level15" QuestStep="1">
+		<Item Amount="1" ItemId="40598"/>		<!--康之袋-->
+		<Material Amount="1" ItemId="40585"/>		<!--妖魔長老首級-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+			<ShowHtml HtmlId="kanguard3"/>
+		</Succeed>
+	</MakeItem>
+
+<!--黑暗妖精 / 同族的背叛（30）-->
+	<!--接受倫得的建議 / 倫得 / 沉默洞穴-->
+	<Action Name="quest 13 ronde2" Class="D">
+		<SetQuest Id="Level30" Step="1"/>
+		<ShowHtml HtmlId="ronde2"/>
+	</Action>
+
+	<!--交出秘密名單 / 倫得 / 沉默洞穴-->
+	<MakeItem Name="request close list of assassination" Class="D" AmountInputable="false">
+		<Item Amount="1" ItemId="40556"/>		<!--暗殺名單之袋-->
+		<Material Amount="1" ItemId="40554"/>		<!--秘密名單-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="2"/>
+			<ShowHtml HtmlId="ronde3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--接受古代刺客咒術 / 倫得 / 沉默洞穴-->
+	<Action Name="quest 15 ronde4" Class="D">
+		<SetQuest Id="Level30" Step="3"/>
+		<ShowHtml HtmlId="ronde4"/>
+	</Action>
+
+	<!--交出死亡誓約 / 倫得 / 沉默洞穴-->
+	<MakeItem Name="request rondebag" Class="D" AmountInputable="false" QuestId="Level30" QuestStep="3">
+		<Item Amount="1" ItemId="40545"/>		<!--倫得之袋-->
+		<Material Amount="1" ItemId="40596"/>		<!--死亡誓約-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+			<ShowHtml HtmlId="ronde5"/>
+		</Succeed>
+	</MakeItem>
+
+<!--黑暗妖精 / 糾正錯誤的觀念（45）-->
+	<!--關於糾正錯誤觀念 / 布魯迪卡 / 布魯迪卡洞穴-->
+	<Action Name="quest 17 bluedikaq2" Class="D">
+		<SetQuest Id="Level45" Step="1"/>
+		<ShowHtml HtmlId="bluedikaq2"/>
+	</Action>
+
+	<!--如何才能見到刺客首領 / 刺客首領護衛 / 眠龍洞穴外圍-->
+	<Action Name="quest 18 assassin2" Class="D">
+		<SetQuest Id="Level45" Step="2"/>
+		<ShowHtml HtmlId="assassin2"/>
+	</Action>
+
+	<!--我要證明你是錯的 / 羅吉 / 歐瑞村莊-->
+	<Action Name="quest 19 roje12" Class="D">
+		<SetQuest Id="Level45" Step="3"/>
+		<ShowHtml HtmlId="roje12"/>
+	</Action>
+
+	<!--給予雪怪首級 / 羅吉 / 歐瑞村莊-->
+	<MakeItem Name="request mark of assassin" Class="D" AmountInputable="false">
+		<Item Amount="1" ItemId="40572"/>		<!--刺客之證-->
+		<Material Amount="1" ItemId="40584"/>		<!--雪怪首級-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="4"/>
+			<ShowHtml HtmlId="roje13"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--關於生鏽的刺客之劍 / 羅吉 / 歐瑞村莊-->
+	<Action Name="quest 21 roje14" Class="D">
+		<SetQuest Id="Level45" Step="5"/>
+		<ShowHtml HtmlId="roje14"/>
+	</Action>
+
+	<!--給予死亡之證及刺客之證 / 布魯迪卡 / 布魯迪卡洞穴-->
+	<MakeItem Name="request bluedikabag" Class="D" AmountInputable="false" QuestId="Level45" QuestStep="5">
+		<Item Amount="1" ItemId="40553"/>		<!--布魯迪卡之袋-->
+		<Material Amount="1" ItemId="40572"/>		<!--刺客之證-->
+		<Material Amount="1" ItemId="40595"/>		<!--死亡之證-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+			<ShowHtml HtmlId="bluedikaq3"/>
+		</Succeed>
+	</MakeItem>
+
+<!--黑暗妖精 / 尋找黑暗之星（50）-->
+	<!--執行任務 / 布魯迪卡 / 布魯迪卡洞穴-->
+	<Action Name="quest 24 bluedikaq7" Class="D">
+		<SetQuest Id="Level50" Step="1"/>
+		<ShowHtml HtmlId="bluedikaq7"/>
+	</Action>
+
+	<!--遞給調查結果物 / 奇馬 / 沉默洞穴-->
+	<MakeItem Name="request mask of true" Class="D" AmountInputable="false">
+		<Item Amount="1" ItemId="20037"/>       <!--真實的面具-->
+		<Material Amount="1" ItemId="40583"/>   <!--安迪亞之信-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="3"/>
+			<ShowHtml HtmlId="kimaq3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--關於靈魂枯竭的土地 / 奇馬 / 沉默洞穴-->
+	<Action Name="quest 26 kimaq4" Class="D">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="kimaq4"/>
+	</Action>
+
+	<!--遞給黑暗之星 / 布魯迪卡 / 布魯迪卡洞穴-->
+	<MakeItem Name="request finger of death" Class="D" AmountInputable="false">
+		<Item Amount="1" ItemId="13"/>          <!--死亡之指-->
+		<Material Amount="1" ItemId="20037"/>   <!--真實的面具-->
+		<Material Amount="1" ItemId="40541"/>   <!--黑暗之星-->
+		<Material Amount="1" ItemId="40603"/>   <!--蘑菇毒液-->
+		<Material Amount="1" ItemId="40648"/>   <!--生銹的刺客之劍-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+			<ShowHtml HtmlId="bluedikaq8"/>
+		</Succeed>
+	</MakeItem>
+
+<!--龍騎士 / 行跡可疑的妖魔們（15）-->
+	<!--將妖魔搜索文件交出 / 長老 普洛凱爾 / 貝希摩斯村莊-->
+	<MakeItem Name="b" Class="R" NpcId="80136" AmountInputable="false" QuestId="Level15" QuestStep="1">
+		<Item Amount="1" ItemId="275"/>		<!--龍騎士雙手劍-->
+		<Item Amount="1" ItemId="49102"/>		<!--龍騎士書板(龍之護鎧)-->
+		<Material Amount="1" ItemId="49217"/>		<!--妖魔搜索文件(妖魔森林)-->
+		<Material Amount="1" ItemId="49218"/>		<!--妖魔搜索文件(古魯丁)-->
+		<Material Amount="1" ItemId="49219"/>		<!--妖魔搜索文件(風木)-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+			<ShowHtml HtmlId="prokel5"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="prokel6"/>
+		</Fail>
+	</MakeItem>
+
+<!--龍騎士 / 妖魔密使首領的情報（30）-->
+	<!--交出妖魔密使首領間諜書 / 長老 普洛凱爾 / 貝希摩斯村莊-->
+	<MakeItem Name="d" Class="R" NpcId="80136" AmountInputable="false" QuestId="Level30" QuestStep="1">
+		<Item Amount="1" ItemId="49107"/>		<!--龍騎士書板(血之渴望)-->
+		<Item Amount="1" ItemId="49213"/>		<!--普洛凱爾的第一次信件-->
+		<Material Amount="1" ItemId="49221"/>		<!--妖魔密使首領間諜書-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="2"/>
+			<ShowHtml HtmlId="prokel11"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="prokel12"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出普洛凱爾的第一次信件 / 塔爾立昂 / 貝希摩斯村莊-->
+	<MakeItem Name="a" Class="R" NpcId="80134" AmountInputable="false" QuestId="Level30" QuestStep="2">
+		<Item Amount="1" ItemId="21103"/>		<!--龍鱗臂甲-->
+		<Material Amount="1" ItemId="49213"/>		<!--普洛凱爾的第一次信件-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+			<ShowHtml HtmlId="talrion2"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="talrion3"/>
+		</Fail>
+	</MakeItem>
+
+<!--龍騎士 / 與幻術士締結同盟（45）-->
+	<!--交出雪怪之心10個 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="n" Class="R" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="3">
+		<Item Amount="1" ItemId="49224"/>		<!--幻術士同盟徽印-->
+		<Material Amount="10" ItemId="49225"/>	<!--雪怪之心-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="4"/>
+			<ShowHtml HtmlId="silrein41"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein42"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出幻術士同盟徽印 / 長老 普洛凱爾 / 貝希摩斯村莊-->
+	<MakeItem Name="g" Class="R" NpcId="80136" AmountInputable="false" QuestId="Level45" QuestStep="4">
+		<Item Amount="1" ItemId="49214"/>		<!--普洛凱爾的第二次信件-->
+		<Material Amount="1" ItemId="49224"/>		<!--幻術士同盟徽印-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="5"/>
+			<ShowHtml HtmlId="prokel18"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="prokel19"/>
+		</Fail>
+	</MakeItem>
+
+	<!--普洛凱爾的第二次信件 / 塔爾立昂 / 貝希摩斯村莊-->
+	<MakeItem Name="b" Class="R" NpcId="80134" AmountInputable="false" QuestId="Level45" QuestStep="5">
+		<Item Amount="1" ItemId="21102"/>		<!--龍騎士斗篷-->
+		<Material Amount="1" ItemId="49214"/>		<!--普洛凱爾的第二次信件-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+			<ShowHtml HtmlId="talrion7"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="talrion8"/>
+		</Fail>
+	</MakeItem>
+
+<!--龍騎士 / 時空彼端的線索（50）-->
+	<!--交出時空裂痕碎片100個 / 長老 普洛凱爾 / 貝希摩斯村莊-->
+	<MakeItem Name="i" Class="R" NpcId="80136" AmountInputable="false" QuestId="Level50" QuestStep="1">
+		<Item Amount="1" ItemId="49202"/>		<!--時空裂痕邪念碎片-->
+		<Item Amount="1" ItemId="49216"/>		<!--普洛凱爾的護身符-->
+		<Item Amount="1" ItemId="49288"/>		<!--普洛凱爾的第五次指令書-->
+		<Material Amount="100" ItemId="49101"/>		<!--時空裂痕碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="2"/>
+			<ShowHtml HtmlId="prokel23"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="prokel31"/>
+		</Fail>
+	</MakeItem>
+
+	<!--奉獻異界邪念粉末 / 紅色靈魂之火 / 異界奎斯特-->
+	<MakeItem Name="a" Class="R" NpcId="81310" AmountInputable="false" QuestId="Level50" QuestStep="2">
+		<Item Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Item Amount="1" ItemId="49227"/>		<!--紅色之火碎片-->
+		<Material Amount="10" ItemId="49229"/>		<!--異界邪念粉末-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="3"/>
+			<ShowHtml HtmlId="redsoul_f2"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="redsoul_f3"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出路西爾斯邪念碎片與靈魂之火灰燼 / 長老 普洛凱爾 / 貝希摩斯村莊-->
+	<MakeItem Name="j" Class="R" NpcId="80136" AmountInputable="false" QuestId="Level50" QuestStep="3">
+		<Item Amount="1" ItemId="49228"/>		<!--發光的銀塊-->
+		<Material Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Material Amount="1" ItemId="49231"/>		<!--路西爾斯邪念碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="4"/>
+			<ShowHtml HtmlId="prokel26"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="prokel22"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出發光的銀塊 / 塔爾立昂 / 貝希摩斯村莊-->
+	<MakeItem Name="c" Class="R" NpcId="80134" AmountInputable="false" QuestId="Level50" QuestStep="4">
+		<Item Amount="1" ItemId="49230"/>		<!--塔爾立昂的武器材料清單-->
+		<Material Amount="1" ItemId="49228"/>		<!--發光的銀塊-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="5"/>
+			<ShowHtml HtmlId="talrion5"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="talrion6"/>
+		</Fail>
+	</MakeItem>
+
+	<!--製作破滅者鎖鏈劍 / 鐵匠 皮爾 / 貝希摩斯村莊-->
+	<MakeItem Name="request chainsword extinctioner" Class="R" NpcId="80133" AmountInputable="false" QuestId="Level50" QuestStep="5">
+		<Item Amount="1" ItemId="272"/>		<!--消滅者鎖鏈劍-->
+		<Material Amount="1" ItemId="49230"/>		<!--塔爾立昂的武器材料清單-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--幻術士 / 眠龍洞穴污染的來源（15）-->
+	<!--交出分析污染原因的物品 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="b" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level15" QuestStep="1">
+		<Item Amount="1" ItemId="269"/>		<!--幻術士魔杖-->
+		<Item Amount="1" ItemId="49121"/>		<!--記憶水晶(立方：燃燒)-->
+		<Material Amount="10" ItemId="49169"/>	<!--污濁妖魔之心-->
+		<Material Amount="1" ItemId="49170"/>		<!--污濁精靈核晶-->
+		<Material Amount="1" ItemId="40510"/>		<!--污濁安特的樹皮-->
+		<Material Amount="1" ItemId="40511"/>		<!--污濁安特的水果-->
+		<Material Amount="1" ItemId="40512"/>		<!--污濁安特的樹枝-->
+		<Succeed>
+			<SetQuest Id="Level15" Step="End"/>
+			<ShowHtml HtmlId="silrein7"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein8"/>
+		</Fail>
+	</MakeItem>
+
+<!--幻術士 / 艾爾摩戰場的軌跡（30）-->
+	<!--交出艾爾摩部隊日記 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="d" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level30" QuestStep="1">
+		<Item Amount="1" ItemId="21101"/>		<!--幻術士法書-->
+		<Item Amount="1" ItemId="49131"/>		<!--記憶水晶(立方：衝擊)-->
+		<Material Amount="1" ItemId="49191"/>		<!--艾爾摩部隊日記-->
+		<Succeed>
+			<SetQuest Id="Level30" Step="End"/>
+			<ShowHtml HtmlId="silrein13"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein12"/>
+		</Fail>
+	</MakeItem>
+
+<!--幻術士 / 白蟻出現的理由（45）-->
+	<!--使用時空裂痕水晶(綠色) / 第一個白蟻的屍體 / 巨蟻洞穴-->
+	<MakeItem Name="a" Class="I" NpcId="81247" AmountInputable="false" QuestId="Level45" QuestStep="1">
+		<Item Amount="1" ItemId="49194"/>		<!--第一次記憶碎片-->
+		<Material Amount="1" ItemId="49192"/>		<!--時空裂痕水晶(綠色)-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="2"/>
+			<ShowHtml HtmlId="wcorpse3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wcorpse1"/>
+		</Fail>
+	</MakeItem>
+
+	<!--使用時空裂痕水晶(綠色) / 第二個白蟻的屍體 / 巨蟻洞穴-->
+	<MakeItem Name="a" Class="I" NpcId="81248" AmountInputable="false" QuestId="Level45" QuestStep="2">
+		<Item Amount="1" ItemId="49195"/>		<!--第二次記憶碎片-->
+		<Material Amount="1" ItemId="49192"/>		<!--時空裂痕水晶(綠色)-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="3"/>
+			<ShowHtml HtmlId="wcorpse6"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wcorpse4"/>
+		</Fail>
+	</MakeItem>
+
+	<!--使用時空裂痕水晶(綠色) / 第三個白蟻的屍體 / 巨蟻洞穴-->
+	<MakeItem Name="a" Class="I" NpcId="81249" AmountInputable="false" QuestId="Level45" QuestStep="3">
+		<Item Amount="1" ItemId="49196"/>		<!--第三次記憶碎片-->
+		<Material Amount="1" ItemId="49192"/>		<!--時空裂痕水晶(綠色)-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="4"/>
+			<ShowHtml HtmlId="wcorpse9"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wcorpse7"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出記憶的碎片 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="f" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="4">
+		<Item Amount="1" ItemId="49175"/>		<!--希蓮恩的第四次信件-->
+		<Item Amount="1" ItemId="49185"/>		<!--威頓村莊瞬間移動卷軸-->
+		<Item Amount="3" ItemId="49193"/>		<!--時空裂痕水晶(藍色)-->
+		<Material Amount="1" ItemId="49194"/>		<!--第一次記憶碎片-->
+		<Material Amount="1" ItemId="49195"/>		<!--第二次記憶碎片-->
+		<Material Amount="1" ItemId="49196"/>		<!--第三次記憶碎片-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="5"/>
+			<ShowHtml HtmlId="silrein22"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein21"/>
+		</Fail>
+	</MakeItem>
+
+	<!--使用時空裂痕水晶(藍色) / 白蟻的痕跡(土壤) / 火龍窟-->
+	<MakeItem Name="a" Class="I" NpcId="81250" AmountInputable="false" QuestId="Level45" QuestStep="5">
+		<Item Amount="1" ItemId="49197"/>		<!--第一次邪念碎片-->
+		<Material Amount="1" ItemId="49193"/>		<!--時空裂痕水晶(藍色)-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="6"/>
+			<ShowHtml HtmlId="wa_earth3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wa_earth1"/>
+		</Fail>
+	</MakeItem>
+
+	<!--使用時空裂痕水晶(藍色) / 白蟻的痕跡(酸性液) / 火龍窟-->
+	<MakeItem Name="a" Class="I" NpcId="81251" AmountInputable="false" QuestId="Level45" QuestStep="6">
+		<Item Amount="1" ItemId="49198"/>		<!--第二次邪念碎片-->
+		<Material Amount="1" ItemId="49193"/>		<!--時空裂痕水晶(藍色)-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="7"/>
+			<ShowHtml HtmlId="wa_acidw3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wa_acidw1"/>
+		</Fail>
+	</MakeItem>
+
+	<!--使用時空裂痕水晶(藍色) / 白蟻的痕跡(蛋殼) / 火龍窟-->
+	<MakeItem Name="a" Class="I" NpcId="81252" AmountInputable="false" QuestId="Level45" QuestStep="7">
+		<Item Amount="1" ItemId="49199"/>		<!--第三次邪念碎片-->
+		<Material Amount="1" ItemId="49193"/>		<!--時空裂痕水晶(藍色)-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="8"/>
+			<ShowHtml HtmlId="wa_egg3"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="wa_egg1"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出時空裂痕邪念碎片 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="g" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level45" QuestStep="8">
+		<Item Amount="1" ItemId="21100"/>		<!--幻術士斗篷-->
+		<Material Amount="1" ItemId="49202"/>		<!--時空裂痕邪念碎片-->
+		<Succeed>
+			<SetQuest Id="Level45" Step="End"/>
+			<ShowHtml HtmlId="silrein25"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein24"/>
+		</Fail>
+	</MakeItem>
+
+<!--幻術士 / 時空彼端的線索（50）-->
+	<!--交出時空裂痕碎片100個 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="i" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level50" QuestStep="1">
+		<Item Amount="1" ItemId="49177"/>		<!--希蓮恩的第六次信件-->
+		<Item Amount="1" ItemId="49178"/>		<!--希蓮恩的護身符-->
+		<Item Amount="1" ItemId="49202"/>		<!--時空裂痕邪念碎片-->
+		<Material Amount="100" ItemId="49101"/>		<!--時空裂痕碎片-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="2"/>
+			<ShowHtml HtmlId="silrein31"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="silrein30"/>
+		</Fail>
+	</MakeItem>
+
+	<!--供奉魔族之血 / 藍色靈魂之火 / 異界奎斯特-->
+	<MakeItem Name="a" Class="I" NpcId="81311" AmountInputable="false" QuestId="Level50" QuestStep="2">
+		<Item Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Item Amount="1" ItemId="49208"/>		<!--藍色之火碎片-->
+		<Material Amount="5" ItemId="49203"/>		<!--食腐獸之血-->
+		<Material Amount="5" ItemId="49204"/>		<!--翼龍之血-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="3"/>
+			<ShowHtml HtmlId="bluesoul_f2"/>
+		</Succeed>
+		<Fail>
+			<ShowHtml HtmlId="bluesoul_f3"/>
+		</Fail>
+	</MakeItem>
+
+	<!--交出塞維斯邪念碎片 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<Action Name="k" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level50" QuestStep="3">
+		<SetQuest Id="Level50" Step="4"/>
+		<ShowHtml HtmlId="silrein35"/>
+	</Action>
+
+	<!--交出塞維斯邪念碎片與靈魂之火灰燼 / 長老 希蓮恩 / 希培莉亞村莊-->
+	<MakeItem Name="j" Class="I" NpcId="80145" AmountInputable="false" QuestId="Level50" QuestStep="4">
+		<Item Amount="1" ItemId="49171"/>		<!--希蓮恩的指令書-->
+		<Item Amount="1" ItemId="49205"/>		<!--特別的原石-->
+		<Material Amount="1" ItemId="49206"/>		<!--塞維斯邪念碎片-->
+		<Material Amount="1" ItemId="49207"/>		<!--靈魂之火灰燼-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="5"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--提供希蓮恩的推薦書與特別的原石 / 鐵匠 巴特爾 / 希培莉亞村莊-->
+	<MakeItem Name="request sapphire kiringku" Class="I" NpcId="80142" AmountInputable="false" QuestId="Level50" QuestStep="5">
+		<Item Amount="1" ItemId="270"/>		<!--藍寶石奇古獸-->
+		<Material Amount="1" ItemId="49171"/>		<!--希蓮恩的指令書-->
+		<Material Amount="1" ItemId="49205"/>		<!--特別的原石-->
+		<Succeed>
+			<SetQuest Id="Level50" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--爺爺的寶物（15↑）-->
+	<!--撿起寶石 / 第三個藏寶圖地點 / 海賊島-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="71067,71068,71069,71070,71071,71072" AmountInputable="false">
+		<Item Amount="1" ItemId="40716"/>		<!--爺爺的寶物-->
+		<Material Amount="1" ItemId="40701"/>		<!--小藏寶圖-->
+		<Succeed>
+			<ShowHtml HtmlId="maptbox2"/>
+			<SetQuest Id="lukein" Step="11"/>
+			<SetQuest Id="tbox3" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--接受項鍊 / 路卡音 / 海賊島村莊-->
+	<MakeItem Name="1" Class="PWEKDRI" NpcId="71055" AmountInputable="false">
+		<Item Amount="1" ItemId="20269"/>		<!--骷髏項鍊-->
+		<Material Amount="1" ItemId="40716"/>		<!--爺爺的寶物-->
+		<Succeed>
+			<ShowHtml HtmlId="lukein0"/>
+			<SetQuest Id="lukein" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--德雷克的寶藏前置任務 / 隱藏的事實（18↑）-->
+	<!--還給戒指 / 萊斯塔 / 海賊島村莊-->
+	<MakeItem Name="D" Class="PWEKDRI" NpcId="71060" AmountInputable="false">
+		<Item Amount="1" ItemId="40647"/>		<!--藏寶圖碎片-->
+		<Material Amount="1" ItemId="40631"/>		<!--萊斯塔的戒指-->
+		<Succeed>
+			<ShowHtml HtmlId="resta15"/>
+			<SetQuest Id="resta" Step="End"/>
+		</Succeed>
+	</MakeItem>
+	
+<!--德雷克的寶藏前置任務 / 完整的藏寶圖（18↑）-->
+	<!--接受完成的藏寶圖 / 卡得穆斯 / 海賊島村莊-->
+	<MakeItem Name="B" Class="PWEKDRI" NpcId="71061" AmountInputable="false">
+		<Item Amount="1" ItemId="40692"/>		<!--完成的藏寶圖-->
+		<Material Amount="1" ItemId="40711"/>		<!--卡得穆斯項練-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="cadmus" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--德雷克的寶藏 / 德雷克的真實（40↑）-->
+	<!--選擇榮耀之劍 / 卡蜜拉的靈魂 / 卡蜜拉的房間-->
+	<MakeItem Name="g" Class="PWEKDRI" NpcId="71036" AmountInputable="false" QuestId="kamyla" QuestStep="4">
+		<Item Amount="1" ItemId="33"/>		<!--榮耀之劍-->
+		<Material Amount="1" ItemId="40717"/>		<!--弄縐的情書-->
+		<Succeed>
+			<ShowHtml HtmlId="kamyla25"/>
+			<SetQuest Id="kamyla" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--選擇深淵雙刀 / 卡蜜拉的靈魂 / 卡蜜拉的房間-->
+	<MakeItem Name="h" Class="PWEKDRI" NpcId="71036" AmountInputable="false" QuestId="kamyla" QuestStep="4">
+		<Item Amount="1" ItemId="79"/>		<!--深淵雙刀-->
+		<Material Amount="1" ItemId="40717"/>		<!--弄縐的情書-->
+		<Succeed>
+			<ShowHtml HtmlId="kamyla25"/>
+			<SetQuest Id="kamyla" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--選擇寂靜十字弓 / 卡蜜拉的靈魂 / 卡蜜拉的房間-->
+	<MakeItem Name="i" Class="PWEKDRI" NpcId="71036" AmountInputable="false" QuestId="kamyla" QuestStep="4">
+		<Item Amount="1" ItemId="178"/>		<!--寂靜十字弓-->
+		<Material Amount="1" ItemId="40717"/>		<!--弄縐的情書-->
+		<Succeed>
+			<ShowHtml HtmlId="kamyla25"/>
+			<SetQuest Id="kamyla" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--選擇漆黑水晶球 / 卡蜜拉的靈魂 / 卡蜜拉的房間-->
+	<MakeItem Name="j" Class="PWEKDRI" NpcId="71036" AmountInputable="false" QuestId="kamyla" QuestStep="4">
+		<Item Amount="1" ItemId="118"/>		<!--漆黑水晶球-->
+		<Material Amount="1" ItemId="40717"/>		<!--弄縐的情書-->
+		<Succeed>
+			<ShowHtml HtmlId="kamyla25"/>
+			<SetQuest Id="kamyla" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--選擇信念之盾 / 卡蜜拉的靈魂 / 卡蜜拉的房間-->
+	<MakeItem Name="k" Class="PWEKDRI" NpcId="71036" AmountInputable="false" QuestId="kamyla" QuestStep="4">
+		<Item Amount="1" ItemId="20234"/>		<!--信念之盾-->
+		<Material Amount="1" ItemId="40717"/>		<!--弄縐的情書-->
+		<Succeed>
+			<ShowHtml HtmlId="kamyla25"/>
+			<SetQuest Id="kamyla" Step="End"/>
+		</Succeed>
+	</MakeItem>
+	
+<!--蜥蜴人的寶物（40↑）-->
+	<!--請你收下這個 / 蜥蜴人長老 / 蜥蜴人村莊-->
+	<MakeItem Name="C" Class="PWEKDRI" NpcId="71074" AmountInputable="false" QuestId="lizard" QuestStep="3">
+		<Item Amount="1" ItemId="20167"/>		<!--蜥蜴王手套-->
+		<Material Amount="1" ItemId="40634"/>		<!--蜥蜴人的寶物-->
+		<Succeed>
+			<ShowHtml HtmlId="lelder13"/>
+			<SetQuest Id="lizard" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--友好度提升（45-51）24小時限制-->
+	<!--吃下從魔族得來的井水 / 污濁的布拉伯 / 眠龍洞穴1樓-->
+	<MakeItem Name="k" Class="PWEKDRI" NpcId="81208" AmountInputable="false" QuestId="desire" QuestStep="1">
+		<Item Amount="1" ItemId="41138"/>		<!--火焰之影的井水-->
+		<Material Amount="1" ItemId="41135"/>		<!--火焰之影的墮落井水-->
+		<Material Amount="1" ItemId="41136"/>		<!--火焰之影的無力井水-->
+		<Material Amount="1" ItemId="41137"/>		<!--火焰之影的執著井水-->
+		<Succeed>
+			<ShowHtml HtmlId="minibrob03"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--吃下從魔族得來的井水 / 污濁的布拉伯 / 眠龍洞穴1樓-->
+	<MakeItem Name="k" Class="PWEKDRI" NpcId="81208" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41129"/>		<!--炎魔的井水-->
+		<Material Amount="1" ItemId="41126"/>		<!--炎魔的墮落井水-->
+		<Material Amount="1" ItemId="41127"/>		<!--炎魔的無力井水-->
+		<Material Amount="1" ItemId="41128"/>		<!--炎魔的執著井水-->
+		<Succeed>
+			<ShowHtml HtmlId="minibrob03"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr1" Class="PWEKDRI" NpcId="46069" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41126"/>		<!--炎魔的墮落井水-->
+		<Material Amount="1" ItemId="41123"/>		<!--火焰之影的墮落粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr3" Class="PWEKDRI" NpcId="46070" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41128"/>		<!--炎魔的執著井水-->
+		<Material Amount="1" ItemId="41125"/>		<!--火焰之影的執著粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr2" Class="PWEKDRI" NpcId="46072" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41127"/>		<!--炎魔的無力井水-->
+		<Material Amount="1" ItemId="41124"/>		<!--火焰之影的無力粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr2" Class="PWEKDRI" NpcId="46074" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41127"/>		<!--炎魔的無力井水-->
+		<Material Amount="1" ItemId="41124"/>		<!--火焰之影的無力粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr3" Class="PWEKDRI" NpcId="46075" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41128"/>		<!--炎魔的執著井水-->
+		<Material Amount="1" ItemId="41125"/>		<!--火焰之影的執著粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr1" Class="PWEKDRI" NpcId="46076" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41126"/>		<!--炎魔的墮落井水-->
+		<Material Amount="1" ItemId="41123"/>		<!--火焰之影的墮落粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 不死魔族拋棄之地-->
+	<MakeItem Name="request mtosr2" Class="PWEKDRI" NpcId="46077" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41127"/>		<!--炎魔的無力井水-->
+		<Material Amount="1" ItemId="41124"/>		<!--火焰之影的無力粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr1" Class="PWEKDRI" NpcId="46078" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41126"/>		<!--炎魔的墮落井水-->
+		<Material Amount="1" ItemId="41123"/>		<!--火焰之影的墮落粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr2" Class="PWEKDRI" NpcId="46079" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41127"/>		<!--炎魔的無力井水-->
+		<Material Amount="1" ItemId="41124"/>		<!--火焰之影的無力粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 不死魔族拋棄之地-->
+	<MakeItem Name="request mtosr1" Class="PWEKDRI" NpcId="46080" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41126"/>		<!--炎魔的墮落井水-->
+		<Material Amount="1" ItemId="41123"/>		<!--火焰之影的墮落粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mtosr2" Class="PWEKDRI" NpcId="46076" AmountInputable="false" QuestId="shadows" QuestStep="1">
+		<Item Amount="1" ItemId="41127"/>		<!--炎魔的無力井水-->
+		<Material Amount="1" ItemId="41124"/>		<!--火焰之影的無力粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mcodr3" Class="PWEKDRI" NpcId="46092" AmountInputable="false" QuestId="desire" QuestStep="1">
+		<Item Amount="1" ItemId="41137"/>		<!--火焰之影的執著井水-->
+		<Material Amount="1" ItemId="41134"/>		<!--炎魔的執著粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mcodr3" Class="PWEKDRI" NpcId="46093" AmountInputable="false" QuestId="desire" QuestStep="1">
+		<Item Amount="1" ItemId="41137"/>		<!--火焰之影的執著井水-->
+		<Material Amount="1" ItemId="41134"/>		<!--炎魔的執著粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mcodr2" Class="PWEKDRI" NpcId="46094" AmountInputable="false" QuestId="desire" QuestStep="1">
+		<Item Amount="1" ItemId="41136"/>		<!--火焰之影的無力井水-->
+		<Material Amount="1" ItemId="41133"/>		<!--炎魔的無力粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+	<!--無法被選擇的人 / 原生魔族拋棄之地-->
+	<MakeItem Name="request mcodr2" Class="PWEKDRI" NpcId="46095" AmountInputable="false" QuestId="desire" QuestStep="1">
+		<Item Amount="1" ItemId="41136"/>		<!--火焰之影的無力井水-->
+		<Material Amount="1" ItemId="41133"/>		<!--炎魔的無力粉-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+		</Succeed>
+	</MakeItem>
+
+<!--說話卷軸-->
+	<!--雷克曼 / 隱藏之谷村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50113" AmountInputable="false" QuestId="toscroll" QuestStep="0">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40085"/>		<!--說話之島指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="1"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--賽利安 / 歌唱之島村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50112" AmountInputable="false" QuestId="toscroll" QuestStep="0">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40085"/>		<!--說話之島指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="1"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--莉莉 / 說話之島村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50111" AmountInputable="false" QuestId="toscroll" QuestStep="1">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40080"/>		<!--古魯丁村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="2"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--奇溫 / 古魯丁村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50116" AmountInputable="false" QuestId="toscroll" QuestStep="2">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40122"/>		<!--肯特村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="3"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--希利亞 / 肯特村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50117" AmountInputable="false" QuestId="toscroll" QuestStep="3">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40115"/>		<!--風木村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="4"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--奧西利亞 / 風木村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50119" AmountInputable="false" QuestId="toscroll" QuestStep="4">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40125"/>		<!--燃柳村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="5"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--胡尼 / 燃柳村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50121" AmountInputable="false" QuestId="toscroll" QuestStep="5">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40114"/>		<!--妖森指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="6"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--齊柯 / 妖精森林-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50114" AmountInputable="false" QuestId="toscroll" QuestStep="6">
+		<Item Amount="1" ItemId="20282"/>		<!--象牙塔戒指--> 
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40117"/>		<!--銀騎士村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="7"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--賀伯 / 銀騎士之村-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50120" AmountInputable="false" QuestId="toscroll" QuestStep="7">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40081"/>		<!--奇岩村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="8"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--托克 / 奇岩村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50122" AmountInputable="false" QuestId="toscroll" QuestStep="8">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40123"/>		<!--海音村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="9"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--迦利溫 / 海音村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50123" AmountInputable="false" QuestId="toscroll" QuestStep="9">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40103"/>		<!--歐瑞村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="10"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--吉伯特 / 歐瑞村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50125" AmountInputable="false" QuestId="toscroll" QuestStep="10">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40116"/>		<!--威頓村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="11"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--波利卡 / 威頓村莊-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50124" AmountInputable="false" QuestId="toscroll" QuestStep="11">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="40102"/>		<!--亞丁村莊指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="12"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--傑瑞 / 亞丁城鎮-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50126" AmountInputable="false" QuestId="toscroll" QuestStep="12">
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="20" ItemId="41425"/>		<!--沉默洞穴指定傳送卷軸-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="13"/>
+		</Succeed>
+	</MakeItem>
+
+	<!--賈魯曼 / 沉默洞穴-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="50115" AmountInputable="false" QuestId="toscroll" QuestStep="13">
+		<Item Amount="1" ItemId="20082"/>		<!--象牙塔T恤-->
+		<Item Amount="20" ItemId="40029"/>		<!--象牙塔治癒藥水-->
+		<Item Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Material Amount="1" ItemId="40641"/>		<!--說話卷軸-->
+		<Succeed>
+			<ShowHtml HtmlId=""/>
+			<SetQuest Id="toscroll" Step="End"/>
+		</Succeed>
+	</MakeItem>
+
+<!--L1J-JP-->
+	<!--歌う島アレックスクエスト / アレックス（訓練所）-->
+	<MakeItem Name="0" Class="PWEKDRI" NpcId="71000" AmountInputable="false">
+		<Item Amount="1" ItemId="23"/>		<!--闊劍-->
+		<Item Amount="1" ItemId="20219"/>		<!--皮盾牌-->
+		<Item Amount="1" ItemId="20193"/>		<!--皮涼鞋-->
+		<Material Amount="1" ItemId="41146"/>		<!--[jp]ドロモンドの紹介狀-->
+		<Succeed>
+				<!--ドロモンド依頼書受取済み-->
+			<SetQuest Id="DOROMOND" Step="End"/>
+			<ShowHtml HtmlId="jpe0036"/>
+		</Succeed>
+	</MakeItem>
+	<!--歌う島アレックスクエスト / アレックス-->
+	<MakeItem Name="1" Class="PWEKDRI" NpcId="70999" AmountInputable="false">
+		<Item Amount="1" ItemId="23"/>		<!--闊劍-->
+		<Item Amount="1" ItemId="20219"/>		<!--皮盾牌-->
+		<Item Amount="1" ItemId="20193"/>		<!--皮涼鞋-->
+		<Material Amount="1" ItemId="41146"/>		<!--[jp]ドロモンドの紹介狀-->
+		<Succeed>
+				<!--ドロモンド依頼書受取済み-->
+			<SetQuest Id="DOROMOND" Step="End"/>
+		</Succeed>
+	</MakeItem>
+</NpcActionList>

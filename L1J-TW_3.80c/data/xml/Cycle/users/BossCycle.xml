@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<BossCycleList>
+	<BossCycle Name="DK">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="Oren">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="Aden">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="Caspa">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="1Drake">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="2Drake">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="Night">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="Dragon">
+		<Cycle Period="18h"/>
+	</BossCycle>
+	<BossCycle Name="etc1">
+		<Cycle Period="10m"/>
+	</BossCycle>
+	<BossCycle Name="Unknown">
+		<Cycle Period="10m"/>
+	</BossCycle>
+</BossCycleList>

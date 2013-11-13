@@ -1,0 +1,4890 @@
+リビジョン: 305
+作者: line
+日時: 22:56:45, 2007年7月6日
+メッセージ:
+
+----
+追加 : /src/l1j/server/server/ThreadPoolManager.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestBanParty.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestChatold.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestCreateParty.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestLeaveParty.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestWar.java
+追加 : /src/l1j/server/server/model/L1ItemDelay.java
+追加 : /src/l1j/server/server/model/L1ScarecrowInstance.java
+追加 : /src/l1j/server/server/model/L1Summon.java
+追加 : /src/l1j/server/server/model/L1War.java
+追加 : /src/l1j/server/server/serverpackets/S_SPMR.java
+追加 : /src/l1j/server/server/serverpackets/S_ShowSummonList.java
+追加 : /src/l1j/server/server/serverpackets/S_Underwater.java
+追加 : /src/l1j/server/server/serverpackets/S_War.java
+追加 : /src/l1j/server/server/taskmanager
+追加 : /src/l1j/server/server/taskmanager/Task.java
+追加 : /src/l1j/server/server/taskmanager/TaskManager.java
+追加 : /src/l1j/server/server/taskmanager/TaskTypes.java
+追加 : /src/l1j/server/server/taskmanager/tasks
+追加 : /src/l1j/server/server/taskmanager/tasks/TaskRestart.java
+追加 : /src/l1j/server/server/taskmanager/tasks/TaskShutdown.java
+
+
+リビジョン: 304
+作者: line
+日時: 22:52:01, 2007年7月6日
+メッセージ:
+
+----
+変更 : /src/l1j/server/L1DatabaseFactory.java
+変更 : /src/l1j/server/server/ClanTable.java
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/GameServer.java
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/Opcodes.java
+変更 : /src/l1j/server/server/PacketHandler.java
+変更 : /src/l1j/server/server/clientpackets/C_GiveItem.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestBanClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestJoinClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLeaveClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestWho.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/clientpackets/ClientBasePacket.java
+変更 : /src/l1j/server/server/model/Beginner.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1Clan.java
+変更 : /src/l1j/server/server/model/L1DwarfInventory.java
+変更 : /src/l1j/server/server/model/L1GroundInventory.java
+変更 : /src/l1j/server/server/model/L1GuardInstance.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+変更 : /src/l1j/server/server/model/L1Object.java
+変更 : /src/l1j/server/server/model/L1Party.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/model/L1PetInstance.java
+変更 : /src/l1j/server/server/model/L1Spawn.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+変更 : /src/l1j/server/server/model/L1World.java
+変更 : /src/l1j/server/server/serverpackets/S_ChangeHeading.java
+変更 : /src/l1j/server/server/serverpackets/S_ChangeShape.java
+変更 : /src/l1j/server/server/serverpackets/S_ChatPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_Message_YN.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharPack.java
+変更 : /src/l1j/server/server/serverpackets/S_PetMenuPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+変更 : /src/l1j/server/server/serverpackets/S_ServerVersion.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/serverpackets/ServerBasePacket.java
+変更 : /src/l1j/server/server/templates/DropTable.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+変更 : /src/l1j/server/server/templates/L1EtcItem.java
+変更 : /src/l1j/server/server/templates/L1Item.java
+
+
+リビジョン: 303
+作者: line
+日時: 22:26:35, 2007年6月14日
+メッセージ:
+PCからPCへの魔法ダメージがなくなっていた箇所修正
+----
+変更 : /src/l1j/server/server/model/L1Magic.java
+
+
+リビジョン: 302
+作者: line
+日時: 10:02:41, 2007年6月13日
+メッセージ:
+
+----
+追加 : /src/.project
+
+
+リビジョン: 301
+作者: line
+日時: 16:18:27, 2007年6月10日
+メッセージ:
+・NPCテーブルに新規項目追加詳細はフォーラムで。※処理はまだなし
+・MobTableをNpcTableに変更
+・ACボーナスダメージ軽減を修正　某検証サイト参考
+・PC→サモンの1/8処理削除 某検証サイト参考（サモン→PCのほうは残してる）
+・ボーナスステータスでDEXを上げたときにACが上がってしまっていたバグを修正
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/DoorTable.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/GameServer.java
+削除 : /src/l1j/server/server/MobTable.java
+変更 : /src/l1j/server/server/NpcSpawnTable.java
+変更 : /src/l1j/server/server/NpcTable.java
+変更 : /src/l1j/server/server/SpawnTable.java
+変更 : /src/l1j/server/server/UBSpawnTable.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1MagicInstance.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+変更 : /src/l1j/server/server/templates/L1Npc.java
+変更 : /src/l1j/server/server/utils/CalcDmg.java
+変更 : /src/l1j/server/server/utils/CalcDmgmagic.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 300
+作者: line
+日時: 23:19:45, 2007年6月9日
+メッセージ:
+・ディテクションの処理でdelInvisを使うように変更。
+・NPCのダメージ算出方法を
+　LV+random(1～LV)+str/2となっていたがあまりにも痛いので
+ random(1～LV)+str/2に変更
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 299
+作者: line
+日時: 12:31:38, 2007年6月9日
+メッセージ:
+Npcテンプレート値のセットをL1NpcInstanceのコンストラクタでするように修正
+UBのドロップまわりの処理をインベントリにドロップを読込済みか判定するために
+使用していた_storeDropedを使って再実装
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1Spawn.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+
+
+リビジョン: 298
+作者: line
+日時: 22:49:53, 2007年6月8日
+メッセージ:
+ステータス整理作業 charactersテーブルの不要になった項目を削除
+テーブル更新してね。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_CommonClick.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+
+
+リビジョン: 297
+作者: line
+日時: 21:21:04, 2007年6月8日
+メッセージ:
+ステータス整理作業 L1Characterソース整理
+使われてないorセットしかされてないプロパティ削除
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1PetInstance.java
+変更 : /src/l1j/server/server/model/L1Spawn.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+
+
+リビジョン: 296
+作者: line
+日時: 17:24:59, 2007年6月8日
+メッセージ:
+LvUp時とLvDown時の命中補正、攻撃補正及びHP,MP増加の修正
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 295
+作者: line
+日時: 13:42:57, 2007年6月8日
+メッセージ:
+魔族の神殿でbinが対応していない死の司祭が画面内に入るとクライアント落ちるのでspawnされないように修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 294
+作者: line
+日時: 12:50:03, 2007年6月8日
+メッセージ:
+その４ (up0426を含む）
+
+※データベースが更新されているので使用する場合は同梱のデータベースへ移行してね
+
+
+277以降でログイン周りに深刻な問題があったので状況的にアレだけどフルパッケージを上げたよ
+（影響が大きい問題なので）
+
+
+SVNからソースが取れなかったのでup0417.zip（凍結前に388さんが上げた？）に
+945さんのup0420.zipの更新を加えて
+ログイン周り、データベース周りと細かい所少々の修正を加えたVerだよ
+rev283からrev287までの更新は詳しくは不明、おそらくは
+・726さんによるステータス関係修正
+・388さんによるUB周りの修正
+等が含まれていると思う
+
+
+ソースを一応同梱しておいたけれど、このVerは実行用のみとしてビルド用のソース入手は
+SVNの凍結解除を待つ事を強くお勧め（これを元にSVN無しで更新し続けると派生がたくさん出来そうなので）
+というわけで、開発者向けではなく利用者向けのパッケージです
+
+
+今回自分がやった分は
+・UBでボス以外はドロップが出ないように変更
+また、召喚されたモンスターもドロップしないように変更
+isUB()がTrueのモンスターはドロップしない（set_isUB(boolean)、get_isUB())
+ついでに消去の際に読み込むマップをUBのマップのみ読み込むように変更
+L1World.getInstance().getVisibleObjects(int mapid)で指定したマップのみ読み込み
+※現在のアキレス腱であるDBへの負荷対策（プレイヤーが何か入手するとDBへ書き込まれるので）
+
+・spawnlist_ubでテーブルの最後のモンスターが読み込まれた際にUBのタイマーが終了しない問題の応急処置
+テーブルの最後にダミーデータを置いた
+
+・以前自分が作ったGlanceCheckの出来が非常によろしくない上、
+不具合の原因になっていたのでL1Jオリジナルのシンプルな物に差し替え
+
+・重複ログインが行われた際に重複した二つの接続両方を切断するように変更
+一旦そのIDでのログインが全くない状態を作るため
+
+・キャラクターセーブの際に、まず古いデータを消してから新しいデータを書き込んでいたが
+それではキャラクターの並びが変化してしまう上に工程が一つ増えてしまうので
+古い方を消さずに上書きするように変更
+
+・強制切断時に鯖画面に表示されるメッセージを整理
+
+
+現在、ショートカットなどの情報をクライアント側へ保存させる為の処置により
+・キャラクター選択画面でのキャラクターレベルの表示が全て1になる
+（わざと表示の上で1にしている為で実際のレベルには影響は無い）
+という不具合があるけれどびっくりしないでね
+----
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+変更 : /src/l1j/server/server/model/L1World.java
+
+
+リビジョン: 293
+作者: line
+日時: 12:47:54, 2007年6月8日
+メッセージ:
+その３
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+
+
+リビジョン: 292
+作者: line
+日時: 12:46:24, 2007年6月8日
+メッセージ:
+その２
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+
+
+リビジョン: 291
+作者: line
+日時: 12:43:33, 2007年6月8日
+メッセージ:
+rev287+a その１
+----
+変更 : /src/l1j/server/L1DatabaseFactory.java
+変更 : /src/l1j/server/Server.java
+
+
+リビジョン: 290
+作者: line
+日時: 11:52:13, 2007年6月8日
+メッセージ:
+オペコードをｒｅｖ287に差し替え。
+----
+変更 : /src/l1j/server/server/Opcodes.java
+
+
+リビジョン: 289
+作者: line
+日時: 0:31:58, 2007年6月7日
+メッセージ:
+
+----
+変更 : /src/l1j/server/server/Opcodes.java
+
+
+リビジョン: 288
+作者: line
+日時: 20:16:35, 2007年6月6日
+メッセージ:
+出現パターンが６（最後にヴァラカスが出現するパターン）の場合、UBが終わらない不具合を修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 287
+作者: line
+日時: 8:54:19, 2007年6月5日
+メッセージ:
+UB終了時にモンスターを消すように修正。
+----
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+
+
+リビジョン: 286
+作者: line
+日時: 7:46:07, 2007年6月5日
+メッセージ:
+※一時期キャラクター選択画面のステータス値がベース値になります。ご了承下さい。
+ステータス整理作業 L1Characterソース整理
+とりあえず該当項目の対応完了（属性防御ベースは必要なかったので消去）
+charactersテーブルの整理等まだやることはありますが少しづつ対応していきます。
+とりあえず修正箇所がたまりすぎるのもなんなのでコミット
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1Spawn.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+変更 : /src/l1j/server/server/serverpackets/S_Dexup.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus2.java
+変更 : /src/l1j/server/server/serverpackets/S_PetMenuPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+変更 : /src/l1j/server/server/serverpackets/S_SkillUnk.java
+変更 : /src/l1j/server/server/serverpackets/S_Strup.java
+変更 : /src/l1j/server/server/serverpackets/S_SummonPack.java
+変更 : /src/l1j/server/server/skills/LambdaStats.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+変更 : /src/l1j/server/server/templates/L1Item.java
+変更 : /src/l1j/server/server/utils/CalcDmg.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 285
+作者: line
+日時: 1:35:11, 2007年6月5日
+メッセージ:
+パーティーへの魔法の実装（NBとH-A）
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 284
+作者: line
+日時: 1:02:55, 2007年6月5日
+メッセージ:
+コロシアム内にPCが居ない場合、MOBが出現しないように変更。
+----
+変更 : /src/l1j/server/server/model/L1UltimateBattle.java
+
+
+リビジョン: 283
+作者: line
+日時: 23:10:58, 2007年6月4日
+メッセージ:
+DB設定方法.txt
+----
+変更 : /etc/DB設定方法.txt
+
+
+リビジョン: 282
+作者: line
+日時: 22:58:16, 2007年6月4日
+メッセージ:
+・リスタートした際にもキャラクターレベルを詐称するように変更
+（ショートカット対応の為）
+----
+変更 : /src/l1j/server/server/PacketHandler.java
+
+
+リビジョン: 281
+作者: line
+日時: 22:46:02, 2007年6月4日
+メッセージ:
+ギランUBを実装。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/GameServer.java
+変更 : /src/l1j/server/server/GameTimeController.java
+追加 : /src/l1j/server/server/UBSpawnTable.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+追加 : /src/l1j/server/server/model/L1UltimateBattle.java
+変更 : /src/l1j/server/server/model/L1World.java
+
+
+リビジョン: 280
+作者: line
+日時: 22:28:11, 2007年6月4日
+メッセージ:
+・DBへの最大アクセス数設定をserver.cfgに追加（DBMaxConnections 最低値100）
+値は必ずMaximumOnlineUsers以上に設定する必要あり
+server.cfgが更新されたので現在使用中の物と入れ替えてください
+（新しいserver.cfgはSVNのルートにあります）
+----
+追加 : /server.cfg
+変更 : /src/l1j/server/L1DatabaseFactory.java
+変更 : /src/l1j/server/Server.java
+
+
+リビジョン: 279
+作者: line
+日時: 12:22:38, 2007年6月4日
+メッセージ:
+DB設定方法.txtにMOB、NPCショップの簡単な設定方法を追加
+----
+変更 : /etc/DB設定方法.txt
+
+
+リビジョン: 278
+作者: line
+日時: 11:23:25, 2007年6月4日
+メッセージ:
+
+----
+変更 : /src/l1j/server/server/GameServer.java
+変更 : /src/l1j/server/server/ShopTable.java
+変更 : /src/l1j/server/server/SpawnTable.java
+変更 : /src/l1j/server/server/TeleportLocations.java
+変更 : /src/l1j/server/server/model/Beginner.java
+変更 : /src/l1j/server/server/model/Getback.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1PetInstance.java
+変更 : /src/l1j/server/server/model/WorldMapPoint.java
+変更 : /src/l1j/server/server/serverpackets/S_MoveCharPacket.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 277
+作者: line
+日時: 6:41:37, 2007年6月4日
+メッセージ:
+・DBへのアクセスが複数同時に発生した際への対応
+L2Jから拝借
+
+・MySQLへの接続チェック用テーブルを追加
+が、追加しただけでMySQLへの接続チェックをL2Jの最新版にならって無効に設定
+有効にするにはL1DatabaseFactoryのetTestConnectionOnCheckinの引数をtrueへ
+
+・DBへのアクセス時に毎回server.cfgを読み込んでいたので鯖起動時に一度だけ読み込むように変更
+（なるべく手早くDBへのアクセスを済ませる為）
+
+・DB関連で利用しているc3p0-0.9.1.jarをバージョンをアップ（c3p0-0.9.1.1.jar）
+従来のc3p0-0.9.1.jarも一応残してある
+さらに新しいVerがあるけれどL2Jで利用しているものにあわせた
+
+・libの変更に伴ってbatファイルも更新
+
+・未使用部分をコメントアウト（ClientThread）
+
+・鯖のDOS画面に表示される接続関係メッセージの表示順が前後してしまっていて
+分かりづらかったので順番に表示されるように変更
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/L1DatabaseFactory.java
+変更 : /src/l1j/server/Server.java
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GameServer.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+
+
+リビジョン: 276
+作者: line
+日時: 5:25:03, 2007年6月4日
+メッセージ:
+ステータス整理作業 L1Characterソース整理 maxHpとmaxMpを対応
+スレで書いた仕様と少し替えました
+HpとかStrとか基本的に増減がメインなので
+set_maxHp(現在値＋増減値)ではなく
+add_maxHp(増減値)とすることにしました。
+あと、最小値や最大値もaddメソッドで確認するようにしました。
+maxHp,maxMp(1~32767)
+ac,wind,fire,water,earth,dmgup,hitup(-128~127)
+str,con,dex,int,cha,wis(1~127)
+mr(0~127)
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1Spawn.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_NewCharPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+変更 : /src/l1j/server/server/templates/L1Item.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+変更 : /src/l1j/server/server/utils/CalcExp2.java
+
+
+リビジョン: 275
+作者: line
+日時: 1:22:59, 2007年6月4日
+メッセージ:
+・rev264の作業によってパッシブモンスターへの攻撃が
+当たりにくくなっていたので調整
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 274
+作者: line
+日時: 23:12:17, 2007年6月3日
+メッセージ:
+ステータス整理作業 L1Characterソース整理 ミス
+----
+変更 : /src/l1j/server/server/model/L1Character.java
+
+
+リビジョン: 273
+作者: line
+日時: 23:10:48, 2007年6月3日
+メッセージ:
+ステータス整理作業 L1Characterソース整理 ちまちま。。
+----
+変更 : /src/l1j/server/server/model/L1Character.java
+
+
+リビジョン: 272
+作者: line
+日時: 21:58:32, 2007年6月3日
+メッセージ:
+ナイトのMP上昇量が0～1になっていたので0～2に修正。
+----
+変更 : /src/l1j/server/server/utils/CalcStat.java
+
+
+リビジョン: 271
+作者: line
+日時: 21:13:36, 2007年6月3日
+メッセージ:
+MOBのステータスが設定されない不具合に対応
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/model/L1Spawn.java
+
+
+リビジョン: 270
+作者: line
+日時: 20:17:36, 2007年6月3日
+メッセージ:
+・ClientThreadの調整
+sendPacketと同じくパケットデータの複製を作らずに
+オリジナルで処理するように変更
+（他と共有していそうな部分を減らすため）
+----
+変更 : /src/l1j/server/server/ClientThread.java
+
+
+リビジョン: 269
+作者: line
+日時: 19:58:41, 2007年6月3日
+メッセージ:
+ステータス整理作業 L1Characterソース整理 
+コメントに移動先を書いて自分なりに分類したのでヤヴァイと思うのはスレで報告してね。
+set_base(),set_()を対応したあとにゴミ箱のやつ消していきます。
+----
+変更 : /src/l1j/server/server/model/L1Character.java
+
+
+リビジョン: 268
+作者: line
+日時: 17:03:17, 2007年6月3日
+メッセージ:
+etcitemの重量を修正（黒魔石など）
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 267
+作者: line
+日時: 15:59:09, 2007年6月3日
+メッセージ:
+・ログイン出来ない問題を修正
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+
+
+リビジョン: 266
+作者: line
+日時: 11:24:52, 2007年6月3日
+メッセージ:
+スロー、エンタングルの効果実装
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 265
+作者: line
+日時: 10:03:57, 2007年6月3日
+メッセージ:
+・ログイン時のアナウンスをワールドに入った時のみ表示するように変更
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+
+
+リビジョン: 264
+作者: line
+日時: 9:59:33, 2007年6月3日
+メッセージ:
+・アクティブモンスターの挙動調整
+・麻痺攻撃実装までの応急処置
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 263
+作者: line
+日時: 9:24:04, 2007年6月3日
+メッセージ:
+・定員オーバー時のメッセージをS_CommonNewsで
+送信するように変更
+定員オーバーの際には現在は
+「定員を超えました。接続できません。」
+というメッセージが表示される
+
+・ID・Password入力後に表示されるアナウンスが
+キャラクター選択後にワールドへ入った後も表示されていたので
+キャラクター選択後の方は表示しないように変更
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/serverpackets/S_CommonNews.java
+
+
+リビジョン: 262
+作者: line
+日時: 8:39:56, 2007年6月3日
+メッセージ:
+・ログイン周りの処理を修正
+ついでに同じIDで重複してログインされた場合は
+後からログインした方を優先するように変更（どの程度機能するかは未知数）
+
+・定員オーバー時のメッセージを変更
+今後は「接続に失敗しました、3分後にまた試みてください。」
+というメッセージが表示される
+
+・クライアント側が表示できる範囲を超えたステータス値になった際に
+クライアントが落ちたり表示が崩れたりする問題に応急処置
+726さんが進めているステータス周りの修正が完了するまでの急場しのぎです
+
+・BPとGPの効果がアイコンが消えた後もずっと残ってしまう問題を修正
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/LoginController.java
+変更 : /src/l1j/server/server/clientpackets/C_CommonClick.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/serverpackets/S_Dexup.java
+変更 : /src/l1j/server/server/serverpackets/S_HPUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_MPUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus2.java
+変更 : /src/l1j/server/server/serverpackets/S_Strup.java
+
+
+リビジョン: 261
+作者: line
+日時: 2:37:14, 2007年6月3日
+メッセージ:
+ウェポンブレイクとダークネスの実装（対NPCにしか効果無し）
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+
+
+リビジョン: 260
+作者: line
+日時: 1:41:05, 2007年6月3日
+メッセージ:
+・一定時間（約10分）クライアントスレッドから
+何もパケットが送られてこなかった場合、強制切断するように変更
+（運が良ければ不正落ち後10分で復帰できるかも、程度です）
+----
+変更 : /src/l1j/server/server/ClientThread.java
+
+
+リビジョン: 259
+作者: line
+日時: 0:51:07, 2007年6月3日
+メッセージ:
+・麻痺確定時に周囲のプレイヤーへS_Paralysisを送らないように変更
+----
+変更 : /src/l1j/server/server/model/L1Poison.java
+
+
+リビジョン: 258
+作者: line
+日時: 23:56:01, 2007年6月2日
+メッセージ:
+・重量オーバー時でも攻撃できてしまう点を修正
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+
+
+リビジョン: 257
+作者: line
+日時: 23:35:42, 2007年6月2日
+メッセージ:
+・ショートカット情報などのinvファイル保存に暫定対応
+以降、正式に対応するまでキャラクター選択画面での
+各キャラクターの表示レベルは強制的に1として表示される
+実際のレベルには影響は無い
+・従来テスト版として使用していた処理をSVNの方にも適用
+・buffの保存をQUIT時にも行うように変更
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_CommonClick.java
+
+
+リビジョン: 256
+作者: line
+日時: 23:29:28, 2007年6月2日
+メッセージ:
+未実装機能一覧.txt
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 255
+作者: line
+日時: 18:54:11, 2007年6月2日
+メッセージ:
+ステータス整理作業 とりあえず少しソース整理 
+中身ほとんどかわってません。 位置と内部変数名がちょっとかわっただけ。
+----
+変更 : /src/l1j/server/server/model/L1Character.java
+
+
+リビジョン: 254
+作者: line
+日時: 18:52:23, 2007年6月2日
+メッセージ:
+リスタート時に残すエンチャントを変更。
+----
+変更 : /src/l1j/server/server/CharBuffTable.java
+
+
+リビジョン: 253
+作者: line
+日時: 17:33:27, 2007年6月2日
+メッセージ:
+飛び道具周りをいろいろ実装
+・攻撃がミスしたときに後ろのほうまで飛んでいく処理を追加
+・使用する矢やスティングを選択できる処理を追加（アイテムダブルクリック）
+・ガントレットを実装（エフェクトはサイハで代価、ちゃんとしたダメージも計算してない）
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/serverpackets/S_UseArrowSkill.java
+
+
+リビジョン: 252
+作者: line
+日時: 16:07:56, 2007年6月2日
+メッセージ:
+リスタート時にエンチャントが残るように変更。
+----
+変更 : /db/SJIS_l1jdb.sql
+追加 : /src/l1j/server/server/CharBuffTable.java
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 251
+作者: line
+日時: 14:30:43, 2007年6月2日
+メッセージ:
+L1Inventory移行作業 ItemTable.ArrowFinder()の移行
+弓まわりの挙動を修正
+・弓を撃ったときの方向を矢の向きと同じになるように修正
+・サイハの場合でも矢をもっていいたら矢を使うように修正(ダメージはまだやってない)
+・etitemにsting属性を追加（ガントレットで使うやつ）
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1DwarfInstance.java
+変更 : /src/l1j/server/server/model/L1GuardInstance.java
+変更 : /src/l1j/server/server/model/L1MerchantInstance.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1TeleporterInstance.java
+変更 : /src/l1j/server/server/serverpackets/S_ArrowStatus.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 250
+作者: line
+日時: 11:28:22, 2007年6月2日
+メッセージ:
+変身中にシェイプ チェンジが使えない不具合を修正。
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 249
+作者: line
+日時: 11:15:57, 2007年6月2日
+メッセージ:
+SkillStopがうまく機能していなかった不具合を修正。
+S_ChangeShapeを時間指定できるように変更。
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1PolyMorph.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/serverpackets/S_ChangeShape.java
+
+
+リビジョン: 248
+作者: line
+日時: 10:05:32, 2007年6月2日
+メッセージ:
+L1SkillUseをタイマー指定できるように変更。
+----
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 247
+作者: line
+日時: 9:11:05, 2007年6月2日
+メッセージ:
+スキルタイマーにカウンタを持たせた。
+キャンセレーションしても、タイマーが止まらない不具合を修正。
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 246
+作者: line
+日時: 6:31:54, 2007年6月2日
+メッセージ:
+・S_ServerMessageへの置き換え作業 
+GMコマンド関連はそのほとんどがオリジナルメッセージなので手を付けていない
+（GMコマンドは敵の攻撃を受けない状況で使った方が安全です）
+一部の不要メッセージを削除、ミスは大いにありそう、報告修正歓迎
+----
+変更 : /src/l1j/server/server/clientpackets/C_CreateParty.java
+変更 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestBanClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestJoinClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLeaveClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestWho.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/model/L1Party.java
+変更 : /src/l1j/server/server/model/L1Poison.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/serverpackets/S_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 245
+作者: line
+日時: 5:55:15, 2007年6月2日
+メッセージ:
+L1Inventory移行作業 ItemTable.ItemFinder()の置き換え完了
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+
+
+リビジョン: 244
+作者: line
+日時: 4:34:34, 2007年6月2日
+メッセージ:
+NPCテーブルに毒、凍結の値を入力
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 243
+作者: line
+日時: 1:58:09, 2007年6月2日
+メッセージ:
+シアン ポーションが減らない不具合を修正。
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 242
+作者: line
+日時: 1:21:13, 2007年6月2日
+メッセージ:
+・正しい仕様か不明だけれどモンスターが毒攻撃に成功した場合でも
+攻撃処理を行うように変更
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 241
+作者: line
+日時: 1:07:19, 2007年6月2日
+メッセージ:
+・AutoUpdateでPTメンバーのHPバーを取得出来るように変更
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 240
+作者: line
+日時: 23:51:09, 2007年6月1日
+メッセージ:
+・S_ServerMessageへの置き換え作業
+不要メッセージの削除と一部のデバッグメッセージ
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/templates/L1BookMark.java
+
+
+リビジョン: 239
+作者: line
+日時: 23:34:14, 2007年6月1日
+メッセージ:
+・C_RequestItemUSe内のS_SystemMessageを可能な限り
+S_ServerMessageへ置き換え
+C_RequestItemUSe内のコメントを参考にさせて貰ったよ
+ミスがありそうなのでおかしなメッセージが出たら教えてくれると助かります
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 238
+作者: line
+日時: 21:32:46, 2007年6月1日
+メッセージ:
+・ヘルムを複数装備出来ていた問題を修正
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 237
+作者: line
+日時: 21:31:08, 2007年6月1日
+メッセージ:
+麻痺毒の麻痺するまでの時間を20秒、麻痺時間を45秒に変更。
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1Poison.java
+
+
+リビジョン: 236
+作者: line
+日時: 21:25:25, 2007年6月1日
+メッセージ:
+MOBのスキルに対しても、I2Hとバリアが有効になるように修正。
+----
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 235
+作者: line
+日時: 20:35:31, 2007年6月1日
+メッセージ:
+麻痺毒の麻痺するまでの時間を10秒に変更
+----
+変更 : /src/l1j/server/server/model/L1Poison.java
+
+
+リビジョン: 234
+作者: line
+日時: 20:23:54, 2007年6月1日
+メッセージ:
+テレポートすると毒の色が消える不具合を修正
+----
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 233
+作者: line
+日時: 20:23:10, 2007年6月1日
+メッセージ:
+・レベルアップ時のHP、MP上昇上限を25000に再設定（魔法による20%UPに対応するため）
+・ブックマークの名前を入力する際に文字数に制限を設けていなかったので制限をかけた（12文字）
+・クライアントがS_SystemMessageを受信直後に攻撃系のパケットを受信すると
+例のエフェクトが出て（再現率100%）その状態がある程度続くと落ちる事が判明
+S_SystemMessageと攻撃系パケットの間にステータス更新系パケットが入るとその状態は回避出来るが
+最初からS_SystemMessageを使わない方が安全と思われるので
+とりあえず戦闘時に特に良く表示されそうなS_SystemMessageをS_ServerMessageに置き換えた
+S_SystemMessageが受信されるとクライアント側の状態に何か変化があるようなので
+戦闘関連に限らず出来うる限りS_ServerMessageに置き換えていった方がよさそう
+今回は「回復ポーション」、「テレポートの制限メッセージ」、「HP不足、MP不足、材料不足」
+「PT時のドロップ」、「ブックマーク関連の一部」、「スキルの未実装」を置き換え
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/serverpackets/S_SkillSound.java
+変更 : /src/l1j/server/server/templates/DropTable.java
+変更 : /src/l1j/server/server/templates/L1BookMark.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 232
+作者: line
+日時: 17:22:37, 2007年6月1日
+メッセージ:
+毒を実装。
+通常毒、麻痺毒、沈黙毒、シアン ポーション、エントの枝、キュアポイズン、
+ゼニス リング、ベノム レジスト、エンチャントベノム、フィンガー オブ デス
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1Poison.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 231
+作者: line
+日時: 17:08:50, 2007年6月1日
+メッセージ:
+GMCommand .itemのエンチャントLvが反映されない不具合の修正
+アイテムの初期値を未確認にしていたのを、確認済みに戻し。
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+
+
+リビジョン: 230
+作者: line
+日時: 15:53:11, 2007年6月1日
+メッセージ:
+L1Inventory移行作業 ItemTable.EtcItemCounter()対応完了
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 229
+作者: line
+日時: 15:31:10, 2007年6月1日
+メッセージ:
+アイテム精製、材料の数量判定対応part3完了
+ItemTable.giveItem()のL1Inventory対応完了
+Lv52以上のサモンのコストがずれていたのを修正
+サモンモンスター、テイミングモンスター、クリエイトゾンビのバッファ時間を0に変更
+モンスターがアイテムを使う条件を変更
+※回復系HP40以下で50% ヘイスト系アクティブになったときに40%
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 228
+作者: line
+日時: 13:42:58, 2007年6月1日
+メッセージ:
+アイテム精製、材料の数量判定対応part2
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+
+
+リビジョン: 227
+作者: line
+日時: 12:50:13, 2007年6月1日
+メッセージ:
+魔法書（トゥルーターゲット）と魔法書（コールクラン）の名前を修正。
+skillsテーブルの名前と一致していなかったので
+desc-j.tblにあわせてスペースを消しました。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 226
+作者: line
+日時: 9:41:44, 2007年6月1日
+メッセージ:
+魔法サモンの再実装とL1SkillUseでヘイストのS_SkillHasteを送る作業追加
+書く場所間違ってたらごめんなさい。
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 225
+作者: line
+日時: 9:12:53, 2007年6月1日
+メッセージ:
+6.L1Inventory移行作業 ItemTable.giveItem()を一部移行
+アイテム精製で材料の数は見ていなかった処理を数もみるように修正
+※量がおおすぎて全部対応できてません、よろしければ一緒にお願いします。。。
+　C_RequestNpcActionです。
+GMCommandで.addと.itemの内容が一緒だったので.addのほうを削除
+----
+変更 : /etc/GMコマンド一覧.txt
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/templates/DropTable.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+変更 : /src/l1j/server/server/templates/L1Item.java
+
+
+リビジョン: 224
+作者: line
+日時: 6:42:44, 2007年6月1日
+メッセージ:
+・シールドを複数重ねて装備出来てしまう問題を修正
+※報告にあったマントやヘルム等の他の装備品の問題が上手く再現できない為、
+出来れば再現させる為の方法も併せて教えて貰えると助かります
+・rev218でアイテム購入時の問題に対応した結果、またスタックしないアイテムが
+複数同時に購入出来なくなってしまっていたので修正
+・レベルアップ時のHP、MP上昇制限をそれぞれ30000を越えていると上昇しないように変更
+きちんと対処するためにはBaseHP、BaseMPといった感じのパラメータをDBで保持する変更が必要
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 223
+作者: line
+日時: 2:16:33, 2007年6月1日
+メッセージ:
+DB設定方法.txtを追加
+----
+追加 : /etc/DB設定方法.txt
+
+
+リビジョン: 222
+作者: line
+日時: 2:08:38, 2007年6月1日
+メッセージ:
+・Lvアップ時のHP、MP上昇に上限を設定（上限：30000）
+32767を越える数値にクライアント側が対応できない為の処置で
+30000を限界としているのは装備やその他による上限の変動分、余裕を持たせる為
+----
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 221
+作者: line
+日時: 1:54:40, 2007年6月1日
+メッセージ:
+GMコマンド一覧.txt
+----
+変更 : /etc/GMコマンド一覧.txt
+
+
+リビジョン: 220
+作者: line
+日時: 1:53:39, 2007年6月1日
+メッセージ:
+・スキルの遅延消化中などで魔法処理が行われない場合、
+ダミーエフェクトをクライアントへ送信するように変更
+・スタラックを他の攻撃魔法を同じパケットを使うように変更
+※スタラック自体に問題があったわけではなく、古い処理（rev120以前ぐらい）に
+問題があった為スタラックの連続使用で落ちていた
+現在はスタラックを連続使用しても落ちやすさは他の魔法と変わらない
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 219
+作者: line
+日時: 1:00:15, 2007年6月1日
+メッセージ:
+L1SkillUse.javaを元に状態に復元
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 218
+作者: line
+日時: 22:29:35, 2007年5月31日
+メッセージ:
+・スタックするアイテムをショップで購入した際に
+一つずつカウントされる問題を修正
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+
+
+リビジョン: 217
+作者: line
+日時: 21:14:20, 2007年5月31日
+メッセージ:
+・ブックマークの追加と削除を実装
+・ブックマークを使ったb-teleでの移動を実装
+
+仕様がよく分からないのでとりあえず以下のように設定（情報があればその都度変更）
+
+・テレポート制限設定を有効にしている場合、
+ランテレ出来ないマップではブックマークが制限されるように設定
+・b-teleでの移動はn-teleと同じ制限を受け、b-teleでのテレポート先が
+ランテレ禁止の場合、テレポート出来ないように設定
+ただし、テレポート制限を設定している場合そもそもランテレ禁止場所ではブックマークできないので
+鯖の設定が途中から変更された等の特殊なケースで無い限り意味無いかも
+
+※データベースは既存のcharacter_teleportを利用しているので差し替える必要は無いです
+ちなみにROTCの機能はまだ実装してないよ
+----
+変更 : /etc/未実装機能一覧.txt
+変更 : /src/l1j/server/server/PacketHandler.java
+変更 : /src/l1j/server/server/clientpackets/C_DeleteBookmark.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestaddBookmark.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/serverpackets/S_Bookmarks.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_OtherCharPacks.java
+追加 : /src/l1j/server/server/templates/L1BookMark.java
+
+
+リビジョン: 216
+作者: line
+日時: 20:08:42, 2007年5月31日
+メッセージ:
+未実装機能一覧.txt
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 215
+作者: line
+日時: 17:27:35, 2007年5月31日
+メッセージ:
+DBのnpcテーブルにpoison_atk、paralysis_atkを追加。
+ただし、毒や麻痺の処理は未実装。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/MobTable.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1NpcDataTable.java
+追加 : /src/l1j/server/server/model/L1Poison.java
+追加 : /src/l1j/server/server/serverpackets/S_Paralysis.java
+追加 : /src/l1j/server/server/serverpackets/S_Poison.java
+変更 : /src/l1j/server/server/templates/L1Npc.java
+
+
+リビジョン: 214
+作者: line
+日時: 4:55:35, 2007年5月31日
+メッセージ:
+L1Inventory移行作業 準備1
+----
+変更 : /src/l1j/server/server/Charitemtable.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1DwarfInventory.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/serverpackets/S_CharInvVisualUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 213
+作者: line
+日時: 23:25:28, 2007年5月30日
+メッセージ:
+・GMコマンド「skick」の調整
+入力だけでなく出力ストリームも同時に閉じるように変更
+これによって以前より不正落ちしたアカウントのキャラクターを
+ワールド内から除去できるようになったかも・・・
+念のため、ストリームを閉じると同時に対象キャラクターの座標位置を
+SKTへ転送するようにしてある（rev207での設定で街へ転送しないように出来る為）
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+
+
+リビジョン: 212
+作者: line
+日時: 22:56:42, 2007年5月30日
+メッセージ:
+未実装機能一覧.txt更新
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 211
+作者: line
+日時: 22:52:40, 2007年5月30日
+メッセージ:
+・未実装の祝福されたテレポートスクロールと
+マステレポートスクロールを通常のテレポートスクロールとして
+処理するように変更
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 210
+作者: line
+日時: 20:50:06, 2007年5月30日
+メッセージ:
+・デバッグメッセージ表示処理をコメントアウト
+----
+変更 : /src/l1j/server/server/PacketHandler.java
+
+
+リビジョン: 209
+作者: line
+日時: 20:28:14, 2007年5月30日
+メッセージ:
+GMコマンド一覧更新
+----
+変更 : /etc/GMコマンド一覧.txt
+
+
+リビジョン: 208
+作者: line
+日時: 20:26:30, 2007年5月30日
+メッセージ:
+Rev199で修正された内容を修正済みに移動。
+・死のマント（HP自然回復量-10）を装備してHPが自然に減り0になるとHP0のまま歩ける状態になり、リスタしてもポーション類が使えなくなります。
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 207
+作者: line
+日時: 20:23:01, 2007年5月30日
+メッセージ:
+・クライアントから送られてくる71に対する扱いを無視に再度変更
+初期キャラ以外の3キャラを用意して100回ほどランダムに選択しリスタートさせ続けた結果
+75が送信されず71だけが送信されるケースは3回程度で状況が特定できず
+75が送信されないケースは単なるパケロスか鯖側の受け取り漏れの可能性もありえる為。
+（キャラクター変更時にはリスタートを使わずに一旦ログアウトした方がいいかも）
+
+・ClientThreadのテスト版用の部分をコメントアウト（SVN版では使っていない為）
+他、現在使用していない部分を削除
+
+・ClientThread終了時の処理を調整
+念のためにS_Disconnectの送信とクライアントが使用していた入出力ストリームを閉じる処理を追加
+
+・リスタート、ログアウト時の処理を微調整
+
+・キャラクターをワールド内から除去する為の処理が
+過去の仕様を引きずったままになっていたので微調整
+
+・データベースのrateテーブル、RaceRecognitionRangeフィールドに1が設定されたいた場合
+リスタート、ログイン時にキャラクターを街へ強制移動させないように変更（1以外なら従来通り街へ移動）
+この設定の追加は暫定的な物であり、将来的には街への強制移動自体無くす予定なので
+RaceRecognitionRangeを適切な名前にする予定は無いです（この設定自体も必要なくなるので）
+この設定の追加はareaテーブル活用にあたっての準備目的であり、作業時の為の設定なので
+RaceRecognitionRangeを1にする場合、従来通り状況によってはキャラクターがログイン出来ない座標に
+陥る危険性があることを理解した上で設定してください
+
+・GMコマンド「kick」を元の状態へ変更
+従来は入力ストリームを強制的に閉じる処理を入れていたが、ClientThreadの終了処理に合わせて
+S_Disconnectを送るように差し戻し
+代わりに「skick」というコマンドを追加してそちらに従来の処理をあてた、使い方は「kick」と同じ
+対象キャラクターが不正落ちした場合でなければ通常版（SVN版）でも効果あり
+不正落ちしてログイン状態が続いているキャラクターに対して効果が無いのは従来通り
+
+・kickコマンドの使用方法（念のため記述）
+GMキャラクターで「.kickキャラクター名」と入力する
+.kickとキャラクター名との間にはスペースを空けず、さらにキャラクター名が半角アルファベットの場合は
+頭文字を大文字で入力する必要がある、日本語名の場合はそのまま入力
+例：キックさせたいキャラクター名がtestなら「.kickTest」テストなら「.kickテスト」
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/PacketHandler.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 206
+作者: line
+日時: 20:17:41, 2007年5月30日
+メッセージ:
+未実装一覧.txt
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 205
+作者: line
+日時: 11:23:54, 2007年5月30日
+メッセージ:
+・DBのarmor,etcitem,weaponにblessカラムを追加
+　0:祝福,1:通常,2:呪い
+・サモンモンスターを魔法で呼べるように追加
+　サモコンを装備してもリストはでません、未実装 仮対応はしてます。
+・モンスターからのドロップも重量制限をかけました。
+・rev203で起きたスタックできないアイテムが複数買えなくなった不具合を修正
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/templates/DropTable.java
+
+
+リビジョン: 204
+作者: line
+日時: 5:20:42, 2007年5月30日
+メッセージ:
+TestMessage 消し消し
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+
+
+リビジョン: 203
+作者: line
+日時: 5:19:36, 2007年5月30日
+メッセージ:
+アイテム周りをいろいろ修正
+L1Inventoryに容量と重量をチェックするメソッドを追加
+倉庫とお店の処理で容量と重量をチェックするように修正
+WeightをL1Inventoryに梱包
+S_OwnerCharStatus2とS_ItemAmountなんたらの重複してた箇所を排除
+※C_DeleteInventoryItem,C_RequestDropItem,C_RequestPickUpItem,C_RequestResultの4箇所
+----
+変更 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus2.java
+変更 : /src/l1j/server/server/serverpackets/S_Strup.java
+
+
+リビジョン: 202
+作者: line
+日時: 22:25:48, 2007年5月29日
+メッセージ:
+・キャラクターデータのセーブが同じタイミングで重複して行われないように変更
+・リスタート、ログアウト時にワールド内からキャラクターを除去する際に
+キャラクターデータセーブ中の場合はセーブが終わるのを待ってから除去するように変更
+（定期セーブと被らないようにするため）
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_Disconnect.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+
+
+リビジョン: 201
+作者: line
+日時: 19:21:56, 2007年5月29日
+メッセージ:
+エルフの属性を実装
+----
+変更 : /src/l1j/server/server/SkillsTable.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+
+
+リビジョン: 200
+作者: line
+日時: 7:22:15, 2007年5月29日
+メッセージ:
+・updateItemにアイテム個数の更新を追加
+----
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+
+
+リビジョン: 199
+作者: line
+日時: 7:09:50, 2007年5月29日
+メッセージ:
+・特殊な装備によってHP自然回復量がマイナスになっている状態で
+HPが減少した結果0になってしまう問題を修正
+・リスタート、ログアウト時の処理を調整
+・DBへのキャラクター情報保存処理を調整
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_Disconnect.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/model/L1Character.java
+
+
+リビジョン: 198
+作者: line
+日時: 5:56:21, 2007年5月29日
+メッセージ:
+サモンがアイテムを使う条件をちょっと修正
+----
+変更 : /src/l1j/server/server/clientpackets/C_GiveItem.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 197
+作者: line
+日時: 5:29:36, 2007年5月29日
+メッセージ:
+5．サモンとモンスターがアイテムを使うようにする
+回復系ポーション及びヘイスト系ポーションのみ使用
+
+・L1PcInventoryのcheckItemCountをL1Inventoryに統合
+・L1InventoryのcheckItemCountをcheckItemに変更
+----
+変更 : /src/l1j/server/server/clientpackets/C_GiveItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/templates/DropTable.java
+
+
+リビジョン: 196
+作者: line
+日時: 2:56:56, 2007年5月29日
+メッセージ:
+未実装機能一覧更新 Add:［不具合］L1Inventoryで同期エラーが起こる
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 195
+作者: line
+日時: 1:14:43, 2007年5月29日
+メッセージ:
+・rev193、rev194で修正した処理（装備の問題）の場所を移動
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 194
+作者: line
+日時: 23:27:29, 2007年5月28日
+メッセージ:
+・マナクリスタルの着脱に関する問題の修正
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 193
+作者: line
+日時: 21:33:28, 2007年5月28日
+メッセージ:
+・両手武器を装備していると防具の着脱に影響を与えてしまう問題を修正
+（盾は従来通り両手武器を装備していると着脱できない）
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 192
+作者: line
+日時: 20:30:53, 2007年5月28日
+メッセージ:
+・リスタートの問題を再々度修正・・・（ごめんなさい）
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 191
+作者: line
+日時: 18:41:28, 2007年5月28日
+メッセージ:
+・リスタートの問題を再度修正
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/PacketHandler.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+
+
+リビジョン: 190
+作者: line
+日時: 9:13:12, 2007年5月28日
+メッセージ:
+死亡時、ロウフルでもアイテムを落とすようになっていたので、修正しておきました。
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 189
+作者: line
+日時: 7:34:48, 2007年5月28日
+メッセージ:
+間違えてrev188で古い物をコミットしてしまったのでその修正
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+
+
+リビジョン: 188
+作者: line
+日時: 6:51:11, 2007年5月28日
+メッセージ:
+・インベントリ内のアイテム個数に変動があった際に
+クライアント側にもその変動を反映するように修正
+・重量や一部のステータスのみに変動があった際に送るパケットを変更
+・対象がすでに死亡している、MPや触媒不足等で魔法が使用できなかった場合にも
+何も表示されないエフェクトを送信するように変更（不正落ち対策）
+・ショップでの売買時や倉庫利用時に限界を超える数のアイテムを取得しようとした際の処理の見直し
+（限界を超える取得をしようとするとメッセージが表示されて取得できない）
+・テレポート後に詠唱モーションを表示しないように変更
+・リスタートした際に別のキャラを選択したにも関わらず、リスタート前のキャラクターが
+ワールド内に取り残されたままになり、その後のプレイに影響を与える問題の修正
+
+S_SendItemAmountUpdateはインベントリ内のアイテム個数をクライアントへ伝えるパケット
+S_OwnCharStatus2はS_OwnCharStatusを使うほどでも無いケースで使用（能力値と重量のみ）
+※S_OwnCharStatusの内容が完全で無い為か多用すると戦闘時に妙なエフェクトが表示されその後不安定になる
+原因が分かるまで出来るだけS_OwnCharStatusの使用は控えた方がよさそう
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/PacketHandler.java
+変更 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/serverpackets/S_DeleteInventoryItem.java
+追加 : /src/l1j/server/server/serverpackets/S_OwnCharStatus2.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvStatusUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_SendItemAmountUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 187
+作者: line
+日時: 6:16:21, 2007年5月28日
+メッセージ:
+テーブルarmorとweaponのsteal_hp,steal_mpをadd_hpr,add_mprに変更
+
+装備で追加されるHP自然回復量とMP自然回復量を上記カラムをみるように修正
+
+L1Itemのソース整理、etcitem,armorではget_priceなのに
+weaponではgetPriceだったりと、ばらばらだったので、
+統一してL1Itemから全てのメソッドを呼べるように修正
+
+rev185でミスしていた箇所を修正
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvStatusUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopItemSellList.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+変更 : /src/l1j/server/server/templates/L1Armor.java
+変更 : /src/l1j/server/server/templates/L1EtcItem.java
+変更 : /src/l1j/server/server/templates/L1Item.java
+変更 : /src/l1j/server/server/templates/L1Weapon.java
+
+
+リビジョン: 186
+作者: line
+日時: 3:54:26, 2007年5月28日
+メッセージ:
+キラービーのsprの修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 185
+作者: line
+日時: 1:01:10, 2007年5月28日
+メッセージ:
+L1PcInstanceのget_weightをItemTableのWeightGageに合わせて修正
+S_OwnCharStatusとS_Strupで使用していた
+Itemtable.getInstance().WeightGageを
+L1PcInstane.get_weightに変更
+その他L1Inventoryの不具合修正
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1DwarfInventory.java
+変更 : /src/l1j/server/server/model/L1GroundInventory.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_Strup.java
+
+
+リビジョン: 184
+作者: line
+日時: 0:09:51, 2007年5月28日
+メッセージ:
+armorテーブルの自然回復量を修正
+steal_hp と steal_mp に負の値が入るように修正。
+それぞれに、HP・MP自然回復量の値を入力。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 183
+作者: line
+日時: 23:18:23, 2007年5月27日
+メッセージ:
+新しいL1SkillUseの修正が進んでいないようなので
+一時的に古い方へ戻しました（魔法全般が不安定な為）
+修正が済み次第またコミットしてください。
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 182
+作者: line
+日時: 22:49:34, 2007年5月27日
+メッセージ:
+rev181（魔法発動系武器）の忘れ物。
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 181
+作者: line
+日時: 22:41:55, 2007年5月27日
+メッセージ:
+魔法発動系の武器の計算式を、なるべく本サーバーと同じような数値になるように修正。
+（属性MRでの軽減が無かったり、素のSPで計算されていたりします。）
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 180
+作者: line
+日時: 20:20:22, 2007年5月27日
+メッセージ:
+
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+
+
+リビジョン: 179
+作者: line
+日時: 19:05:35, 2007年5月27日
+メッセージ:
+Rev176のエラー修正（javolutionをコメントアウト）
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+
+
+リビジョン: 178
+作者: line
+日時: 17:56:14, 2007年5月27日
+メッセージ:
+PTのHPバーの表示順序を修正
+----
+変更 : /src/l1j/server/server/model/L1Party.java
+
+
+リビジョン: 177
+作者: line
+日時: 17:33:33, 2007年5月27日
+メッセージ:
+isNowNightの中身を記述
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 176
+作者: line
+日時: 16:20:12, 2007年5月27日
+メッセージ:
+GameTimeController.javaに新メソッド追加。
+主に昼夜切り替え、NPCや魔法のタイミングの同期に使えるようにしてます。
+詳しい説明はソース内に記述してます。
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+
+
+リビジョン: 175
+作者: line
+日時: 14:10:23, 2007年5月27日
+メッセージ:
+死亡時のアイテムロストの仕様を変更
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/templates/Inventory.java
+
+
+リビジョン: 174
+作者: line
+日時: 13:17:52, 2007年5月27日
+メッセージ:
+パインワンド使用時のMOBを調整
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 173
+作者: line
+日時: 11:06:58, 2007年5月27日
+メッセージ:
+赤ネームでPKされると、MRがおかしくなる不具合を修正
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 172
+作者: line
+日時: 9:36:19, 2007年5月27日
+メッセージ:
+赤ネームで死亡すると装備が消滅するが、消滅する確率を100%から20%に変更。
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 171
+作者: line
+日時: 9:02:31, 2007年5月27日
+メッセージ:
+パインワンドで出現するMOBを制限
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 170
+作者: line
+日時: 7:55:26, 2007年5月27日
+メッセージ:
+4．NPCの所持品をL1Inventoryで実装完了
+・倒したときにドロップを取得していたのをNpcActionが実行された時に
+ドロップをL1Inventoryに設定するようにしました。
+・ヘイトに応じてドロップを分配するようにしました。
+※AutoLooting=0:アデナ以外地面に落ちる
+※AutoLooting=1:サモンやペットもアイテムを取得
+※AutoLooting=2:サモンやペットはアイテムを取得しない
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/templates/DropTable.java
+削除 : /src/l1j/server/server/utils/CalcDrops.java
+
+
+リビジョン: 169
+作者: line
+日時: 5:25:48, 2007年5月27日
+メッセージ:
+OE時のメッセージの直し忘れをup。
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 168
+作者: line
+日時: 2:31:02, 2007年5月27日
+メッセージ:
+L1SkillUse関連の対応
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 167
+作者: line
+日時: 1:38:40, 2007年5月27日
+メッセージ:
+オペコード参考資料.txtの誤字訂正
+----
+変更 : /etc/オペコード参考資料.txt
+
+
+リビジョン: 166
+作者: line
+日時: 0:31:40, 2007年5月27日
+メッセージ:
+オペコード参考資料.txt
+----
+変更 : /etc/オペコード参考資料.txt
+
+
+リビジョン: 165
+作者: line
+日時: 23:28:56, 2007年5月26日
+メッセージ:
+4．とりあえずサモンの所持品をL1Inventoryで実装(物を渡せる＆解放処理)
+・ログインしたときに自分のサモンを探してsetしなおす処理の追加 
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/PacketHandler.java
+追加 : /src/l1j/server/server/clientpackets/C_GiveItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1World.java
+
+
+リビジョン: 164
+作者: line
+日時: 23:21:03, 2007年5月26日
+メッセージ:
+オペコード参考資料.txt
+----
+変更 : /etc/オペコード参考資料.txt
+
+
+リビジョン: 163
+作者: line
+日時: 22:14:08, 2007年5月26日
+メッセージ:
+オペコード参考資料.txt
+----
+変更 : /etc/オペコード参考資料.txt
+
+
+リビジョン: 162
+作者: line
+日時: 21:17:21, 2007年5月26日
+メッセージ:
+・範囲魔法を使用した際に魔法の範囲に対象が1体しか存在しない場合、
+無効になっていた問題を修正
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 161
+作者: line
+日時: 21:12:02, 2007年5月26日
+メッセージ:
+3.地面対応、コミット忘れふぁいる。
+----
+追加 : /src/l1j/server/server/model/L1GroundInventory.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1World.java
+
+
+リビジョン: 160
+作者: line
+日時: 21:10:35, 2007年5月26日
+メッセージ:
+3．地面をL1Inventoryに対応
+----
+変更 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+
+
+リビジョン: 159
+作者: line
+日時: 12:15:37, 2007年5月26日
+メッセージ:
+GMコマンド.summonを使用した際、サモンのSTR、DEX、CON、INT、WIS、AC、MR、アンデッド属性が設定されるように変更。
+----
+変更 : /src/l1j/server/server/GMCommands.java
+
+
+リビジョン: 158
+作者: line
+日時: 10:57:07, 2007年5月26日
+メッセージ:
+オークファイター、オークアーチャーのspr修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 157
+作者: line
+日時: 10:24:45, 2007年5月26日
+メッセージ:
+ブラックナイトのsprを修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 156
+作者: line
+日時: 10:04:43, 2007年5月26日
+メッセージ:
+NPCとの会話の調査結果を反映
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+
+
+リビジョン: 155
+作者: line
+日時: 7:02:26, 2007年5月26日
+メッセージ:
+PTのEXP・ロウフル分配を実装
+----
+変更 : /etc/未実装機能一覧.txt
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 154
+作者: line
+日時: 6:54:06, 2007年5月26日
+メッセージ:
+細かいことだけど、タイトルの無い状態で「/who」コマンドを使用した際は半角スペースは表示されないように修正。
+----
+変更 : /src/l1j/server/server/serverpackets/S_WhoCharinfo.java
+
+
+リビジョン: 153
+作者: line
+日時: 6:43:11, 2007年5月26日
+メッセージ:
+・getWeight()(L1Inventory)を580さん式の重量に対応
+----
+変更 : /src/l1j/server/server/model/L1Inventory.java
+
+
+リビジョン: 152
+作者: line
+日時: 6:38:42, 2007年5月26日
+メッセージ:
+・NPCテーブルのpassispeedとatkspeedを修正
+・間違っているsprを差し替え修正等
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 151
+作者: line
+日時: 5:53:04, 2007年5月26日
+メッセージ:
+L1Worldテストコメント消し忘れ
+----
+変更 : /src/l1j/server/server/model/L1World.java
+
+
+リビジョン: 150
+作者: line
+日時: 4:48:31, 2007年5月26日
+メッセージ:
+L1WorldのstoreObjectとremoveObjectの調整
+プレイヤーが死んだときのリスタートの処理の変更
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestRestart.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1DwarfInventory.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+変更 : /src/l1j/server/server/model/L1World.java
+
+
+リビジョン: 149
+作者: line
+日時: 2:36:21, 2007年5月26日
+メッセージ:
+パーティーを組まない状態でパーティーチャットすると、落ちる不具合に対応
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+
+
+リビジョン: 148
+作者: line
+日時: 1:01:14, 2007年5月26日
+メッセージ:
+2．倉庫をL1Inventoryに対応　同じ種類の物をいれたらスタックするようになりました
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvStatusUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+
+
+リビジョン: 147
+作者: line
+日時: 0:41:05, 2007年5月26日
+メッセージ:
+1．L1PCInstanceをL1Inventoryに対応 
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 146
+作者: line
+日時: 0:40:33, 2007年5月26日
+メッセージ:
+デバッグメッセージが残っていたので削除
+----
+変更 : /src/l1j/server/server/model/L1Magic.java
+
+
+リビジョン: 145
+作者: line
+日時: 0:19:25, 2007年5月26日
+メッセージ:
+L1Inventoryクラスの修正
+----
+変更 : /src/l1j/server/server/model/L1DwarfInventory.java
+変更 : /src/l1j/server/server/model/L1Inventory.java
+変更 : /src/l1j/server/server/model/L1PcInventory.java
+
+
+リビジョン: 144
+作者: line
+日時: 0:07:54, 2007年5月26日
+メッセージ:
+確率魔法の計算モデル作成
+　攻撃側ポイント：LV + ((MagicBonus * 3) * 魔法固有係数) 
+　防御側ポイント：((LV / 2) + (MR * 3)) / 2 
+　攻撃成功率：攻撃側ポイント - 防御側ポイント 
+
+skillsテーブルの変更
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 143
+作者: line
+日時: 22:51:55, 2007年5月25日
+メッセージ:
+パーティーチャットを実装
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+変更 : /src/l1j/server/server/serverpackets/S_ChatPacket.java
+
+
+リビジョン: 142
+作者: line
+日時: 21:59:26, 2007年5月25日
+メッセージ:
+※データベースに変更有り（重量修正）
+・鯖がキャラクター名の前にエンブレムを表示しようとして、名前の位置が1マス後ろにずれる件を修正
+・魔法STRとDEXを使用した際に表示の上でステータスが0になる問題の修正
+・キャラクターのステータス更新時に鯖が送っている時間をゲーム内時間での5分単位で送るように変更
+・キャラクター作成時の名前登録に日本語名を許可するように変更
+（キャラクターの名前を日本語名にした場合、まだテストが十分でないので何か不具合が出る恐れ有り、報告歓迎）
+・特定のモンスターに変身した状態でテレポートすると装備の変更等を行うまで移動出来なくなる問題の修正
+（GMコマンドで変身できる一部モンスターに関してはテレポート後に動けなくなる場合があるかも）
+・アミュレットによるテレポートにも制限がかかるように修正
+・ログイン時に最初に送られてくる時間もゲーム内時間での5分単位に変更
+・580さんによるアイテムの重量修正に対応
+・インベントリ内のアイテムに変動があった際にステータス情報を送るように再度変更
+（本来、重量情報だけ送るべき点のようだけれど、重量情報だけ送る方法がまだわからないので・・・）
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/PacketHandler.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+変更 : /src/l1j/server/server/serverpackets/S_Dexup.java
+変更 : /src/l1j/server/server/serverpackets/S_HPUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_MPUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_NormalChatPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_OtherCharPacks.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharPack.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvStatusUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_ServerVersion.java
+変更 : /src/l1j/server/server/serverpackets/S_Strup.java
+変更 : /src/l1j/server/server/templates/Inventory.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 141
+作者: line
+日時: 21:55:26, 2007年5月25日
+メッセージ:
+L1Inventoryクラスのアップ
+----
+追加 : /src/l1j/server/server/model/L1DwarfInventory.java
+追加 : /src/l1j/server/server/model/L1Inventory.java
+追加 : /src/l1j/server/server/model/L1PcInventory.java
+
+
+リビジョン: 140
+作者: line
+日時: 20:07:29, 2007年5月25日
+メッセージ:
+パーティーDROP表示に対応
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+変更 : /src/l1j/server/server/model/L1Party.java
+変更 : /src/l1j/server/server/templates/DropTable.java
+
+
+リビジョン: 139
+作者: line
+日時: 18:08:02, 2007年5月25日
+メッセージ:
+パーティー機能の一部を実装
+----
+変更 : /etc/未実装機能一覧.txt
+変更 : /src/l1j/server/server/Opcodes.java
+変更 : /src/l1j/server/server/clientpackets/C_CreateParty.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+変更 : /src/l1j/server/server/model/L1Character.java
+追加 : /src/l1j/server/server/model/L1Party.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PetInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+削除 : /src/l1j/server/server/serverpackets/JoinParty.java
+削除 : /src/l1j/server/server/serverpackets/S_AskJoinParty.java
+追加 : /src/l1j/server/server/serverpackets/S_Message_YN.java
+変更 : /src/l1j/server/server/utils/CalcDmgPc.java
+変更 : /src/l1j/server/server/utils/CalcExp2.java
+
+
+リビジョン: 138
+作者: line
+日時: 10:57:15, 2007年5月25日
+メッセージ:
+inport修正
+----
+削除 : /src/SubstringTest.java
+変更 : /src/l1j/server/server/CharTemplateTable.java
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/DoorTable.java
+変更 : /src/l1j/server/server/GameServer.java
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/MapsTable.java
+変更 : /src/l1j/server/server/SpawnTable.java
+変更 : /src/l1j/server/server/TeleportLocations.java
+変更 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/clientpackets/C_Disconnect.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestBanClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestJoinClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLeaveClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/model/Dungeon.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1PetInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1Spawn.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+変更 : /src/l1j/server/server/model/L1World.java
+変更 : /src/l1j/server/server/serverpackets/GetItem.java
+変更 : /src/l1j/server/server/serverpackets/S_AddInventoryItem.java
+変更 : /src/l1j/server/server/serverpackets/S_ChangeShape.java
+変更 : /src/l1j/server/server/serverpackets/S_CharInvVisualUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_CharTitle.java
+変更 : /src/l1j/server/server/serverpackets/S_CharVisualUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_ChatPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/serverpackets/S_DeleteNewObject.java
+変更 : /src/l1j/server/server/serverpackets/S_DropItem.java
+変更 : /src/l1j/server/server/serverpackets/S_MoveCharPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_MoveNpcPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_NPCPack.java
+変更 : /src/l1j/server/server/serverpackets/S_NewCharPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_OpcodeTest.java
+変更 : /src/l1j/server/server/serverpackets/S_OtherCharPacks.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharPack.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_PetsPack.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvStatusUpdate.java
+変更 : /src/l1j/server/server/serverpackets/S_StringMessage.java
+変更 : /src/l1j/server/server/serverpackets/S_SummonPack.java
+変更 : /src/l1j/server/server/serverpackets/S_UseArrowSkill.java
+変更 : /src/l1j/server/server/serverpackets/S_UseArrowSkillMob.java
+変更 : /src/l1j/server/server/serverpackets/S_UseAttackSkill.java
+変更 : /src/l1j/server/server/templates/ItemDrop.java
+変更 : /src/l1j/server/server/templates/L1BuyList.java
+変更 : /src/l1j/server/server/templates/L1Maps.java
+変更 : /src/l1j/server/server/utils/CalcDmg.java
+変更 : /src/l1j/server/server/utils/CalcDmgMop.java
+変更 : /src/l1j/server/server/utils/CalcDmgmagic.java
+変更 : /src/l1j/server/server/utils/CalcDrops.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+変更 : /src/l1j/server/server/utils/CalcExp2.java
+変更 : /src/l1j/server/server/utils/CalcStat.java
+変更 : /src/l1j/server/server/utils/UpdateInventoryItem.java
+
+
+リビジョン: 137
+作者: line
+日時: 8:25:00, 2007年5月25日
+メッセージ:
+ServerMessageを5個持たせられるように変更しました、すみません。
+----
+変更 : /src/l1j/server/server/serverpackets/S_ServerMessage.java
+
+
+リビジョン: 136
+作者: line
+日時: 7:49:54, 2007年5月25日
+メッセージ:
+S_ServerMessageに4つまで値を持たせられるように修正（何もない場合でも1個以上は必要です）。
+%1～%4に順に対応しています。
+----
+変更 : /src/l1j/server/server/serverpackets/S_ServerMessage.java
+
+
+リビジョン: 135
+作者: line
+日時: 7:26:01, 2007年5月25日
+メッセージ:
+武器の持ち替えに対応
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 134
+作者: line
+日時: 3:34:25, 2007年5月25日
+メッセージ:
+【以下はまだ使用されていないので、動作には影響ありません。】
+areaテーブルを調整。
+getback_restartテーブルを追加。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 133
+作者: line
+日時: 2:04:22, 2007年5月25日
+メッセージ:
+L1SkillUseを大幅更新しました。（結局スパゲッティ プログラムになってしまいました。。。）
+回復系の魔法はマイナスダメージとして計算しています。
+基本的には以前のL1SkillUseとほぼ同じことが出来るレベルで
+以下の未対応の部分について対応していく予定です。
+
+以下は現時点での未対応の部分です。
+・確率系魔法が１００％利く、L1Magicで計算する予定です。（というか、誰か計算モデル教えてください。）
+・ファイヤアローなど自分にエフェクトがある。
+・ダメージ調整が適当。
+・MBとSPと違うということを今日知ったので、MBしか実装していない。
+・setspeedがサモンは対応しているが、NPCが対応していないのでそこの改良
+・魔法使用時のメッセージが表示しない。
+　ttp://www.abcoroti.com/~umagon/cgi-bin/src/up0345.txt
+　に書かれているメッセージIDの調査をお願いします。string-j?で分かるらしい。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 132
+作者: line
+日時: 21:47:22, 2007年5月24日
+メッセージ:
+未実装機能一覧.txtを更新
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 131
+作者: line
+日時: 15:14:44, 2007年5月24日
+メッセージ:
+各種テレポートスクロールの不具合を修正。
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 130
+作者: line
+日時: 11:54:24, 2007年5月24日
+メッセージ:
+未実装一覧.txt
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 129
+作者: line
+日時: 6:02:30, 2007年5月24日
+メッセージ:
+mapids/zoneを統合した形のareaテーブルの仮追加（多少違いはあります）。
+「restart」フィールドがリスタート時の移動フラグです。
+「territory」フィールド（領地）は、まだ全て0になっています。
+JPクライアントを参考にし、不明なマップは全て省きました。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 128
+作者: line
+日時: 1:39:10, 2007年5月24日
+メッセージ:
+Skill関連のUpdate
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/templates/L1Skills.java
+
+
+リビジョン: 127
+作者: line
+日時: 22:21:13, 2007年5月23日
+メッセージ:
+MapIDをJPクライアントの保持する情報に従って修正。
+ランダムテレポートのみ不可能の地域（1）、帰還も不可能な地域（2）によって
+テレポートや帰還をしようとした際のメッセージを適切な物に変更。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 126
+作者: line
+日時: 18:38:36, 2007年5月23日
+メッセージ:
+未実装アイテム使用時のメッセージをより適切な物に変更（仮）。
+オーバーエンチャント時のメッセージを修正。
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 125
+作者: line
+日時: 14:50:37, 2007年5月23日
+メッセージ:
+npc,spawnlist_npcテーブルの名前を修正
+606さんがアップしてくれた翻訳情報を元に未翻訳部分とスペースの空きなどを修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 124
+作者: line
+日時: 13:46:34, 2007年5月23日
+メッセージ:
+etcitemテーブルの名前を修正
+606さんがアップしてくれた翻訳情報を元に未翻訳部分とスペースの空きなどを修正。
+記念メダルのレコードを本来の宝石類の名前、グラフィックIDに修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 123
+作者: line
+日時: 12:59:23, 2007年5月23日
+メッセージ:
+weaponテーブルの名前を修正
+606さんがアップしてくれた翻訳情報を元に未翻訳部分とスペースの空きなどを修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 122
+作者: line
+日時: 11:49:42, 2007年5月23日
+メッセージ:
+armorテーブルの名前を修正
+606さんがアップしてくれた翻訳情報を元に未翻訳部分とスペースの空きなどを修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 121
+作者: line
+日時: 1:54:10, 2007年5月23日
+メッセージ:
+・テレポート制限について未実装一覧.txtに追加
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 120
+作者: line
+日時: 1:51:16, 2007年5月23日
+メッセージ:
+・マップによってテレポート制限がかかるように変更
+制限を掛けるには、まずDBのrateテーブルにある
+TeleportLimitationフィールドを1にする（0：制限無効 1：制限有効）
+
+次にマップ毎の設定をする
+DBのmapidsテーブルにあるflagフィールにて設定可能
+（0：無制限　1：ランテレのみ制限　2：ランテレ、帰還両方制限）
+
+137鯖にあるオリジナルアイテム、目的地帰還スクロールは
+帰還スクロールとして扱われるよ（flagが2だと使えない）
+
+注意；現在DBのmapsフラグに設定してある制限は完全な物ではないので
+間違いに気がついたら、その都度修正してね
+また、魔法によるテレポートを途中で止めてしまうとクライアントが止まってしまうので
+現在は現在位置にテレポートさせるようにしてあるよ
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/GameServer.java
+追加 : /src/l1j/server/server/MapsTable.java
+変更 : /src/l1j/server/server/RateTable.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+追加 : /src/l1j/server/server/templates/L1Maps.java
+
+
+リビジョン: 119
+作者: line
+日時: 19:43:04, 2007年5月22日
+メッセージ:
+未実装機能一覧.txt 魔法関係の項目の追加
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 118
+作者: line
+日時: 18:40:58, 2007年5月22日
+メッセージ:
+・他PCの情報を受け取るとHPメーターを表示した上、酔ってしまう件の修正
+おもしろいけど、ダメだよねw
+----
+変更 : /src/l1j/server/server/serverpackets/S_OtherCharPacks.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharPack.java
+
+
+リビジョン: 117
+作者: line
+日時: 18:34:06, 2007年5月22日
+メッセージ:
+未実装機能一覧.txt
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 116
+作者: line
+日時: 17:27:53, 2007年5月22日
+メッセージ:
+サモンの散開を実装
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 115
+作者: line
+日時: 8:16:16, 2007年5月22日
+メッセージ:
+サイハの弓のエフェクト修正(キャラクターを攻撃したときだけ)
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1DwarfInstance.java
+変更 : /src/l1j/server/server/model/L1GuardInstance.java
+変更 : /src/l1j/server/server/model/L1MerchantInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1TeleporterInstance.java
+
+
+リビジョン: 114
+作者: line
+日時: 6:45:22, 2007年5月22日
+メッセージ:
+弓攻撃まわりをいろいろ修正
+・ミスしていたときに2回モーションが出ていたのを修正
+・ミスしていたときもターゲットが喰らうモーションになっていたのを修正
+・ＮＰＣの射程距離(Ｒａｎｇｅｄ)が１０の場合は弓として矢を発動するように修正
+----
+変更 : /etc/未実装機能一覧.txt
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/serverpackets/S_ArrowStatus.java
+
+
+リビジョン: 113
+作者: line
+日時: 5:33:33, 2007年5月22日
+メッセージ:
+サモン遠隔攻撃時に障害物判定(L1Character.GlanceCheck)をするように修正
+----
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 112
+作者: line
+日時: 2:46:14, 2007年5月22日
+メッセージ:
+NPCのエリアスキルや白茶などがログインしたマップでしかきちんと作動しなかった問題を修正
+※キャラクターとサモンがテレポートしたときに_visibleObjectsも移動させるようした
+サモンが攻撃を喰らったときに対象をターゲットリストに追加するように修正
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+変更 : /src/l1j/server/server/model/L1World.java
+
+
+リビジョン: 111
+作者: line
+日時: 1:24:53, 2007年5月22日
+メッセージ:
+テレポート安定化作業
+----
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 110
+作者: line
+日時: 22:18:00, 2007年5月21日
+メッセージ:
+モンスターがダメージ受けたとき、マイナスダメージは回復魔法として処理する
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 109
+作者: line
+日時: 22:15:37, 2007年5月21日
+メッセージ:
+skillsテープルの更新
+L1Magicに少しだけ実装
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 108
+作者: line
+日時: 18:12:31, 2007年5月21日
+メッセージ:
+・クライアントへ送る幾つかのパケットにGameTimeを含めるように変更（まだ不完全）
+
+・定期的にクライアントへ送っていたGameTimeをクライアントからオペコード49番が送られた来た時に
+返信する形で送るように変更
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/PacketHandler.java
+追加 : /src/l1j/server/server/clientpackets/C_KeepALIVE.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+変更 : /src/l1j/server/server/serverpackets/S_ArrowStatus.java
+変更 : /src/l1j/server/server/serverpackets/S_DropItem.java
+変更 : /src/l1j/server/server/serverpackets/S_Lawful.java
+変更 : /src/l1j/server/server/serverpackets/S_MapID.java
+変更 : /src/l1j/server/server/serverpackets/S_NPCPack.java
+変更 : /src/l1j/server/server/serverpackets/S_OtherCharPacks.java
+変更 : /src/l1j/server/server/serverpackets/S_ServerVersion.java
+変更 : /src/l1j/server/server/serverpackets/S_SkillIsik.java
+変更 : /src/l1j/server/server/serverpackets/S_SkillSound.java
+変更 : /src/l1j/server/server/serverpackets/S_UseArrowSkill.java
+変更 : /src/l1j/server/server/serverpackets/S_UseArrowSkillMob.java
+変更 : /src/l1j/server/server/serverpackets/S_UseAttackSkill.java
+変更 : /src/l1j/server/server/serverpackets/S_WhoCharinfo.java
+
+
+リビジョン: 107
+作者: line
+日時: 8:37:01, 2007年5月21日
+メッセージ:
+1年毎にゲーム時間をリセットするように変更
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 106
+作者: line
+日時: 7:18:16, 2007年5月21日
+メッセージ:
+ゲーム内時間が0:00に巻き戻る不具合を修正
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+
+
+リビジョン: 105
+作者: line
+日時: 23:19:47, 2007年5月20日
+メッセージ:
+GlanceCheckをL1Characterへ統合
+----
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+
+
+リビジョン: 104
+作者: line
+日時: 21:51:16, 2007年5月20日
+メッセージ:
+入力ストリームのバッファの扱いを変えた結果、
+一部の環境以外でしかまともに動かなくなってしまった為
+従来のバッファが貯まり続ける方式に差し戻し
+
+これによって、従来通り不正終了時に鯖がクライアントを解放しなくなると思う
+また、前回追加されたGMコマンド「kick」も機能しなくなるよ
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+
+
+リビジョン: 103
+作者: line
+日時: 20:38:30, 2007年5月20日
+メッセージ:
+GMコマンドにより、サモンモンスターを召喚した状態で
+テレポート行為を行うと、テレポート先の状況によっては
+サモンモンスターの位置が決定出来ず、無限ループ状態に陥る問題の修正
+----
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 102
+作者: line
+日時: 14:27:56, 2007年5月20日
+メッセージ:
+L1Attackに移植し忘れていたダメージメッセージの追加
+rateテーブルのAttackMessageOnのやつ
+あとS_UseAttackSkillに入ってたコンパイルエラー消し
+あげる前にコンパイルしてみましょう。。
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/serverpackets/S_UseAttackSkill.java
+
+
+リビジョン: 101
+作者: line
+日時: 14:18:28, 2007年5月20日
+メッセージ:
+・ファイアアローとスタラックが特におかしい感じなので
+そこだけS_SkillSoundを使うように変更
+また、それに伴って試行錯誤中のS_UseAttackSkillを
+一旦元の状態へ差し戻し
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/serverpackets/S_UseAttackSkill.java
+
+
+リビジョン: 100
+作者: line
+日時: 14:02:22, 2007年5月20日
+メッセージ:
+・アイテムを複数置いたり削除したり出来なくなった問題を修正
+----
+変更 : /src/l1j/server/server/ClientThread.java
+
+
+リビジョン: 99
+作者: line
+日時: 14:00:56, 2007年5月20日
+メッセージ:
+・rev94で自動アイテム削除をコメントアウトする際に
+間違えてservertime++;までコメントアウトしてしまっていたので修正
+----
+変更 : /src/l1j/server/server/GameTimeController.java
+
+
+リビジョン: 98
+作者: line
+日時: 12:46:03, 2007年5月20日
+メッセージ:
+攻撃魔法を使うと落ちる不具合の対応
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 97
+作者: line
+日時: 12:16:26, 2007年5月20日
+メッセージ:
+Skillsテーブルに貫通するかのフラグを追加
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/SkillsTable.java
+変更 : /src/l1j/server/server/templates/L1Skills.java
+
+
+リビジョン: 96
+作者: line
+日時: 8:24:29, 2007年5月20日
+メッセージ:
+・ドワーフ倉庫での受け取り制限を入れ忘れていたので追加
+100種類以上所持している場合は受け取り不可になる
+----
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+
+
+リビジョン: 95
+作者: line
+日時: 7:49:06, 2007年5月20日
+メッセージ:
+・ショップ購入時にアイテム所持数制限を追加
+簡易的な物なので、例えばすでに99種類持っている状態でショップを利用する場合、
+一度に10種類の物を買うと限界を超えた109個所持出来てしまうよ
+
+・落ちているアイテムを拾う時にアイテム所持数チェックを追加
+すでに100種類以上所持している場合、落ちているアイテムを拾うことが
+出来なくなるよ
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+
+
+リビジョン: 94
+作者: line
+日時: 6:55:59, 2007年5月20日
+メッセージ:
+・ACが表示上8になってしまう問題を修正
+
+・アイテムの売却が出来ない問題を修正
+
+・攻撃魔法使用時に不正終了する問題を暫定対処（見た目を大きく損なう変更、やむを得ず暫定処置）
+
+・クライアントからの入力がバッファに貯まってしまう問題に対処
+
+・パケット送信部に使っていたsynchronizedの使用をやめて、ReentrantLockへ変更
+
+・自動アイテム削除の処理に不安があるので一旦停止（なるべくセキュアな動作にしたつもりだったけれどセキュア過ぎて効果もアレだったし・・・）
+
+・処理のタイミングにより、モンスター死亡後にモンスターが攻撃パケットを送信してしまう問題に対処
+
+・モンスターの死亡時の処理をスレッドを立ち上げてそちらで処理（プレイヤーをモンスターの後処理から早めに解放する為、暫定）
+
+・プレイヤーの移動時の処理を変更（より確実に移動させる為）
+
+・アイテムやスキル使用後に追加していた遅延を削除（意味が無い為・・・）
+
+・スキル使用時と攻撃時の障害物判定での判定範囲を縮小
+
+・テレポート時に座標移動前に自キャラの認識を削除するように変更
+
+・EtcItemCounter呼び出し時に自キャラのステータス更新をしないように変更（ステータス更新が必要な時はケースによって個別にしてね）
+
+・GMコマンド「kick」を有効化（不正終了した場合、今回の変更で鯖から切断されやすくなったので使う機会が少ないかも）
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/GameTimeController.java
+変更 : /src/l1j/server/server/clientpackets/C_ChangeHeading.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/model/Dungeon.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/serverpackets/S_SkillSound.java
+変更 : /src/l1j/server/server/serverpackets/S_SkillUnk.java
+変更 : /src/l1j/server/server/serverpackets/S_UseArrowSkill.java
+変更 : /src/l1j/server/server/serverpackets/S_UseArrowSkillMob.java
+変更 : /src/l1j/server/server/serverpackets/S_UseAttackSkill.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+
+
+リビジョン: 93
+作者: line
+日時: 1:44:10, 2007年5月20日
+メッセージ:
+未実装機能一覧.txt
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 92
+作者: line
+日時: 23:31:04, 2007年5月19日
+メッセージ:
+矢を持っていない状態でサイハの弓を撃つと落ちる不具合を修正
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 91
+作者: line
+日時: 21:08:30, 2007年5月19日
+メッセージ:
+未実装機能一覧.txtを更新
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 90
+作者: line
+日時: 20:53:22, 2007年5月19日
+メッセージ:
+18～6時はアンデッドの攻撃力が1.1倍になるように変更
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 89
+作者: line
+日時: 15:25:41, 2007年5月19日
+メッセージ:
+サモンのHPメーターが喰らったときに動くように修正
+PC同様set_currentHp(int)を利用することでメーターを変動させれます。
+GMCommandにオペレーションコード解析用のコマンドを追加
+etc/フォルダにオペコード参考資料.txtを追加
+----
+追加 : /etc/オペコード参考資料.txt
+変更 : /etc/GMコマンド一覧.txt
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/Opcodes.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+追加 : /src/l1j/server/server/serverpackets/S_HPMeter.java
+追加 : /src/l1j/server/server/serverpackets/S_OpCode_Test.java
+
+
+リビジョン: 88
+作者: line
+日時: 14:21:44, 2007年5月19日
+メッセージ:
+skillsテーブル修正
+精霊魔法・闇精霊魔法・君主魔法・技術の属性、type、target_toの修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 87
+作者: line
+日時: 12:50:29, 2007年5月19日
+メッセージ:
+ゲーム内時刻が進むように修正
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/GameTimeController.java
+
+
+リビジョン: 86
+作者: line
+日時: 9:29:36, 2007年5月19日
+メッセージ:
+NPCテーブルのundeadに0：通常、1：アンデッド系、2：悪魔系を入力
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 85
+作者: line
+日時: 8:34:09, 2007年5月19日
+メッセージ:
+skill_id:172を削除
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+
+
+リビジョン: 84
+作者: line
+日時: 8:26:35, 2007年5月19日
+メッセージ:
+アンデッド・悪魔に対する銀・ミスリル・オリハルコン、祝福効果を追加。
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1ItemInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/serverpackets/S_InvList.java
+変更 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+変更 : /src/l1j/server/server/templates/L1Item.java
+
+
+リビジョン: 83
+作者: line
+日時: 6:57:11, 2007年5月19日
+メッセージ:
+未実装機能一覧.txtを更新
+----
+変更 : /etc/未実装機能一覧.txt
+
+
+リビジョン: 82
+作者: line
+日時: 6:13:43, 2007年5月19日
+メッセージ:
+エルフが魔法を覚えるとサーバーが応答しなくなる不具合を修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 81
+作者: line
+日時: 0:15:58, 2007年5月19日
+メッセージ:
+Skillsテーブルの更新をしました。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/SkillsTable.java
+変更 : /src/l1j/server/server/templates/L1Skills.java
+
+
+リビジョン: 80
+作者: line
+日時: 0:00:18, 2007年5月19日
+メッセージ:
+DBのnpcテーブルにundeadを追加
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/MobTable.java
+変更 : /src/l1j/server/server/model/L1MobDataTable.java
+変更 : /src/l1j/server/server/model/L1NpcDataTable.java
+変更 : /src/l1j/server/server/templates/L1Npc.java
+
+
+リビジョン: 79
+作者: line
+日時: 17:24:21, 2007年5月18日
+メッセージ:
+DBのetcitemに使用可能最小レベル、使用可能最大レベル、X座標、Y座標、
+マップIDを追加。
+パインワンドのGM制限を削除。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/templates/ItemTable.java
+変更 : /src/l1j/server/server/templates/L1EtcItem.java
+
+
+リビジョン: 78
+作者: line
+日時: 15:25:15, 2007年5月18日
+メッセージ:
+skillsテーブル修正
+
+attrに属性を入力
+（0.無属性魔法,1.地魔法,2.火魔法,4.水魔法,8.風魔法,16.光魔法）
+
+スタラックとファイアー アロー が入れ替わっていたのを修正
+トゥルーターゲット にスペースが空いていたのを修正
+コールクラン にスペースが空いていたのを修正
+ヒール のrangedを15に修正
+カーズ ブラインド の持続時間を10秒に修正
+ターン アンデット のrangedを10に修正
+ファイアー ボール のrangedを6に修正
+カウンター マジック の使用で魔力の石を1個使うように修正
+カーズ パラライズ の持続時間を16秒に修正
+コール ライトニング のrangedを10に修正
+ディジーズ のMP使用量を20に修正
+シェイプ チェンジ の持続時間を20分に修正
+シェイプ チェンジ のHP使用量を1に修正
+マス テレポート のareaを2に修正
+ショック スタン の持続時間を3秒 ディレイを8秒に修正
+リダクション アーマー のディレイを3秒に修正
+バウンス アタック のディレイを5秒に修正
+ブラインド ハイディング の持続時間を32秒 ディレイを9.9秒に修正
+シャドウ アーマー のHP使用量を5に修正
+バーニング スピリッツ のディレイを2.9秒に修正
+ダーク ブラインド の使用でダークストーンを1個つかうように修正
+ダーク ブラインド のディレイを1秒 アライメントを-10に修正
+ドレス イベイジョンの持続時間を32秒に修正
+グローウィング オーラ の持続時間を640秒に修正
+ボディ トゥ マインド のディレイを0秒に修正
+リターン トゥ ネイチャー の名前が ネイチャーズ タッチ だったのを修正
+コール オブ ネイチャー の名前が リターン トゥ ネイチャー だったのを修正
+エンタングル の持続時間を64秒に修正
+イレース マジック の持続時間を32秒に修正
+レッサー エレメンタル の持続時間を1時間に修正
+アース バインド の持続時間を16秒に修正
+エリア サイレンス のディレイを9秒に修正
+グレーター エレメンタル の持続時間を1時間に修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 77
+作者: line
+日時: 2:26:01, 2007年5月18日
+メッセージ:
+skillsテーブルに色々追加、他に必要な項目がありましたら連絡してください。
+L1Magicクラスの形だけ作成
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/SkillsTable.java
+追加 : /src/l1j/server/server/model/L1Magic.java
+変更 : /src/l1j/server/server/templates/L1Skills.java
+
+
+リビジョン: 76
+作者: line
+日時: 0:48:09, 2007年5月18日
+メッセージ:
+L1MonsterInstanceのソース整理とヘイト処理追加
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 75
+作者: line
+日時: 23:00:28, 2007年5月17日
+メッセージ:
+WIZが初期状態でエネルギーボルトを覚えるように変更
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+
+
+リビジョン: 74
+作者: line
+日時: 21:48:53, 2007年5月17日
+メッセージ:
+パインワンドの重量を修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 73
+作者: line
+日時: 16:56:19, 2007年5月17日
+メッセージ:
+オーキッシュ ダガー のuse_darkelf(1)を修正
+ショートソードの刀身 のtypeをswordに修正
+オリハルコン ダガー のdmgmodifier(+2)を修正
+クリスタル ショートソード のuse_darkelf(0)を修正
+魔力を失った カーツ ソード の重さを1に修正
+古代のソード を 封印された 古代のソードに修正
+フレイム ソード の重さを80に修正
+ツルギ の攻撃成功率を2に修正
+ドゥーム ブレード を全ステータス+5に修正
+リベンジ ソード のdmg_large(33) use_mage(0) use_darkelf(0)を修正
+古代のグレート ソード を 封印された 古代のグレート ソード に修正
+封印された 古代のグレート ソード の攻撃成功率を5に修正
+ドラゴン スレイヤー の追加ダメージを0に修正
+謎のスピアー の重さを0に修正 すべてクラスで装備できないように修正
+パンの角 のダメージを2/2に修正 重さを12に修正
+ミスリル ホーン の重さを24に修正 use_darkelf(0)を修正
+エルヴン スピアー のmaterialをmithrilに修正
+オリハルコン ホーン のmaterialをoriharukonに修正
+フォチャード のmaterialをoriharukonに修正
+クリムゾン ランス のmaterialをmithrilに修正
+謎のアックス のmaterialをboneに修正 すべてクラスで装備できないように修正
+アックス のuse_darkelf(0)を修正
+アタム のdmg_large(4)を修正 use_elf(1)を修正
+シルバー アックス のmaterialをsilverに修正
+ウォーハンマー を`use_royal`='1',`use_knight`='1',`use_elf`='1' に修正
+バトル アックス の名前がアックスだったのを修正
+ゴールデン スティック のtypeをswordに修正
+象牙の塔の デュアルブレード が ダーク デュアルブレード だったのを修正
+ケント デュアルブレード のuse_darkelf(1)を修正
+ブラインド デュアルブレード の重さを30に修正 攻撃成功率+3、追加ダメージ+1 に修正
+ラスタバド デュアルブレード の攻撃成功率と追加ダメージを0に修正
+ヘイトリッド クロウ のsefenchant(0)を修正
+魔力を失った アイスクイーン スタッフ のsefenchant(0)を修正 全てのクラスで装備出来ないように修正
+魔力を失った ベレス スタッフ のweight(1)、sefenchant(0)を修正 全てのクラスで装備出来ないように修正
+魔力を失った バフォメット スタッフ のweight(1)、sefenchant(0)を修正 全てのクラスで装備出来ないように修正
+魔力を失った デーモン スタッフ のweight(1)、sefenchant(0)を修正 全てのクラスで装備出来ないように修正
+デーモン スタッフ のsefenchant(0)、material(bone)を修正
+クリスタル スタッフ のMP自然回復量steal_mp(10)を修正
+ライア ワンド のMP自然回復量steal_mp(10)を修正
+バフォメット スタッフ のsafenchant(0)を修正
+ラスタバド スタッフ のMP自然回復量steal_mp(8)を修正
+象牙の塔のスタッフ のMP自然回復量steal_mp(2)を修正
+レッドクリスタル スタッフ のMP自然回復量steal_mp(5)を修正
+古代のボーガン を 封印された 古代のボーガン に修正
+エルヴン ボウ の追加ダメージ(1)を修正
+オーキッシュ ボウ の追加ダメージ(-1)を修正
+ショート ボウ の追加ダメージ(-1)を修正
+ディアド クロスボウ の重さを50に修正
+イリュージョン ボウ 装備クラスを修正
+古代のエルヴン ボウガン を 古代のエルフ ボウガン に修正
+177のラスタバド ヘビー クロスボウ を ブラインド クロスボウ に修正
+クロスボウ の追加ダメージ(+2)を修正
+サイハの弓 をエルフしか装備できないように修正
+古代人のボウ のsafenchant(0)を修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 72
+作者: line
+日時: 8:22:37, 2007年5月17日
+メッセージ:
+GMコマンド一覧.txt、必要な物.txt、未実装機能一覧.txtをetcフォルダへ移動
+----
+削除 : /必要な物.txt
+削除 : /未実装機能一覧.txt
+削除 : /GMコマンド一覧.txt
+追加 : /etc
+追加 : /etc/必要な物.txt
+追加 : /etc/未実装機能一覧.txt
+追加 : /etc/GMコマンド一覧.txt
+
+
+リビジョン: 71
+作者: line
+日時: 8:17:43, 2007年5月17日
+メッセージ:
+clientpacketsの中身を一旦、rev68に差し戻し
+----
+変更 : /src/l1j/server/server/clientpackets/C_ChangeHeading.java
+変更 : /src/l1j/server/server/clientpackets/C_CommonClick.java
+変更 : /src/l1j/server/server/clientpackets/C_CreateParty.java
+変更 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/clientpackets/C_Disconnect.java
+変更 : /src/l1j/server/server/clientpackets/C_LoginToServerOK.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestBanClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestChatWhisper.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDeleteChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestJoinClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLeaveClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCTalk.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCTalkAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNormalChat.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestRestart.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestReturnToLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestServerVersion.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestTitle.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestWhisper.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestWho.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/clientpackets/RequestSkillList.java
+
+
+リビジョン: 70
+作者: line
+日時: 7:23:47, 2007年5月17日
+メッセージ:
+初期アイテムの配布が消えていたので修正
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+
+
+リビジョン: 69
+作者: line
+日時: 2:12:18, 2007年5月17日
+メッセージ:
+ClientPacketクリーニング
+----
+変更 : /src/l1j/server/server/clientpackets/C_ChangeHeading.java
+変更 : /src/l1j/server/server/clientpackets/C_CommonClick.java
+変更 : /src/l1j/server/server/clientpackets/C_CreateParty.java
+変更 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+変更 : /src/l1j/server/server/clientpackets/C_Disconnect.java
+変更 : /src/l1j/server/server/clientpackets/C_LoginToServerOK.java
+変更 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestBanClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestChatWhisper.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDeleteChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestJoinClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLeaveClan.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCTalk.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCTalkAction.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestNormalChat.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestRestart.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestReturnToLogin.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestServerVersion.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestTitle.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestWhisper.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestWho.java
+変更 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+変更 : /src/l1j/server/server/clientpackets/RequestSkillList.java
+
+
+リビジョン: 68
+作者: line
+日時: 1:03:35, 2007年5月17日
+メッセージ:
+ERの計算式を追加（先ほどのUPではコンパイルできませんでした）
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 67
+作者: line
+日時: 0:49:10, 2007年5月17日
+メッセージ:
+弓攻撃の場合、ERによる回避を追加
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 66
+作者: line
+日時: 19:47:39, 2007年5月16日
+メッセージ:
+キャラクターが存在する座標が正常であっても
+クライアントが対応できず、ログイン出来なくなる問題に対処
+今後はログイン、リスタート時は強制的に
+「シルバーナイトタウン、ウッドベック、ケント、話せる島、ハイネ」
+以上の5つの街からランダムでスタートするよ
+（どこでログアウト、あるいは不正落ちしても、必ず再開時に街からスタートする）
+
+不正落ちやテレポートなどでログイン出来なくなった場合に
+いちいち無難な座標に戻すのが面倒なので仕方なく行った処理です
+スタート地点がランダムなのはキャラクターが一カ所に集中する事を避ける為だよ
+----
+変更 : /src/l1j/server/server/ClientThread.java
+
+
+リビジョン: 65
+作者: line
+日時: 18:25:10, 2007年5月16日
+メッセージ:
+readme.txtを削除
+----
+削除 : /readme.txt
+
+
+リビジョン: 64
+作者: line
+日時: 17:41:21, 2007年5月16日
+メッセージ:
+未実装機能一覧.txtを更新
+----
+変更 : /未実装機能一覧.txt
+
+
+リビジョン: 63
+作者: line
+日時: 17:36:04, 2007年5月16日
+メッセージ:
+クラン関連（加入、脱退、追放のみ）を追加
+----
+変更 : /src/l1j/server/server/ClanTable.java
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/PacketHandler.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestBanClan.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestCreateClan.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestJoinClan.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestLeaveClan.java
+
+
+リビジョン: 62
+作者: line
+日時: 7:02:48, 2007年5月16日
+メッセージ:
+PCの実効速度になるべく依存しにくい不正落ち対策
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 61
+作者: line
+日時: 6:48:09, 2007年5月16日
+メッセージ:
+グレイヴガーディアンナイトとジャイアントグレイヴガーディアンのsprが互い違いになっていたのを修正。これは前のSVNの時に誰かが修正したはずなのですが、そこらへんの修正は入ってなかったのかな？
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 60
+作者: line
+日時: 3:39:25, 2007年5月16日
+メッセージ:
+armorテーブルの add_str add_con add_dex add_int add_wis add_cha add_hp add_mp に負の値を入力できるように変更
+
+ガーディアン リング のadd_hp(+30)とadd_mp(+20)を修正
+ディスプレイス マント のadd_hp(-5)を修正
+ビショップ クローク を ビショップ マント に修正
+ブレイブ ベルトの min_lvl(45)を修正
+カスパの帽子 を カスパーの帽子 に修正
+マミーロード クラウン のadd_cha(-1)を修正
+バランカ ヘルム のadd_cha(-1)を修正
+ディ フォン ダブレット ジッツ 、
+ディ フォン ダブレット チェッツ 、
+ディ フォン ダブレット ヴィッツ のステータスを修正
+マンボコート のadd_str(-1)を修正
+死の鎧 のadd_wis(-2)とadd_cha(-2)を修正
+バランカ アーマー のadd_cha(-2)を修正
+リザードマン グローブ のadd_cha(-2)を修正
+死のグローブ のadd_cha(-2)を修正
+渓谷の印 のadd_hp(+5)とadd_mp(+5)を修正
+渓谷の印と島の印の装備可能キャラが違っていたのを修正
+マイナー 腕力のアミュレット のadd_str(+1)とadd_dex(-2)を修正
+マイナー 機敏のアミュレット のadd_dex(+1)とadd_con(-2)を修正
+マイナー 体力のアミュレット のadd_con(+1)とadd_str(-2)を修正
+マイナー 知力のアミュレット のadd_int(+1)とadd_wis(-2)を修正
+マイナー 精神のアミュレット のadd_wis(+1)とadd_cha(-2)を修正
+マイナー 魅力のアミュレット のadd_cha(+1)とadd_int(-2)を修正
+魅力のアミュレット のadd_cha(+1)を修正
+ビースト サマナー アミュレット のadd_cha(+2)とadd_wis(-1)を修正
+ブラック ウィザード アミュレット のadd_int(+2)とadd_con(-1)を修正
+ライア アミュレット のadd_con(-2)とadd_int(+1)とadd_wis(+1)を修正
+冥法軍王のリング のadd_cha(+3)を修正
+魔霊軍王のアミュレット のadd_mp(+15)を修正
+呪われたダイアモンド リング のadd_con(-1)とadd_wis(-1)を修正
+呪われたエメラルド リング のadd_hp(+25)を修正
+ブレイブベルトがダブっている。id:20315のブレイブベルトを Belt of vigor に変更。
+
+エルブン ソード：魔力 のadd_hp(-15)を修正
+古代のダークエルフソード のadd_wis(-1)とadd_hp(-15)を修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 59
+作者: line
+日時: 0:54:06, 2007年5月16日
+メッセージ:
+デバッグ用のメッセージを入れたままにしていたので
+コメントアウト
+----
+変更 : /src/l1j/server/server/ClientThread.java
+
+
+リビジョン: 58
+作者: line
+日時: 0:48:01, 2007年5月16日
+メッセージ:
+テレポート後に落ちた場合にキャラクターデータが不正な座標で
+DBに書き込まれてしまい、以後ログインできなくなる問題に対処
+以降、MAP移動が伴う動作で不正落ちした後に再度ログインすると
+DBからキャラクターデータを読み込む際に不正な座標の場合はSKTへ転送されます
+ただし、クライアント側が対応出来ないMAPへ移動した際には
+座標自体は不正では無いのでこの処理は適用されないよ（クライアントが未実装なだけ）
+その場合は手動でDBを編集してクライアントが対応できる座標に直してね
+未実装MAPIDを調べてくれたら、不正座標判断の条件に加えるよ
+
+
+テレポートと移動の処理を少し古い物に戻した
+
+
+up332の処理を少しだけ変えてこちらにも適用
+報告がまったくないので迷ったんだけど、効果が知りたいので・・・
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 57
+作者: line
+日時: 0:25:41, 2007年5月16日
+メッセージ:
+未実装機能一覧.txtを更新
+----
+変更 : /未実装機能一覧.txt
+
+
+リビジョン: 56
+作者: line
+日時: 23:04:33, 2007年5月15日
+メッセージ:
+distance関数をL1Characterへ統合
+----
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 55
+作者: line
+日時: 20:40:30, 2007年5月15日
+メッセージ:
+未実装機能一覧.txtを更新
+----
+変更 : /未実装機能一覧.txt
+
+
+リビジョン: 54
+作者: line
+日時: 20:30:54, 2007年5月15日
+メッセージ:
+DBのBDBの画像修正とラスタバドDBの画像修正。
+肉が目肉だったので肉の画像に修正。
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 53
+作者: line
+日時: 20:27:00, 2007年5月15日
+メッセージ:
+サモンもNon-PvPだと攻撃できないように修正
+サモンもモンスターのエリアスキルを喰らうように修正
+あと、エリアスキルのダメージに適当な計算式をいれました。
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 52
+作者: line
+日時: 20:24:56, 2007年5月15日
+メッセージ:
+プレイヤー→NPCの命中率を修正
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 51
+作者: line
+日時: 19:08:08, 2007年5月15日
+メッセージ:
+サモンのAIをちょびっと強化＋1時間で消える処理追加
+それとスレPart9の450の問題修正したはず、、、とりあえず情報THX!
+あ、ちなみにマルチプレイできない環境だからテストしてません。。
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 50
+作者: line
+日時: 16:14:10, 2007年5月15日
+メッセージ:
+Somのとこ間違ってたので修正
+----
+変更 : /src/l1j/server/server/model/L1Attack.java
+
+
+リビジョン: 49
+作者: line
+日時: 14:43:52, 2007年5月15日
+メッセージ:
+注！ダメージ処理は以降ReciveDamageを通すようにして下さい。 
+[変更内容]
+・物理攻撃系の計算式をL1Attackに集約
+　物理系の計算式を修正する場合はこのクラスのみでOKにしました。
+・ActionResult??????及びDeath??????を廃棄して
+ReciveDamage及びDeathに統一させました。
+
+修正範囲が広かったので問題が増えたかもしれませんが、
+このままあちこちに重複処理が増えるよりはいいとおもったので修正しました。
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+追加 : /src/l1j/server/server/model/L1Attack.java
+変更 : /src/l1j/server/server/model/L1MagicInstance.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1NpcInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 48
+作者: line
+日時: 7:57:38, 2007年5月15日
+メッセージ:
+マップIDをクライアントへ送る際に2バイトで送信しなければならない所を
+1バイトで送ってしまっていたので修正
+
+アイテムを売却する際に、売却出来るのはそのショップで
+扱っているアイテムだけだけど、それを伝えるメッセージが文字化けしていて
+バグと勘違いされやすいので適当な日本語メッセージを当てておいた
+----
+変更 : /src/l1j/server/server/serverpackets/S_MapID.java
+変更 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+
+
+リビジョン: 47
+作者: line
+日時: 7:52:56, 2007年5月15日
+メッセージ:
+polymorphsへ変身を追加
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 46
+作者: line
+日時: 7:26:59, 2007年5月15日
+メッセージ:
+未実装機能一覧.txtを全面的に変更
+----
+変更 : /未実装機能一覧.txt
+
+
+リビジョン: 45
+作者: line
+日時: 5:26:49, 2007年5月15日
+メッセージ:
+「MPが不足していて魔法を使うことができません。」メッセージを日本語化
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 44
+作者: line
+日時: 1:17:49, 2007年5月15日
+メッセージ:
+未実装機能一覧.txtを更新
+----
+変更 : /未実装機能一覧.txt
+
+
+リビジョン: 43
+作者: line
+日時: 22:21:29, 2007年5月14日
+メッセージ:
+すみません、テスト用コメントが残ったままでした。
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 42
+作者: line
+日時: 22:20:32, 2007年5月14日
+メッセージ:
+ヒール、EH、GH、FHの回復量が一様乱数だったが、正規乱数に変更
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 41
+作者: line
+日時: 18:07:50, 2007年5月14日
+メッセージ:
+カスパ隊のメルキ追加・4F魔法陣↑バルタと5fDK出現座標修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 40
+作者: line
+日時: 17:25:39, 2007年5月14日
+メッセージ:
+防具を装備するとMRが上昇するように変更。
+DBのarmorテーブルのMR値（m_def）を修正。
+クリアーマインド、レジストマジックでMRが上昇するように変更。
+（ただし、DBのMRには反映されない）
+君主のオーラ系の魔法の能力値を修正。（発動しないので無意味だが）
+死亡時にMRが下がらない不具合を修正。
+死亡時のEXPロスト量を修正。
+イビルクロウで攻撃魔法が発動しないように修正。
+未実装機能一覧.txtを更新。
+----
+変更 : /未実装機能一覧.txt
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/model/L1Character.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 39
+作者: line
+日時: 12:02:41, 2007年5月14日
+メッセージ:
+30FのケントケイブのVPを傲慢仕様に置き換え
+召喚するバットをコウモリに変更（でもこっちのVPは召喚を使わない
+11F↑の大空洞仕様ダイアーウルフを傲慢仕様に置き換え
+----
+変更 : /未実装機能一覧.txt
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 38
+作者: line
+日時: 11:21:23, 2007年5月14日
+メッセージ:
+大精霊・ミニ精霊の名前がウィルオーウィスプになってたものを修正
+----
+変更 : /db/SJIS_l1jdb.sql
+
+
+リビジョン: 37
+作者: line
+日時: 7:24:09, 2007年5月14日
+メッセージ:
+・テレポートで特に落ちまくってるような報告だったのでちょこっとだけ簡略化
+根本的には変わっていないけれど、自キャラのステータス情報を他キャラに押しつけてたので
+そこが結構やばかったと思う
+
+※注意：以前からずっと変わらずテレポート関係（魔法、スクロール、ダンジョン移動など）は危険！
+静止状態でテレポートした方が多少安全になるよ（歩きながらはかなりヤバイです）
+
+
+・テレポート処理中は特定のパケットだけがクライアントに届くように変更
+単にテレポート中はsendpacketsを閉じて、もう一つ入り口を作っただけ
+
+
+・（ClientThreadの）sendpacketを簡略化
+元ソースでは別のbyte配列にパケット情報をコピーしてからコピーを符号化して送っていたのだけれど
+意味無さそうだし、行程が増えると不安定のにつながりそうだったので
+コピーを作らずオリジナルの方だけで処理するように変更
+元ソースはsynchronizedを使っていなかったので後からきた情報による上書きを恐れてコピーしてたのかな？
+
+
+・AutoUpdateを整理
+まだまだ悲惨
+
+
+・モンスターのスレッドを整理
+まだまだ悲惨
+
+
+・一時的に認識範囲を広くしてみたものの、散々な結果だということしかわからなかったので戻した・・・
+ずっと意図的に落ちやすくしておくのは使ってくれている人に対して悪いしね・・・
+以前と同じに戻しただけであって、不正落ち対策を入れたわけではないです
+
+
+・戦闘中にアイテムを使用するとその後、変なエフェクトが出続ける事に対して前回対処したけれど
+間に合わせ的な物だったので後日きちんと対処することにして一端その対処を削除
+（また頻繁に例のエフェクトが出るよ）
+
+
+・AttackMessageOnを0にしていてもPacketHandlerで常に不明オペコードを16進表示用に変換していたので
+AttackMessageOnを2にしたときだけ変換するように変更
+
+
+・（Dungeonの）dgメソッドで以前、全てのデータを検索する前に座標がマッチしたら処理を中断するようにしていたけれど
+ムラが出るので元の全検索に戻した（ダンジョン情報の格納方法変えたい・・・）
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/PacketHandler.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+変更 : /src/l1j/server/server/model/Dungeon.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+変更 : /src/l1j/server/server/model/WorldMapPoint.java
+
+
+リビジョン: 36
+作者: line
+日時: 0:49:18, 2007年5月14日
+メッセージ:
+サモンが攻撃するよう変更
+サモンのＳＴＲ設定方法がわかんないです。。。誰かお願いします。
+あと、命中率、攻撃力は適当です。
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 35
+作者: line
+日時: 20:42:46, 2007年5月13日
+メッセージ:
+LV、WISによりMRが上昇するように変更。防具によるMR上昇は未実装。
+前スレ945さんのDEX UP時のAC変更がコミットされていなかったので、コミットした。
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+変更 : /src/l1j/server/server/utils/CalcExp.java
+変更 : /src/l1j/server/server/utils/CalcStat.java
+
+
+リビジョン: 34
+作者: line
+日時: 18:24:00, 2007年5月13日
+メッセージ:
+サモンオブジェクトの認識処理(オートアップデート)とL1Teleportのバグ取り
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 33
+作者: line
+日時: 17:56:23, 2007年5月13日
+メッセージ:
+死亡時ＨＰが０以下にならないように変更
+L1teleportのミニ修正
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 32
+作者: line
+日時: 17:19:10, 2007年5月13日
+メッセージ:
+テレポート時にサモンも一緒に移動させるように変更
+----
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 31
+作者: line
+日時: 16:51:22, 2007年5月13日
+メッセージ:
+L1SkillUseのbuffをNpcにも掛けれるように修正、ヘイストぐらいしかしっかり対応してないので、現状では他のbuffではエラーでる可能性高いです。従来からあったターゲットがプレイヤーのものはだいたい大丈夫だと思います。
+あとS_SummonPacketsなるものがあったようなので、S_NPCPackに記入していたサモン用のデータ出力部分を消しました。
+それとL1SummonInstanceをミニ修正
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/serverpackets/S_NPCPack.java
+
+
+リビジョン: 30
+作者: line
+日時: 13:50:47, 2007年5月13日
+メッセージ:
+サモンのHPバーを正しく表示するように変更
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/serverpackets/S_SummonPack.java
+
+
+リビジョン: 29
+作者: line
+日時: 8:58:45, 2007年5月13日
+メッセージ:
+PC→PCの攻撃魔法のダメージのみ、MRで半減するように変更
+ただし、LV、WIS、防具によるMR上昇は未実装
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+
+
+リビジョン: 28
+作者: line
+日時: 8:33:00, 2007年5月13日
+メッセージ:
+C_RequestNPCTalk.javaの遷移先をonActionからonTalkActionに変更
+それにともなったmodelの変更も
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestNPCTalk.java
+変更 : /src/l1j/server/server/model/L1DwarfInstance.java
+変更 : /src/l1j/server/server/model/L1GuardInstance.java
+変更 : /src/l1j/server/server/model/L1MerchantInstance.java
+変更 : /src/l1j/server/server/model/L1Object.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/model/L1TeleporterInstance.java
+
+
+リビジョン: 27
+作者: line
+日時: 8:30:20, 2007年5月13日
+メッセージ:
+MOB→PCの攻撃魔法のダメージのみ、MRで半減するように変更
+ただし、LV、WIS、防具によるMR上昇は未実装
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 26
+作者: line
+日時: 1:25:52, 2007年5月13日
+メッセージ:
+GMコマンドでサモンできなかったのを修正
+readme.txtにコンパイル方法を記入
+----
+変更 : /readme.txt
+変更 : /src/l1j/server/server/GMCommands.java
+
+
+リビジョン: 25
+作者: line
+日時: 0:06:50, 2007年5月13日
+メッセージ:
+未実装機能一覧.txtに追加
+----
+変更 : /未実装機能一覧.txt
+
+
+リビジョン: 24
+作者: line
+日時: 23:44:28, 2007年5月12日
+メッセージ:
+DBにMRとエルフの属性を追加。ただし、初期値設定のみで処理は未実装。
+----
+変更 : /db/SJIS_l1jdb.sql
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+変更 : /src/l1j/server/server/model/L1Character.java
+
+
+リビジョン: 23
+作者: line
+日時: 22:59:33, 2007年5月12日
+メッセージ:
+いつやってしまったのか覚えてないけれど
+S_SystemMessageのオペコードを間違えてた（機能してたけど・・・）ので修正
+
+装備を変えた際に（装備出来ないアイテムをクリックした場合にも）
+ステータス情報を更新してあげないと戦闘時に変なエフェクトが出てしまうので対処
+
+アイテム使用時にノーウェイトで使えるアイテムも含め、
+全てのアイテムに0.1秒の遅延が乗るようにした
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/serverpackets/S_SystemMessage.java
+
+
+リビジョン: 22
+作者: line
+日時: 21:25:06, 2007年5月12日
+メッセージ:
+未実装機能一覧.txtに追加
+----
+変更 : /未実装機能一覧.txt
+
+
+リビジョン: 21
+作者: line
+日時: 20:38:31, 2007年5月12日
+メッセージ:
+L1SummonInstance Thread版
+----
+変更 : /src/l1j/server/server/GMCommands.java
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+変更 : /src/l1j/server/server/serverpackets/S_AttackPacket.java
+変更 : /src/l1j/server/server/serverpackets/S_NPCPack.java
+追加 : /src/l1j/server/server/serverpackets/S_PetMenuPacket.java
+
+
+リビジョン: 20
+作者: line
+日時: 18:59:11, 2007年5月12日
+メッセージ:
+・鯖からの送信とクライアントからの受信に単純にウエイトをかけたよ
+ほんとはもっとちゃんとやらないといけないっぽいけど、ノーウェイトだと問題多そうなので・・・
+
+・.allrecallを変更
+----
+変更 : /src/l1j/server/server/ClientThread.java
+変更 : /src/l1j/server/server/GMCommands.java
+
+
+リビジョン: 19
+作者: line
+日時: 9:28:40, 2007年5月12日
+メッセージ:
+L1SkillUseとL1Teleportをup311に変更
+----
+変更 : /src/l1j/server/server/model/L1SkillUse.java
+変更 : /src/l1j/server/server/model/L1Teleport.java
+
+
+リビジョン: 18
+作者: line
+日時: 9:24:27, 2007年5月12日
+メッセージ:
+C_RequestMoveChar、C_RequestItemUseをup311に置き換え
+----
+変更 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+変更 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+
+
+リビジョン: 17
+作者: line
+日時: 7:32:00, 2007年5月12日
+メッセージ:
+サモンが自キャラを追い越さないようにした
+----
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 16
+作者: line
+日時: 2:51:18, 2007年5月12日
+メッセージ:
+build.xmlを削除
+----
+削除 : /build.xml
+
+
+リビジョン: 15
+作者: line
+日時: 2:50:28, 2007年5月12日
+メッセージ:
+libを削除
+----
+削除 : /lib
+
+
+リビジョン: 14
+作者: line
+日時: 2:36:45, 2007年5月12日
+メッセージ:
+文字化けの修正
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 13
+作者: line
+日時: 2:35:24, 2007年5月12日
+メッセージ:
+戦闘メッセージの表示変更（文字化け→日本語）
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 12
+作者: line
+日時: 2:25:39, 2007年5月12日
+メッセージ:
+サモンの移動ルーチンをモンスターの移動ルーチンに変更
+ただし、非常に不安定
+----
+変更 : /src/l1j/server/server/model/L1SummonInstance.java
+
+
+リビジョン: 11
+作者: line
+日時: 2:21:06, 2007年5月12日
+メッセージ:
+サモンの変更
+----
+変更 : /src/l1j/server/server/GMCommands.java
+
+
+リビジョン: 10
+作者: line
+日時: 2:20:07, 2007年5月12日
+メッセージ:
+コンパイルできなかったエラーを修正
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 9
+作者: line
+日時: 2:09:27, 2007年5月12日
+メッセージ:
+libとbuild.xmlを追加
+----
+追加 : /build.xml
+追加 : /lib
+追加 : /lib/bsf.jar
+追加 : /lib/bsh-2.0b4.jar
+追加 : /lib/c3p0-0.9.1.jar
+追加 : /lib/commons-logging-1.1.jar
+追加 : /lib/javolution.jar
+追加 : /lib/jython.jar
+追加 : /lib/mmocore.jar
+追加 : /lib/mysql-connector-java-5.0.5-bin.jar
+
+
+リビジョン: 8
+作者: line
+日時: 2:07:30, 2007年5月12日
+メッセージ:
+レベルダウン時のレベル、DEXによるAC補正の再計算
+----
+変更 : /src/l1j/server/server/model/L1PcInstance.java
+
+
+リビジョン: 7
+作者: line
+日時: 2:04:29, 2007年5月12日
+メッセージ:
+LVUP時のAC計算方法変更
+----
+変更 : /src/l1j/server/server/utils/CalcExp.java
+
+
+リビジョン: 6
+作者: line
+日時: 2:03:03, 2007年5月12日
+メッセージ:
+レベルとDEXから素の低減ACを算出
+----
+変更 : /src/l1j/server/server/utils/CalcStat.java
+
+
+リビジョン: 5
+作者: line
+日時: 2:01:00, 2007年5月12日
+メッセージ:
+サモンの送信パケット
+----
+追加 : /src/l1j/server/server/serverpackets/S_SummonPack.java
+
+
+リビジョン: 4
+作者: line
+日時: 1:59:20, 2007年5月12日
+メッセージ:
+命中率とNPCから受けるダメージ軽減の計算方法変更
+----
+変更 : /src/l1j/server/server/model/L1MonsterInstance.java
+
+
+リビジョン: 3
+作者: line
+日時: 1:47:41, 2007年5月12日
+メッセージ:
+up311のソースを追加
+----
+追加 : /src
+追加 : /src/META-INF
+追加 : /src/META-INF/MANIFEST.MF
+追加 : /src/SubstringTest.java
+追加 : /src/l1j
+追加 : /src/l1j/server
+追加 : /src/l1j/server/Base64.java
+追加 : /src/l1j/server/Config.java
+追加 : /src/l1j/server/ConsoleLogFormatter.java
+追加 : /src/l1j/server/ErrorFilter.java
+追加 : /src/l1j/server/ErrorLogHandler.java
+追加 : /src/l1j/server/FileLogFormatter.java
+追加 : /src/l1j/server/L1DatabaseFactory.java
+追加 : /src/l1j/server/Server.java
+追加 : /src/l1j/server/server
+追加 : /src/l1j/server/server/Announcements.java
+追加 : /src/l1j/server/server/BadNamesList.java
+追加 : /src/l1j/server/server/CharNameTable.java
+追加 : /src/l1j/server/server/CharTemplateTable.java
+追加 : /src/l1j/server/server/Charitemtable.java
+追加 : /src/l1j/server/server/ClanTable.java
+追加 : /src/l1j/server/server/ClientThread.java
+追加 : /src/l1j/server/server/DoorTable.java
+追加 : /src/l1j/server/server/ExpDataTable.java
+追加 : /src/l1j/server/server/GMCommands.java
+追加 : /src/l1j/server/server/GameServer.java
+追加 : /src/l1j/server/server/GameTimeController.java
+追加 : /src/l1j/server/server/IdFactory.java
+追加 : /src/l1j/server/server/IpTable.java
+追加 : /src/l1j/server/server/L1DoorInstance.java
+追加 : /src/l1j/server/server/LoginController.java
+追加 : /src/l1j/server/server/Logins.java
+追加 : /src/l1j/server/server/MobTable.java
+追加 : /src/l1j/server/server/NPCTalkData.java
+追加 : /src/l1j/server/server/NpcSpawnTable.java
+追加 : /src/l1j/server/server/NpcTable.java
+追加 : /src/l1j/server/server/Opcodes.java
+追加 : /src/l1j/server/server/PacketHandler.java
+追加 : /src/l1j/server/server/PolyTable.java
+追加 : /src/l1j/server/server/RateTable.java
+追加 : /src/l1j/server/server/ShopTable.java
+追加 : /src/l1j/server/server/Shutdown.java
+追加 : /src/l1j/server/server/SkillsTable.java
+追加 : /src/l1j/server/server/SpawnTable.java
+追加 : /src/l1j/server/server/TeleportLocations.java
+追加 : /src/l1j/server/server/TeleporterPrices.java
+追加 : /src/l1j/server/server/clientpackets
+追加 : /src/l1j/server/server/clientpackets/C_ChangeHeading.java
+追加 : /src/l1j/server/server/clientpackets/C_CommonClick.java
+追加 : /src/l1j/server/server/clientpackets/C_CreateParty.java
+追加 : /src/l1j/server/server/clientpackets/C_DeleteBookmark.java
+追加 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+追加 : /src/l1j/server/server/clientpackets/C_Disconnect.java
+追加 : /src/l1j/server/server/clientpackets/C_LoginToServerOK.java
+追加 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestChatWhisper.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestDeleteChar.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNPCTalk.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNPCTalkAction.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNormalChat.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestRestart.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestReturnToLogin.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestServerVersion.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestTitle.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestWhisper.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestWho.java
+追加 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+追加 : /src/l1j/server/server/clientpackets/ClientBasePacket.java
+追加 : /src/l1j/server/server/clientpackets/RequestSkillList.java
+追加 : /src/l1j/server/server/clientpackets/SkilList.java
+追加 : /src/l1j/server/server/encryptions
+追加 : /src/l1j/server/server/encryptions/ClientIdExistsException.java
+追加 : /src/l1j/server/server/encryptions/LineageBlowfish.java
+追加 : /src/l1j/server/server/encryptions/LineageEncryption.java
+追加 : /src/l1j/server/server/encryptions/LineageKeys.java
+追加 : /src/l1j/server/server/encryptions/NoEncryptionKeysSelectedException.java
+追加 : /src/l1j/server/server/encryptions/NoSuchClientIdException.java
+追加 : /src/l1j/server/server/model
+追加 : /src/l1j/server/server/model/ActionFailed.java
+追加 : /src/l1j/server/server/model/Beginner.java
+追加 : /src/l1j/server/server/model/CharAppearance.java
+追加 : /src/l1j/server/server/model/ClassId.java
+追加 : /src/l1j/server/server/model/ClassType.java
+追加 : /src/l1j/server/server/model/Die.java
+追加 : /src/l1j/server/server/model/Dungeon.java
+追加 : /src/l1j/server/server/model/ExpTemplate.java
+追加 : /src/l1j/server/server/model/Experience.java
+追加 : /src/l1j/server/server/model/Getback.java
+追加 : /src/l1j/server/server/model/L1Character.java
+追加 : /src/l1j/server/server/model/L1Clan.java
+追加 : /src/l1j/server/server/model/L1ClanMember.java
+追加 : /src/l1j/server/server/model/L1DropData.java
+追加 : /src/l1j/server/server/model/L1DropTable.java
+追加 : /src/l1j/server/server/model/L1DwarfInstance.java
+追加 : /src/l1j/server/server/model/L1ExpTemplate.java
+追加 : /src/l1j/server/server/model/L1GuardInstance.java
+追加 : /src/l1j/server/server/model/L1ItemInstance.java
+追加 : /src/l1j/server/server/model/L1LvlupData.java
+追加 : /src/l1j/server/server/model/L1MagicInstance.java
+追加 : /src/l1j/server/server/model/L1MerchantInstance.java
+追加 : /src/l1j/server/server/model/L1MobDataTable.java
+追加 : /src/l1j/server/server/model/L1MonsterInstance.java
+追加 : /src/l1j/server/server/model/L1NpcDataTable.java
+追加 : /src/l1j/server/server/model/L1NpcInstance.java
+追加 : /src/l1j/server/server/model/L1NpcTalkData.java
+追加 : /src/l1j/server/server/model/L1Object.java
+追加 : /src/l1j/server/server/model/L1PcInstance.java
+追加 : /src/l1j/server/server/model/L1PetInstance.java
+追加 : /src/l1j/server/server/model/L1PolyMorph.java
+追加 : /src/l1j/server/server/model/L1RequestInstance.java
+追加 : /src/l1j/server/server/model/L1SkillUse.java
+追加 : /src/l1j/server/server/model/L1Spawn.java
+追加 : /src/l1j/server/server/model/L1SummonInstance.java
+追加 : /src/l1j/server/server/model/L1Teleport.java
+追加 : /src/l1j/server/server/model/L1TeleportLocationsTable.java
+追加 : /src/l1j/server/server/model/L1TeleporterInstance.java
+追加 : /src/l1j/server/server/model/L1TeleporterPricesTable.java
+追加 : /src/l1j/server/server/model/L1World.java
+追加 : /src/l1j/server/server/model/LevelUpData.java
+追加 : /src/l1j/server/server/model/ObjectPosition.java
+追加 : /src/l1j/server/server/model/PlayerRace.java
+追加 : /src/l1j/server/server/model/Race.java
+追加 : /src/l1j/server/server/model/Sex.java
+追加 : /src/l1j/server/server/model/Stats.java
+追加 : /src/l1j/server/server/model/StatsSet.java
+追加 : /src/l1j/server/server/model/WorldMapPoint.java
+追加 : /src/l1j/server/server/serverpackets
+追加 : /src/l1j/server/server/serverpackets/AttackCanceld.java
+追加 : /src/l1j/server/server/serverpackets/AutoAttackStart.java
+追加 : /src/l1j/server/server/serverpackets/AutoAttackStop.java
+追加 : /src/l1j/server/server/serverpackets/ChooseInventoryItem.java
+追加 : /src/l1j/server/server/serverpackets/GetItem.java
+追加 : /src/l1j/server/server/serverpackets/ItemInfo.java
+追加 : /src/l1j/server/server/serverpackets/JoinParty.java
+追加 : /src/l1j/server/server/serverpackets/LoginFail.java
+追加 : /src/l1j/server/server/serverpackets/LoginOk.java
+追加 : /src/l1j/server/server/serverpackets/PledgeCrest.java
+追加 : /src/l1j/server/server/serverpackets/S_ActiveSpells.java
+追加 : /src/l1j/server/server/serverpackets/S_AddInventoryItem.java
+追加 : /src/l1j/server/server/serverpackets/S_AddSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_ArrowStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_AskJoinParty.java
+追加 : /src/l1j/server/server/serverpackets/S_AttackMissPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_AttackPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_AttackStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_Bookmarks.java
+追加 : /src/l1j/server/server/serverpackets/S_ChangeHeading.java
+追加 : /src/l1j/server/server/serverpackets/S_ChangeShape.java
+追加 : /src/l1j/server/server/serverpackets/S_CharAmount.java
+追加 : /src/l1j/server/server/serverpackets/S_CharCreateStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_CharInfo.java
+追加 : /src/l1j/server/server/serverpackets/S_CharInvVisualUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_CharPacks.java
+追加 : /src/l1j/server/server/serverpackets/S_CharTitle.java
+追加 : /src/l1j/server/server/serverpackets/S_CharVisualUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_ChatPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_CommonNews.java
+追加 : /src/l1j/server/server/serverpackets/S_DelSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteCharOK.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteInventoryItem.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteMobObject.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteNewObject.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteObjectFromScreen.java
+追加 : /src/l1j/server/server/serverpackets/S_Dexup.java
+追加 : /src/l1j/server/server/serverpackets/S_Disconnect.java
+追加 : /src/l1j/server/server/serverpackets/S_DoActionGFX.java
+追加 : /src/l1j/server/server/serverpackets/S_DropItem.java
+追加 : /src/l1j/server/server/serverpackets/S_Exp.java
+追加 : /src/l1j/server/server/serverpackets/S_GMHtml.java
+追加 : /src/l1j/server/server/serverpackets/S_GameTime.java
+追加 : /src/l1j/server/server/serverpackets/S_HPUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_HasteIcon.java
+追加 : /src/l1j/server/server/serverpackets/S_InvList.java
+追加 : /src/l1j/server/server/serverpackets/S_Invis.java
+追加 : /src/l1j/server/server/serverpackets/S_Lawful.java
+追加 : /src/l1j/server/server/serverpackets/S_Light.java
+追加 : /src/l1j/server/server/serverpackets/S_MPUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_MapID.java
+追加 : /src/l1j/server/server/serverpackets/S_MoveCharPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_MoveNpcPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCActionGFX.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCPack.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCTPPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCTalkActionTPUrl.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCTalkReturn.java
+追加 : /src/l1j/server/server/serverpackets/S_NewCharPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NormalChatPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NpcShout.java
+追加 : /src/l1j/server/server/serverpackets/S_OpcodeTest.java
+追加 : /src/l1j/server/server/serverpackets/S_OtherCharPacks.java
+追加 : /src/l1j/server/server/serverpackets/S_OwnCharPack.java
+追加 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_PetsPack.java
+追加 : /src/l1j/server/server/serverpackets/S_ReStart.java
+追加 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+追加 : /src/l1j/server/server/serverpackets/S_SendInvStatusUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_ServerMessage.java
+追加 : /src/l1j/server/server/serverpackets/S_ServerVersion.java
+追加 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+追加 : /src/l1j/server/server/serverpackets/S_ShopItemSellList.java
+追加 : /src/l1j/server/server/serverpackets/S_ShowPolyList.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillBrave.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillHaste.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIcon.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIcon2.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIcon3.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIconGFX.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIconShield.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIsik.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillSound.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillUnk.java
+追加 : /src/l1j/server/server/serverpackets/S_SoundFX.java
+追加 : /src/l1j/server/server/serverpackets/S_Spells.java
+追加 : /src/l1j/server/server/serverpackets/S_StringMessage.java
+追加 : /src/l1j/server/server/serverpackets/S_Strup.java
+追加 : /src/l1j/server/server/serverpackets/S_SystemMessage.java
+追加 : /src/l1j/server/server/serverpackets/S_TPUNK1.java
+追加 : /src/l1j/server/server/serverpackets/S_TeleportGfx.java
+追加 : /src/l1j/server/server/serverpackets/S_TeleportUnknown1.java
+追加 : /src/l1j/server/server/serverpackets/S_Unknown1.java
+追加 : /src/l1j/server/server/serverpackets/S_Unknown2.java
+追加 : /src/l1j/server/server/serverpackets/S_UseArrowSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_UseArrowSkillMob.java
+追加 : /src/l1j/server/server/serverpackets/S_UseAttackSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_UseMap.java
+追加 : /src/l1j/server/server/serverpackets/S_Weather.java
+追加 : /src/l1j/server/server/serverpackets/S_WhoAmount.java
+追加 : /src/l1j/server/server/serverpackets/S_WhoCharinfo.java
+追加 : /src/l1j/server/server/serverpackets/S_bonusstats.java
+追加 : /src/l1j/server/server/serverpackets/S_kill.java
+追加 : /src/l1j/server/server/serverpackets/ServerBasePacket.java
+追加 : /src/l1j/server/server/serverpackets/SkillList.java
+追加 : /src/l1j/server/server/serverpackets/TradeItem.java
+追加 : /src/l1j/server/server/skills
+追加 : /src/l1j/server/server/skills/Calculator.java
+追加 : /src/l1j/server/server/skills/Condition.java
+追加 : /src/l1j/server/server/skills/ConditionGameTime.java
+追加 : /src/l1j/server/server/skills/ConditionInventory.java
+追加 : /src/l1j/server/server/skills/ConditionItemId.java
+追加 : /src/l1j/server/server/skills/ConditionListener.java
+追加 : /src/l1j/server/server/skills/ConditionLogicAnd.java
+追加 : /src/l1j/server/server/skills/ConditionLogicNot.java
+追加 : /src/l1j/server/server/skills/ConditionLogicOr.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerBaseStats.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerHp.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerHpPercentage.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerLevel.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerState.java
+追加 : /src/l1j/server/server/skills/ConditionTargetAggro.java
+追加 : /src/l1j/server/server/skills/ConditionTargetLevel.java
+追加 : /src/l1j/server/server/skills/ConditionTargetNone.java
+追加 : /src/l1j/server/server/skills/ConditionUsingSkill.java
+追加 : /src/l1j/server/server/skills/Env.java
+追加 : /src/l1j/server/server/skills/Func.java
+追加 : /src/l1j/server/server/skills/FuncAdd.java
+追加 : /src/l1j/server/server/skills/FuncDiv.java
+追加 : /src/l1j/server/server/skills/FuncMul.java
+追加 : /src/l1j/server/server/skills/FuncSet.java
+追加 : /src/l1j/server/server/skills/FuncSub.java
+追加 : /src/l1j/server/server/skills/FuncTemplate.java
+追加 : /src/l1j/server/server/skills/L1SkillDefault.java
+追加 : /src/l1j/server/server/skills/Lambda.java
+追加 : /src/l1j/server/server/skills/LambdaCalc.java
+追加 : /src/l1j/server/server/skills/LambdaConst.java
+追加 : /src/l1j/server/server/skills/LambdaRnd.java
+追加 : /src/l1j/server/server/skills/LambdaStats.java
+追加 : /src/l1j/server/server/skills/Stats.java
+追加 : /src/l1j/server/server/templates
+追加 : /src/l1j/server/server/templates/Accounts.java
+追加 : /src/l1j/server/server/templates/CharNames.java
+追加 : /src/l1j/server/server/templates/CharSelectInfoPackage.java
+追加 : /src/l1j/server/server/templates/DropTable.java
+追加 : /src/l1j/server/server/templates/Inventory.java
+追加 : /src/l1j/server/server/templates/ItemDrop.java
+追加 : /src/l1j/server/server/templates/ItemTable.java
+追加 : /src/l1j/server/server/templates/L1Armor.java
+追加 : /src/l1j/server/server/templates/L1BadNames.java
+追加 : /src/l1j/server/server/templates/L1BuyList.java
+追加 : /src/l1j/server/server/templates/L1CharTemplate.java
+追加 : /src/l1j/server/server/templates/L1Doors.java
+追加 : /src/l1j/server/server/templates/L1EtcItem.java
+追加 : /src/l1j/server/server/templates/L1Item.java
+追加 : /src/l1j/server/server/templates/L1Npc.java
+追加 : /src/l1j/server/server/templates/L1Polymorphs.java
+追加 : /src/l1j/server/server/templates/L1Skills.java
+追加 : /src/l1j/server/server/templates/L1Weapon.java
+追加 : /src/l1j/server/server/types
+追加 : /src/l1j/server/server/types/UByte8.java
+追加 : /src/l1j/server/server/types/UChar8.java
+追加 : /src/l1j/server/server/types/ULong32.java
+追加 : /src/l1j/server/server/utils
+追加 : /src/l1j/server/server/utils/CalcDmg.java
+追加 : /src/l1j/server/server/utils/CalcDmgMop.java
+追加 : /src/l1j/server/server/utils/CalcDmgPc.java
+追加 : /src/l1j/server/server/utils/CalcDmgmagic.java
+追加 : /src/l1j/server/server/utils/CalcDrops.java
+追加 : /src/l1j/server/server/utils/CalcExp.java
+追加 : /src/l1j/server/server/utils/CalcExp2.java
+追加 : /src/l1j/server/server/utils/CalcStat.java
+追加 : /src/l1j/server/server/utils/UpdateInventoryItem.java
+追加 : /src/l1j/server/telnet
+追加 : /src/l1j/server/telnet/GameStatusThread.java
+追加 : /src/l1j/server/telnet/LoginStatusThread.java
+追加 : /src/l1j/server/telnet/Status.java
+
+
+リビジョン: 2
+作者: line
+日時: 1:44:08, 2007年5月12日
+メッセージ:
+up311へバージョンアップのため、up309+up310を削除
+----
+削除 : /src
+
+
+リビジョン: 1
+作者: line
+日時: 17:08:58, 2007年5月11日
+メッセージ:
+up0309.zip+up0310.zip
+----
+追加 : /必要な物.txt
+追加 : /未実装機能一覧.txt
+追加 : /GMコマンド一覧.txt
+追加 : /db
+追加 : /db/SJIS_l1jdb.sql
+追加 : /readme.txt
+追加 : /src
+追加 : /src/META-INF
+追加 : /src/META-INF/MANIFEST.MF
+追加 : /src/SubstringTest.java
+追加 : /src/l1j
+追加 : /src/l1j/server
+追加 : /src/l1j/server/Base64.java
+追加 : /src/l1j/server/Config.java
+追加 : /src/l1j/server/ConsoleLogFormatter.java
+追加 : /src/l1j/server/ErrorFilter.java
+追加 : /src/l1j/server/ErrorLogHandler.java
+追加 : /src/l1j/server/FileLogFormatter.java
+追加 : /src/l1j/server/L1DatabaseFactory.java
+追加 : /src/l1j/server/Server.java
+追加 : /src/l1j/server/server
+追加 : /src/l1j/server/server/Announcements.java
+追加 : /src/l1j/server/server/BadNamesList.java
+追加 : /src/l1j/server/server/CharNameTable.java
+追加 : /src/l1j/server/server/CharTemplateTable.java
+追加 : /src/l1j/server/server/Charitemtable.java
+追加 : /src/l1j/server/server/ClanTable.java
+追加 : /src/l1j/server/server/ClientThread.java
+追加 : /src/l1j/server/server/DoorTable.java
+追加 : /src/l1j/server/server/ExpDataTable.java
+追加 : /src/l1j/server/server/GMCommands.java
+追加 : /src/l1j/server/server/GameServer.java
+追加 : /src/l1j/server/server/GameTimeController.java
+追加 : /src/l1j/server/server/IdFactory.java
+追加 : /src/l1j/server/server/IpTable.java
+追加 : /src/l1j/server/server/L1DoorInstance.java
+追加 : /src/l1j/server/server/LoginController.java
+追加 : /src/l1j/server/server/Logins.java
+追加 : /src/l1j/server/server/MobTable.java
+追加 : /src/l1j/server/server/NPCTalkData.java
+追加 : /src/l1j/server/server/NpcSpawnTable.java
+追加 : /src/l1j/server/server/NpcTable.java
+追加 : /src/l1j/server/server/Opcodes.java
+追加 : /src/l1j/server/server/PacketHandler.java
+追加 : /src/l1j/server/server/PolyTable.java
+追加 : /src/l1j/server/server/RateTable.java
+追加 : /src/l1j/server/server/ShopTable.java
+追加 : /src/l1j/server/server/Shutdown.java
+追加 : /src/l1j/server/server/SkillsTable.java
+追加 : /src/l1j/server/server/SpawnTable.java
+追加 : /src/l1j/server/server/TeleportLocations.java
+追加 : /src/l1j/server/server/TeleporterPrices.java
+追加 : /src/l1j/server/server/clientpackets
+追加 : /src/l1j/server/server/clientpackets/C_ChangeHeading.java
+追加 : /src/l1j/server/server/clientpackets/C_CommonClick.java
+追加 : /src/l1j/server/server/clientpackets/C_CreateParty.java
+追加 : /src/l1j/server/server/clientpackets/C_DeleteBookmark.java
+追加 : /src/l1j/server/server/clientpackets/C_DeleteInventoryItem.java
+追加 : /src/l1j/server/server/clientpackets/C_Disconnect.java
+追加 : /src/l1j/server/server/clientpackets/C_LoginToServerOK.java
+追加 : /src/l1j/server/server/clientpackets/C_NewCharSelect.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestAttack.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestAttr.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestAuthLogin.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestChat.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestChatWhisper.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestCreateChar.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestDeleteChar.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestDropItem.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestItemUSe.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestLoginToServer.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestMoveChar.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNPCAction.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNPCTalk.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNPCTalkAction.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestNormalChat.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestPickUpItem.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestRestart.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestResult.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestReturnToLogin.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestServerVersion.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestTitle.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestWhisper.java
+追加 : /src/l1j/server/server/clientpackets/C_RequestWho.java
+追加 : /src/l1j/server/server/clientpackets/C_UseSkill.java
+追加 : /src/l1j/server/server/clientpackets/ClientBasePacket.java
+追加 : /src/l1j/server/server/clientpackets/RequestSkillList.java
+追加 : /src/l1j/server/server/clientpackets/SkilList.java
+追加 : /src/l1j/server/server/encryptions
+追加 : /src/l1j/server/server/encryptions/ClientIdExistsException.java
+追加 : /src/l1j/server/server/encryptions/LineageBlowfish.java
+追加 : /src/l1j/server/server/encryptions/LineageEncryption.java
+追加 : /src/l1j/server/server/encryptions/LineageKeys.java
+追加 : /src/l1j/server/server/encryptions/NoEncryptionKeysSelectedException.java
+追加 : /src/l1j/server/server/encryptions/NoSuchClientIdException.java
+追加 : /src/l1j/server/server/model
+追加 : /src/l1j/server/server/model/ActionFailed.java
+追加 : /src/l1j/server/server/model/Beginner.java
+追加 : /src/l1j/server/server/model/CharAppearance.java
+追加 : /src/l1j/server/server/model/ClassId.java
+追加 : /src/l1j/server/server/model/ClassType.java
+追加 : /src/l1j/server/server/model/Die.java
+追加 : /src/l1j/server/server/model/Dungeon.java
+追加 : /src/l1j/server/server/model/ExpTemplate.java
+追加 : /src/l1j/server/server/model/Experience.java
+追加 : /src/l1j/server/server/model/Getback.java
+追加 : /src/l1j/server/server/model/L1Character.java
+追加 : /src/l1j/server/server/model/L1Clan.java
+追加 : /src/l1j/server/server/model/L1ClanMember.java
+追加 : /src/l1j/server/server/model/L1DropData.java
+追加 : /src/l1j/server/server/model/L1DropTable.java
+追加 : /src/l1j/server/server/model/L1DwarfInstance.java
+追加 : /src/l1j/server/server/model/L1ExpTemplate.java
+追加 : /src/l1j/server/server/model/L1GuardInstance.java
+追加 : /src/l1j/server/server/model/L1ItemInstance.java
+追加 : /src/l1j/server/server/model/L1LvlupData.java
+追加 : /src/l1j/server/server/model/L1MagicInstance.java
+追加 : /src/l1j/server/server/model/L1MerchantInstance.java
+追加 : /src/l1j/server/server/model/L1MobDataTable.java
+追加 : /src/l1j/server/server/model/L1MonsterInstance.java
+追加 : /src/l1j/server/server/model/L1NpcDataTable.java
+追加 : /src/l1j/server/server/model/L1NpcInstance.java
+追加 : /src/l1j/server/server/model/L1NpcTalkData.java
+追加 : /src/l1j/server/server/model/L1Object.java
+追加 : /src/l1j/server/server/model/L1PcInstance.java
+追加 : /src/l1j/server/server/model/L1PetInstance.java
+追加 : /src/l1j/server/server/model/L1PolyMorph.java
+追加 : /src/l1j/server/server/model/L1RequestInstance.java
+追加 : /src/l1j/server/server/model/L1SkillUse.java
+追加 : /src/l1j/server/server/model/L1Spawn.java
+追加 : /src/l1j/server/server/model/L1SummonInstance.java
+追加 : /src/l1j/server/server/model/L1Teleport.java
+追加 : /src/l1j/server/server/model/L1TeleportLocationsTable.java
+追加 : /src/l1j/server/server/model/L1TeleporterInstance.java
+追加 : /src/l1j/server/server/model/L1TeleporterPricesTable.java
+追加 : /src/l1j/server/server/model/L1World.java
+追加 : /src/l1j/server/server/model/LevelUpData.java
+追加 : /src/l1j/server/server/model/ObjectPosition.java
+追加 : /src/l1j/server/server/model/PlayerRace.java
+追加 : /src/l1j/server/server/model/Race.java
+追加 : /src/l1j/server/server/model/Sex.java
+追加 : /src/l1j/server/server/model/Stats.java
+追加 : /src/l1j/server/server/model/StatsSet.java
+追加 : /src/l1j/server/server/model/WorldMapPoint.java
+追加 : /src/l1j/server/server/serverpackets
+追加 : /src/l1j/server/server/serverpackets/AttackCanceld.java
+追加 : /src/l1j/server/server/serverpackets/AutoAttackStart.java
+追加 : /src/l1j/server/server/serverpackets/AutoAttackStop.java
+追加 : /src/l1j/server/server/serverpackets/ChooseInventoryItem.java
+追加 : /src/l1j/server/server/serverpackets/GetItem.java
+追加 : /src/l1j/server/server/serverpackets/ItemInfo.java
+追加 : /src/l1j/server/server/serverpackets/JoinParty.java
+追加 : /src/l1j/server/server/serverpackets/LoginFail.java
+追加 : /src/l1j/server/server/serverpackets/LoginOk.java
+追加 : /src/l1j/server/server/serverpackets/PledgeCrest.java
+追加 : /src/l1j/server/server/serverpackets/S_ActiveSpells.java
+追加 : /src/l1j/server/server/serverpackets/S_AddInventoryItem.java
+追加 : /src/l1j/server/server/serverpackets/S_AddSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_ArrowStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_AskJoinParty.java
+追加 : /src/l1j/server/server/serverpackets/S_AttackMissPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_AttackPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_AttackStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_Bookmarks.java
+追加 : /src/l1j/server/server/serverpackets/S_ChangeHeading.java
+追加 : /src/l1j/server/server/serverpackets/S_ChangeShape.java
+追加 : /src/l1j/server/server/serverpackets/S_CharAmount.java
+追加 : /src/l1j/server/server/serverpackets/S_CharCreateStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_CharInfo.java
+追加 : /src/l1j/server/server/serverpackets/S_CharInvVisualUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_CharPacks.java
+追加 : /src/l1j/server/server/serverpackets/S_CharTitle.java
+追加 : /src/l1j/server/server/serverpackets/S_CharVisualUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_ChatPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_CommonNews.java
+追加 : /src/l1j/server/server/serverpackets/S_DelSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteCharOK.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteInventoryItem.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteMobObject.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteNewObject.java
+追加 : /src/l1j/server/server/serverpackets/S_DeleteObjectFromScreen.java
+追加 : /src/l1j/server/server/serverpackets/S_Dexup.java
+追加 : /src/l1j/server/server/serverpackets/S_Disconnect.java
+追加 : /src/l1j/server/server/serverpackets/S_DoActionGFX.java
+追加 : /src/l1j/server/server/serverpackets/S_DropItem.java
+追加 : /src/l1j/server/server/serverpackets/S_Exp.java
+追加 : /src/l1j/server/server/serverpackets/S_GMHtml.java
+追加 : /src/l1j/server/server/serverpackets/S_GameTime.java
+追加 : /src/l1j/server/server/serverpackets/S_HPUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_HasteIcon.java
+追加 : /src/l1j/server/server/serverpackets/S_InvList.java
+追加 : /src/l1j/server/server/serverpackets/S_Invis.java
+追加 : /src/l1j/server/server/serverpackets/S_Lawful.java
+追加 : /src/l1j/server/server/serverpackets/S_Light.java
+追加 : /src/l1j/server/server/serverpackets/S_MPUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_MapID.java
+追加 : /src/l1j/server/server/serverpackets/S_MoveCharPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_MoveNpcPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCActionGFX.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCPack.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCTPPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCTalkActionTPUrl.java
+追加 : /src/l1j/server/server/serverpackets/S_NPCTalkReturn.java
+追加 : /src/l1j/server/server/serverpackets/S_NewCharPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NormalChatPacket.java
+追加 : /src/l1j/server/server/serverpackets/S_NpcShout.java
+追加 : /src/l1j/server/server/serverpackets/S_OpcodeTest.java
+追加 : /src/l1j/server/server/serverpackets/S_OtherCharPacks.java
+追加 : /src/l1j/server/server/serverpackets/S_OwnCharPack.java
+追加 : /src/l1j/server/server/serverpackets/S_OwnCharStatus.java
+追加 : /src/l1j/server/server/serverpackets/S_PetsPack.java
+追加 : /src/l1j/server/server/serverpackets/S_ReStart.java
+追加 : /src/l1j/server/server/serverpackets/S_SendInvOnLogin.java
+追加 : /src/l1j/server/server/serverpackets/S_SendInvStatusUpdate.java
+追加 : /src/l1j/server/server/serverpackets/S_ServerMessage.java
+追加 : /src/l1j/server/server/serverpackets/S_ServerVersion.java
+追加 : /src/l1j/server/server/serverpackets/S_ShopBuyList.java
+追加 : /src/l1j/server/server/serverpackets/S_ShopItemSellList.java
+追加 : /src/l1j/server/server/serverpackets/S_ShowPolyList.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillBrave.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillHaste.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIcon.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIcon2.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIcon3.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIconGFX.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIconShield.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillIsik.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillSound.java
+追加 : /src/l1j/server/server/serverpackets/S_SkillUnk.java
+追加 : /src/l1j/server/server/serverpackets/S_SoundFX.java
+追加 : /src/l1j/server/server/serverpackets/S_Spells.java
+追加 : /src/l1j/server/server/serverpackets/S_StringMessage.java
+追加 : /src/l1j/server/server/serverpackets/S_Strup.java
+追加 : /src/l1j/server/server/serverpackets/S_SystemMessage.java
+追加 : /src/l1j/server/server/serverpackets/S_TPUNK1.java
+追加 : /src/l1j/server/server/serverpackets/S_TeleportGfx.java
+追加 : /src/l1j/server/server/serverpackets/S_TeleportUnknown1.java
+追加 : /src/l1j/server/server/serverpackets/S_Unknown1.java
+追加 : /src/l1j/server/server/serverpackets/S_Unknown2.java
+追加 : /src/l1j/server/server/serverpackets/S_UseArrowSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_UseArrowSkillMob.java
+追加 : /src/l1j/server/server/serverpackets/S_UseAttackSkill.java
+追加 : /src/l1j/server/server/serverpackets/S_UseMap.java
+追加 : /src/l1j/server/server/serverpackets/S_Weather.java
+追加 : /src/l1j/server/server/serverpackets/S_WhoAmount.java
+追加 : /src/l1j/server/server/serverpackets/S_WhoCharinfo.java
+追加 : /src/l1j/server/server/serverpackets/S_bonusstats.java
+追加 : /src/l1j/server/server/serverpackets/S_kill.java
+追加 : /src/l1j/server/server/serverpackets/ServerBasePacket.java
+追加 : /src/l1j/server/server/serverpackets/SkillList.java
+追加 : /src/l1j/server/server/serverpackets/TradeItem.java
+追加 : /src/l1j/server/server/skills
+追加 : /src/l1j/server/server/skills/Calculator.java
+追加 : /src/l1j/server/server/skills/Condition.java
+追加 : /src/l1j/server/server/skills/ConditionGameTime.java
+追加 : /src/l1j/server/server/skills/ConditionInventory.java
+追加 : /src/l1j/server/server/skills/ConditionItemId.java
+追加 : /src/l1j/server/server/skills/ConditionListener.java
+追加 : /src/l1j/server/server/skills/ConditionLogicAnd.java
+追加 : /src/l1j/server/server/skills/ConditionLogicNot.java
+追加 : /src/l1j/server/server/skills/ConditionLogicOr.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerBaseStats.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerHp.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerHpPercentage.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerLevel.java
+追加 : /src/l1j/server/server/skills/ConditionPlayerState.java
+追加 : /src/l1j/server/server/skills/ConditionTargetAggro.java
+追加 : /src/l1j/server/server/skills/ConditionTargetLevel.java
+追加 : /src/l1j/server/server/skills/ConditionTargetNone.java
+追加 : /src/l1j/server/server/skills/ConditionUsingSkill.java
+追加 : /src/l1j/server/server/skills/Env.java
+追加 : /src/l1j/server/server/skills/Func.java
+追加 : /src/l1j/server/server/skills/FuncAdd.java
+追加 : /src/l1j/server/server/skills/FuncDiv.java
+追加 : /src/l1j/server/server/skills/FuncMul.java
+追加 : /src/l1j/server/server/skills/FuncSet.java
+追加 : /src/l1j/server/server/skills/FuncSub.java
+追加 : /src/l1j/server/server/skills/FuncTemplate.java
+追加 : /src/l1j/server/server/skills/L1SkillDefault.java
+追加 : /src/l1j/server/server/skills/Lambda.java
+追加 : /src/l1j/server/server/skills/LambdaCalc.java
+追加 : /src/l1j/server/server/skills/LambdaConst.java
+追加 : /src/l1j/server/server/skills/LambdaRnd.java
+追加 : /src/l1j/server/server/skills/LambdaStats.java
+追加 : /src/l1j/server/server/skills/Stats.java
+追加 : /src/l1j/server/server/templates
+追加 : /src/l1j/server/server/templates/Accounts.java
+追加 : /src/l1j/server/server/templates/CharNames.java
+追加 : /src/l1j/server/server/templates/CharSelectInfoPackage.java
+追加 : /src/l1j/server/server/templates/DropTable.java
+追加 : /src/l1j/server/server/templates/Inventory.java
+追加 : /src/l1j/server/server/templates/ItemDrop.java
+追加 : /src/l1j/server/server/templates/ItemTable.java
+追加 : /src/l1j/server/server/templates/L1Armor.java
+追加 : /src/l1j/server/server/templates/L1BadNames.java
+追加 : /src/l1j/server/server/templates/L1BuyList.java
+追加 : /src/l1j/server/server/templates/L1CharTemplate.java
+追加 : /src/l1j/server/server/templates/L1Doors.java
+追加 : /src/l1j/server/server/templates/L1EtcItem.java
+追加 : /src/l1j/server/server/templates/L1Item.java
+追加 : /src/l1j/server/server/templates/L1Npc.java
+追加 : /src/l1j/server/server/templates/L1Polymorphs.java
+追加 : /src/l1j/server/server/templates/L1Skills.java
+追加 : /src/l1j/server/server/templates/L1Weapon.java
+追加 : /src/l1j/server/server/types
+追加 : /src/l1j/server/server/types/UByte8.java
+追加 : /src/l1j/server/server/types/UChar8.java
+追加 : /src/l1j/server/server/types/ULong32.java
+追加 : /src/l1j/server/server/utils
+追加 : /src/l1j/server/server/utils/CalcDmg.java
+追加 : /src/l1j/server/server/utils/CalcDmgMop.java
+追加 : /src/l1j/server/server/utils/CalcDmgPc.java
+追加 : /src/l1j/server/server/utils/CalcDmgmagic.java
+追加 : /src/l1j/server/server/utils/CalcDrops.java
+追加 : /src/l1j/server/server/utils/CalcExp.java
+追加 : /src/l1j/server/server/utils/CalcExp2.java
+追加 : /src/l1j/server/server/utils/CalcStat.java
+追加 : /src/l1j/server/server/utils/UpdateInventoryItem.java
+追加 : /src/l1j/server/telnet
+追加 : /src/l1j/server/telnet/GameStatusThread.java
+追加 : /src/l1j/server/telnet/LoginStatusThread.java
+追加 : /src/l1j/server/telnet/Status.java
+
+

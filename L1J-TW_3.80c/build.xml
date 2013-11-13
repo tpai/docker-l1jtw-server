@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="L1J" default="all" basedir=".">
+    <description>
+        This script will build the L1J server.
+
+        This program is free software; you can redistribute it and/or modify
+        it under the terms of the GNU General Public License as published by
+        the Free Software Foundation; either version 2, or (at your option)
+        any later version.
+
+        This program is distributed in the hope that it will be useful,
+        but WITHOUT ANY WARRANTY; without even the implied warranty of
+        MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+        GNU General Public License for more details.
+
+        You should have received a copy of the GNU General Public License
+        along with this program; if not, write to the Free Software
+        Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+        02111-1307, USA.
+
+        http://www.gnu.org/copyleft/gpl.html
+
+    </description>
+ 	
+    <!-- 相關資料目錄 -->
+ 	<property name="class.dir" value="bin" />
+	<property name="server.src.dir" value="src" />
+ 	<property name="loader.src.dir" value="src_loader" />
+    <property name="lib.dir" value="lib" />
+	<property name="etc.dir" value="config" />
+
+	<!-- 封裝檔案名稱 -->
+	<property name="server.jar.file" value="l1jserver.jar" />
+	<property name="loader.jar.file" value="l1jloader.jar" />
+	
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+ 			<include name="**/*.jar" />
+        </fileset>
+    </path>
+
+	<!-- 在 mf 檔內設定相關 class path -->
+	<pathconvert property="mf.classpath" pathsep=" ">
+		<path refid="classpath" />
+		<mapper>
+			<chainedmapper>
+				<flattenmapper />
+				<globmapper from="*" to="${lib.dir}/*" />
+			</chainedmapper>
+		</mapper>
+	</pathconvert>
+
+    <!-- 設定主要任務 -->
+    <target name="all" depends="clean,compile_loader,jar_loader,clean,compile_server,jar_server" />
+	<target name="mini" depends="clean,compile_loader_mini,jar_loader,clean,compile_server_mini,jar_server" />
+
+    <!-- 清除既有的編譯檔案 -->
+    <target name="clean">
+        <delete dir="${class.dir}" />
+    </target>
+
+    <!-- Server 完整編譯(包含除錯訊息) -->
+    <target name="compile_server">
+        <mkdir dir="${class.dir}" />
+		<javac includeantruntime="true" debug="on" optimize="true" deprecation="true" source="1.7" target="1.7" encoding="UTF-8" destdir="${class.dir}">
+			<src path="${server.src.dir}" />
+			<classpath refid="classpath" />
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+    </target>
+
+     <!-- Server 最簡編譯(不包含任何除錯訊息) -->
+    <target name="compile_server_mini">
+        <mkdir dir="${class.dir}" />
+		<javac includeantruntime="true" debug="off" optimize="true" deprecation="true" source="1.7" target="1.7" encoding="UTF-8" destdir="${class.dir}">
+			<src path="${server.src.dir}" />
+			<classpath refid="classpath" />
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+    </target>
+
+   <!-- Server 封裝成 jar -->
+	<target name="jar_server" depends="copy_c3p0_config">
+		<jar basedir="${class.dir}" jarfile="${server.jar.file}">
+			<manifest>
+				<attribute name="Class-Path" value="${mf.classpath}" />
+				<attribute name="Main-Class" value="l1j.server.Server" />
+				<attribute name="Created-By" value="L1JTW 99nets" />
+				<attribute name="Specification-Title" value="L1JTW_99nets_GameServer_S3DS2" />
+				<attribute name="Specification-Vendor" value="L1JTW 99nets" />
+			</manifest>
+		</jar>
+		<delete dir="${class.dir}" />
+	</target>
+	
+	<!-- Loader 完整編譯(包含除錯訊息) -->
+	<target name="compile_loader" depends="clean">
+		<mkdir dir="${class.dir}" />
+		
+		<javac includeantruntime="true" debug="on" optimize="true" deprecation="true" source="1.7" target="1.7" encoding="UTF-8" destdir="${class.dir}">
+			<src path="${loader.src.dir}" />
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+	</target>
+	
+	<!-- 最簡編譯(不包含任何除錯訊息) -->
+	<target name="compile_loader_mini" depends="clean">
+		<mkdir dir="${class.dir}" />
+		
+		<javac includeantruntime="true" debug="off" optimize="true" deprecation="true" source="1.7" target="1.7" encoding="UTF-8" destdir="${class.dir}">
+			<src path="${loader.src.dir}" />
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
+	</target>
+
+	<!-- Loader 封裝成 jar -->
+	<target name="jar_loader">
+		<delete dir="${loader.jar.file}" />
+		<tstamp>
+			<format property="build.tstamp" pattern="yyyy/MM/dd HH:mm" />
+		</tstamp>
+		<jar basedir="${class.dir}" jarfile="${loader.jar.file}">
+			<manifest>
+				<attribute name="Built-Time" value="${build.tstamp}" />
+				<attribute name="Main-Class" value="l1j.loader.StartLoader" />
+				<attribute name="Created-By" value="L1JTW 99nets" />
+			</manifest>
+		</jar>
+		<delete dir="${class.dir}" />
+	</target>
+	
+	<!-- 複製 c3p0 的設定檔到 class 根目錄 -->
+	<target name="copy_c3p0_config">
+		<copy todir="${class.dir}" file="${etc.dir}/c3p0-config.xml" overwrite="true" />
+	</target>
+</project>
