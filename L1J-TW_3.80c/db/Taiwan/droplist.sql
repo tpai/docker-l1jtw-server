@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50140
 File Encoding         : 65001
 
-Date: 2011-05-18 20:53:00
+Date: 2013-11-14 11:56:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -24,6 +24,7 @@ CREATE TABLE `droplist` (
   `min` int(4) unsigned NOT NULL DEFAULT '0',
   `max` int(4) unsigned NOT NULL DEFAULT '0',
   `chance` int(8) unsigned NOT NULL DEFAULT '0',
+  `enchantlvl` int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`mobId`,`itemId`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
