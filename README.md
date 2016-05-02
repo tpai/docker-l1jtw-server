@@ -9,7 +9,7 @@ This repo is forked from [l1j-tw-99nets](http://l1j-tw-99nets.googlecode.com/svn
 
 **Create MYSQL DB**
 
-I'm using mysql:5.6 for habit, so you can try other db images. Map 3306 container port to host public port 3306, be sure to keep it default, because the server side is set default db port to 3306. Don't forget to set root password.
+I'm using mysql:5.6 for habit, so you can try other db images. Map container port 3306 to host public port 3306, be sure to keep it the same, because the server side is set its db port to 3306. Then don't forget to set root password.
 
 ```
 # Port Map
