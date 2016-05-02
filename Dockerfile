@@ -3,6 +3,9 @@
 FROM java:openjdk-7-jdk
 MAINTAINER Tony Pai <tonypai@ifalo.com.tw>
 
+RUN apt-get update
+RUN apt-get install -y mysql-client
+
 WORKDIR /data
 VOLUME /data
 
