@@ -1,17 +1,18 @@
 #!/bin/bash
-# Program:
-#     The program will show it's name and first 3 parameters.
-# History:
-# 2005/08/25 VBird First release
-# 2016/02/21 tonypai Add automated build
 
 PATH=.:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/jdk1.7.0/bin
 export PATH
 
-# Import data to sql
-/etc/init.d/mysql start
-echo "create database l1jdb;" | mysql -u root
-mysql -u root l1jdb < /data/db/l1jdb_Taiwan.sql
+cd /data/config/
 
-# Run Server
-java -Xmx512m -Xincgc -jar l1jserver.jar
+sed 's/mysql:\/\/localhost/mysql:\/\/'"$DB_HOST"'/g' server.properties > custom.server; \
+cat custom.server > server.properties
+
+sed 's/Password=password/Password='"$DB_PWD"'/g' server.properties > custom.server; \
+cat custom.server > server.properties
+
+unzip /data/maps/352_maps.zip -d /data/maps/
+
+cd /data
+
+java -Xmx512m -Xincgc -jar /data/l1jserver.jar
