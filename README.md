@@ -1,7 +1,7 @@
 Docker L1JTW Server
 ===
 
-This repo is forked from [l1j-tw-99nets](http://l1j-tw-99nets.googlecode.com/svn/trunk/L1J-TW_3.50c/), now it can build with docker in rancher.
+This repo is forked from [l1j-tw-99nets](http://l1j-tw-99nets.googlecode.com/), now it can build with docker in rancher.
 
 ![](http://i.giphy.com/l4HnNobFGTXXI56ik.gif)
 
