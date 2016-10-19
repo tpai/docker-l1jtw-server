@@ -9,8 +9,6 @@ This repo is forked from [l1j-tw-99nets](http://l1j-tw-99nets.googlecode.com/), 
 
 **Create MYSQL DB**
 
-I'm using mysql:5.6 for habit, so you can try other db images. Map container port 3306 to host public port 3306, be sure to keep it the same, because the server side is set its db port to 3306. Then don't forget to set root password.
-
 ```
 # Port Map
 0.0.0.0:3306->3306/tcp
@@ -22,8 +20,6 @@ MYSQ_ROOT_PASSWORD=[your-password]
 ![](http://i.imgur.com/ffA1rLJ.png)
 
 **Create L1JTW Server**
-
-Pull image, map port, link service and add required environment vars.
 
 ```
 # From Image
