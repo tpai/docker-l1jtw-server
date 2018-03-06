@@ -1,0 +1,27 @@
+version: '2.3'
+
+services:
+  db:
+    image: mysql:5.6
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+  l1jtw:
+    depends_on:
+      db:
+        condition: service_healthy
+    links:
+      - db
+    build: .
+    restart: always
+    environment:
+      DB_HOST: db
+      DB_PWD: password
+      RATE: 10
+      ENCHANT_CHANCE: 40
