@@ -2,3 +2,5 @@ L1J-TW_3.50c/custom.rates
 L1J-TW_3.50c/custom.server
 L1J-TW_3.50c/rates.properties
 L1J-TW_3.50c/server.properties
+.env
+.DS_Store
