@@ -25,7 +25,7 @@ import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 import l1j.server.L1DatabaseFactory;
 import l1j.server.server.utils.SQLUtil;
@@ -95,7 +95,7 @@ public class Account {
 		byte[] buf = rawPassword.getBytes("UTF-8");
 		buf = MessageDigest.getInstance("SHA").digest(buf);
 
-		return new BASE64Encoder().encode(buf);
+		return Base64.getEncoder().encodeToString(buf);
 	}
 
 	/**
