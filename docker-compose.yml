@@ -1,27 +1,49 @@
-version: '2.3'
+version: '3.5'
 
 services:
-  db:
-    image: mysql:5.6
-    restart: always
+  net:
+    image: alpine:3.7
+    network_mode: bridge
     ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin -h localhost -u root -ppassword ping --silent"]
-      timeout: 10s
-      retries: 3
-  l1jtw:
+      - 2000:2000
+    command: tail -f /dev/null
+    restart: always
+  dev:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - "$PWD:/data"
+    working_dir: /data
+    command: tail -f /dev/null
+  v350c:
+    build:
+      context: .
+      target: v350c
+    network_mode: service:net
     depends_on:
-      db:
-        condition: service_healthy
-    links:
       - db
-    build: .
+    env_file:
+      - .env
+    command: /bin/bash -i ./wait-for-it.sh 127.0.0.1:3306 -- ./ServerStart.sh
+  v380c:
+    build:
+      context: .
+      target: v380c
+    network_mode: service:net
+    depends_on:
+      - db
+    env_file:
+      - .env
+    command: /bin/bash -i ./wait-for-it.sh 127.0.0.1:3306 -- ./ServerStart.sh
+  db:
+    image: mariadb:10
+    network_mode: service:net
+    volumes:
+      - db-data:/var/lib/mysql
     restart: always
     environment:
-      DB_HOST: db
-      DB_PWD: password
-      RATE: 10
-      ENCHANT_CHANCE: 40
+      MYSQL_ROOT_PASSWORD: admin
+
+volumes:
+  db-data:
