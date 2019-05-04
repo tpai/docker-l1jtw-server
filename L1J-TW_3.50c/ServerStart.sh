@@ -3,11 +3,11 @@
 PATH=.:/usr/local/bin:/usr/bin:/bin:/usr/games:/usr/local/jdk1.7.0/bin
 export PATH
 
-if [ $(echo "show databases;" | mysql -h $DB_HOST -u root -p$DB_PWD | grep "l1jdb") = "l1jdb" ]; then
-    echo "Database l1jdb exist!"
+if [ $(echo "show databases;" | mysql -h $DB_HOST -u root -p$DB_PWD | grep "l1jdb350") = "l1jdb350" ]; then
+    echo "Database l1jdb350 exist!"
 else
-    echo "create database l1jdb;" | mysql -h $DB_HOST -u root -p$DB_PWD
-    mysql -h $DB_HOST -u root -p$DB_PWD l1jdb < /data/db/l1jdb_Taiwan.sql
+    echo "create database l1jdb350;" | mysql -h $DB_HOST -u root -p$DB_PWD
+    mysql -h $DB_HOST -u root -p$DB_PWD l1jdb350 < /data/db/l1jdb_Taiwan.sql
 fi
 
 cd /data/config/
