@@ -1,19 +1,14 @@
 FROM openjdk:8-jdk-alpine AS dev
 
 # compilation tools
-RUN apk update
-RUN apk add build-base gcc
+RUN apk update && \
+    apk add build-base gcc
 
 FROM openjdk:8-jre-alpine AS base
 
 # wait-for-it.sh needs bash
-RUN apk update
-RUN apk add bash mysql-client
-
-ENV DB_HOST 127.0.0.1
-ENV DB_PWD admin
-ENV RATE 10
-ENV ENCHANT_CHANCE 40
+RUN apk update && \
+    apk add bash mysql-client
 
 FROM base AS v350c
 
